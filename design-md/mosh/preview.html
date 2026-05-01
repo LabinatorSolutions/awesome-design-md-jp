@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MOSH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- IBM Plex Sans JP（コンテンツ）と Outfit（degular の代替: hairline/extralight 用ディスプレイ） -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@200;400;500;700&family=Outfit:wght@100;200;300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Brand === */
+    --brand: #fa6f78;
+    --brand-deep: #f2414c;
+
+    /* === CTA / Buttons === */
+    --primary-button: #111827;        /* gray-900 */
+    --primary-button-hover: #374151;  /* gray-700 */
+    --secondary-button: #ffffff;
+    --secondary-button-hover: #f3f4f6;
+
+    /* === Text === */
+    --text-primary: #111827;
+    --text-body: #09090b;
+    --text-helper: #4b5563;
+    --text-placeholder: #9ca3af;
+    --text-disabled: #d1d5db;
+    --text-invert: #ffffff;
+    --text-link: #2559eb;
+    --text-link-hover: #6088fa;
+    --text-brand: #fa6f78;
+
+    /* === Semantic === */
+    --info: #0369a1;
+    --success: #15803d;
+    --warning: #ae4f0f;
+    --danger: #d92500;
+
+    /* === Gray Scale (Tailwind v4 gray) === */
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+
+    /* === Surface & Borders === */
+    --bg-ui: #ffffff;
+    --bg-canvas: #ffffff;
+    --bg-surface: rgba(17, 24, 39, 0.04); /* #1118270a */
+    --bg-brand: #fa6f78;
+    --border-default: #e5e7eb;
+    --border-brand: #fa6f78;
+    --border-focused: #111827;
+
+    /* === Radius === */
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-pill: 20px;
+
+    /* === Fonts === */
+    --font-content: "IBM Plex Sans JP", ui-sans-serif, system-ui, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    /* degular は Webフォント。プレビューは Outfit で hairline/extralight 風の代替を使用 */
+    --font-display: "Outfit", "IBM Plex Sans JP", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-canvas);
+    color: var(--text-body);
+    font-family: var(--font-content);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HEADER */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 36px; height: 64px;
+    background: var(--bg-ui);
+    border-bottom: 1px solid var(--border-default);
+    font-family: var(--font-ui);
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 200; letter-spacing: 0.05em;
+    color: var(--gray-900); text-decoration: none;
+  }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--gray-900);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--brand); }
+  .nav-cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--primary-button); color: var(--text-invert);
+    padding: 8px 16px; border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--primary-button-hover); }
+
+  /* HERO */
+  .hero {
+    padding: 96px 36px 80px; text-align: center;
+    background: linear-gradient(180deg, #fff 0%, #fff5f6 100%);
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 14px; font-weight: 700; color: var(--brand);
+    letter-spacing: 0.025em; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-content);
+    font-size: 60px; font-weight: 400; line-height: 1.375;
+    color: var(--brand-deep); margin-bottom: 24px;
+    white-space: pre-line;
+  }
+  .hero-lead {
+    font-size: 16px; font-weight: 500; line-height: 2.0;
+    color: var(--brand); letter-spacing: 0.1em;
+    max-width: 720px; margin: 0 auto 40px;
+  }
+  .hero-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* SECTION */
+  .section { padding: 96px 36px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-content);
+    font-size: 14px; font-weight: 700; color: var(--brand);
+    letter-spacing: 0.025em; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--font-content);
+    font-size: 32px; font-weight: 400; line-height: 1.375;
+    color: var(--brand-deep); margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    color: var(--gray-700); margin-bottom: 48px;
+  }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 14px; background: var(--bg-ui); }
+  .swatch-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .swatch-hex { font-family: var(--font-ui); font-size: 12px; color: var(--text-helper); margin-top: 4px; }
+
+  /* TYPE SCALE */
+  .type-row {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 24px; padding: 20px 0;
+    border-bottom: 1px solid var(--border-default);
+    align-items: baseline;
+  }
+  .type-meta { font-family: var(--font-ui); font-size: 12px; color: var(--text-helper); }
+  .type-meta strong { display: block; font-size: 13px; color: var(--text-primary); margin-bottom: 4px; }
+  .type-display-h1 { font-family: var(--font-content); font-size: 60px; font-weight: 400; line-height: 1.375; color: var(--brand-deep); }
+  .type-h1 { font-family: var(--font-content); font-size: 48px; font-weight: 400; line-height: 1.0; color: var(--brand); }
+  .type-h2 { font-family: var(--font-content); font-size: 36px; font-weight: 700; line-height: 1.111; color: var(--brand); }
+  .type-h3 { font-family: var(--font-content); font-size: 32px; font-weight: 400; line-height: 1.375; color: var(--brand-deep); }
+  .type-h4 { font-family: var(--font-content); font-size: 24px; font-weight: 400; line-height: 1.375; color: var(--brand-deep); }
+  .type-lead { font-family: var(--font-content); font-size: 16px; font-weight: 500; line-height: 2.0; letter-spacing: 0.1em; color: var(--brand); }
+  .type-body { font-family: var(--font-content); font-size: 16px; font-weight: 400; line-height: 1.5; color: var(--text-body); }
+  .type-caption { font-family: var(--font-content); font-size: 14px; font-weight: 700; line-height: 1.43; color: var(--text-body); }
+  .type-small { font-family: var(--font-content); font-size: 12px; font-weight: 500; line-height: 1.625; color: var(--gray-900); }
+  .type-display-num { font-family: var(--font-display); font-size: 72px; font-weight: 100; line-height: 1.0; color: var(--brand); letter-spacing: -0.02em; }
+  .type-stat-num { font-family: var(--font-display); font-size: 48px; font-weight: 200; line-height: 1.0; color: var(--brand); }
+  .type-stat-unit { font-family: var(--font-content); font-size: 20px; font-weight: 200; line-height: 1.4; color: var(--brand); }
+
+  /* STATS */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px; padding: 56px 40px;
+    background: var(--gray-900); border-radius: var(--radius-lg);
+    color: var(--text-invert); text-align: center;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 72px; font-weight: 100; line-height: 1.0;
+    color: var(--text-invert); letter-spacing: -0.02em;
+  }
+  .stat-num .unit {
+    font-family: var(--font-content);
+    font-size: 20px; font-weight: 200; margin-left: 6px;
+    color: var(--text-invert);
+  }
+  .stat-label {
+    font-family: var(--font-content);
+    font-size: 16px; font-weight: 500; color: var(--text-invert);
+    margin-top: 12px;
+  }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-ui); font-size: 14px; font-weight: 500;
+    padding: 8px 16px; border-radius: var(--radius-md);
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--primary-button); color: var(--text-invert); }
+  .btn-primary:hover { background: var(--primary-button-hover); }
+  .btn-secondary { background: var(--secondary-button); color: var(--gray-900); border: 1px solid var(--border-default); }
+  .btn-secondary:hover { background: var(--secondary-button-hover); }
+  .btn-ghost { background: transparent; color: var(--gray-900); }
+  .btn-ghost:hover { background: var(--bg-surface); }
+  .btn-brand-pill {
+    background: var(--brand); color: var(--text-invert);
+    font-family: var(--font-content); font-weight: 700; font-size: 14px;
+    padding: 10px 16px; border-radius: var(--radius-lg);
+  }
+  .btn-brand-pill.sm { font-size: 12px; padding: 8px 14px; }
+  .btn-outline-cta {
+    background: var(--primary-button); color: var(--text-invert);
+    border: 2px solid var(--primary-button);
+    font-family: var(--font-content); font-size: 14px; font-weight: 200;
+    padding: 16px 48px; border-radius: var(--radius-lg);
+  }
+  .btn-outline-cta:hover { border-color: var(--gray-700); background: var(--gray-700); }
+  .chip {
+    display: inline-flex; align-items: center;
+    background: var(--bg-surface); color: var(--gray-900);
+    font-family: var(--font-content); font-size: 14px; font-weight: 700;
+    padding: 10px 16px; border-radius: var(--radius-pill);
+    border: none; cursor: pointer;
+  }
+  .chip:hover { background: rgba(17, 24, 39, 0.08); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-ui);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .card-cover {
+    height: 160px;
+    background: linear-gradient(135deg, #fa6f78 0%, #f2414c 100%);
+  }
+  .card-body { padding: 20px; }
+  .card-tag {
+    display: inline-block;
+    font-family: var(--font-content);
+    font-size: 12px; font-weight: 700;
+    color: var(--brand); margin-bottom: 8px;
+    letter-spacing: 0.025em;
+  }
+  .card-title {
+    font-family: var(--font-content);
+    font-size: 18px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .card-meta {
+    font-family: var(--font-content);
+    font-size: 14px; color: var(--text-helper); line-height: 1.5;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 20px; max-width: 520px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-family: var(--font-content); font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .form-input {
+    font-family: var(--font-content); font-size: 14px;
+    padding: 10px 14px; border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--bg-ui); color: var(--text-body);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-placeholder); }
+  .form-input:focus { outline: none; border-color: var(--border-focused); box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08); }
+  .form-input.error { border-color: var(--danger); }
+  .form-help { font-family: var(--font-content); font-size: 12px; color: var(--text-helper); }
+  .form-error { font-family: var(--font-content); font-size: 12px; color: var(--danger); font-weight: 500; }
+
+  /* ABOUT BLOCK (テーマ：情熱がめぐる経済) */
+  .about {
+    background: var(--gray-900); color: var(--text-invert);
+    padding: 96px 36px; border-radius: var(--radius-lg);
+    text-align: center; max-width: 1100px; margin: 0 auto;
+  }
+  .about h2 {
+    font-family: var(--font-content);
+    font-size: 48px; font-weight: 400; line-height: 1.0;
+    color: var(--text-invert); margin-bottom: 24px;
+  }
+  .about p {
+    font-family: var(--font-content);
+    font-size: 16px; font-weight: 500; line-height: 1.6;
+    color: var(--text-invert); max-width: 680px; margin: 0 auto 40px;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border-default);
+    padding: 20px 36px; min-height: 65px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-ui); font-size: 14px; color: var(--text-placeholder);
+    background: var(--bg-canvas);
+  }
+  .footer-brand { font-family: var(--font-display); font-weight: 200; color: var(--gray-900); font-size: 16px; }
+
+  /* utility */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 36px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .stat-num { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<nav class="nav">
+  <a href="#" class="nav-brand">MOSH</a>
+  <ul class="nav-links">
+    <li><a href="#">機能紹介</a></li>
+    <li><a href="#">活用事例</a></li>
+    <li><a href="#">料金プラン</a></li>
+    <li><a href="#">リソース</a></li>
+    <li><a href="#">会社概要</a></li>
+  </ul>
+  <a href="#" class="nav-cta">アカウント登録</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-eyebrow">AI搭載のオールインワンプラットフォーム</span>
+  <h1>集客の流れをつくる
+ひとつのMOSH</h1>
+  <p class="hero-lead">申し込み・予約・決済・会員サイト・顧客管理 — サービス販売に必要なすべてを、MOSHひとつで。</p>
+  <div class="hero-cta-row">
+    <a href="#" class="btn btn-primary">無料ではじめる</a>
+    <a href="#" class="btn btn-secondary">資料ダウンロード</a>
+  </div>
+</section>
+
+<!-- 1. COLORS -->
+<section class="section">
+  <span class="section-label">01 — Colors</span>
+  <h2 class="section-title">カラーパレット</h2>
+  <p class="section-sub">コーラルレッドのブランドアクセント、黒に近いグレー（gray-900）の CTA、Tailwind v4 のグレースケールで構成される。</p>
+
+  <h3 style="font-family: var(--font-content); font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);">Brand</h3>
+  <div class="color-grid" style="margin-bottom: 40px;">
+    <div class="swatch"><div class="swatch-color" style="background:#fa6f78;"></div><div class="swatch-meta"><div class="swatch-name">Brand 400</div><div class="swatch-hex">#fa6f78</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f2414c;"></div><div class="swatch-meta"><div class="swatch-name">Brand Deep</div><div class="swatch-hex">#f2414c</div></div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-content); font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);">CTA / Buttons</h3>
+  <div class="color-grid" style="margin-bottom: 40px;">
+    <div class="swatch"><div class="swatch-color" style="background:#111827;"></div><div class="swatch-meta"><div class="swatch-name">Primary Button</div><div class="swatch-hex">#111827 (gray-900)</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#374151;"></div><div class="swatch-meta"><div class="swatch-name">Hover</div><div class="swatch-hex">#374151 (gray-700)</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#ffffff; border-right: 1px solid #e5e7eb;"></div><div class="swatch-meta"><div class="swatch-name">Secondary</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f3f4f6;"></div><div class="swatch-meta"><div class="swatch-name">Secondary Hover</div><div class="swatch-hex">#f3f4f6 (gray-100)</div></div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-content); font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);">Semantic</h3>
+  <div class="color-grid" style="margin-bottom: 40px;">
+    <div class="swatch"><div class="swatch-color" style="background:#2559eb;"></div><div class="swatch-meta"><div class="swatch-name">Link</div><div class="swatch-hex">#2559eb</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0369a1;"></div><div class="swatch-meta"><div class="swatch-name">Info</div><div class="swatch-hex">#0369a1</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#15803d;"></div><div class="swatch-meta"><div class="swatch-name">Success</div><div class="swatch-hex">#15803d</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#ae4f0f;"></div><div class="swatch-meta"><div class="swatch-name">Warning</div><div class="swatch-hex">#ae4f0f</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#d92500;"></div><div class="swatch-meta"><div class="swatch-name">Danger</div><div class="swatch-hex">#d92500</div></div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-content); font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary);">Gray Scale</h3>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-color" style="background:#111827;"></div><div class="swatch-meta"><div class="swatch-name">gray-900</div><div class="swatch-hex">#111827</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#374151;"></div><div class="swatch-meta"><div class="swatch-name">gray-700</div><div class="swatch-hex">#374151</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#4b5563;"></div><div class="swatch-meta"><div class="swatch-name">gray-600</div><div class="swatch-hex">#4b5563</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#9ca3af;"></div><div class="swatch-meta"><div class="swatch-name">gray-400</div><div class="swatch-hex">#9ca3af</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#d1d5db;"></div><div class="swatch-meta"><div class="swatch-name">gray-300</div><div class="swatch-hex">#d1d5db</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#e5e7eb;"></div><div class="swatch-meta"><div class="swatch-name">gray-200 / Border</div><div class="swatch-hex">#e5e7eb</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f3f4f6;"></div><div class="swatch-meta"><div class="swatch-name">gray-100</div><div class="swatch-hex">#f3f4f6</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:rgba(17, 24, 39, 0.04); border: 1px dashed #e5e7eb;"></div><div class="swatch-meta"><div class="swatch-name">Surface (4% α)</div><div class="swatch-hex">rgba(17,24,39,0.04)</div></div></div>
+  </div>
+</section>
+
+<!-- 2. TYPOGRAPHY -->
+<section class="section" style="background: var(--gray-100); border-radius: var(--radius-lg);">
+  <span class="section-label">02 — Typography</span>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+  <p class="section-sub">コンテンツは <code>IBM Plex Sans JP</code>、UIシェルは <code>system-ui</code>、大数字は <code>degular</code>（プレビューでは <code>Outfit</code> で代替）。</p>
+
+  <div class="type-row">
+    <div class="type-meta"><strong>Hero H1（トップ）</strong>60 / 1.375 / 400 / brand-deep</div>
+    <div class="type-display-h1">集客の流れをつくる</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>About H1 / H2</strong>48 / 1.0 / 400 / brand</div>
+    <div class="type-h1">情熱がめぐる経済をつくる</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Origin H2</strong>36 / 1.111 / 700 / brand</div>
+    <div class="type-h2">私たちの原点</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Section H3</strong>32 / 1.375 / 400 / brand-deep</div>
+    <div class="type-h3">AI搭載のオールインワンプロダクト</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Subhead H4</strong>24 / 1.375 / 400 / brand-deep</div>
+    <div class="type-h4">チャットサポート</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Lead</strong>16 / 2.0 / 500 / brand / 0.1em</div>
+    <div class="type-lead">申し込み・予約・決済・会員サイト・顧客管理 サービス販売に必要なすべてを、MOSHひとつで</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Body</strong>16 / 1.5 / 400 / #09090b</div>
+    <div class="type-body">SNSの普及により、多くの人の生き様に触れられる時代になりました。創業前に世界一周をして感じたことは、自分らしい情熱の在り方は、人の数だけあるということです。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Caption</strong>14 / 1.43 / 700 / #09090b</div>
+    <div class="type-caption">資料ダウンロード</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Small</strong>12 / 1.625 / 500 / gray-900</div>
+    <div class="type-small">出典: 創業者 籔 和弥 note『起業のきっかけは、神楽坂の割烹和食とケニアの大草原の狭間で』より</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><strong>Display Number</strong>72 / 1.0 / <em>100</em> (thin) / brand</div>
+    <div class="type-display-num">90,000</div>
+  </div>
+  <div class="type-row" style="border-bottom: none;">
+    <div class="type-meta"><strong>Stat Number + Unit</strong>48 / 1.0 / <em>200</em> + 20 / 1.4 / 200</div>
+    <div><span class="type-stat-num">400</span><span class="type-stat-unit"> 億円</span></div>
+  </div>
+</section>
+
+<!-- 3. STATS -->
+<section class="section">
+  <span class="section-label">03 — Stats Showcase</span>
+  <h2 class="section-title">主なデータ</h2>
+  <p class="section-sub">大数字は欧文ディスプレイ書体（degular）の hairline / extralight。軽さで主張する。</p>
+  <div class="stat-row">
+    <div>
+      <div class="stat-num">90,000<span class="unit">人以上</span></div>
+      <div class="stat-label">登録クリエイター数</div>
+    </div>
+    <div>
+      <div class="stat-num">400<span class="unit">億円</span></div>
+      <div class="stat-label">流通総額</div>
+    </div>
+    <div>
+      <div class="stat-num">25<span class="unit">種類以上</span></div>
+      <div class="stat-label">サービスカテゴリ</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. BUTTONS -->
+<section class="section" style="background: var(--gray-100); border-radius: var(--radius-lg);">
+  <span class="section-label">04 — Buttons</span>
+  <h2 class="section-title">ボタン</h2>
+  <p class="section-sub">押しは黒（gray-900）。コーラルはピル/バッジに使い、CTA の主役にはしない。</p>
+
+  <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin: 24px 0 12px; color: var(--text-helper);">Primary / Secondary / Ghost</h3>
+  <div class="btn-row" style="margin-bottom: 32px;">
+    <a href="#" class="btn btn-primary">アカウント登録</a>
+    <a href="#" class="btn btn-secondary">プロフィールリンク</a>
+    <a href="#" class="btn btn-ghost">活用事例</a>
+    <a href="#" class="btn btn-primary" style="background: var(--gray-300); cursor: not-allowed;">Disabled</a>
+  </div>
+
+  <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin: 24px 0 12px; color: var(--text-helper);">Brand Pill / Badge</h3>
+  <div class="btn-row" style="margin-bottom: 32px;">
+    <span class="btn-brand-pill">アカウント登録</span>
+    <span class="btn-brand-pill sm">アカウント登録</span>
+    <span class="btn-brand-pill">資料ダウンロード</span>
+  </div>
+
+  <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin: 24px 0 12px; color: var(--text-helper);">Outlined Display CTA</h3>
+  <div class="btn-row" style="margin-bottom: 32px;">
+    <a href="#" class="btn-outline-cta">創業の物語のすべてを読む</a>
+  </div>
+
+  <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin: 24px 0 12px; color: var(--text-helper);">Surface Chips</h3>
+  <div class="btn-row">
+    <button class="chip">フィットネス・健康</button>
+    <button class="chip">料理・食</button>
+    <button class="chip">ヨガ・ピラティス</button>
+    <button class="chip">ビジネス</button>
+    <button class="chip">ミュージック</button>
+  </div>
+</section>
+
+<!-- 5. CARDS -->
+<section class="section">
+  <span class="section-label">05 — Cards</span>
+  <h2 class="section-title">クリエイターカード</h2>
+  <p class="section-sub">Tailwind v4 標準。フラットでボーダー1px、角丸 8px のシンプルカード。</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-cover"></div>
+      <div class="card-body">
+        <span class="card-tag">フィットネス・健康</span>
+        <div class="card-title">森拓郎フィットネス</div>
+        <div class="card-meta">パーソナルトレーニング・オンラインレッスン</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-cover" style="background: linear-gradient(135deg, #f2414c 0%, #fa6f78 100%);"></div>
+      <div class="card-body">
+        <span class="card-tag">ヨガ・ピラティス</span>
+        <div class="card-title">朝のオンラインヨガ</div>
+        <div class="card-meta">毎朝6時から、自宅で参加できるヨガレッスン</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-cover" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);"></div>
+      <div class="card-body">
+        <span class="card-tag">ビジネス</span>
+        <div class="card-title">起業家向けマンツーマンコーチング</div>
+        <div class="card-meta">月2回 / 60分 / オンライン対応</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FORMS -->
+<section class="section" style="background: var(--gray-100); border-radius: var(--radius-lg);">
+  <span class="section-label">06 — Forms</span>
+  <h2 class="section-title">フォーム</h2>
+  <p class="section-sub">フォーカス時は border を <code>#111827</code>（gray-900）に切替＋薄いリング。</p>
+  <div class="grid-2">
+    <div>
+      <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--text-helper);">Default / Focus</h3>
+      <form class="form" onsubmit="return false;">
+        <div class="form-field">
+          <label class="form-label" for="email">メールアドレス</label>
+          <input class="form-input" id="email" type="email" placeholder="you@example.com">
+          <span class="form-help">アカウントの作成に使用します</span>
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="name">サービス名</label>
+          <input class="form-input" id="name" type="text" placeholder="例：朝のオンラインヨガ" autofocus>
+        </div>
+      </form>
+    </div>
+    <div>
+      <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--text-helper);">Error</h3>
+      <form class="form" onsubmit="return false;">
+        <div class="form-field">
+          <label class="form-label" for="pass">パスワード</label>
+          <input class="form-input error" id="pass" type="password" value="hi">
+          <span class="form-error">8文字以上で入力してください</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ABOUT BLOCK -->
+<section class="section">
+  <span class="section-label">07 — About Block</span>
+  <h2 class="section-title">情熱を語るブロック</h2>
+  <p class="section-sub">黒背景 + 白文字 + ブランドカラー見出しで、ブランドステートメントを情緒的に伝える。</p>
+  <div class="about">
+    <h2 style="color: var(--brand);">情熱がめぐる経済をつくる</h2>
+    <p>静かに灯った青い炎が少しでも長く続き、自然に周りに伝播する情熱の連鎖を支援し続けたい。<br>個人の情熱がビジネスとなり、再び誰かの情熱を灯す。そんな経済を MOSH がつくる。</p>
+    <a href="#" class="btn-outline-cta">創業の物語のすべてを読む</a>
+  </div>
+</section>
+
+<!-- 8. LAYOUT / ELEVATION -->
+<section class="section" style="background: var(--gray-100); border-radius: var(--radius-lg);">
+  <span class="section-label">08 — Elevation & Radius</span>
+  <h2 class="section-title">階層と角丸</h2>
+  <p class="section-sub">立体感は影ではなく、半透明の薄いグレー面（surface）と 1px ボーダーで表現する。</p>
+  <div class="grid-2">
+    <div>
+      <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--text-helper);">Surface Stack</h3>
+      <div style="background: var(--bg-ui); padding: 32px; border: 1px solid var(--border-default); border-radius: 8px;">
+        <div style="background: var(--bg-surface); padding: 24px; border-radius: 8px;">
+          <div style="background: var(--bg-ui); padding: 16px; border: 1px solid var(--border-default); border-radius: 6px;">
+            <div class="type-caption">3階層のサーフェス</div>
+            <div class="type-body" style="margin-top: 8px;">影は使わず、面と細い線だけで重なりを示す。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-family: var(--font-content); font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--text-helper);">Radius Scale</h3>
+      <div style="display: grid; gap: 12px;">
+        <div style="background: var(--bg-ui); border: 1px solid var(--border-default); border-radius: 6px; padding: 16px;"><strong>6px</strong> — rounded-md（ボタン・小UI）</div>
+        <div style="background: var(--bg-ui); border: 1px solid var(--border-default); border-radius: 8px; padding: 16px;"><strong>8px</strong> — rounded-lg（バッジ・大CTA）</div>
+        <div style="background: var(--bg-ui); border: 1px solid var(--border-default); border-radius: 20px; padding: 16px;"><strong>20px</strong> — rounded-[1.25rem]（チップ）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-brand">MOSH</span>
+  <span>MOSH, Inc. All Rights Reserved.</span>
+</footer>
+
+</body>
+</html>

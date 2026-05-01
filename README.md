@@ -64,11 +64,12 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Digital Agency](https://www.digital.go.jp/) | Public / Gov | [DESIGN.md](design-md/digital-go/DESIGN.md) | [preview.html](design-md/digital-go/preview.html) |
 | [PayPay](https://paypay.ne.jp/) | Fintech | [DESIGN.md](design-md/paypay/DESIGN.md) | [preview.html](design-md/paypay/preview.html) |
 | [Nikkei](https://www.nikkei.com/) | News / Editorial | [DESIGN.md](design-md/nikkei/DESIGN.md) | [preview.html](design-md/nikkei/preview.html) |
+| [MOSH](https://mosh.jp/) | Creator Platform / SaaS | [DESIGN.md](design-md/mosh/DESIGN.md) | [preview.html](design-md/mosh/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (31 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (32 sites)</a>
 </p>
 
 <table>
@@ -114,7 +115,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>日経電子版</strong><br><img src="design-md/nikkei/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>MOSH</strong><br><img src="design-md/mosh/preview-screenshot.png" width="120"></td>
 <td></td>
 <td></td>
 <td></td>
@@ -152,7 +153,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (31 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (32 sites)</a>
 </p>
 
 <table>
@@ -198,7 +199,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 </tr>
 <tr>
 <td align="center"><strong>日経電子版</strong><br><img src="design-md/nikkei/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>MOSH</strong><br><img src="design-md/mosh/preview-screenshot.png" width="120"></td>
 <td></td>
 <td></td>
 <td></td>
