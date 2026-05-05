@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Wantedly（ウォンテッドリー）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --brand-cyan: #21bddb;
+    --brand-cyan-dark: #1294ad;
+    --brand-cyan-deep: #006f8e;
+    --heading-black: #24282a;
+    --text-primary: rgba(0, 0, 0, 0.84);
+    --text-secondary: rgba(0, 0, 0, 0.74);
+    --text-tertiary: rgba(0, 0, 0, 0.56);
+    --text-quaternary: rgba(0, 0, 0, 0.4);
+    --text-disabled: rgba(0, 0, 0, 0.24);
+    --helper-gray: #9e9e9e;
+    --white: #ffffff;
+    --surface-1: #f5f5f5;
+    --surface-2: #eeeeee;
+    --surface-input: rgba(0, 0, 0, 0.06);
+    --overlay: rgba(0, 0, 0, 0.74);
+
+    /* === Recommended semantic === */
+    --danger: #e53935;
+    --success: #43a047;
+    --warning: #fb8c00;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 2px 6px 0;
+    --elevation-2: rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.1) 0 0 0 1px;
+    --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    /* === Fonts: 実測準拠 === */
+    --font-heading: Poppins, "Helvetica Neue", Helvetica, Arial, "Hiragino Sans", "Noto Sans JP", "ヒラギノ角ゴシック", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+    --font-body: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans", "Noto Sans JP", "ヒラギノ角ゴシック", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+    --font-form: Lato, "Helvetica Neue", Helvetica, "Hiragino Sans", "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-pill: 100px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.57;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 22px; font-weight: 700;
+    color: var(--brand-cyan); text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { color: var(--brand-cyan-deep); }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--brand-cyan); color: var(--white);
+    padding: 10px 20px; border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--elevation-1);
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    max-width: 1100px; margin: 0 auto;
+    text-align: left;
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 56px; font-weight: 700;
+    line-height: 1.33;
+    color: var(--heading-black);
+    margin-bottom: 24px;
+    max-width: 880px;
+  }
+  .hero p {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.014em;
+    color: var(--heading-black);
+    max-width: 720px; margin: 0 0 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--brand-cyan); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    box-shadow: var(--elevation-1);
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--white); color: var(--text-tertiary);
+    padding: 12px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    box-shadow: var(--elevation-2);
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--surface-1); }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--brand-cyan-dark);
+    padding: 8px 0;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* SECTION */
+  .section {
+    padding: 64px 32px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section--surface { background: var(--surface-1); max-width: none; padding: 64px 0; }
+  .section--surface .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+  .section h2 {
+    font-family: var(--font-heading);
+    font-size: 40px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+  }
+  .section h3 {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 700;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    color: var(--heading-black);
+    margin-bottom: 8px;
+  }
+  .section p {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.57;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .section .helper {
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 600;
+    color: var(--helper-gray);
+    margin-bottom: 8px;
+    letter-spacing: 0.012em;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 16px; }
+  .swatch-name {
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 12px;
+    color: var(--text-quaternary);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .type-label {
+    flex: 0 0 200px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 12px;
+    color: var(--text-quaternary);
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+  .type-display { font-family: var(--font-heading); font-size: 56px; font-weight: 700; line-height: 1.33; color: var(--heading-black); }
+  .type-h2 { font-family: var(--font-heading); font-size: 40px; font-weight: 700; line-height: 1.4; }
+  .type-h1 { font-family: var(--font-heading); font-size: 28px; font-weight: 400; line-height: 1.5; }
+  .type-desc { font-family: var(--font-heading); font-size: 24px; font-weight: 700; line-height: 1.5; letter-spacing: 0.014em; }
+  .type-feature { font-family: var(--font-heading); font-size: 18px; font-weight: 700; line-height: 1.55; letter-spacing: 0.01em; }
+  .type-body { font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.57; }
+  .type-caption { font-family: var(--font-body); font-size: 12px; font-weight: 400; line-height: 1.33; color: var(--text-quaternary); }
+
+  /* CARDS */
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+  .card-cover {
+    height: 140px;
+    background: linear-gradient(135deg, var(--brand-cyan) 0%, var(--brand-cyan-deep) 100%);
+  }
+  .card-body { padding: 20px; }
+  .card-tag {
+    display: inline-block;
+    background: var(--surface-2);
+    color: var(--text-tertiary);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--heading-black);
+    margin-bottom: 8px;
+  }
+  .card-meta {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-quaternary);
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--surface-input);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-family: var(--font-form);
+    font-size: 16px;
+    color: var(--text-primary);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--brand-cyan);
+    background: var(--white);
+  }
+  .form .input-error {
+    border-color: var(--danger);
+  }
+  .form .error-text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 4px;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .elevation-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+  .elevation-2 { box-shadow: var(--elevation-2); }
+  .elevation-3 { box-shadow: var(--elevation-3); }
+
+  /* LAYOUT GUIDE */
+  .layout-grid {
+    background: var(--surface-1);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;
+  }
+  .layout-grid > div {
+    background: var(--brand-cyan);
+    opacity: 0.4;
+    height: 40px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--white);
+    padding: 48px 32px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 64px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer p {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-quaternary);
+    line-height: 1.33;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">Wantedly</a>
+  <ul class="nav-links">
+    <li><a href="#colors">募集を探す</a></li>
+    <li><a href="#typography">記事</a></li>
+    <li><a href="#article">人を探す</a></li>
+    <li><a href="#components">企業</a></li>
+  </ul>
+  <a href="#" class="nav-cta">プロフィールを作成</a>
+</nav>
+
+<section class="hero">
+  <h1>共感でつながる、<br>あなたのシゴトを面白く。</h1>
+  <p>登録ユーザー400万人以上。あなたの会社の<br>想いに共感する人材へアプローチできます。</p>
+  <div class="hero-buttons">
+    <a href="#" class="btn-primary">無料で始める</a>
+    <a href="#" class="btn-secondary">アプリを入手</a>
+    <a href="#" class="btn-link">お問い合わせ →</a>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>Colors</h2>
+  <p class="helper" style="text-transform: uppercase;">Brand</p>
+  <div class="swatches" style="margin-bottom: 32px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--brand-cyan);"></div><div class="swatch-meta"><div class="swatch-name">Brand Cyan</div><div class="swatch-hex">#21bddb</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--brand-cyan-dark);"></div><div class="swatch-meta"><div class="swatch-name">Cyan Dark (Link)</div><div class="swatch-hex">#1294ad</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--brand-cyan-deep);"></div><div class="swatch-meta"><div class="swatch-name">Cyan Deep</div><div class="swatch-hex">#006f8e</div></div></div>
+  </div>
+  <p class="helper" style="text-transform: uppercase;">Neutral / Surfaces</p>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--heading-black);"></div><div class="swatch-meta"><div class="swatch-name">Heading Black</div><div class="swatch-hex">#24282a</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--helper-gray);"></div><div class="swatch-meta"><div class="swatch-name">Helper Gray</div><div class="swatch-hex">#9e9e9e</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-1);"></div><div class="swatch-meta"><div class="swatch-name">Surface 1</div><div class="swatch-hex">#f5f5f5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-2);"></div><div class="swatch-meta"><div class="swatch-name">Surface 2</div><div class="swatch-hex">#eeeeee</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);"></div><div class="swatch-meta"><div class="swatch-name">White</div><div class="swatch-hex">#ffffff</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="typography">
+  <h2>Typography</h2>
+  <p style="margin-bottom: 32px; color: var(--text-tertiary);">Poppins（見出し・CTA）+ Helvetica Neue（本文）+ Hiragino Sans（和文）の混植。letter-spacing は基本 normal、line-height は欧文寄りで締まり気味。</p>
+  <div class="type-row"><div class="type-label">Hero / 56px / 700 / Poppins</div><div class="type-sample"><div class="type-display">私を本気にさせる仕事はどこにある?</div></div></div>
+  <div class="type-row"><div class="type-label">H2 / 40px / 700 / Poppins</div><div class="type-sample"><div class="type-h2">さあ、このプロフィールで</div></div></div>
+  <div class="type-row"><div class="type-label">H1 Lead / 28px / 400 / Poppins</div><div class="type-sample"><div class="type-h1">採用担当者さま向けのご案内</div></div></div>
+  <div class="type-row"><div class="type-label">Description / 24px / 700 / Poppins</div><div class="type-sample"><div class="type-desc">登録ユーザー400万人以上。あなたの会社の想いに共感する人材へアプローチできます。</div></div></div>
+  <div class="type-row"><div class="type-label">Feature / 18px / 700 / Poppins</div><div class="type-sample"><div class="type-feature">募集掲載</div></div></div>
+  <div class="type-row"><div class="type-label">Body / 14px / 400 / Helvetica Neue</div><div class="type-sample"><div class="type-body">Wantedlyは、400万人のユーザーと40,000社が利用する、ビジネスSNSです。共感でつながる新しい採用の形を、私たちは提案しています。仕事もプライベートも、関わる人たちのことをもっと知って、自分らしくはたらくきっかけを見つけてください。</div></div></div>
+  <div class="type-row"><div class="type-label">Caption / 12px / 400 / Helvetica Neue</div><div class="type-sample"><div class="type-caption">掲載数無制限・採用成功報酬０円</div></div></div>
+</section>
+
+<section class="section--surface">
+  <div class="section-inner">
+    <h2 style="font-family: var(--font-heading); font-size: 40px; font-weight: 700; line-height: 1.4; color: var(--text-primary); margin-bottom: 32px;">採用担当者さまへ</h2>
+    <p style="font-family: var(--font-heading); font-size: 24px; font-weight: 700; line-height: 1.5; letter-spacing: 0.014em; color: var(--heading-black); max-width: 720px;">登録ユーザー400万人以上。あなたの会社の想いに共感する人材へアプローチできます。</p>
+    <p style="font-family: var(--font-body); font-size: 14px; line-height: 1.57; color: var(--text-secondary); max-width: 720px; margin-top: 24px;">企業の魅力を発信し、求職者と直接つながる場としてご活用いただけます。求人広告や採用 SaaS とは異なるアプローチで、共感を起点とした採用活動を支援します。</p>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>Buttons</h2>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-primary">無料で始める</a>
+    <a href="#" class="btn-secondary">アプリを入手</a>
+    <a href="#" class="btn-link">お問い合わせ →</a>
+    <button class="btn-primary" style="background: var(--text-disabled); box-shadow: none; cursor: not-allowed;">無効状態</button>
+  </div>
+
+  <h2 id="cards" style="margin-top: 48px;">Cards</h2>
+  <div class="cards" style="margin-bottom: 32px;">
+    <div class="card">
+      <div class="card-cover"></div>
+      <div class="card-body">
+        <span class="card-tag">エンジニア</span>
+        <div class="card-title">プロダクトの未来を一緒につくるフルスタックエンジニアを募集！</div>
+        <div class="card-meta">株式会社サンプル ・ 東京都渋谷区 ・ 3日前</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-cover" style="background: linear-gradient(135deg, #ff8a65, #ff5722);"></div>
+      <div class="card-body">
+        <span class="card-tag">デザイナー</span>
+        <div class="card-title">ブランドの体験設計から関わるプロダクトデザイナー</div>
+        <div class="card-meta">株式会社サンプル ・ リモート可 ・ 5日前</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-cover" style="background: linear-gradient(135deg, #7986cb, #3f51b5);"></div>
+      <div class="card-body">
+        <span class="card-tag">PM</span>
+        <div class="card-title">事業会社のプロダクトマネジメントを担う経験者を募集</div>
+        <div class="card-meta">株式会社サンプル ・ 東京都港区 ・ 1週間前</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 id="forms" style="margin-top: 48px;">Forms</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="company">会社名（エラー）</label>
+      <input id="company" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">会社名を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="3" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>Elevation</h2>
+  <p style="color: var(--text-tertiary); margin-bottom: 24px;">CTA は 2 層シャドウ（極薄ボーダー＋ぼかし影）。それ以外はフラットが基本。</p>
+  <div class="elevation-row">
+    <div class="elevation-card" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — CTA</div>
+    <div class="elevation-card elevation-2">Level 2 — Pseudo Border</div>
+    <div class="elevation-card elevation-3">Level 3 — Modal</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Layout</h2>
+  <p style="color: var(--text-tertiary); margin-bottom: 24px;">12 カラムグリッドが推奨。Spacing は 8px ベースで XS=4 / S=8 / M=16 / L=24 / XL=48 / XXL=72。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p>このプレビューは Wantedly のデザインを参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。Poppins と Helvetica Neue は Google Fonts、和文は OS フォントで描画しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>

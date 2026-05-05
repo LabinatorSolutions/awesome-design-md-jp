@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Snow Peak（スノーピーク）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Lato:wght@400;700&family=Shippori+Mincho:wght@400;500;700&family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --brand-red: #820000;
+    --brand-charcoal: #3e3e3e;
+    --tag-gray: #888888;
+    --light-border: #e6e6e6;
+    --surface-1: #eeeeee;
+    --surface-2: #f5f5f5;
+    --surface-3: #f7f7f7;
+    --black: #000000;
+    --white: #ffffff;
+    --header-overlay: rgba(0, 0, 0, 0.75);
+
+    /* === Recommended semantic === */
+    --danger: #a40000;
+    --warning: #b07a00;
+    --success: #3f6b3f;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+    /* === Fonts === */
+    /* 游明朝/YuMincho の代替として Shippori Mincho、サブとして Sawarabi Mincho */
+    --font-mincho: 游明朝, YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "Shippori Mincho", "Sawarabi Mincho", serif;
+    --font-garamond: "EB Garamond", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "ヒラギノ角ゴシック", "Yu Gothic", "メイリオ", sans-serif;
+    --font-lato: Lato, sans-serif;
+
+    /* === Radius === */
+    --radius-sharp: 0;
+    --radius-tag: 3px;
+    --radius-input: 4px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.57;
+    letter-spacing: 0.036em;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--light-border);
+  }
+  .nav-brand {
+    font-family: var(--font-garamond);
+    font-size: 22px; font-weight: 500;
+    color: var(--black); text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400;
+    color: var(--black); text-decoration: none;
+    letter-spacing: 0.036em;
+    transition: opacity 0.15s;
+  }
+  .nav-links a.lato {
+    font-family: var(--font-lato);
+    font-size: 10px; letter-spacing: 0.05em;
+  }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--header-overlay); color: var(--white);
+    padding: 10px 18px;
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.036em;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    text-align: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: var(--font-mincho);
+    font-size: 36px; font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.036em;
+    color: var(--black);
+    max-width: 640px; margin: 0 auto 48px;
+  }
+
+  /* PRIMARY CTA BANNERS */
+  .cta-banners {
+    display: grid; grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+  }
+  .cta-banner {
+    padding: 21px 0;
+    text-align: center;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .cta-banner:hover { opacity: 0.9; }
+  .cta-banner--red { background: var(--brand-red); }
+  .cta-banner--charcoal { background: var(--brand-charcoal); }
+
+  /* SECTION */
+  .section {
+    padding: 80px 32px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section--surface { background: var(--surface-3); max-width: none; padding: 80px 0; }
+  .section--surface .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .section h2 {
+    font-family: var(--font-garamond);
+    font-size: 32px; font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .section h2 .jp {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    display: block;
+    margin-top: 4px;
+  }
+  .section h3 {
+    font-family: var(--font-mincho);
+    font-size: 22px; font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 12px;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--light-border);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 16px; }
+  .swatch-name {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    color: var(--black);
+    letter-spacing: 0.036em;
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--brand-charcoal);
+    margin-top: 4px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--light-border);
+  }
+  .type-label {
+    flex: 0 0 220px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--brand-charcoal);
+    letter-spacing: 0;
+  }
+  .type-sample { flex: 1; color: var(--black); }
+  .type-mincho-hero { font-family: var(--font-mincho); font-size: 36px; font-weight: 400; line-height: 1.8; letter-spacing: 0.05em; }
+  .type-mincho-large { font-family: var(--font-mincho); font-size: 55px; font-weight: 400; line-height: 1.0; letter-spacing: 0.009em; }
+  .type-garamond-news { font-family: var(--font-garamond); font-size: 32px; font-weight: 400; line-height: 1.3; letter-spacing: 0.05em; }
+  .type-garamond-partner { font-family: var(--font-garamond); font-size: 24px; font-weight: 400; line-height: 1.0; letter-spacing: 0.08em; }
+  .type-mincho-h1 { font-family: var(--font-mincho); font-size: 26px; font-weight: 400; line-height: 1.6; letter-spacing: 0.05em; }
+  .type-body { font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.57; letter-spacing: 0.036em; }
+  .type-lato { font-family: var(--font-lato); font-size: 10px; font-weight: 400; letter-spacing: 0.05em; }
+  .type-cta { font-family: var(--font-body); font-size: 17px; font-weight: 700; letter-spacing: 0.10em; }
+
+  /* CARDS */
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .card-link {
+    background: var(--surface-2);
+    color: var(--black);
+    text-decoration: none;
+    display: flex; flex-direction: column;
+    aspect-ratio: 3 / 4;
+  }
+  .card-cover {
+    flex: 1;
+    background: linear-gradient(135deg, #4a5d4a, #2c3e2c);
+    position: relative;
+  }
+  .card-cover--brown { background: linear-gradient(135deg, #6b5b3a, #3e3324); }
+  .card-cover--green { background: linear-gradient(135deg, #5a6b3a, #3e4824); }
+  .card-cover--blue { background: linear-gradient(135deg, #3a4f6b, #243348); }
+  .card-cover--gray { background: linear-gradient(135deg, #5a5a5a, #2a2a2a); }
+  .card-title {
+    position: absolute; left: 22px; bottom: 70px;
+    font-family: var(--font-mincho);
+    font-size: 36px; font-weight: 400;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+  }
+  .card-body { padding: 24px 22px; background: var(--surface-2); }
+  .card-desc {
+    font-family: var(--font-body);
+    font-size: 13px; line-height: 1.7;
+    letter-spacing: 0.036em;
+    color: var(--black);
+  }
+  .card-tag {
+    display: inline-block;
+    background: var(--tag-gray);
+    color: var(--white);
+    padding: 2px 12px;
+    border-radius: var(--radius-tag);
+    font-family: var(--font-mincho);
+    font-size: 12px; letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  /* ARTICLE / EDITORIAL */
+  .article {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .article-meta {
+    display: flex; gap: 16px; align-items: center;
+    margin-bottom: 24px;
+  }
+  .article-date {
+    font-family: var(--font-garamond);
+    font-size: 14px; letter-spacing: 0.05em;
+    color: var(--brand-charcoal);
+  }
+  .article h1 {
+    font-family: var(--font-mincho);
+    font-size: 32px; font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+  .article p {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.85;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+  .article p:first-of-type::first-letter {
+    font-family: var(--font-mincho);
+    font-size: 1.4em;
+  }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--brand-red); color: var(--white);
+    padding: 21px 48px;
+    font-family: var(--font-body);
+    font-size: 17px; font-weight: 700;
+    letter-spacing: 0.10em;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: var(--brand-charcoal); color: var(--white);
+    padding: 21px 48px;
+    font-family: var(--font-body);
+    font-size: 17px; font-weight: 700;
+    letter-spacing: 0.10em;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-tertiary {
+    display: inline-flex; align-items: center;
+    background: var(--light-border); color: var(--black);
+    padding: 14px 28px;
+    border: 1px solid var(--light-border);
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.036em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-outline {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--black);
+    padding: 12px 24px;
+    border: 1px solid var(--black);
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.036em;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700;
+    color: var(--black);
+    letter-spacing: 0.036em;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--surface-1);
+    border: 1px solid transparent;
+    border-radius: var(--radius-input);
+    padding: 12.8px 12px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--black);
+    letter-spacing: 0.036em;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--black);
+    background: var(--white);
+  }
+  .form .input-error {
+    border-color: var(--danger);
+  }
+  .form .error-text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 4px;
+    letter-spacing: 0.036em;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .elevation-card {
+    background: var(--white);
+    padding: 28px;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    color: var(--black);
+    letter-spacing: 0.036em;
+    border: 1px solid transparent;
+  }
+  .elevation-0 { border-color: var(--light-border); }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+  .elevation-2 { box-shadow: var(--elevation-2); }
+
+  /* LAYOUT GUIDE */
+  .layout-grid {
+    background: var(--surface-3);
+    padding: 24px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+  }
+  .layout-grid > div {
+    background: var(--brand-charcoal);
+    opacity: 0.5;
+    height: 60px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--black);
+    padding: 80px 32px 40px;
+    color: var(--white);
+    margin-top: 80px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer h3 {
+    font-family: var(--font-garamond);
+    font-size: 32px; font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .footer h3 .jp {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-top: 6px;
+  }
+  .footer p {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--white);
+    line-height: 1.7;
+    letter-spacing: 0.036em;
+    margin-top: 24px;
+    opacity: 0.7;
+  }
+  .footer-experience {
+    font-family: var(--font-garamond);
+    font-size: 16px;
+    line-height: 2.5;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-transform: capitalize;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">Snow Peak</a>
+  <ul class="nav-links">
+    <li><a href="#colors">遊 / CAMP</a></li>
+    <li><a href="#typography">衣 / WEAR</a></li>
+    <li><a href="#article">食 / FOOD</a></li>
+    <li><a href="#components">住 / LIFE</a></li>
+    <li><a href="#" class="lato">STORE</a></li>
+  </ul>
+  <a href="#" class="nav-cta">宿泊予約・イベント申込</a>
+</nav>
+
+<section class="hero">
+  <h1>私たちはキャンプの力を信じています。</h1>
+  <p>新潟・燕三条で生まれたスノーピークは、自然と人、人と人をつなぐ製品と体験を、世界中のキャンパーへ届けています。</p>
+</section>
+
+<div class="cta-banners">
+  <a href="#" class="cta-banner cta-banner--red">オンラインストア</a>
+  <a href="#" class="cta-banner cta-banner--charcoal">宿泊申込・イベント申込</a>
+</div>
+
+<section class="section" id="colors">
+  <h2>COLORS<span class="jp">カラーパレット</span></h2>
+  <p style="font-family: var(--font-body); margin: 16px 0 32px; color: var(--brand-charcoal); line-height: 1.85;">深紅 #820000 のオンラインストア帯、チャコール #3e3e3e の予約帯、淡いグレー階層のサーフェスで構成。彩度は全体に低く、写真と組み合わせて落ち着きを作る。</p>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--brand-red);"></div><div class="swatch-meta"><div class="swatch-name">Brand Deep Red</div><div class="swatch-hex">#820000</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--brand-charcoal);"></div><div class="swatch-meta"><div class="swatch-name">Brand Charcoal</div><div class="swatch-hex">#3e3e3e</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--tag-gray);"></div><div class="swatch-meta"><div class="swatch-name">Tag Gray</div><div class="swatch-hex">#888888</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--light-border);"></div><div class="swatch-meta"><div class="swatch-name">Light Border</div><div class="swatch-hex">#e6e6e6</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-1);"></div><div class="swatch-meta"><div class="swatch-name">Surface 1 (Input)</div><div class="swatch-hex">#eeeeee</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-2);"></div><div class="swatch-meta"><div class="swatch-name">Surface 2 (Card)</div><div class="swatch-hex">#f5f5f5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-3);"></div><div class="swatch-meta"><div class="swatch-name">Surface 3</div><div class="swatch-hex">#f7f7f7</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--black);"></div><div class="swatch-meta"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="typography">
+  <h2>TYPOGRAPHY<span class="jp">タイポグラフィ</span></h2>
+  <p style="font-family: var(--font-body); margin: 16px 0 32px; color: var(--brand-charcoal); line-height: 1.85;">游明朝（情緒的見出し）+ EB Garamond（英ラベル）+ system sans-serif（本文）の3 書体で構成。<code>palt</code> がグローバル適用され、letter-spacing は本文 0.036em / 見出し 0.05em / CTA 0.10em の 3 段階で広く取る。</p>
+  <div class="type-row"><div class="type-label">Hero / 36px / 400 / Mincho<br>line-height: 1.8 / ls: 0.05em</div><div class="type-sample"><div class="type-mincho-hero">私たちはキャンプの力を信じています。</div></div></div>
+  <div class="type-row"><div class="type-label">Card Large / 55px / 400 / Mincho<br>line-height: 1.0 / ls: 0.009em</div><div class="type-sample"><div class="type-mincho-large">遊 / CAMP</div></div></div>
+  <div class="type-row"><div class="type-label">EN News / 32px / 400 / Garamond<br>line-height: 1.3 / ls: 0.05em</div><div class="type-sample"><div class="type-garamond-news">NEWS 新着情報</div></div></div>
+  <div class="type-row"><div class="type-label">EN Label / 24px / 400 / Garamond<br>line-height: 1.0 / ls: 0.08em</div><div class="type-sample"><div class="type-garamond-partner">PARTNERSHIP パートナーシップ</div></div></div>
+  <div class="type-row"><div class="type-label">H1 News / 26px / 400 / Mincho<br>line-height: 1.6 / ls: 0.05em</div><div class="type-sample"><div class="type-mincho-h1">新着情報</div></div></div>
+  <div class="type-row"><div class="type-label">Body / 14px / 400 / sans-serif<br>line-height: 1.57 / ls: 0.036em</div><div class="type-sample"><div class="type-body">スノーピークは、新潟県三条市の山中で生まれた、キャンプギア・アパレル・住空間を提案するブランドです。私たちはキャンプの力を信じ、自然との関わり方を変える製品と体験を届けます。</div></div></div>
+  <div class="type-row"><div class="type-label">Lato Caption / 10px / 400</div><div class="type-sample"><div class="type-lato">STORE</div></div></div>
+  <div class="type-row"><div class="type-label">CTA / 17px / 700 / sans-serif<br>letter-spacing: 0.10em</div><div class="type-sample"><div class="type-cta">オンラインストア</div></div></div>
+</section>
+
+<section class="section--surface" id="article">
+  <div class="section-inner">
+    <h2 style="font-family: var(--font-garamond); font-size: 32px; letter-spacing: 0.05em;">JOURNAL<span class="jp">編集記事サンプル</span></h2>
+    <article class="article" style="margin-top: 48px;">
+      <div class="article-meta">
+        <span class="card-tag" style="margin: 0;">お知らせ</span>
+        <span class="article-date">2026.05.06</span>
+      </div>
+      <h1>春のキャンプ場で出会う、燕三条の道具たち</h1>
+      <p>春の気配が深まる新潟・燕三条。雪解けの水音が静かに山を巡るころ、私たちのキャンプ場ではあたらしい季節の準備が始まります。地元の鍛冶の技を受け継ぐ製品づくりと、自然のなかで過ごす一夜の体験は、地続きにあります。</p>
+      <p>キャンプは、ただ外で眠ることではありません。風の方向、火の温度、隣にいる人の気配——日常では見えなくなっていたものに気づきなおす時間です。製品もまた、その気づきを支える道具として設計されています。</p>
+      <p>今年のシーズンは、より多くの人に「キャンプの力」を届けるため、初心者向けのワークショップを各地のキャンプ場で開催します。詳細は新着情報よりご確認ください。</p>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>BUTTONS<span class="jp">ボタン</span></h2>
+  <p style="font-family: var(--font-body); margin: 16px 0 32px; color: var(--brand-charcoal); line-height: 1.85;">主要 CTA は深紅 / チャコールのフル幅バナー、補助はグレーボックス、フッター用に白枠アウトライン。タグだけ 3px の角丸、それ以外はすべて直角。</p>
+  <div class="btn-row" style="margin-bottom: 32px;">
+    <a href="#" class="btn-primary">オンラインストア</a>
+    <a href="#" class="btn-secondary">宿泊申込</a>
+  </div>
+  <div class="btn-row">
+    <a href="#" class="btn-tertiary">詳しく見る</a>
+    <a href="#" class="btn-outline">よくあるご質問</a>
+    <span class="card-tag">お知らせ</span>
+    <span class="card-tag">イベント</span>
+    <span class="card-tag">プレスリリース</span>
+  </div>
+
+  <h2 id="cards" style="margin-top: 64px;">CARDS<span class="jp">カードグリッド</span></h2>
+  <div class="cards" style="margin-top: 32px;">
+    <a href="#" class="card-link">
+      <div class="card-cover card-cover--green">
+        <div class="card-title">遊 / CAMP</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">自然の中で五感から豊かさを感じる時間。</div>
+      </div>
+    </a>
+    <a href="#" class="card-link">
+      <div class="card-cover card-cover--brown">
+        <div class="card-title">衣 / WEAR</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">着ることでその土地の物語になる服。</div>
+      </div>
+    </a>
+    <a href="#" class="card-link">
+      <div class="card-cover">
+        <div class="card-title">食 / FOOD</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">野生の感覚がおいしいと感じる食体験。</div>
+      </div>
+    </a>
+    <a href="#" class="card-link">
+      <div class="card-cover card-cover--blue">
+        <div class="card-title">住 / LIFE</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">自然と共生した住まいと暮らし方。</div>
+      </div>
+    </a>
+    <a href="#" class="card-link">
+      <div class="card-cover card-cover--gray">
+        <div class="card-title">働 / WORK</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">自然と仕事がうまくいく働き方と環境。</div>
+      </div>
+    </a>
+  </div>
+
+  <h2 id="forms" style="margin-top: 64px;">FORMS<span class="jp">フォーム</span></h2>
+  <form class="form" style="margin-top: 32px;">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="phone">電話番号（エラー）</label>
+      <input id="phone" type="tel" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">電話番号を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="3" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>ELEVATION<span class="jp">深度</span></h2>
+  <p style="font-family: var(--font-body); margin: 16px 0 32px; color: var(--brand-charcoal); line-height: 1.85;">基本フラット。立体感は明朝体・色面・写真で表現する。影はホバー時とモーダル時のみ控えめに。</p>
+  <div class="elevation-row">
+    <div class="elevation-card elevation-0">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — Hover</div>
+    <div class="elevation-card elevation-2">Level 2 — Modal</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>LAYOUT<span class="jp">レイアウト</span></h2>
+  <p style="font-family: var(--font-body); margin: 16px 0 32px; color: var(--brand-charcoal); line-height: 1.85;">遊・衣・食・住・働 の 5 カードグリッドが象徴的。Spacing は XS=8 / S=16 / M=24 / L=36 / XL=60 / XXL=120。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h3>CONTACT<span class="jp">お問い合わせ</span></h3>
+    <div class="footer-experience">Experience the wild</div>
+    <p>このプレビューは Snow Peak のデザインを参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。游明朝の代替に Shippori Mincho、欧文セリフは EB Garamond（Google Fonts）で描画しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>

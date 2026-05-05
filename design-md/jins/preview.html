@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: JINS（ジンズ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 + CSS 変数準拠 === */
+    --main-color: #000000;
+    --main-color-rv: #ffffff;
+    --main-color-white: #ffffff;
+    --main-color-gray90: #1b1b1b;
+    --main-color-gray60: #5e5e5e;
+    --main-color-gray50: #808080;
+    --main-color-gray25: #bfbfbf;
+    --main-color-gray10: #e6e6e6;
+    --main-color-gray5: #f2f2f2;
+    --main-color-gray3: #f8f8f8;
+    --main-color-red: #da0024;
+    --brand-red-computed: #ca2029;
+    --link-color: #eb667c;
+    --accent-navy: #27455c;
+    --accent-olive: #468254;
+    --surface-card: #fafafa;
+    --main-sub-blue5: #f7f8fd;
+    --main-sub-red3: #fff5f6;
+    --cookie-bg: rgba(62, 58, 57, 0.8);
+
+    /* === Sizes (CSS 変数) === */
+    --text-body-l-jp: 16.5px;
+    --text-body-m-jp: 14.4px;
+    --text-body-s-jp: 12.2px;
+    --text-caption-jp: 11px;
+    --text-body-l-en: 17px;
+    --text-body-m-en: 15px;
+    --text-body-s-en: 13px;
+    --text-letter-spacing: 0.01em;
+    --text-letter-spacing-en: 0.02em;
+    --side-spacing: 48px;
+    --header-height: 70px;
+    --transition: 0.3s;
+
+    /* === Recommended semantic === */
+    --danger: var(--main-color-red);
+    --success: #468254;
+    --warning: #d97a00;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.10);
+    --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.14);
+
+    /* === Fonts === */
+    /* TazuganeGothicStdN（Morisawa）の代替に Noto Sans JP / Inter */
+    --font-jp: TazuganeGothicStdN, "Noto Sans JP", "Hiragino Sans", "ヒラギノ角ゴシック", "Yu Gothic", "メイリオ", sans-serif;
+    --font-en: jins_next, "JINS Next", Inter, "Noto Sans Japanese", "Noto Sans JP", sans-serif;
+
+    /* === Radius === */
+    --radius-sm: 2px;
+    --radius-md: 10px;
+    --radius-filter: 17px;
+    --radius-pill: 50px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--main-color-white);
+    color: var(--main-color);
+    font-family: var(--font-jp);
+    font-size: var(--text-body-l-jp);
+    font-weight: 400;
+    line-height: 1.66;
+    letter-spacing: var(--text-letter-spacing);
+    font-feature-settings: "liga" 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--side-spacing); height: var(--header-height);
+    background: var(--main-color-white);
+    border-bottom: 1px solid var(--main-color-gray10);
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 22px; font-weight: 700;
+    color: var(--main-color); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en);
+    font-size: 17px; font-weight: 500;
+    color: var(--main-color); text-decoration: none;
+    letter-spacing: var(--text-letter-spacing-en);
+    transition: opacity var(--transition);
+    line-height: 1.3;
+  }
+  .nav-links a.jp {
+    font-family: var(--font-jp);
+    font-weight: 700;
+    letter-spacing: var(--text-letter-spacing);
+  }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--brand-red-computed); color: var(--main-color-white);
+    padding: 12px 30px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp);
+    font-size: 12.2px; font-weight: 700;
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+  .nav-cta:hover { opacity: 0.9; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 480px;
+    background: linear-gradient(135deg, #1b1b1b 0%, #3c3c3c 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    color: var(--main-color-white);
+    padding: 0 var(--side-spacing);
+  }
+  .hero-inner {
+    max-width: 720px;
+  }
+  .hero h1 {
+    font-family: var(--font-jp);
+    font-size: 31px; font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: var(--text-letter-spacing);
+    color: var(--main-color-white);
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-family: var(--font-jp);
+    font-size: var(--text-body-l-jp); font-weight: 400;
+    line-height: 1.44;
+    letter-spacing: var(--text-letter-spacing);
+    color: var(--main-color-white);
+    margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* SECTION */
+  .section {
+    padding: 64px var(--side-spacing);
+    max-width: 1440px; margin: 0 auto;
+  }
+  .section--gray { background: var(--main-color-gray3); max-width: none; padding: 64px 0; }
+  .section--gray .section-inner { max-width: 1440px; margin: 0 auto; padding: 0 var(--side-spacing); }
+  .section h2 {
+    font-family: var(--font-en);
+    font-size: 21px; font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: var(--text-letter-spacing-en);
+    color: var(--main-color);
+    margin-bottom: 4px;
+  }
+  .section h2 .jp {
+    display: block;
+    font-family: var(--font-jp);
+    font-size: var(--text-body-l-jp); font-weight: 400;
+    letter-spacing: var(--text-letter-spacing);
+    color: var(--main-color-gray60);
+    margin-top: 4px;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--main-color-white);
+    border: 1px solid var(--main-color-gray10);
+  }
+  .swatch-color { height: 88px; }
+  .swatch-meta { padding: 12px 16px; }
+  .swatch-name {
+    font-family: var(--font-jp);
+    font-size: 13px; font-weight: 700;
+    color: var(--main-color);
+    letter-spacing: var(--text-letter-spacing);
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--main-color-gray60);
+    margin-top: 4px;
+  }
+  .swatch-token {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 10px;
+    color: var(--main-color-gray50);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--main-color-gray10);
+  }
+  .type-label {
+    flex: 0 0 240px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--main-color-gray60);
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--main-color); }
+  .type-hero { font-family: var(--font-jp); font-size: 31px; font-weight: 700; line-height: 1.45; letter-spacing: var(--text-letter-spacing); }
+  .type-h4-en { font-family: var(--font-en); font-size: 21px; font-weight: 500; line-height: 1.3; letter-spacing: var(--text-letter-spacing-en); }
+  .type-footer-en { font-family: var(--font-en); font-size: 17px; font-weight: 500; line-height: 1.3; letter-spacing: var(--text-letter-spacing-en); }
+  .type-nav-jp { font-family: var(--font-jp); font-size: 17px; font-weight: 700; line-height: 1.55; letter-spacing: var(--text-letter-spacing); }
+  .type-body-l { font-family: var(--font-jp); font-size: 16.5px; font-weight: 400; line-height: 1.66; letter-spacing: var(--text-letter-spacing); }
+  .type-body-s { font-family: var(--font-jp); font-size: 12.2px; font-weight: 400; line-height: 1.66; letter-spacing: var(--text-letter-spacing); }
+  .type-caption { font-family: var(--font-jp); font-size: 11px; font-weight: 400; color: var(--main-color-gray60); letter-spacing: var(--text-letter-spacing); }
+
+  /* PRODUCT CARDS */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .product-card {
+    background: var(--surface-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: filter var(--transition);
+    cursor: pointer;
+    position: relative;
+  }
+  .product-card:hover { filter: brightness(0.97); }
+  .product-card .fav {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--main-color-white);
+    border: 1px solid var(--main-color-gray10);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--main-color-gray50);
+    font-size: 14px;
+  }
+  .product-card .image {
+    height: 160px;
+    background: linear-gradient(135deg, #d4d8dd, #b6bcc4);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--main-color-gray50);
+    font-family: var(--font-en);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  .product-card .image--brown { background: linear-gradient(135deg, #c5a888, #a08766); }
+  .product-card .image--gold { background: linear-gradient(135deg, #d4c08a, #a8956b); }
+  .product-card .image--titanium { background: linear-gradient(135deg, #e3e3e6, #c4c4c8); }
+  .product-card .body {
+    padding: 16px 18px 20px;
+  }
+  .product-card .title {
+    font-family: var(--font-jp);
+    font-size: var(--text-body-s-jp);
+    font-weight: 400;
+    line-height: 1.66;
+    letter-spacing: var(--text-letter-spacing);
+    color: var(--main-color);
+    margin-bottom: 8px;
+  }
+  .product-card .price {
+    font-family: var(--font-en);
+    font-size: 14px; font-weight: 500;
+    color: var(--main-color);
+    letter-spacing: var(--text-letter-spacing-en);
+  }
+  .product-card .colors {
+    display: flex; gap: 6px; margin-top: 8px;
+  }
+  .product-card .colors > span {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--main-color-gray10);
+  }
+
+  .more-card {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--main-color-gray5);
+    border: 1px solid var(--main-color-gray5);
+    border-radius: var(--radius-md);
+    aspect-ratio: 1 / 1;
+    font-family: var(--font-jp);
+    font-size: var(--text-body-s-jp);
+    color: var(--main-color);
+    letter-spacing: var(--text-letter-spacing);
+    cursor: pointer;
+    transition: filter var(--transition);
+  }
+  .more-card:hover { filter: brightness(0.97); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--brand-red-computed); color: var(--main-color-white);
+    padding: 12px 30px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp);
+    font-size: 12.2px; font-weight: 700;
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: none; cursor: pointer; border: 1px solid var(--brand-red-computed);
+    transition: opacity var(--transition);
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: var(--main-color-gray5); color: var(--main-color);
+    padding: 12px 22px; border-radius: var(--radius-md);
+    font-family: var(--font-jp);
+    font-size: 12.2px; font-weight: 400;
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: none; cursor: pointer; border: 1px solid var(--main-color-gray5);
+    transition: filter var(--transition);
+  }
+  .btn-secondary:hover { filter: brightness(0.97); }
+  .btn-outline {
+    display: inline-flex; align-items: center;
+    background: var(--main-color-white); color: var(--main-color);
+    padding: 6px 18px; border-radius: var(--radius-pill);
+    font-family: var(--font-jp);
+    font-size: 12.8px; font-weight: 400;
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: none; cursor: pointer; border: 1px solid #707070;
+  }
+  .btn-tertiary {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--main-color-gray60);
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp);
+    font-size: 14.4px; font-weight: 700;
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: none; cursor: pointer; border: 1px solid transparent;
+  }
+  .btn-link {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--link-color);
+    padding: 0;
+    font-family: var(--font-jp);
+    font-size: 13px; font-weight: 400;
+    letter-spacing: var(--text-letter-spacing);
+    text-decoration: underline;
+    cursor: pointer; border: none;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-jp);
+    font-size: 13px; font-weight: 700;
+    color: var(--main-color);
+    letter-spacing: var(--text-letter-spacing);
+    margin-bottom: 4px;
+    display: block;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--main-color-white);
+    border: 1px solid var(--main-color-gray10);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-family: var(--font-jp);
+    font-size: 14.4px;
+    color: var(--main-color);
+    letter-spacing: var(--text-letter-spacing);
+    transition: border-color var(--transition);
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--main-color);
+  }
+  .form .input-error {
+    border-color: var(--main-color-red);
+  }
+  .form .error-text {
+    font-family: var(--font-jp);
+    font-size: 11px;
+    color: var(--main-color-red);
+    margin-top: 4px;
+    letter-spacing: var(--text-letter-spacing);
+  }
+  .filter-pill-input {
+    background: var(--main-color-white);
+    border: 1px solid #707070;
+    border-radius: var(--radius-pill);
+    padding: 6px 35px 6px 15px;
+    font-family: var(--font-jp);
+    font-size: 12.8px;
+    color: var(--main-color);
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .elevation-card {
+    background: var(--main-color-white);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    text-align: center;
+    font-family: var(--font-jp);
+    font-size: 14.4px; font-weight: 700;
+    color: var(--main-color);
+    letter-spacing: var(--text-letter-spacing);
+    border: 1px solid transparent;
+  }
+  .elevation-0 { border-color: var(--main-color-gray10); }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+  .elevation-2 { box-shadow: var(--elevation-2); }
+  .elevation-3 { box-shadow: var(--elevation-3); }
+
+  /* LAYOUT GUIDE */
+  .layout-grid {
+    background: var(--main-color-gray3);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .layout-grid > div {
+    background: var(--brand-red-computed);
+    opacity: 0.4;
+    height: 60px;
+    border-radius: var(--radius-md);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--main-color-gray5);
+    padding: 60px var(--side-spacing) 20px;
+    color: var(--main-color);
+    margin-top: 64px;
+  }
+  .footer-inner { max-width: 1440px; margin: 0 auto; }
+  .footer h3 {
+    font-family: var(--font-en);
+    font-size: 17px; font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: var(--text-letter-spacing-en);
+    color: var(--main-color);
+    margin-bottom: 4px;
+  }
+  .footer h3 .jp {
+    display: block;
+    font-family: var(--font-jp);
+    font-size: var(--text-body-l-jp); font-weight: 400;
+    letter-spacing: var(--text-letter-spacing);
+    color: var(--main-color);
+    margin-top: 4px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  .footer ul { list-style: none; margin-top: 16px; }
+  .footer li {
+    font-family: var(--font-jp);
+    font-size: 13px;
+    color: var(--main-color-gray60);
+    line-height: 2.2;
+    letter-spacing: var(--text-letter-spacing);
+  }
+  .footer-note {
+    font-family: var(--font-jp);
+    font-size: 11px;
+    color: var(--main-color-gray50);
+    line-height: 1.7;
+    margin-top: 24px;
+    border-top: 1px solid var(--main-color-gray10);
+    padding-top: 24px;
+  }
+
+  /* COOKIE BANNER */
+  .cookie-banner {
+    background: var(--cookie-bg);
+    color: var(--main-color-white);
+    padding: 24px 32px;
+    display: flex; gap: 24px; align-items: center; justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .cookie-banner p {
+    font-family: var(--font-jp);
+    font-size: 13px; line-height: 1.6;
+    letter-spacing: var(--text-letter-spacing);
+    flex: 1; min-width: 280px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">JINS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">MEN</a></li>
+    <li><a href="#typography">WOMEN</a></li>
+    <li><a href="#article">KIDS</a></li>
+    <li><a href="#components">サングラス</a></li>
+    <li><a href="#" class="jp">レンズ</a></li>
+  </ul>
+  <a href="#" class="nav-cta">店舗検索</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Airframe</h1>
+    <p>2,600万人が選んだ「軽さ」の、その先へ。</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn-primary">商品を見る</a>
+      <a href="#" class="btn-secondary" style="background: var(--main-color-white); color: var(--main-color);">店舗で試着する</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>COLORS<span class="jp">カラーパレット</span></h2>
+  <p style="font-family: var(--font-jp); margin: 24px 0 32px; color: var(--main-color-gray60); line-height: 1.66;">CSS 変数で完全にトークン化。ブランドレッドは <code>--main-color-red: #da0024</code>、グレーは gray3〜gray90 の 7 段階。</p>
+
+  <h3 style="font-family: var(--font-en); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--main-color-gray60); margin-bottom: 12px;">Brand</h3>
+  <div class="swatches" style="margin-bottom: 32px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-red);"></div><div class="swatch-meta"><div class="swatch-name">Brand Red (Token)</div><div class="swatch-hex">#da0024</div><div class="swatch-token">--main-color-red</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--brand-red-computed);"></div><div class="swatch-meta"><div class="swatch-name">Brand Red (Computed)</div><div class="swatch-hex">#ca2029</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--link-color);"></div><div class="swatch-meta"><div class="swatch-name">Link Pink</div><div class="swatch-hex">#eb667c</div><div class="swatch-token">--link-color</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--accent-navy);"></div><div class="swatch-meta"><div class="swatch-name">Accent Navy</div><div class="swatch-hex">#27455c</div></div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-en); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--main-color-gray60); margin-bottom: 12px;">Gray Scale (7 tokens)</h3>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray90);"></div><div class="swatch-meta"><div class="swatch-name">gray90</div><div class="swatch-hex">#1b1b1b</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray60);"></div><div class="swatch-meta"><div class="swatch-name">gray60</div><div class="swatch-hex">#5e5e5e</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray50);"></div><div class="swatch-meta"><div class="swatch-name">gray50</div><div class="swatch-hex">#808080</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray25);"></div><div class="swatch-meta"><div class="swatch-name">gray25</div><div class="swatch-hex">#bfbfbf</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray10);"></div><div class="swatch-meta"><div class="swatch-name">gray10</div><div class="swatch-hex">#e6e6e6</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray5);"></div><div class="swatch-meta"><div class="swatch-name">gray5</div><div class="swatch-hex">#f2f2f2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--main-color-gray3);"></div><div class="swatch-meta"><div class="swatch-name">gray3</div><div class="swatch-hex">#f8f8f8</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-card);"></div><div class="swatch-meta"><div class="swatch-name">Card Surface</div><div class="swatch-hex">#fafafa</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="typography">
+  <h2>TYPOGRAPHY<span class="jp">タイポグラフィ</span></h2>
+  <p style="font-family: var(--font-jp); margin: 24px 0 32px; color: var(--main-color-gray60); line-height: 1.66;">Tazugane Gothic（和文）+ JINS Next（英ナビ・見出し）の二本立て。letter-spacing は JP 0.01em / EN 0.02em で CSS 変数化。<code>font-feature-settings: "liga" 0</code> がルートに適用される。</p>
+  <div class="type-row"><div class="type-label">Hero / 31px / 700 / Tazugane<br>line-height: 1.45 / ls: 0.01em</div><div class="type-sample"><div class="type-hero">2,600万人が選んだ「軽さ」の、その先へ。</div></div></div>
+  <div class="type-row"><div class="type-label">H4 EN / 21px / 500 / JINS Next<br>line-height: 1.3 / ls: 0.02em</div><div class="type-sample"><div class="type-h4-en">Magnify Life</div></div></div>
+  <div class="type-row"><div class="type-label">Footer EN / 17px / 500 / JINS Next<br>line-height: 1.3 / ls: 0.02em</div><div class="type-sample"><div class="type-footer-en">Products / 製品情報</div></div></div>
+  <div class="type-row"><div class="type-label">Nav JP / 17px / 700 / Tazugane<br>line-height: 1.55 / ls: 0.01em</div><div class="type-sample"><div class="type-nav-jp">コンタクトレンズ</div></div></div>
+  <div class="type-row"><div class="type-label">Body L / 16.5px / 400 / Tazugane<br>line-height: 1.66 / ls: 0.01em</div><div class="type-sample"><div class="type-body-l">JINS は、メガネをかけるすべての人の人生を拡張するアイウェアブランドです。Airframe・SCREEN・Combination Titanium など、軽さと機能性を両立した製品を、全国の店舗とオンラインショップで提供しています。</div></div></div>
+  <div class="type-row"><div class="type-label">Body S / 12.2px / 400 / Tazugane<br>line-height: 1.66 / ls: 0.01em</div><div class="type-sample"><div class="type-body-s">JINS Combination Titanium ［中顔面短縮メガネ］</div></div></div>
+  <div class="type-row"><div class="type-label">Caption / 11px / 400 / Tazugane</div><div class="type-sample"><div class="type-caption">※ 在庫状況により、店舗での試着が出来ない場合があります</div></div></div>
+</section>
+
+<section class="section--gray" id="article">
+  <div class="section-inner">
+    <h2 style="font-family: var(--font-en); font-size: 21px; font-weight: 500; letter-spacing: var(--text-letter-spacing-en); margin-bottom: 32px;">PRODUCTS<span class="jp" style="font-family: var(--font-jp); display: block; font-size: var(--text-body-l-jp); font-weight: 400; color: var(--main-color-gray60); margin-top: 4px;">今月のトレンド</span></h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="fav">♡</div>
+        <div class="image image--titanium">Airframe</div>
+        <div class="body">
+          <div class="title">JINS Airframe Slim</div>
+          <div class="price">¥5,500</div>
+          <div class="colors"><span style="background:#1b1b1b;"></span><span style="background:#a08766;"></span><span style="background:#27455c;"></span></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="fav">♡</div>
+        <div class="image image--brown">Classic</div>
+        <div class="body">
+          <div class="title">JINS Classic Boston</div>
+          <div class="price">¥8,800</div>
+          <div class="colors"><span style="background:#a08766;"></span><span style="background:#1b1b1b;"></span></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="fav">♡</div>
+        <div class="image image--gold">Combination</div>
+        <div class="body">
+          <div class="title">JINS Combination Titanium ［中顔面短縮メガネ］</div>
+          <div class="price">¥13,200</div>
+          <div class="colors"><span style="background:#a8956b;"></span><span style="background:#1b1b1b;"></span><span style="background:#bfbfbf;"></span></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="fav">♡</div>
+        <div class="image">SCREEN</div>
+        <div class="body">
+          <div class="title">JINS SCREEN ブルーライトカット</div>
+          <div class="price">¥5,500</div>
+          <div class="colors"><span style="background:#1b1b1b;"></span><span style="background:#5e5e5e;"></span></div>
+        </div>
+      </div>
+      <a href="#" class="more-card">もっとみる →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>BUTTONS<span class="jp">ボタン</span></h2>
+  <p style="font-family: var(--font-jp); margin: 24px 0 32px; color: var(--main-color-gray60); line-height: 1.66;">主要 CTA は radius 2px、商品系の "もっとみる" は radius 10px、フィルタ系は radius 50px のピル。階層的な角丸スケール。</p>
+  <div class="btn-row" style="margin-bottom: 24px;">
+    <a href="#" class="btn-primary">Apply</a>
+    <a href="#" class="btn-primary" style="font-size: 14.4px; padding: 12px 36px;">全てのクッキーを受け入れる</a>
+    <a href="#" class="btn-secondary">もっとみる</a>
+    <a href="#" class="btn-outline">Filter ▼</a>
+    <a href="#" class="btn-tertiary">Clear</a>
+    <a href="#" class="btn-link">クッキー詳細</a>
+  </div>
+
+  <h2 id="forms" style="margin-top: 48px;">FORMS<span class="jp">フォーム</span></h2>
+  <form class="form" style="margin-top: 32px;">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="phone">電話番号（エラー）</label>
+      <input id="phone" type="tel" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">電話番号を入力してください</div>
+    </div>
+    <div>
+      <label for="search">フィルタ検索（pill input）</label>
+      <input id="search" type="text" class="filter-pill-input" placeholder="店舗を検索" />
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="3" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>ELEVATION<span class="jp">深度</span></h2>
+  <p style="font-family: var(--font-jp); margin: 24px 0 32px; color: var(--main-color-gray60); line-height: 1.66;">基本フラット。立体感は 7 段階のグレースケールサーフェスで表現。ホバー時は <code>brightness(0.97)</code> で軽くトーンを落とす。</p>
+  <div class="elevation-row">
+    <div class="elevation-card elevation-0">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — Hover</div>
+    <div class="elevation-card elevation-2">Level 2 — Modal</div>
+    <div class="elevation-card elevation-3">Level 3 — Dialog</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>LAYOUT<span class="jp">レイアウト</span></h2>
+  <p style="font-family: var(--font-jp); margin: 24px 0 32px; color: var(--main-color-gray60); line-height: 1.66;">Container は <code>--side-spacing: 48px</code> 左右パディング。Header は <code>--header-height: 70px</code>。商品グリッドは PC 4 カラム。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<div class="cookie-banner">
+  <p>当社は、お客様のウェブサイトでの体験向上、利用分析、広告配信のためにクッキーを使用しています。</p>
+  <div class="btn-row">
+    <a href="#" class="btn-primary">全てのクッキーを受け入れる</a>
+    <a href="#" class="btn-primary" style="background: transparent; border: 1px solid var(--main-color-white); color: var(--main-color-white);">設定を保存する</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h3>Products<span class="jp">製品情報</span></h3>
+        <ul>
+          <li>メガネ</li>
+          <li>サングラス</li>
+          <li>コンタクトレンズ</li>
+          <li>レンズオプション</li>
+        </ul>
+      </div>
+      <div>
+        <h3>About<span class="jp">JINS について</span></h3>
+        <ul>
+          <li>会社情報</li>
+          <li>ニュースリリース</li>
+          <li>サステナビリティ</li>
+          <li>店舗検索</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Support<span class="jp">サポート</span></h3>
+        <ul>
+          <li>よくあるご質問</li>
+          <li>お問い合わせ</li>
+          <li>ご利用ガイド</li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-note">このプレビューは JINS のデザインを参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。TazuganeGothicStdN（Morisawa）の代替に Noto Sans JP、JINS Next の代替に Inter を使用しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>
