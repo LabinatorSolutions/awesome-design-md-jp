@@ -66,11 +66,12 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Nikkei](https://www.nikkei.com/) | News / Editorial | [DESIGN.md](design-md/nikkei/DESIGN.md) | [preview.html](design-md/nikkei/preview.html) |
 | [MOSH](https://mosh.jp/) | Creator Platform / SaaS | [DESIGN.md](design-md/mosh/DESIGN.md) | [preview.html](design-md/mosh/preview.html) |
 | [Shiseido](https://www.shiseido.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/shiseido/DESIGN.md) | [preview.html](design-md/shiseido/preview.html) |
+| [STORES](https://stores.fun/) | Commerce SaaS | [DESIGN.md](design-md/stores/DESIGN.md) | [preview.html](design-md/stores/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (33 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (34 sites)</a>
 </p>
 
 <table>
@@ -118,7 +119,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>日経電子版</strong><br><img src="design-md/nikkei/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOSH</strong><br><img src="design-md/mosh/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Shiseido</strong><br><img src="design-md/shiseido/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>STORES</strong><br><img src="design-md/stores/preview-screenshot.png" width="120"></td>
 <td></td>
 <td></td>
 </tr>
@@ -154,7 +155,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (32 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (34 sites)</a>
 </p>
 
 <table>
@@ -202,7 +203,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 <td align="center"><strong>日経電子版</strong><br><img src="design-md/nikkei/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOSH</strong><br><img src="design-md/mosh/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Shiseido</strong><br><img src="design-md/shiseido/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>STORES</strong><br><img src="design-md/stores/preview-screenshot.png" width="120"></td>
 <td></td>
 <td></td>
 </tr>
