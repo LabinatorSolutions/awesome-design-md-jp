@@ -31,6 +31,7 @@
 
 - **Brand Blue** (`#0066ff`): メインのブランドカラー。主要 CTA "無料でアカウント作成" の背景、テキストリンク、セカンダリ CTA の文字色（Tailwind トークン `bg-brand` / `border-brand` / `text-brand`）
 - **Brand Mint Accent** (`#40f2b4`): プロモ・期間限定バッジの背景（`bg-bg-emphasis-green`）。"導入するなら今！" 等で使用
+- **Recommended Plan Surface** (`#e5fbff`): "おすすめプラン" バッジ／推奨プランカードの薄いシアン面。Brand Blue の派生
 
 ### CTA / Buttons
 
