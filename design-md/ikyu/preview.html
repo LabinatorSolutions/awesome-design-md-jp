@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 一休.com (Ikyu)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Neutrals === */
+    --neutral-000: #ffffff;
+    --neutral-100: #f7f7f7;
+    --neutral-200: #eeeeee;
+    --neutral-300: #dedede;
+    --neutral-400: #cccccc;
+    --neutral-500: #a4a4a4;
+    --neutral-600: #888888;
+    --neutral-700: #6c6c6c;
+    --neutral-800: #333333;
+    --neutral-900: #000000;
+    --gray-700: #696969;
+
+    /* === Stay (宿泊) === */
+    --stay-main: #1a4473;
+    --stay-sub: #008dde;
+    --stay-gradient: linear-gradient(45deg, #1a4473, #008dde);
+
+    /* === Restaurant === */
+    --res-main: #af9b65;
+    --res-main-actual: #9f8c5b;
+    --res-sub: #ff7171;
+    --res-warm-bg: #f8f5ee;
+
+    /* === Other verticals === */
+    --spa-main: #82a9da;
+    --outbound-main: #a0634a;
+    --otoriyose-main: #b8593d;
+    --furusato-main: #861212;
+
+    /* === Loyalty Tier Gradients === */
+    --tier-diamond: linear-gradient(45deg, #0c7b8e, #54acb9);
+    --tier-platinum: linear-gradient(45deg, #777, #c4c4c4);
+    --tier-gold: linear-gradient(45deg, #a88304, #d6b604);
+    --tier-bronze: linear-gradient(45deg, #844c00, #ac7318);
+    --tier-regular: linear-gradient(45deg, #d27d07, #ffb44d);
+
+    /* === Functional === */
+    --error: #de180d;
+    --review-orange: #ff6600;
+    --review-amber: #ff9900;
+    --review-yellow: #ffcc00;
+    --line-green: #00b900;
+
+    /* === Borders === */
+    --border-light: #eeeeee;
+    --border-medium: #dddddd;
+    --border-deep: #cccccc;
+
+    /* === Promo (Yellow Sale Banner) === */
+    --promo-yellow: #ffc100;
+    --promo-text: #1a1a1a;
+
+    /* === Fonts === */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    --font-serif: "Shippori Mincho", "游明朝", "Yu Mincho", "Noto Serif JP", "ヒラギノ明朝 ProN W3", serif;
+
+    /* === Radius === */
+    --radius-base: 6px;
+    --radius-sm: 4px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--neutral-000);
+    color: var(--neutral-800);
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  img { max-width: 100%; display: block; }
+
+  /* === Promo Hazard Banner === */
+  .promo-hazard {
+    background: var(--promo-yellow);
+    color: var(--promo-text);
+    padding: 8px 32px;
+    text-align: center;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--stay-main);
+    color: #fff;
+  }
+  .nav-brand {
+    display: flex; align-items: baseline; gap: 4px;
+    color: #fff; text-decoration: none;
+    font-family: var(--font-serif);
+    font-size: 22px; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .nav-brand small {
+    font-family: var(--font-sans);
+    font-size: 11px; font-weight: 400;
+    opacity: 0.9;
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 20px; list-style: none; }
+  .nav-links a {
+    color: #fff; text-decoration: none;
+    font-size: 13px; font-weight: 400;
+  }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-actions {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 12px;
+  }
+  .nav-actions a { color: #fff; text-decoration: none; }
+  .nav-actions a:hover { opacity: 0.7; }
+
+  /* === SECTIONS === */
+  .section {
+    padding: 64px 32px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 700;
+    color: var(--gray-700);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700;
+    color: var(--neutral-800);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  /* === COLORS GRID === */
+  .palette-group {
+    margin-bottom: 40px;
+  }
+  .palette-group h3 {
+    font-size: 14px; font-weight: 700;
+    color: var(--gray-700);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .swatch {
+    background: var(--neutral-000);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-base);
+    overflow: hidden;
+  }
+  .swatch-color {
+    height: 80px;
+  }
+  .swatch-meta {
+    padding: 12px;
+    font-size: 12px;
+  }
+  .swatch-name {
+    color: var(--neutral-800); font-weight: 700; margin-bottom: 4px;
+  }
+  .swatch-hex {
+    color: var(--gray-700); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    font-size: 11px;
+  }
+
+  /* === TIER GRADIENTS === */
+  .tier-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .tier-chip {
+    border-radius: var(--radius-base);
+    padding: 16px;
+    color: #fff;
+    text-align: center;
+  }
+  .tier-chip-name {
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .tier-chip-sub {
+    font-size: 11px; opacity: 0.9; margin-top: 4px;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  /* === TYPOGRAPHY === */
+  .typo-row {
+    display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .typo-meta {
+    font-size: 11px;
+    color: var(--gray-700);
+    font-family: ui-monospace, Menlo, monospace;
+    line-height: 1.5;
+  }
+  .typo-meta strong {
+    display: block; color: var(--neutral-800);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .promo-lead {
+    font-family: var(--font-serif);
+    font-size: 28px; font-weight: 400;
+    line-height: 1.6;
+    color: var(--neutral-800);
+  }
+  .h2-section {
+    font-size: 24px; font-weight: 700;
+    line-height: 1.6;
+    color: var(--neutral-800);
+  }
+  .h2-rest-subtitle {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--res-main-actual);
+  }
+  .h2-rest-section {
+    font-size: 20px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--neutral-800);
+  }
+  .h3-sidebar {
+    font-size: 12px; font-weight: 700;
+    line-height: 1.6;
+    color: var(--gray-700);
+  }
+  .body-text {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.6;
+    color: var(--neutral-800);
+  }
+  .area-label {
+    font-size: 18px; font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0.025em;
+    color: var(--neutral-800);
+  }
+
+  /* === HERO PROMO (Mincho on photo) === */
+  .hero-promo {
+    position: relative;
+    height: 360px;
+    background: linear-gradient(135deg, #2a4d70 0%, #1a3055 100%);
+    border-radius: var(--radius-base);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    text-align: center;
+  }
+  .hero-promo::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at top, rgba(255,255,255,0.12), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(255, 193, 0, 0.08), transparent 50%);
+  }
+  .hero-promo-content {
+    position: relative; z-index: 1;
+    padding: 0 32px;
+  }
+  .hero-promo-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 700;
+    color: #ffc100;
+    letter-spacing: 0.18em;
+    margin-bottom: 12px;
+  }
+  .hero-promo-mincho {
+    font-family: var(--font-serif);
+    font-size: 40px; font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .hero-promo-sub {
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    opacity: 0.9;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* === BUTTONS === */
+  .button-row {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center;
+  }
+  .btn {
+    border: 0;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    border-radius: var(--radius-base);
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-stay {
+    background: var(--stay-gradient);
+    color: #fff;
+    font-size: 18px;
+    padding: 16px 32px;
+  }
+  .btn-restaurant {
+    background: var(--res-sub);
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+  .btn-secondary {
+    background: var(--neutral-000);
+    color: var(--neutral-800);
+    border: 1px solid var(--border-medium);
+    font-size: 14px;
+    padding: 10px 20px;
+    font-weight: 400;
+  }
+  .btn-line {
+    background: var(--line-green);
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+  .tag-pill {
+    display: inline-flex; align-items: center;
+    background: var(--neutral-100);
+    color: var(--neutral-800);
+    font-size: 12px; font-weight: 400;
+    padding: 8px 12px;
+    border-radius: var(--radius-base);
+    text-decoration: none;
+    margin: 0 8px 8px 0;
+  }
+  .tag-pill:hover { opacity: 0.7; }
+  .badge-tier {
+    display: inline-block;
+    color: #fff;
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.06em;
+  }
+  .badge-tier.gold { background: var(--tier-gold); }
+  .badge-tier.diamond { background: var(--tier-diamond); }
+  .badge-tier.bronze { background: var(--tier-bronze); }
+
+  /* === CARDS === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--neutral-000);
+    border-radius: var(--radius-base);
+    overflow: hidden;
+    transition: opacity 0.15s;
+  }
+  .card:hover { opacity: 0.85; }
+  .card-img {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #d6b08a 0%, #8c6a4a 100%);
+    position: relative;
+  }
+  .card-img.spa { background: linear-gradient(135deg, #aac4dd 0%, #5e7a99 100%); }
+  .card-img.modern { background: linear-gradient(135deg, #2a3a55 0%, #4a637e 100%); }
+  .card-img.zen { background: linear-gradient(135deg, #c8a87e 0%, #6e5436 100%); }
+  .card-img-overlay {
+    position: absolute; left: 8px; top: 8px;
+    background: var(--review-orange);
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 11px; font-weight: 700;
+    border-radius: var(--radius-sm);
+  }
+  .card-body {
+    padding: 12px 4px;
+  }
+  .card-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--neutral-800);
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+  .card-meta {
+    font-size: 12px;
+    color: var(--gray-700);
+  }
+  .card-price {
+    font-size: 16px; font-weight: 700;
+    color: var(--neutral-800);
+    margin-top: 8px;
+  }
+  .card-price small { font-size: 11px; font-weight: 400; color: var(--gray-700); }
+  .card-rating {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 700;
+    color: var(--review-orange);
+  }
+
+  /* === SEARCH FORM === */
+  .search-card {
+    background: var(--neutral-000);
+    border-radius: var(--radius-base);
+    border: 1px solid var(--border-light);
+    padding: 24px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .search-tabs {
+    display: flex; gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-light);
+  }
+  .search-tab {
+    padding: 10px 20px;
+    font-size: 14px; font-weight: 700;
+    color: var(--gray-700);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  .search-tab.active {
+    color: var(--stay-main);
+    border-bottom-color: var(--stay-main);
+  }
+  .search-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .form-field {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .form-field label {
+    font-size: 12px; font-weight: 700;
+    color: var(--gray-700);
+  }
+  .form-field input,
+  .form-field select {
+    background: var(--neutral-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-base);
+    padding: 12px 14px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--neutral-800);
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .form-field input:focus,
+  .form-field select:focus {
+    border-color: var(--stay-sub);
+    background: var(--neutral-000);
+  }
+  .form-field input.error,
+  .form-field input[aria-invalid="true"] {
+    border-color: var(--error);
+    background: #fff5f5;
+  }
+  .form-error {
+    font-size: 11px; color: var(--error);
+  }
+  .form-submit { display: flex; justify-content: flex-end; }
+
+  /* === ARTICLE (Editorial Promo) === */
+  .article {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--neutral-000);
+    padding: 56px 48px;
+    border-radius: var(--radius-base);
+  }
+  .article-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 700;
+    color: var(--res-main-actual);
+    letter-spacing: 0.16em;
+    margin-bottom: 16px;
+  }
+  .article-title {
+    font-family: var(--font-serif);
+    font-size: 36px; font-weight: 500;
+    line-height: 1.6;
+    color: var(--neutral-800);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .article-subtitle {
+    font-family: var(--font-sans);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.7;
+    color: var(--gray-700);
+    margin-bottom: 32px;
+  }
+  .article-h2 {
+    font-size: 20px; font-weight: 700;
+    color: var(--neutral-800);
+    line-height: 1.5;
+    margin: 32px 0 12px;
+  }
+  .article-body p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--neutral-800);
+    margin-bottom: 16px;
+  }
+
+  /* === FORM STATES === */
+  .form-states {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .form-state {
+    background: var(--neutral-000);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-base);
+    padding: 16px;
+  }
+  .form-state h4 {
+    font-size: 12px; font-weight: 700;
+    color: var(--gray-700);
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
+  }
+  .form-state input {
+    width: 100%;
+    background: var(--neutral-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-base);
+    padding: 10px 12px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--neutral-800);
+    outline: none;
+  }
+  .form-state.focus input {
+    border-color: var(--stay-sub);
+    background: var(--neutral-000);
+  }
+  .form-state.error input {
+    border-color: var(--error);
+    background: #fff5f5;
+  }
+  .form-state.error .err {
+    font-size: 11px; color: var(--error); margin-top: 6px;
+  }
+
+  /* === ELEVATION === */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .elevation-box {
+    background: var(--neutral-000);
+    border-radius: var(--radius-base);
+    padding: 32px 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-700);
+  }
+  .elev-flat { border: 1px solid var(--border-light); }
+  .elev-soft { box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .elev-card { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  /* === LAYOUT === */
+  .layout-demo {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    background: var(--neutral-100);
+    padding: 24px;
+    border-radius: var(--radius-base);
+  }
+  .layout-sidebar {
+    background: var(--neutral-000);
+    padding: 16px;
+    border-radius: var(--radius-base);
+    font-size: 12px;
+    color: var(--gray-700);
+  }
+  .layout-sidebar h4 {
+    font-size: 12px; font-weight: 700;
+    color: var(--neutral-800);
+    margin-bottom: 8px;
+  }
+  .layout-sidebar ul { list-style: none; }
+  .layout-sidebar li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 12px;
+  }
+  .layout-sidebar li:last-child { border: 0; }
+  .layout-main {
+    background: var(--neutral-000);
+    padding: 24px;
+    border-radius: var(--radius-base);
+    font-size: 13px;
+    color: var(--gray-700);
+  }
+
+  /* === FOOTER === */
+  .footer {
+    margin-top: 80px;
+    padding: 40px 32px;
+    background: var(--neutral-100);
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-700);
+    line-height: 1.8;
+  }
+  .footer code { font-family: ui-monospace, Menlo, monospace; background: #fff; padding: 2px 6px; border-radius: 3px; }
+
+  .vertical-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .vertical-card {
+    border-radius: var(--radius-base);
+    padding: 20px 16px;
+    color: #fff;
+    text-align: center;
+  }
+  .vertical-card h4 {
+    font-family: var(--font-serif);
+    font-size: 18px; font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .vertical-card span {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 11px; opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+<!-- Promo Hazard Banner -->
+<div class="promo-hazard">タイムセール開催中  ／  最大25%OFF・限定クーポン配布中</div>
+
+<!-- NAV -->
+<header class="nav">
+  <a class="nav-brand" href="#">
+    一休<small>.com</small>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">国内</a></li>
+    <li><a href="#">レストラン</a></li>
+    <li><a href="#">海外</a></li>
+    <li><a href="#">スパ</a></li>
+    <li><a href="#">特集</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#">お気に入り</a>
+    <a href="#">予約一覧</a>
+    <a href="#">ログイン</a>
+  </div>
+</header>
+
+<!-- HERO PROMO with Mincho -->
+<section class="section">
+  <div class="hero-promo">
+    <div class="hero-promo-content">
+      <div class="hero-promo-eyebrow">SPECIAL OFFER</div>
+      <h2 class="hero-promo-mincho">割引クーポン配布中</h2>
+      <p class="hero-promo-sub">伝統の温泉旅館から都心の高級ホテルまで、特別な滞在を割引価格でご提供。期間限定のオファーをお見逃しなく。</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section">
+  <div class="section-eyebrow">Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="palette-group">
+    <h3>Stay (宿泊 / www.ikyu.com)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: var(--stay-main)"></div><div class="swatch-meta"><div class="swatch-name">Stay Main</div><div class="swatch-hex">#1A4473</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--stay-sub)"></div><div class="swatch-meta"><div class="swatch-name">Stay Sub</div><div class="swatch-hex">#008DDE</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--stay-gradient)"></div><div class="swatch-meta"><div class="swatch-name">Stay CTA gradient</div><div class="swatch-hex">linear-gradient(45deg, #1a4473, #008dde)</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--promo-yellow)"></div><div class="swatch-meta"><div class="swatch-name">Promo Yellow</div><div class="swatch-hex">#FFC100</div></div></div>
+    </div>
+  </div>
+
+  <div class="palette-group">
+    <h3>Restaurant (restaurant.ikyu.com)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: var(--res-main-actual)"></div><div class="swatch-meta"><div class="swatch-name">Restaurant Gold (実測)</div><div class="swatch-hex">#9F8C5B</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--res-main)"></div><div class="swatch-meta"><div class="swatch-name">Restaurant Gold (CSS変数)</div><div class="swatch-hex">#AF9B65</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--res-sub)"></div><div class="swatch-meta"><div class="swatch-name">Restaurant CTA Coral</div><div class="swatch-hex">#FF7171</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--res-warm-bg)"></div><div class="swatch-meta"><div class="swatch-name">Restaurant Surface (warm)</div><div class="swatch-hex">#F8F5EE</div></div></div>
+    </div>
+  </div>
+
+  <div class="palette-group">
+    <h3>Other Verticals</h3>
+    <div class="vertical-row">
+      <div class="vertical-card" style="background: var(--stay-main)"><h4>宿泊</h4><span>#1A4473</span></div>
+      <div class="vertical-card" style="background: var(--res-main-actual)"><h4>レストラン</h4><span>#9F8C5B</span></div>
+      <div class="vertical-card" style="background: var(--spa-main)"><h4>スパ・温泉</h4><span>#82A9DA</span></div>
+      <div class="vertical-card" style="background: var(--outbound-main)"><h4>海外</h4><span>#A0634A</span></div>
+      <div class="vertical-card" style="background: var(--otoriyose-main)"><h4>お取り寄せ</h4><span>#B8593D</span></div>
+      <div class="vertical-card" style="background: var(--furusato-main)"><h4>ふるさと納税</h4><span>#861212</span></div>
+    </div>
+  </div>
+
+  <div class="palette-group">
+    <h3>Loyalty Tier Gradients (一休ステージ)</h3>
+    <div class="tier-row">
+      <div class="tier-chip" style="background: var(--tier-diamond)"><div class="tier-chip-name">Diamond</div><div class="tier-chip-sub">#0c7b8e → #54acb9</div></div>
+      <div class="tier-chip" style="background: var(--tier-platinum)"><div class="tier-chip-name">Platinum</div><div class="tier-chip-sub">#777 → #c4c4c4</div></div>
+      <div class="tier-chip" style="background: var(--tier-gold)"><div class="tier-chip-name">Gold</div><div class="tier-chip-sub">#a88304 → #d6b604</div></div>
+      <div class="tier-chip" style="background: var(--tier-bronze)"><div class="tier-chip-name">Bronze</div><div class="tier-chip-sub">#844c00 → #ac7318</div></div>
+      <div class="tier-chip" style="background: var(--tier-regular)"><div class="tier-chip-name">Regular</div><div class="tier-chip-sub">#d27d07 → #ffb44d</div></div>
+    </div>
+  </div>
+
+  <div class="palette-group">
+    <h3>Neutrals</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: var(--neutral-000); border-bottom: 1px solid var(--border-light)"></div><div class="swatch-meta"><div class="swatch-name">Page</div><div class="swatch-hex">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--neutral-100)"></div><div class="swatch-meta"><div class="swatch-name">Surface (most frequent)</div><div class="swatch-hex">#F7F7F7</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--neutral-200)"></div><div class="swatch-meta"><div class="swatch-name">Border light</div><div class="swatch-hex">#EEEEEE</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--neutral-300)"></div><div class="swatch-meta"><div class="swatch-name">Border medium</div><div class="swatch-hex">#DDDDDD</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--gray-700)"></div><div class="swatch-meta"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#696969</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: var(--neutral-800)"></div><div class="swatch-meta"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#333333</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="section" style="background: var(--neutral-100); max-width: none">
+  <div style="max-width: 1280px; margin: 0 auto">
+    <div class="section-eyebrow">Typography</div>
+    <h2 class="section-title">タイポグラフィ階層</h2>
+
+    <div class="typo-row">
+      <div class="typo-meta"><strong>Promo Lead (Mincho)</strong>28px / 400<br>line-height 1.6<br>--font-serif<br>用途: ヒーロー/特集</div>
+      <div class="promo-lead">割引クーポン配布中</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta"><strong>H2 Section</strong>24px / 700<br>line-height 1.6<br>--font-sans<br>用途: セクション見出し</div>
+      <div class="h2-section">いま最も売れている宿</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta"><strong>H2 Restaurant Subtitle</strong>14px / 400<br>line-height 1.5<br>color #9F8C5B<br>用途: レストラン</div>
+      <div class="h2-rest-subtitle">よく検索されているキーワード</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta"><strong>H2 Restaurant Section</strong>20px / 700<br>line-height 1.5<br>用途: レストラン本見出し</div>
+      <div class="h2-rest-section">おすすめレストラン</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta"><strong>H3 Sidebar</strong>12px / 700<br>line-height 1.6<br>color #696969</div>
+      <div class="h3-sidebar">人気のキーワード</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta"><strong>Area Card Label</strong>18px / 700<br>letter-spacing 0.025em<br>用途: エリア名</div>
+      <div class="area-label">伊豆 / 熱海 / 京都</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta"><strong>Body</strong>14px / 400<br>line-height 1.6<br>用途: 本文</div>
+      <div class="body-text">ご家族・カップル・お一人様まで。シーンに合わせて選べる宿が見つかります。チェックイン日と人数を入力するだけで、簡単にご予約いただけます。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE -->
+<section class="section">
+  <div class="section-eyebrow">Article / Editorial</div>
+  <h2 class="section-title">特集ページ・組版サンプル</h2>
+  <article class="article">
+    <div class="article-eyebrow">SPECIAL FEATURE / 京都・春</div>
+    <h1 class="article-title">桜花、しだれの宿。京都・嵐山の春旅</h1>
+    <p class="article-subtitle">渡月橋を眺める数寄屋造りの宿で、迎賓の花見御膳と檜風呂を。一休が選んだ、この春だけの特別なご滞在。</p>
+    <h2 class="article-h2">嵐山の朝、ひとり時間を慈しむ</h2>
+    <div class="article-body">
+      <p>春の嵐山は、桜の薄紅と新緑のせめぎあいが最も美しい季節です。山霧が晴れる朝七時、宿のお茶室で一服、点てたてのお抹茶と季節の和菓子で目覚める。客室の縁側からは、満開の桜並木と保津川のせせらぎを一望できます。</p>
+      <p>ご朝食は懐石仕立て。地元・京野菜の炊き合わせと、京都丹後で水揚げされた鯛の昆布締め、五穀米のおかゆに春の山菜。朝の静謐な時間を、ひとつひとつの器が支えます。</p>
+    </div>
+    <h2 class="article-h2">夜は、特別仕立ての花見御膳を</h2>
+    <div class="article-body">
+      <p>夕刻、ライトアップされた庭園を望むお食事処にて、一休限定の花見御膳をご用意します。先付の桜豆腐から始まり、椀物は鯛と若竹の桜花仕立て。八寸には季節の山菜と桜の塩漬けをあしらった逸品が並びます。</p>
+    </div>
+  </article>
+</section>
+
+<!-- BUTTONS -->
+<section class="section">
+  <div class="section-eyebrow">Buttons & Tags</div>
+  <h2 class="section-title">ボタン・タグ</h2>
+  <div class="palette-group">
+    <h3>Primary CTA</h3>
+    <div class="button-row">
+      <button class="btn btn-stay">検索する</button>
+      <button class="btn btn-restaurant">予約する</button>
+      <button class="btn btn-line">LINEで予約</button>
+      <button class="btn btn-secondary">詳細を見る</button>
+    </div>
+  </div>
+  <div class="palette-group">
+    <h3>Tag Pills (地名・キーワード)</h3>
+    <div>
+      <a href="#" class="tag-pill">熱海</a>
+      <a href="#" class="tag-pill">箱根</a>
+      <a href="#" class="tag-pill">京都</a>
+      <a href="#" class="tag-pill">伊豆高原</a>
+      <a href="#" class="tag-pill">由布院</a>
+      <a href="#" class="tag-pill">軽井沢</a>
+      <a href="#" class="tag-pill">那須</a>
+    </div>
+  </div>
+  <div class="palette-group">
+    <h3>Loyalty Badges</h3>
+    <div class="button-row">
+      <span class="badge-tier diamond">DIAMOND</span>
+      <span class="badge-tier gold">GOLD</span>
+      <span class="badge-tier bronze">BRONZE</span>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section class="section" style="background: var(--neutral-100); max-width: none">
+  <div style="max-width: 1280px; margin: 0 auto">
+    <div class="section-eyebrow">Cards</div>
+    <h2 class="section-title">いま最も売れている宿</h2>
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-img">
+          <span class="card-img-overlay">SALE 25%</span>
+        </div>
+        <div class="card-body">
+          <span class="card-rating">★4.8 <span style="color: var(--gray-700); font-weight:400">(1,024件)</span></span>
+          <h3 class="card-title">星のしずく 嵐山 別邸</h3>
+          <p class="card-meta">京都・嵐山 / 露天風呂付き客室</p>
+          <p class="card-price">¥58,000<small>〜 / 1泊2食付</small></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img spa">
+          <span class="card-img-overlay">SALE 20%</span>
+        </div>
+        <div class="card-body">
+          <span class="card-rating">★4.7 <span style="color: var(--gray-700); font-weight:400">(820件)</span></span>
+          <h3 class="card-title">熱海 月見の館</h3>
+          <p class="card-meta">静岡・熱海 / オーシャンビュー</p>
+          <p class="card-price">¥42,000<small>〜 / 1泊2食付</small></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img modern">
+        </div>
+        <div class="card-body">
+          <span class="card-rating">★4.9 <span style="color: var(--gray-700); font-weight:400">(2,150件)</span></span>
+          <h3 class="card-title">東京・丸の内ザ・スカイ</h3>
+          <p class="card-meta">東京 / 都心の絶景ホテル</p>
+          <p class="card-price">¥36,000<small>〜 / 1泊朝食付</small></p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-img zen">
+        </div>
+        <div class="card-body">
+          <span class="card-rating">★4.6 <span style="color: var(--gray-700); font-weight:400">(640件)</span></span>
+          <h3 class="card-title">由布院 椛の宿</h3>
+          <p class="card-meta">大分・由布院 / 全室源泉かけ流し</p>
+          <p class="card-price">¥48,000<small>〜 / 1泊2食付</small></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH FORM -->
+<section class="section">
+  <div class="section-eyebrow">Search Form</div>
+  <h2 class="section-title">予約検索フォーム</h2>
+  <div class="search-card">
+    <div class="search-tabs">
+      <div class="search-tab active">宿泊</div>
+      <div class="search-tab">ビジネス</div>
+      <div class="search-tab">特集・テーマ</div>
+    </div>
+    <div class="search-fields">
+      <div class="form-field">
+        <label>エリア・キーワード</label>
+        <input type="text" placeholder="伊豆・温泉・露天風呂など" value="京都">
+      </div>
+      <div class="form-field">
+        <label>チェックイン</label>
+        <input type="text" value="2026/05/10 (日)">
+      </div>
+      <div class="form-field">
+        <label>大人 / 子供</label>
+        <select>
+          <option>大人2名 / 子供0名</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-submit">
+      <button class="btn btn-stay">検索する</button>
+    </div>
+  </div>
+</section>
+
+<!-- FORM STATES -->
+<section class="section">
+  <div class="section-eyebrow">Form States</div>
+  <h2 class="section-title">フォーム状態</h2>
+  <div class="form-states">
+    <div class="form-state">
+      <h4>Default</h4>
+      <input type="text" placeholder="お名前">
+    </div>
+    <div class="form-state focus">
+      <h4>Focus (border #008DDE)</h4>
+      <input type="text" value="一休 太郎">
+    </div>
+    <div class="form-state error">
+      <h4>Error (border #DE180D)</h4>
+      <input type="text" value="" placeholder="お名前">
+      <div class="err">お名前は必須項目です</div>
+    </div>
+  </div>
+</section>
+
+<!-- ELEVATION -->
+<section class="section">
+  <div class="section-eyebrow">Elevation</div>
+  <h2 class="section-title">階層・影</h2>
+  <p class="body-text" style="margin-bottom: 24px; color: var(--gray-700)">一休は基本フラット。階層は背景色（白 vs <code style="background:#fff;padding:2px 6px;border-radius:3px">#F7F7F7</code>）と罫線で作る。box-shadow はほぼ使わない。</p>
+  <div class="elevation-grid">
+    <div class="elevation-box elev-flat">Flat (border only)</div>
+    <div class="elevation-box elev-soft">Soft shadow (限定的)</div>
+    <div class="elevation-box elev-card">Card hover (限定的)</div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<section class="section">
+  <div class="section-eyebrow">Layout</div>
+  <h2 class="section-title">2カラム検索結果</h2>
+  <div class="layout-demo">
+    <aside class="layout-sidebar">
+      <h4>条件で絞り込む</h4>
+      <ul>
+        <li>露天風呂付き客室</li>
+        <li>夕食・朝食付き</li>
+        <li>駅近（5分以内）</li>
+        <li>ペット可</li>
+        <li>禁煙</li>
+        <li>1名利用可</li>
+      </ul>
+    </aside>
+    <div class="layout-main">
+      検索結果メインカラム — カードリスト・並び替え・ページネーション。<br>サイドバーフィルタは PC では sticky、モバイルではモーダル化される想定。
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  Design System Preview · 一休.com (ikyu.com)<br>
+  Apple system / Hiragino Kaku Gothic ProN <code>--font-sans</code> + 游明朝 <code>--font-serif</code><br>
+  ※ プレビューでは <code>--font-serif</code> のフォールバックに Google Fonts の Shippori Mincho / Noto Serif JP を併用しています（実サイトは游明朝などのOSフォントが先頭）
+</footer>
+
+</body>
+</html>
