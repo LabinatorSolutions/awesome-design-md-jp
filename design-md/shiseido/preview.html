@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SHISEIDO (Light)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+  Web フォント方針（DESIGN.md §3.2 注記参照）:
+  - Inter: 欧文の最優先指定。Google Fonts から配信
+  - Noto Sans JP: 游ゴシック体は Web 配信されていないため代替として併読
+  - 環境固有の游ゴシック / Hiragino はフォールバックチェーンで活かす
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: DESIGN.md §2 実測値ベース === */
+    --shiseido-red: #c80421;
+    --text-brand: #45433e;        /* 本文・見出しの基準色（純黒ではない） */
+    --text-inverse: #ffffff;
+    --border-subtle: #d3d2cf;
+    --border-strong: #45433e;
+    --bg-primary: #ffffff;
+    --bg-surface-subtle: #d3d2cf;
+    --footer-bg: #3d3d3d;
+
+    /* === Semantic === */
+    --color-danger: #c80421;       /* Shiseido Red を流用 */
+
+    /* === Typography === */
+    --font-base: "Inter", "游ゴシック体", yugothic, "游ゴシック", "Yu Gothic",
+                 "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP",
+                 sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Layout / Spacing === */
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 40px;
+    --space-xl: 58px;
+    --space-xxl: 80px;
+    --container-max: 1280px;
+    --content-max: 940px;
+
+    /* === Borders / Radius === */
+    --radius: 0px;                 /* 角丸は使わない（資生堂方針） */
+
+    /* === Shadows（基本は使用しない。推奨値のみ） === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 2px rgba(0,0,0,0.06);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-brand);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;            /* 21px / 14px */
+    letter-spacing: normal;
+    font-feature-settings: normal; /* palt は使わない */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-m);
+    height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    color: var(--text-brand);
+    letter-spacing: 0.08em;
+  }
+  .nav-brand .red { color: var(--shiseido-red); }
+  .nav-links { display: flex; gap: var(--space-m); }
+  .nav-links a {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-brand);
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--shiseido-red); }
+  .nav-cta {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-brand);
+    padding: 10px 18px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-size: 14px; font-weight: 400;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-cta:hover { background: var(--text-brand); color: var(--text-inverse); }
+
+  /* === HERO === */
+  .hero {
+    padding: var(--space-xxl) var(--space-m) var(--space-l);
+    text-align: center;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 700;
+    line-height: 1.18;             /* 33/28 */
+    color: var(--text-brand);
+    margin-bottom: var(--space-s);
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-brand);
+    max-width: 640px;
+    margin: 0 auto var(--space-m);
+  }
+  .hero-buttons {
+    display: flex; gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    padding: var(--space-xxl) var(--space-m);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-brand);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.12em;
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 700;
+    line-height: 1.36;
+    color: var(--text-brand);
+    margin-bottom: var(--space-l);
+  }
+  .section-title.alert { color: var(--shiseido-red); }
+  .section-gray {
+    background: #faf9f7;            /* 資生堂的な極薄ベージュグレー */
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .section-gray-inner {
+    padding: var(--space-xxl) var(--space-m);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+
+  /* === COLORS === */
+  .color-group-label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-brand);
+    margin: var(--space-m) 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-s);
+    margin-bottom: var(--space-m);
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .color-swatch-block {
+    height: 80px;
+    width: 100%;
+  }
+  .color-swatch-info {
+    padding: 12px 14px;
+  }
+  .color-swatch-name {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--text-brand);
+    margin-bottom: 4px;
+  }
+  .color-swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-brand);
+    opacity: 0.8;
+  }
+  .color-swatch-role {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--text-brand);
+    opacity: 0.7;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample {
+    margin-bottom: var(--space-m);
+    padding-bottom: var(--space-m);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 400;
+    color: var(--text-brand);
+    opacity: 0.7;
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-surface-subtle);
+    color: var(--text-brand);
+    font-family: var(--font-base);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    margin-left: 8px;
+  }
+
+  /* === ARTICLE / PRODUCT === */
+  .article-preview {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .article-preview .eyebrow {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 500;
+    color: var(--shiseido-red);
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-brand);
+    margin-bottom: var(--space-s);
+  }
+  .article-preview .meta {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--text-brand);
+    opacity: 0.7;
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-s);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 700;
+    line-height: 1.36;
+    color: var(--text-brand);
+    margin: var(--space-l) 0 var(--space-s);
+  }
+  .article-preview p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.85;              /* 読み物用に DESIGN.md 推奨の 1.7+ を採用 */
+    color: var(--text-brand);
+    margin-bottom: var(--space-s);
+  }
+
+  /* Product cards */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-m);
+    margin-top: var(--space-l);
+  }
+  .product-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 0 0 var(--space-s) 0;
+    box-shadow: var(--elevation-0);
+  }
+  .product-card-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #f3ebe5 0%, #e8d8cc 100%);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-brand);
+    font-family: var(--font-base);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+  .product-card-image.tone-2 { background: linear-gradient(135deg, #efe8e6 0%, #d8c4be 100%); }
+  .product-card-image.tone-3 { background: linear-gradient(135deg, #ece5dd 0%, #c8b69a 100%); }
+  .product-card-body {
+    padding: var(--space-s);
+  }
+  .product-category {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 500;
+    color: var(--text-brand);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 16.38px; font-weight: 700;
+    line-height: 1.305;
+    color: var(--text-brand);
+    margin-bottom: 4px;
+  }
+  .product-jp {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-brand);
+    margin-bottom: 12px;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-brand);
+  }
+  .product-price small {
+    font-size: 12px; font-weight: 400;
+    opacity: 0.7;
+  }
+
+  /* Alert block */
+  .alert-block {
+    border-top: 1px solid var(--shiseido-red);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: var(--space-m) 0;
+    margin-bottom: var(--space-l);
+  }
+  .alert-title {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 700;
+    line-height: 1.36;
+    color: var(--shiseido-red);
+    margin-bottom: 12px;
+  }
+  .alert-list {
+    list-style: none;
+  }
+  .alert-list li {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 500;
+    line-height: 1.375;
+    padding: 12px 0 12px 24px;
+    border-top: 1px solid var(--border-subtle);
+    position: relative;
+  }
+  .alert-list li:first-child { border-top: none; }
+  .alert-list li::before {
+    content: "›";
+    position: absolute;
+    left: 4px; top: 12px;
+    color: var(--shiseido-red);
+    font-weight: 700;
+  }
+  .alert-list a {
+    color: var(--text-brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .alert-list a:hover { color: var(--shiseido-red); }
+
+  /* === BUTTONS === */
+  .button-row {
+    display: flex; gap: var(--space-m);
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .button-item { text-align: center; }
+  .button-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 400;
+    color: var(--text-brand);
+    opacity: 0.7;
+    margin-top: 8px;
+  }
+
+  .btn {
+    display: inline-block;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--font-base);
+    text-decoration: none;
+    transition: opacity 0.15s, background 0.15s, color 0.15s;
+    box-shadow: var(--elevation-0);
+  }
+  .btn:hover { opacity: 0.85; }
+
+  .btn-primary {
+    background: var(--bg-primary);
+    color: var(--text-brand);
+    padding: 14px 28px;
+    border: 1px solid var(--border-subtle);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.125;
+  }
+  .btn-secondary {
+    background: var(--bg-surface-subtle);
+    color: var(--text-brand);
+    padding: 14px 28px;
+    border: none;
+    font-size: 16px; font-weight: 500;
+    line-height: 1.125;
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-brand);
+    padding: 12px 24px;
+    border: 1px solid var(--border-subtle);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+  }
+  .btn-outline-strong {
+    background: var(--bg-primary);
+    color: var(--text-brand);
+    padding: 12px 24px;
+    border: 1px solid var(--border-strong);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+  }
+  .btn-danger {
+    background: var(--shiseido-red);
+    color: var(--text-inverse);
+    padding: 14px 28px;
+    border: none;
+    font-size: 16px; font-weight: 700;
+    line-height: 1.125;
+  }
+
+  /* === CARDS === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-m);
+  }
+  .card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    box-shadow: var(--elevation-0);
+  }
+  .card .card-eyebrow {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 500;
+    color: var(--shiseido-red);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 700;
+    line-height: 1.22;
+    color: var(--text-brand);
+    margin-bottom: 12px;
+  }
+  .card p {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-brand);
+  }
+  .card-link {
+    display: inline-block;
+    margin-top: var(--space-s);
+    font-family: var(--font-base);
+    font-size: 14px;
+    color: var(--text-brand);
+    border-bottom: 1px solid var(--text-brand);
+    padding-bottom: 2px;
+  }
+  .card-link:hover { color: var(--shiseido-red); border-color: var(--shiseido-red); }
+
+  /* === FORMS === */
+  .form-group {
+    margin-bottom: var(--space-m);
+    max-width: 420px;
+  }
+  .form-label {
+    display: block;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500;
+    color: var(--text-brand);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-brand);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    line-height: 1.5;
+    height: 44px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-brand); opacity: 0.45; }
+  .form-input:focus,
+  .form-input--focus {
+    border-color: var(--border-strong);
+    border-width: 1px;
+  }
+  .form-input--error {
+    border-color: var(--shiseido-red);
+  }
+  .form-state-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-brand);
+    opacity: 0.7;
+    margin-top: 6px;
+  }
+  .form-state-label.error { color: var(--shiseido-red); opacity: 1; }
+
+  /* === ELEVATION === */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-m);
+  }
+  .elevation-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    text-align: center;
+  }
+  .elevation-label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-brand);
+    margin-bottom: 6px;
+  }
+  .elevation-desc {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-brand);
+    opacity: 0.7;
+    word-break: break-all;
+  }
+  .elevation-note {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--text-brand);
+    opacity: 0.7;
+    margin-top: var(--space-s);
+    line-height: 1.6;
+  }
+
+  /* === LAYOUT (Spacing & Container) === */
+  .spacing-row {
+    display: flex; align-items: flex-end;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-m);
+  }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--shiseido-red);
+    border-radius: var(--radius);
+    margin-bottom: 6px;
+    width: 28px;
+  }
+  .spacing-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-brand);
+  }
+  .spacing-token {
+    font-family: var(--font-base);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-brand);
+  }
+
+  .width-bar {
+    height: 32px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .width-bar-inner {
+    height: 100%;
+    background: var(--bg-surface-subtle);
+  }
+  .width-bar-label {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--text-brand);
+    margin-bottom: 4px;
+  }
+  .width-bar-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-brand);
+    opacity: 0.8;
+    margin-left: 8px;
+    font-weight: 400;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--footer-bg);
+    color: var(--text-inverse);
+    padding: var(--space-l) var(--space-xxl) var(--space-xl);
+    text-align: left;
+    font-family: var(--font-base);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .footer a {
+    color: var(--text-inverse);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .footer .footer-brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: var(--space-s);
+  }
+  .footer .footer-brand .red { color: var(--shiseido-red); }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: var(--space-l) var(--space-s) var(--space-m); }
+    .hero h1 { font-size: 22px; }
+    .section { padding: var(--space-l) var(--space-s); }
+    .section-gray-inner { padding: var(--space-l) var(--space-s); }
+    .section-title { font-size: 18px; }
+    .article-preview h1 { font-size: 22px; }
+    .article-preview h2 { font-size: 18px; }
+    .article-preview p { font-size: 14px; line-height: 1.85; }
+    .footer { padding: var(--space-l) var(--space-s) var(--space-l); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">SHI<span class="red">S</span>EIDO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ブランド一覧</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview<br>SHISEIDO — 1872年から続く美の哲学</h1>
+  <p>shiseido.co.jp のデザイントークンをカタログ化。シャープな直線、温かみのある中間色、ピンポイントで効かせる資生堂レッド。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn btn-outline-strong" href="#">DESIGN.md を読む</a>
+    <a class="btn btn-outline" href="#">ブランドサイトを見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#c80421"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Shiseido Red</div>
+        <div class="color-swatch-hex">#c80421</div>
+        <div class="color-swatch-role">象徴色。重要な見出し・限定強調</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#45433e"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Brand Text</div>
+        <div class="color-swatch-hex">#45433e</div>
+        <div class="color-swatch-role">本文・見出しの基準色（茶味のある DG）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #d3d2cf"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Background</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">ページ全体の基本背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#d3d2cf"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Border / Surface Subtle</div>
+        <div class="color-swatch-hex">#d3d2cf</div>
+        <div class="color-swatch-role">仕切り線・セカンダリボタン面</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#45433e"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Border Strong</div>
+        <div class="color-swatch-hex">#45433e</div>
+        <div class="color-swatch-role">強調アウトライン</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#3d3d3d"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Footer Background</div>
+        <div class="color-swatch-hex">#3d3d3d</div>
+        <div class="color-swatch-role">フッター専用のチャコール</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #d3d2cf"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Inverse</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">暗い背景上のテキスト</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#c80421"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Danger / Important</div>
+        <div class="color-swatch-hex">#c80421</div>
+        <div class="color-swatch-role">Shiseido Red を流用</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:repeating-linear-gradient(45deg, #f3f3f3, #f3f3f3 6px, #fff 6px, #fff 12px)"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Warning</div>
+        <div class="color-swatch-hex">未定義</div>
+        <div class="color-swatch-role">実測値なし（DESIGN.md §2）</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:repeating-linear-gradient(45deg, #f3f3f3, #f3f3f3 6px, #fff 6px, #fff 12px)"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Success</div>
+        <div class="color-swatch-hex">未定義</div>
+        <div class="color-swatch-role">実測値なし（DESIGN.md §2）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:28px; font-weight:700; line-height:1.18; color:var(--text-brand);">資生堂のブランド哲学 — Heading 1</div>
+    <div class="type-meta">28px / 700 / line-height: 1.18 (33/28) / letter-spacing: normal<span class="type-context">header</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:22px; font-weight:700; line-height:1.45; color:var(--text-brand);">美しさは、人を強くする — Heading 2 (lead)</div>
+    <div class="type-meta">22px / 700 / line-height: 1.45 (32/22)<span class="type-context">service__lead</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:22px; font-weight:700; line-height:1.36; color:var(--shiseido-red);">大事なお知らせ — Heading 2 (alert)</div>
+    <div class="type-meta">22px / 700 / line-height: 1.36 / color: #c80421<span class="type-context">attention__title</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:22px; font-weight:700; line-height:1.0; color:var(--text-brand); text-transform:uppercase; letter-spacing:0.04em;">INFORMATION — Heading 2 (news)</div>
+    <div class="type-meta">22px / 700 / line-height: 1.0 / 英大文字ラベル系<span class="type-context">news__title</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:21px; font-weight:700; line-height:1.24; color:var(--text-brand);">セクション見出し — Heading 2 (section)</div>
+    <div class="type-meta">21px / 700 / line-height: 1.24 (26/21)<span class="type-context">main h2</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:700; line-height:1.22; color:var(--text-brand);">小見出し — Heading 3 / 4</div>
+    <div class="type-meta">18px / 700 / line-height: 1.22 (22/18)<span class="type-context">service-s__title / service__sub__title</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:700; line-height:1.0; color:var(--text-brand);">サイドカラム見出し — Heading 2 (aside)</div>
+    <div class="type-meta">18px / 700 / line-height: 1.0<span class="type-context">info__title</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16.38px; font-weight:700; line-height:1.305; color:var(--text-brand);">コンテンツ小見出し — Heading 3 (small)</div>
+    <div class="type-meta">16.38px / 700 / line-height: 1.305<span class="type-context">service__content__title</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:500; line-height:1.5; color:var(--text-brand);">サービス本文 — Body Emphasis（化粧水・美容液など、肌を整える基礎ケアの考え方をご紹介します。）</div>
+    <div class="type-meta">16px / 500 / line-height: 1.5 (24/16)<span class="type-context">service__text</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.5; color:var(--text-brand);">本文テキスト — Body。資生堂のサイトは本文 14px / line-height 1.5 でほぼ統一されています。情報量の多いコーポレートサイトとして読みやすさより一覧性を優先した設計です。letter-spacing は normal、palt も使用しません。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 (21/14) / letter-spacing: normal / palt: なし<span class="type-context">body / p / a / li</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:500; line-height:1.5; color:var(--text-brand);">キャプション — Caption（お買い物に使えるポイントをためる・つかう）</div>
+    <div class="type-meta">12px / 500 / line-height: 1.5 (18/12)<span class="type-context">small p</span></div>
+  </div>
+
+  <p style="font-family:var(--font-mono); font-size:11px; color:var(--text-brand); opacity:0.7; margin-top:var(--space-m); line-height:1.7;">
+    Web フォント方針: <code>Inter</code>（Google Fonts）+ <code>Noto Sans JP</code>（Google Fonts）を読み込み、游ゴシック体は OS インストール環境のフォールバックとして活かす。<br>
+    詳細は DESIGN.md §3.2 注記を参照。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT -->
+<section class="section-gray" id="article">
+<div class="section-gray-inner">
+  <div class="section-label">03 / Article & Product</div>
+  <h2 class="section-title">記事と商品の組版サンプル</h2>
+
+  <!-- 大事なお知らせ（資生堂のホームでよく見る要素） -->
+  <div class="article-preview">
+    <div class="alert-block">
+      <div class="alert-title">大事なお知らせ</div>
+      <ul class="alert-list">
+        <li><a href="#">一部商品の自主回収に関するお詫びとご報告</a></li>
+        <li><a href="#">配送遅延に関するご案内（一部地域）</a></li>
+      </ul>
+    </div>
+
+    <div class="eyebrow">SKINCARE STORY</div>
+    <h1>素肌の強さを、内側から育てる。</h1>
+    <div class="meta">2026.05.05 ／ Beauty Editorial ／ Reading time: 4 min</div>
+
+    <p>資生堂が長年研究してきたのは、肌そのものが本来持つ「美しさを生み出す力」です。化粧品はその力を奪うものではなく、肌の自律的な働きにそっと寄り添い、引き出すための存在であるべき—— それが、1872 年の創業以来、私たちが守り続けてきた基本姿勢です。</p>
+
+    <h2>角層という、いちばん外側のレイヤー</h2>
+    <p>肌の表面には、水分と脂質、そして天然保湿因子（NMF）でできた精緻なバリアがあります。このわずか 0.02mm の薄い層が、外的刺激から肌を守り、潤いを内側にとどめる役割を担っています。スキンケアの第一歩は、この層を整えること。化粧水で水分を、美容液で集中ケアを、乳液で蓋を—— ひとつひとつのステップに意味があります。</p>
+
+    <h2>選び方のヒント</h2>
+    <p>「自分に合うものがわからない」と感じたら、まずは肌の状態を観察してみてください。乾燥なのか、ベタつきなのか、ゆらぎなのか。資生堂の店頭では、肌測定機器を用いた無料カウンセリングをご利用いただけます。最寄りの店舗でお気軽にご相談ください。</p>
+
+    <!-- Product cards -->
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-card-image">SKINCARE</div>
+        <div class="product-card-body">
+          <div class="product-category">Lotion</div>
+          <div class="product-name">Treatment Softener</div>
+          <div class="product-jp">トリートメント ソフナー</div>
+          <div class="product-price">¥6,600 <small>（税込／150mL）</small></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-2">SERUM</div>
+        <div class="product-card-body">
+          <div class="product-category">Essence</div>
+          <div class="product-name">Ultimune Power Infusing Concentrate</div>
+          <div class="product-jp">アルティミューン パワライジング コンセントレート</div>
+          <div class="product-price">¥12,100 <small>（税込／50mL）</small></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-3">MAKEUP</div>
+        <div class="product-card-body">
+          <div class="product-category">Lipstick</div>
+          <div class="product-name">ModernMatte Powder Lipstick</div>
+          <div class="product-jp">モダンマット パウダー リップスティック</div>
+          <div class="product-price">¥4,400 <small>（税込）</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-l); text-align:center;">
+      <a class="btn btn-outline-strong" href="#">商品一覧を見る</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <p style="font-size:14px; color:var(--text-brand); margin-bottom:var(--space-l); line-height:1.7;">
+    資生堂のボタンは <code style="font-family:var(--font-mono); font-size:13px;">border-radius: 0px</code> を徹底。装飾的な影は使わず、罫線・余白・タイポグラフィの強弱だけで階層を作ります。
+  </p>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn btn-primary" href="#">新着情報</a>
+      <div class="button-label">Primary（白地・タブ的）<br>16px / 700</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-secondary" href="#">資生堂グループ情報</a>
+      <div class="button-label">Secondary（グレー塗り）<br>16px / 500</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-outline-strong" href="#">ブランド一覧</a>
+      <div class="button-label">Outline Strong（強い枠）<br>14px / 400</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-outline" href="#">さらに見る</a>
+      <div class="button-label">Outline（細枠）<br>14px / 400</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-danger" href="#">大事なお知らせ</a>
+      <div class="button-label">Danger（参考実装）<br>16px / 700</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-eyebrow">BEAUTY METHOD</div>
+      <h3>朝のスキンケア、3 ステップで完了</h3>
+      <p>洗顔・化粧水・乳液の基本ステップを、忙しい朝でもきちんと続けるためのコツをご紹介します。1 つひとつの所作にかける時間は、自分を整える時間でもあります。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">PRODUCT GUIDE</div>
+      <h3>美容液の選び方</h3>
+      <p>保湿、エイジングケア、美白—— 目的別に最適な美容液を選ぶための判断軸を、資生堂の研究員が解説。自分の肌状態と相談しながら選んでください。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">BRAND STORY</div>
+      <h3>1872 年、銀座から始まった</h3>
+      <p>日本初の洋風調剤薬局として銀座に誕生した資生堂。150 年を超えるブランドの歩みと、これからの美容に向き合う姿勢をたどります。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素（3 状態）</h2>
+  <p style="font-size:14px; color:var(--text-brand); margin-bottom:var(--space-l); line-height:1.7;">
+    入力欄も角丸を使わず、44px のタッチターゲット高さを基準に。フォーカス時は border を <code style="font-family:var(--font-mono);">#45433e</code>（Border Strong）に切り替え、エラーは Shiseido Red を最小限に使います。
+  </p>
+
+  <div class="form-group">
+    <label class="form-label" for="email-default">メールアドレス</label>
+    <input id="email-default" class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: 1px solid #d3d2cf / radius: 0px / height: 44px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="pw-focus">パスワード</label>
+    <input id="pw-focus" class="form-input form-input--focus" type="password" value="••••••••••••">
+    <div class="form-state-label">フォーカス — border: 1px solid #45433e（Border Strong）</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="email-error">メールアドレス</label>
+    <input id="email-error" class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-state-label error">エラー — border: 1px solid #c80421（Shiseido Red）／メッセージは最小限のテキストで</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">box-shadow: none</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1（推奨）</div>
+      <div class="elevation-desc">0 1px 2px rgba(0,0,0,0.06)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2（推奨）</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.08)</div>
+    </div>
+  </div>
+  <p class="elevation-note">
+    実測値はすべて <code style="font-family:var(--font-mono);">box-shadow: none</code>。資生堂はフラットを徹底しており、影に頼らずに階層を表現します。Level 1 / 2 は「どうしても必要な場合の推奨値」です。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシングとコンテナ幅</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:8px;"></div>
+      <div class="spacing-token">XS</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:16px;"></div>
+      <div class="spacing-token">S</div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:24px;"></div>
+      <div class="spacing-token">M</div>
+      <div class="spacing-value">24px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:40px;"></div>
+      <div class="spacing-token">L</div>
+      <div class="spacing-value">40px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:58px;"></div>
+      <div class="spacing-token">XL</div>
+      <div class="spacing-value">58px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:80px;"></div>
+      <div class="spacing-token">XXL</div>
+      <div class="spacing-value">80px</div>
+    </div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Container & Content Widths</div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Container Max <span class="width-bar-value">1280px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Main Content <span class="width-bar-value">940px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:73.4%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Article（読み物） <span class="width-bar-value">680px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:53.1%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Footer Padding（左右） <span class="width-bar-value">80px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:6.25%"></div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Breakpoints</div>
+  <p style="font-family:var(--font-base); font-size:14px; color:var(--text-brand); line-height:1.7;">
+    <strong style="font-weight:700;">Mobile</strong>: ≤ 767px ／ <strong style="font-weight:700;">Tablet</strong>: 768 – 1024px ／ <strong style="font-weight:700;">Desktop</strong>: > 1024px<br>
+    タッチターゲットは 44px × 44px 以上（WCAG 基準。<code style="font-family:var(--font-mono);">--swiper-navigation-size: 44px</code> とも整合）。
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">SHI<span class="red">S</span>EIDO</div>
+  Generated from <a href="https://www.shiseido.co.jp/">shiseido.co.jp</a> DESIGN.md — awesome-design-md-jp ／ computed style 実測値（2026-05-05）<br>
+  <span style="opacity:0.7;">Web fonts: Inter + Noto Sans JP（Google Fonts） / OS フォールバック: 游ゴシック体, Hiragino Sans</span>
+</footer>
+
+</body>
+</html>

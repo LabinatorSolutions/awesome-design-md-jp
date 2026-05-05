@@ -65,11 +65,12 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [PayPay](https://paypay.ne.jp/) | Fintech | [DESIGN.md](design-md/paypay/DESIGN.md) | [preview.html](design-md/paypay/preview.html) |
 | [Nikkei](https://www.nikkei.com/) | News / Editorial | [DESIGN.md](design-md/nikkei/DESIGN.md) | [preview.html](design-md/nikkei/preview.html) |
 | [MOSH](https://mosh.jp/) | Creator Platform / SaaS | [DESIGN.md](design-md/mosh/DESIGN.md) | [preview.html](design-md/mosh/preview.html) |
+| [Shiseido](https://www.shiseido.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/shiseido/DESIGN.md) | [preview.html](design-md/shiseido/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (32 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (33 sites)</a>
 </p>
 
 <table>
@@ -116,7 +117,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>日経電子版</strong><br><img src="design-md/nikkei/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOSH</strong><br><img src="design-md/mosh/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>Shiseido</strong><br><img src="design-md/shiseido/preview-screenshot.png" width="120"></td>
 <td></td>
 <td></td>
 <td></td>
@@ -200,7 +201,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 <tr>
 <td align="center"><strong>日経電子版</strong><br><img src="design-md/nikkei/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOSH</strong><br><img src="design-md/mosh/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>Shiseido</strong><br><img src="design-md/shiseido/preview-screenshot.png" width="120"></td>
 <td></td>
 <td></td>
 <td></td>
