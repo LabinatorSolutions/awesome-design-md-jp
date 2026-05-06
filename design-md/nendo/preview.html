@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: nendo（ネンド）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --text-primary: #212529;
+    --text-caption: #5a5a5a;
+    --text-charcoal: #5a5757;
+    --text-quaternary: #222222;
+    --form-text: #495057;
+    --border-form: #ced4da;
+    --surface-pill: #f2f2f7;
+    --white: #ffffff;
+    --overlay-light: rgba(255, 255, 255, 0.2);
+    --overlay-mid: rgba(255, 255, 255, 0.5);
+
+    /* === Bootstrap 4 system colors（参考） === */
+    --bs-primary: #007bff;
+    --bs-danger: #dc3545;
+    --bs-warning: #ffc107;
+    --bs-success: #28a745;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 0 0 1px rgba(0, 0, 0, 0.04);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+    /* === Fonts: 実測準拠 === */
+    --font-nav: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-jp: -apple-system, YuGothic, "Yu Gothic Medium", "Yu Gothic", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    --font-system: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+
+    /* === Radius === */
+    --radius-square: 0px;
+    --radius-form: 4px;
+    --radius-pill: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-system);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    background: var(--white);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .nav-brand {
+    font-family: var(--font-nav);
+    font-size: 24px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; gap: 8px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-nav);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    color: var(--text-caption); text-decoration: none;
+    padding: 8px 18px;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-charcoal); }
+  .nav-store {
+    background: var(--surface-pill) !important;
+    border-radius: var(--radius-pill);
+    padding: 8px 18px 8px 34px !important;
+    position: relative;
+  }
+  .nav-store::before {
+    content: "🛍";
+    position: absolute;
+    left: 14px;
+    font-size: 12px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .hero-image {
+    height: 480px;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 50%, #d0d0d0 100%);
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .hero-image::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 60%; height: 60%;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(180, 180, 200, 0.6) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(220, 200, 180, 0.5) 0%, transparent 50%);
+    border-radius: 50%;
+  }
+  .hero-indicators {
+    display: flex; gap: 8px; justify-content: center;
+    margin-top: 16px;
+  }
+  .indicator {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .indicator.active { background: var(--text-charcoal); }
+
+  /* SECTION */
+  .section {
+    padding: 64px 32px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .section h2 {
+    font-family: var(--font-nav);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    color: var(--text-caption);
+    margin-bottom: 24px;
+    text-transform: lowercase;
+  }
+  .section-display {
+    font-family: var(--font-nav);
+    font-size: 32px; font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .section p {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    border-radius: var(--radius-square);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 16px; }
+  .swatch-name {
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 12px;
+    color: var(--text-caption);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .type-label {
+    flex: 0 0 240px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-caption);
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+  .type-section-h { font-family: var(--font-nav); font-size: 14px; font-weight: 400; line-height: 1.2; letter-spacing: 1px; color: var(--text-caption); }
+  .type-project-title { font-family: var(--font-jp); font-size: 24px; font-weight: 700; line-height: 1.5; color: var(--text-charcoal); }
+  .type-project-sub { font-family: var(--font-jp); font-size: 17.6px; font-weight: 400; line-height: 1.5; color: var(--text-charcoal); }
+  .type-body { font-family: var(--font-jp); font-size: 16px; font-weight: 400; line-height: 1.5; }
+  .type-nav { font-family: var(--font-nav); font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: 1px; color: var(--text-caption); }
+  .type-sub-date { font-family: var(--font-jp); font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--text-caption); }
+  .type-footer-cap { font-family: var(--font-jp); font-size: 10px; font-weight: 400; line-height: 1.5; color: var(--text-caption); }
+
+  /* PROJECT GRID */
+  .project-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 32px 24px;
+  }
+  .project {
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .project:hover { opacity: 0.8; }
+  .project-image {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #f0f0f0 0%, #d8d8d8 100%);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-image.tone-warm { background: linear-gradient(135deg, #fce8d4 0%, #d8b48a 100%); }
+  .project-image.tone-cool { background: linear-gradient(135deg, #e0eaf0 0%, #88a8c0 100%); }
+  .project-image.tone-charcoal {
+    background:
+      linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%),
+      radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  }
+  .project-image.tone-pink { background: linear-gradient(135deg, #f5c8d8 0%, #d88a9e 100%); }
+  .project-image.tone-cream { background: linear-gradient(135deg, #fff5e0 0%, #e0c897 100%); }
+  .project-image.tone-mint { background: linear-gradient(135deg, #d4ece4 0%, #88baa9 100%); }
+  .project-title {
+    font-family: var(--font-jp);
+    font-size: 24px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--text-charcoal);
+    margin-bottom: 4px;
+  }
+  .project-subtitle {
+    font-family: var(--font-jp);
+    font-size: 17.6px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-charcoal);
+    margin-bottom: 8px;
+  }
+  .project-client {
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-caption);
+  }
+
+  /* CLIENTS */
+  .clients-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 24px 0;
+  }
+  .client {
+    aspect-ratio: 1;
+    background: var(--white);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-nav);
+    font-size: 13px;
+    color: var(--text-caption);
+    letter-spacing: 0.5px;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--border-form);
+    border-radius: var(--radius-form);
+    padding: 6px 12px;
+    font-family: var(--font-jp);
+    font-size: 16px;
+    color: var(--form-text);
+    line-height: 1.5;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--text-charcoal);
+    box-shadow: 0 0 0 2px rgba(90, 87, 87, 0.1);
+  }
+  .form .input-error {
+    border-color: var(--bs-danger);
+  }
+  .form .error-text {
+    font-family: var(--font-jp);
+    font-size: 12px;
+    color: var(--bs-danger);
+    margin-top: 4px;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .elevation-card {
+    background: var(--white);
+    border-radius: var(--radius-square);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+  }
+  .elevation-0 { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06); }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+  .elevation-2 { box-shadow: var(--elevation-2); }
+
+  /* LAYOUT GUIDE */
+  .layout-grid {
+    background: var(--white);
+    border: 1px solid var(--border-form);
+    border-radius: var(--radius-square);
+    padding: 24px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;
+  }
+  .layout-grid > div {
+    background: var(--text-charcoal);
+    opacity: 0.2;
+    height: 40px;
+    border-radius: var(--radius-square);
+  }
+
+  /* STORE PILL DEMO */
+  .pill-demo {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--surface-pill);
+    color: var(--text-caption);
+    padding: 8px 18px 8px 34px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-nav);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 1px;
+    text-decoration: none; cursor: pointer;
+    position: relative;
+  }
+  .pill-demo::before {
+    content: "🛍";
+    position: absolute;
+    left: 14px;
+    font-size: 12px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--white);
+    padding: 64px 32px 32px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 64px;
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; text-align: center; }
+  .footer h4 {
+    font-family: var(--font-nav);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    color: var(--text-caption);
+    margin-bottom: 8px;
+    text-transform: lowercase;
+  }
+  .footer p {
+    font-family: var(--font-jp);
+    font-size: 10px;
+    color: var(--text-caption);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">nendo</a>
+  <ul class="nav-links">
+    <li><a href="#works">works</a></li>
+    <li><a href="#typography">about</a></li>
+    <li><a href="#colors">contact</a></li>
+    <li><a href="#" class="nav-store">online store</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-image"></div>
+  <div class="hero-indicators">
+    <div class="indicator active"></div>
+    <div class="indicator"></div>
+    <div class="indicator"></div>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>colors</h2>
+  <p style="margin-bottom: 24px; color: var(--text-caption); max-width: 720px;">ブランド固有色は持たず、無彩色のみで UI を構成。色は作品写真の中だけに存在する設計方針。Bootstrap 4 系のシステム色も内部に残るが、UI 表面ではほぼ使われない。</p>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></div><div class="swatch-meta"><div class="swatch-name">White</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-primary);"></div><div class="swatch-meta"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#212529</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-caption);"></div><div class="swatch-meta"><div class="swatch-name">Text Caption</div><div class="swatch-hex">#5a5a5a</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-charcoal);"></div><div class="swatch-meta"><div class="swatch-name">Text Charcoal</div><div class="swatch-hex">#5a5757</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-pill);"></div><div class="swatch-meta"><div class="swatch-name">Surface Pill</div><div class="swatch-hex">#f2f2f7</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--border-form);"></div><div class="swatch-meta"><div class="swatch-name">Border Form</div><div class="swatch-hex">#ced4da</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="typography">
+  <h2>typography</h2>
+  <p style="margin-bottom: 32px; color: var(--text-caption); max-width: 720px;">Helvetica Neue（ナビ・ラベル）+ 游ゴシック（和文・キャプション）の役割分担。ナビには letter-spacing 1px の小キャップス調が共通言語。line-height は 1.5 で統一。</p>
+  <div class="type-row"><div class="type-label">Section H / 14px / Helvetica / 1.2 / 1px</div><div class="type-sample"><div class="type-section-h">clients</div></div></div>
+  <div class="type-row"><div class="type-label">Project Title / 24px / Yu Gothic 700 / 1.5</div><div class="type-sample"><div class="type-project-title">HRMT</div></div></div>
+  <div class="type-row"><div class="type-label">Project Sub / 17.6px / Yu Gothic / 1.5</div><div class="type-sample"><div class="type-project-sub">多様な料理ジャンルと人材が相乗効果を生むリブランディングプロジェクト</div></div></div>
+  <div class="type-row"><div class="type-label">Body / 16px / Yu Gothic / 1.5</div><div class="type-sample"><div class="type-body">nendo は、デザインオフィスとして、プロダクト・建築・インテリア・グラフィック・パッケージなど、領域を横断するデザインのプラクティスを行っています。日々の暮らしに小さな "！" の気付きをもたらすことを大切にしています。</div></div></div>
+  <div class="type-row"><div class="type-label">Nav / 14px / Helvetica / 1.5 / 1px</div><div class="type-sample"><div class="type-nav">works · about · contact · online store</div></div></div>
+  <div class="type-row"><div class="type-label">Sub Date / 12px / Yu Gothic / 1.5</div><div class="type-sample"><div class="type-sub-date">SNCF Voyageurs / 2025</div></div></div>
+  <div class="type-row"><div class="type-label">Footer / 10px / Yu Gothic / 1.5</div><div class="type-sample"><div class="type-footer-cap">online store</div></div></div>
+</section>
+
+<section class="section" id="works">
+  <h2>works</h2>
+  <div class="project-grid">
+    <div class="project">
+      <div class="project-image tone-warm"></div>
+      <div class="project-title">HRMT</div>
+      <div class="project-subtitle">多様な料理ジャンルと人材が相乗効果を生むリブランディングプロジェクト</div>
+      <div class="project-client">Hermitage Group / 2025</div>
+    </div>
+    <div class="project">
+      <div class="project-image tone-cool"></div>
+      <div class="project-title">MAQL</div>
+      <div class="project-subtitle">裏と表が曖昧なハンドバッグ</div>
+      <div class="project-client">Maqual / 2025</div>
+    </div>
+    <div class="project">
+      <div class="project-image tone-charcoal"></div>
+      <div class="project-title">TGV</div>
+      <div class="project-subtitle">滑らかに流れる川のような新型高速列車</div>
+      <div class="project-client">SNCF Voyageurs / 2025</div>
+    </div>
+    <div class="project">
+      <div class="project-image tone-pink"></div>
+      <div class="project-title">SAKURA</div>
+      <div class="project-subtitle">桜の花びらをモチーフにしたコスメティックパッケージ</div>
+      <div class="project-client">Cosmetic Brand / 2024</div>
+    </div>
+    <div class="project">
+      <div class="project-image tone-cream"></div>
+      <div class="project-title">CUTLERY</div>
+      <div class="project-subtitle">手の延長として機能する一体成型のステンレスカトラリー</div>
+      <div class="project-client">Tableware Co. / 2024</div>
+    </div>
+    <div class="project">
+      <div class="project-image tone-mint"></div>
+      <div class="project-title">CHAIR</div>
+      <div class="project-subtitle">座面のたわみが体をやわらかく受け止める椅子</div>
+      <div class="project-client">Furniture Brand / 2024</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>clients</h2>
+  <div class="clients-grid">
+    <div class="client">SNCF</div>
+    <div class="client">CASSINA</div>
+    <div class="client">SHIKI</div>
+    <div class="client">ISSEY</div>
+    <div class="client">MUJI</div>
+    <div class="client">DAIKIN</div>
+    <div class="client">PANASONIC</div>
+    <div class="client">+ more</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>buttons</h2>
+  <p style="color: var(--text-caption); max-width: 720px; margin-bottom: 24px;">UI 上の唯一のカラーピル要素は "online store"。それ以外はテキストリンクのみ。</p>
+  <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+    <a href="#" class="pill-demo">online store</a>
+    <a href="#" class="type-nav" style="text-decoration: none;">works</a>
+    <a href="#" class="type-nav" style="text-decoration: none;">about</a>
+    <a href="#" class="type-nav" style="text-decoration: none;">contact</a>
+  </div>
+</section>
+
+<section class="section" id="forms">
+  <h2>forms</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="company">会社名（エラー）</label>
+      <input id="company" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">会社名を入力してください</div>
+    </div>
+    <div>
+      <label for="message">メッセージ</label>
+      <textarea id="message" rows="3" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>elevation</h2>
+  <p style="color: var(--text-caption); margin-bottom: 24px; max-width: 720px;">影をほぼ使わない設計。写真の存在感が主役で、UI 側はギャラリー壁のように透明。</p>
+  <div class="elevation-row">
+    <div class="elevation-card elevation-0">Level 0 — Border</div>
+    <div class="elevation-card elevation-1">Level 1 — Hover</div>
+    <div class="elevation-card elevation-2">Level 2 — Modal</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>layout</h2>
+  <p style="color: var(--text-caption); margin-bottom: 24px; max-width: 720px;">4 カラムグリッドが推奨（works ページのプロジェクトサムネイル）。Gutter 16〜24px。Spacing は 8px ベース。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>about nendo</h4>
+    <p>このプレビューは nendo のデザインを参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。Helvetica Neue はシステム、和文は游ゴシック / Noto Sans JP（Google Fonts）で描画しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>

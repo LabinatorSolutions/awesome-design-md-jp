@@ -71,11 +71,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Wantedly](https://www.wantedly.com/) | Recruiting / Business SNS | [DESIGN.md](design-md/wantedly/DESIGN.md) | [preview.html](design-md/wantedly/preview.html) |
 | [Snow Peak](https://www.snowpeak.co.jp/) | Outdoor / Lifestyle | [DESIGN.md](design-md/snowpeak/DESIGN.md) | [preview.html](design-md/snowpeak/preview.html) |
 | [JINS](https://www.jins.com/jp/) | Eyewear / D2C | [DESIGN.md](design-md/jins/DESIGN.md) | [preview.html](design-md/jins/preview.html) |
+| [Yamaha](https://www.yamaha.com/ja/) | Corporate / Manufacturing | [DESIGN.md](design-md/yamaha/DESIGN.md) | [preview.html](design-md/yamaha/preview.html) |
+| [BAKE INC.](https://bake-jp.com/) | Confectionary / Brand | [DESIGN.md](design-md/bake/DESIGN.md) | [preview.html](design-md/bake/preview.html) |
+| [nendo](https://www.nendo.jp/jp/) | Design Studio | [DESIGN.md](design-md/nendo/DESIGN.md) | [preview.html](design-md/nendo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (38 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (41 sites)</a>
 </p>
 
 <table>
@@ -130,9 +133,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>Snow Peak</strong><br><img src="design-md/snowpeak/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>JINS</strong><br><img src="design-md/jins/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Yamaha</strong><br><img src="design-md/yamaha/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BAKE</strong><br><img src="design-md/bake/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>nendo</strong><br><img src="design-md/nendo/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -167,7 +170,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (38 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (41 sites)</a>
 </p>
 
 <table>
@@ -222,9 +225,9 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 <tr>
 <td align="center"><strong>Snow Peak</strong><br><img src="design-md/snowpeak/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>JINS</strong><br><img src="design-md/jins/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>ヤマハ</strong><br><img src="design-md/yamaha/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BAKE</strong><br><img src="design-md/bake/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>nendo</strong><br><img src="design-md/nendo/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
