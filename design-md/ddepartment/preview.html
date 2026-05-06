@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: D&amp;DEPARTMENT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Serif+JP:wght@200;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --d-terracotta: #993c2e;
+    --d-indigo: #2e5799;
+    --d-deep-red: #800000;
+
+    --bg-white: #ffffff;
+    --surface-cream: #faf8f8;
+    --surface-veil-cream: rgba(244, 242, 239, 0.8);
+    --surface-veil-white: rgba(255, 255, 255, 0.8);
+    --surface-overlay: rgba(0, 0, 0, 0.6);
+
+    --used-gray: #808080;
+    --text-primary: #000000;
+    --text-inverse: #ffffff;
+    --text-sub: #808080;
+    --border-pale: #e5e5e5;
+
+    /* === Recommended semantic === */
+    --danger: #993c2e;
+    --warning: #993c2e;
+    --success: #2e5799;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    /* === Fonts ===
+       D&DEPARTMENT は ヒラギノ UD（ユニバーサルデザイン）書体を採用
+       Adobe Fonts の Amiri / dMotels はライセンス制約があるため Google Fonts の Amiri と
+       Noto Serif JP（W2 = 200 のような細さ）で代替。 */
+    --font-base: "ヒラギノUD角ゴ W5 JIS2004", "ヒラギノUD角ゴ ProN", "ヒラギノUD角ゴ StdN", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+    --font-display: Amiri, "Noto Serif JP", "ヒラギノ明朝 W2 JIS2004", "ヒラギノ明朝 ProN", "ヒラギノ明朝 StdN", serif;
+    --font-mini: Amiri, "Noto Serif JP", "ヒラギノUD明朝 W4 JIS2004", "ヒラギノUD明朝 ProN", serif;
+
+    --radius-2: 2px;
+    --radius-square: 0px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: normal;
+    font-feature-settings: "halt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* TOP HEADER (赤地ロゴ風) */
+  .top-header {
+    background: var(--d-terracotta);
+    color: var(--text-inverse);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .top-header h1 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-inverse);
+    line-height: 16px;
+    letter-spacing: 0.04em;
+  }
+  .top-header .nav-mini {
+    display: flex; gap: 16px;
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+  }
+  .top-header .nav-mini a {
+    color: var(--text-inverse); text-decoration: none;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    padding: 16px 24px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 1px solid var(--border-pale);
+  }
+  .nav-brand {
+    display: flex; flex-direction: column;
+  }
+  .nav-brand .ja {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+  }
+  .nav-brand .en {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    color: var(--d-terracotta);
+    letter-spacing: 0.16em;
+    line-height: 1.0;
+    margin-top: 6px;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: flex-end; }
+  .nav-links li { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .nav-links .ja {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    line-height: 1.0;
+  }
+  .nav-links .en {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
+    color: var(--text-sub);
+    line-height: 1.0;
+    letter-spacing: 0.1em;
+  }
+  .nav-links li.active .ja { color: var(--d-terracotta); }
+  .nav-links li.active .en { color: var(--d-terracotta); }
+
+  /* HERO */
+  .hero {
+    background: var(--surface-cream);
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 400;
+    line-height: 45px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0;
+  }
+  .hero .lead {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 24px;
+    color: var(--text-primary);
+    max-width: 680px; margin: 0 auto;
+    font-feature-settings: "halt" 1;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 56px 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section--cream {
+    background: var(--surface-cream);
+    max-width: none; padding: 56px 0;
+  }
+  .section--cream .section-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  }
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 400;
+    line-height: 45px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0;
+  }
+  .section h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 24px;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    font-feature-settings: "halt" 1;
+  }
+  .section .helper {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    color: var(--d-terracotta);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.0;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .swatch {
+    background: var(--bg-white);
+    border: 1px solid var(--border-pale);
+    border-radius: var(--radius-2);
+  }
+  .swatch-color { height: 96px; border-radius: var(--radius-2) var(--radius-2) 0 0; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-name {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-feature-settings: "halt" 1;
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-sub);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-pale);
+  }
+  .type-label {
+    flex: 0 0 280px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+  .type-display-mincho { font-family: var(--font-display); font-size: 36px; font-weight: 400; line-height: 45px; }
+  .type-h1 { font-family: var(--font-base); font-size: 17px; font-weight: 700; line-height: 25.5px; font-feature-settings: "halt" 1; }
+  .type-heading { font-family: var(--font-base); font-size: 16px; font-weight: 700; line-height: 24px; font-feature-settings: "halt" 1; }
+  .type-sub { font-family: var(--font-base); font-size: 14px; font-weight: 700; line-height: 21px; font-feature-settings: "halt" 1; }
+  .type-body { font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 24px; font-feature-settings: "halt" 1; }
+  .type-caption { font-family: var(--font-base); font-size: 14px; font-weight: 400; line-height: 21px; font-feature-settings: "halt" 1; }
+  .type-mini-mincho { font-family: var(--font-mini); font-size: 10px; font-weight: 700; line-height: 1.0; color: var(--d-terracotta); letter-spacing: 0.08em; }
+  .type-mini-num { font-family: var(--font-display); font-size: 10px; font-weight: 700; line-height: 1.0; color: var(--text-sub); letter-spacing: 0.04em; }
+
+  /* BUTTONS */
+  .btn-card {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-cream); color: var(--text-primary);
+    padding: 16px 24px;
+    border: 2px solid var(--bg-white);
+    border-radius: var(--radius-2);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "halt" 1;
+    box-shadow: 0 0 0 1px var(--border-pale);
+  }
+
+  .btn-veil {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-veil-white); color: var(--text-primary);
+    padding: 16px 24px;
+    border: 2px solid var(--bg-white);
+    border-radius: var(--radius-2);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "halt" 1;
+    backdrop-filter: blur(2px);
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--d-terracotta); color: var(--text-inverse);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-2);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 24px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "halt" 1;
+  }
+  .btn-primary:hover { background: var(--d-deep-red); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg-white); color: var(--text-primary);
+    padding: 12px 24px;
+    border: 1px solid var(--text-primary);
+    border-radius: var(--radius-2);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 24px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "halt" 1;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--radius-2);
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 700;
+    line-height: 16px;
+    color: var(--text-inverse);
+    font-feature-settings: "halt" 1;
+  }
+  .tag-red { background: var(--d-terracotta); }
+  .tag-indigo { background: var(--d-indigo); }
+  .tag-used { background: var(--used-gray); }
+  .tag-deep { background: var(--d-deep-red); }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--surface-cream);
+    border: 2px solid var(--bg-white);
+    border-radius: var(--radius-2);
+    padding: 16px;
+    box-shadow: 0 0 0 1px var(--border-pale);
+  }
+  .product-cover {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-white);
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .product-cover-1 { background: linear-gradient(135deg, #c8b89c 0%, #6b5d4f 100%); }
+  .product-cover-2 { background: linear-gradient(135deg, #d8d2c8 0%, #8a7a6c 100%); }
+  .product-cover-3 { background: linear-gradient(135deg, #b8a890 0%, #5a4d3f 100%); }
+  .product-cover-4 { background: linear-gradient(135deg, #c8d4cc 0%, #4a5e54 100%); }
+  .product-tag {
+    position: absolute; top: 8px; left: 8px;
+  }
+  .product-region {
+    font-family: var(--font-mini);
+    font-size: 12px; font-weight: 700;
+    color: var(--d-terracotta);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    line-height: 1.0;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 4px;
+    font-feature-settings: "halt" 1;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-sub);
+    line-height: 1.5;
+    font-feature-settings: "halt" 1;
+  }
+
+  /* EDITORIAL JOURNAL */
+  .journal {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .journal-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-pale);
+    padding: 32px;
+    border-radius: var(--radius-2);
+  }
+  .journal-card .meta {
+    display: flex; gap: 12px; align-items: center;
+    margin-bottom: 16px;
+  }
+  .journal-card h3 {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .journal-card p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 24px;
+    color: var(--text-primary);
+    font-feature-settings: "halt" 1;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-feature-settings: "halt" 1;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--bg-white);
+    border: 1px solid var(--border-pale);
+    border-radius: var(--radius-2);
+    padding: 12px 16px;
+    font-family: var(--font-base);
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 24px;
+    font-feature-settings: "halt" 1;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--d-terracotta);
+    background: var(--bg-white);
+  }
+  .form .input-error { border-color: var(--danger); }
+  .form .error-text {
+    font-family: var(--font-base);
+    font-size: 13px;
+    color: var(--danger);
+    margin-top: 4px;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .elevation-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-pale);
+    border-radius: var(--radius-2);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-feature-settings: "halt" 1;
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+
+  /* LAYOUT GRID */
+  .layout-grid {
+    background: var(--surface-cream);
+    padding: 16px;
+    border-radius: var(--radius-2);
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+  }
+  .layout-grid > div {
+    background: var(--d-terracotta);
+    opacity: 0.5;
+    height: 32px;
+    border-radius: var(--radius-2);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--text-primary);
+    padding: 64px 24px 40px;
+    color: var(--text-inverse);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer h4 {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 700;
+    color: var(--text-inverse);
+    margin-bottom: 24px;
+    letter-spacing: 0.08em;
+    line-height: 1.0;
+  }
+  .footer p {
+    font-family: var(--font-base);
+    font-size: 14px;
+    color: var(--text-inverse); opacity: 0.7;
+    line-height: 1.6;
+    margin-top: 16px;
+    font-feature-settings: "halt" 1;
+  }
+</style>
+</head>
+<body>
+
+<header class="top-header">
+  <h1>D&amp;DEPARTMENT</h1>
+  <nav class="nav-mini">
+    <a href="#">マイページ</a>
+    <a href="#">カート（0）</a>
+    <a href="#">JP / EN</a>
+  </nav>
+</header>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="ja">D&amp;DEPARTMENT PROJECT</span>
+    <span class="en">LONG LIFE DESIGN</span>
+  </div>
+  <ul class="nav-links">
+    <li class="active">
+      <span class="ja">特集</span>
+      <span class="en">FEATURE</span>
+    </li>
+    <li>
+      <span class="ja">商品</span>
+      <span class="en">SHOP</span>
+    </li>
+    <li>
+      <span class="ja">ストア</span>
+      <span class="en">STORES</span>
+    </li>
+    <li>
+      <span class="ja">読みもの</span>
+      <span class="en">JOURNAL</span>
+    </li>
+    <li>
+      <span class="ja">食堂</span>
+      <span class="en">DINING</span>
+    </li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>LONG LIFE DESIGN</h1>
+    <p class="lead">ナガオカケンメイが 2000 年に立ち上げた D&amp;DEPARTMENT は、「長く愛され続ける生活の道具」を扱うストア／観光ブランドです。47 都道府県のものづくり、土地、文化を軸に、ロングライフな視点で日本の暮らしを編集しています。</p>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>COLORS</h2>
+  <div class="helper">BRAND ACCENT — 伝統色のニュアンス</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--d-terracotta);"></div><div class="swatch-meta"><div class="swatch-name">D Terracotta (土の赤)</div><div class="swatch-hex">#993c2e</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--d-indigo);"></div><div class="swatch-meta"><div class="swatch-name">D Indigo (藍)</div><div class="swatch-hex">#2e5799</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--d-deep-red);"></div><div class="swatch-meta"><div class="swatch-name">D Deep Red</div><div class="swatch-hex">#800000</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--used-gray);"></div><div class="swatch-meta"><div class="swatch-name">USED Tag</div><div class="swatch-hex">#808080</div></div></div>
+  </div>
+  <div class="helper">SURFACE — 生成り・和紙のような暖色寄り</div>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-cream);"></div><div class="swatch-meta"><div class="swatch-name">Surface Cream (最頻出 91 回)</div><div class="swatch-hex">#faf8f8</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--bg-white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></div><div class="swatch-meta"><div class="swatch-name">Background</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-primary);"></div><div class="swatch-meta"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#000000</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-sub);"></div><div class="swatch-meta"><div class="swatch-name">Text Sub</div><div class="swatch-hex">#808080</div></div></div>
+  </div>
+</section>
+
+<section class="section--cream" id="typography">
+  <div class="section-inner">
+    <h2>TYPOGRAPHY</h2>
+    <p style="font-family: var(--font-base); font-size: 16px; line-height: 24px; color: var(--text-primary); margin-bottom: 32px; max-width: 720px; font-feature-settings: 'halt' 1;">本文は <strong>ヒラギノ UD 角ゴ W5（ユニバーサルデザイン書体）</strong>。誰にでも読みやすい本を作る出版的な姿勢の表れ。大見出しは <strong>Amiri（Latin Serif）+ ヒラギノ明朝 W2</strong> の混植で、洋書のような格調を出す。<strong>font-feature-settings: "halt" 1</strong> を本文と UI に適用し、半角 Latin（数字・記号）を詰めて和欧混植を整える。</p>
+    <div class="type-row"><div class="type-label">Display Mincho / Amiri+ヒラギノ明朝 / 36 / 400</div><div class="type-sample"><div class="type-display-mincho">LONG LIFE DESIGN</div></div></div>
+    <div class="type-row"><div class="type-label">H1 / ヒラギノUD角ゴ / 17 / 700 / 1.5</div><div class="type-sample"><div class="type-h1">d design travel — 47 都道府県のロングライフを訪ねる</div></div></div>
+    <div class="type-row"><div class="type-label">Heading / ヒラギノUD角ゴ / 16 / 700 / 1.5</div><div class="type-sample"><div class="type-heading">秋田・大館の曲げわっぱ</div></div></div>
+    <div class="type-row"><div class="type-label">Sub / ヒラギノUD角ゴ / 14 / 700 / 1.5</div><div class="type-sample"><div class="type-sub">2025 年秋の特集——民藝と道具</div></div></div>
+    <div class="type-row"><div class="type-label">Body / ヒラギノUD角ゴ / 16 / 400 / 1.5</div><div class="type-sample"><div class="type-body">D&amp;DEPARTMENT は「LONG LIFE DESIGN」をコンセプトに、47 都道府県の地場産業と暮らしの道具を扱っています。土地のものづくりを通じて、その地域の文化を編集していくのが私たちの仕事です。</div></div></div>
+    <div class="type-row"><div class="type-label">Caption / ヒラギノUD角ゴ / 14 / 400</div><div class="type-sample"><div class="type-caption">商品ページにて、産地と作り手の物語をご覧いただけます。</div></div></div>
+    <div class="type-row"><div class="type-label">Mini Mincho / Amiri / 10 / 700 / red</div><div class="type-sample"><div class="type-mini-mincho">AKITA / OODATE</div></div></div>
+    <div class="type-row"><div class="type-label">Mini Num / Amiri / 10 / 700 / gray</div><div class="type-sample"><div class="type-mini-num">No. 047 — 2025.10</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="article">
+  <div class="helper">JOURNAL</div>
+  <h2>読みもの</h2>
+  <div class="journal">
+    <article class="journal-card">
+      <div class="meta">
+        <span class="tag tag-red">開催中</span>
+        <span class="type-mini-num">No. 047 — 2025.10</span>
+      </div>
+      <h3>d design travel — 秋田を訪ねる</h3>
+      <p>大館の曲げわっぱ、横手のかまくら、男鹿のなまはげ。秋田の地場産業と祭りの記憶を、ロングライフな視点で編集する旅の記録。47 都道府県のものづくりを訪ね歩く、d design travel シリーズの最新号です。</p>
+    </article>
+    <article class="journal-card">
+      <div class="meta">
+        <span class="tag tag-indigo">受付中</span>
+        <span class="type-mini-num">EVENT — 2025.11.15</span>
+      </div>
+      <h3>NIPPON VISION — 民藝と道具のあいだ</h3>
+      <p>ナガオカケンメイが提唱する「ロングライフデザイン」とは何か。民藝運動の系譜から現代の生活道具までを横断する展示を、d47 MUSEUM にて開催。土地と手仕事と暮らしを、写真と現物で読み解きます。</p>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>BUTTONS</h2>
+  <div class="helper">CARD BUTTON (生成り背景・白枠)</div>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-card">商品を見る</a>
+    <a href="#" class="btn-card">特集を読む</a>
+  </div>
+  <div class="helper">PRIMARY (土の赤) / SECONDARY (アウトライン)</div>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-primary">カートに入れる</a>
+    <a href="#" class="btn-secondary">お気に入り登録</a>
+  </div>
+  <div class="helper">VEIL (画像オーバーレイ)</div>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; padding: 32px; background: linear-gradient(135deg, #c8b89c 0%, #6b5d4f 100%); border-radius: 2px;">
+    <a href="#" class="btn-veil">自由自在を楽しむ カスタムスチールシェルフ</a>
+  </div>
+  <div class="helper">STATUS TAGS</div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;">
+    <span class="tag tag-red">開催中</span>
+    <span class="tag tag-indigo">受付中</span>
+    <span class="tag tag-used">USED</span>
+    <span class="tag tag-deep">完売</span>
+  </div>
+
+  <h2 id="cards" style="margin-top: 56px;">PRODUCTS</h2>
+  <div class="helper">PRODUCT CARDS — 47 都道府県のものづくり</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-cover product-cover-1">
+        <span class="tag tag-red product-tag">開催中</span>
+      </div>
+      <div class="product-region">AKITA / OODATE</div>
+      <div class="product-name">大館の曲げわっぱ弁当箱</div>
+      <div class="product-price">¥8,800</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover product-cover-2">
+        <span class="tag tag-used product-tag">USED</span>
+      </div>
+      <div class="product-region">OKINAWA / YOMITAN</div>
+      <div class="product-name">読谷山焼の小皿（ヴィンテージ）</div>
+      <div class="product-price">¥3,300</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover product-cover-3"></div>
+      <div class="product-region">FUKUI / SABAE</div>
+      <div class="product-name">越前漆器の片口</div>
+      <div class="product-price">¥6,600</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover product-cover-4">
+        <span class="tag tag-indigo product-tag">受付中</span>
+      </div>
+      <div class="product-region">TOKUSHIMA / AIZUMI</div>
+      <div class="product-name">藍染めの手ぬぐい</div>
+      <div class="product-price">¥2,200</div>
+    </div>
+  </div>
+
+  <h2 id="forms" style="margin-top: 56px;">FORMS</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="zip">郵便番号（エラー）</label>
+      <input id="zip" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">郵便番号を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="4" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>ELEVATION</h2>
+  <p style="font-family: var(--font-base); font-size: 16px; line-height: 24px; color: var(--text-primary); margin-bottom: 24px; max-width: 720px; font-feature-settings: 'halt' 1;">D&amp;DEPARTMENT はシャドウをほぼ使わない。階層は面色（#fff / #faf8f8 / #993c2e / #2e5799 / #800000）の差と、カードの 2px 白枠で表現する。</p>
+  <div class="elevation-row">
+    <div class="elevation-card">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — Sticky</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>LAYOUT</h2>
+  <p style="font-family: var(--font-base); font-size: 16px; line-height: 24px; color: var(--text-primary); margin-bottom: 24px; max-width: 720px; font-feature-settings: 'halt' 1;">12 カラムのエディトリアル × カタロググリッド。max-width 1200px、ガッターは 16–24px。商品 + 産地 + ストーリーを 1 ページに同居させる、d design travel 由来のレイアウト感。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>D&amp;DEPARTMENT</h4>
+    <p>このプレビューは D&amp;DEPARTMENT 公式オンラインショップの UI を参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。本文は ヒラギノ UD 角ゴ（OS フォント）、大見出しは Amiri（Google Fonts）と Noto Serif JP の混植で代替しています（実サイトは Amiri + ヒラギノ明朝 W2 + dMotels）。</p>
+  </div>
+</footer>
+
+</body>
+</html>

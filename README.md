@@ -77,11 +77,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [BEAMS](https://www.beams.co.jp/) | Select Shop / Apparel | [DESIGN.md](design-md/beams/DESIGN.md) | [preview.html](design-md/beams/preview.html) |
 | [Sanrio](https://www.sanrio.co.jp/) | Character / Lifestyle | [DESIGN.md](design-md/sanrio/DESIGN.md) | [preview.html](design-md/sanrio/preview.html) |
 | [Yoshida & Co. (PORTER)](https://www.yoshidakaban.com/) | Bag Manufacturer / Heritage Brand | [DESIGN.md](design-md/yoshidakaban/DESIGN.md) | [preview.html](design-md/yoshidakaban/preview.html) |
+| [Nakagawa Masashichi Shoten](https://www.nakagawa-masashichi.jp/) | Heritage Craft / Lifestyle | [DESIGN.md](design-md/nakagawa/DESIGN.md) | [preview.html](design-md/nakagawa/preview.html) |
+| [POLA](https://www.pola.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/pola/DESIGN.md) | [preview.html](design-md/pola/preview.html) |
+| [D&DEPARTMENT](https://www.d-department.com/) | Long Life Design / Curated Retail | [DESIGN.md](design-md/ddepartment/DESIGN.md) | [preview.html](design-md/ddepartment/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (44 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (47 sites)</a>
 </p>
 
 <table>
@@ -144,9 +147,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>Sanrio</strong><br><img src="design-md/sanrio/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>吉田カバン</strong><br><img src="design-md/yoshidakaban/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>中川政七商店</strong><br><img src="design-md/nakagawa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>POLA</strong><br><img src="design-md/pola/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>D&amp;DEPARTMENT</strong><br><img src="design-md/ddepartment/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -181,7 +184,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (44 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (47 sites)</a>
 </p>
 
 <table>
@@ -244,9 +247,9 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 <tr>
 <td align="center"><strong>サンリオ</strong><br><img src="design-md/sanrio/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>吉田カバン</strong><br><img src="design-md/yoshidakaban/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>中川政七商店</strong><br><img src="design-md/nakagawa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>POLA</strong><br><img src="design-md/pola/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>D&amp;DEPARTMENT</strong><br><img src="design-md/ddepartment/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

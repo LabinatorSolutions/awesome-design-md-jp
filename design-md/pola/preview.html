@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: POLA</title>
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --pola-black: #000000;
+    --pola-white: #ffffff;
+    --surface-gray: #f5f5f5;
+    --surface-mid: #d8d8d8;
+    --surface-cookie: #f4f4f4;
+    --surface-cookie-tbl: #f8f8f8;
+    --border-pale: #e5e5e5;
+
+    /* === Recommended semantic === */
+    --danger: #b00020;
+    --warning: #d97a00;
+    --success: #2e7d4f;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    /* === Fonts ===
+       游ゴシック体 + ヒラギノ Pro (ProN ではなく Pro) を中心とした 4 段フォールバック
+       メイリオは含めない */
+    --font-base: 游ゴシック体, YuGothic, 游ゴシック, "Yu Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro W3", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", sans-serif;
+
+    /* === Header === */
+    --header-h: 60px;
+
+    --radius-square: 0px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--pola-white);
+    color: var(--pola-black);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: normal;
+    font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--pola-white);
+    color: var(--pola-black);
+    height: var(--header-h);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border-pale);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 400;
+    color: var(--pola-black); text-decoration: none;
+    letter-spacing: 0.16em;
+    line-height: 1.0;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+    color: var(--pola-black); text-decoration: none;
+    line-height: 20px;
+  }
+
+  /* SECONDARY NAV (shop nav) */
+  .nav-secondary {
+    background: var(--pola-white);
+    border-bottom: 1px solid var(--border-pale);
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 32px;
+  }
+  .nav-secondary a {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 400;
+    color: var(--pola-black); text-decoration: none;
+    line-height: 32px;
+  }
+  .nav-secondary .crumb {
+    font-size: 13px;
+    color: var(--pola-black);
+    line-height: 20px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--pola-white);
+    padding: 96px 24px;
+  }
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 400;
+    line-height: 48px;
+    color: var(--pola-black);
+    margin-bottom: 32px;
+    letter-spacing: 0;
+    font-feature-settings: "palt" 1;
+  }
+  .hero .lead {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 400;
+    line-height: 32px;
+    color: var(--pola-black);
+    max-width: 720px;
+    font-feature-settings: "palt" 1;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 64px 24px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .section--surface {
+    background: var(--surface-gray);
+    max-width: none; padding: 64px 0;
+  }
+  .section--surface .section-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  }
+  .section h2 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 400;
+    line-height: 40px;
+    color: var(--pola-black);
+    margin-bottom: 32px;
+    letter-spacing: 0;
+    font-feature-settings: "palt" 1;
+  }
+  .section h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 20.8px;
+    color: var(--pola-black);
+    margin-bottom: 16px;
+    font-feature-settings: "palt" 1;
+  }
+  .section .helper {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--pola-black);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.0;
+  }
+
+  /* CATEGORY HERO ROW (ローション/ミルク/クリーム) */
+  .cat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 56px 24px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .cat-card {
+    background: var(--surface-gray);
+    aspect-ratio: 4 / 5;
+    display: flex; align-items: flex-end;
+    padding: 32px;
+    border-radius: var(--radius-square);
+  }
+  .cat-card h3 {
+    font-family: var(--font-base);
+    font-size: 21.92px; font-weight: 600;
+    line-height: 26.304px;
+    color: var(--pola-black);
+    font-feature-settings: "palt" 1;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .swatch {
+    background: var(--pola-white);
+    border: 1px solid var(--border-pale);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-name {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--pola-black);
+    line-height: 1.5;
+    font-feature-settings: "palt" 1;
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--pola-black); opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border-pale);
+  }
+  .type-label {
+    flex: 0 0 280px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--pola-black); opacity: 0.6;
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--pola-black); font-feature-settings: "palt" 1; }
+  .type-display { font-family: var(--font-base); font-size: 28px; font-weight: 400; line-height: 48px; }
+  .type-section { font-family: var(--font-base); font-size: 24px; font-weight: 400; line-height: 40px; }
+  .type-sub-section { font-family: var(--font-base); font-size: 21.92px; font-weight: 600; line-height: 26.3px; }
+  .type-card { font-family: var(--font-base); font-size: 16px; font-weight: 700; line-height: 20.8px; }
+  .type-card-sm { font-family: var(--font-base); font-size: 14px; font-weight: 700; line-height: 19.6px; }
+  .type-body { font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 28px; }
+  .type-body-lead { font-family: var(--font-base); font-size: 18px; font-weight: 400; line-height: 32px; }
+  .type-caption { font-family: var(--font-base); font-size: 13px; font-weight: 400; line-height: 20px; }
+
+  /* BUTTONS（すべて radius 0） */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--pola-black); color: var(--pola-white);
+    padding: 16px 40px;
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 28px;
+    text-decoration: none; cursor: pointer; border: 1px solid var(--pola-black);
+    font-feature-settings: "palt" 1;
+    min-width: 200px;
+  }
+  .btn-primary:hover { background: var(--pola-white); color: var(--pola-black); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--pola-black);
+    padding: 16px 40px;
+    border: 1px solid var(--pola-black);
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 28px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "palt" 1;
+    min-width: 200px;
+  }
+  .btn-secondary:hover { background: var(--pola-black); color: var(--pola-white); }
+
+  .btn-list {
+    display: flex; align-items: center; justify-content: space-between;
+    background: transparent; color: var(--pola-black);
+    padding: 24px 30px 24px 0;
+    border: none;
+    border-bottom: 1px solid var(--border-pale);
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 400;
+    line-height: 32px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "palt" 1;
+    width: 100%;
+  }
+  .btn-list::after { content: "→"; font-size: 20px; }
+  .btn-list:hover { color: rgba(0,0,0,0.6); }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 40px;
+  }
+  .product-card {
+    background: transparent;
+    border-radius: var(--radius-square);
+  }
+  .product-cover {
+    aspect-ratio: 1 / 1;
+    background: var(--surface-gray);
+    margin-bottom: 24px;
+  }
+  .product-cover-1 { background: linear-gradient(135deg, #f5f5f5 0%, #d8d8d8 100%); }
+  .product-cover-2 { background: linear-gradient(135deg, #efe6dc 0%, #c8b8a8 100%); }
+  .product-cover-3 { background: linear-gradient(135deg, #f8f0e8 0%, #d8c8b8 100%); }
+  .product-cover-4 { background: linear-gradient(135deg, #ecece8 0%, #b8b8b0 100%); }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--pola-black);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    font-feature-settings: "palt" 1;
+  }
+  .product-tag {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+    color: var(--pola-black);
+    line-height: 20px;
+    margin-bottom: 8px;
+    opacity: 0.6;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    color: var(--pola-black);
+    line-height: 28px;
+    font-feature-settings: "palt" 1;
+  }
+
+  /* EDITORIAL BLOCK */
+  .editorial {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .editorial-image {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, #f0e8dc 0%, #b8a890 100%);
+  }
+  .editorial-body h3 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 400;
+    color: var(--pola-black);
+    line-height: 40px;
+    margin-bottom: 24px;
+    font-feature-settings: "palt" 1;
+  }
+  .editorial-body p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 28px;
+    color: var(--pola-black);
+    margin-bottom: 32px;
+    font-feature-settings: "palt" 1;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--pola-black);
+    line-height: 1.5;
+    font-feature-settings: "palt" 1;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--pola-white);
+    border: 1px solid var(--border-pale);
+    border-radius: var(--radius-square);
+    padding: 12px 16px;
+    font-family: var(--font-base);
+    font-size: 16px;
+    color: var(--pola-black);
+    line-height: 28px;
+    font-feature-settings: "palt" 1;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--pola-black);
+    background: var(--pola-white);
+  }
+  .form .input-error { border-color: var(--danger); }
+  .form .error-text {
+    font-family: var(--font-base);
+    font-size: 13px;
+    color: var(--danger);
+    margin-top: 4px;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .elevation-card {
+    background: var(--pola-white);
+    border: 1px solid var(--border-pale);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--pola-black);
+    line-height: 1.5;
+    font-feature-settings: "palt" 1;
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+
+  /* LAYOUT GRID */
+  .layout-grid {
+    background: var(--surface-gray);
+    padding: 16px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+  }
+  .layout-grid > div {
+    background: var(--pola-black);
+    opacity: 0.5;
+    height: 32px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--pola-black);
+    padding: 80px 24px 40px;
+    color: var(--pola-white);
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer h4 {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 400;
+    color: var(--pola-white);
+    margin-bottom: 24px;
+    letter-spacing: 0.16em;
+    line-height: 1.0;
+  }
+  .footer p {
+    font-family: var(--font-base);
+    font-size: 14px;
+    color: var(--pola-white); opacity: 0.7;
+    line-height: 1.7;
+    margin-top: 16px;
+    font-feature-settings: "palt" 1;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">POLA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">商品を見る</a></li>
+    <li><a href="#typography">ブランド</a></li>
+    <li><a href="#components">サイエンス</a></li>
+    <li><a href="#article">アート</a></li>
+    <li><a href="#">店舗を探す</a></li>
+  </ul>
+</nav>
+
+<nav class="nav-secondary">
+  <a href="#" class="crumb">トップ ／ ブランド</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Science. Art. Love.</h1>
+    <p class="lead">研究・芸術・愛——POLA は 1929 年の創業以来、肌の研究と美意識のあいだに立ち、お客さまひとりひとりの美しさに向き合ってきました。一本のクリームに、ひとつの考えを込めて。</p>
+  </div>
+</section>
+
+<section class="cat-row">
+  <div class="cat-card" style="background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);"><h3>ローション（保湿化粧水）</h3></div>
+  <div class="cat-card" style="background: linear-gradient(135deg, #efe6dc 0%, #d8c8b8 100%);"><h3>ミルク（保湿乳液）</h3></div>
+  <div class="cat-card" style="background: linear-gradient(135deg, #ecece8 0%, #c8c8c0 100%);"><h3>クリーム（保湿クリーム）</h3></div>
+</section>
+
+<section class="section" id="colors">
+  <h2>COLORS</h2>
+  <div class="helper">PRIMARY (純黒運用)</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--pola-black);"></div><div class="swatch-meta"><div class="swatch-name">POLA Black</div><div class="swatch-hex">#000000</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--pola-white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></div><div class="swatch-meta"><div class="swatch-name">POLA White</div><div class="swatch-hex">#ffffff</div></div></div>
+  </div>
+  <div class="helper">SURFACE (4 色のみ)</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-gray);"></div><div class="swatch-meta"><div class="swatch-name">Surface Gray (最頻出 39 回)</div><div class="swatch-hex">#f5f5f5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-mid);"></div><div class="swatch-meta"><div class="swatch-name">Surface Mid</div><div class="swatch-hex">#d8d8d8</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-cookie);"></div><div class="swatch-meta"><div class="swatch-name">Surface Cookie</div><div class="swatch-hex">#f4f4f4</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--border-pale);"></div><div class="swatch-meta"><div class="swatch-name">Border Pale</div><div class="swatch-hex">#e5e5e5</div></div></div>
+  </div>
+</section>
+
+<section class="section--surface" id="typography">
+  <div class="section-inner">
+    <h2>TYPOGRAPHY</h2>
+    <p style="font-family: var(--font-base); font-size: 16px; line-height: 28px; color: var(--pola-black); margin-bottom: 32px; max-width: 720px; font-feature-settings: 'palt' 1;">本文は游ゴシック体 16px / line-height 28px (1.75) と、雑誌的にゆとりのある行間。<strong>全要素に font-feature-settings: "palt" 1 を継承</strong>するのが POLA の最重要特徴で、和欧混植・カタカナ商品名が美しく詰まる。letter-spacing は normal（palt が自動字詰めするため明示不要）。</p>
+    <div class="type-row"><div class="type-label">Display H1 / 28 / 400 / 48</div><div class="type-sample"><div class="type-display">リンクル ショット</div></div></div>
+    <div class="type-row"><div class="type-label">Section H2 / 24 / 400 / 40</div><div class="type-sample"><div class="type-section">研究と美のあいだに、POLA がある</div></div></div>
+    <div class="type-row"><div class="type-label">Sub Section H2 / 21.92 / 600 / 26.3</div><div class="type-sample"><div class="type-sub-section">ローション（保湿化粧水）</div></div></div>
+    <div class="type-row"><div class="type-label">Card H3 / 16 / 700 / 20.8</div><div class="type-sample"><div class="type-card">B.A ローション</div></div></div>
+    <div class="type-row"><div class="type-label">Card Sub H3 / 14 / 700 / 19.6</div><div class="type-sample"><div class="type-card-sm">トリートメントクレンジング</div></div></div>
+    <div class="type-row"><div class="type-label">Body / 16 / 400 / 28 (1.75)</div><div class="type-sample"><div class="type-body">POLA リサーチセンターでは、肌の研究を通じて、年齢を重ねるほどに整っていく美しさを追究しています。研究・処方・パッケージング・接客——すべての工程に POLA の哲学が宿ります。</div></div></div>
+    <div class="type-row"><div class="type-label">Body Lead / 18 / 400 / 32 (1.78)</div><div class="type-sample"><div class="type-body-lead">一本のクリームに、ひとつの考えを込めて。POLA</div></div></div>
+    <div class="type-row"><div class="type-label">Caption / 13 / 400 / 20</div><div class="type-sample"><div class="type-caption">医薬部外品 / リンクル ショット メディカル セラム N</div></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>EDITORIAL</h2>
+  <div class="editorial">
+    <div class="editorial-image"></div>
+    <div class="editorial-body">
+      <h3>美しさは、研究の先にある。</h3>
+      <p>POLA は化粧品メーカーとして、美術館を持つ稀有なブランドです。研究と芸術——一見遠いふたつを近づけることが、美しさを深める道だと私たちは考えています。一本のクリームの裏側に、肌の研究と、表現への憧れ。それが POLA のものづくりです。</p>
+      <a href="#" class="btn-primary">ブランドを知る</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>BUTTONS</h2>
+  <div class="helper">PRIMARY (黒ベタ・角張り)</div>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-primary">商品を見る</a>
+    <a href="#" class="btn-primary">ブランドを知る</a>
+  </div>
+  <div class="helper">SECONDARY (アウトライン)</div>
+  <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-secondary">店舗を探す</a>
+    <a href="#" class="btn-secondary">サンプル請求</a>
+  </div>
+  <div class="helper">LIST LINK</div>
+  <div style="margin-bottom: 32px; max-width: 480px;">
+    <a href="#" class="btn-list">B.A シリーズについて</a>
+    <a href="#" class="btn-list">リンクル ショット シリーズについて</a>
+    <a href="#" class="btn-list">ホワイトショット シリーズについて</a>
+  </div>
+
+  <h2 id="cards" style="margin-top: 64px;">PRODUCTS</h2>
+  <div class="helper">PRODUCT CARDS — エディトリアル余白</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-cover product-cover-2"></div>
+      <div class="product-tag">B.A</div>
+      <div class="product-name">B.A ローション N</div>
+      <div class="product-price">¥22,000</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover product-cover-3"></div>
+      <div class="product-tag">リンクル ショット</div>
+      <div class="product-name">リンクル ショット メディカル セラム N</div>
+      <div class="product-price">¥14,850</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover product-cover-1"></div>
+      <div class="product-tag">ホワイトショット</div>
+      <div class="product-name">ホワイトショット スキンプロテクター DX</div>
+      <div class="product-price">¥6,600</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover product-cover-4"></div>
+      <div class="product-tag">B.A</div>
+      <div class="product-name">B.A クリーム</div>
+      <div class="product-price">¥38,500</div>
+    </div>
+  </div>
+
+  <h2 id="forms" style="margin-top: 64px;">FORMS</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 花子" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="hanako@example.com" autofocus />
+    </div>
+    <div>
+      <label for="zip">郵便番号（エラー）</label>
+      <input id="zip" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">郵便番号を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="4" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>ELEVATION</h2>
+  <p style="font-family: var(--font-base); font-size: 16px; line-height: 28px; color: var(--pola-black); margin-bottom: 24px; max-width: 720px; font-feature-settings: 'palt' 1;">POLA は box-shadow を実質使わない。階層は #fff / #f5f5f5 の面色の差で表現する。商品写真の色彩を引き立たせるための、徹底したフラット設計。</p>
+  <div class="elevation-row">
+    <div class="elevation-card">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — Sticky</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>LAYOUT</h2>
+  <p style="font-family: var(--font-base); font-size: 16px; line-height: 28px; color: var(--pola-black); margin-bottom: 24px; max-width: 720px; font-feature-settings: 'palt' 1;">12 カラムのエディトリアル・グリッド。max-width 1280px、ガッターは 24–40px と広め。商品をひとつの作品のように配置する余白優先のレイアウト。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>POLA</h4>
+    <p>このプレビューは POLA 公式サイトの UI を参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。和文は游ゴシック体・ヒラギノ角ゴ Pro（OS フォント）を使用しています。font-feature-settings: "palt" を全要素に適用するのが POLA の特徴です。</p>
+  </div>
+</footer>
+
+</body>
+</html>
