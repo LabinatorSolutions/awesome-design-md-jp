@@ -74,11 +74,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Yamaha](https://www.yamaha.com/ja/) | Corporate / Manufacturing | [DESIGN.md](design-md/yamaha/DESIGN.md) | [preview.html](design-md/yamaha/preview.html) |
 | [BAKE INC.](https://bake-jp.com/) | Confectionary / Brand | [DESIGN.md](design-md/bake/DESIGN.md) | [preview.html](design-md/bake/preview.html) |
 | [nendo](https://www.nendo.jp/jp/) | Design Studio | [DESIGN.md](design-md/nendo/DESIGN.md) | [preview.html](design-md/nendo/preview.html) |
+| [BEAMS](https://www.beams.co.jp/) | Select Shop / Apparel | [DESIGN.md](design-md/beams/DESIGN.md) | [preview.html](design-md/beams/preview.html) |
+| [Sanrio](https://www.sanrio.co.jp/) | Character / Lifestyle | [DESIGN.md](design-md/sanrio/DESIGN.md) | [preview.html](design-md/sanrio/preview.html) |
+| [Yoshida & Co. (PORTER)](https://www.yoshidakaban.com/) | Bag Manufacturer / Heritage Brand | [DESIGN.md](design-md/yoshidakaban/DESIGN.md) | [preview.html](design-md/yoshidakaban/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (41 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (44 sites)</a>
 </p>
 
 <table>
@@ -136,6 +139,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Yamaha</strong><br><img src="design-md/yamaha/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BAKE</strong><br><img src="design-md/bake/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>nendo</strong><br><img src="design-md/nendo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BEAMS</strong><br><img src="design-md/beams/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Sanrio</strong><br><img src="design-md/sanrio/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>吉田カバン</strong><br><img src="design-md/yoshidakaban/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -170,7 +181,7 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (41 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (44 sites)</a>
 </p>
 
 <table>
@@ -228,6 +239,14 @@ Use [`template/DESIGN.md`](template/DESIGN.md) to create your own Japanese DESIG
 <td align="center"><strong>ヤマハ</strong><br><img src="design-md/yamaha/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BAKE</strong><br><img src="design-md/bake/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>nendo</strong><br><img src="design-md/nendo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BEAMS</strong><br><img src="design-md/beams/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>サンリオ</strong><br><img src="design-md/sanrio/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>吉田カバン</strong><br><img src="design-md/yoshidakaban/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

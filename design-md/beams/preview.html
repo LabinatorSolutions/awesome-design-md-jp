@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: BEAMS（ビームス）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- BST (BEAMS Serif Type) は独自書体のため、ブランドサーブと近似するシャープなセリフ系として Noto Serif Display を h1 のみに使用 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --ink: #333333;
+    --black-bar: #1a1a1a;
+    --beams-red: #ff3700;
+    --beams-orange: #e85b03;
+    --beams-green: #8fb347;
+    --beams-blue: #55b1f2;
+    --beams-new: #f23e0c;
+    --promo-olive: #bea870;
+    --promo-brown: #997a5c;
+    --white: #ffffff;
+    --surface-cream: rgba(251, 250, 247, 0.75);
+    --tag-surface: #f2f2f2;
+    --section-surface: #e5e5e5;
+    --border: #efefef;
+    --mid-gray: #808080;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-muted: #838383;
+
+    /* === Recommended semantic === */
+    --danger: #ff3700;
+    --warning: #f23e0c;
+    --success: #8fb347;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+    /* === Fonts === */
+    --font-base: "Hiragino Kaku Gothic Pro", "Noto Sans JP", メイリオ, "ＭＳ Ｐゴシック", -apple-system, "system-ui", sans-serif;
+    --font-bst: "Noto Serif Display", BST, "Hiragino Kaku Gothic Pro", メイリオ, "ＭＳ Ｐゴシック", serif;
+
+    /* === Radius === */
+    --radius-square: 0px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* TOP ALERT BAR */
+  .alert-bar {
+    background: var(--black-bar);
+    color: var(--white);
+    text-align: center;
+    padding: 12px 0;
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.0;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-bst);
+    font-size: 32px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    line-height: 1.54;
+    border-radius: var(--radius-md);
+    padding: 4px 8px;
+  }
+  .nav-links a:hover { background: var(--tag-surface); }
+
+  /* HERO */
+  .hero {
+    padding: 64px 32px 48px;
+    background: var(--surface-cream);
+  }
+  .hero-inner { max-width: 1280px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-bst);
+    font-size: 48px; font-weight: 400;
+    line-height: 1.0;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .hero .lead {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.71;
+    color: var(--text-primary);
+    max-width: 680px;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 56px 32px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .section-surface {
+    background: var(--surface-cream);
+    padding: 56px 0;
+  }
+  .section-surface .section-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 32px;
+  }
+
+  .section h2 {
+    font-family: var(--font-base);
+    font-size: 21px; font-weight: 700;
+    line-height: 1.0;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .section h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.0;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .section-label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    line-height: 1.0;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .swatch {
+    border: 1px solid var(--border);
+    background: var(--white);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-name {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--text-primary);
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .type-label {
+    flex: 0 0 240px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+  .type-bst { font-family: var(--font-bst); font-size: 48px; font-weight: 400; line-height: 1.0; }
+  .type-h2 { font-family: var(--font-base); font-size: 21px; font-weight: 700; line-height: 1.0; }
+  .type-h3 { font-family: var(--font-base); font-size: 16px; font-weight: 700; line-height: 1.0; }
+  .type-label-bold { font-family: var(--font-base); font-size: 14px; font-weight: 700; line-height: 1.0; }
+  .type-body { font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 1.5; }
+  .type-caption { font-family: var(--font-base); font-size: 14px; font-weight: 400; line-height: 1.71; }
+  .type-card-cap { font-family: var(--font-base); font-size: 12px; font-weight: 400; line-height: 1.8; }
+  .type-link { font-family: var(--font-base); font-size: 13px; font-weight: 400; line-height: 1.54; }
+  .type-badge { font-family: var(--font-base); font-size: 12px; font-weight: 400; line-height: 1.0; }
+
+  /* BUTTONS */
+  .btn-tag {
+    display: inline-flex; align-items: center;
+    background: var(--tag-surface);
+    color: var(--text-primary);
+    padding: 10px 15px 9px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    text-decoration: none;
+    line-height: 1.0;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  .btn-filter {
+    display: inline-flex; align-items: center;
+    background: var(--tag-surface);
+    color: var(--text-primary);
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+    line-height: 1.0;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  .btn-alert {
+    display: inline-flex; align-items: center; justify-content: center; width: 100%;
+    background: var(--black-bar);
+    color: var(--white);
+    padding: 12px 0;
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+    text-decoration: none;
+    line-height: 1.0;
+  }
+  .btn-text {
+    display: inline-block;
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.0;
+    text-decoration: none;
+    padding: 8px 0;
+  }
+  .btn-text:hover { text-decoration: underline; }
+
+  /* PAGINATION DOTS */
+  .pagination {
+    display: flex; gap: 8px; align-items: center;
+    margin-top: 24px;
+  }
+  .page-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--section-surface);
+    color: var(--text-secondary);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 400;
+    text-decoration: none;
+    line-height: 1.0;
+  }
+  .page-dot.active { background: var(--mid-gray); color: var(--white); }
+
+  /* BADGES */
+  .badge { font-family: var(--font-base); font-size: 12px; font-weight: 400; line-height: 1.0; margin-right: 12px; }
+  .badge-new { color: var(--beams-new); }
+  .badge-rearrival { color: var(--beams-green); }
+  .badge-preorder { color: var(--beams-blue); }
+  .badge-sale { color: var(--beams-red); }
+  .badge-promo {
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  .badge-promo-1 { background: var(--promo-olive); }
+  .badge-promo-3 { background: var(--promo-brown); }
+
+  /* CARDS — 商品サムネ風 */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius-square);
+  }
+  .product-cover {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, #d8d8d8 0%, #e8e8e8 100%);
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .product-cover .badges-overlay {
+    position: absolute; top: 8px; left: 8px;
+  }
+  .product-brand {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.8;
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.0;
+  }
+
+  /* JOURNAL EDITORIAL */
+  .editorial {
+    background: var(--white);
+  }
+  .editorial-h2 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.0;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .editorial-body {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.71;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 20px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid #dddddd;
+    border-radius: var(--radius-square);
+    padding: 10px 12px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--text-primary);
+  }
+  .form .input-error { border-color: var(--beams-red); }
+  .form .error-text {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--beams-red);
+    margin-top: 4px;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .elevation-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.0;
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+
+  /* LAYOUT GRID */
+  .layout-grid {
+    background: var(--tag-surface);
+    padding: 24px;
+    display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px;
+  }
+  .layout-grid > div {
+    background: var(--text-primary);
+    opacity: 0.4;
+    height: 40px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--black-bar);
+    padding: 64px 32px 32px;
+    color: var(--white);
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer h4 {
+    font-family: var(--font-bst);
+    font-size: 24px; font-weight: 400;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+  }
+  .footer p {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--white);
+    line-height: 1.7;
+    margin-top: 16px;
+    opacity: 0.8;
+  }
+</style>
+</head>
+<body>
+
+<div class="alert-bar">偽サイト・偽物（商品）にご注意ください</div>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">BEAMS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">MEN</a></li>
+    <li><a href="#typography">WOMEN</a></li>
+    <li><a href="#components">KIDS</a></li>
+    <li><a href="#article">ジャーナル</a></li>
+    <li><a href="#cards">マイページ</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>BEAMS</h1>
+    <p class="lead">1976 年に原宿の小さな店舗から始まったセレクトショップ。MEN・WOMEN・KIDS の総合カタログから、ライフスタイル、編集された読みもの、スタッフコーディネートまで。装飾を抑えた編集ビジュアルで商品の良さをそのまま伝えます。</p>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>Colors</h2>
+  <div class="section-label">Primary</div>
+  <div class="swatches" style="margin-bottom: 24px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--ink);"></div><div class="swatch-meta"><div class="swatch-name">Ink</div><div class="swatch-hex">#333333</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--black-bar);"></div><div class="swatch-meta"><div class="swatch-name">Black Bar</div><div class="swatch-hex">#1a1a1a</div></div></div>
+  </div>
+  <div class="section-label">Accent / Badges</div>
+  <div class="swatches" style="margin-bottom: 24px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--beams-red);"></div><div class="swatch-meta"><div class="swatch-name">Sale Red</div><div class="swatch-hex">#ff3700</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--beams-orange);"></div><div class="swatch-meta"><div class="swatch-name">Orange</div><div class="swatch-hex">#e85b03</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--beams-green);"></div><div class="swatch-meta"><div class="swatch-name">Green (REARRIVAL)</div><div class="swatch-hex">#8fb347</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--beams-blue);"></div><div class="swatch-meta"><div class="swatch-name">Blue (PRE ORDER)</div><div class="swatch-hex">#55b1f2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--promo-olive);"></div><div class="swatch-meta"><div class="swatch-name">Promo Olive</div><div class="swatch-hex">#bea870</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--promo-brown);"></div><div class="swatch-meta"><div class="swatch-name">Promo Brown</div><div class="swatch-hex">#997a5c</div></div></div>
+  </div>
+  <div class="section-label">Surface / Neutral</div>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></div><div class="swatch-meta"><div class="swatch-name">White</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-cream); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"></div><div class="swatch-meta"><div class="swatch-name">Surface Cream</div><div class="swatch-hex">rgba(251,250,247,.75)</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--tag-surface);"></div><div class="swatch-meta"><div class="swatch-name">Tag Surface</div><div class="swatch-hex">#f2f2f2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--section-surface);"></div><div class="swatch-meta"><div class="swatch-name">Section Surface</div><div class="swatch-hex">#e5e5e5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--mid-gray);"></div><div class="swatch-meta"><div class="swatch-name">Mid Gray</div><div class="swatch-hex">#808080</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-secondary);"></div><div class="swatch-meta"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#666666</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="typography">
+  <h2>Typography</h2>
+  <p style="font-family: var(--font-base); font-size: 14px; line-height: 1.71; color: var(--text-secondary); margin-bottom: 32px;">和文はヒラギノ角ゴ Pro（ProN ではない）主導。h1 ロゴだけ独自書体 BST。見出しは line-height 1.0 と極めてタイト、本文は 1.5–1.8 で確保するのが BEAMS の運用。letter-spacing は normal。</p>
+  <div class="type-row"><div class="type-label">Logo / 48px / 400 / 1.0 / BST</div><div class="type-sample"><div class="type-bst">BEAMS</div></div></div>
+  <div class="type-row"><div class="type-label">H2 / 21px / 700 / 1.0</div><div class="type-sample"><div class="type-h2">人気のアイテムタグ</div></div></div>
+  <div class="type-row"><div class="type-label">H3 / 16px / 700 / 1.0</div><div class="type-sample"><div class="type-h3">特集をもっと見る</div></div></div>
+  <div class="type-row"><div class="type-label">Section Label / 14px / 700 / 1.0</div><div class="type-sample"><div class="type-label-bold">人気検索キーワード</div></div></div>
+  <div class="type-row"><div class="type-label">Body / 16px / 400 / 1.5</div><div class="type-sample"><div class="type-body">原宿で生まれたセレクトショップ BEAMS。1976 年の創業以来、ファッション、ライフスタイル、カルチャーを編集して提案してきました。</div></div></div>
+  <div class="type-row"><div class="type-label">Article Body / 14px / 400 / 1.71</div><div class="type-sample"><div class="type-caption">スタッフが選んだコーディネートと、別注アイテムの紹介を中心に、BEAMS が見つけた「いま着たいもの」をお届けします。</div></div></div>
+  <div class="type-row"><div class="type-label">Card Caption / 12px / 400 / 1.8</div><div class="type-sample"><div class="type-card-cap">【REMI RELIEF 別注 / Pocket T-shirt】定番の REMI RELIEF にビームス別注のポケット T。</div></div></div>
+  <div class="type-row"><div class="type-label">Link / 13px / 400 / 1.54</div><div class="type-sample"><div class="type-link">アイテムをすべて見る</div></div></div>
+  <div class="type-row"><div class="type-label">Badge / 12px / 400 / 1.0</div><div class="type-sample">
+    <span class="badge badge-new">NEW</span>
+    <span class="badge badge-rearrival">REARRIVAL</span>
+    <span class="badge badge-preorder">PRE ORDER</span>
+    <span class="badge badge-sale">SALE</span>
+  </div></div>
+</section>
+
+<section class="section-surface" id="article">
+  <div class="section-inner">
+    <div class="section-label">JOURNAL</div>
+    <h2 style="font-family: var(--font-base); font-size: 21px; font-weight: 700; line-height: 1.0; margin-bottom: 16px;">原宿の歩みと、これからの BEAMS</h2>
+    <div style="font-family: var(--font-base); font-size: 12px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.4;">2026.05.07 / EDITORIAL</div>
+    <div class="editorial-body">1976 年、原宿の小さな店舗から BEAMS は始まりました。「アメリカン・ライフショップ」を掲げ、当時の日本にはなかった西海岸のカルチャーを届ける場所として誕生しました。</div>
+    <div class="editorial-body">それから 50 年近く、私たちはセレクトショップの枠を越え、ファッション・ライフスタイル・カルチャーを編集する場所として進化してきました。MEN・WOMEN・KIDS の枠で商品を並べるだけではなく、スタッフが日々のスタイリングで提案する「使い方」を編集することが、BEAMS のもうひとつの仕事です。</div>
+    <div class="editorial-body">これからも商品の良さをそのまま伝えるフラットな編集視点と、選び抜かれた別注・コラボレーションの両輪で、お客さまの暮らしに寄り添うブランドであり続けます。</div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>Buttons</h2>
+  <div style="margin-bottom: 24px;">
+    <div class="section-label" style="margin-bottom: 12px;">Tag Pill / Filter Pill（最頻出）</div>
+    <a href="#" class="btn-tag">#上品</a>
+    <a href="#" class="btn-tag">#カジュアル</a>
+    <a href="#" class="btn-tag">#別注</a>
+    <a href="#" class="btn-tag">#リネン</a>
+    <a href="#" class="btn-tag">#新作</a>
+  </div>
+  <div style="margin-bottom: 24px;">
+    <div class="section-label" style="margin-bottom: 12px;">Filter Pill</div>
+    <a href="#" class="btn-filter">新着アイテム</a>
+    <a href="#" class="btn-filter">予約アイテム</a>
+  </div>
+  <div style="margin-bottom: 24px;">
+    <div class="section-label" style="margin-bottom: 12px;">Black Alert Bar / Text Link</div>
+    <a href="#" class="btn-alert">偽サイト・偽物（商品）にご注意ください</a>
+    <div style="margin-top: 16px;">
+      <a href="#" class="btn-text">詳細を見る</a>
+    </div>
+  </div>
+  <div>
+    <div class="section-label" style="margin-bottom: 12px;">Pagination Dots</div>
+    <div class="pagination">
+      <a href="#" class="page-dot active">2</a>
+      <a href="#" class="page-dot">1</a>
+      <a href="#" class="page-dot">3</a>
+      <a href="#" class="page-dot">4</a>
+      <a href="#" class="page-dot">5</a>
+      <a href="#" class="page-dot">6</a>
+      <a href="#" class="page-dot">7</a>
+    </div>
+  </div>
+
+  <h2 id="cards" style="margin-top: 48px;">Product Cards（フラット）</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-cover">
+        <div class="badges-overlay"><span class="badge badge-new">NEW</span></div>
+      </div>
+      <div class="product-brand">BEAMS / Selected</div>
+      <div class="product-name">REMI RELIEF 別注 / Pocket T-shirt</div>
+      <div class="product-price">¥9,900</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #c5b18d 0%, #d8c8a3 100%);">
+        <div class="badges-overlay"><span class="badge badge-rearrival">REARRIVAL</span></div>
+      </div>
+      <div class="product-brand">BEAMS PLUS</div>
+      <div class="product-name">リネン × コットン オープンカラー シャツ</div>
+      <div class="product-price">¥18,700</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #2b3a4a 0%, #4a5a6a 100%);">
+        <div class="badges-overlay"><span class="badge badge-preorder">PRE ORDER</span></div>
+      </div>
+      <div class="product-brand">B印 YOSHIDA</div>
+      <div class="product-name">PORTER × BEAMS / Tanker Tote Bag (M)</div>
+      <div class="product-price">¥27,500</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #b75d4a 0%, #d97a64 100%);">
+        <div class="badges-overlay"><span class="badge badge-sale">SALE</span></div>
+      </div>
+      <div class="product-brand">BEAMS BOY</div>
+      <div class="product-name">コットンリネン / クルーネック プルオーバー</div>
+      <div class="product-price">¥6,930</div>
+    </div>
+  </div>
+
+  <h2 id="forms" style="margin-top: 48px;">Forms</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="zip">郵便番号（エラー）</label>
+      <input id="zip" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">郵便番号を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="4" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>Elevation</h2>
+  <p style="font-family: var(--font-base); font-size: 14px; line-height: 1.71; color: var(--text-secondary); margin-bottom: 24px;">BEAMS はシャドウをほぼ使わない。階層は色面で表現する。スティッキーヘッダー等にだけ薄い境界用シャドウが入る。</p>
+  <div class="elevation-row">
+    <div class="elevation-card">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — Sticky Header</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Layout</h2>
+  <p style="font-family: var(--font-base); font-size: 14px; line-height: 1.71; color: var(--text-secondary); margin-bottom: 24px;">商品サムネは 4–8 カラム / ジャーナル 3 カラムの密度高グリッド。ガッターは 8–12px と狭めにとり、編集力で密度を整える。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>BEAMS</h4>
+    <p>このプレビューは BEAMS の編集型 UI を参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。</p>
+    <p>独自書体 BST（BEAMS Serif Type）はライセンスの都合で表示できないため、近似書体として Noto Serif Display を使用しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>

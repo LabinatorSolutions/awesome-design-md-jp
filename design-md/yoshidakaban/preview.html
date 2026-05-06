@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 吉田カバン / YOSHIDA & Co. (PORTER)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --porter-black: #000000;
+    --porter-gray-dark: #333333;
+    --porter-gray-mid: #444444;
+    --porter-gray: #666666;
+    --surface-light-gray: #dddddd;
+    --surface-pale: #f2f2f2;
+    --surface-section: #f0f0f0;
+    --surface-mid-gray: #b4b4b4;
+    --surface-input: #efefef;
+    --surface-input-alt: #eaeaea;
+    --surface-translucent: rgba(204, 204, 204, 0.3);
+    --porter-orange: #ff9e5e;
+    --white: #ffffff;
+    --border: #dddddd;
+
+    /* === Recommended semantic === */
+    --danger: #b00020;
+    --warning: #ff9e5e;
+    --success: #2e7d4f;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    --font-display: "Helvetica Neue", Helvetica, Arial, "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+    /* === Radius (すべて 0px) === */
+    --radius-square: 0px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--porter-black);
+    font-family: var(--font-base);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--porter-gray-dark);
+    color: var(--white);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    color: var(--white); text-decoration: none;
+    line-height: 1.5;
+  }
+  .nav-links a:hover { color: var(--surface-light-gray); }
+  .nav-links a.lang {
+    color: var(--surface-light-gray);
+    font-size: 11px;
+  }
+
+  /* SECONDARY NAV (white bar) */
+  .nav-secondary {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 32px;
+  }
+  .nav-secondary a {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--porter-black); text-decoration: none;
+    line-height: 1.5;
+  }
+  .nav-secondary .item {
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--surface-pale);
+    padding: 64px 24px;
+  }
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 39px; font-weight: 700;
+    line-height: 1.135;
+    color: var(--porter-black);
+    margin-bottom: 16px;
+    letter-spacing: 0;
+  }
+  .hero .lead {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--porter-black);
+    max-width: 680px;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 56px 24px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .section--surface {
+    background: var(--surface-section);
+    max-width: none; padding: 56px 0;
+  }
+  .section--surface .section-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  }
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 39px; font-weight: 700;
+    line-height: 1.135;
+    color: var(--porter-black);
+    margin-bottom: 24px;
+    letter-spacing: 0;
+  }
+  .section h3 {
+    font-family: var(--font-base);
+    font-size: 17px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--porter-black);
+    margin-bottom: 16px;
+  }
+  .section .helper {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    color: var(--porter-gray);
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.0;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .swatch {
+    background: var(--white);
+    border: 1px solid var(--border);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 10px 14px; }
+  .swatch-name {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--porter-black);
+    line-height: 1.5;
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--porter-gray);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .type-label {
+    flex: 0 0 240px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--porter-gray);
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--porter-black); }
+  .type-display { font-family: var(--font-display); font-size: 39px; font-weight: 700; line-height: 1.135; }
+  .type-hero { font-family: var(--font-base); font-size: 17px; font-weight: 700; line-height: 1.5; }
+  .type-sub { font-family: var(--font-base); font-size: 15px; font-weight: 400; line-height: 1.5; }
+  .type-body { font-family: var(--font-base); font-size: 12px; font-weight: 400; line-height: 1.5; }
+  .type-card-cap { font-family: var(--font-base); font-size: 12px; font-weight: 500; line-height: 1.3; }
+  .type-card-sub { font-family: var(--font-base); font-size: 11px; font-weight: 400; line-height: 1.5; }
+  .type-brand-tag { font-family: var(--font-base); font-size: 10px; font-weight: 700; line-height: 1.2; }
+  .type-cat-en { font-family: var(--font-display); font-size: 10px; font-weight: 700; line-height: 1.0; color: var(--surface-mid-gray); letter-spacing: 0.06em; }
+  .type-price { font-family: var(--font-base); font-size: 10px; font-weight: 700; line-height: 1.35; }
+
+  /* BUTTONS（すべて radius 0） */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-mid-gray); color: var(--white);
+    padding: 12px 24px;
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+    text-decoration: none; cursor: pointer; border: none;
+    line-height: 1.5;
+  }
+  .btn-primary:hover { background: var(--porter-gray); }
+  .btn-primary::after { content: " ›"; margin-left: 4px; }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--white); color: var(--porter-gray-mid);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    line-height: 1.5;
+  }
+  .btn-secondary:hover { background: var(--surface-pale); }
+
+  .btn-search {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-input); color: var(--porter-gray-mid);
+    padding: 4px 14px;
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 400;
+    border: none; cursor: pointer;
+    line-height: 1.5;
+  }
+
+  .btn-tag {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-pale); color: var(--porter-black);
+    padding: 8px 14px;
+    border-radius: var(--radius-square);
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    line-height: 1.5;
+    margin-right: 4px; margin-bottom: 4px;
+  }
+
+  /* PRODUCT GRID — 密度高カタログ */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius-square);
+  }
+  .product-cover {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, var(--surface-light-gray) 0%, #cccccc 100%);
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .product-brand {
+    margin-bottom: 4px;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 500;
+    color: var(--porter-black);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .product-cat-line {
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 10px; font-weight: 700;
+    color: var(--porter-black);
+    line-height: 1.35;
+  }
+
+  /* CATEGORY GRID — グレーラベル */
+  .category-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 4px;
+  }
+  .category-item {
+    background: var(--surface-light-gray);
+    color: var(--porter-black);
+    padding: 14px 16px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    text-decoration: none;
+    border-radius: var(--radius-square);
+    line-height: 1.5;
+  }
+  .category-item:hover { background: var(--surface-mid-gray); color: var(--white); }
+
+  /* JOURNAL CARD */
+  .journal-card {
+    background: var(--surface-translucent);
+    padding: 24px;
+    border-radius: var(--radius-square);
+    margin-bottom: 16px;
+  }
+  .journal-card .num {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 700;
+    color: var(--porter-gray);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    line-height: 1.0;
+  }
+  .journal-card h3 {
+    font-family: var(--font-base);
+    font-size: 17px; font-weight: 700;
+    color: var(--porter-black);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .journal-card p {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--porter-black);
+  }
+
+  /* SEARCH BOX */
+  .searchbox {
+    display: flex; align-items: stretch;
+    background: var(--surface-input);
+    padding: 0;
+    border-radius: var(--radius-square);
+    max-width: 480px;
+  }
+  .searchbox input {
+    flex: 1;
+    background: var(--surface-input);
+    border: none;
+    padding: 8px 12px;
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--porter-black);
+    outline: none;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 700;
+    color: var(--porter-black);
+    line-height: 1.5;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--surface-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-square);
+    padding: 10px 12px;
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--porter-black);
+    line-height: 1.5;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--porter-black);
+    background: var(--white);
+  }
+  .form .input-error { border-color: var(--danger); }
+  .form .error-text {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--danger);
+    margin-top: 4px;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .elevation-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--porter-black);
+    line-height: 1.5;
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+
+  /* LAYOUT GRID */
+  .layout-grid {
+    background: var(--surface-section);
+    padding: 16px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+  }
+  .layout-grid > div {
+    background: var(--porter-black);
+    opacity: 0.5;
+    height: 32px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--porter-gray-dark);
+    padding: 64px 24px 32px;
+    color: var(--white);
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer h4 {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 700;
+    color: var(--white);
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+  }
+  .footer p {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--surface-light-gray);
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">YOSHIDA &amp; Co.</a>
+  <ul class="nav-links">
+    <li><a href="#colors">プロダクト</a></li>
+    <li><a href="#typography">コラボレーション</a></li>
+    <li><a href="#components">ストア</a></li>
+    <li><a href="#article">ジャーナル</a></li>
+    <li><a href="#" class="lang">日本語 / EN</a></li>
+  </ul>
+</nav>
+
+<nav class="nav-secondary">
+  <a href="#">すべてのアイテム</a>
+  <span class="item">PORTER</span>
+  <span class="item">LUGGAGE LABEL</span>
+  <span class="item">B印 YOSHIDA</span>
+  <span class="item">PORTER CLASSIC</span>
+  <span class="item">ハンドバッグ特集</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>YOSHIDA &amp; Co.</h1>
+    <p class="lead">1935 年の創業以来、東京の小さな工房から始まった吉田カバン。職人の手仕事と素材選びにこだわり、PORTER / LUGGAGE LABEL / B印 YOSHIDA / PORTER CLASSIC のブランドを通じて、長く使えるカバンをつくり続けています。</p>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>COLORS</h2>
+  <div class="helper">PRIMARY</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--porter-black);"></div><div class="swatch-meta"><div class="swatch-name">PORTER Black</div><div class="swatch-hex">#000000</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--porter-gray-dark);"></div><div class="swatch-meta"><div class="swatch-name">Gray Dark</div><div class="swatch-hex">#333333</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--porter-gray-mid);"></div><div class="swatch-meta"><div class="swatch-name">Gray Mid</div><div class="swatch-hex">#444444</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--porter-gray);"></div><div class="swatch-meta"><div class="swatch-name">Gray</div><div class="swatch-hex">#666666</div></div></div>
+  </div>
+  <div class="helper">SURFACE</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-mid-gray);"></div><div class="swatch-meta"><div class="swatch-name">Mid Gray (CTA)</div><div class="swatch-hex">#b4b4b4</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-light-gray);"></div><div class="swatch-meta"><div class="swatch-name">Light Gray</div><div class="swatch-hex">#dddddd</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-pale);"></div><div class="swatch-meta"><div class="swatch-name">Pale Gray</div><div class="swatch-hex">#f2f2f2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-section);"></div><div class="swatch-meta"><div class="swatch-name">Section</div><div class="swatch-hex">#f0f0f0</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-input);"></div><div class="swatch-meta"><div class="swatch-name">Input</div><div class="swatch-hex">#efefef</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);"></div><div class="swatch-meta"><div class="swatch-name">White</div><div class="swatch-hex">#ffffff</div></div></div>
+  </div>
+  <div class="helper">ACCENT (rare)</div>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--porter-orange);"></div><div class="swatch-meta"><div class="swatch-name">PORTER Orange</div><div class="swatch-hex">#ff9e5e</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="typography">
+  <h2>TYPOGRAPHY</h2>
+  <p style="font-family: var(--font-base); font-size: 12px; line-height: 1.5; color: var(--porter-black); margin-bottom: 32px; max-width: 720px;">本文は Noto Sans JP 12px / line-height 1.5。情報密度を最優先する職人的なベタ組み。英語の大見出しのみ Helvetica Neue 700 でブランドサーブ。letter-spacing は normal。</p>
+  <div class="type-row"><div class="type-label">Display H2 / 39px / 700 / Helvetica</div><div class="type-sample"><div class="type-display">CATEGORY</div></div></div>
+  <div class="type-row"><div class="type-label">Hero / 17px / 700 / 1.5</div><div class="type-sample"><div class="type-hero">RECOMMEND for YOU</div></div></div>
+  <div class="type-row"><div class="type-label">Sub / 15px / 400 / 1.5</div><div class="type-sample"><div class="type-sub">職人がつくる、長く使えるカバン</div></div></div>
+  <div class="type-row"><div class="type-label">Body / 12px / 400 / 1.5</div><div class="type-sample"><div class="type-body">1935 年に東京・四谷で創業した吉田カバンは、「一針入魂」を合言葉に、ひとつひとつのカバンに職人の手仕事を込めて製作してきました。シンプルで機能的なデザインは、世代を越えて愛され続けています。</div></div></div>
+  <div class="type-row"><div class="type-label">Card Caption / 12px / 500 / 1.3</div><div class="type-sample"><div class="type-card-cap">PORTER / EXTREME RUCKSACK</div></div></div>
+  <div class="type-row"><div class="type-label">Card Sub / 11px / 400 / 1.5</div><div class="type-sample"><div class="type-card-sub">日常に頼れる本格派バックパック</div></div></div>
+  <div class="type-row"><div class="type-label">Brand Tag / 10px / 700 / 1.2</div><div class="type-sample"><div class="type-brand-tag">PORTER / EXTREME</div></div></div>
+  <div class="type-row"><div class="type-label">Category EN / 10px / 700 / muted</div><div class="type-sample"><div class="type-cat-en">RUCKSACK</div></div></div>
+  <div class="type-row"><div class="type-label">Price / 10px / 700 / 1.35</div><div class="type-sample"><div class="type-price">¥57,200</div></div></div>
+</section>
+
+<section class="section--surface" id="article">
+  <div class="section-inner">
+    <div class="helper">JOURNAL</div>
+    <h2 style="margin-bottom: 24px;">PRODUCTS</h2>
+    <div class="journal-card">
+      <div class="num">No.32</div>
+      <h3>BUS GIRL Episode — 1962 年の TANKER 誕生秘話</h3>
+      <p>1983 年に発表された TANKER シリーズの原点となる、1962 年のバスガイド向け制服カバンの記録を振り返ります。MA-1 フライトジャケットの素材を応用したナイロン地と、軽さ・耐久性を両立させた構造は、後に PORTER の代表作の礎となりました。</p>
+    </div>
+    <div class="journal-card">
+      <div class="num">No.31</div>
+      <h3>職人のミシンと、四谷の工房で生まれた一針入魂</h3>
+      <p>創業者・吉田吉蔵が掲げた「一針入魂」の精神は、四谷の工房で今も受け継がれています。アルティザンが手仕事で仕上げる一連の工程と、その背後にある考え方を紹介します。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>BUTTONS</h2>
+  <div class="helper" style="margin-bottom: 12px;">PRIMARY (mid gray, square)</div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-primary">すべて見る</a>
+    <a href="#" class="btn-primary">現在地から探す</a>
+  </div>
+  <div class="helper" style="margin-bottom: 12px;">SECONDARY</div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-secondary">登録</a>
+    <a href="#" class="btn-secondary">マイページ</a>
+  </div>
+  <div class="helper" style="margin-bottom: 12px;">CATEGORY TAGS</div>
+  <div style="margin-bottom: 24px;">
+    <a href="#" class="btn-tag">バックパック</a>
+    <a href="#" class="btn-tag">トートバッグ</a>
+    <a href="#" class="btn-tag">ショルダー</a>
+    <a href="#" class="btn-tag">財布・小物</a>
+    <a href="#" class="btn-tag">ボストン・ダッフル</a>
+  </div>
+  <div class="helper" style="margin-bottom: 12px;">SEARCH BAR</div>
+  <div class="searchbox" style="margin-bottom: 24px;">
+    <input type="text" placeholder="人気の検索ワード: タンカー、PX、ハンドバッグ" />
+    <button class="btn-search">検索</button>
+  </div>
+
+  <h2 id="cards" style="margin-top: 48px;">PRODUCTS</h2>
+  <div class="helper" style="margin-bottom: 16px;">CATALOG GRID — 密度重視の 4–5 カラム / フラット</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #1a1a1a 0%, #444444 100%);"></div>
+      <div class="product-brand"><span class="type-brand-tag">PORTER / EXTREME</span></div>
+      <div class="product-name">RUCKSACK</div>
+      <div class="product-cat-line"><span class="type-cat-en">RUCKSACK</span></div>
+      <div class="product-price">¥57,200</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #2b3a4a 0%, #4a5a6a 100%);"></div>
+      <div class="product-brand"><span class="type-brand-tag">PORTER / TANKER</span></div>
+      <div class="product-name">SHOULDER BAG (S)</div>
+      <div class="product-cat-line"><span class="type-cat-en">SHOULDER</span></div>
+      <div class="product-price">¥19,800</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #6b5d4f 0%, #8c7967 100%);"></div>
+      <div class="product-brand"><span class="type-brand-tag">PORTER CLASSIC / SUPER NYLON</span></div>
+      <div class="product-name">3WAY BRIEFCASE</div>
+      <div class="product-cat-line"><span class="type-cat-en">BUSINESS</span></div>
+      <div class="product-price">¥77,000</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #b4b4b4 0%, #dddddd 100%);"></div>
+      <div class="product-brand"><span class="type-brand-tag">B印 YOSHIDA</span></div>
+      <div class="product-name">PORTER × BEAMS / TOTE BAG</div>
+      <div class="product-cat-line"><span class="type-cat-en">TOTE</span></div>
+      <div class="product-price">¥27,500</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #3a3a3a 0%, #5a5a5a 100%);"></div>
+      <div class="product-brand"><span class="type-brand-tag">LUGGAGE LABEL / LINER</span></div>
+      <div class="product-name">DAYPACK</div>
+      <div class="product-cat-line"><span class="type-cat-en">DAYPACK</span></div>
+      <div class="product-price">¥38,500</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 48px;">CATEGORIES</h2>
+  <div class="helper" style="margin-bottom: 16px;">GRAY LABEL GRID — メガメニュー</div>
+  <div class="category-grid">
+    <a href="#" class="category-item">バックパック</a>
+    <a href="#" class="category-item">トートバッグ</a>
+    <a href="#" class="category-item">ショルダー</a>
+    <a href="#" class="category-item">財布</a>
+    <a href="#" class="category-item">ボストン・ダッフル</a>
+    <a href="#" class="category-item">ブリーフ・ビジネス</a>
+    <a href="#" class="category-item">ウエスト・ボディ</a>
+    <a href="#" class="category-item">クラッチ・ポーチ</a>
+  </div>
+
+  <h2 id="forms" style="margin-top: 48px;">FORMS</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" autofocus />
+    </div>
+    <div>
+      <label for="zip">郵便番号（エラー）</label>
+      <input id="zip" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">郵便番号を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="4" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>ELEVATION</h2>
+  <p style="font-family: var(--font-base); font-size: 12px; line-height: 1.5; color: var(--porter-black); margin-bottom: 24px; max-width: 720px;">吉田カバンはシャドウを実質使わない。階層は #fff / #f0f0f0 / #dddddd / #333 の色面で表現する。スティッキー要素にだけ薄い境界用シャドウを与える。</p>
+  <div class="elevation-row">
+    <div class="elevation-card">Level 0 — Flat</div>
+    <div class="elevation-card elevation-1">Level 1 — Sticky</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>LAYOUT</h2>
+  <p style="font-family: var(--font-base); font-size: 12px; line-height: 1.5; color: var(--porter-black); margin-bottom: 24px; max-width: 720px;">12 カラムのカタロググリッド。max-width 1280px、ガッターは 4–8px と狭く、情報密度を確保する。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>YOSHIDA &amp; Co.</h4>
+    <p>このプレビューは吉田カバン（PORTER / LUGGAGE LABEL / B印 YOSHIDA / PORTER CLASSIC）のカタログ的 UI を参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。和文は Noto Sans JP（Google Fonts）、英文の大見出しは Helvetica Neue（OS フォント）を使用しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>
