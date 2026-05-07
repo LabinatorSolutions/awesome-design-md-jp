@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Takram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: Takram CSS Custom Properties 実測値 === */
+    --color-black: #1a1a1a;
+    --color-graphite: #343434;
+    --color-gray-1: #2a2a2a;
+    --color-gray-2: #525252;
+    --color-gray-3: #686868;
+    --color-gray-4: #a8a8a8;
+    --color-gray-5: #d8d8d8;
+    --color-white: #ffffff;
+    --color-red: #c40b0b;
+
+    /* === Fonts: Web 代替 === */
+    --font-base: "Inter", "Helvetica Neue", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 48px;
+    --space-xxl: 96px;
+    --space-xxxl: 160px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 300; line-height: 1.0;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px; height: 64px;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-gray-5);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: normal;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 16px; font-weight: 400;
+    color: #000;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    letter-spacing: normal;
+  }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-lang { display: flex; gap: 16px; }
+  .nav-lang a {
+    font-size: 16px; font-weight: 400;
+    letter-spacing: 0.48px;
+    text-decoration: none;
+    color: var(--color-gray-3);
+    transition: color 0.15s;
+  }
+  .nav-lang a.active { color: var(--color-black); }
+  .nav-lang a:hover { color: var(--color-black); }
+
+  /* HERO */
+  .hero {
+    padding: 160px 32px 96px;
+    background: var(--color-white);
+  }
+  .hero h1 {
+    font-size: 64px; font-weight: 400; line-height: 1.0;
+    letter-spacing: -2.56px;
+    color: var(--color-black);
+    margin-bottom: 24px;
+    max-width: 1100px;
+  }
+  .hero p.lead {
+    font-size: 24px; font-weight: 300; line-height: 1.0;
+    letter-spacing: -0.36px;
+    color: var(--color-black);
+    margin-bottom: 48px;
+    max-width: 800px;
+  }
+  .hero-link {
+    font-size: 16px; font-weight: 400;
+    color: var(--color-gray-3);
+    text-decoration: none;
+    letter-spacing: -0.16px;
+    border-bottom: 1px solid var(--color-gray-3);
+    padding-bottom: 4px;
+    transition: opacity 0.15s;
+  }
+  .hero-link:hover { opacity: 0.7; }
+
+  /* SECTIONS */
+  .section { padding: 96px 32px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-size: 14px; font-weight: 400; color: var(--color-gray-3);
+    letter-spacing: -0.07px;
+    margin-bottom: 16px;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 48px; font-weight: 400; line-height: 1.0;
+    letter-spacing: -0.96px;
+    color: var(--color-black);
+    margin-bottom: 64px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-gray-5); margin: 0; }
+  .section-gray { background: var(--color-graphite); padding: 96px 32px; color: var(--color-white); }
+  .section-gray .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-gray .section-title { color: var(--color-white); }
+  .section-gray .section-label { color: var(--color-gray-4); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0; margin-bottom: 24px; border-top: 1px solid var(--color-gray-5); }
+  .color-swatch {
+    background: #fff;
+    border-bottom: 1px solid var(--color-gray-5);
+    border-right: 1px solid var(--color-gray-5);
+  }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name {
+    font-size: 16px; font-weight: 400; margin-bottom: 4px;
+    color: var(--color-black);
+    letter-spacing: -0.16px;
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--color-gray-3);
+    font-family: var(--font-mono);
+    letter-spacing: 0.06px;
+  }
+  .color-swatch-role {
+    font-size: 11px;
+    color: var(--color-gray-3);
+    margin-top: 8px;
+    letter-spacing: 0.11px;
+  }
+  .color-group-label {
+    font-size: 14px; font-weight: 400;
+    color: var(--color-gray-3);
+    margin: 32px 0 16px;
+    letter-spacing: -0.07px;
+    text-transform: lowercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--color-gray-5);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-gray-3);
+    margin-top: 12px;
+    letter-spacing: 0;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--color-gray-5);
+    color: var(--color-gray-2);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+    letter-spacing: 0;
+  }
+
+  /* PROJECT CARDS */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+  .project-card { background: #fff; }
+  .project-thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--color-gray-5), var(--color-gray-4));
+    margin-bottom: 16px;
+  }
+  .project-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.16px;
+    color: var(--color-black);
+    margin-bottom: 8px;
+  }
+  .project-category {
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: 0.11px;
+    color: var(--color-gray-3);
+  }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 56px; font-weight: 400; line-height: 1.0;
+    letter-spacing: -1.12px;
+    color: var(--color-black);
+    margin-bottom: 48px;
+  }
+  .article-preview h2 {
+    font-size: 24px; font-weight: 400; line-height: 1.25;
+    letter-spacing: -0.36px;
+    color: var(--color-black);
+    margin: 48px 0 16px;
+  }
+  .article-preview p {
+    font-size: 16.32px; font-weight: 300; line-height: 1.6;
+    letter-spacing: 0.16px;
+    color: var(--color-black);
+    margin-bottom: 24px;
+  }
+
+  /* TEXT LINKS (no real buttons in Takram) */
+  .link-row { display: flex; gap: 48px; flex-wrap: wrap; align-items: center; }
+  .link-item { text-align: left; }
+  .link-label {
+    font-size: 12px; font-weight: 400;
+    color: var(--color-gray-3);
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+  .text-link {
+    font-size: 16px; font-weight: 400;
+    color: var(--color-gray-3);
+    text-decoration: none;
+    letter-spacing: -0.16px;
+    border-bottom: 1px solid var(--color-gray-3);
+    padding-bottom: 4px;
+    transition: opacity 0.15s;
+  }
+  .text-link:hover { opacity: 0.7; }
+  .text-link-arrow {
+    font-size: 16px; font-weight: 400;
+    color: var(--color-black);
+    text-decoration: none;
+    letter-spacing: -0.16px;
+    transition: opacity 0.15s;
+  }
+  .filter-tab {
+    font-size: 14.5px; font-weight: 400;
+    color: var(--color-gray-3);
+    background: transparent;
+    border: 1px solid var(--color-gray-5);
+    padding: 8px 16px;
+    cursor: pointer;
+    letter-spacing: -0.145px;
+    border-radius: 0;
+    font-family: var(--font-base);
+  }
+  .filter-tab.active { color: var(--color-black); border-color: var(--color-black); }
+
+  /* SPACING DEMO */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-graphite); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--color-gray-3); }
+
+  /* FOOTER */
+  .footer {
+    padding: 96px 32px 32px;
+    background: var(--color-white);
+    color: var(--color-gray-3);
+  }
+  .footer-feel {
+    font-size: 14.28px; font-weight: 300;
+    letter-spacing: 0.14px;
+    color: var(--color-gray-3);
+    margin-bottom: 48px;
+  }
+  .footer-credit {
+    font-size: 11px;
+    color: var(--color-gray-3);
+    letter-spacing: 0.11px;
+    text-align: center;
+  }
+
+  @media (max-width: 769px) {
+    .hero { padding: 96px 16px 48px; }
+    .hero h1 { font-size: 40px; letter-spacing: -1.6px; }
+    .hero p.lead { font-size: 18px; letter-spacing: -0.27px; }
+    .nav-links { display: none; }
+    .section { padding: 64px 16px; }
+    .section-title { font-size: 32px; letter-spacing: -0.64px; }
+    .article-preview h1 { font-size: 36px; letter-spacing: -0.72px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Takram</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Projects</a></li>
+    <li><a href="#typography">Expertise</a></li>
+    <li><a href="#article">People</a></li>
+    <li><a href="#projects">Contact</a></li>
+  </ul>
+  <div class="nav-lang">
+    <a href="#" class="active">ja</a>
+    <a href="#">en</a>
+    <a href="#">zh</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>We're a design innovation firm.</h1>
+  <p class="lead">和菓子から宇宙まで。テクノロジーとデザインを横断する実践として、Takram はクライアントの長期的な成長と社会の前進に寄与します。</p>
+  <a class="hero-link" href="#">Learn more</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a1a"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#1a1a1a</div><div class="color-swatch-role">--color-black / 本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#343434"></div><div class="color-swatch-info"><div class="color-swatch-name">Graphite</div><div class="color-swatch-hex">#343434</div><div class="color-swatch-role">--color-graphite / オーバーレイ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#525252"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 2</div><div class="color-swatch-hex">#525252</div><div class="color-swatch-role">--color-gray-2</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#686868"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Gray</div><div class="color-swatch-hex">#686868</div><div class="color-swatch-role">--color-gray-3 / 補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a8a8a8"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 4</div><div class="color-swatch-hex">#a8a8a8</div><div class="color-swatch-role">--color-gray-4</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d8d8d8"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 5</div><div class="color-swatch-hex">#d8d8d8</div><div class="color-swatch-role">--color-gray-5 / ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #d8d8d8"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">--color-white / 背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c40b0b"></div><div class="color-swatch-info"><div class="color-swatch-name">Takram Red</div><div class="color-swatch-hex">#c40b0b</div><div class="color-swatch-role">--color-red / 稀なアクセント</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:64px; font-weight:400; line-height:1.0; letter-spacing:-2.56px; font-feature-settings:'palt';">We're a design innovation firm.</div>
+    <div class="type-meta">Hero h1 — 64px / 400 / lh 1.0 / ls -2.56px (-0.04em) / palt<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:56px; font-weight:400; line-height:1.0; letter-spacing:-1.12px; font-feature-settings:'palt';">Projects</div>
+    <div class="type-meta">Page h1 — 56px / 400 / lh 1.0 / ls -1.12px (-0.02em) / palt<span class="type-context">下層ページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:300; line-height:1.0; letter-spacing:-0.36px; font-feature-settings:'palt';">和菓子から宇宙まで</div>
+    <div class="type-meta">Lead — 24px / 300 / lh 1.0 / ls -0.36px (-0.015em) / palt<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16.32px; font-weight:300; line-height:1.6; letter-spacing:0.16px; font-feature-settings:'palt';">Takram is a design innovation firm. テクノロジーとデザインの両方をネイティブに扱う実践として、クライアントの長期的な成長と社会の前進に寄与しています。記事本文は line-height 1.6 と例外的にゆったり組まれています。</div>
+    <div class="type-meta">Body Article — 16.32px / 300 / lh 1.6 / ls +0.16px (+0.01em) / palt<span class="type-context">記事</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:300; line-height:1.0; font-feature-settings:'palt';">Body UI — UI 単発テキスト。line-height 1.0 で締まった文字組</div>
+    <div class="type-meta">Body UI — 16px / 300 / lh 1.0 / ls normal / palt<span class="type-context">UI 全般</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14.28px; font-weight:300; line-height:1.0; letter-spacing:0.14px; color:var(--color-gray-3); font-feature-settings:'palt';">Feel free to connect.</div>
+    <div class="type-meta">Sub Caption — 14.28px / 300 / lh 1.0 / ls +0.14px / color #686868<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:300; line-height:1.0; letter-spacing:0.11px; color:var(--color-gray-3); font-feature-settings:'palt';">Brand Identity & Experiences</div>
+    <div class="type-meta">Category Mini — 11px / 300 / lh 1.0 / ls +0.11px / color #686868<span class="type-context">カテゴリ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル（暗色面）</h2>
+  <div class="article-preview" style="color: var(--color-white);">
+    <h1 style="color: var(--color-white);">いのち動的平衡館</h1>
+    <h2 style="color: var(--color-white);">プロジェクト概要</h2>
+    <p style="color: var(--color-white);">和菓子から宇宙まで。Takram は学術と産業をつなぐデザインを実践しています。本プロジェクトでは生命の動的平衡という概念を空間表現に翻訳し、来館者が感覚を通して理解する体験を設計しました。</p>
+    <p style="color: var(--color-white);">記事本文は line-height 1.6、letter-spacing は +0.01em の控えめなプラスで、Koburina の humanist な柔らかさを引き立てます。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LINKS (no buttons) -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Links — Takram にはボタンがない</div>
+  <h2 class="section-title">テキストリンク・フィルタタブ</h2>
+  <div class="link-row">
+    <div class="link-item"><a class="hero-link" href="#">Learn more</a><div class="link-label">Hero Underline Link</div></div>
+    <div class="link-item"><a class="text-link-arrow" href="#">Read project →</a><div class="link-label">Arrow Link</div></div>
+    <div class="link-item"><a class="text-link" href="#">Contact</a><div class="link-label">Subtle Underline</div></div>
+  </div>
+  <div style="margin-top:48px; display:flex; gap:8px; flex-wrap:wrap;">
+    <button class="filter-tab active">All</button>
+    <button class="filter-tab">Design Engineering</button>
+    <button class="filter-tab">Brand Identity</button>
+    <button class="filter-tab">Service Design</button>
+    <button class="filter-tab">Hardware</button>
+  </div>
+  <div class="link-label" style="margin-top:8px;">Filter Tabs — 14.5px / 400 / ls -0.145px / radius 0px</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROJECT CARDS -->
+<section class="section" id="projects">
+  <div class="section-label">05 / Project Cards</div>
+  <h2 class="section-title">プロジェクトカード</h2>
+  <div class="project-grid">
+    <div class="project-card">
+      <div class="project-thumb"></div>
+      <div class="project-title">「Jリーグ気候アクション」のブランディング</div>
+      <div class="project-category">Brand Identity & Experiences</div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb" style="background: linear-gradient(135deg, #686868, #1a1a1a);"></div>
+      <div class="project-title">いのち動的平衡館</div>
+      <div class="project-category">Service Design & Spatial</div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb" style="background: linear-gradient(135deg, #d8d8d8, #686868);"></div>
+      <div class="project-title">航空機キャビンのリブランディング</div>
+      <div class="project-category">Design Engineering</div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb" style="background: linear-gradient(135deg, #1a1a1a, #343434);"></div>
+      <div class="project-title">スマートシティの体験設計</div>
+      <div class="project-category">Service Design</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">06 / Spacing — 8px ベース</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">XS / 4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">S / 8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">M / 16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">L / 24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">XL / 48</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px;"></div><div class="spacing-value">XXL / 96</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:160px;"></div><div class="spacing-value">XXXL / 160</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <h2 class="section-title">レイアウト</h2>
+  <ul style="list-style:none; padding:0;">
+    <li style="padding:16px 0; border-top:1px solid var(--color-gray-5); display:flex; justify-content:space-between;">
+      <span style="font-size:16px; font-weight:400; letter-spacing:-0.16px;">Container Max Width</span>
+      <span style="font-family:var(--font-mono); font-size:14px; color:var(--color-gray-3);">1280–1440px</span>
+    </li>
+    <li style="padding:16px 0; border-top:1px solid var(--color-gray-5); display:flex; justify-content:space-between;">
+      <span style="font-size:16px; font-weight:400; letter-spacing:-0.16px;">Margin Side (Desktop)</span>
+      <span style="font-family:var(--font-mono); font-size:14px; color:var(--color-gray-3);">32–64px</span>
+    </li>
+    <li style="padding:16px 0; border-top:1px solid var(--color-gray-5); display:flex; justify-content:space-between;">
+      <span style="font-size:16px; font-weight:400; letter-spacing:-0.16px;">Border Radius</span>
+      <span style="font-family:var(--font-mono); font-size:14px; color:var(--color-gray-3);">0px (全要素)</span>
+    </li>
+    <li style="padding:16px 0; border-top:1px solid var(--color-gray-5); border-bottom:1px solid var(--color-gray-5); display:flex; justify-content:space-between;">
+      <span style="font-size:16px; font-weight:400; letter-spacing:-0.16px;">Shadow</span>
+      <span style="font-family:var(--font-mono); font-size:14px; color:var(--color-gray-3);">none</span>
+    </li>
+  </ul>
+</section>
+
+<footer class="footer">
+  <div class="footer-feel">Feel free to connect.</div>
+  <div class="footer-credit">Generated from <a href="https://ja.takram.com/" style="color:var(--color-gray-3); text-decoration:underline;">ja.takram.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）</div>
+</footer>
+
+</body>
+</html>

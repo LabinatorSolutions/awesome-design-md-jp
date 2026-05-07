@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KOKUYO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: KOKUYO CSS Custom Properties 実測値（OKLCH→hex 換算）=== */
+    --black100: #313131;
+    --gray_text: #7a7a7a;
+    --gray_text_light: #a4a4a4;
+    --gray_line: #d4d4d4;
+    --gray_btn: #eeeeee;
+    --gray_bg: #eeeeee;
+    --white100: #ffffff;
+
+    /* Brand Category Colors */
+    --brand_blue: #5dadd1;   /* 文具 */
+    --brand_green: #3eb088;  /* 家具 */
+    --brand_pink: #e08bbf;   /* 空間 */
+    --brand_red: #e76654;    /* 通販 */
+    --cyan: #5dadd1;
+    --purple: #a78bd9;
+    --salmon: #f0a290;
+    --tan: #d4b89a;
+    --sand: #ecf5d5;
+    --sun: #f5d97a;
+    --violet: #c5a5e0;
+    --cloud: #dde5e7;
+    --bean: #c4d68f;
+    --lavender: #d8c0e8;
+    --mint: #9fd9c1;
+    --apricot: #f5b896;
+    --sea: #7ec5d4;
+    --cream: #f0e9d4;
+    --lemon: #f0e89a;
+
+    /* === Spacing === */
+    --space8: 8px;
+    --space16: 16px;
+    --space24: 24px;
+    --space32: 32px;
+    --space48: 48px;
+    --space64: 64px;
+    --space80: 80px;
+    --space96: 96px;
+    --space112: 112px;
+    --space144: 144px;
+
+    /* === Fonts: Web 代替 === */
+    --font-base: "Inter", "Helvetica Neue", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white100);
+    color: var(--black100);
+    font-family: var(--font-base);
+    font-size: 17px; font-weight: 400; line-height: 1.41;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: var(--space16) var(--space32); height: 72px;
+    background: var(--white100);
+    border-bottom: 1px solid var(--gray_line);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 700;
+    color: var(--black100);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; gap: var(--space32); list-style: none; }
+  .nav-links a {
+    font-size: 17px; font-weight: 500;
+    color: var(--black100);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.7; }
+
+  /* HERO */
+  .hero {
+    padding: var(--space96) var(--space32) var(--space64);
+    background: var(--sand);
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 56px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 1px;
+    color: var(--black100);
+    margin-bottom: var(--space16);
+    font-feature-settings: "palt";
+  }
+  .hero p {
+    font-size: 19px; font-weight: 500; line-height: 1.47;
+    color: var(--black100);
+    max-width: 700px; margin: 0 auto var(--space32);
+  }
+
+  /* SECTIONS */
+  .section { padding: var(--space80) var(--space32); max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-size: 13px; font-weight: 500; color: var(--gray_text);
+    margin-bottom: var(--space8);
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 700; line-height: 1.4;
+    letter-spacing: 0.5px;
+    color: var(--black100);
+    margin-bottom: var(--space32);
+    font-feature-settings: "palt";
+  }
+  .section-divider { border: none; border-top: 1px solid var(--gray_line); margin: 0; }
+  .section-gray { background: var(--gray_bg); padding: var(--space80) var(--space32); }
+  .section-gray .section-inner { max-width: 1280px; margin: 0 auto; }
+
+  /* CATEGORY TILES (KOKUYO の象徴) */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border-top: 1px solid transparent;
+  }
+  .category-tile {
+    aspect-ratio: 1 / 1;
+    padding: var(--space32);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--white100);
+    transition: opacity 0.15s;
+  }
+  .category-tile:hover { opacity: 0.85; }
+  .category-tile.cat-stationery { background: var(--brand_blue); }
+  .category-tile.cat-furniture { background: var(--brand_green); }
+  .category-tile.cat-space { background: var(--brand_pink); }
+  .category-tile.cat-mail { background: var(--brand_red); }
+  .category-tile.cat-cloud { background: var(--cloud); color: var(--black100); }
+  .category-tile.cat-magazine { background: var(--lemon); color: var(--black100); }
+  .category-label-jp {
+    font-size: 24px; font-weight: 700; line-height: 1.4;
+    letter-spacing: 0.5px;
+    font-feature-settings: "palt";
+  }
+  .category-label-en {
+    font-size: 13px; font-weight: 500; opacity: 0.85;
+    letter-spacing: 0.5px;
+    margin-top: var(--space8);
+  }
+  .category-tile p {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    margin-top: var(--space16);
+    opacity: 0.92;
+  }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: var(--white100); overflow: hidden; border: 1px solid var(--gray_line); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; color: var(--black100); }
+  .color-swatch-hex { font-size: 12px; color: var(--gray_text); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--gray_text); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 600; color: var(--black100); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--gray_line); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--gray_text); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--gray_bg); color: var(--gray_text); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-family: var(--font-base); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--gray_text); margin-top: 8px; font-family: var(--font-mono); }
+  .btn-primary {
+    display: inline-block; background: var(--brand_blue); color: var(--white100);
+    padding: 16px 32px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 17px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    font-feature-settings: "palt";
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--black100);
+    padding: 16px 32px; border-radius: 0;
+    border: 1px solid var(--gray_line);
+    font-family: var(--font-base); font-size: 17px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+    font-feature-settings: "palt";
+  }
+  .btn-outline:hover { background: var(--gray_bg); }
+  .btn-pill-toggle {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--white100); color: var(--black100);
+    padding: 6px 12px; border-radius: 99px;
+    border: 1px solid var(--gray_line);
+    font-size: 11px; font-weight: 500;
+    cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--gray_bg); border-radius: 0; padding: 24px; transition: opacity 0.15s; }
+  .card:hover { opacity: 0.92; }
+  .card h3 { font-size: 19px; font-weight: 700; line-height: 1.47; letter-spacing: 0.3px; font-feature-settings: "palt"; margin-bottom: 8px; color: var(--black100); }
+  .card p { font-size: 17px; color: var(--gray_text); line-height: 1.41; }
+  .card-link { font-size: 14px; color: var(--black100); text-decoration: underline; margin-top: 12px; display: inline-block; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-size: 36px; font-weight: 700; line-height: 1.4; letter-spacing: 0.5px; font-feature-settings: "palt"; margin-bottom: 24px; color: var(--black100); }
+  .article-preview h2 { font-size: 24px; font-weight: 700; line-height: 1.5; letter-spacing: 0.3px; font-feature-settings: "palt"; margin: 32px 0 12px; color: var(--black100); }
+  .article-preview p { font-size: 17px; font-weight: 400; line-height: 1.7; letter-spacing: normal; font-feature-settings: "palt"; margin-bottom: 16px; color: var(--black100); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--black100); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--white100); color: var(--black100);
+    border: 1px solid var(--gray_line); padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-base); font-size: 17px; outline: none;
+    transition: border-color 0.15s;
+    font-feature-settings: "palt";
+  }
+  .form-input:focus, .form-input--focus { border: 2px solid var(--brand_blue); padding: 11px 15px; }
+  .form-input--error { border: 2px solid var(--brand_red); padding: 11px 15px; }
+  .form-state-label { font-size: 11px; color: var(--gray_text); margin-top: 4px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand_blue); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--gray_text); }
+
+  /* FOOTER */
+  .footer { padding: var(--space64) var(--space32); background: var(--white100); color: var(--gray_text); font-size: 12px; text-align: center; border-top: 1px solid var(--gray_line); }
+
+  @media (max-width: 769px) {
+    .hero { padding: var(--space64) var(--space16); }
+    .hero h1 { font-size: 36px; }
+    .hero p { font-size: 16px; }
+    .nav-links { display: none; }
+    .section { padding: var(--space48) var(--space16); }
+    .section-gray { padding: var(--space48) var(--space16); }
+    .card-grid { grid-template-columns: 1fr; }
+    .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .article-preview h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">KOKUYO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Curiosity is Life</h1>
+  <p>好奇心を人生に — 文具から家具・空間・通販まで、コクヨは「学ぶ・働く・暮らす」の体験すべてに、好奇心を育む道具と場をデザインします。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- CATEGORY TILES -->
+<section class="section" id="categories">
+  <div class="section-label">01 / Category Tiles — KOKUYO の象徴</div>
+  <h2 class="section-title">カテゴリパネル（OKLCH カラーシステム）</h2>
+  <div class="category-grid">
+    <a href="#" class="category-tile cat-stationery">
+      <div>
+        <div class="category-label-jp">文具</div>
+        <div class="category-label-en">Stationery</div>
+      </div>
+      <p>毎日のものから、一生もの。</p>
+    </a>
+    <a href="#" class="category-tile cat-furniture">
+      <div>
+        <div class="category-label-jp">家具</div>
+        <div class="category-label-en">Furniture</div>
+      </div>
+      <p>行動を探求し、家具を究める。</p>
+    </a>
+    <a href="#" class="category-tile cat-space">
+      <div>
+        <div class="category-label-jp">空間</div>
+        <div class="category-label-en">Space</div>
+      </div>
+      <p>場の変化で、組織を動かす。</p>
+    </a>
+    <a href="#" class="category-tile cat-mail">
+      <div>
+        <div class="category-label-jp">通販</div>
+        <div class="category-label-en">Mail Order</div>
+      </div>
+      <p>便利を超えて、はじまる。</p>
+    </a>
+    <a href="#" class="category-tile cat-cloud">
+      <div>
+        <div class="category-label-jp">コクヨを知る</div>
+        <div class="category-label-en">About</div>
+      </div>
+      <p>領域・社員・歴史のこと</p>
+    </a>
+    <a href="#" class="category-tile cat-magazine">
+      <div>
+        <div class="category-label-jp">マガジン</div>
+        <div class="category-label-en">Magazine</div>
+      </div>
+      <p>ワクワクを探して</p>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">02 / Colors — OKLCH 色空間で統一</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand Category</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5dadd1"></div><div class="color-swatch-info"><div class="color-swatch-name">--brand_blue</div><div class="color-swatch-hex">#5dadd1</div><div class="color-swatch-role">文具 / oklch(0.79 0.14 221)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3eb088"></div><div class="color-swatch-info"><div class="color-swatch-name">--brand_green</div><div class="color-swatch-hex">#3eb088</div><div class="color-swatch-role">家具 / oklch(0.73 0.17 159)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e08bbf"></div><div class="color-swatch-info"><div class="color-swatch-name">--brand_pink</div><div class="color-swatch-hex">#e08bbf</div><div class="color-swatch-role">空間 / oklch(0.84 0.12 337)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e76654"></div><div class="color-swatch-info"><div class="color-swatch-name">--brand_red</div><div class="color-swatch-hex">#e76654</div><div class="color-swatch-role">通販 / oklch(0.72 0.16 20)</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface Pastel</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ecf5d5"></div><div class="color-swatch-info"><div class="color-swatch-name">--sand</div><div class="color-swatch-hex">#ecf5d5</div><div class="color-swatch-role">ヒーロー黄緑面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dde5e7"></div><div class="color-swatch-info"><div class="color-swatch-name">--cloud</div><div class="color-swatch-hex">#dde5e7</div><div class="color-swatch-role">企業情報パネル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0e89a"></div><div class="color-swatch-info"><div class="color-swatch-name">--lemon</div><div class="color-swatch-hex">#f0e89a</div><div class="color-swatch-role">マガジン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0e9d4"></div><div class="color-swatch-info"><div class="color-swatch-name">--cream</div><div class="color-swatch-hex">#f0e9d4</div><div class="color-swatch-role">クリーム面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9fd9c1"></div><div class="color-swatch-info"><div class="color-swatch-name">--mint</div><div class="color-swatch-hex">#9fd9c1</div><div class="color-swatch-role">アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c5a5e0"></div><div class="color-swatch-info"><div class="color-swatch-name">--violet</div><div class="color-swatch-hex">#c5a5e0</div><div class="color-swatch-role">アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5b896"></div><div class="color-swatch-info"><div class="color-swatch-name">--apricot</div><div class="color-swatch-hex">#f5b896</div><div class="color-swatch-role">アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7ec5d4"></div><div class="color-swatch-info"><div class="color-swatch-name">--sea</div><div class="color-swatch-hex">#7ec5d4</div><div class="color-swatch-role">アクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#313131"></div><div class="color-swatch-info"><div class="color-swatch-name">--black100</div><div class="color-swatch-hex">#313131</div><div class="color-swatch-role">本文 / oklch(0.27 0 0)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7a7a7a"></div><div class="color-swatch-info"><div class="color-swatch-name">--gray_text</div><div class="color-swatch-hex">#7a7a7a</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d4d4d4"></div><div class="color-swatch-info"><div class="color-swatch-name">--gray_line</div><div class="color-swatch-hex">#d4d4d4</div><div class="color-swatch-role">区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">--gray_bg</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">カード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #d4d4d4"></div><div class="color-swatch-info"><div class="color-swatch-name">--white100</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">03 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:56px; font-weight:700; line-height:1.3; letter-spacing:1px; font-feature-settings:'palt';">Curiosity is Life</div>
+    <div class="type-meta">Hero — 56px / 700 / lh 1.3 / ls +1px / palt<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:700; line-height:1.4; letter-spacing:0.5px; font-feature-settings:'palt';">セクション見出し — Heading 2</div>
+    <div class="type-meta">Section h2 — 28px / 700 / lh 1.4 / ls +0.5px / palt<span class="type-context">セクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:19px; font-weight:500; line-height:1.47; font-feature-settings:'palt';">ニュースリリース — Heading（実測 19px / weight 500）</div>
+    <div class="type-meta">Heading — 19px / 500 / lh 1.47 (28/19) / palt<span class="type-context">小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:17px; font-weight:400; line-height:1.41; font-feature-settings:'palt';">本文テキスト — KOKUYO の本文は 17px / weight 400 / line-height 1.41（24/17）。HelveticaNowText + 田鶴ゴシック StdN（Morisawa）の混植で、欧米寄りの締まったプロポーション。font-feature-settings: "palt" でプロポーショナル詰めが有効。</div>
+    <div class="type-meta">Body — 17px / 400 / lh 1.41 (24/17) / palt<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:17px; font-weight:500; line-height:1.41; color:var(--gray_text); font-feature-settings:'palt';">補助テキスト — Body Muted（領域・社員・歴史のこと）</div>
+    <div class="type-meta">Body Muted — 17px / 400 / lh 1.41 / color #7a7a7a / palt</div>
+  </div>
+  <div class="type-sample">
+    <div style="background:var(--brand_blue); color:var(--white100); padding:24px; font-size:17px; font-weight:500; line-height:1.41; font-feature-settings:'palt';">カラーパネル上のラベル — Card Label (white on color) / weight 500</div>
+    <div class="type-meta">Card Label — 17px / 500 / color #ffffff / カラーパネル上 / palt</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11px; font-weight:500; line-height:1.82;">サイトの動き ON / OFF</div>
+    <div class="type-meta">Toggle Caption — 11px / 500 / lh 1.82</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">04 / Article — 記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>コクヨデザインの120年と、25年目のコクヨデザインアワード</h1>
+    <h2>好奇心を真ん中に</h2>
+    <p>これからは、好奇心を真ん中に、好奇心を世界中へ届けます。文具から家具、空間、通販まで、コクヨの仕事は「学ぶ・働く・暮らす」の現場で人の好奇心を引き出すこと。</p>
+    <p>本文は HelveticaNowText + 田鶴ゴシック StdN（Morisawa）の混植で、line-height 1.41〜1.7 のリズム。letter-spacing は normal で、palt の自動詰めに任せます。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">詳しく見る</a><div class="button-label">Primary (--brand_blue)</div></div>
+    <div class="button-item"><a class="btn-primary" href="#" style="background:var(--brand_green);">家具を見る</a><div class="button-label">Furniture (--brand_green)</div></div>
+    <div class="button-item"><a class="btn-primary" href="#" style="background:var(--brand_red);">通販へ</a><div class="button-label">Mail (--brand_red)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">もっと見る</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><button class="btn-pill-toggle">サイトの動き ON</button><div class="button-label">Toggle Pill</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">06 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>穴あけパンチ（2穴パンチ）の使用中止のお願い</h3>
+      <p>製品の使用中止についてのご案内です。詳細は関連ページをご確認ください。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+    <div class="card">
+      <h3>体験型デザインイベント「コクヨデザインアワード」</h3>
+      <p>コクヨデザインアワードの 25 年目を迎えました。受賞作品と背景にあるストーリーをご紹介します。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+    <div class="card">
+      <h3>CI/VI をリニューアルしました</h3>
+      <p>「Curiosity is Life — 好奇心を人生に」を新しいタグラインに、コーポレートアイデンティティを刷新しました。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">サイト内検索</label><input class="form-input" type="text" placeholder="例: キャンパスノート"><div class="form-state-label">デフォルト — border #d4d4d4 / radius 0px</div></div>
+  <div class="form-group"><label class="form-label">商品名</label><input class="form-input form-input--focus" type="text" value="キャンパスノート"><div class="form-state-label">フォーカス — 2px border #5dadd1 (--brand_blue)</div></div>
+  <div class="form-group"><label class="form-label">入力エラー</label><input class="form-input form-input--error" type="text" value="invalid"><div class="form-state-label">エラー — 2px border #e76654 (--brand_red)</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">08 / Spacing — CSS Custom Properties 実測</div>
+  <h2 class="section-title">8px 加算スケール</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">--space8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">--space16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">--space24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">--space32</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">--space48</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">--space64</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">--space80</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px;"></div><div class="spacing-value">--space96</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:112px;"></div><div class="spacing-value">--space112</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:144px;"></div><div class="spacing-value">--space144</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.kokuyo.co.jp/" style="color:var(--brand_blue); text-decoration:underline;">kokuyo.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+</footer>
+
+</body>
+</html>

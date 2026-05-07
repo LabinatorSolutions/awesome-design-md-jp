@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (47 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (50 sites)</a>
 </p>
 
 <table>
@@ -100,6 +100,14 @@
 <td align="center"><strong>中川政七商店</strong><br><img src="design-md/nakagawa/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>POLA</strong><br><img src="design-md/pola/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>D&amp;DEPARTMENT</strong><br><img src="design-md/ddepartment/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Takram</strong><br><img src="design-md/takram/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>KOKUYO</strong><br><img src="design-md/kokuyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Gマーク</strong><br><img src="design-md/g-mark/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -209,11 +217,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Nakagawa Masashichi Shoten](https://www.nakagawa-masashichi.jp/) | Heritage Craft / Lifestyle | [DESIGN.md](design-md/nakagawa/DESIGN.md) | [preview.html](design-md/nakagawa/preview.html) |
 | [POLA](https://www.pola.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/pola/DESIGN.md) | [preview.html](design-md/pola/preview.html) |
 | [D&DEPARTMENT](https://www.d-department.com/) | Long Life Design / Curated Retail | [DESIGN.md](design-md/ddepartment/DESIGN.md) | [preview.html](design-md/ddepartment/preview.html) |
+| [Takram](https://ja.takram.com/) | Design Innovation Firm | [DESIGN.md](design-md/takram/DESIGN.md) | [preview.html](design-md/takram/preview.html) |
+| [KOKUYO](https://www.kokuyo.co.jp/) | Stationery / Furniture / Space | [DESIGN.md](design-md/kokuyo/DESIGN.md) | [preview.html](design-md/kokuyo/preview.html) |
+| [GOOD DESIGN AWARD](https://www.g-mark.org/) | Design Award / Public | [DESIGN.md](design-md/g-mark/DESIGN.md) | [preview.html](design-md/g-mark/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (47 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (50 sites)</a>
 </p>
 
 <table>
@@ -279,6 +290,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>中川政七商店</strong><br><img src="design-md/nakagawa/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>POLA</strong><br><img src="design-md/pola/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>D&amp;DEPARTMENT</strong><br><img src="design-md/ddepartment/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Takram</strong><br><img src="design-md/takram/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>KOKUYO</strong><br><img src="design-md/kokuyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>G-Mark</strong><br><img src="design-md/g-mark/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
