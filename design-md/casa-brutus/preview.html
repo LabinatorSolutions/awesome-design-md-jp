@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Casa BRUTUS</title>
+<style>
+  :root {
+    /* === Casa BRUTUS Color Tokens (実測値) === */
+    --casa-black: #000000;
+    --casa-white: #ffffff;
+    --soft-cream: #f9e0cc;
+    --soft-sky: #e7f4f9;
+    --modal-veil: rgba(0, 0, 0, 0.5);
+
+    --promo-pink: #dc3b89;
+    --promo-red: #ff3434;
+    --social-blue: #1877f2;
+
+    --border-cta: #000000;
+    --hairline: rgba(0, 0, 0, 0.1);
+
+    --text-primary: #000000;
+    --text-inverse: #ffffff;
+
+    /* === Fonts === */
+    --font-base: "Helvetica Neue", helvetica, "Hiragino Kaku Gothic ProN", "Yu Gothic",
+                 ui-sans-serif, system-ui, sans-serif,
+                 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--casa-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 72px;
+    background: var(--casa-white);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 22px; font-weight: 700;
+    color: var(--casa-black); text-decoration: none; letter-spacing: normal;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 16px; font-weight: 400; color: var(--casa-black); text-decoration: none; letter-spacing: normal; }
+  .nav-links a:hover { text-decoration: underline; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 72px;
+    text-align: center;
+    background: var(--casa-white);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-base); font-size: 24px; font-weight: 400;
+    color: var(--casa-black); margin-bottom: 16px;
+    letter-spacing: normal;
+  }
+  .hero h1 {
+    font-size: 48px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 24px;
+    letter-spacing: normal;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary); max-width: 720px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-outline {
+    display: inline-block; background: var(--casa-white); color: var(--casa-black);
+    padding: 8px; min-width: 256px; text-align: center;
+    border: 1px solid var(--border-cta);
+    border-radius: 0px;
+    font-family: var(--font-base); font-size: 20px; font-weight: 400;
+    line-height: 1.5; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--casa-black); color: var(--casa-white); }
+  .btn-disabled {
+    display: inline-block; background: var(--casa-white); color: var(--casa-black);
+    padding: 8px; min-width: 256px; text-align: center;
+    border: 1px solid var(--border-cta);
+    border-radius: 0px;
+    font-family: var(--font-base); font-size: 20px; font-weight: 400;
+    line-height: 1.5; cursor: not-allowed;
+    opacity: 0.2;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    color: var(--casa-black); letter-spacing: normal; margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 48px; line-height: 1.5;
+    letter-spacing: normal;
+  }
+  .section-divider { border: none; height: 1px; background: var(--hairline); margin: 0; }
+  .section-cream { background: var(--soft-cream); }
+  .section-sky { background: var(--soft-sky); }
+  .section-dark { background: var(--casa-black); color: var(--casa-white); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: #ffffff; border: 1px solid var(--hairline); overflow: hidden; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-primary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-primary); margin-top: 3px; opacity: 0.6; }
+  .color-group-label {
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    color: var(--text-primary); margin: 24px 0 10px;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--hairline); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-primary); margin-top: 12px; opacity: 0.7; }
+  .type-context { display: inline-block; background: var(--casa-black); color: var(--casa-white); font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* CATEGORY TAGS (large) */
+  .category-row { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+  .category-tag {
+    font-family: var(--font-base); font-size: 24px; font-weight: 400;
+    color: var(--casa-black); text-decoration: none; line-height: 1.5;
+    letter-spacing: normal;
+  }
+  .category-tag:hover { text-decoration: underline; }
+
+  /* PR Badge */
+  .pr-badge {
+    display: inline-block; background: var(--casa-black); color: var(--casa-white);
+    font-size: 12px; font-weight: 700; padding: 2px 8px;
+    line-height: 1.5; letter-spacing: 0.3px;
+  }
+
+  /* ARTICLE CARDS */
+  .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .article-card {
+    background: var(--casa-white);
+    text-decoration: none; color: var(--text-primary);
+    display: flex; flex-direction: column;
+  }
+  .article-card-image {
+    height: 200px; background: linear-gradient(135deg, #888888, #444444);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--casa-white); font-weight: 700; font-size: 22px; letter-spacing: normal;
+  }
+  .article-card-image.cream { background: linear-gradient(135deg, var(--soft-cream), #d9b899); color: var(--casa-black); }
+  .article-card-image.sky { background: linear-gradient(135deg, var(--soft-sky), #6bb1cc); color: var(--casa-black); }
+  .article-card-body { padding: 16px 0 0; }
+  .article-card .article-tag { font-size: 14px; font-weight: 400; color: var(--casa-black); margin-bottom: 8px; line-height: 1.5; text-transform: uppercase; }
+  .article-card h3 { font-size: 20px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; color: var(--text-primary); letter-spacing: normal; }
+  .article-card p { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--text-primary); }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-primary); margin-top: 12px; opacity: 0.6; font-family: var(--font-mono); }
+
+  /* HERO COPY (large feature) */
+  .feature-copy {
+    padding: 96px 32px;
+    text-align: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .feature-copy-large {
+    font-size: 48px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 16px; letter-spacing: normal;
+  }
+  .feature-copy-sub {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; letter-spacing: normal; }
+  .form-input {
+    width: 100%; background: var(--casa-white); color: var(--text-primary);
+    border: 1px solid var(--casa-black); padding: 12px 16px; border-radius: 0px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-width: 2px; }
+  .form-state-label { font-size: 11px; color: var(--text-primary); margin-top: 6px; font-family: var(--font-mono); opacity: 0.7; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--casa-black); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-primary); opacity: 0.7; }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--hairline); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--casa-black); }
+  .width-bar-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-primary); opacity: 0.7; }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 32px 40px;
+    background: var(--casa-black);
+    color: var(--casa-white);
+    text-align: center;
+    font-size: 13px; line-height: 1.5;
+  }
+  .footer a { color: var(--casa-white); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1, .feature-copy-large { font-size: 32px; }
+    .section-title { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .feature-copy { padding: 64px 20px; }
+    .article-grid { grid-template-columns: 1fr; }
+    .btn-outline, .btn-disabled { font-size: 16px; min-width: auto; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Casa BRUTUS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#articles">Articles</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">DESIGN SYSTEM PREVIEW</div>
+  <h1>Topics 注目コンテンツ</h1>
+  <p>Casa BRUTUS（casabrutus.com）から抽出したデザイントークンのカタログ。Helvetica Neue + ヒラギノ角ゴ ProN の欧文先頭スタック、純白 × 純黒のハイコントラスト、border-radius 0px の square CTA。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-outline" href="#">Read More</a>
+    <a class="btn-outline" href="#">会員登録</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / COLORS</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Casa Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・CTA 罫線・PR バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Casa White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">背景・CTA 面色</div></div></div>
+  </div>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9e0cc"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Cream</div><div class="color-swatch-hex">#f9e0cc</div><div class="color-swatch-role">フィーチャーカード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e7f4f9"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Sky</div><div class="color-swatch-hex">#e7f4f9</div><div class="color-swatch-role">占い・お告げ系のアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.5)"></div><div class="color-swatch-info"><div class="color-swatch-name">Modal Veil</div><div class="color-swatch-hex">rgba(0,0,0,0.5)</div><div class="color-swatch-role">モーダル暗幕</div></div></div>
+  </div>
+
+  <div class="color-group-label">accent / promo</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc3b89"></div><div class="color-swatch-info"><div class="color-swatch-name">Promo Pink</div><div class="color-swatch-hex">#dc3b89</div><div class="color-swatch-role">キャンペーン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff3434"></div><div class="color-swatch-info"><div class="color-swatch-name">Promo Red</div><div class="color-swatch-hex">#ff3434</div><div class="color-swatch-role">緊急告知</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1877f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Social Blue</div><div class="color-swatch-hex">#1877f2</div><div class="color-swatch-role">SNS シェア</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-cream" style="max-width:none;">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:80px 32px;">
+  <div class="section-eyebrow">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:48px; font-weight:700; line-height:1.5; color:#000000; letter-spacing:normal;">Topics 注目コンテンツ</div>
+    <div class="type-meta">Helvetica Neue + Hiragino Kaku Gothic ProN / 48px / 700 / line-height: 1.5 (72px)<span class="type-context">Hero h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:700; line-height:1.5; color:#000000;">ミラノで初お披露目！ インダストリアル・ファシリティと考える</div>
+    <div class="type-meta">Helvetica Neue + ProN / 24px / 700 / line-height: 1.5 (36px)<span class="type-context">h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:700; line-height:1.5; color:#000000;">東京・駒込にファン待望の〈SHOKKI〉のショップが誕生。</div>
+    <div class="type-meta">Helvetica Neue + ProN / 20px / 700 / line-height: 1.5 (30px)<span class="type-context">h3 Card</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:400; line-height:1.5; color:#000000;">DESIGN — ARCHITECTURE — FASHION — FOOD</div>
+    <div class="type-meta">Helvetica Neue + ProN / 24px / 400 / line-height: 1.5 (36px)<span class="type-context">Category Tag</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.5; color:#000000; max-width:720px;">建築・デザイン・暮らしを一望する Casa BRUTUS は、暮らしを彩る家具・建築・アート・旅・食をめぐる視点を発信し続けるカルチャーマガジンです。日本のクラフト、世界の建築、コンテンポラリーアートから、毎日の食卓まで——美しく豊かな暮らしのための視点を提供します。</div>
+    <div class="type-meta">Helvetica Neue + ProN / 16px / 400 / line-height: 1.5 (24px)<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.5; color:#000000;">〈FUJIFILM〉が2024年にスタートした〈+precious〉が、〈カリモク家具〉と組んで、写真を飾るための新しい家具コレクションを発表しました。</div>
+    <div class="type-meta">Helvetica Neue + ProN / 14px / 400 / line-height: 1.5 (21px)<span class="type-context">Body Small</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:300; line-height:1.5; color:#000000;">ご登録頂くと、弊社のプライバシーポリシーとメールマガジンの配信に同意したことになります。</div>
+    <div class="type-meta">Helvetica Neue + ProN / 12px / 300 / line-height: 1.5 (18px)<span class="type-context">Note</span></div>
+  </div>
+  <div class="type-sample">
+    <div><span class="pr-badge">PR</span></div>
+    <div class="type-meta">PR Badge / 12px / 700 / letter-spacing: 0.3px / 黒地白文字<span class="type-context">PR Badge</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LARGE COPY -->
+<section style="background: var(--casa-black); color: var(--casa-white);">
+  <div class="feature-copy">
+    <div class="feature-copy-large" style="color: var(--casa-white);">『LISTENING ROOM 音のいい部屋。』</div>
+    <div class="feature-copy-sub" style="color: var(--casa-white);">建築・デザイン・暮らしを一望する Casa BRUTUS の連載特集</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLES -->
+<section class="section" id="articles">
+  <div class="section-eyebrow">03 / ARTICLES — feature cards</div>
+  <h2 class="section-title">Articles</h2>
+
+  <div class="category-row">
+    <a class="category-tag" href="#">DESIGN</a>
+    <a class="category-tag" href="#">ARCHITECTURE</a>
+    <a class="category-tag" href="#">FASHION</a>
+    <a class="category-tag" href="#">FOOD</a>
+    <a class="category-tag" href="#">ART</a>
+  </div>
+
+  <div class="article-grid">
+    <a class="article-card" href="#">
+      <div class="article-card-image">DESIGN</div>
+      <div class="article-card-body">
+        <div class="article-tag">DESIGN</div>
+        <h3>東京・駒込にファン待望の〈SHOKKI〉のショップが誕生</h3>
+        <p>ポップで自由な一点物と出会う、新しい器の店。陶芸家やデザイナーが集う展示販売の場が、駒込の路地裏にオープンしました。</p>
+      </div>
+    </a>
+    <a class="article-card" href="#">
+      <div class="article-card-image cream">ARCHITECTURE</div>
+      <div class="article-card-body">
+        <div class="article-tag">ARCHITECTURE</div>
+        <h3>安藤忠雄が語るアートの聖地の最新建築〈ENTER NEW SPACES〉</h3>
+        <p>ベネッセアートサイト直島での 30 余年。空間と光、素材と時間を巡る建築家の言葉を動画連載で追います。</p>
+      </div>
+    </a>
+    <a class="article-card" href="#">
+      <div class="article-card-image sky">CULTURE</div>
+      <div class="article-card-body">
+        <div class="article-tag">CULTURE</div>
+        <h3>究極の手触り。〈エルメス〉のひし形スカーフ《ロザンジュ》の新作</h3>
+        <p>美しい色彩と職人技が織りなす最新コレクション。ひし形のシルクが日常の所作を変える。</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section section-sky" style="max-width:none;" id="buttons">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:80px 32px;">
+  <div class="section-eyebrow">04 / BUTTONS</div>
+  <h2 class="section-title">Buttons & Tags</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline" href="#">Read More</a><div class="button-label">Outline Square (radius 0)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">自分の星座をみる</a><div class="button-label">Outline Square (jp)</div></div>
+    <div class="button-item"><span class="btn-disabled">登録済み</span><div class="button-label">Disabled (opacity 0.2)</div></div>
+  </div>
+
+  <h3 style="font-size:20px; font-weight:700; margin:48px 0 16px; letter-spacing:normal;">PR Badge</h3>
+  <div class="button-row">
+    <span class="pr-badge">PR</span>
+    <div class="button-label" style="margin-top:0; align-self:center;">12px / 700 / letter-spacing 0.3px</div>
+  </div>
+
+  <h3 style="font-size:20px; font-weight:700; margin:48px 0 16px; letter-spacing:normal;">Category Tags</h3>
+  <div class="category-row">
+    <a class="category-tag" href="#">DESIGN</a>
+    <a class="category-tag" href="#">ARCHITECTURE</a>
+    <a class="category-tag" href="#">FASHION</a>
+    <a class="category-tag" href="#">FOOD</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / FORMS</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレスで会員登録</label>
+    <input class="form-input" type="email" placeholder="your@email.com">
+    <div class="form-state-label">デフォルト — 白地 + 黒 1px 細罫線 / radius 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレスで会員登録</label>
+    <input class="form-input form-input--focus" type="email" value="reader@example.com">
+    <div class="form-state-label">フォーカス — border 2px solid #000000</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section section-cream" style="max-width:none;" id="layout">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:80px 32px;">
+  <div class="section-eyebrow">06 / LAYOUT</div>
+  <h2 class="section-title">Spacing &amp; Width</h2>
+  <h3 style="font-size:20px; font-weight:700; margin:16px 0 12px; letter-spacing:normal;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px"></div><div class="spacing-value">120px</div></div>
+  </div>
+
+  <h3 style="font-size:20px; font-weight:700; margin:32px 0 12px; letter-spacing:normal;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Bleed Hero <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Section <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Body Text <span class="width-bar-value">720px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:52%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">CTA Min Width <span class="width-bar-value">256px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:18%"></div></div></div>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://casabrutus.com/">casabrutus.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (74 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (77 sites)</a>
 </p>
 
 <table>
@@ -137,9 +137,9 @@
 <tr>
 <td align="center"><strong>GINZA SIX</strong><br><img src="design-md/ginza6/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>東京ミッドタウン</strong><br><img src="design-md/tokyo-midtown/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Casa BRUTUS</strong><br><img src="design-md/casa-brutus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AURALEE</strong><br><img src="design-md/auralee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Karimoku NS</strong><br><img src="design-md/karimoku-newstandard/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -276,11 +276,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Suntory (サントリー)](https://www.suntory.co.jp/) | Beverage / Corporate | [DESIGN.md](design-md/suntory/DESIGN.md) | [preview.html](design-md/suntory/preview.html) |
 | [GINZA SIX (銀座シックス)](https://ginza6.tokyo/) | Luxury Retail / Commercial Complex | [DESIGN.md](design-md/ginza6/DESIGN.md) | [preview.html](design-md/ginza6/preview.html) |
 | [Tokyo Midtown (東京ミッドタウン)](https://www.tokyo-midtown.com/jp/) | Urban Development / Cultural Complex | [DESIGN.md](design-md/tokyo-midtown/DESIGN.md) | [preview.html](design-md/tokyo-midtown/preview.html) |
+| [Casa BRUTUS](https://casabrutus.com/) | Magazine / Design Editorial | [DESIGN.md](design-md/casa-brutus/DESIGN.md) | [preview.html](design-md/casa-brutus/preview.html) |
+| [AURALEE](https://auralee.jp/) | Fashion / Apparel | [DESIGN.md](design-md/auralee/DESIGN.md) | [preview.html](design-md/auralee/preview.html) |
+| [Karimoku New Standard](https://www.karimoku-newstandard.jp/) | Furniture / Heritage Craft | [DESIGN.md](design-md/karimoku-newstandard/DESIGN.md) | [preview.html](design-md/karimoku-newstandard/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (74 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (77 sites)</a>
 </p>
 
 <table>
@@ -383,9 +386,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>GINZA SIX</strong><br><img src="design-md/ginza6/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Tokyo Midtown</strong><br><img src="design-md/tokyo-midtown/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Casa BRUTUS</strong><br><img src="design-md/casa-brutus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AURALEE</strong><br><img src="design-md/auralee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Karimoku NS</strong><br><img src="design-md/karimoku-newstandard/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

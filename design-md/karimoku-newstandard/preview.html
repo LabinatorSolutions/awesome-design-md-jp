@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Karimoku New Standard</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400&family=Barlow+Condensed:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Karimoku New Standard Color Tokens (実測値) === */
+    --kns-black: #000000;
+    --kns-white: #ffffff;
+    --hairline: rgba(0, 0, 0, 0.1);
+
+    /* === Fonts ===
+       Note: 実サイトは Adobe Fonts の "a-otf-futo-go-b101-pr6n"（モリサワ太ゴ B101 Pr6N）
+             および "nimbus-sans" を使用。
+       本プレビューでは Google Fonts の Zen Kaku Gothic New（Morisawa 系の和文）と
+       Barlow Condensed（密集する英文サンセリフ）を代替として使用。 */
+    --font-jp: "Zen Kaku Gothic New", 游ゴシック体, YuGothic, "Yu Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --font-en: "Barlow Condensed", "Helvetica Neue", Helvetica, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--kns-white);
+    color: var(--kns-black);
+    font-family: var(--font-jp);
+    font-size: 20px; font-weight: 400; line-height: 1.8;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 80px;
+    background: var(--kns-white);
+    border-bottom: 1px solid var(--kns-black);
+  }
+  .nav-brand {
+    font-family: var(--font-jp); font-size: 10px; font-weight: 400;
+    color: var(--kns-black); text-decoration: none; letter-spacing: normal;
+    line-height: 1.0;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    color: var(--kns-black); text-decoration: none; letter-spacing: normal;
+    line-height: 1.0;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { text-decoration: underline; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 72px;
+    text-align: left;
+    background: var(--kns-white);
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-en); font-size: 11.5px; font-weight: 400;
+    color: var(--kns-black); margin-bottom: 8px;
+    letter-spacing: -0.4em;
+    line-height: 1.0;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-jp);
+    font-size: 22px; font-weight: 400; line-height: 1.0;
+    color: var(--kns-black); margin-bottom: 32px;
+    letter-spacing: normal;
+  }
+  .hero p {
+    font-family: var(--font-jp);
+    font-size: 20px; font-weight: 400; line-height: 1.8;
+    color: var(--kns-black); max-width: 720px;
+    margin-bottom: 40px;
+    letter-spacing: normal;
+  }
+  .hero-buttons { display: flex; gap: 32px; align-items: center; }
+  .btn-text {
+    display: inline-block; background: transparent; color: var(--kns-black);
+    padding: 0;
+    border: none;
+    border-radius: 0px;
+    font-family: var(--font-jp); font-size: 20px; font-weight: 400;
+    line-height: 1.8; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+  }
+  .btn-text::after { content: " →"; }
+  .btn-text:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-divider { border: none; height: 1px; background: var(--kns-black); margin: 0; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* Bilingual section title */
+  .bilingual-title {
+    margin-bottom: 48px;
+  }
+  .bilingual-title-jp {
+    font-family: var(--font-jp); font-size: 22px; font-weight: 400;
+    color: var(--kns-black); letter-spacing: -0.08em; line-height: 1.0;
+    display: inline;
+  }
+  .bilingual-title-en {
+    font-family: var(--font-en); font-size: 23px; font-weight: 400;
+    color: var(--kns-black); letter-spacing: -0.18em;
+    line-height: 1.0;
+    text-transform: lowercase;
+    margin-left: 4px;
+  }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--kns-white); border: 1px solid var(--kns-black); overflow: hidden; }
+  .color-swatch-block { height: 100px; width: 100%; }
+  .color-swatch-info { padding: 16px; border-top: 1px solid var(--kns-black); }
+  .color-swatch-name {
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--kns-black);
+    letter-spacing: normal;
+    line-height: 1.0;
+  }
+  .color-swatch-hex { font-size: 12px; color: var(--kns-black); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 12px; color: var(--kns-black); margin-top: 8px; line-height: 1.5; }
+  .color-group-label {
+    font-family: var(--font-en); font-size: 16px; font-weight: 400;
+    color: var(--kns-black); margin: 24px 0 12px; letter-spacing: -0.1em;
+    text-transform: lowercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--hairline); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 400;
+    color: var(--kns-black); margin-top: 12px;
+    letter-spacing: normal;
+  }
+  .type-context {
+    display: inline-block; background: var(--kns-black); color: var(--kns-white);
+    font-size: 10px; padding: 2px 8px; margin-left: 8px;
+    font-family: var(--font-en); letter-spacing: normal;
+  }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  .product-card {
+    background: transparent;
+    text-decoration: none; color: var(--kns-black);
+    display: flex; flex-direction: column;
+  }
+  .product-card-image {
+    aspect-ratio: 1; background: linear-gradient(135deg, #c8b59c, #8a7762);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--kns-white); font-family: var(--font-jp); font-weight: 400; font-size: 16px; letter-spacing: normal;
+  }
+  .product-card-image.dark-wood { background: linear-gradient(135deg, #5a4632, #2e2620); }
+  .product-card-image.light-wood { background: linear-gradient(135deg, #e6d8c0, #b8a182); }
+  .product-card-body { padding: 16px 0 0; }
+  .product-card h2 {
+    font-family: var(--font-jp);
+    font-size: 20px; font-weight: 400; line-height: 1.6; margin-bottom: 4px;
+    color: var(--kns-black); letter-spacing: normal;
+  }
+  .product-card p { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--kns-black); letter-spacing: normal; }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--kns-black); margin-top: 12px; opacity: 0.7; }
+
+  /* HERO COPY (large feature) */
+  .feature-copy {
+    padding: 96px 32px;
+    background: var(--kns-white);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .feature-copy-jp {
+    font-family: var(--font-jp);
+    font-size: 22px; font-weight: 400; line-height: 1.0;
+    color: var(--kns-black); margin-bottom: 32px; letter-spacing: normal;
+  }
+  .feature-copy-body {
+    font-family: var(--font-jp);
+    font-size: 20px; font-weight: 400; line-height: 1.8;
+    color: var(--kns-black); max-width: 720px;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; color: var(--kns-black); margin-bottom: 8px;
+    letter-spacing: normal;
+    line-height: 1.0;
+  }
+  .form-input {
+    width: 100%; background: transparent; color: var(--kns-black);
+    border: none; border-bottom: 1px solid var(--kns-black);
+    padding: 8px 0; border-radius: 0px;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: normal; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-bottom-width: 2px; }
+  .form-input::placeholder { color: var(--kns-black); opacity: 0.5; }
+  .form-state-label { font-size: 11px; color: var(--kns-black); margin-top: 6px; font-family: var(--font-mono); opacity: 0.7; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: left; }
+  .spacing-block { background: var(--kns-black); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--kns-black); }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--hairline); margin-bottom: 8px; border: 1px solid var(--kns-black); }
+  .width-bar-inner { height: 100%; background: var(--kns-black); }
+  .width-bar-label { font-family: var(--font-jp); font-size: 14px; font-weight: 400; color: var(--kns-black); margin-bottom: 4px; line-height: 1.0; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--kns-black); }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 32px 40px;
+    background: var(--kns-white);
+    color: var(--kns-black);
+    text-align: left;
+    font-family: var(--font-jp);
+    font-size: 10px; font-weight: 400; line-height: 1.0;
+    border-top: 1px solid var(--kns-black);
+  }
+  .footer-nav {
+    display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap;
+  }
+  .footer-nav a {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    color: var(--kns-black); text-decoration: none; line-height: 1.0;
+    text-transform: uppercase;
+  }
+  .footer-credit {
+    font-family: var(--font-en); font-size: 11.5px; font-weight: 400;
+    letter-spacing: -0.3em;
+    color: var(--kns-black); margin-top: 16px;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1, .feature-copy-jp { font-size: 18px; }
+    .bilingual-title-jp { font-size: 18px; }
+    .bilingual-title-en { font-size: 19px; }
+    .nav-links { display: none; }
+    .section, .hero, .feature-copy { padding: 48px 20px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    body { font-size: 16px; }
+    .hero p { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Karimoku New Standard</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Products</a></li>
+    <li><a href="#typography">About</a></li>
+    <li><a href="#articles">News</a></li>
+    <li><a href="#buttons">Designers</a></li>
+    <li><a href="#forms">Shop</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">design system preview</div>
+  <h1>Karimoku New Standard</h1>
+  <p>Karimoku New Standard（karimoku-newstandard.jp）から抽出したデザイントークンのカタログ。モリサワ A-OTF 太ゴ B101 Pr6N + nimbus-sans の和欧二段組、純白純黒、weight 400 のみ、border-radius 0px、padding 0px の極限のミニマリズム。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-text" href="#">View All Products</a>
+    <a class="btn-text" href="#">Read About KNS</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="bilingual-title">
+    <span class="bilingual-title-jp">配色</span><span class="bilingual-title-en">colors</span>
+  </div>
+
+  <div class="color-group-label">brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">KNS Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・罫線・アイコンの色（純黒）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff"></div><div class="color-swatch-info"><div class="color-swatch-name">KNS White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・面色（純白）</div></div></div>
+  </div>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff"></div><div class="color-swatch-info"><div class="color-swatch-name">Page White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景（透過 = body 白が透ける）</div></div></div>
+  </div>
+
+  <div class="color-group-label">border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Hairline Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ナビ間・商品カードの細罫線</div></div></div>
+  </div>
+
+  <p style="margin-top: 32px; font-size: 14px; line-height: 1.5; color: var(--kns-black); max-width: 720px;">
+    Karimoku New Standard のパレットは「黒と白の二色のみ」。色を一切使わず、写真（家具の木目・素材感）が誌面の唯一の彩りとなる。展示図録的な視覚言語。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section">
+  <div class="bilingual-title">
+    <span class="bilingual-title-jp">書体</span><span class="bilingual-title-en">typography</span>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:22px; font-weight:400; line-height:1.0; color:#000000; letter-spacing:normal;">特集 — 日本の家具デザインの新たなスタンダード</div>
+    <div class="type-meta">A-OTF Futo Go B101 Pr6N / 22px / 400 / line-height: 1.0 / letter-spacing: normal<span class="type-context">h2 Section</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:20px; font-weight:400; line-height:1.6; color:#000000; letter-spacing:normal;">KNS ブランドビデオ 第 3 回 — Design &amp; Development</div>
+    <div class="type-meta">A-OTF Futo Go B101 Pr6N / 20px / 400 / line-height: 1.6 (32px) / font-feature: "halt"<span class="type-context">h3 Series</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:20px; font-weight:400; line-height:1.8; color:#000000; letter-spacing:normal; max-width: 720px;">日本の木製家具メーカーであるカリモク家具が 2009 年に設立した Karimoku New Standard は、木と対話しながら高品質の家具を作り続けてきたカリモクが、日本国内の広葉樹未利用材を使用し、先進的なアイデアと優れた製造技術を融合し設立したブランドです。</div>
+    <div class="type-meta">A-OTF Futo Go B101 Pr6N / 20px / 400 / line-height: 1.8 (36px)<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div>
+      <span style="font-family:var(--font-jp); font-size:20px; font-weight:400; line-height:1.0; color:#000000; letter-spacing:-0.08em;">特集</span><span style="font-family:var(--font-en); font-size:23px; font-weight:400; line-height:1.0; color:#000000; letter-spacing:-0.18em; margin-left: 4px;">featured</span>
+    </div>
+    <div class="type-meta">和: A-OTF Futo Go / 20px / ls -1.6px (-0.08em) ／ 欧: nimbus-sans / 23px / ls -8.05px (-0.35em)<span class="type-context">Bilingual Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:14px; font-weight:400; line-height:1.0; color:#000000; letter-spacing:normal; text-transform: uppercase;">PRODUCTS — ABOUT — NEWS — CONTRACT — DESIGNERS — SHOP — STORIES</div>
+    <div class="type-meta">A-OTF Futo Go B101 Pr6N / 14px / 400 / line-height: 1.0 / ALL CAPS<span class="type-context">Sub Nav</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:10px; font-weight:400; line-height:1.0; color:#000000; letter-spacing:normal;">Karimoku New Standard — © Karimoku Furniture Inc.</div>
+    <div class="type-meta">A-OTF Futo Go B101 Pr6N / 10px / 400 / line-height: 1.0<span class="type-context">Header / Footer Mini</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LARGE COPY -->
+<section style="background: var(--kns-white); border-bottom: 1px solid var(--kns-black);">
+  <div class="feature-copy">
+    <div class="bilingual-title">
+      <span class="bilingual-title-jp">理念</span><span class="bilingual-title-en">philosophy</span>
+    </div>
+    <div class="feature-copy-jp">家具デザインの新たなスタンダード</div>
+    <div class="feature-copy-body">カリモク家具で培われたユニークな視点と、国内外から選ばれた有数のデザイナーたちが手を組み、Karimoku New Standard は日本の家具デザインの新たなスタンダードとなるべく取り組んでいます。</div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="section" id="articles">
+  <div class="bilingual-title">
+    <span class="bilingual-title-jp">商品</span><span class="bilingual-title-en">products</span>
+  </div>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">CHAIR</div>
+      <div class="product-card-body">
+        <h2>NASHI Card Holder</h2>
+        <p>カードホルダー / 広葉樹</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image dark-wood">TABLE</div>
+      <div class="product-card-body">
+        <h2>HOMERUN-K Coffee Table</h2>
+        <p>コーヒーテーブル / オーク</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image light-wood">SHELF</div>
+      <div class="product-card-body">
+        <h2>CASTOR Storage Stack S</h2>
+        <p>シェルフ / ナラ・栗</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">CHAIR</div>
+      <div class="product-card-body">
+        <h2>SOLID Chair</h2>
+        <p>サイドチェア / 国産広葉樹</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="bilingual-title">
+    <span class="bilingual-title-jp">操作要素</span><span class="bilingual-title-en">controls</span>
+  </div>
+
+  <div class="button-row">
+    <div class="button-item"><a class="btn-text" href="#">View All Products</a><div class="button-label">Text Link + 矢印 / size 20px / weight 400</div></div>
+    <div class="button-item"><a class="btn-text" href="#">商品詳細を見る</a><div class="button-label">Text Link (jp)</div></div>
+  </div>
+
+  <p style="margin-top: 48px; font-size: 14px; line-height: 1.5; color: var(--kns-black); max-width: 720px;">
+    Karimoku New Standard には CTA らしいボタンが存在しない。すべてのリンクはテキスト + 末尾の「→」矢印で表現される。塗りボタンや outline 罫線ボタンを使わず、文字組みだけでナビゲーションを成立させる徹底ぶり。
+  </p>
+
+  <h3 style="font-family: var(--font-en); font-size: 16px; font-weight: 400; margin: 48px 0 16px; letter-spacing: -0.1em; color: var(--kns-black); text-transform: lowercase;">all caps navigation</h3>
+  <div class="button-row" style="gap: 24px;">
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">Products</a>
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">About</a>
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">News</a>
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">Contract</a>
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">Designers</a>
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">Shop</a>
+    <a href="#" style="font-family: var(--font-jp); font-size: 20px; color: var(--kns-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">Stories</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="bilingual-title">
+    <span class="bilingual-title-jp">入力欄</span><span class="bilingual-title-en">forms</span>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Search</label>
+    <input class="form-input" type="text" placeholder="商品名・デザイナー名で検索">
+    <div class="form-state-label">デフォルト — border-bottom: 1px solid #000000 / radius 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Newsletter Sign Up</label>
+    <input class="form-input form-input--focus" type="email" value="reader@example.com">
+    <div class="form-state-label">フォーカス — border-bottom: 2px solid #000000</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="bilingual-title">
+    <span class="bilingual-title-jp">レイアウト</span><span class="bilingual-title-en">layout</span>
+  </div>
+
+  <h3 style="font-family: var(--font-en); font-size: 16px; font-weight: 400; margin: 16px 0 12px; letter-spacing: -0.1em; color: var(--kns-black); text-transform: lowercase;">spacing scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px"></div><div class="spacing-value">120px</div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-en); font-size: 16px; font-weight: 400; margin: 32px 0 12px; letter-spacing: -0.1em; color: var(--kns-black); text-transform: lowercase;">content widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Bleed Hero <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Section <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Body Text <span class="width-bar-value">720px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:52%"></div></div></div>
+</section>
+
+<footer class="footer">
+  <div class="footer-nav">
+    <a href="#">Products</a>
+    <a href="#">About</a>
+    <a href="#">News</a>
+    <a href="#">Contract</a>
+    <a href="#">Designers</a>
+    <a href="#">Shop</a>
+    <a href="#">Stories</a>
+  </div>
+  <div>Generated from <a href="https://www.karimoku-newstandard.jp/" style="color: var(--kns-black);">karimoku-newstandard.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）</div>
+  <div class="footer-credit">preview replaces a-otf-futo-go-b101-pr6n with Zen Kaku Gothic New, nimbus-sans with Barlow Condensed</div>
+</footer>
+
+</body>
+</html>
