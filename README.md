@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (65 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (68 sites)</a>
 </p>
 
 <table>
@@ -124,6 +124,14 @@
 <td align="center"><strong>LEXUS</strong><br><img src="design-md/lexus/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>マルニ木工</strong><br><img src="design-md/maruni/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>POPEYE</strong><br><img src="design-md/popeye/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ミナ ペルホネン</strong><br><img src="design-md/mina-perhonen/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NDC</strong><br><img src="design-md/ndc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>代官山 蔦屋書店</strong><br><img src="design-md/daikanyama-tsite/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -251,11 +259,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [LEXUS](https://lexus.jp/) | Automotive / Luxury | [DESIGN.md](design-md/lexus/DESIGN.md) | [preview.html](design-md/lexus/preview.html) |
 | [Maruni (マルニ木工)](https://www.maruni.com/jp) | Furniture / Heritage Craft | [DESIGN.md](design-md/maruni/DESIGN.md) | [preview.html](design-md/maruni/preview.html) |
 | [POPEYE](https://popeyemagazine.jp/) | Magazine / Editorial | [DESIGN.md](design-md/popeye/DESIGN.md) | [preview.html](design-md/popeye/preview.html) |
+| [mina perhonen](https://www.mina-perhonen.jp/) | Textile / Fashion / Heritage | [DESIGN.md](design-md/mina-perhonen/DESIGN.md) | [preview.html](design-md/mina-perhonen/preview.html) |
+| [Nippon Design Center](https://www.ndc.co.jp/) | Design Firm / Editorial | [DESIGN.md](design-md/ndc/DESIGN.md) | [preview.html](design-md/ndc/preview.html) |
+| [Daikanyama T-SITE](https://store.tsite.jp/daikanyama/) | Bookstore / Cultural Complex | [DESIGN.md](design-md/daikanyama-tsite/DESIGN.md) | [preview.html](design-md/daikanyama-tsite/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (65 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (68 sites)</a>
 </p>
 
 <table>
@@ -345,6 +356,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>LEXUS</strong><br><img src="design-md/lexus/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Maruni</strong><br><img src="design-md/maruni/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>POPEYE</strong><br><img src="design-md/popeye/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>mina perhonen</strong><br><img src="design-md/mina-perhonen/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NDC</strong><br><img src="design-md/ndc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>T-SITE Daikanyama</strong><br><img src="design-md/daikanyama-tsite/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
