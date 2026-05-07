@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: カキモリ (Kakimori)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Zen+Old+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Kakimori Color Tokens === */
+    --brand-orange: #f6921e;
+    --ink-black: #1f1f1f;
+    --text: #333333;
+    --white: #ffffff;
+    --surface-subtle: #ededed;
+    --surface-muted: #969696;
+    --border-light: #c8c8c8;
+    --black: #000000;
+    --overlay: rgba(0,0,0,0.5);
+
+    /* Product swatch examples */
+    --ink-natural: #fcdba6;
+    --ink-blue: #3d74e5;
+    --ink-mint: #b9d6c4;
+    --ink-rose: #e8b1b3;
+
+    /* === Fonts ===
+       Body/UI:   "Gothic Medium BBB" → fallback to Noto Sans JP (Adobe Fonts のため preview では代替)
+       Heading:   eb-garamond, zen-old-mincho (Google Fonts で利用可) */
+    --font-body: "Gothic Medium BBB", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+    --font-heading: "EB Garamond", "Zen Old Mincho", serif;
+    --font-lead: "Zen Kaku Gothic New", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px;
+    background: var(--white);
+    border-bottom: 1px solid var(--surface-subtle);
+  }
+  .nav-brand {
+    font-family: var(--font-heading); font-size: 34px; font-weight: 400; line-height: 1.25;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--text); text-decoration: none; font-family: var(--font-body); }
+  .nav-cta {
+    display: inline-block; background: var(--surface-muted); color: var(--white);
+    padding: 8px 32px; border-radius: 0;
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero { padding: 96px 32px 80px; background: var(--white); }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 48px; font-weight: 400; line-height: 1.25;
+    color: var(--text); margin-bottom: 24px;
+  }
+  .hero-lead {
+    font-family: var(--font-lead);
+    font-size: 16px; font-weight: 600; line-height: 1.8;
+    color: var(--text); max-width: 680px; margin-bottom: 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-block; background: var(--white); color: var(--text);
+    padding: 10px 25px; border: 1px solid var(--ink-black); border-radius: 2px;
+    font-family: var(--font-body); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-secondary {
+    display: inline-block; background: var(--surface-subtle); color: var(--text);
+    padding: 12px 32px; border: 1px solid var(--surface-subtle); border-radius: 4px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+  .btn-inverted {
+    display: inline-block; background: var(--surface-muted); color: var(--white);
+    padding: 12px 32px; border: 1px solid var(--surface-muted); border-radius: 4px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text);
+    padding: 12px 32px; border: 1px solid var(--border-light); border-radius: 4px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+  .btn-confirm {
+    display: inline-block; background: var(--black); color: var(--white);
+    padding: 5px 10px; border: 1px solid var(--border-light); border-radius: 4px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--font-body); font-size: 12px; font-weight: 400; color: var(--text); margin-bottom: 8px; letter-spacing: 0.04em; }
+  .section-title { font-family: var(--font-heading); font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--text); margin-bottom: 40px; }
+  .section-divider { border: none; border-top: 1px solid var(--surface-subtle); margin: 0; }
+
+  .section-warm { background: var(--surface-subtle); padding: 80px 32px; }
+  .section-warm-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--white); border: 1px solid var(--surface-subtle); border-radius: 4px; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-body); font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text); }
+  .color-swatch-hex { font-size: 12px; color: var(--text); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text); margin-top: 4px; opacity: 0.7; }
+  .color-group-label { font-family: var(--font-heading); font-size: 16px; font-weight: 400; color: var(--text); margin: 24px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--surface-subtle); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text); opacity: 0.65; margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--surface-subtle); color: var(--text); font-size: 11px; padding: 2px 10px; border-radius: 4px; margin-left: 8px; font-family: var(--font-body); }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text); margin-top: 12px; opacity: 0.7; font-family: var(--font-body); }
+
+  /* COLOR SWATCHES (オーダーインクの円形) */
+  .ink-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 32px; }
+  .ink-swatch {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+  }
+  .ink-label { font-size: 12px; color: var(--text); margin-top: 8px; text-align: center; font-family: var(--font-body); }
+  .ink-item { text-align: center; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .card { background: var(--white); position: relative; }
+  .card-image { background: linear-gradient(135deg, #efe6d0, #d8c8a4); height: 260px; }
+  .card-image.blue { background: linear-gradient(135deg, #d3def0, #6c8fcf); }
+  .card-image.frost { background: linear-gradient(135deg, #f3f3f3, #c4cfd6); }
+  .card-body { padding: 16px 4px; }
+  .card-eyebrow { font-family: var(--font-heading); font-size: 12px; font-weight: 400; color: var(--text); margin-bottom: 4px; opacity: 0.7; }
+  .card h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 400; line-height: 1.25; color: var(--text); margin-bottom: 8px; }
+  .card p { font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.8; color: var(--text); }
+  .card-meta { font-family: var(--font-body); font-size: 14px; font-weight: 400; color: var(--text); margin-top: 12px; opacity: 0.7; }
+  .badge-new {
+    display: inline-block; background: var(--brand-orange); color: var(--white);
+    font-family: var(--font-body); font-size: 11px; font-weight: 400;
+    padding: 2px 10px; border-radius: 2px; margin-bottom: 8px;
+  }
+
+  /* ARTICLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-family: var(--font-heading); font-size: 34px; font-weight: 400; line-height: 1.25; color: var(--text); margin-bottom: 24px; }
+  .article-preview h2 { font-family: var(--font-heading); font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--text); margin: 32px 0 12px; }
+  .article-preview p { font-family: var(--font-body); font-size: 16px; font-weight: 400; line-height: 1.8; margin-bottom: 20px; color: var(--text); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-family: var(--font-body); font-size: 14px; font-weight: 400; color: var(--text); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text);
+    border: 1px solid var(--border-light); padding: 12px 16px; border-radius: 4px;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+  }
+  .form-input:focus { border-color: var(--ink-black); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--text); border-radius: 2px; }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text); margin-top: 8px; opacity: 0.7; }
+
+  /* FOOTER */
+  .footer { padding: 40px 32px; text-align: center; background: var(--white); color: var(--text); font-family: var(--font-body); font-size: 13px; line-height: 1.8; border-top: 1px solid var(--surface-subtle); }
+  .footer a { color: var(--text); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Kakimori</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Story</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Products</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ログイン</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Tools for everyday writing<br>たのしく、書く人。</h1>
+    <p class="hero-lead">カキモリ（kakimori.com）から抽出したデザイントークンのカタログ。eb-garamond + zen-old-mincho の見出し、Gothic Medium BBB（Morisawa）の本文、控えめな矩形 CTA、点で使うブランドオレンジ。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">受け入れる</a>
+      <a class="btn-secondary" href="#">View more</a>
+      <a class="btn-inverted" href="#">View more</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">PRIMARY</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6921e"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Orange</div><div class="color-swatch-hex">#f6921e</div><div class="color-swatch-role">ロゴ・新着タグ（点使い）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1f1f1f"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink Black</div><div class="color-swatch-hex">#1f1f1f</div><div class="color-swatch-role">CTA 枠線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文・見出し</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE / NEUTRAL</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ededed"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ededed"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Subtle</div><div class="color-swatch-hex">#ededed</div><div class="color-swatch-role">View more 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#969696"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Muted</div><div class="color-swatch-hex">#969696</div><div class="color-swatch-role">反転 CTA 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c8c8c8"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Light</div><div class="color-swatch-hex">#c8c8c8</div><div class="color-swatch-role">ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">PRODUCT INK SWATCHES</div>
+  <div class="ink-row">
+    <div class="ink-item"><div class="ink-swatch" style="background:#fcdba6"></div><div class="ink-label">Natural</div></div>
+    <div class="ink-item"><div class="ink-swatch" style="background:#3d74e5"></div><div class="ink-label">Blue</div></div>
+    <div class="ink-item"><div class="ink-swatch" style="background:#b9d6c4"></div><div class="ink-label">Mint</div></div>
+    <div class="ink-item"><div class="ink-swatch" style="background:#e8b1b3"></div><div class="ink-label">Rose</div></div>
+    <div class="ink-item"><div class="ink-swatch" style="background:#1f1f1f"></div><div class="ink-label">Ink</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:34px; font-weight:400; line-height:1.25;">Kakimori — Brand Logo / 言語</div>
+    <div class="type-meta">34px / 400 / line-height: 1.25 / eb-garamond + zen-old-mincho<span class="type-context">h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:28px; font-weight:400; line-height:1.25;">Our Story — 私たちのこと</div>
+    <div class="type-meta">28px / 400 / line-height: 1.25<span class="type-context">h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:24px; font-weight:400; line-height:1.25;">オーダーインク — Section Title</div>
+    <div class="type-meta">24px / 400 / line-height: 1.25<span class="type-context">h2/h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:20px; font-weight:400; line-height:1.25;">Frost — Product Title</div>
+    <div class="type-meta">20px / 400 / line-height: 1.25<span class="type-context">h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:16px; font-weight:600; line-height:1.25;">カキモリからのお便り — Footer Heading</div>
+    <div class="type-meta">16px / 600 / line-height: 1.25<span class="type-context">h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-lead); font-size:16px; font-weight:600; line-height:1.8;">たのしく、書く人。が集う町は、ものづくりの町。— Lead</div>
+    <div class="type-meta">16px / 600 / line-height: 1.8 / Zen Kaku Gothic New<span class="type-context">Lead</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:16px; font-weight:400; line-height:1.8;">Body — カキモリは蔵前にあるセミオーダー文具店です。お気に入りの紙、革、糸を選び、世界に一つだけのノートをつくることができます。書くことを楽しむ。Gothic Medium BBB を本文に。line-height 1.8 で和文を読み物として組む。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.8 / Gothic Medium BBB<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:400; line-height:1.8;">Description — 内部の機構もデザインの一部に。半透明で磨りガラスのような佇まいに、繊細なペン先がのぞくガラスペン。書くたびに溢れる小さな喜びを、毎日の机に。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.8<span class="type-context">Description</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:12px; font-weight:400; line-height:1.33;">12px / 400 — Caption / カート個数 / 補助情報</div>
+    <div class="type-meta">12px / 400 / line-height: 1.33<span class="type-context">Caption</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-warm" id="article">
+<div class="section-warm-inner">
+  <div class="section-label">03 / STORY — 蔵前から</div>
+  <h2 class="section-title" style="font-family:var(--font-heading);">Tools for everyday writing</h2>
+  <div class="article-preview">
+    <h1>たのしく、書く人。</h1>
+    <p>カキモリは2010年、東京・蔵前に誕生しました。「ものを書く時間が、楽しみになるように」を合言葉に、紙、革、糸、ペン、インク。書くことにまつわる道具をひとつひとつ手作業で選び、お客さまと一緒にお気に入りを見つけていきます。</p>
+    <h2>セミオーダーノートの世界</h2>
+    <p>表紙、裏表紙、紙、ゴム、リング。すべての要素を選び、自分だけのノートを組み立てる。それは、書く時間そのものを大切にするための儀式のようなもの。</p>
+    <p>ガラスペン、つけペン、万年筆、それぞれに合わせたインク。書き味と発色を試しながら、お気に入りを見つけていく。蔵前の街と、書くという行為の交差点。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">受け入れる</a><div class="button-label">Primary / 白地+黒枠 / radius 2px</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">View more</a><div class="button-label">Secondary / radius 4px</div></div>
+    <div class="button-item"><a class="btn-inverted" href="#">View more</a><div class="button-label">Inverted / 濃グレー</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">コンテンツにスキップ</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><a class="btn-confirm" href="#">OK</a><div class="button-label">Confirm / 黒</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / PRODUCTS — 商品カード</div>
+  <h2 class="section-title">商品ラインナップ</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <span class="badge-new">NEW</span>
+        <div class="card-eyebrow">PEN</div>
+        <h3>ガラスペン Frost</h3>
+        <p>磨りガラスのような半透明のペン軸。書くたびに、小さな光がペン先に集まる。</p>
+        <div class="card-meta">¥7,700</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image blue"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">INK</div>
+        <h3>Order-made Ink — Blue</h3>
+        <p>調合台で 100ml の自分だけのインクをつくる。100色の中から選び、ガラスペンと組む。</p>
+        <div class="card-meta">¥2,200</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image frost"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">NOTEBOOK</div>
+        <h3>Custom Notebook</h3>
+        <p>表紙、紙、ゴム、リングを選び、その場で組み立てるセミオーダーノート。</p>
+        <div class="card-meta">¥3,300〜</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label class="form-label">お問い合わせ内容</label>
+    <input class="form-input" type="text" placeholder="ガラスペン Frost について">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / SPACING & LAYOUT</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:5px; height:32px;"></div><div class="spacing-value">5px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px; height:32px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:25px; height:32px;"></div><div class="spacing-value">25px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://kakimori.com/">kakimori.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-08)<br>
+  ※ "Gothic Medium BBB" は Adobe Fonts のため preview では Noto Sans JP で代替表示
+</footer>
+
+</body>
+</html>

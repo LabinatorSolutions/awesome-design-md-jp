@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (77 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (80 sites)</a>
 </p>
 
 <table>
@@ -140,6 +140,14 @@
 <td align="center"><strong>Casa BRUTUS</strong><br><img src="design-md/casa-brutus/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>AURALEE</strong><br><img src="design-md/auralee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Karimoku NS</strong><br><img src="design-md/karimoku-newstandard/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カキモリ</strong><br><img src="design-md/kakimori/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>グランドセイコー</strong><br><img src="design-md/grand-seiko/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CIBONE</strong><br><img src="design-md/cibone/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -279,11 +287,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Casa BRUTUS](https://casabrutus.com/) | Magazine / Design Editorial | [DESIGN.md](design-md/casa-brutus/DESIGN.md) | [preview.html](design-md/casa-brutus/preview.html) |
 | [AURALEE](https://auralee.jp/) | Fashion / Apparel | [DESIGN.md](design-md/auralee/DESIGN.md) | [preview.html](design-md/auralee/preview.html) |
 | [Karimoku New Standard](https://www.karimoku-newstandard.jp/) | Furniture / Heritage Craft | [DESIGN.md](design-md/karimoku-newstandard/DESIGN.md) | [preview.html](design-md/karimoku-newstandard/preview.html) |
+| [Kakimori (カキモリ)](https://kakimori.com/) | Stationery / Custom Craft | [DESIGN.md](design-md/kakimori/DESIGN.md) | [preview.html](design-md/kakimori/preview.html) |
+| [Grand Seiko (グランドセイコー)](https://www.grand-seiko.com/jp-ja) | Luxury Watch / Heritage | [DESIGN.md](design-md/grand-seiko/DESIGN.md) | [preview.html](design-md/grand-seiko/preview.html) |
+| [CIBONE (シボネ)](https://www.cibone.com/) | Lifestyle Retail / Editorial | [DESIGN.md](design-md/cibone/DESIGN.md) | [preview.html](design-md/cibone/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (77 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (80 sites)</a>
 </p>
 
 <table>
@@ -389,6 +400,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Casa BRUTUS</strong><br><img src="design-md/casa-brutus/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>AURALEE</strong><br><img src="design-md/auralee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Karimoku NS</strong><br><img src="design-md/karimoku-newstandard/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kakimori</strong><br><img src="design-md/kakimori/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Grand Seiko</strong><br><img src="design-md/grand-seiko/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CIBONE</strong><br><img src="design-md/cibone/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
