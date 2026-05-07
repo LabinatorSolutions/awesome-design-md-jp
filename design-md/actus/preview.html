@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ACTUS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&family=Source+Sans+3:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: ACTUS 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-light: #e8eaea;
+    --bg-soft-2: #eef0f0;
+    --bg-soft-3: #efefef;
+    --bg-footer: #4c4948;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    --text-primary: #000000;
+    --text-inverse: #ffffff;
+    --text-muted: #8b9191;
+    --text-secondary: rgba(9, 15, 32, 0.5);
+
+    --border-default: #dcdcdc;
+
+    --accent-red: #de4c51;
+
+    /* === Fonts === */
+    --font-base: "Source Sans 3", "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 32px;
+    --space-xl: 64px;
+    --space-xxl: 120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: var(--bg-primary);
+    height: 80px;
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 4px;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    display: block;
+    padding: 30px 18px;
+    font-size: 14px; font-weight: 400;
+    line-height: 1;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+  .nav-links a:hover { color: var(--text-muted); }
+  .nav-utility { display: flex; gap: 16px; font-size: 12px; }
+  .nav-utility a { color: var(--text-primary); text-decoration: none; letter-spacing: 1px; }
+
+  /* HERO */
+  .hero {
+    background: var(--bg-light);
+    padding: 120px 40px 100px;
+    text-align: center;
+  }
+  .hero .meta {
+    font-size: 13px; font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .hero p.lead {
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    max-width: 720px;
+    margin: 0 auto 48px;
+  }
+  .btn-text {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: none;
+    border-radius: 0;
+    padding: 25px 50px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .btn-text:hover { color: var(--text-muted); }
+  .btn-text--inverse { color: var(--text-inverse); }
+  .btn-text--inverse:hover { color: var(--border-default); }
+
+  /* SECTIONS */
+  .section { padding: 120px 40px 100px; max-width: 1440px; margin: 0 auto; }
+  .section--soft { background: var(--bg-light); max-width: none; }
+  .section--soft-2 { background: var(--bg-soft-2); max-width: none; }
+  .section--dark { background: var(--bg-footer); color: var(--text-inverse); max-width: none; }
+  .section--inner { max-width: 1440px; margin: 0 auto; padding: 120px 40px 100px; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .section-en {
+    display: block;
+    font-size: 20px; font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-ja {
+    display: block;
+    font-size: 12px; font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+  .section--dark .section-en { color: var(--text-inverse); }
+  .section--dark .section-ja { color: var(--border-default); }
+
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+  }
+  .color-swatch-block { height: 110px; width: 100%; }
+  .color-swatch-info { padding: 16px 4px; }
+  .color-swatch-name {
+    font-size: 14px; font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+  }
+  .color-swatch-role {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+  .color-group-label {
+    font-size: 13px; font-weight: 400;
+    color: var(--text-primary);
+    margin: 32px 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: left;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-default);
+    text-align: left;
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-soft-3);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+    letter-spacing: 1px;
+  }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 48px 32px;
+  }
+  .product-card {
+    text-decoration: none;
+    color: var(--text-primary);
+    text-align: left;
+  }
+  .product-thumb {
+    aspect-ratio: 1 / 1;
+    background: var(--bg-light);
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .product-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .product-cat {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .product-name {
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .product-price {
+    font-size: 13px; font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+  }
+  .product-price .sale { color: var(--accent-red); }
+
+  /* DARK BANNER */
+  .banner-dark {
+    background: var(--bg-footer);
+    color: var(--text-inverse);
+    padding: 100px 40px;
+    text-align: center;
+  }
+  .banner-dark h2 {
+    font-size: 28px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+  }
+  .banner-dark p {
+    font-size: 14px; line-height: 1.8;
+    letter-spacing: 1px;
+    max-width: 600px;
+    margin: 0 auto 48px;
+  }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .badge-sale {
+    display: inline-block;
+    background: var(--accent-red);
+    color: var(--text-inverse);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    text-transform: uppercase;
+  }
+  .badge-cat {
+    display: inline-block;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    text-transform: uppercase;
+  }
+  .filter-chip {
+    display: inline-block;
+    color: var(--text-muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+  }
+  .filter-chip.active { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+
+  /* FORM */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-size: 12px; font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 14px 16px;
+    border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px;
+    letter-spacing: 1px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-state-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 40px;
+    text-align: center;
+    background: var(--bg-footer);
+    color: var(--text-inverse);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .footer a { color: var(--text-inverse); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; letter-spacing: 3px; }
+    .nav-links { display: none; }
+    .section, .section--inner { padding: 80px 24px; }
+    .section-en { font-size: 16px; letter-spacing: 3px; }
+    .banner-dark h2 { font-size: 20px; letter-spacing: 3px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">ACTUS</a>
+  <ul class="nav-links">
+    <li><a href="#">PRODUCT</a></li>
+    <li><a href="#colors">SHOP</a></li>
+    <li><a href="#typography">CONCEPT</a></li>
+    <li><a href="#products">JOURNAL</a></li>
+    <li><a href="#products">SUSTAINABILITY</a></li>
+  </ul>
+  <div class="nav-utility">
+    <a href="#">SEARCH</a>
+    <a href="#">LOGIN</a>
+    <a href="#">CART</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="meta">CONCEPT</div>
+  <h1>暮らしを愉しむ、ライフスタイルの提案。</h1>
+  <p class="lead">ACTUS のデザインシステム。Source Sans 3 + Noto Sans JP の二系統フォントを weight 400 統一で運用し、letter-spacing 1px (≈0.07em) で字間を広げる極限ミニマル UI。本文 14px と小さめに抑えることで、家具と空間写真を主役に据えた、インテリアブランド特有の余白優先デザイン。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <a class="btn-text" href="#products">VIEW ALL ITEMS</a>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-header">
+    <span class="section-en">PALETTE</span>
+    <span class="section-ja">カラーパレット</span>
+  </div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Actus Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">テキスト・ロゴ・主要 UI</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; box-shadow:inset 0 0 0 1px #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Page White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8eaea"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Surface</div><div class="color-swatch-hex">#e8eaea</div><div class="color-swatch-role">写真背景・カード面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eef0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Surface 2</div><div class="color-swatch-hex">#eef0f0</div><div class="color-swatch-role">セクション切替</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Surface 3</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">Pick Up セクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dcdcdc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#dcdcdc</div><div class="color-swatch-role">罫線・SNS アイコン枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4c4948"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Warm Gray</div><div class="color-swatch-hex">#4c4948</div><div class="color-swatch-role">フッター（暖色濃グレー）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text / Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#8b9191"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#8b9191</div><div class="color-swatch-role">補助テキスト・フィルター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#de4c51"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Red</div><div class="color-swatch-hex">#de4c51</div><div class="color-swatch-role">セール・限定キャンペーン</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-header">
+    <span class="section-en">TYPOGRAPHY</span>
+    <span class="section-ja">タイポグラフィ階層</span>
+  </div>
+
+  <div style="max-width:900px; margin: 0 auto;">
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:28px; font-weight:400; line-height:1.6; letter-spacing:4px;">ヒーロー見出し ／ 暮らしを愉しむ</div>
+      <div class="type-meta">28px / 400 / line-height 1.6 / letter-spacing 4px<span class="type-context">ヒーロー（preview拡張）</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:20px; font-weight:400; line-height:1.0; letter-spacing:0.7px; text-transform:uppercase;">PRODUCT プロダクト</div>
+      <div class="type-meta">20px / 400 / line-height 1.0 / letter-spacing 0.7px / uppercase<span class="type-context">暗色帯セクション h3</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.0; letter-spacing:1px;">ナビゲーション ／ PRODUCT / SHOP / CONCEPT</div>
+      <div class="type-meta">14px / 400 / line-height 1.0 / letter-spacing 1px (≈0.07em)<span class="type-context">グローバルナビ</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.4; letter-spacing:1px;">本文テキスト ／ ACTUS のWeb サイトでは、letter-spacing 1px をほぼ全要素に適用することで、字間をゆったり広げています。文字サイズは 14px と一般的なサイトより小さく、家具と空間写真を主役に据える設計思想を貫いています。weight は 400 統一で、太字によるヒエラルキーは作りません。</div>
+      <div class="type-meta">14px / 400 / line-height 1.4 / letter-spacing 1px<span class="type-context">本文 p</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.8; letter-spacing:1px;">注釈・キャプション ／ 12px の小さい本文には line-height 1.8 と広めの行送りを当て、可読性を保ちます。小さい文字ほど行間を広げる、という日本語タイポグラフィの基本に忠実な設定です。</div>
+      <div class="type-meta">12px / 400 / line-height 1.8 / letter-spacing 1px<span class="type-context">注釈・キャプション p</span></div>
+    </div>
+    <div class="type-sample">
+      <div><a href="#" style="font-family:var(--font-base); font-size:14px; font-weight:400; color:#000; letter-spacing:2px; text-transform:uppercase; text-decoration:none; padding:25px 50px; display:inline-block; border:none;">VIEW ALL</a></div>
+      <div class="type-meta">14px / 400 / letter-spacing 2px / padding 25px 50px / no border / no radius<span class="type-context">CTA テキストリンク</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT GRID -->
+<section class="section--soft">
+<div class="section--inner">
+  <div class="section-header">
+    <span class="section-en">PRODUCT</span>
+    <span class="section-ja">プロダクト</span>
+  </div>
+
+  <div class="badge-row" style="margin-bottom:48px; justify-content:center;">
+    <span class="filter-chip active">ALL</span>
+    <span class="filter-chip">CHAIR</span>
+    <span class="filter-chip">SOFA</span>
+    <span class="filter-chip">TABLE</span>
+    <span class="filter-chip">LIGHTING</span>
+    <span class="filter-chip">TEXTILE</span>
+  </div>
+
+  <div class="product-grid">
+    <a href="#" class="product-card">
+      <div class="product-thumb"><div class="product-thumb-overlay">CHAIR / 01</div></div>
+      <div class="product-cat">CHAIR</div>
+      <div class="product-name">SVELT ダイニングチェア / オーク</div>
+      <div class="product-price">¥58,300</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-thumb" style="background:#eef0f0"><div class="product-thumb-overlay">SOFA / 02</div></div>
+      <div class="product-cat">SOFA</div>
+      <div class="product-name">JOURNEY 2P ファブリックソファ</div>
+      <div class="product-price"><span class="sale">¥168,000</span> <span style="text-decoration:line-through; color:var(--text-muted); font-size:11px;">¥189,000</span></div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-thumb" style="background:#efefef"><div class="product-thumb-overlay">TABLE / 03</div></div>
+      <div class="product-cat">TABLE</div>
+      <div class="product-name">PIATTO ダイニングテーブル W160</div>
+      <div class="product-price">¥132,000</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-thumb" style="background:#e8eaea"><div class="product-thumb-overlay">LIGHTING / 04</div></div>
+      <div class="product-cat">LIGHTING</div>
+      <div class="product-name">ARCO フロアランプ / ブラス</div>
+      <div class="product-price">¥48,400</div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-top:64px;">
+    <a class="btn-text" href="#">VIEW ALL ITEMS</a>
+  </div>
+</div>
+</section>
+
+<!-- DARK BANNER -->
+<div class="banner-dark">
+  <h2>暮らしに、本物を。</h2>
+  <p>ACTUS は、世界各国から厳選した家具・インテリアアイテムを、日本の住空間に合わせて提案するセレクトショップです。暗色帯 #4c4948 の上では、本文と見出しを白文字で組み、CTA は同じくテキストリンクで反転表示します。</p>
+  <a class="btn-text btn-text--inverse" href="#">VIEW CONCEPT</a>
+</div>
+
+<hr class="section-divider">
+
+<!-- BADGES -->
+<section class="section" id="badges">
+  <div class="section-header">
+    <span class="section-en">BADGES</span>
+    <span class="section-ja">バッジ・ラベル</span>
+  </div>
+
+  <div class="badge-row" style="justify-content:center;">
+    <span class="badge-sale">SALE</span>
+    <span class="badge-sale">LIMITED</span>
+    <span class="badge-cat">NEW</span>
+    <span class="badge-cat">EXCLUSIVE</span>
+  </div>
+  <div style="text-align:center; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:var(--text-muted); letter-spacing:0.5px;">
+    SALE バッジは赤 #de4c51（普段は使わず、キャンペーン時のみ）／ NEW バッジは Light Surface
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-header">
+    <span class="section-en">FORMS</span>
+    <span class="section-ja">フォーム要素</span>
+  </div>
+  <div style="max-width:480px; margin: 0 auto;">
+    <div class="form-group"><label class="form-label">サイト内検索 / SEARCH</label><input class="form-input" type="text" placeholder="商品名・カテゴリで検索"><div class="form-state-label">デフォルト — border 1px solid #dcdcdc / radius 0</div></div>
+    <div class="form-group"><label class="form-label">メールアドレス / EMAIL</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border-color #000</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-header">
+    <span class="section-en">SPACING</span>
+    <span class="section-ja">スペーシング</span>
+  </div>
+  <div class="spacing-row" style="justify-content:center;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">L · 32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">XL · 64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px"></div><div class="spacing-value">XXL · 120px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.actus-interior.com/">ACTUS</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+</footer>
+
+</body>
+</html>

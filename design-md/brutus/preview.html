@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: BRUTUS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: BRUTUS 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-section-light: #eaeaea;
+    --bg-magazine-beige: #e2dfd7;
+    --bg-soft-cream: #f4f3ef;
+    --bg-charcoal: #191919;
+    --bg-footer: #394045;
+    --bg-dark-charcoal: #212729;
+    --bg-footer-ink: #2e2e2e;
+
+    --text-primary: #101010;
+    --text-magazine: #191919;
+    --text-inverse: #ffffff;
+    --text-muted: #939393;
+
+    /* Category colors */
+    --cat-slate: #577590;
+    --cat-turquoise: #00c6ac;
+    --cat-sky: #5fb7ff;
+    --cat-beige: #ab9a86;
+    --cat-navy: #275ba1;
+    --cat-copper: #b87333;
+    --cat-red: #e63946;
+    --cat-charcoal: #191919;
+    --cat-sand: #bda295;
+
+    /* === Fonts ===
+       Note: BRUTUS uses Adobe Fonts (futura-pt) and Fontworks (FOT-筑紫ゴシック Pro).
+       This preview uses Noto Sans JP and Google Fonts substitutes. */
+    --font-jp-body: "FOT-筑紫ゴシック Pro B", "Noto Sans JP", sans-serif;
+    --font-jp-mid: "FOT-筑紫ゴシック Pro E", "Noto Sans JP", sans-serif;
+    --font-jp-heavy: "FOT-筑紫ゴシック Pro H", "Noto Sans JP", sans-serif;
+    --font-en: futura-pt, "Futura", "Trebuchet MS", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-jp-body);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--bg-section-light);
+    height: 72px;
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 32px; font-weight: 800;
+    color: var(--text-magazine);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    display: block;
+    padding: 26px 16px 20px;
+    font-family: var(--font-en);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .nav-lang {
+    display: flex; gap: 12px;
+    background: var(--bg-dark-charcoal);
+    padding: 6px 12px;
+    color: var(--text-inverse);
+    font-size: 12px;
+    font-family: var(--font-jp-body);
+  }
+  .nav-lang a { color: var(--text-inverse); text-decoration: none; }
+
+  /* HERO MAGAZINE BAND */
+  .hero {
+    background: var(--bg-charcoal);
+    color: var(--text-inverse);
+    padding: 80px 32px 64px;
+  }
+  .hero .meta {
+    font-family: var(--font-en);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-inverse);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--font-jp-heavy);
+    font-size: 42px; font-weight: 800; line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--text-inverse);
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .hero p.lead {
+    font-family: var(--font-jp-body);
+    font-size: 18px; font-weight: 400; line-height: 1.6;
+    color: var(--text-inverse);
+    max-width: 720px;
+    margin-bottom: 32px;
+  }
+  .hero .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cat-badge {
+    display: inline-block;
+    font-family: var(--font-en);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-inverse);
+    background: var(--cat-slate);
+    padding: 6px 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1280px; margin: 0 auto; }
+  .section--light { background: var(--bg-section-light); max-width: none; }
+  .section--beige { background: var(--bg-magazine-beige); max-width: none; }
+  .section--cream { background: var(--bg-soft-cream); max-width: none; }
+  .section--inner { max-width: 1280px; margin: 0 auto; padding: 64px 32px; }
+
+  /* MAGAZINE SECTION HEADER (英字＋和文 対訳) */
+  .magazine-header {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 40px;
+  }
+  .magazine-header .en {
+    font-family: var(--font-en);
+    font-size: 19px; font-weight: 800;
+    color: var(--text-magazine);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .magazine-header .ja {
+    font-family: var(--font-jp-heavy);
+    font-size: 24px; font-weight: 800; line-height: 1.5;
+    color: var(--text-magazine);
+  }
+
+  .section-divider { border: none; border-top: 1px solid var(--bg-section-light); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 32px;
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+  }
+  .color-swatch-block { height: 100px; width: 100%; }
+  .color-swatch-info { padding: 14px; }
+  .color-swatch-name {
+    font-family: var(--font-jp-mid);
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .color-swatch-role {
+    font-family: var(--font-jp-body);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+  .color-group-label {
+    font-family: var(--font-en);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-magazine);
+    margin: 32px 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--bg-section-light);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-section-light);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-jp-body);
+  }
+
+  /* ARTICLE GRID */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+  }
+  .article-card {
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .article-thumb {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-section-light);
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .article-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-family: var(--font-en);
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 0.05em;
+  }
+  .article-meta {
+    font-family: var(--font-en);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-magazine);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .article-title {
+    font-family: var(--font-jp-mid);
+    font-size: 16px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary);
+  }
+  .article-date {
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* CATEGORY BADGES SHOWCASE */
+  .badge-row {
+    display: flex; flex-wrap: wrap; gap: 12px;
+  }
+  .cat-tag {
+    display: inline-block;
+    font-family: var(--font-en);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-inverse);
+    padding: 6px 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-jp-mid);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-section-light);
+    padding: 12px 16px;
+    border-radius: 0;
+    font-family: var(--font-jp-body);
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-magazine); border-width: 2px; padding: 11px 15px; }
+  .form-state-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* DARK CTA */
+  .btn-dark {
+    display: inline-block;
+    background: var(--bg-charcoal);
+    color: var(--text-inverse);
+    border: none;
+    padding: 16px 28px;
+    font-family: var(--font-jp-body);
+    font-size: 16px; font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-dark:hover { background: var(--text-primary); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px;
+    text-align: center;
+    background: var(--bg-footer);
+    color: var(--text-inverse);
+    font-family: var(--font-jp-body);
+    font-size: 13px;
+  }
+  .footer a { color: var(--text-inverse); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .nav-links { display: none; }
+    .magazine-header .ja { font-size: 18px; }
+    .magazine-header .en { font-size: 14px; }
+    .section, .section--inner { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">BRUTUS</a>
+  <ul class="nav-links">
+    <li><a href="#">FEATURE</a></li>
+    <li><a href="#colors">CULTURE</a></li>
+    <li><a href="#typography">FOOD</a></li>
+    <li><a href="#articles">TRAVEL</a></li>
+    <li><a href="#articles">SHOP</a></li>
+  </ul>
+  <div class="nav-lang">
+    <a href="#">日本語</a>
+    <a href="#">English</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="meta">FEATURE / 特集</div>
+  <h1>新しい時計の見方を、いま、探しに行こう。</h1>
+  <p class="lead">BRUTUS Web 版のデザインシステム。FOT-筑紫ゴシック Pro B/E/H と Futura PT の二系統フォントを使い分け、letter-spacing normal・palt 不使用の雑誌的組版と、特集カテゴリごとに彩りを変える色設計が特徴。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <div class="badges">
+    <span class="cat-badge" style="background:var(--cat-charcoal)">WATCHES</span>
+    <span class="cat-badge" style="background:var(--cat-copper)">FOOD</span>
+    <span class="cat-badge" style="background:var(--cat-turquoise)">CULTURE</span>
+    <span class="cat-badge" style="background:var(--cat-red)">SPECIAL</span>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="magazine-header">
+    <span class="en">PALETTE</span>
+    <span class="ja">カラーパレット</span>
+  </div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#101010"></div><div class="color-swatch-info"><div class="color-swatch-name">Brutus Ink</div><div class="color-swatch-hex">#101010</div><div class="color-swatch-role">本文の基本色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#191919"></div><div class="color-swatch-info"><div class="color-swatch-name">Brutus Charcoal</div><div class="color-swatch-hex">#191919</div><div class="color-swatch-role">暗色帯セクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; box-shadow:inset 0 0 0 1px #eaeaea;"></div><div class="color-swatch-info"><div class="color-swatch-name">Page White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eaeaea"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Light</div><div class="color-swatch-hex">#eaeaea</div><div class="color-swatch-role">セクション区切り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e2dfd7"></div><div class="color-swatch-info"><div class="color-swatch-name">Magazine Beige</div><div class="color-swatch-hex">#e2dfd7</div><div class="color-swatch-role">推奨コンテンツ帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f3ef"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Cream</div><div class="color-swatch-hex">#f4f3ef</div><div class="color-swatch-role">新着記事帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#394045"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Slate</div><div class="color-swatch-hex">#394045</div><div class="color-swatch-role">フッター</div></div></div>
+  </div>
+
+  <div class="color-group-label">Category Colors（特集ジャンル別）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#577590"></div><div class="color-swatch-info"><div class="color-swatch-name">Slate Blue</div><div class="color-swatch-hex">#577590</div><div class="color-swatch-role">主力カテゴリ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00c6ac"></div><div class="color-swatch-info"><div class="color-swatch-name">Turquoise</div><div class="color-swatch-hex">#00c6ac</div><div class="color-swatch-role">カルチャー・アート</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5fb7ff"></div><div class="color-swatch-info"><div class="color-swatch-name">Sky Blue</div><div class="color-swatch-hex">#5fb7ff</div><div class="color-swatch-role">ライフスタイル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ab9a86"></div><div class="color-swatch-info"><div class="color-swatch-name">Magazine Beige</div><div class="color-swatch-hex">#ab9a86</div><div class="color-swatch-role">クラフト・伝統</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#275ba1"></div><div class="color-swatch-info"><div class="color-swatch-name">Deep Navy</div><div class="color-swatch-hex">#275ba1</div><div class="color-swatch-role">ビジネス・旅</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b87333"></div><div class="color-swatch-info"><div class="color-swatch-name">Copper</div><div class="color-swatch-hex">#b87333</div><div class="color-swatch-role">フード・ドリンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e63946"></div><div class="color-swatch-info"><div class="color-swatch-name">Tomato Red</div><div class="color-swatch-hex">#e63946</div><div class="color-swatch-role">限定特集</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#191919"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#191919</div><div class="color-swatch-role">時計・ジュエリー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="magazine-header">
+    <span class="en">TYPOGRAPHY</span>
+    <span class="ja">タイポグラフィ階層</span>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp-heavy); font-size:32px; font-weight:800; line-height:1.5; color:var(--text-magazine);">特集大見出し ／ 新しい時計の見方を</div>
+    <div class="type-meta">32px / 800 (Heavy) / line-height 1.5 / FOT-筑紫ゴシック Pro H<span class="type-context">特集 h1/h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp-heavy); font-size:24px; font-weight:800; line-height:1.5; color:var(--text-magazine);">セクション見出し ／ WHAT'S NEW</div>
+    <div class="type-meta">24px / 800 (Heavy) / line-height 1.5 / FOT-筑紫ゴシック Pro H<span class="type-context">セクション h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp-mid); font-size:19px; font-weight:700; line-height:1.47; color:var(--text-primary);">記事中見出し ／ 取材ノートから</div>
+    <div class="type-meta">19px / 700 (Extra Bold) / line-height 1.47 / FOT-筑紫ゴシック Pro E<span class="type-context">本文中の中見出し p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp-mid); font-size:16px; font-weight:700; line-height:1.43; color:var(--text-primary);">小見出し ／ カードタイトル</div>
+    <div class="type-meta">16px / 700 / line-height 1.43 / FOT-筑紫ゴシック Pro E<span class="type-context">カード h3/h4</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp-body); font-size:18px; font-weight:400; line-height:1.5; color:var(--text-primary);">本文テキスト ／ BRUTUS の Web 版は、雑誌特有のタイトな組版を踏襲しています。本文 18px に line-height 1.5、letter-spacing は normal。palt は使わず、句読点の余分な空きをそのまま残すことで、誌面のリズムを保ちます。</div>
+    <div class="type-meta">18px / 400 / line-height 1.5 / letter-spacing normal / FOT-筑紫ゴシック Pro B<span class="type-context">本文 p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:19px; font-weight:800; color:var(--text-magazine); letter-spacing:0.04em; text-transform:uppercase;">FEATURE / RECOMMEND</div>
+    <div class="type-meta">19px / 800 / Futura PT / uppercase / letter-spacing 0.04em<span class="type-context">英字大タイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:13px; font-weight:600; color:var(--text-magazine); letter-spacing:0.05em; text-transform:uppercase;">2026.01.23 / WATCHES</div>
+    <div class="type-meta">13px / 600 / Futura PT / uppercase / letter-spacing 0.05em<span class="type-context">日付・カテゴリラベル</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE GRID -->
+<section class="section--cream">
+<div class="section--inner">
+  <div class="magazine-header">
+    <span class="en">WHAT'S NEW</span>
+    <span class="ja">新着記事</span>
+  </div>
+
+  <div class="article-grid">
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-charcoal)"><div class="article-thumb-overlay">WATCHES</div></div>
+      <div class="article-meta">2026.01.23 / WATCHES</div>
+      <div class="article-title">機械式時計を旅する、もう一つの時計案内</div>
+      <div class="article-date">BRUTUS No. 1004</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-copper)"><div class="article-thumb-overlay">FOOD</div></div>
+      <div class="article-meta">2026.01.18 / FOOD</div>
+      <div class="article-title">夜更けに通う、東京・小さなビストロ案内</div>
+      <div class="article-date">BRUTUS No. 1003</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-turquoise)"><div class="article-thumb-overlay">CULTURE</div></div>
+      <div class="article-meta">2026.01.10 / CULTURE</div>
+      <div class="article-title">瀬戸内国際芸術祭2025、島々を旅する。</div>
+      <div class="article-date">BRUTUS No. 1002</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-navy)"><div class="article-thumb-overlay">TRAVEL</div></div>
+      <div class="article-meta">2025.12.20 / TRAVEL</div>
+      <div class="article-title">京都の冬、底冷えの街で見つけた一杯。</div>
+      <div class="article-date">BRUTUS No. 1001</div>
+    </a>
+  </div>
+</div>
+</section>
+
+<!-- RECOMMEND -->
+<section class="section--beige">
+<div class="section--inner">
+  <div class="magazine-header">
+    <span class="en">RECOMMEND</span>
+    <span class="ja">注目のコンテンツ</span>
+  </div>
+
+  <div class="article-grid">
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-slate)"><div class="article-thumb-overlay">DESIGN</div></div>
+      <div class="article-meta">SPECIAL / DESIGN</div>
+      <div class="article-title">日本のグラフィック、これからの 100 年</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-red)"><div class="article-thumb-overlay">SPECIAL</div></div>
+      <div class="article-meta">SPECIAL / 限定特集</div>
+      <div class="article-title">2026年、買って良かったもの100選</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb" style="background:var(--cat-beige)"><div class="article-thumb-overlay">CRAFT</div></div>
+      <div class="article-meta">FEATURE / CRAFT</div>
+      <div class="article-title">職人の手仕事、京都・西陣を訪ねる旅</div>
+    </a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BADGES -->
+<section class="section" id="badges">
+  <div class="magazine-header">
+    <span class="en">CATEGORY BADGES</span>
+    <span class="ja">カテゴリバッジ</span>
+  </div>
+  <div class="badge-row">
+    <span class="cat-tag" style="background:var(--cat-slate)">FEATURE</span>
+    <span class="cat-tag" style="background:var(--cat-turquoise)">CULTURE</span>
+    <span class="cat-tag" style="background:var(--cat-sky)">LIFESTYLE</span>
+    <span class="cat-tag" style="background:var(--cat-beige)">CRAFT</span>
+    <span class="cat-tag" style="background:var(--cat-navy)">TRAVEL</span>
+    <span class="cat-tag" style="background:var(--cat-copper)">FOOD</span>
+    <span class="cat-tag" style="background:var(--cat-red)">SPECIAL</span>
+    <span class="cat-tag" style="background:var(--cat-charcoal)">WATCHES</span>
+  </div>
+  <div style="margin-top:32px;">
+    <a class="btn-dark" href="#">配信停止</a>
+    <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-left:16px;">Dark CTA · #191919 / 18px</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="magazine-header">
+    <span class="en">FORMS</span>
+    <span class="ja">フォーム要素</span>
+  </div>
+  <div class="form-group"><label class="form-label">サイト内検索</label><input class="form-input" type="text" placeholder="キーワードで検索"><div class="form-state-label">デフォルト — border 1px solid #eaeaea / radius 0</div></div>
+  <div class="form-group"><label class="form-label">メールマガジン購読</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border 2px #191919</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="magazine-header">
+    <span class="en">SPACING</span>
+    <span class="ja">スペーシング</span>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">XL · 32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">XXL · 64px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://brutus.jp/">BRUTUS</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）<br>
+  Note: BRUTUS uses Adobe Fonts (futura-pt) and Fontworks (FOT-筑紫ゴシック Pro). This preview uses Noto Sans JP and a Futura substitute.
+</footer>
+
+</body>
+</html>

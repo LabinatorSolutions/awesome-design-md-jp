@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (56 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (59 sites)</a>
 </p>
 
 <table>
@@ -113,9 +113,9 @@
 <tr>
 <td align="center"><strong>とらや</strong><br><img src="design-md/toraya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IDÉE</strong><br><img src="design-md/idee/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Mazda</strong><br><img src="design-md/mazda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BRUTUS</strong><br><img src="design-md/brutus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ACTUS</strong><br><img src="design-md/actus/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -234,11 +234,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [PARCO](https://www.parco.co.jp/) | Retail / Commercial Real Estate | [DESIGN.md](design-md/parco/DESIGN.md) | [preview.html](design-md/parco/preview.html) |
 | [Toraya (虎屋)](https://www.toraya-group.co.jp/) | Heritage Confectionery / Wagashi | [DESIGN.md](design-md/toraya/DESIGN.md) | [preview.html](design-md/toraya/preview.html) |
 | [IDÉE](https://www.idee-online.com/) | Furniture / Lifestyle Retail | [DESIGN.md](design-md/idee/DESIGN.md) | [preview.html](design-md/idee/preview.html) |
+| [Mazda](https://www.mazda.com/ja/) | Automotive / Corporate | [DESIGN.md](design-md/mazda/DESIGN.md) | [preview.html](design-md/mazda/preview.html) |
+| [BRUTUS](https://brutus.jp/) | Magazine / Editorial | [DESIGN.md](design-md/brutus/DESIGN.md) | [preview.html](design-md/brutus/preview.html) |
+| [ACTUS](https://www.actus-interior.com/) | Furniture / Interior Retail | [DESIGN.md](design-md/actus/DESIGN.md) | [preview.html](design-md/actus/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (56 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (59 sites)</a>
 </p>
 
 <table>
@@ -317,9 +320,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>とらや</strong><br><img src="design-md/toraya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IDÉE</strong><br><img src="design-md/idee/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Mazda</strong><br><img src="design-md/mazda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BRUTUS</strong><br><img src="design-md/brutus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ACTUS</strong><br><img src="design-md/actus/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
