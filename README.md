@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (80 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (83 sites)</a>
 </p>
 
 <table>
@@ -145,9 +145,9 @@
 <tr>
 <td align="center"><strong>グランドセイコー</strong><br><img src="design-md/grand-seiko/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CIBONE</strong><br><img src="design-md/cibone/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>POSTALCO</strong><br><img src="design-md/postalco/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>OSAJI</strong><br><img src="design-md/osaji/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>45R</strong><br><img src="design-md/45r/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -290,11 +290,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Kakimori (カキモリ)](https://kakimori.com/) | Stationery / Custom Craft | [DESIGN.md](design-md/kakimori/DESIGN.md) | [preview.html](design-md/kakimori/preview.html) |
 | [Grand Seiko (グランドセイコー)](https://www.grand-seiko.com/jp-ja) | Luxury Watch / Heritage | [DESIGN.md](design-md/grand-seiko/DESIGN.md) | [preview.html](design-md/grand-seiko/preview.html) |
 | [CIBONE (シボネ)](https://www.cibone.com/) | Lifestyle Retail / Editorial | [DESIGN.md](design-md/cibone/DESIGN.md) | [preview.html](design-md/cibone/preview.html) |
+| [POSTALCO (ポスタルコ)](https://www.postalco.net/) | Leather / Stationery / Design Studio | [DESIGN.md](design-md/postalco/DESIGN.md) | [preview.html](design-md/postalco/preview.html) |
+| [OSAJI (オサジ)](https://osaji.net/) | Skincare / Lifestyle | [DESIGN.md](design-md/osaji/DESIGN.md) | [preview.html](design-md/osaji/preview.html) |
+| [45R (フォーティーファイブアール)](https://www.45r.jp/) | Fashion / Apparel / Heritage | [DESIGN.md](design-md/45r/DESIGN.md) | [preview.html](design-md/45r/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (80 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (83 sites)</a>
 </p>
 
 <table>
@@ -405,9 +408,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>Grand Seiko</strong><br><img src="design-md/grand-seiko/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CIBONE</strong><br><img src="design-md/cibone/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>POSTALCO</strong><br><img src="design-md/postalco/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>OSAJI</strong><br><img src="design-md/osaji/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>45R</strong><br><img src="design-md/45r/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

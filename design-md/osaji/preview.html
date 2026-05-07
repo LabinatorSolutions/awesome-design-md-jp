@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: OSAJI（オサジ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Old+Mincho:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === OSAJI Color Tokens === */
+    --forest-dark: #1b281d;
+    --forest-dark-92: rgba(27, 40, 29, 0.92);
+    --forest-dark-50: rgba(27, 40, 29, 0.5);
+    --forest-dark-10: rgba(27, 40, 29, 0.1);
+    --beige-sand: #ddd9cf;
+    --misty-sage: #868f8f;
+    --stone-gray: #dcdde0;
+    --text-sub: #595757;
+    --text-mute: #868f8f;
+    --text-caption: #a7a2a9;
+    --action-gray: #444444;
+    --cream-white: #f3f3f3;
+    --surface-light: #f5f5f5;
+    --surface-white: #ffffff;
+
+    /* === Fonts ===
+       実サイトは Noto Sans Japanese と Zen Old Mincho。
+       preview では Google Fonts の Noto Sans JP / Zen Old Mincho で再現。 */
+    --font-body: "Noto Sans JP", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", 游ゴシック, YuGothic, sans-serif;
+    --font-mincho: "Zen Old Mincho", "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", 游明朝, YuMincho, serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--forest-dark-92);
+    font-family: var(--font-body);
+    font-size: 12.6px; font-weight: 400; line-height: 1.89;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px;
+    background: var(--surface-white);
+    border-bottom: 1px solid var(--stone-gray);
+  }
+  .nav-brand {
+    font-family: var(--font-body); font-size: 18px; font-weight: 700; line-height: 1.0;
+    color: var(--forest-dark); text-decoration: none; letter-spacing: 0.06em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 12.6px; font-weight: 400; color: var(--forest-dark); text-decoration: none; letter-spacing: 0.06em; }
+  .nav-cta {
+    display: inline-block; background: var(--forest-dark); color: var(--surface-white);
+    padding: 7.2px 21.6px; border-radius: 0; border: none;
+    font-family: var(--font-body); font-size: 10.8px; font-weight: 700; letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--beige-sand);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-body);
+    font-size: 25.5px; font-weight: 400; line-height: 1.5;
+    color: var(--forest-dark); margin-bottom: 24px; letter-spacing: 0.06em;
+  }
+  .hero-lead {
+    font-size: 12.6px; font-weight: 400; line-height: 1.89;
+    color: var(--forest-dark-92); max-width: 640px; margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--forest-dark); color: var(--surface-white);
+    padding: 10.8px 32.4px; border: none; border-radius: 0;
+    font-family: var(--font-body); font-size: 12.6px; font-weight: 700; letter-spacing: 0.07em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-small {
+    display: inline-block; background: var(--forest-dark); color: var(--surface-white);
+    padding: 7.2px 21.6px; border: none; border-radius: 0;
+    font-family: var(--font-body); font-size: 10.8px; font-weight: 700; letter-spacing: 0.06em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-small-sub {
+    display: inline-block; background: var(--text-sub); color: var(--cream-white);
+    padding: 7.2px 21.6px; border: none; border-radius: 0;
+    font-family: var(--font-body); font-size: 10.8px; font-weight: 700; letter-spacing: 0.06em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-small-reverse {
+    display: inline-block; background: var(--surface-white); color: var(--forest-dark);
+    padding: 7.2px 21.6px; border: none; border-radius: 0;
+    font-family: var(--font-body); font-size: 10.8px; font-weight: 700; letter-spacing: 0.06em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--forest-dark);
+    padding: 14px 60px; border: 1px solid var(--forest-dark); border-radius: 4px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 11.05px; font-weight: 400; color: var(--text-mute); margin-bottom: 12px; letter-spacing: 0.06em; }
+  .section-title { font-family: var(--font-body); font-size: 25.5px; font-weight: 400; line-height: 1.5; color: var(--forest-dark); margin-bottom: 40px; letter-spacing: 0.06em; }
+  .section-divider { border: none; border-top: 1px solid var(--stone-gray); margin: 0; }
+
+  .section-cool { background: var(--surface-light); padding: 80px 32px; }
+  .section-cool-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-beige { background: var(--beige-sand); padding: 80px 32px; }
+  .section-beige-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-dark { background: var(--forest-dark); padding: 80px 32px; color: var(--cream-white); }
+  .section-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--cream-white); }
+  .section-dark .section-label { color: var(--cream-white); opacity: 0.85; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid var(--stone-gray); border-radius: 0; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-size: 12.6px; font-weight: 700; margin-bottom: 4px; color: var(--forest-dark); letter-spacing: 0.06em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-sub); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-mute); margin-top: 4px; letter-spacing: 0.06em; }
+  .color-group-label { font-size: 11.7px; font-weight: 400; color: var(--forest-dark); margin: 24px 0 12px; letter-spacing: 0.06em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--stone-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-mute); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--text-sub); font-size: 10px; padding: 2px 10px; border-radius: 0; margin-left: 8px; font-family: var(--font-mono); }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--text-mute); margin-top: 12px; letter-spacing: 0.06em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { background: linear-gradient(135deg, #ddd9cf, #868f8f); height: 260px; }
+  .card-image.serum { background: linear-gradient(135deg, #d8d2c0, #595757); }
+  .card-image.cream { background: linear-gradient(135deg, #ddd9cf, #1b281d); }
+  .card-image.kit { background: linear-gradient(135deg, #f3f3f3, #868f8f); }
+  .card-body { padding: 16px 4px; }
+  .card-eyebrow { font-size: 11px; font-weight: 400; color: var(--text-mute); margin-bottom: 6px; letter-spacing: 0.06em; }
+  .card h3 { font-size: 12.6px; font-weight: 400; line-height: 1.5; color: var(--forest-dark); margin-bottom: 8px; letter-spacing: 0.06em; }
+  .card p { font-size: 11.05px; font-weight: 400; line-height: 1.5; color: var(--forest-dark-92); letter-spacing: 0.06em; }
+  .card-meta { font-size: 11.05px; font-weight: 400; color: var(--text-sub); margin-top: 12px; letter-spacing: 0.06em; }
+
+  /* ARTICLE — Mincho 引用 */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-family: var(--font-mincho); font-size: 25.5px; font-weight: 400; line-height: 1.5; color: var(--forest-dark); margin-bottom: 24px; letter-spacing: 0.06em; }
+  .article-preview h2 { font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--forest-dark); margin: 32px 0 12px; letter-spacing: 0.06em; }
+  .article-preview p { font-family: var(--font-mincho); font-size: 13px; font-weight: 400; line-height: 2.0; margin-bottom: 20px; color: var(--forest-dark-92); }
+  .article-preview .gothic { font-family: var(--font-body); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-size: 12.6px; font-weight: 400; color: var(--forest-dark); margin-bottom: 8px; letter-spacing: 0.06em; }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--forest-dark);
+    border: 1px solid var(--stone-gray); padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+  }
+  .form-input:focus { border-color: var(--forest-dark); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--forest-dark); border-radius: 0; }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-mute); margin-top: 8px; }
+
+  /* FOOTER */
+  .footer { padding: 48px 32px; background: var(--forest-dark); color: var(--cream-white); font-size: 11.05px; line-height: 1.89; letter-spacing: 0.06em; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px; }
+  .footer-col h4 { font-size: 12.6px; font-weight: 400; margin-bottom: 12px; letter-spacing: 0.06em; }
+  .footer-col a { display: block; color: var(--cream-white); text-decoration: none; opacity: 0.85; margin-bottom: 6px; font-size: 11.05px; letter-spacing: 0.06em; }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta { text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.15); font-size: 10.8px; opacity: 0.7; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">OSAJI</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Journal</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Products</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">View all</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>四季と肌のあいだに</h1>
+    <p class="hero-lead">OSAJI（osaji.net）から抽出したデザイントークンのカタログ。Noto Sans Japanese と Zen Old Mincho の二刀流、letter-spacing 0.06em の均等な間合い、border-radius 0 の完全矩形 CTA、Forest Dark #1b281d とベージュ #ddd9cf のアースパレット。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">コンテンツに進む</a>
+      <a class="btn-outline" href="#">一覧を見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">PRIMARY — アースパレット</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1b281d"></div><div class="color-swatch-info"><div class="color-swatch-name">Forest Dark</div><div class="color-swatch-hex">#1b281d</div><div class="color-swatch-role">Primary CTA・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ddd9cf"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige Sand</div><div class="color-swatch-hex">#ddd9cf</div><div class="color-swatch-role">セカンダリ面・砂色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#868f8f"></div><div class="color-swatch-info"><div class="color-swatch-name">Misty Sage</div><div class="color-swatch-hex">#868f8f</div><div class="color-swatch-role">霧の灰緑（最頻出）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dcdde0"></div><div class="color-swatch-info"><div class="color-swatch-name">Stone Gray</div><div class="color-swatch-hex">#dcdde0</div><div class="color-swatch-role">区切り・境界</div></div></div>
+  </div>
+
+  <div class="color-group-label">TEXT</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(27,40,29,0.92)"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">rgba(27,40,29,.92)</div><div class="color-swatch-role">本文</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#595757"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Sub</div><div class="color-swatch-hex">#595757</div><div class="color-swatch-role">副見出し・New Items</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#868f8f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Mute</div><div class="color-swatch-hex">#868f8f</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a7a2a9"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Caption</div><div class="color-swatch-hex">#a7a2a9</div><div class="color-swatch-role">商品キャプション</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #dcdde0"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">極淡セクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Cream White</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">反転背景上のテキスト色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Action Gray</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">埋込ウィジェット用</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:25.5px; font-weight:400; line-height:1.5; letter-spacing:0.06em; color:var(--forest-dark);">Ranking 人気商品ランキング</div>
+    <div class="type-meta">25.5px / 400 / line-height: 1.5 (38.25px) / letter-spacing: 0.06em<span class="type-context">h1 / h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-mincho); font-size:25.5px; font-weight:400; line-height:1.5; letter-spacing:0.06em; color:var(--forest-dark);">四季のスキンケア — Zen Old Mincho（明朝引用）</div>
+    <div class="type-meta">25.5px / 400 / line-height: 1.5 / Zen Old Mincho<span class="type-context">h2 mincho</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.06em; color:var(--forest-dark);">大切なのは、暮らしの機嫌を整えること — Sub Heading</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / letter-spacing: 0.06em<span class="type-context">h2 sub</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:12.6px; font-weight:400; line-height:1.5; letter-spacing:0.06em; color:var(--forest-dark);">a rose for you ギフトセット — Card Title</div>
+    <div class="type-meta">12.6px / 400 / line-height: 1.5 (18.9px) / letter-spacing: 0.06em<span class="type-context">h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:12.6px; font-weight:400; line-height:1.89; color:var(--forest-dark-92);">Body — OSAJI（オサジ）は、皮膚科学者・茂田正和が立ち上げたスキンケアブランド。「日本の四季と暮らしの中の機嫌」をコンセプトに、肌だけでなく、生活全体の機嫌を整えるためのスキンケア・フレグランス・暮らし道具を提案します。商品はすべて日本国内で製造され、敏感肌の方でも使えるやさしい設計になっています。</div>
+    <div class="type-meta">12.6px / 400 / line-height: 1.89 (23.8px) / letter-spacing: normal<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:11.05px; font-weight:400; line-height:1.5; letter-spacing:0.06em; color:var(--text-mute);">【お詫びとご案内】サイトリニューアルに伴うアカウント有効化メールについて — Notice</div>
+    <div class="type-meta">11.05px / 400 / line-height: 1.5 (16.575px) / letter-spacing: 0.06em<span class="type-context">p notice</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:11.7px; font-weight:400; line-height:1.6; letter-spacing:0.06em; color:var(--forest-dark);">PRODUCTS — Banner Label</div>
+    <div class="type-meta">11.7px / 400 / line-height: 1.6 (18.72px) / letter-spacing: 0.06em<span class="type-context">h2 banner</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE — 明朝の引用ページ -->
+<section class="section-beige" id="article">
+<div class="section-beige-inner">
+  <div class="section-label">03 / JOURNAL — OSAJI Journal</div>
+  <h2 class="section-title">皮膚と暮らしのあいだに</h2>
+  <div class="article-preview">
+    <h1>四季と機嫌</h1>
+    <p>春の風が吹き、肌が敏感になる頃。冬を超えた肌は、まだ眠りから覚めきっていない。OSAJI が考える「機嫌のいい肌」とは、季節の変わり目に立ち止まって、肌そのものに耳を澄ますことから始まります。</p>
+    <h2 class="gothic">私たちが大切にしていること</h2>
+    <p>製品を作るうえで、私たちは「強さ」よりも「やさしさ」を選びます。肌への負担を減らし、毎日の生活の中で自然に使い続けられる設計を目指す。それは、機嫌のよさを毎日積み重ねていくこと。</p>
+    <p>香りも、色も、テクスチャーも、すべてが暮らしの中の小さな儀式の一部となるように。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">コンテンツに進む</a><div class="button-label">Primary / Forest Dark / radius 0px</div></div>
+    <div class="button-item"><a class="btn-small" href="#">View all</a><div class="button-label">Small / radius 0px / 700</div></div>
+    <div class="button-item"><a class="btn-small-sub" href="#">View all</a><div class="button-label">Sub Variant / Gray</div></div>
+    <div class="button-item"><a class="btn-small-reverse" href="#">View all</a><div class="button-label">Reverse / White</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">一覧を見る</a><div class="button-label">Outline / radius 4px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / PRODUCTS</div>
+  <h2 class="section-title">人気商品ランキング</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image serum"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">SKINCARE</div>
+        <h3>a rose for you ギフトセット</h3>
+        <p>季節の限定セット。化粧水と乳液のセット。</p>
+        <div class="card-meta">¥7,920</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image cream"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">MOISTURIZER</div>
+        <h3>サマーベースメイクキットB</h3>
+        <p>夏の肌のためのベースメイクキット。皮脂・汗対策。</p>
+        <div class="card-meta">¥9,790</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image kit"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">GIFT</div>
+        <h3>KAI リベレーションモイスチャライザー</h3>
+        <p>敏感肌のためのモイスチャライザー。香り控えめ。</p>
+        <div class="card-meta">¥5,940</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">FRAGRANCE</div>
+        <h3>NERIKO アロマミスト</h3>
+        <p>練香をモチーフにした和の香りのアロマミスト。</p>
+        <div class="card-meta">¥3,300</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label class="form-label">お問い合わせ</label>
+    <input class="form-input" type="text" placeholder="商品について">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / SPACING & LAYOUT</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:7.2px; height:32px;"></div><div class="spacing-value">7.2px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10.8px; height:32px;"></div><div class="spacing-value">10.8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:14px; height:32px;"></div><div class="spacing-value">14px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:21.6px; height:32px;"></div><div class="spacing-value">21.6px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32.4px; height:32px;"></div><div class="spacing-value">32.4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:60px; height:32px;"></div><div class="spacing-value">60px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>PRODUCTS</h4>
+      <a href="#">スキンケア</a>
+      <a href="#">フレグランス</a>
+      <a href="#">ボディケア</a>
+      <a href="#">ギフト</a>
+    </div>
+    <div class="footer-col">
+      <h4>BRAND</h4>
+      <a href="#">OSAJI について</a>
+      <a href="#">設計思想</a>
+      <a href="#">ジャーナル</a>
+    </div>
+    <div class="footer-col">
+      <h4>STORE</h4>
+      <a href="#">直営店</a>
+      <a href="#">取扱店</a>
+      <a href="#">オンラインショップ</a>
+    </div>
+    <div class="footer-col">
+      <h4>SUPPORT</h4>
+      <a href="#">お問い合わせ</a>
+      <a href="#">配送・返品</a>
+      <a href="#">よくあるご質問</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from osaji.net DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-08)<br>
+    ※ Noto Sans Japanese / Zen Old Mincho（Google Fonts）で再現。フォールバックは Hiragino / YuGothic
+  </div>
+</footer>
+
+</body>
+</html>

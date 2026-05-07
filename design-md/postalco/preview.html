@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ポスタルコ (POSTALCO)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === POSTALCO Color Tokens === */
+    --warm-offwhite: #fffffb;
+    --pure-white: #ffffff;
+    --surface-subtle: #f0f0f0;
+    --surface-muted: #e9e9e9;
+    --surface-cool: #eff3f3;
+    --surface-coolest: #f7f7f8;
+    --body-gray: #7d7d7d;
+    --heading-gray: #636363;
+    --deep-gray: #171717;
+    --mid-gray: #afafaf;
+    --promo-cream: #f7f6eb;
+    --postal-teal: #1e596c;
+    --overlay-dark: rgba(0, 0, 0, 0.3);
+
+    /* === Fonts ===
+       実サイトは Jost (Google Fonts) と OS のサンセリフ。
+       和文は OS フォールバックで表示する設計。 */
+    --font-body: "Jost", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", "Yu Gothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--warm-offwhite);
+    color: var(--body-gray);
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px;
+    background: var(--warm-offwhite);
+    border-bottom: 1px solid var(--surface-muted);
+  }
+  .nav-brand {
+    font-family: var(--font-body); font-size: 22px; font-weight: 400; line-height: 1.2;
+    color: var(--heading-gray); text-decoration: none; letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--body-gray); text-decoration: none; }
+  .nav-cta {
+    display: inline-block; background: var(--mid-gray); color: var(--warm-offwhite);
+    padding: 14.4px 25px; border-radius: 3px; border: none;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--warm-offwhite);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 {
+    font-size: 22px; font-weight: 400; line-height: 1.2;
+    color: var(--heading-gray); margin-bottom: 24px; letter-spacing: 2px;
+  }
+  .hero-lead {
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    color: var(--body-gray); max-width: 640px; margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--mid-gray); color: var(--warm-offwhite);
+    padding: 14.4px 25px; border: none; border-radius: 3px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-submit {
+    display: inline-block; background: var(--body-gray); color: var(--warm-offwhite);
+    padding: 14.4px 25px; border: none; border-radius: 3px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-language {
+    display: inline-block; background: var(--warm-offwhite); color: var(--body-gray);
+    padding: 10.5px 42px 10.5px 14px; border: 1px solid var(--surface-muted); border-radius: 3px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 400; color: var(--body-gray); margin-bottom: 12px; opacity: 0.8; }
+  .section-title { font-size: 20px; font-weight: 400; line-height: 1.2; color: var(--heading-gray); margin-bottom: 40px; letter-spacing: 2px; }
+  .section-divider { border: none; border-top: 1px solid var(--surface-muted); margin: 0; }
+
+  .section-cool { background: var(--surface-subtle); padding: 80px 32px; }
+  .section-cool-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-promo { background: var(--postal-teal); color: var(--promo-cream); padding: 64px 32px; text-align: center; }
+  .section-promo h3 { font-size: 22px; color: var(--promo-cream); letter-spacing: 2px; margin-bottom: 16px; font-weight: 400; }
+  .section-promo p { color: var(--promo-cream); font-size: 14px; line-height: 1.6; opacity: 0.95; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--warm-offwhite); border: 1px solid var(--surface-muted); border-radius: 3px; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--heading-gray); letter-spacing: 1px; }
+  .color-swatch-hex { font-size: 12px; color: var(--body-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--body-gray); margin-top: 4px; opacity: 0.85; }
+  .color-group-label { font-size: 14px; font-weight: 400; color: var(--heading-gray); margin: 24px 0 12px; letter-spacing: 2px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--surface-muted); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--body-gray); opacity: 0.75; margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-subtle); color: var(--body-gray); font-size: 11px; padding: 2px 10px; border-radius: 3px; margin-left: 8px; font-family: var(--font-mono); }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--body-gray); margin-top: 12px; opacity: 0.75; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .card { background: var(--warm-offwhite); position: relative; }
+  .card-image { background: linear-gradient(135deg, #d9c5a1, #8a7558); height: 280px; }
+  .card-image.leather-tan { background: linear-gradient(135deg, #c5a685, #6e5440); }
+  .card-image.paper { background: linear-gradient(135deg, #f0eddc, #c8c0a4); }
+  .card-image.canvas { background: linear-gradient(135deg, #a9b1a3, #5d6552); }
+  .card-body { padding: 16px 4px; }
+  .card-eyebrow { font-size: 12px; font-weight: 400; color: var(--body-gray); margin-bottom: 6px; opacity: 0.8; }
+  .card h3 { font-size: 19px; font-weight: 400; line-height: 1.2; color: var(--heading-gray); margin-bottom: 8px; }
+  .card p { font-size: 14px; font-weight: 400; line-height: 1.6; color: var(--body-gray); }
+  .card-meta { font-size: 12px; font-weight: 400; color: var(--body-gray); margin-top: 12px; opacity: 0.85; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-size: 22px; font-weight: 400; line-height: 1.2; color: var(--heading-gray); margin-bottom: 24px; letter-spacing: 2px; }
+  .article-preview h2 { font-size: 20px; font-weight: 400; line-height: 1.2; color: var(--heading-gray); margin: 32px 0 12px; letter-spacing: 2px; }
+  .article-preview p { font-size: 14px; font-weight: 400; line-height: 1.6; margin-bottom: 20px; color: var(--body-gray); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--heading-gray); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--warm-offwhite); color: var(--body-gray);
+    border: 1px solid var(--surface-muted); padding: 12px 16px; border-radius: 3px;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+  }
+  .form-input:focus { border-color: var(--body-gray); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--body-gray); border-radius: 3px; }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--body-gray); margin-top: 8px; opacity: 0.75; }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--surface-muted); padding: 48px 32px; text-align: center; }
+  .newsletter h3 { font-size: 18px; font-weight: 400; margin-bottom: 16px; color: var(--heading-gray); letter-spacing: 2px; }
+  .newsletter p { font-size: 12px; color: var(--body-gray); margin-bottom: 24px; }
+  .newsletter form { display: flex; gap: 8px; max-width: 480px; margin: 0 auto; }
+  .newsletter .form-input { flex: 1; }
+
+  /* FOOTER */
+  .footer { padding: 48px 32px; background: var(--surface-subtle); color: var(--body-gray); font-size: 12px; line-height: 1.6; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px; }
+  .footer-col h4 { font-size: 14px; font-weight: 400; margin-bottom: 12px; color: var(--heading-gray); letter-spacing: 2px; }
+  .footer-col a { display: block; color: var(--body-gray); text-decoration: none; opacity: 0.85; margin-bottom: 6px; font-size: 12px; }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta { text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--surface-muted); font-size: 11px; opacity: 0.7; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">POSTALCO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Story</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Products</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">More</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>霧の中の展望台</h1>
+    <p class="hero-lead">ポスタルコ（postalco.net）から抽出したデザイントークンのカタログ。Jost で全要素を組み、見出しに letter-spacing 2px の広い字間、border-radius 3px の控えめな角丸 CTA、暖オフホワイト #fffffb の面、グレースケールの階調で構成。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">More</a>
+      <a class="btn-language" href="#">日本語</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">SURFACE — オフホワイト基調</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fffffb; border-bottom:1px solid #e9e9e9"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Off-white</div><div class="color-swatch-hex">#fffffb</div><div class="color-swatch-role">標準背景・カード面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Subtle</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">セクション地（最頻出）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e9e9e9"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Muted</div><div class="color-swatch-hex">#e9e9e9</div><div class="color-swatch-role">区切り・薄カード</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eff3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Cool</div><div class="color-swatch-hex">#eff3f3</div><div class="color-swatch-role">涼やかなセクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Coolest</div><div class="color-swatch-hex">#f7f7f8</div><div class="color-swatch-role">最も淡い面</div></div></div>
+  </div>
+
+  <div class="color-group-label">TEXT — グレースケール</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#171717"></div><div class="color-swatch-info"><div class="color-swatch-name">Deep Gray</div><div class="color-swatch-hex">#171717</div><div class="color-swatch-role">最濃テキスト・プロモ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#636363"></div><div class="color-swatch-info"><div class="color-swatch-name">Heading Gray</div><div class="color-swatch-hex">#636363</div><div class="color-swatch-role">見出し（h1〜h3）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7d7d7d"></div><div class="color-swatch-info"><div class="color-swatch-name">Body Gray</div><div class="color-swatch-hex">#7d7d7d</div><div class="color-swatch-role">本文の標準色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#afafaf"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Gray</div><div class="color-swatch-hex">#afafaf</div><div class="color-swatch-role">More CTA 背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">ACCENT — 控えめなティール</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1e596c"></div><div class="color-swatch-info"><div class="color-swatch-name">Postal Teal</div><div class="color-swatch-hex">#1e596c</div><div class="color-swatch-role">プロモ・差し色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f6eb"></div><div class="color-swatch-info"><div class="color-swatch-name">Promo Cream</div><div class="color-swatch-hex">#f7f6eb</div><div class="color-swatch-role">プロモ上の文字色</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:22px; font-weight:400; line-height:1.2; letter-spacing:2px; color:var(--heading-gray);">霧の中の展望台 — Major Title</div>
+    <div class="type-meta">22px / 400 / line-height: 1.2 (26.4px) / letter-spacing: 2px<span class="type-context">h1 / h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:20px; font-weight:400; line-height:1.2; letter-spacing:2px; color:var(--heading-gray);">オールレザースナップパッド — Section Title</div>
+    <div class="type-meta">20px / 400 / line-height: 1.2 (24px) / letter-spacing: 2px<span class="type-context">h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:19px; font-weight:400; line-height:1.2; letter-spacing:normal; color:var(--heading-gray);">Tシャツ — Card Title</div>
+    <div class="type-meta">19px / 400 / line-height: 1.2 (22.8px) / letter-spacing: normal<span class="type-context">h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:18px; font-weight:400; line-height:1.0; letter-spacing:2px; color:var(--heading-gray);">ニュースレター登録 — Sub Title</div>
+    <div class="type-meta">18px / 400 / line-height: 1.0 (18px) / letter-spacing: 2px<span class="type-context">h1 in-content</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:400; line-height:1.6; color:var(--body-gray);">Body — ポスタルコ（POSTALCO）は、東京を拠点に革と紙の製品を作るデザインスタジオ／ブランドです。スイス的なグリッドの厳密さと、和紙のような暖かさを併せ持つプロダクトと組版を、Mike Abelson と古内ヨシエの二人がデザイン・制作しています。すべてのプロダクトは少量生産で、長く使える簡潔な構造を備えます。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.6 (22.4px) / letter-spacing: normal<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:12px; font-weight:400; line-height:1.3; color:var(--body-gray);">¥11,000以上のご購入で日本国内送料無料 — Caption</div>
+    <div class="type-meta">12px / 400 / line-height: 1.3 (15.6px) / letter-spacing: normal<span class="type-context">Caption</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-cool" id="article">
+<div class="section-cool-inner">
+  <div class="section-label">03 / STORY</div>
+  <h2 class="section-title">設計と素材のあいだ</h2>
+  <div class="article-preview">
+    <h1>霧の中の展望台</h1>
+    <p>ある日、霧の中で展望台にのぼった。視界はまっしろで、遠くに何があるかは見えないけれど、足元の手すりや、目の前の木の葉だけがやけにはっきり見える。設計とは、そんな霧の中での近距離の手仕事ではないかと思う。</p>
+    <h2>少量を、長く</h2>
+    <p>ポスタルコのプロダクトは、ひとつずつ手作業で作られる。革を裁ち、紙を貼り、糸で綴じる。多くを作らず、長く使える形を選ぶ。それが私たちの素朴な答えだ。</p>
+    <p>素材は革と紙が中心。革は経年で表情が変わり、紙は破れやすいけれど補修できる。どちらも完璧ではないが、その不完全さが時間を引き受けてくれる。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">More</a><div class="button-label">Primary / Mid Gray / radius 3px</div></div>
+    <div class="button-item"><a class="btn-submit" href="#">登録</a><div class="button-label">Submit / Body Gray / radius 3px</div></div>
+    <div class="button-item"><a class="btn-language" href="#">日本語 ▾</a><div class="button-label">Language Toggle / radius 3px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / PRODUCTS</div>
+  <h2 class="section-title">プロダクト</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image leather-tan"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">LEATHER</div>
+        <h3>オールレザー スナップパッド</h3>
+        <p>一枚革を折って作るスナップ式のメモパッド。経年で表情が深まる。</p>
+        <div class="card-meta">¥34,100</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image paper"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">PAPER</div>
+        <h3>チャネルポイント ノートブック</h3>
+        <p>糸かがり製本のシンプルなノート。見開きを大きく開いて使える。</p>
+        <div class="card-meta">¥2,200</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image canvas"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">WEAR</div>
+        <h3>ボートサンダル</h3>
+        <p>キャンバスとレザーで作るシンプルなサンダル。素足でも靴下でも。</p>
+        <div class="card-meta">¥18,700</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label class="form-label">お問い合わせ</label>
+    <input class="form-input" type="text" placeholder="オールレザー スナップパッドについて">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / SPACING & LAYOUT</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:10.5px; height:32px;"></div><div class="spacing-value">10.5px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:14px; height:32px;"></div><div class="spacing-value">14px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:14.4px; height:32px;"></div><div class="spacing-value">14.4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:25px; height:32px;"></div><div class="spacing-value">25px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:42px; height:32px;"></div><div class="spacing-value">42px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-promo">
+  <h3>¥11,000以上のご購入で日本国内送料無料</h3>
+  <p>プロモバナーには稀に Postal Teal #1e596c のティールが差し色として登場する</p>
+</section>
+
+<section class="newsletter">
+  <h3>NEWSLETTER</h3>
+  <p>新作・展示会のお知らせをお届けします</p>
+  <form>
+    <input class="form-input" type="email" placeholder="name@example.com">
+    <a class="btn-submit" href="#">登録</a>
+  </form>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>SHOP</h4>
+      <a href="#">Leather</a>
+      <a href="#">Paper</a>
+      <a href="#">Wear</a>
+      <a href="#">Bags</a>
+    </div>
+    <div class="footer-col">
+      <h4>ABOUT</h4>
+      <a href="#">Studio</a>
+      <a href="#">Process</a>
+      <a href="#">Press</a>
+    </div>
+    <div class="footer-col">
+      <h4>STORE</h4>
+      <a href="#">Tokyo / Shibuya</a>
+      <a href="#">Online Store</a>
+    </div>
+    <div class="footer-col">
+      <h4>LANGUAGE</h4>
+      <a href="#">日本語</a>
+      <a href="#">English</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from postalco.net DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-08)<br>
+    ※ Jost は Google Fonts、和文は OS フォールバック（Hiragino Sans / Yu Gothic / Noto Sans JP）
+  </div>
+</footer>
+
+</body>
+</html>
