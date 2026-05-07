@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (68 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (71 sites)</a>
 </p>
 
 <table>
@@ -129,9 +129,9 @@
 <tr>
 <td align="center"><strong>NDC</strong><br><img src="design-md/ndc/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>代官山 蔦屋書店</strong><br><img src="design-md/daikanyama-tsite/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>BALMUDA</strong><br><img src="design-md/balmuda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ほぼ日</strong><br><img src="design-md/hobonichi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>±0</strong><br><img src="design-md/plusminuszero/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -262,11 +262,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [mina perhonen](https://www.mina-perhonen.jp/) | Textile / Fashion / Heritage | [DESIGN.md](design-md/mina-perhonen/DESIGN.md) | [preview.html](design-md/mina-perhonen/preview.html) |
 | [Nippon Design Center](https://www.ndc.co.jp/) | Design Firm / Editorial | [DESIGN.md](design-md/ndc/DESIGN.md) | [preview.html](design-md/ndc/preview.html) |
 | [Daikanyama T-SITE](https://store.tsite.jp/daikanyama/) | Bookstore / Cultural Complex | [DESIGN.md](design-md/daikanyama-tsite/DESIGN.md) | [preview.html](design-md/daikanyama-tsite/preview.html) |
+| [BALMUDA](https://www.balmuda.com/jp/) | Home Appliance / Product Design | [DESIGN.md](design-md/balmuda/DESIGN.md) | [preview.html](design-md/balmuda/preview.html) |
+| [Hobonichi (ほぼ日刊イトイ新聞)](https://www.1101.com/) | Web Magazine / EC | [DESIGN.md](design-md/hobonichi/DESIGN.md) | [preview.html](design-md/hobonichi/preview.html) |
+| [±0 (Plus Minus Zero)](https://www.plusminuszero.jp/) | Product Design / Home Appliance | [DESIGN.md](design-md/plusminuszero/DESIGN.md) | [preview.html](design-md/plusminuszero/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (68 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (71 sites)</a>
 </p>
 
 <table>
@@ -361,9 +364,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>NDC</strong><br><img src="design-md/ndc/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>T-SITE Daikanyama</strong><br><img src="design-md/daikanyama-tsite/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>BALMUDA</strong><br><img src="design-md/balmuda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Hobonichi</strong><br><img src="design-md/hobonichi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>±0</strong><br><img src="design-md/plusminuszero/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

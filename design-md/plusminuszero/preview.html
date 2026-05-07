@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ±0 (Plus Minus Zero)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === ±0 Color Tokens（実測値） === */
+    --brand-blue: #0999d8;          /* 唯一のブランドアクセント */
+    --text-primary: #444444;        /* 純黒は使わない */
+
+    --bg-white: #ffffff;
+    --surface-pale-gray: #f0f0f0;   /* タブ・ナビ */
+    --footer-dark: #444444;
+    --border-faint: #e8e8e8;
+
+    /* Product Color Variants（プロダクト色 — UI には使わない） */
+    --brass-gold: #bda730;
+    --stainless: #c4c4c3;
+    --copper: #a77b3d;
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 300; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 60px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-faint);
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 300; color: var(--text-primary); text-decoration: none; }
+
+  /* CATEGORY TABS */
+  .category-tabs {
+    display: flex; gap: 0; padding: 0; background: var(--surface-pale-gray);
+    border-bottom: 1px solid var(--border-faint);
+  }
+  .category-tab {
+    padding: 14px 24px; font-size: 12px; font-weight: 300;
+    color: var(--text-primary); text-decoration: none;
+    background: var(--surface-pale-gray);
+    border-right: 1px solid #e0e0e0;
+  }
+  .category-tab.active { background: var(--bg-white); font-weight: 700; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 24px 64px;
+    text-align: center;
+    background: var(--bg-white);
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 16px; letter-spacing: 0.02em;
+  }
+  .hero p {
+    font-size: 12px; font-weight: 300; line-height: 1.8;
+    color: var(--text-primary); max-width: 680px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+  /* PRIMARY CTA — 唯一のスタイル */
+  .btn-primary {
+    display: inline-block; background: var(--brand-blue); color: #ffffff;
+    padding: 8px 24px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+  .btn-primary-large {
+    display: inline-block; background: var(--brand-blue); color: #ffffff;
+    padding: 12px 36px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    letter-spacing: 0.04em;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 24px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 700; color: var(--text-primary);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 32px; letter-spacing: 0.02em;
+  }
+  .section-divider { border: none; height: 1px; background: var(--border-faint); margin: 0; }
+  .section-gray { background: var(--surface-pale-gray); padding: 64px 24px; }
+  .section-gray .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: #ffffff; border-radius: 0; overflow: hidden; border: 1px solid var(--border-faint); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); letter-spacing: 0.02em; }
+  .color-swatch-hex { font-size: 11px; color: #888888; font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 10px; color: #888888; margin-top: 3px; }
+  .color-group-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin: 24px 0 10px; letter-spacing: 0.04em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-faint); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: #888888; margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-pale-gray); color: #888888; font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* PRODUCT GRID */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .product-card {
+    background: #ffffff; padding: 0; text-decoration: none; color: var(--text-primary);
+    display: block;
+  }
+  .product-image {
+    height: 220px; background: var(--surface-pale-gray);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 14px; color: #888888;
+    margin-bottom: 16px;
+  }
+  .product-image-gold { background: linear-gradient(135deg, var(--brass-gold) 0%, #d4be4a 100%); color: #ffffff; }
+  .product-image-silver { background: linear-gradient(135deg, var(--stainless) 0%, #d8d8d7 100%); color: #555555; }
+  .product-image-copper { background: linear-gradient(135deg, var(--copper) 0%, #c89656 100%); color: #ffffff; }
+  .product-card h3 { font-size: 20px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; color: var(--text-primary); letter-spacing: 0.02em; }
+  .product-card-price { font-size: 12px; font-weight: 300; color: var(--text-primary); margin-bottom: 16px; }
+  .product-card-colors { display: flex; gap: 6px; margin-bottom: 16px; }
+  .color-dot { width: 14px; height: 14px; border: 1px solid var(--border-faint); }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 300; color: #888888; margin-top: 8px; font-family: var(--font-mono); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; letter-spacing: 0.02em; }
+  .form-input {
+    width: 100%; background: #ffffff; color: var(--text-primary);
+    border: 1px solid var(--border-faint); padding: 8px 12px; border-radius: 0;
+    font-family: var(--font-base); font-size: 12px; font-weight: 300; outline: none;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-blue); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-blue); height: 28px; margin-bottom: 6px; border-radius: 0; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: #888888; }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--surface-pale-gray); border: 1px solid var(--border-faint); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--brand-blue); opacity: 0.25; }
+  .width-bar-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: 0.02em; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: #888888; }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 24px;
+    background: var(--footer-dark);
+    color: #cccccc;
+    text-align: center;
+    font-size: 11px; font-weight: 300; line-height: 1.8;
+  }
+  .footer a { color: #cccccc; text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 40px 16px; }
+    .section-gray { padding: 40px 16px; }
+    .product-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">±0</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+</nav>
+
+<div class="category-tabs">
+  <a class="category-tab active" href="#">商品一覧</a>
+  <a class="category-tab" href="#">掃除</a>
+  <a class="category-tab" href="#">キッチン</a>
+  <a class="category-tab" href="#">空調</a>
+  <a class="category-tab" href="#">健康</a>
+</div>
+
+<section class="hero">
+  <h1>Design System Preview — ±0</h1>
+  <p>plusminuszero.jp から抽出したデザイントークンのカタログ。深澤直人のニュートラリティを翻訳した、薄く・小さく・控えめな EC レイアウト。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary-large" href="#">詳しく見る・購入する</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / Colors</div>
+  <h2 class="section-title">3 色だけで構成される UI</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0999d8"></div><div class="color-swatch-info"><div class="color-swatch-name">Plus Minus Blue</div><div class="color-swatch-hex">#0999d8</div><div class="color-swatch-role">唯一の UI アクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">本文（純黒は使わない）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Pale Gray</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">タブ・ナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Dark</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">フッター</div></div></div>
+  </div>
+
+  <div class="color-group-label">Product Color Variants（プロダクト本体の色 / UI では未使用）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bda730"></div><div class="color-swatch-info"><div class="color-swatch-name">Brass Gold</div><div class="color-swatch-hex">#bda730</div><div class="color-swatch-role">電卓・テーブルライト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c4c4c3"></div><div class="color-swatch-info"><div class="color-swatch-name">Stainless Silver</div><div class="color-swatch-hex">#c4c4c3</div><div class="color-swatch-role">基本色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a77b3d"></div><div class="color-swatch-info"><div class="color-swatch-name">Copper</div><div class="color-swatch-hex">#a77b3d</div><div class="color-swatch-role">家電の限定色</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-gray" style="max-width:none;" id="typography">
+<div class="section-inner">
+  <div class="section-eyebrow">02 / Typography — 実測値</div>
+  <h2 class="section-title">12px / Light を基準にした文字</h2>
+
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.5; color:#444444; letter-spacing:0.02em;">商品名 — Heading (h3)</div>
+    <div class="type-meta">Noto Sans JP / 20px / 700 / line-height: 1.5 (30px)<span class="type-context">カード見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.5; color:#444444; padding:8px; background:#444; color:#fff;">コンパクト衣類乾燥機の使い方</div>
+    <div class="type-meta">Noto Sans JP / 16px / 400 / line-height: 1.5 (24px)<span class="type-context">バナー上テキスト（白）</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:300; line-height:1.5; color:#444444; max-width:680px;">ご使用前に必ず取扱説明書をよくお読みください。本製品は屋内専用です。</div>
+    <div class="type-meta">Noto Sans JP / 14px / 300 / line-height: 1.5<span class="type-context">補足注意書き</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:300; line-height:1.5; color:#444444; max-width:680px;">本文 — 12px / weight 300（Light）。±0 のすべてのキャプション・本文・ナビ・価格は、この極小・極薄の文字で統一される。商品写真が主役であり、文字は徹底的に脇役に徹する。ABCabc 123</div>
+    <div class="type-meta">Noto Sans JP / 12px / 300 / line-height: 1.5 (18px)<span class="type-context">本文（標準）</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:700; line-height:1.5; color:#444444; letter-spacing:0.02em;">ナビゲーションリンク — Bold</div>
+    <div class="type-meta">Noto Sans JP / 12px / 700 / 強調するときだけ Bold へ</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / Products</div>
+  <h2 class="section-title">プロダクトカタログ</h2>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-image product-image-silver">±0 加湿器</div>
+      <h3>±0 加湿器</h3>
+      <div class="product-card-price">¥14,300（税込）</div>
+      <div class="product-card-colors">
+        <span class="color-dot" style="background:#c4c4c3" title="シルバー"></span>
+        <span class="color-dot" style="background:#444" title="ブラック"></span>
+        <span class="color-dot" style="background:#fff" title="ホワイト"></span>
+      </div>
+      <a class="btn-primary" href="#">詳しく見る・購入する</a>
+    </div>
+    <div class="product-card">
+      <div class="product-image product-image-gold">±0 電卓</div>
+      <h3>±0 電卓</h3>
+      <div class="product-card-price">¥3,300（税込）</div>
+      <div class="product-card-colors">
+        <span class="color-dot" style="background:#bda730" title="ブラス"></span>
+        <span class="color-dot" style="background:#c4c4c3" title="シルバー"></span>
+      </div>
+      <a class="btn-primary" href="#">詳しく見る・購入する</a>
+    </div>
+    <div class="product-card">
+      <div class="product-image product-image-copper">±0 コードレスクリーナー</div>
+      <h3>±0 コードレスクリーナー</h3>
+      <div class="product-card-price">¥27,500（税込）</div>
+      <div class="product-card-colors">
+        <span class="color-dot" style="background:#a77b3d" title="カッパー"></span>
+        <span class="color-dot" style="background:#c4c4c3" title="シルバー"></span>
+        <span class="color-dot" style="background:#444" title="ブラック"></span>
+      </div>
+      <a class="btn-primary" href="#">詳しく見る・購入する</a>
+    </div>
+    <div class="product-card">
+      <div class="product-image">±0 オイルヒーター</div>
+      <h3>±0 オイルヒーター</h3>
+      <div class="product-card-price">¥36,300（税込）</div>
+      <div class="product-card-colors">
+        <span class="color-dot" style="background:#fff" title="ホワイト"></span>
+      </div>
+      <a class="btn-primary" href="#">詳しく見る・購入する</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section section-gray" style="max-width:none;" id="buttons">
+<div class="section-inner">
+  <div class="section-eyebrow">04 / Buttons</div>
+  <h2 class="section-title">CTA は 1 種類だけ</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">詳しく見る・購入する</a><div class="button-label">Primary CTA (radius 0)</div></div>
+    <div class="button-item"><a class="btn-primary-large" href="#">詳しく見る・購入する</a><div class="button-label">Primary Large</div></div>
+  </div>
+  <p style="margin-top:24px; max-width:640px; font-size:12px; line-height:1.8;">±0 には pill 型・outline 型・カラフルな塗りボタンが <em>存在しない</em>。CTA は <strong>#0999d8 のフラット長方形 1 種類のみ</strong>で、これがブランドの「ニュートラリティ」を体現している。</p>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="name@example.com"><div class="button-label" style="margin-top:6px; text-align:left;">デフォルト — radius 0 / border 1px solid #e8e8e8</div></div>
+  <div class="form-group"><label class="form-label">配送先住所</label><input class="form-input form-input--focus" type="text" value="東京都渋谷区..."><div class="button-label" style="margin-top:6px; text-align:left;">フォーカス — border #0999d8</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section section-gray" style="max-width:none;" id="layout">
+<div class="section-inner">
+  <div class="section-eyebrow">06 / Layout</div>
+  <h2 class="section-title">Spacing & Width</h2>
+  <h3 style="font-size:14px; font-weight:700; margin:16px 0 12px; letter-spacing:0.02em;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px"></div><div class="spacing-value">12px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <h3 style="font-size:14px; font-weight:700; margin:32px 0 12px; letter-spacing:0.02em;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Page Container <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Product Grid (4 col) <span class="width-bar-value">1100px / 4 = 275px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:25%"></div></div></div>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.plusminuszero.jp/">plusminuszero.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>
