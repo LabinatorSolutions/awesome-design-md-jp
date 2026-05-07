@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ISSEY MIYAKE</title>
+<style>
+  :root {
+    /* === Colors: ISSEY MIYAKE 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-section-alt: #eceeef;
+    --notice-bar: #464d59;
+    --text-primary: #333333;
+    --text-date: #222222;
+    --text-muted: #767676;
+    --text-on-dark: #ffffff;
+    --cta-black: #333333;
+    --cta-orange: #ff4500;
+    --border-default: #cccccc;
+    --border-subtle: #eaeaea;
+
+    /* === Fonts: 実測値 === */
+    /* 実サイト: HelveticaLTPro, HelveticaNeueLTPro, "Hiragino Kaku Gothic W4 JIS2004", sans-serif */
+    /* Web 代替: "Helvetica Neue" + "Hiragino Kaku Gothic ProN" */
+    --font-base: "Helvetica Neue", Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NOTICE BAR */
+  .notice {
+    background: var(--notice-bar);
+    color: var(--text-on-dark);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1;
+    padding: 8px 16px;
+    text-align: center;
+    letter-spacing: normal;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-brand {
+    font-size: 18px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-utils { display: flex; gap: 16px; align-items: center; }
+  .nav-utils a {
+    font-size: 12px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .wishlist-btn {
+    display: inline-block;
+    background: var(--cta-orange);
+    color: var(--text-on-dark);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 30px;
+    padding: 0 15px 0 36px;
+    text-decoration: none;
+    position: relative;
+  }
+  .wishlist-btn::before {
+    content: '♡';
+    position: absolute;
+    left: 14px;
+    top: 0;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 24px 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .hero-eyebrow {
+    font-size: 10px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    max-width: 900px;
+    letter-spacing: normal;
+  }
+  .hero p.lead {
+    font-size: 18px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--cta-black);
+    color: var(--text-on-dark);
+    border: none;
+    padding: 10px 20px;
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  /* SECTIONS */
+  .section { padding: 64px 24px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px; font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 20px; font-weight: 700; line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    letter-spacing: normal;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-subtle); margin: 0; }
+
+  .section-gray { background: var(--bg-section-alt); padding: 64px 24px; }
+  .section-gray .section-inner { max-width: 1280px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border-subtle);
+    border-left: 1px solid var(--border-subtle);
+  }
+  .color-swatch {
+    background: #fff;
+    border-bottom: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+  }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+  .color-group-label {
+    font-size: 10px; font-weight: 700;
+    color: var(--text-primary);
+    margin: 32px 0 12px;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-section-alt);
+    color: var(--text-primary);
+    font-size: 10px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+  }
+
+  /* PRODUCT TILES */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .product-tile {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+  }
+  .product-photo {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(170deg, #f5f5f4 0%, #d8d3cc 60%, #b9afa1 100%);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-photo::before {
+    content: '';
+    position: absolute;
+    bottom: 12%; left: 22%;
+    width: 56%; height: 70%;
+    background: linear-gradient(180deg, transparent 0%, rgba(40, 36, 32, 0.16) 30%, rgba(20, 18, 16, 0.34) 100%);
+    border-radius: 50% 50% 38% 38% / 18% 18% 100% 100%;
+    filter: blur(0.5px);
+  }
+  .product-brand {
+    font-size: 10px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .product-name {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-size: 11px; font-weight: 400; line-height: 1.5;
+    color: var(--text-date);
+  }
+
+  /* ARTICLE */
+  .article {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .article h1 {
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .article .article-date {
+    font-size: 11px; font-weight: 400; line-height: 1.5;
+    color: var(--text-date);
+    margin-bottom: 24px;
+  }
+  .article h2 {
+    font-size: 18px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin: 24px 0 12px;
+  }
+  .article p {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; color: var(--text-muted); margin-top: 8px; font-family: var(--font-mono); }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--text-primary);
+    padding: 8px 14px;
+    font-family: var(--font-base);
+    font-size: 11px;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-cookie {
+    display: inline-block;
+    background: var(--cta-black);
+    color: var(--text-on-dark);
+    border: none;
+    padding: 8px 14px;
+    font-family: var(--font-base);
+    font-size: 11px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  .tag-link {
+    display: inline-block;
+    color: var(--text-primary);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 2px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .form-input {
+    width: 100%;
+    background: #fff;
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 8px 12px;
+    border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 12px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-input--error { border-color: #c4292d; }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono); }
+  .form-select {
+    width: 100%;
+    background: #fff;
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 8px 12px;
+    border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px;
+    line-height: 1.5;
+    appearance: none;
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--cta-black); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 24px 24px;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .footer-inner a { color: var(--text-primary); text-decoration: underline; }
+  .footer-copy { font-size: 12px; color: var(--text-primary); margin-top: 16px; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 16px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="notice">【重要なお知らせ】REALITY LAB. ISSEY MIYAKE 営業に関するご案内</div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">ISSEY MIYAKE</a>
+  <ul class="nav-links">
+    <li><a href="#products">ブランド</a></li>
+    <li><a href="#article">ニュース</a></li>
+    <li><a href="#colors">ストア</a></li>
+    <li><a href="#buttons">サービス</a></li>
+    <li><a href="#forms">サポート</a></li>
+  </ul>
+  <div class="nav-utils">
+    <a href="#" class="wishlist-btn">My Wishlist</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">DESIGN SYSTEM PREVIEW</div>
+  <h1>ISSEY MIYAKE — 日本語版デザイン仕様</h1>
+  <p class="lead">DESIGN.md から抽出したデザイントークンのカタログ。HelveticaLTPro と Hiragino Kaku Gothic W4 JIS2004 の混植で組まれた、美術館カタログ的なフラット編集デザイン。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <a class="btn-primary" href="#products">コンテンツに進む</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ全体（純白）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eceeef"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Alt</div><div class="color-swatch-hex">#eceeef</div><div class="color-swatch-role">検索バー・補助セクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#464d59"></div><div class="color-swatch-info"><div class="color-swatch-name">Notice Bar</div><div class="color-swatch-hex">#464d59</div><div class="color-swatch-role">お知らせ帯（slate gray）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文・見出し・ナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Date</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">日付テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#767676"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#767676</div><div class="color-swatch-role">補足・カテゴリ</div></div></div>
+  </div>
+
+  <div class="color-group-label">CTA</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Black</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">「コンテンツに進む」「すべて同意」</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff4500"></div><div class="color-swatch-info"><div class="color-swatch-name">Wishlist Orange</div><div class="color-swatch-hex">#ff4500</div><div class="color-swatch-role">「My Wishlist」EC専用</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.2;">セクション見出し — PLEATS PLEASE ISSEY MIYAKE</div>
+    <div class="type-meta">20px / 700 / line-height: 1.2 / letter-spacing: normal<span class="type-context">トップページ h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:400; line-height:1.5;">リード — 重要なお知らせ</div>
+    <div class="type-meta">24px / 400 / line-height: 1.5 / color: #333333<span class="type-context">お知らせ大見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:400; line-height:1.5;">小見出し — REALITY LAB. ISSEY MIYAKE 営業に関するご案内</div>
+    <div class="type-meta">18px / 400 / line-height: 1.5 / color: #333333<span class="type-context">サブ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5;">本文テキスト — このたびREALITY LAB. ISSEY MIYAKEは、ご来店のお客様に快適にお過ごしいただくため、休業日の変更を実施いたします。HelveticaLTPro と Hiragino Kaku Gothic W4 JIS2004 の混植で組まれた、編集デザイン的なタイトな組（line-height 1.5）。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">本文 p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.5;">ナビリンク — メニューを開く</div>
+    <div class="type-meta">16px / 400 / line-height: 1.5 / color: #333333<span class="type-context">ヘッダー a</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.5;">フッターリンク — Cookieポリシー</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5 / color: #333333<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11px; font-weight:400; line-height:1.5; color:#222;">日付 — 2026.03.25</div>
+    <div class="type-meta">11px / 400 / line-height: 1.5 / color: #222222<span class="type-context">日付・キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:10px; font-weight:700; line-height:1.5; text-transform:uppercase; letter-spacing:0.05em;">タグ — ONLINE STORE</div>
+    <div class="type-meta">10px / 700 / line-height: 1.5 / uppercase<span class="type-context">アクセスタグ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT TILES -->
+<section class="section-gray" id="products">
+<div class="section-inner">
+  <div class="section-label">03 / Products — 商品グリッド</div>
+  <h2 class="section-title">商品カード</h2>
+  <div class="product-grid">
+    <div class="product-tile">
+      <div class="product-photo"></div>
+      <div class="product-brand">PLEATS PLEASE ISSEY MIYAKE</div>
+      <div class="product-name">MONTHLY COLORS : MARCH</div>
+      <div class="product-price">¥41,800（税込）</div>
+    </div>
+    <div class="product-tile">
+      <div class="product-photo"></div>
+      <div class="product-brand">A-POC ABLE ISSEY MIYAKE</div>
+      <div class="product-name">TYPE-XIII Atelier Oï project</div>
+      <div class="product-price">¥132,000（税込）</div>
+    </div>
+    <div class="product-tile">
+      <div class="product-photo"></div>
+      <div class="product-brand">BAO BAO ISSEY MIYAKE</div>
+      <div class="product-name">PRISM PLUS BASIC</div>
+      <div class="product-price">¥39,600（税込）</div>
+    </div>
+    <div class="product-tile">
+      <div class="product-photo"></div>
+      <div class="product-brand">HOMME PLISSÉ ISSEY MIYAKE</div>
+      <div class="product-name">MONTHLY COLOR PANTS</div>
+      <div class="product-price">¥35,200（税込）</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-label">04 / Article — 編集組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article">
+    <h1>重要なお知らせ</h1>
+    <div class="article-date">2026.03.25</div>
+    <h2>REALITY LAB. ISSEY MIYAKE 営業に関するご案内</h2>
+    <p>このたびREALITY LAB. ISSEY MIYAKEは、ご来店のお客様により快適にお過ごしいただくため、店内の改装工事を実施いたします。期間中はご不便をおかけいたしますが、何卒ご理解いただけますようお願い申し上げます。</p>
+    <p>HelveticaLTPro と Hiragino Kaku Gothic W4 JIS2004 の混植で組まれた本文。日本語サイトとしては欧文寄りの line-height 1.5 を基準とする編集デザインの組版言語。letter-spacing は normal、palt も適用しない素朴な組。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">コンテンツに進む</a><div class="button-label">Primary CTA</div></div>
+    <div class="button-item"><a class="btn-cookie" href="#">すべて同意</a><div class="button-label">Cookie Black</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">詳細設定</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><a class="wishlist-btn" href="#">My Wishlist</a><div class="button-label">Wishlist (Orange)</div></div>
+    <div class="button-item"><a class="tag-link" href="#">ONLINE STORE</a><div class="button-label">Tag Link</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">EMAIL</label><input class="form-input" type="email" placeholder="name@example.com"><div class="form-state-label">デフォルト — border: 1px solid #cccccc, radius: 0px</div></div>
+  <div class="form-group"><label class="form-label">PASSWORD</label><input class="form-input form-input--focus" type="password" value="passw0rd"><div class="form-state-label">フォーカス — border: #333333（黒）</div></div>
+  <div class="form-group"><label class="form-label">EMAIL</label><input class="form-input form-input--error" type="email" value="invalid@"><div class="form-state-label">エラー — border: #c4292d（推奨）</div></div>
+  <div class="form-group"><label class="form-label">LANGUAGE</label><select class="form-select"><option>日本語</option><option>English</option><option>中文</option></select><div class="form-state-label">Select — border: 1px solid #cccccc, radius: 0px, font-size: 14px</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / Spacing — 8px グリッド</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">XL · 48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px"></div><div class="spacing-value">XXL · 96px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Generated from <a href="https://www.isseymiyake.com/ja">ISSEY MIYAKE</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+    <div class="footer-copy">© ISSEY MIYAKE INC.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SOU・SOU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: SOU・SOU 実測値 (CSS Custom Properties より) === */
+    --bg-primary: #f5f5f5;
+    --bg-section-alt: #e8e8e8;
+    --surface-white: #ffffff;
+    --footer-dark: #4b4b4b;
+    --sub-header-dark: #222426;
+    --text-primary: #222222;
+    --text-muted: #888888;
+    --search-text: #5c5c5c;
+    --search-placeholder: #929292;
+    --outline-text: #555555;
+    --border-default: #dedede;
+    --border-stronger: #a7a7a7;
+    --border-main: #dcdcdc;
+    --color-accent: #c1a443;
+    --campaign-red: #a91717;
+    --error-color: #de2a2a;
+    --success-color: #2e9e7b;
+    --link-blue: #4181f2;
+    --pale-blue: #e1eaf2;
+
+    /* === Fonts: 実測値 === */
+    --font-base: "Noto Serif JP", "Noto Serif Japanese", serif;
+    --font-gothic: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.733;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* CAMPAIGN BAR */
+  .campaign-bar {
+    background: var(--surface-white);
+    padding: 16px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .campaign-bar .label {
+    font-size: 17px; font-weight: 500; line-height: 1;
+    color: var(--campaign-red);
+    letter-spacing: 1.7px;
+    margin-right: 8px;
+  }
+  .campaign-bar .date {
+    font-size: 17px; font-weight: 500; line-height: 1;
+    color: var(--text-primary);
+    letter-spacing: 1.7px;
+  }
+  .campaign-bar .caption {
+    display: block;
+    font-size: 14px; font-weight: 400; line-height: 1;
+    color: var(--text-muted);
+    letter-spacing: 1.7px;
+    margin-top: 8px;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--surface-white);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 1.76px;
+    font-family: var(--font-base);
+  }
+  .nav-brand .dot { color: var(--color-accent); margin: 0 2px; }
+  .nav-utils { display: flex; gap: 16px; align-items: center; }
+  .nav-utils a {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 1.12px;
+  }
+
+  /* PILL NAV */
+  .pill-nav {
+    display: flex;
+    gap: 8px;
+    padding: 16px 24px;
+    background: var(--bg-primary);
+    flex-wrap: wrap;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .pill-nav a {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 15px 20px;
+    border-radius: 40.81px;
+    font-size: 16px; font-weight: 400; line-height: 1;
+    text-decoration: none;
+    letter-spacing: 1.28px;
+    transition: background 0.15s;
+  }
+  .pill-nav a:hover { background: var(--surface-white); }
+  .pill-nav a.active { background: var(--text-primary); color: var(--surface-white); border-color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 24px 64px;
+    background: var(--bg-primary);
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 36px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 7.2px;
+  }
+  .hero p.lead {
+    font-size: 16px; font-weight: 400; line-height: 1.733;
+    color: var(--text-primary);
+    margin: 0 auto 32px;
+    max-width: 720px;
+    letter-spacing: 1.28px;
+  }
+  .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTON STYLES */
+  .btn-primary {
+    display: inline-block;
+    background: #000000;
+    color: var(--surface-white);
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.733;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-rounded-large {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-main);
+    padding: 19px 20px;
+    border-radius: 25px;
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-rounded-large:hover { background: var(--surface-white); }
+
+  .btn-rounded-small {
+    display: inline-block;
+    background: var(--surface-white);
+    color: var(--outline-text);
+    border: 1px solid var(--border-default);
+    padding: 10px 20px;
+    border-radius: 19px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn-link-blue {
+    display: inline-block;
+    background: var(--link-blue);
+    color: var(--surface-white);
+    padding: 15px 35px;
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+
+  .btn-form-submit {
+    display: inline-block;
+    background: var(--text-muted);
+    color: var(--surface-white);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 3px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 24px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    letter-spacing: 5.6px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-banner {
+    background: var(--sub-header-dark);
+    padding: 96px 24px;
+    color: var(--surface-white);
+    text-align: center;
+  }
+  .section-banner h2 {
+    font-size: 26.6px; font-weight: 400; line-height: 1.4;
+    color: var(--surface-white);
+    margin-bottom: 16px;
+    letter-spacing: 2.128px;
+  }
+  .section-banner h3 {
+    font-size: 22px; font-weight: 400; line-height: 1.733;
+    color: var(--surface-white);
+    margin-bottom: 16px;
+  }
+  .section-banner p {
+    font-size: 15px; font-weight: 400; line-height: 1.8;
+    color: var(--surface-white);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    letter-spacing: 1.2px;
+  }
+  .section-banner .btn-banner {
+    display: inline-block;
+    background: transparent;
+    color: var(--surface-white);
+    border: 1px solid var(--surface-white);
+    padding: 15px 32px;
+    border-radius: 25px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none;
+  }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .color-swatch {
+    background: var(--surface-white);
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--border-default);
+  }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 1.12px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+  .color-group-label {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+    margin: 32px 0 12px;
+    letter-spacing: 1.12px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: 0;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-section-alt);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+    letter-spacing: 0;
+  }
+
+  /* PRODUCT TILES */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .product-tile {
+    background: var(--surface-white);
+    padding: 16px;
+    border-radius: 0;
+  }
+  .product-photo {
+    width: 100%;
+    height: 240px;
+    margin-bottom: 16px;
+    background: linear-gradient(160deg, #d6c89a 0%, #b6975c 50%, #8a6e3c 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .product-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(255, 255, 255, 0.18), transparent 60%),
+      repeating-linear-gradient(120deg, transparent 0 8px, rgba(60, 40, 12, 0.05) 8px 9px);
+  }
+  .product-name {
+    font-size: 22px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: 1.76px;
+  }
+  .product-price {
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    letter-spacing: 1.12px;
+  }
+  .product-tag {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--surface-white);
+    font-size: 11px;
+    font-weight: 400;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ARTICLE */
+  .article {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .article h1 {
+    font-size: 22px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 1.76px;
+  }
+  .article h2 {
+    font-size: 22px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    margin: 32px 0 16px;
+    letter-spacing: 1.76px;
+  }
+  .article p {
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 1.12px;
+  }
+
+  /* BUTTONS DISPLAY */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; color: var(--text-muted); margin-top: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 1.12px; }
+  .form-input {
+    width: 100%;
+    background: var(--surface-white);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 10px 12px;
+    border-radius: 3px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--color-accent); }
+  .form-input--error { border-color: var(--error-color); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-accent); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* RADIUS SHOWCASE */
+  .radius-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 80px;
+    height: 56px;
+    background: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 24px 24px;
+    background: var(--footer-dark);
+    color: var(--surface-white);
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.733;
+    letter-spacing: 1.12px;
+  }
+  .footer-inner a { color: var(--surface-white); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; letter-spacing: 4.8px; }
+    .section-title { font-size: 22px; letter-spacing: 4.4px; }
+    .pill-nav { padding: 12px 16px; }
+    .pill-nav a { padding: 12px 16px; }
+    .section { padding: 48px 16px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-name { font-size: 16px; letter-spacing: 1.28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="campaign-bar">
+  <span class="label">送料無料キャンペーン中</span>
+  <span class="date">5.15 (金)まで</span>
+  <span class="caption">¥5,000以上(海外は¥10,000以上)ご注文が対象</span>
+</div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">SOU<span class="dot">・</span>SOU netshop</a>
+  <div class="nav-utils">
+    <a href="#">ログイン</a>
+    <a href="#">カート (0)</a>
+  </div>
+</nav>
+
+<nav class="pill-nav">
+  <a href="#" class="active">トップページ</a>
+  <a href="#">新商品</a>
+  <a href="#">衣類</a>
+  <a href="#">足袋</a>
+  <a href="#">テキスタイル</a>
+  <a href="#">傾衣</a>
+  <a href="#">le coq sportif</a>
+</nav>
+
+<section class="hero">
+  <h1>SOU・SOU について</h1>
+  <p class="lead">DESIGN.md から抽出したデザイントークンのカタログ。Noto Serif JP の明朝体で本文と見出しを統一し、letter-spacing を 0.08em〜0.2em と広く取った和的編集デザイン。マスタード金茶 #c1a443 がブランド identity。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#">今日のブログを読む</a>
+    <a class="btn-rounded-large" href="#">全て見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c1a443"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent</div><div class="color-swatch-hex">#c1a443</div><div class="color-swatch-role">マスタード金茶 / --color-accent / 47回出現</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a91717"></div><div class="color-swatch-info"><div class="color-swatch-name">Campaign Red</div><div class="color-swatch-hex">#a91717</div><div class="color-swatch-role">深紅・キャンペーン強調</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">和紙風オフホワイト・67回出現</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・モーダル面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4b4b4b"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Dark</div><div class="color-swatch-hex">#4b4b4b</div><div class="color-swatch-role">フッター・ダーク背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222426"></div><div class="color-swatch-info"><div class="color-swatch-name">Sub Header Dark</div><div class="color-swatch-hex">#222426</div><div class="color-swatch-role">バナー暗色面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Heading / Text</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">見出し・本文・ナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#888888"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#888888</div><div class="color-swatch-role">補足・キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5c5c5c"></div><div class="color-swatch-info"><div class="color-swatch-name">Search Text</div><div class="color-swatch-hex">#5c5c5c</div><div class="color-swatch-role">--color-search</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#555555"></div><div class="color-swatch-info"><div class="color-swatch-name">Outline Btn</div><div class="color-swatch-hex">#555555</div><div class="color-swatch-role">「もっと見る」テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dedede"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#dedede</div><div class="color-swatch-role">--border-color</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a7a7a7"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Stronger</div><div class="color-swatch-hex">#a7a7a7</div><div class="color-swatch-role">強めの境界線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dcdcdc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Main</div><div class="color-swatch-hex">#dcdcdc</div><div class="color-swatch-role">--color-main-border</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#de2a2a"></div><div class="color-swatch-info"><div class="color-swatch-name">Error</div><div class="color-swatch-hex">#de2a2a</div><div class="color-swatch-role">--error-color</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2e9e7b"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2e9e7b</div><div class="color-swatch-role">--success-color</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4181f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Blue</div><div class="color-swatch-hex">#4181f2</div><div class="color-swatch-role">外部リンク（U-KOMI 等）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e1eaf2"></div><div class="color-swatch-info"><div class="color-swatch-name">Pale Blue</div><div class="color-swatch-hex">#e1eaf2</div><div class="color-swatch-role">--color-bg-light</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:36px; font-weight:400; line-height:1.5; letter-spacing:7.2px;">Hero — SOU・SOU について</div>
+    <div class="type-meta">36px / 400 / line-height: 1.5 / letter-spacing: 7.2px (+0.2em)<span class="type-context">大見出し h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:400; line-height:1.5; letter-spacing:5.6px;">セクション見出し — お知らせ</div>
+    <div class="type-meta">28px / 400 / line-height: 1.5 / letter-spacing: 5.6px (+0.2em)<span class="type-context">セクション h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:400; line-height:1.3; letter-spacing:1.92px;">リード — 5.15(金)まで</div>
+    <div class="type-meta">24px / 400 / line-height: 1.3 / letter-spacing: 1.92px (+0.08em)<span class="type-context">プロモ大文字</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:22px; font-weight:400; line-height:1.8; letter-spacing:1.76px;">小見出し — 衣類</div>
+    <div class="type-meta">22px / 400 / line-height: 1.8 / letter-spacing: 1.76px (+0.08em)<span class="type-context">セクション h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:17px; font-weight:500; line-height:1; letter-spacing:1.7px; color:#a91717;">キャンペーン強調 — 送料無料キャンペーン中</div>
+    <div class="type-meta">17px / 500 / line-height: 1.0 / letter-spacing: 1.7px / color: #a91717<span class="type-context">深紅キャンペーンラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.733;">本文 — DESIGN.md は AI エージェントが正確な日本語 UI を生成するためのデザイン仕様書。Noto Serif JP の明朝体で本文と見出しを統一し、letter-spacing を 0.08em〜0.2em と広く取ることで、和的な「呼吸の長い」編集組を作る。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.733 / letter-spacing: normal<span class="type-context">本文 body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.8; letter-spacing:1.12px;">記事本文 — このシリーズは、細見えするのが良いです。セットアップしやすく、和装の基本を押さえた現代的な一着。letter-spacing 1.12px (+0.08em) で組まれた長文記事の標準スタイル。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.8 / letter-spacing: 1.12px (+0.08em)<span class="type-context">記事 article p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1; letter-spacing:1.28px;">ナビリンク — トップページ</div>
+    <div class="type-meta">16px / 400 / line-height: 1.0 / letter-spacing: 1.28px (+0.08em)<span class="type-context">ピル形ナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1; letter-spacing:1.7px; color:#888;">補足キャプション — ¥5,000以上(海外は¥10,000以上)ご注文が対象</div>
+    <div class="type-meta">14px / 400 / line-height: 1.0 / letter-spacing: 1.7px / color: #888888<span class="type-context">キャプション</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BANNER -->
+<section class="section-banner" id="banner">
+  <h2>夏の新作和装</h2>
+  <h3>送料／関税 無料キャンペーン</h3>
+  <p>日本の気候に寄り添った素材で仕立てた、夏の一着。Noto Serif JP の明朝で組まれた暗色バナーセクションのサンプル。</p>
+  <a class="btn-banner" href="#">全て見る</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-label">03 / PRODUCTS</div>
+  <h2 class="section-title">商品グリッド</h2>
+  <div class="product-grid">
+    <div class="product-tile">
+      <div class="product-photo"></div>
+      <span class="product-tag">新商品</span>
+      <div class="product-name">高島縮 五分袖 さしもの</div>
+      <div class="product-price">¥18,700（税込）</div>
+    </div>
+    <div class="product-tile">
+      <div class="product-photo" style="background:linear-gradient(160deg, #4a4a4a 0%, #1f1f1f 100%);"></div>
+      <span class="product-tag">定番</span>
+      <div class="product-name">貫頭衣 麻 木立</div>
+      <div class="product-price">¥24,200（税込）</div>
+    </div>
+    <div class="product-tile">
+      <div class="product-photo" style="background:linear-gradient(150deg, #c8a8a0 0%, #8e6058 60%, #5a342f 100%);"></div>
+      <span class="product-tag">新色</span>
+      <div class="product-name">地下足袋 SOU・SOU × le coq sportif</div>
+      <div class="product-price">¥15,400（税込）</div>
+    </div>
+    <div class="product-tile">
+      <div class="product-photo" style="background:linear-gradient(150deg, #d8d6cc 0%, #b6ad94 60%, #786c54 100%);"></div>
+      <span class="product-tag">在庫僅少</span>
+      <div class="product-name">ぬぬ 風呂敷 SO-SU-U</div>
+      <div class="product-price">¥3,300（税込）</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-label">04 / ARTICLE — 記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article">
+    <h1>【お詫び】発送遅延・着日指定不可について</h1>
+    <h2>お知らせの詳細</h2>
+    <p>このたび物流の混雑により、SOU・SOU netshop からの発送に遅延が発生しております。お客様にはご迷惑をおかけし、誠に申し訳ございません。Noto Serif JP の明朝体で組まれた、letter-spacing 1.12px (+0.08em) / line-height 1.8 の標準的な記事本文。</p>
+    <h2>対象期間と対応</h2>
+    <p>2026年5月7日以降のご注文につきましては、通常より1〜2日多くお時間をいただく場合がございます。着日指定のご依頼は一時的に承れません。何卒ご理解のほど、よろしくお願いいたします。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / BUTTONS</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">今日のブログを読む</a><div class="button-label">Primary 黒塗り (radius 5px)</div></div>
+    <div class="button-item"><a class="btn-rounded-large" href="#">全て見る</a><div class="button-label">Outline Large (radius 25px)</div></div>
+    <div class="button-item"><a class="btn-rounded-small" href="#">もっと見る</a><div class="button-label">Outline Small (radius 19px)</div></div>
+    <div class="button-item"><a class="btn-link-blue" href="#">U-KOMIの詳細はこちら</a><div class="button-label">Link Blue (radius 5px)</div></div>
+    <div class="button-item"><button class="btn-form-submit">登録</button><div class="button-label">Form Submit (radius 3px)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- RADIUS SHOWCASE -->
+<section class="section" id="radius">
+  <div class="section-label">06 / BORDER RADIUS — 7種使い分け</div>
+  <h2 class="section-title">角丸スケール</h2>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-block" style="border-radius:0;"></div><div class="radius-label">Sharp · 0px</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:3px;"></div><div class="radius-label">Soft · 3px</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:5px;"></div><div class="radius-label">Subtle · 5px</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:19px;"></div><div class="radius-label">Rounded · 19px</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:25px;"></div><div class="radius-label">Pill Soft · 25px</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:40.81px; width:120px;"></div><div class="radius-label">Pill Full · 40.81px</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:100%; width:56px; height:56px;"></div><div class="radius-label">Circle · 100%</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">07 / FORMS</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="email" placeholder="name@example.com"><div class="form-state-label">デフォルト — border: 1px solid #dedede, radius: 3px</div></div>
+  <div class="form-group"><label class="form-label">パスワード</label><input class="form-input form-input--focus" type="password" value="passw0rd"><div class="form-state-label">フォーカス — border: #c1a443（accent gold）</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="email" value="invalid@"><div class="form-state-label">エラー — border: #de2a2a (--error-color)</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">08 / SPACING — 8px グリッド</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">XL · 48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">XXL · 80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Generated from <a href="https://www.sousou.co.jp/">SOU・SOU netshop</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+  </div>
+</footer>
+
+</body>
+</html>

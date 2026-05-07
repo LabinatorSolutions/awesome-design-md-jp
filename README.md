@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (50 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (53 sites)</a>
 </p>
 
 <table>
@@ -105,9 +105,9 @@
 <tr>
 <td align="center"><strong>KOKUYO</strong><br><img src="design-md/kokuyo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Gマーク</strong><br><img src="design-md/g-mark/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>teamLab</strong><br><img src="design-md/teamlab/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ISSEY MIYAKE</strong><br><img src="design-md/isseymiyake/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SOU・SOU</strong><br><img src="design-md/sousou/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -220,11 +220,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Takram](https://ja.takram.com/) | Design Innovation Firm | [DESIGN.md](design-md/takram/DESIGN.md) | [preview.html](design-md/takram/preview.html) |
 | [KOKUYO](https://www.kokuyo.co.jp/) | Stationery / Furniture / Space | [DESIGN.md](design-md/kokuyo/DESIGN.md) | [preview.html](design-md/kokuyo/preview.html) |
 | [GOOD DESIGN AWARD](https://www.g-mark.org/) | Design Award / Public | [DESIGN.md](design-md/g-mark/DESIGN.md) | [preview.html](design-md/g-mark/preview.html) |
+| [teamLab](https://www.teamlab.art/jp/) | Digital Art Collective | [DESIGN.md](design-md/teamlab/DESIGN.md) | [preview.html](design-md/teamlab/preview.html) |
+| [ISSEY MIYAKE](https://www.isseymiyake.com/ja) | Fashion / Apparel | [DESIGN.md](design-md/isseymiyake/DESIGN.md) | [preview.html](design-md/isseymiyake/preview.html) |
+| [SOU・SOU](https://www.sousou.co.jp/) | Textile / Heritage Apparel | [DESIGN.md](design-md/sousou/DESIGN.md) | [preview.html](design-md/sousou/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (50 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (53 sites)</a>
 </p>
 
 <table>
@@ -295,9 +298,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>KOKUYO</strong><br><img src="design-md/kokuyo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>G-Mark</strong><br><img src="design-md/g-mark/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>teamLab</strong><br><img src="design-md/teamlab/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ISSEY MIYAKE</strong><br><img src="design-md/isseymiyake/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SOU・SOU</strong><br><img src="design-md/sousou/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

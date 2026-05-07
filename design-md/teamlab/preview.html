@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: teamLab</title>
+<style>
+  :root {
+    /* === Colors: teamLab 実測値 === */
+    --bg-primary: #0e0f0e;
+    --bg-section: #0e0f0e;
+    --bg-section-alt: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-muted: #999999;
+    --badge-bg: #ffffff;
+    --badge-text: #000000;
+    --border-cta: #5a5a5a;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+
+    /* === Fonts === */
+    --font-base: Helvetica, Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", 游ゴシック, "Yu Gothic", YuGothic, Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS P Gothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 40px;
+    --space-xxl: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-brand {
+    font-size: 18px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: normal;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a.active { font-weight: 600; }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-lang {
+    display: flex; gap: 12px;
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.24px;
+  }
+  .nav-lang a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-lang a.active { color: var(--text-primary); }
+  .nav-lang a:hover { color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .hero h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    max-width: 900px;
+  }
+  .hero p.lead {
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+  .btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-cta);
+    padding: 12px 24px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: normal;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s, opacity 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--text-primary); opacity: 1; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-subtle); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .color-swatch {
+    background: transparent;
+    border-bottom: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+  }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+  .color-group-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted);
+    margin: 32px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--font-mono);
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-section-alt);
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+  }
+
+  /* WORK TILES */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+  .work-tile {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
+  .work-photo {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #1a1a1a, #0e0f0e);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .work-photo::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(ellipse at center, rgba(180, 220, 255, 0.18) 0%, rgba(255, 110, 180, 0.10) 50%, transparent 80%);
+    filter: blur(8px);
+  }
+  .work-badge {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  .work-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .work-date {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .work-venue {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; font-family: var(--font-mono); }
+  .badge-sample {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    line-height: 1.6;
+  }
+  .lang-sample {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.24px;
+  }
+  .lang-sample a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 6px;
+  }
+  .lang-sample a.active { color: var(--text-primary); }
+
+  /* INPUTS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-cta);
+    padding: 8px 12px;
+    border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px;
+    text-align: center;
+    background: var(--bg-primary);
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .footer a { color: var(--text-primary); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .work-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">teamLab</a>
+  <ul class="nav-links">
+    <li><a href="#works" class="active">WORKS</a></li>
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Type</a></li>
+    <li><a href="#buttons">UI</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <div class="nav-lang">
+    <a href="#" class="active">日本語</a>
+    <a href="#">English</a>
+    <a href="#">中文</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview — teamLab.art / 日本語版</h1>
+  <p class="lead">DESIGN.md から抽出したデザイントークンのカタログ。背景 #0e0f0e の純黒を基調に、Helvetica と OS 既定の和文フォントだけで構成された極限までストイックなダーク UI。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <a class="btn-outline" href="#works">もっとみる</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0e0f0e"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#0e0f0e</div><div class="color-swatch-role">ページ全体（純黒ではない深いブラック）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a1a"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Alt</div><div class="color-swatch-hex">#1a1a1a</div><div class="color-swatch-role">入力欄・推奨ホバー面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">日付・キャプション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Badge / Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge BG</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">「ON VIEW」「VIDEO」</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge Text</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">白バッジ内テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5a5a5a"></div><div class="color-swatch-info"><div class="color-swatch-name">Border (CTA)</div><div class="color-swatch-hex">#5a5a5a</div><div class="color-swatch-role">ボタン枠線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.5;">セクション見出し — WORKS</div>
+    <div class="type-meta">20px / 700 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">トップページ h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.6;">本文テキスト — チームラボ バイオヴォルテックス 京都 - 大成建設。深いブラック #0e0f0e 上に純白テキスト、line-height: 1.6 で組まれた標準本文。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.6 / letter-spacing: normal<span class="type-context">本文 p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:600; line-height:1.6;">アクティブナビ — WORKS</div>
+    <div class="type-meta">14px / 600 / line-height: 1.6<span class="type-context">ヘッダー a.active</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:400; line-height:1.6;">サブメタ — 2025.10.07(火) - 常設</div>
+    <div class="type-meta">13px / 400 / line-height: 1.6 / color: #ffffff<span class="type-context">作品開催情報</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:400; line-height:1.6; color:var(--text-muted);">会場名 — teamLab Museum</div>
+    <div class="type-meta">13px / 400 / line-height: 1.6 / color: #999999<span class="type-context">会場サブメタ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.6; color:var(--text-muted);">キャプション — 2025.4.18(金) - 常設</div>
+    <div class="type-meta">12px / 400 / line-height: 1.6 / color: #999999<span class="type-context">日付キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.6; letter-spacing:0.24px;">言語切替 — Deutsch  English  Español  Français</div>
+    <div class="type-meta">12px / 400 / line-height: 1.6 / letter-spacing: 0.24px (+0.02em)<span class="type-context">ヘッダー言語切替</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="display:inline-block; font-size:10px; font-weight:700; line-height:1.6; background:#fff; color:#000; padding:4px 8px;">ON VIEW</div>
+    <div class="type-meta">10px / 700 / 黒文字 #000 on 白 #fff / padding 4px 8px<span class="type-context">作品状態バッジ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WORK TILES -->
+<section class="section" id="works">
+  <div class="section-label">03 / Works — 作品カード</div>
+  <h2 class="section-title">作品グリッド</h2>
+  <div class="work-grid">
+    <div class="work-tile">
+      <div class="work-photo"></div>
+      <div class="work-badge">ON VIEW</div>
+      <div class="work-title">Forest of Resonating Lamps</div>
+      <div class="work-date">2025.10.07(火) - 常設</div>
+      <div class="work-venue">teamLab Museum</div>
+    </div>
+    <div class="work-tile">
+      <div class="work-photo"></div>
+      <div class="work-badge">VIDEO</div>
+      <div class="work-title">Floating Flower Garden</div>
+      <div class="work-date">2025.4.18(金) - 常設</div>
+      <div class="work-venue">teamLab Borderless</div>
+    </div>
+    <div class="work-tile">
+      <div class="work-photo"></div>
+      <div class="work-badge">ON VIEW</div>
+      <div class="work-title">Flutter of Butterflies</div>
+      <div class="work-date">2025.7.15(火) - 常設</div>
+      <div class="work-venue">teamLab Planets</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons & Badges</div>
+  <h2 class="section-title">UI コンポーネント</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline" href="#">もっとみる</a><div class="button-label">Outlined CTA</div></div>
+    <div class="button-item"><span class="badge-sample">ON VIEW</span><div class="button-label">Mini Badge</div></div>
+    <div class="button-item"><span class="badge-sample">VIDEO</span><div class="button-label">Mini Badge</div></div>
+    <div class="button-item">
+      <div class="lang-sample">
+        <a href="#" class="active">日本語</a>
+        <a href="#">English</a>
+        <a href="#">中文</a>
+      </div>
+      <div class="button-label">Lang Switch (letter-spacing 0.24px)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">検索</label><input class="form-input" type="text" placeholder="作品名・会場で検索"><div class="form-state-label">デフォルト — border: 1px solid #5a5a5a, radius: 0px</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border: #ffffff（白）</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">06 / Spacing — 8px グリッド</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">XL · 40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">XXL · 80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.teamlab.art/jp/">teamLab</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+</footer>
+
+</body>
+</html>
