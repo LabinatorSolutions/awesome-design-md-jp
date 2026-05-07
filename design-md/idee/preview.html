@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: IDÉE</title>
+<style>
+  :root {
+    /* === Colors: IDÉE 実測値 === */
+    --bg-primary: #ffffff;
+    --brand-navy: #001646;
+    --text-primary: #111111;
+    --text-inverse: #ffffff;
+    --text-logo: #000000;
+    --border-cta: #888888;
+
+    /* === Fonts === */
+    --font-base: "Helvetica Neue", Helvetica, "Yu Gothic Medium", "Hiragino Sans", "Yu Gothic", "游ゴシック", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 48px;
+    --space-xxl: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-cta);
+    height: 72px;
+  }
+  .nav-brand {
+    font-size: 28px; font-weight: 700;
+    color: var(--text-logo);
+    text-decoration: none;
+    letter-spacing: 0.6px;
+    font-family: var(--font-base);
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+  }
+  .nav-links a.active { font-weight: 700; }
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+  .btn-navy {
+    display: inline-block;
+    background: var(--brand-navy);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: 0;
+    padding: 0 16px;
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.3px;
+    font-feature-settings: "palt";
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-navy:hover { opacity: 0.85; }
+  .btn-line {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-cta);
+    border-radius: 0;
+    padding: 0 32px;
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    line-height: 48px;
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-line:hover { border-color: var(--text-primary); color: var(--text-primary); }
+  .label-navy {
+    display: inline-block;
+    background: var(--brand-navy);
+    color: var(--text-inverse);
+    padding: 6px 12px;
+    font-size: 11px; font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: 0.5px;
+    font-feature-settings: "palt";
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-cta);
+  }
+  .hero-label {
+    display: inline-block;
+    background: var(--brand-navy);
+    color: var(--text-inverse);
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 700; line-height: 1.0;
+    letter-spacing: 0.6px;
+    color: var(--text-primary);
+    font-feature-settings: "palt";
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .hero p.lead {
+    font-size: 14px; font-weight: 400; line-height: 1.7;
+    letter-spacing: 0.6px;
+    color: var(--text-primary);
+    font-feature-settings: "palt";
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1280px; margin: 0 auto; }
+  .section-label-mono {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--border-cta);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 21px; font-weight: 700; line-height: 1.6;
+    color: var(--text-primary);
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-cta); margin: 0; opacity: 0.4; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border-cta);
+    border-left: 1px solid var(--border-cta);
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-cta);
+    border-right: 1px solid var(--border-cta);
+  }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; line-height: 1.5; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.6px; }
+  .color-swatch-hex { font-size: 12px; color: var(--border-cta); font-family: var(--font-mono); letter-spacing: normal; }
+  .color-swatch-role { font-size: 11px; color: var(--border-cta); margin-top: 8px; letter-spacing: 0.4px; }
+  .color-group-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--border-cta);
+    margin: 32px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-cta);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--border-cta);
+    margin-top: 8px;
+    line-height: 1.5;
+    letter-spacing: normal;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-cta);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+  }
+
+  /* PRODUCT GRID */
+  .product-section { padding: 80px 32px; max-width: 1280px; margin: 0 auto; }
+  .product-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--bg-primary);
+    border-radius: 0;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: opacity 0.2s;
+  }
+  .product-card:hover { opacity: 0.8; }
+  .product-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, #f4f4f4, #e8e8e8);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-image::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background: var(--bg-primary);
+    opacity: 0.6;
+    border-radius: 50%;
+  }
+  .product-name {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-primary);
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+    margin-bottom: 6px;
+  }
+  .product-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.6px;
+  }
+
+  /* TOPIC */
+  .topic-block {
+    max-width: 720px;
+    margin-bottom: 48px;
+  }
+  .topic-title {
+    font-size: 30px; font-weight: 400; line-height: 1.4;
+    letter-spacing: 0.6px;
+    color: var(--text-primary);
+    font-feature-settings: "palt";
+    margin-bottom: 16px;
+  }
+  .topic-body {
+    font-size: 13px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.6px;
+    color: var(--text-primary);
+    font-feature-settings: "palt";
+    margin-bottom: 32px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 13px; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.6px; line-height: 1.5; }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-cta);
+    padding: 12px 16px;
+    border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px;
+    letter-spacing: 0.6px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-navy); }
+  .form-state-label { font-size: 11px; color: var(--border-cta); margin-top: 4px; font-family: var(--font-mono); line-height: 1.5; letter-spacing: normal; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--border-cta); letter-spacing: normal; }
+
+  /* BRAND FOOTER */
+  .brand-footer {
+    background: var(--brand-navy);
+    color: var(--text-inverse);
+    padding: 64px 32px 48px;
+    margin-top: 80px;
+  }
+  .brand-footer-inner { max-width: 1280px; margin: 0 auto; }
+  .brand-footer-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .brand-footer-col h4 {
+    font-size: 11px; font-weight: 700; line-height: 1.0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-inverse);
+    margin-bottom: 16px;
+  }
+  .brand-footer-col a {
+    display: block;
+    font-size: 11px; line-height: 1.6;
+    letter-spacing: 0.3px;
+    color: var(--text-inverse);
+    text-decoration: none;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+  .brand-footer-col a:hover { opacity: 1; }
+  .brand-footer-meta {
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+    color: var(--text-inverse);
+    opacity: 0.6;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 24px;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .nav-links { display: none; }
+    .section, .product-section { padding: 56px 20px; }
+    .topic-title { font-size: 22px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">IDÉE</a>
+  <ul class="nav-links">
+    <li><a href="#products" class="active">FURNITURE</a></li>
+    <li><a href="#colors">LIGHTING</a></li>
+    <li><a href="#typography">FABRIC</a></li>
+    <li><a href="#topics">FOOD</a></li>
+    <li><a href="#forms">SHOP NEWS</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="label-navy" href="#">NEW ARRIVALS</a>
+    <a class="btn-navy" href="#">ログイン</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="hero-label">DESIGN SYSTEM</span>
+  <h1>IDÉE のデザインシステム ／ 日本語版</h1>
+  <p class="lead">DESIGN.md から抽出したデザイントークンのカタログ。純白背景 #ffffff にブランド深紺 #001646 をアクセントとして据え、Helvetica Neue（欧文）+ 游ゴシック Pr6n（和文、preview では Yu Gothic Medium 代替）+ YakuHanJP（約物処理）の三層構造でエディトリアル風 UI を構築。font-feature-settings: "palt" を全要素に適用、letter-spacing 0.6px (+0.04em) で字間を広げ、line-height 1.0 のタイト見出しと line-height 48px のライン CTA を組み合わせる。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <a class="btn-line" href="#products">特集一覧を見る</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label-mono">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#001646"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Navy</div><div class="color-swatch-hex">#001646</div><div class="color-swatch-role">ログイン・バッジ・フッタ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#111111"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Black</div><div class="color-swatch-hex">#111111</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Logo Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">IDÉE ロゴ・純黒</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid var(--border-cta)"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">純白</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#888888"></div><div class="color-swatch-info"><div class="color-swatch-name">Border (CTA)</div><div class="color-swatch-hex">#888888</div><div class="color-swatch-role">ライン CTA 1px 枠</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label-mono">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:28px; font-weight:700; line-height:1.0; letter-spacing:0.6px; font-feature-settings:'palt';">Page Heading ／ ページ見出し</div>
+    <div class="type-meta">28px / weight 700 / line-height: 1.0 / letter-spacing: 0.6px (+0.02em)<span class="type-context">h1 ヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:21px; font-weight:700; line-height:1.6; letter-spacing:0.6px; font-feature-settings:'palt';">Section Title ／ INFORMATION ／ SHOP NEWS</div>
+    <div class="type-meta">21px / weight 700 / line-height: 1.6 / letter-spacing: 0.6px<span class="type-context">h2 .sectionTitle</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:30px; font-weight:400; line-height:1.4; letter-spacing:0.6px; font-feature-settings:'palt';">Hero Title ／ 配置や選び方でお部屋の印象や余白が整う収納家具。</div>
+    <div class="type-meta">30px / weight 400 / line-height: 1.4 / letter-spacing: 0.6px<span class="type-context">スライダー大型タイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.0; letter-spacing:0.6px; font-feature-settings:'palt';">Body ／ Helvetica Neue + 游ゴシック Pr6n の和欧混在組</div>
+    <div class="type-meta">14px / weight 400 / line-height: 1.0 / letter-spacing: 0.6px (+0.04em) / palt: ON<span class="type-context">本文 — タイト組</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:13px; font-weight:400; line-height:1.5; letter-spacing:0.6px; font-feature-settings:'palt';">Topic Body ／ 配置や選び方でお部屋の印象や余白が整う収納家具。実用的なものから個性派までご紹介します。長文は line-height 1.5 に切り替え、読みやすさを担保します。</div>
+    <div class="type-meta">13px / weight 400 / line-height: 1.5 / letter-spacing: 0.6px<span class="type-context">.topic_txt</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.4; letter-spacing:0.6px; font-feature-settings:'palt';">Item Name ／ IDEE Cotton Linen Tote Bag ネイビー</div>
+    <div class="type-meta">12px / weight 400 / line-height: 1.4 / letter-spacing: 0.6px<span class="type-context">.itemName</span></div>
+  </div>
+  <div class="type-sample">
+    <div><span class="label-navy">NEW ARRIVALS</span></div>
+    <div class="type-meta">11px / weight 400 / line-height: 1.0 / letter-spacing: 0.5px / 白文字 #fff on 深紺 #001646<span class="type-context">セクションラベル</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TOPIC -->
+<section class="section" id="topics">
+  <div class="section-label-mono">03 / Editorial Topic</div>
+  <h2 class="section-title">FEATURE</h2>
+  <div class="topic-block">
+    <span class="label-navy">FURNITURE</span>
+    <h3 class="topic-title" style="margin-top:24px;">配置や選び方でお部屋の印象や余白が整う、IDÉE の収納家具。</h3>
+    <p class="topic-body">IDÉE の家具は、長く使い続けることを前提にデザインされています。本文は游ゴシック Pr6n + Helvetica Neue の和欧混在組、letter-spacing 0.6px を全体に適用。長文段落では line-height を 1.5 に切り替えることで、エディター誌面のような誠実な可読性を実現します。</p>
+    <a class="btn-line" href="#">特集一覧を見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT GRID -->
+<section class="product-section" id="products">
+  <div class="product-section-header">
+    <div>
+      <div class="section-label-mono">04 / Products</div>
+      <h2 class="section-title" style="margin-bottom:0;">NEW ARRIVALS</h2>
+    </div>
+    <a class="btn-line" href="#" style="line-height:36px; padding:0 16px; font-size:13px;">SHOP NEWS一覧</a>
+  </div>
+  <div class="product-grid">
+    <a href="#" class="product-card">
+      <div class="product-image"></div>
+      <div class="product-name">IDEE Cotton Linen Tote Bag ネイビー</div>
+      <div class="product-price">¥6,820</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-image"></div>
+      <div class="product-name">AOR ダイニングチェア オーク</div>
+      <div class="product-price">¥48,400</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-image"></div>
+      <div class="product-name">SOFA NOIE フェザー 2.5シーター</div>
+      <div class="product-price">¥220,000</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-image"></div>
+      <div class="product-name">PUEBCO ガラスフラワーベース</div>
+      <div class="product-price">¥3,300</div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label-mono">05 / Buttons</div>
+  <h2 class="section-title">UI コンポーネント</h2>
+  <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:center;">
+    <div style="text-align:center;"><a class="btn-line" href="#">特集一覧を見る</a><div style="font-family:var(--font-mono); font-size:11px; color:var(--border-cta); margin-top:8px; line-height:1.5;">Line CTA (line-height 48px / radius 0)</div></div>
+    <div style="text-align:center;"><a class="btn-navy" href="#">ログイン</a><div style="font-family:var(--font-mono); font-size:11px; color:var(--border-cta); margin-top:8px; line-height:1.5;">Navy CTA (#001646 / 12px / radius 0)</div></div>
+    <div style="text-align:center;"><span class="label-navy">NEW ARRIVALS</span><div style="font-family:var(--font-mono); font-size:11px; color:var(--border-cta); margin-top:8px; line-height:1.5;">Section Label (11px / 英大文字)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label-mono">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">商品検索</label><input class="form-input" type="text" placeholder="家具・雑貨・キーワードで検索"><div class="form-state-label">デフォルト — border: 1px solid #888888, radius: 0px</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border: #001646（ブランド深紺）</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label-mono">07 / Spacing — 4px グリッド</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">XL · 48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">XXL · 80px</div></div>
+  </div>
+</section>
+
+<!-- BRAND FOOTER -->
+<footer class="brand-footer">
+  <div class="brand-footer-inner">
+    <div class="brand-footer-cols">
+      <div class="brand-footer-col">
+        <h4>SHOP</h4>
+        <a href="#">FURNITURE</a>
+        <a href="#">LIGHTING</a>
+        <a href="#">FABRIC</a>
+        <a href="#">FOOD</a>
+      </div>
+      <div class="brand-footer-col">
+        <h4>ABOUT</h4>
+        <a href="#">IDÉE について</a>
+        <a href="#">店舗情報</a>
+        <a href="#">お買いものガイド</a>
+      </div>
+      <div class="brand-footer-col">
+        <h4>SUPPORT</h4>
+        <a href="#">配送について</a>
+        <a href="#">よくあるご質問</a>
+        <a href="#">お問い合わせ</a>
+      </div>
+      <div class="brand-footer-col">
+        <h4>FOLLOW US</h4>
+        <a href="#">Instagram</a>
+        <a href="#">X (Twitter)</a>
+        <a href="#">Newsletter</a>
+      </div>
+    </div>
+    <div class="brand-footer-meta">
+      Generated from <a href="https://www.idee-online.com/" style="color:var(--text-inverse);">IDÉE</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07） ／ © 2002 IDÉE
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

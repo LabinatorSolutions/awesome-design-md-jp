@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (53 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (56 sites)</a>
 </p>
 
 <table>
@@ -108,6 +108,14 @@
 <td align="center"><strong>teamLab</strong><br><img src="design-md/teamlab/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ISSEY MIYAKE</strong><br><img src="design-md/isseymiyake/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SOU・SOU</strong><br><img src="design-md/sousou/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PARCO</strong><br><img src="design-md/parco/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>とらや</strong><br><img src="design-md/toraya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IDÉE</strong><br><img src="design-md/idee/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -223,11 +231,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [teamLab](https://www.teamlab.art/jp/) | Digital Art Collective | [DESIGN.md](design-md/teamlab/DESIGN.md) | [preview.html](design-md/teamlab/preview.html) |
 | [ISSEY MIYAKE](https://www.isseymiyake.com/ja) | Fashion / Apparel | [DESIGN.md](design-md/isseymiyake/DESIGN.md) | [preview.html](design-md/isseymiyake/preview.html) |
 | [SOU・SOU](https://www.sousou.co.jp/) | Textile / Heritage Apparel | [DESIGN.md](design-md/sousou/DESIGN.md) | [preview.html](design-md/sousou/preview.html) |
+| [PARCO](https://www.parco.co.jp/) | Retail / Commercial Real Estate | [DESIGN.md](design-md/parco/DESIGN.md) | [preview.html](design-md/parco/preview.html) |
+| [Toraya (虎屋)](https://www.toraya-group.co.jp/) | Heritage Confectionery / Wagashi | [DESIGN.md](design-md/toraya/DESIGN.md) | [preview.html](design-md/toraya/preview.html) |
+| [IDÉE](https://www.idee-online.com/) | Furniture / Lifestyle Retail | [DESIGN.md](design-md/idee/DESIGN.md) | [preview.html](design-md/idee/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (53 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (56 sites)</a>
 </p>
 
 <table>
@@ -301,6 +312,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>teamLab</strong><br><img src="design-md/teamlab/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ISSEY MIYAKE</strong><br><img src="design-md/isseymiyake/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SOU・SOU</strong><br><img src="design-md/sousou/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PARCO</strong><br><img src="design-md/parco/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>とらや</strong><br><img src="design-md/toraya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IDÉE</strong><br><img src="design-md/idee/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

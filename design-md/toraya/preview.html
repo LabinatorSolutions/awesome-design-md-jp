@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Toraya（とらや）</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: Toraya 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-light: #f2f1f1;
+    --brand-navy: #27455c;
+    --text-primary: #111111;
+    --text-muted: #777777;
+    --text-inverse: #ffffff;
+    --border-cta: #cccccc;
+    --border-light: #e5e7eb;
+
+    /* === 季節パステル === */
+    --sakura-pink: #eee0e9;
+    --peach-pink: #e6d4de;
+    --matcha-green: #d6e2db;
+    --wakaba-green: #c8d7cd;
+
+    /* === Fonts === */
+    --font-mincho: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    --font-base: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, 游ゴシック, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 48px;
+    --space-xxl: 96px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    height: 72px;
+  }
+  .nav-brand {
+    font-family: var(--font-mincho);
+    font-size: 24px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 16px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-links a.active { font-weight: 700; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .hero h1 {
+    font-family: var(--font-mincho);
+    font-size: 48px; font-weight: 400; line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .hero p.lead {
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+  .btn-pill {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--border-cta);
+    padding: 14px 32px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: normal;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 23px;
+    line-height: 1;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-pill:hover { border-color: var(--text-primary); background: var(--bg-light); }
+  .btn-pill--dark { background: var(--text-primary); color: var(--text-inverse); border-color: var(--text-primary); }
+  .btn-pill--dark:hover { background: var(--brand-navy); border-color: var(--brand-navy); }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-mincho);
+    font-size: 32px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+  }
+  .section-subtitle {
+    font-family: var(--font-mincho);
+    font-size: 24px; font-weight: 400; line-height: 1.58;
+    color: var(--text-primary);
+    margin: 32px 0 20px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border-light);
+    border-left: 1px solid var(--border-light);
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    border-right: 1px solid var(--border-light);
+  }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+  .color-group-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-muted);
+    margin: 32px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+  }
+
+  /* ARTICLE — 老舗らしい組版サンプル */
+  .article-card {
+    max-width: 720px;
+    background: var(--bg-primary);
+    padding: 48px 0 24px;
+  }
+  .article-meta {
+    font-family: var(--font-base);
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .article-title {
+    font-family: var(--font-mincho);
+    font-size: 32px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .article-body p {
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  /* SEASONAL CARDS — 季節商品グリッド */
+  .seasonal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .seasonal-card {
+    border-radius: 0;
+    overflow: hidden;
+    background: var(--sakura-pink);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: opacity 0.2s;
+  }
+  .seasonal-card:hover { opacity: 0.85; }
+  .seasonal-card.peach { background: var(--peach-pink); }
+  .seasonal-card.matcha { background: var(--matcha-green); }
+  .seasonal-card.wakaba { background: var(--wakaba-green); }
+  .seasonal-card .card-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mincho);
+    font-size: 56px;
+    color: var(--text-primary);
+    opacity: 0.45;
+  }
+  .seasonal-card .card-info {
+    background: var(--bg-primary);
+    padding: 16px 20px;
+  }
+  .seasonal-card .card-date {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .seasonal-card .card-title {
+    font-size: 20px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+  }
+
+  /* BRAND FOOTER STRIP */
+  .brand-strip {
+    background: var(--brand-navy);
+    color: var(--text-inverse);
+    padding: 64px 32px;
+    margin: 0 -32px;
+  }
+  .brand-strip-inner { max-width: 1200px; margin: 0 auto; }
+  .brand-strip-title {
+    font-family: var(--font-mincho);
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    color: var(--text-inverse);
+    margin-bottom: 16px;
+  }
+  .brand-strip-body {
+    font-size: 16px; line-height: 1.8;
+    color: var(--text-inverse);
+    max-width: 720px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 16px; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-cta);
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-family: var(--font-base);
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-navy); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px;
+    text-align: center;
+    background: var(--bg-primary);
+    font-size: 14px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-light);
+  }
+  .footer a { color: var(--text-primary); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+    .section-subtitle { font-size: 20px; }
+    .article-title { font-size: 24px; }
+    .seasonal-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">とらや</a>
+  <ul class="nav-links">
+    <li><a href="#articles" class="active">和菓子</a></li>
+    <li><a href="#colors">店舗・菓寮</a></li>
+    <li><a href="#typography">虎屋について</a></li>
+    <li><a href="#cards">虎屋文庫</a></li>
+    <li><a href="#forms">オンラインショップ</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>季節をかたどる、虎屋のデザインシステム</h1>
+  <p class="lead">DESIGN.md から抽出したデザイントークンのカタログ。純白背景 #ffffff に明朝見出し（モリサワ「本明朝シンキング Pro Medium」、preview では Shippori Mincho 代替）と游ゴシック本文を組み合わせ、深紺 #27455c のブランド色と季節パステル（桜ピンク・抹茶緑など）で老舗の格式と現代的な和の美意識を両立する構成。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <a class="btn-pill" href="#articles">季節のおすすめを見る</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27455c"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Navy</div><div class="color-swatch-hex">#27455c</div><div class="color-swatch-role">フッタ・グループ会社案内</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#111111"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Black</div><div class="color-swatch-hex">#111111</div><div class="color-swatch-role">本文・見出し</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid var(--border-light)"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">純白</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f1f1"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f2f1f1</div><div class="color-swatch-role">補助セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#777777"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#777777</div><div class="color-swatch-role">日付・キャプション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Seasonal Pastels — 季節パステル</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eee0e9"></div><div class="color-swatch-info"><div class="color-swatch-name">Sakura Pink</div><div class="color-swatch-hex">#eee0e9</div><div class="color-swatch-role">桜・春の和菓子</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e6d4de"></div><div class="color-swatch-info"><div class="color-swatch-name">Peach Pink</div><div class="color-swatch-hex">#e6d4de</div><div class="color-swatch-role">桃の節句・春</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d6e2db"></div><div class="color-swatch-info"><div class="color-swatch-name">Matcha Green</div><div class="color-swatch-hex">#d6e2db</div><div class="color-swatch-role">抹茶・初夏</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c8d7cd"></div><div class="color-swatch-info"><div class="color-swatch-name">Wakaba Green</div><div class="color-swatch-hex">#c8d7cd</div><div class="color-swatch-role">若葉・初夏</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:32px; font-weight:400; line-height:1.5;">見出し Lv1 ／ お知らせ</div>
+    <div class="type-meta">32px / 明朝 / weight 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">h2 .HeadingLv1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:24px; font-weight:400; line-height:1.58;">見出し Lv2 ／ 季節のおすすめ</div>
+    <div class="type-meta">24px / 明朝 / weight 400 / line-height: 1.58<span class="type-context">h2 .HeadingLv2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:400; line-height:1.6;">関連リンク見出し ／ 菓子資料室 虎屋文庫</div>
+    <div class="type-meta">20px / 游ゴシック / weight 400 / line-height: 1.6<span class="type-context">.RelatedContentThumbnail__Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.6;">本文テキスト ／ 虎屋は全国で80軒以上の店舗を構えており、さまざまなお客様にとって、居心地のよい店になるよう努めています。本文は line-height 1.6 と日本語標準の値で組み、letter-spacing は normal を貫きます。</div>
+    <div class="type-meta">16px / 游ゴシック / weight 400 / line-height: 1.6 / palt: なし<span class="type-context">本文 p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.6; color:var(--text-muted);">日付 ／ 2026.04.16</div>
+    <div class="type-meta">16px / 游ゴシック / weight 400 / line-height: 1.6 / color: #777777<span class="type-context">.TorayaArticleCard__Prefix</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:700; line-height:1.6;">CTA ボタン文字 ／ すべてのお知らせを読む</div>
+    <div class="type-meta">14px / 游ゴシック / weight 700 / line-height: 1.6<span class="type-context">.TorayaBtn</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="articles">
+  <div class="section-label">03 / Article — 老舗の組版</div>
+  <h2 class="section-title">読みもの</h2>
+  <article class="article-card">
+    <div class="article-meta">2026.04.16 ／ 虎屋文庫</div>
+    <h3 class="article-title">桜の和菓子 — 春をかたどる、季節の意匠について</h3>
+    <div class="article-body">
+      <p>虎屋では、季節ごとに異なる意匠の和菓子をお届けしています。春の桜、初夏の若葉、夏の涼、秋の紅葉、冬の雪。和菓子の意匠は四季の移ろいを写しとる絵画のようなものです。</p>
+      <p>本文は游ゴシック 16px、line-height 1.6 で組まれます。letter-spacing は normal、font-feature-settings も normal です。明朝見出しのシャープな黒と、游ゴシックの素直な字面が、和菓子の写真を引き立てます。</p>
+      <p>菓子資料室「虎屋文庫」では、和菓子の歴史と意匠を研究するアーカイブを公開しています。室町時代後期から続く老舗の蓄積を、デジタルでもご覧いただけます。</p>
+    </div>
+    <div style="margin-top:32px;"><a class="btn-pill" href="#">続きを読む</a></div>
+  </article>
+</section>
+
+<hr class="section-divider">
+
+<!-- SEASONAL GRID -->
+<section class="section" id="seasonal">
+  <div class="section-label">04 / Seasonal Grid — 季節商品</div>
+  <h2 class="section-title">季節のおすすめ</h2>
+  <h3 class="section-subtitle">春の和菓子</h3>
+  <div class="seasonal-grid">
+    <a href="#" class="seasonal-card">
+      <div class="card-image">桜</div>
+      <div class="card-info">
+        <div class="card-date">2026.03.01</div>
+        <div class="card-title">桜餅 御所車</div>
+      </div>
+    </a>
+    <a href="#" class="seasonal-card peach">
+      <div class="card-image">桃</div>
+      <div class="card-info">
+        <div class="card-date">2026.02.20</div>
+        <div class="card-title">桃の節句 上生菓子</div>
+      </div>
+    </a>
+    <a href="#" class="seasonal-card matcha">
+      <div class="card-image">茶</div>
+      <div class="card-info">
+        <div class="card-date">2026.04.10</div>
+        <div class="card-title">抹茶 羊羹「新緑」</div>
+      </div>
+    </a>
+    <a href="#" class="seasonal-card wakaba">
+      <div class="card-image">若</div>
+      <div class="card-info">
+        <div class="card-date">2026.04.18</div>
+        <div class="card-title">若葉 きんとん</div>
+      </div>
+    </a>
+  </div>
+  <div style="margin-top:32px;"><a class="btn-pill" href="#">すべての季節商品を見る</a></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BRAND FOOTER STRIP -->
+<section class="section" id="brand">
+  <div class="brand-strip">
+    <div class="brand-strip-inner">
+      <h2 class="brand-strip-title">虎屋グループのご案内</h2>
+      <p class="brand-strip-body">室町時代後期創業以来、虎屋は和菓子の製造販売を続けてまいりました。フッタ深紺 #27455c の上に明朝見出しと游ゴシック本文を組み合わせ、老舗の格式を表現します。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">UI コンポーネント</h2>
+  <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:center;">
+    <div style="text-align:center;"><a class="btn-pill" href="#">すべて見る</a><div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:8px;">Primary Pill (radius 23px)</div></div>
+    <div style="text-align:center;"><a class="btn-pill btn-pill--dark" href="#">同意する</a><div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:8px;">Dark Pill</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">商品検索</label><input class="form-input" type="text" placeholder="羊羹・最中・季節の和菓子で検索"><div class="form-state-label">デフォルト — border: 1px solid #cccccc, radius: 4px</div></div>
+  <div class="form-group"><label class="form-label">メールマガジン登録</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border: #27455c（ブランド深紺）</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / Spacing — 8px グリッド</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">XL · 48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px"></div><div class="spacing-value">XXL · 96px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.toraya-group.co.jp/">Toraya（虎屋）</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+</footer>
+
+</body>
+</html>

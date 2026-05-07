@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: PARCO</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: PARCO 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-light: #ededed;
+    --bg-tag: #707070;
+    --text-primary: #2c2c2c;
+    --text-muted: #646464;
+    --text-inverse: #ffffff;
+    --text-logo: #000000;
+    --border-card: #dedede;
+    --border-light: #ededed;
+    --pager-inactive: #aeaeae;
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", NotoSansCJKjp, "ヒラギノ角ゴシック", "Hiragino Kaku Gothic", 游ゴシック, YuGothic, メイリオ, Meiryo, sans-serif;
+    --font-en: "Lato", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 32px;
+    --space-xxl: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-card);
+    height: 72px;
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 700;
+    color: var(--text-logo);
+    text-decoration: none;
+    letter-spacing: 4px;
+    font-family: var(--font-base);
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    display: block;
+    padding: 26px 18px 20px;
+    font-size: 16px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+  }
+  .nav-links a.active { font-weight: 700; }
+  .nav-lang {
+    display: flex; gap: 16px;
+    font-family: var(--font-en);
+    font-size: 12px;
+  }
+  .nav-lang a {
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.28px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-card);
+  }
+  .hero h1 {
+    font-size: 30px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 3px;
+    color: var(--text-primary);
+    font-feature-settings: "palt";
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .hero p.lead {
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+  .btn-card {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    padding: 16px 32px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .btn-card:hover { border-color: var(--text-primary); background: var(--border-light); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 30px; font-weight: 700; line-height: 1.3;
+    color: var(--text-primary);
+    letter-spacing: 3px;
+    font-feature-settings: "palt";
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border-card);
+    border-left: 1px solid var(--border-card);
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-card);
+    border-right: 1px solid var(--border-card);
+  }
+  .color-swatch-block { height: 96px; width: 100%; border-bottom: 1px solid var(--border-card); }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name { font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.28px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.22px; }
+  .color-group-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--text-muted);
+    margin: 32px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: normal;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+    letter-spacing: 0.22px;
+  }
+
+  /* NEWS LIST */
+  .news-list {
+    border-top: 1px solid var(--border-card);
+  }
+  .news-item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 8px;
+    border-bottom: 1px solid var(--border-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background 0.15s;
+  }
+  .news-item:hover { background: var(--border-light); }
+  .news-date {
+    font-family: var(--font-en);
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.28px;
+    flex-shrink: 0;
+    width: 90px;
+  }
+  .news-tag {
+    display: inline-block;
+    background: var(--bg-tag);
+    color: var(--text-inverse);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 8px;
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+    flex-shrink: 0;
+    width: 84px;
+    text-align: center;
+  }
+  .news-title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--text-primary);
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--border-card);
+    border-left: 1px solid var(--border-card);
+  }
+  .card-link {
+    display: block;
+    padding: 32px 16px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-card);
+    border-right: 1px solid var(--border-card);
+    text-decoration: none;
+    color: var(--text-primary);
+    text-align: center;
+    transition: background 0.15s;
+  }
+  .card-link:hover { background: var(--border-light); }
+  .card-link-title {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 0.28px;
+    font-feature-settings: "palt";
+  }
+
+  /* PAGER */
+  .pager {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 32px;
+  }
+  .pager-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-family: var(--font-en);
+    text-decoration: none;
+  }
+  .pager-num.active { background: var(--bg-primary); border: 1px solid var(--border-card); }
+  .pager-num.muted { background: var(--pager-inactive); color: var(--text-inverse); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.28px; font-feature-settings: "palt"; }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-card);
+    padding: 12px 16px;
+    border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px;
+    letter-spacing: 0.28px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px;
+    text-align: center;
+    background: var(--bg-primary);
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-card);
+    letter-spacing: 0.28px;
+  }
+  .footer a { color: var(--text-primary); text-decoration: underline; font-family: var(--font-en); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; letter-spacing: 2px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-title { font-size: 22px; letter-spacing: 2px; }
+    .news-item { flex-wrap: wrap; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">PARCO</a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">企業情報</a></li>
+    <li><a href="#colors">商業施設</a></li>
+    <li><a href="#typography">エンタテインメント</a></li>
+    <li><a href="#cards">IR情報</a></li>
+    <li><a href="#forms">採用情報</a></li>
+  </ul>
+  <div class="nav-lang">
+    <a href="#" class="active">JP</a>
+    <a href="#">ENGLISH</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>パルコのデザインシステム ／ 日本語版</h1>
+  <p class="lead">DESIGN.md から抽出したデザイントークンのカタログ。純白背景 #ffffff × 濃グレー文字 #2c2c2c × Noto Sans JP（和文）+ Lato（欧文）の二系統フォントで構成された、コーポレート寄りのタイポグラフィ主導 UI。font-feature-settings: "palt" を全要素に適用し、letter-spacing 0.28px (+0.02em) で字間を広げる伝統的な日本企業サイトの典型例。computed style 実測値（2026-05-07 取得）に基づく。</p>
+  <a class="btn-card" href="#cards">企業情報を見る</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid var(--border-card)"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ全体（純白）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ededed"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray Surface</div><div class="color-swatch-hex">#ededed</div><div class="color-swatch-role">ページャー背景・補助面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2c2c2c"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#2c2c2c</div><div class="color-swatch-role">本文・見出し（濃グレー）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#646464"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#646464</div><div class="color-swatch-role">日付・キャプション（Lato）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Logo Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">PARCO ロゴ・純黒</div></div></div>
+  </div>
+
+  <div class="color-group-label">Tag / Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#707070"></div><div class="color-swatch-info"><div class="color-swatch-name">Tag Background</div><div class="color-swatch-hex">#707070</div><div class="color-swatch-role">「営業関連」等のタグ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dedede"></div><div class="color-swatch-info"><div class="color-swatch-name">Border (Card)</div><div class="color-swatch-hex">#dedede</div><div class="color-swatch-role">カード罫線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#aeaeae"></div><div class="color-swatch-info"><div class="color-swatch-name">Pager Inactive</div><div class="color-swatch-hex">#aeaeae</div><div class="color-swatch-role">ページャー非アクティブ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:30px; font-weight:700; line-height:1.3; letter-spacing:3px; font-feature-settings:'palt';">セクション見出し ／ お知らせ</div>
+    <div class="type-meta">30px / 700 / line-height: 1.3 / letter-spacing: 3px (+0.1em) / palt: ON<span class="type-context">トップページ h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:700; line-height:1.8; letter-spacing:0.28px; font-feature-settings:'palt';">アクティブナビ ／ 企業情報</div>
+    <div class="type-meta">16px / 700 / line-height: 1.8 / letter-spacing: 0.28px (+0.02em)<span class="type-context">グローバルナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.8; letter-spacing:0.28px; font-feature-settings:'palt';">本文テキスト ／ パルコは1969年（昭和44年）の池袋進出以降、ファッション・カルチャー・エンタテインメントを軸とした商業施設運営を続けています。コーポレートサイトの本文は line-height 1.8 と広めに取り、palt で約物を詰めて引き締めた組です。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.8 / letter-spacing: 0.28px / palt: ON<span class="type-context">本文 p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:12px; font-weight:400; line-height:1.8; letter-spacing:0.28px; color:var(--text-muted);">Date Caption — 2026.01.23 / Lato</div>
+    <div class="type-meta">12px / 400 / line-height: 1.8 / Lato / color #646464<span class="type-context">日付（英数字専用）</span></div>
+  </div>
+  <div class="type-sample">
+    <div><span style="display:inline-block; background:#707070; color:#ffffff; font-size:12px; font-weight:400; line-height:1.8; letter-spacing:0.28px; padding:2px 8px;">営業関連</span></div>
+    <div class="type-meta">12px / 400 / line-height: 1.8 / 白文字 #fff on 灰色 #707070 / padding 2px 8px<span class="type-context">カテゴリタグ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- NEWS LIST -->
+<section class="section" id="news">
+  <div class="section-label">03 / News List — お知らせ一覧</div>
+  <h2 class="section-title">お知らせ</h2>
+  <div class="news-list">
+    <a href="#" class="news-item">
+      <span class="news-date">2026.01.23</span>
+      <span class="news-tag">営業関連</span>
+      <span class="news-title">渋谷PARCOにて期間限定ポップアップを開催いたします</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2026.01.18</span>
+      <span class="news-tag">IR情報</span>
+      <span class="news-title">2026年2月期 第3四半期決算短信〔IFRS〕を公開しました</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2026.01.10</span>
+      <span class="news-tag">企業</span>
+      <span class="news-title">サステナビリティレポート2025を発行いたしました</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2025.12.20</span>
+      <span class="news-tag">営業関連</span>
+      <span class="news-title">名古屋PARCO リニューアルオープンのお知らせ</span>
+    </a>
+  </div>
+  <div class="pager">
+    <span class="pager-num active">1</span>
+    <a href="#" class="pager-num muted">2</a>
+    <a href="#" class="pager-num muted">3</a>
+    <a href="#" class="pager-num muted">4</a>
+    <a href="#" class="pager-num muted">5</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARD GRID -->
+<section class="section" id="cards">
+  <div class="section-label">04 / Card Grid — リンクカード</div>
+  <h2 class="section-title">企業情報</h2>
+  <div class="card-grid">
+    <a href="#" class="card-link"><div class="card-link-title">ビジネスモデル</div></a>
+    <a href="#" class="card-link"><div class="card-link-title">開発計画</div></a>
+    <a href="#" class="card-link"><div class="card-link-title">"次世代型商業施設"渋谷PARCO</div></a>
+    <a href="#" class="card-link"><div class="card-link-title">サステナビリティ</div></a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons & Tags</div>
+  <h2 class="section-title">UI コンポーネント</h2>
+  <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:center;">
+    <div style="text-align:center;"><a class="btn-card" href="#">詳細を見る</a><div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:8px;">Card Link CTA</div></div>
+    <div style="text-align:center;"><span class="news-tag" style="display:inline-block; padding:2px 8px;">営業関連</span><div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:8px;">Tag Badge</div></div>
+    <div style="text-align:center;"><span class="news-tag" style="display:inline-block; padding:2px 8px;">IR情報</span><div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:8px;">Tag Badge</div></div>
+    <div style="text-align:center;"><div class="pager"><span class="pager-num active">1</span><a href="#" class="pager-num muted">2</a></div><div style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted); margin-top:8px;">Pager (radius 50%)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">サイト内検索</label><input class="form-input" type="text" placeholder="店舗名・キーワードで検索"><div class="form-state-label">デフォルト — border: 1px solid #dedede, radius: 0px</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border: #2c2c2c</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / Spacing — 4px グリッド</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">XL · 32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">XXL · 64px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.parco.co.jp/">PARCO</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-07）
+</footer>
+
+</body>
+</html>
