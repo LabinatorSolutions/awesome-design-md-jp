@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: LEXUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Lexus Rodin / Nobel are licensed brand fonts. Substitute with Google Fonts (Noto Sans JP + Outfit) for visual proximity. -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Lexus Color Tokens === */
+    --black: #000000;
+    --white: #ffffff;
+    --text-subdued: #646464;
+    --divider: #e3e3e3;
+    --disabled: #999999;
+    --section-bg: #f2f2f2;
+    --max-width-common: 1400px;
+
+    /* === Fonts (substitution: Outfit ≈ Nobel, Noto Sans JP ≈ Lexus Rodin) === */
+    --font-base: "Outfit", "Noto Sans JP", メイリオ, sans-serif;
+    --font-jp: "Noto Sans JP", メイリオ, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Easing tokens === */
+    --easeOut-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+    --easeOut-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav-brand { font-family: var(--font-base); font-size: 22px; font-weight: 500; color: var(--black); text-decoration: none; letter-spacing: 0.06em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14.4px; font-weight: 500; color: var(--black); text-decoration: none; }
+  .nav-cta {
+    display: inline-block; background: var(--black); color: var(--white);
+    padding: 8.22857px 24px; border-radius: 0; font-size: 14.4px; font-weight: 500;
+    font-family: var(--font-base);
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero { padding: 120px 32px 80px; text-align: center; background: var(--white); border-bottom: 1px solid var(--divider); }
+  .hero-eyebrow { font-size: 12.3px; font-weight: 500; color: var(--text-subdued); letter-spacing: 0.1em; margin-bottom: 24px; }
+  .hero h1 {
+    font-size: 74px; font-weight: 400; line-height: 1.0;
+    color: var(--black); margin-bottom: 24px;
+    font-feature-settings: "palt";
+  }
+  .hero p {
+    font-size: 18px; font-weight: 400; line-height: 1.6;
+    color: var(--black); max-width: 720px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--black); color: var(--white);
+    padding: 8.22857px 24px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 14.4px; font-weight: 500;
+    line-height: 1.6; text-decoration: none; cursor: pointer;
+    font-feature-settings: "palt";
+  }
+  .btn-card {
+    display: inline-block; background: var(--white); color: var(--black);
+    padding: 16px 32px; border-radius: 8.22857px;
+    border: 1px solid var(--divider);
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.75; text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: var(--max-width-common); margin: 0 auto; }
+  .section-label { font-size: 11.3px; font-weight: 500; color: var(--text-subdued); letter-spacing: 0.1em; margin-bottom: 16px; }
+  .section-title { font-size: 44px; font-weight: 500; line-height: 1.0; color: var(--black); margin-bottom: 48px; font-feature-settings: "palt"; }
+  .section-divider { border: none; border-top: 1px solid var(--divider); margin: 0; }
+  .section-gray { background: var(--section-bg); padding: 80px 32px; }
+  .section-gray .section-inner { max-width: var(--max-width-common); margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0; margin-bottom: 32px; border-top: 1px solid var(--divider); border-left: 1px solid var(--divider); }
+  .color-swatch { background: var(--white); border-right: 1px solid var(--divider); border-bottom: 1px solid var(--divider); }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 16px; }
+  .color-swatch-name { font-size: 14.4px; font-weight: 500; margin-bottom: 4px; color: var(--black); }
+  .color-swatch-hex { font-size: 12.3px; color: var(--text-subdued); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11.3px; color: var(--text-subdued); margin-top: 4px; }
+  .color-group-label { font-size: 14.4px; font-weight: 500; color: var(--text-subdued); margin: 32px 0 12px; letter-spacing: 0.06em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--divider); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11.3px; font-weight: 400; color: var(--text-subdued); margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--section-bg); color: var(--text-subdued); font-size: 11px; padding: 2px 8px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12.3px; font-weight: 500; color: var(--text-subdued); margin-top: 12px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0; }
+  .card { background: var(--white); border: 1px solid var(--divider); border-radius: 0; padding: 0; }
+  .card-image { background: linear-gradient(135deg, #2a2a2a, #4a4a4a); height: 220px; }
+  .card-body { padding: 24px; }
+  .card-eyebrow { font-size: 11.3px; font-weight: 500; color: var(--text-subdued); letter-spacing: 0.1em; margin-bottom: 8px; }
+  .card h3 { font-size: 21px; font-weight: 500; line-height: 1.6; letter-spacing: 0.075em; color: var(--black); margin-bottom: 12px; font-feature-settings: "palt"; }
+  .card p { font-size: 14.4px; color: var(--text-subdued); line-height: 1.6; }
+  .card-meta { font-size: 12.3px; color: var(--black); font-weight: 500; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--divider); }
+
+  /* MODEL CAROUSEL CARDS (small) */
+  .support-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .support-card {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 32px 16px; background: var(--white); border-radius: 8.22857px;
+    border: 1px solid var(--divider);
+    text-align: center; text-decoration: none; color: var(--black);
+  }
+  .support-card-icon { width: 48px; height: 48px; background: var(--section-bg); border-radius: 50%; margin-bottom: 16px; }
+  .support-card-label { font-size: 16px; font-weight: 400; line-height: 1.75; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-size: 14.4px; font-weight: 500; color: var(--black); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--divider); padding: 10.3px; border-radius: 0;
+    font-family: var(--font-jp); font-size: 15.4px; outline: none;
+  }
+  .form-input:focus { border-color: var(--black); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--black); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11.3px; color: var(--text-subdued); margin-top: 8px; }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--section-bg); border: 1px solid var(--divider); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--black); opacity: 0.15; }
+  .width-bar-label { font-size: 14.4px; font-weight: 500; color: var(--black); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12.3px; color: var(--text-subdued); }
+
+  /* FOOTER */
+  .footer { padding: 40px 32px; text-align: center; background: var(--white); border-top: 1px solid var(--divider); font-size: 12.3px; color: var(--text-subdued); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 44px; }
+    .section-title { font-size: 32px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-gray { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">LEXUS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#models">Models</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">見積りシミュレーション</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">DESIGN SYSTEM PREVIEW</div>
+  <h1>EXPERIENCE AMAZING</h1>
+  <p>LEXUS（lexus.jp）から抽出したデザイントークンのカタログ。Nobel + Lexus Rodin の和欧混植、純黒の CTA、border-radius を排した直線基調。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">見積りシミュレーション</a>
+    <a class="btn-card" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">PRIMARY</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">テキスト・CTA・アイコン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom: 1px solid var(--divider)"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">背景・CTA テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">NEUTRAL</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#646464"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Subdued</div><div class="color-swatch-hex">#646464</div><div class="color-swatch-role">パンくず・補足</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Disabled</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">無効状態</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e3e3e3"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#e3e3e3</div><div class="color-swatch-role">区切り・薄ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2; border-bottom: 1px solid var(--divider)"></div><div class="color-swatch-info"><div class="color-swatch-name">Section BG</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">セクション背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-size:74px; font-weight:400; line-height:1.0; font-feature-settings:'palt';">EXPERIENCE AMAZING</div>
+    <div class="type-meta">74px / 400 / line-height: 1.0 / palt: あり<span class="type-context">Hero</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:50px; font-weight:500; line-height:1.5; font-feature-settings:'palt';">モデル一覧 — Page Title</div>
+    <div class="type-meta">50px / 500 / line-height: 1.5 (75px) / palt: あり<span class="type-context">h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:44px; font-weight:500; line-height:1.0; font-feature-settings:'palt';">BEV（電気自動車）</div>
+    <div class="type-meta">44px / 500 / line-height: 1.0 (44px) / palt: あり<span class="type-context">h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:35px; font-weight:400; line-height:1.75; font-feature-settings:'palt';">モデル一覧 — Section Title</div>
+    <div class="type-meta">35px / 400 / line-height: 1.75 (61.2px) / palt: あり<span class="type-context">h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:21px; font-weight:500; line-height:1.6; letter-spacing:0.075em; font-feature-settings:'palt';">モデル比較シミュレーション — Card Title</div>
+    <div class="type-meta">21px / 500 / line-height: 1.6 / letter-spacing: 0.075em / palt: あり<span class="type-context">Card</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.6; font-feature-settings:'palt';">本文テキスト — クルマの概算金額をシミュレーションできます。Body 16px / 400 / line-height 1.6。LEXUS は本文も palt を適用し、半角数字・記号も和文と同じ密度で組まれます。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.6 (25.6px) / palt: あり<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14.4px; font-weight:500; line-height:1.6; font-feature-settings:'palt';">Caption — リンク・補足・CTA テキスト</div>
+    <div class="type-meta">14.4px / 500 / line-height: 1.6<span class="type-context">Caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12.3px; font-weight:500; line-height:1.6; color:var(--text-subdued);">7,900,000円〜9,500,000円(税込) — Small / 価格表記</div>
+    <div class="type-meta">12.3px / 500 / line-height: 1.6 / color: subdued<span class="type-context">Small</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / MODEL -->
+<section class="section-gray" id="models">
+<div class="section-inner">
+  <div class="section-label">03 / MODELS — モデルカード</div>
+  <h2 class="section-title">Model Lineup</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #1a1a1a, #555);"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">BEV — 電気自動車</div>
+        <h3>RZ</h3>
+        <p>すべての乗員が笑顔になれる、Driving Lounge をコンセプトにした BEV。</p>
+        <div class="card-meta">7,900,000円〜9,500,000円(税込)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #2a2a2a, #6a6a6a);"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">HEV — ハイブリッド</div>
+        <h3>LS</h3>
+        <p>長距離の上質さを極めたフラッグシップサルーン。</p>
+        <div class="card-meta">10,940,000円〜18,000,000円(税込)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #3a3a3a, #7a7a7a);"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">SUV</div>
+        <h3>NX</h3>
+        <p>都市と自然をシームレスにつなぐ、新世代のラグジュアリー SUV。</p>
+        <div class="card-meta">4,800,000円〜7,200,000円(税込)</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <h2 class="section-title">Buttons</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">見積りシミュレーション</a><div class="button-label">Primary CTA / 黒地白文字 / radius 0</div></div>
+    <div class="button-item"><a class="btn-primary" href="#">モデルを選んで比較</a><div class="button-label">Primary CTA / Variant</div></div>
+    <div class="button-item"><a class="btn-card" href="#">販売店検索</a><div class="button-label">Card-style CTA / radius 8.22857px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SUPPORT MENU -->
+<section class="section" id="cards">
+  <div class="section-label">05 / SUPPORT MENU — 購入検討サポート</div>
+  <h2 class="section-title">Support Menu</h2>
+  <div class="support-grid">
+    <a class="support-card" href="#"><div class="support-card-icon"></div><div class="support-card-label">販売店検索</div></a>
+    <a class="support-card" href="#"><div class="support-card-icon"></div><div class="support-card-label">見積りシミュレーション</div></a>
+    <a class="support-card" href="#"><div class="support-card-icon"></div><div class="support-card-label">試乗予約</div></a>
+    <a class="support-card" href="#"><div class="support-card-icon"></div><div class="support-card-label">モデル比較シミュレーション</div></a>
+    <a class="support-card" href="#"><div class="support-card-icon"></div><div class="support-card-label">認定中古車 CPO</div></a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group">
+    <label class="form-label">郵便番号</label>
+    <input class="form-input" type="text" placeholder="例: 100-0001" value="">
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎" value="">
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" placeholder="name@example.com" value="">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="widths">
+  <div class="section-label">07 / LAYOUT — Container</div>
+  <h2 class="section-title">Layout</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Common Container <span class="width-bar-value">1400px (--designMaxWidthCommon)</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Navigation <span class="width-bar-value">1400px (--designMaxWidthNavigation)</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+
+  <div class="color-group-label" style="margin-top:32px">SPACING SCALE (実測)</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8.23px; height:32px;"></div><div class="spacing-value">8.23px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:25.7px; height:32px;"></div><div class="spacing-value">25.7px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:41.1px; height:32px;"></div><div class="spacing-value">41.1px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:82.3px; height:32px;"></div><div class="spacing-value">82.3px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://lexus.jp/" style="color:var(--black); text-decoration:underline;">lexus.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-08)<br>
+  ※ Lexus Rodin / Nobel はブランド専用フォントのためライセンス上ローカルでは表示されません。本プレビューは Outfit + Noto Sans JP で代替表示しています。
+</footer>
+
+</body>
+</html>

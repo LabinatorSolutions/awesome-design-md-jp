@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (62 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (65 sites)</a>
 </p>
 
 <table>
@@ -121,9 +121,9 @@
 <tr>
 <td align="center"><strong>21_21 DS</strong><br><img src="design-md/2121designsight/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Pen Online</strong><br><img src="design-md/penonline/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>LEXUS</strong><br><img src="design-md/lexus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>マルニ木工</strong><br><img src="design-md/maruni/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>POPEYE</strong><br><img src="design-md/popeye/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -248,11 +248,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [KINTO](https://kinto.co.jp/) | Lifestyle / Tableware | [DESIGN.md](design-md/kinto/DESIGN.md) | [preview.html](design-md/kinto/preview.html) |
 | [21_21 DESIGN SIGHT](https://www.2121designsight.jp/) | Design Museum | [DESIGN.md](design-md/2121designsight/DESIGN.md) | [preview.html](design-md/2121designsight/preview.html) |
 | [Pen Online](https://www.pen-online.jp/) | Magazine / Editorial | [DESIGN.md](design-md/penonline/DESIGN.md) | [preview.html](design-md/penonline/preview.html) |
+| [LEXUS](https://lexus.jp/) | Automotive / Luxury | [DESIGN.md](design-md/lexus/DESIGN.md) | [preview.html](design-md/lexus/preview.html) |
+| [Maruni (マルニ木工)](https://www.maruni.com/jp) | Furniture / Heritage Craft | [DESIGN.md](design-md/maruni/DESIGN.md) | [preview.html](design-md/maruni/preview.html) |
+| [POPEYE](https://popeyemagazine.jp/) | Magazine / Editorial | [DESIGN.md](design-md/popeye/DESIGN.md) | [preview.html](design-md/popeye/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (62 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (65 sites)</a>
 </p>
 
 <table>
@@ -339,9 +342,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>21_21 DS</strong><br><img src="design-md/2121designsight/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Pen Online</strong><br><img src="design-md/penonline/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>LEXUS</strong><br><img src="design-md/lexus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Maruni</strong><br><img src="design-md/maruni/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>POPEYE</strong><br><img src="design-md/popeye/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

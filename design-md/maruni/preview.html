@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: マルニ木工 (MARUNI)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  :root {
+    /* === MARUNI Color Tokens === */
+    --charcoal: #414141;          /* 本文・CTA・見出し */
+    --heading: #363636;           /* h1 のみ */
+    --warm-gray: #b4afaf;         /* フッター背景 */
+    --tag-surface: #eeebea;       /* タグ pill 背景 */
+    --overlay: rgba(255,255,255,0.85);
+    --white: #ffffff;
+    --bullet-active: #414141;
+    --bullet-inactive: #000000;
+
+    /* === Fonts (matches site stack exactly) === */
+    --font-base: YuGothic, "Yu Gothic medium", "Hiragino Sans", Meiryo, "sans-serif";
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--charcoal);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.15px;
+    font-feature-settings: "calt", "clig", "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px;
+    background: var(--white);
+    border-bottom: 1px solid var(--tag-surface);
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 32px; font-weight: 700; line-height: 1.125;
+    color: var(--heading); text-decoration: none; letter-spacing: 0.15px;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 15.44px; font-weight: 700; color: var(--charcoal); text-decoration: none; letter-spacing: 0.15px; }
+  .nav-cta {
+    display: inline-block; background: var(--charcoal); color: var(--white);
+    padding: 5px 30px 3px 35px; border-radius: 50px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.15px;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    text-align: left;
+    background: var(--white);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    color: var(--heading); margin-bottom: 24px; letter-spacing: 0.15px;
+    padding: 5px 0 7px;
+  }
+  .hero-lead {
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--charcoal); max-width: 680px; margin-bottom: 40px;
+    letter-spacing: 0.15px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--charcoal); color: var(--white);
+    padding: 5px 30px 3px 35px; border-radius: 50px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.15px;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-overlay {
+    display: inline-block; background: var(--overlay); color: var(--charcoal);
+    padding: 5px 20px 3px 25px; border-radius: 50px;
+    font-size: 12.8px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.15px;
+    text-decoration: none;
+  }
+  .btn-tab-corner {
+    display: inline-block; background: var(--warm-gray); color: var(--charcoal);
+    padding: 10px 20px; border-radius: 0 28.8px 0 0;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.15px;
+    text-decoration: none;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 13.6px; font-weight: 700; color: var(--charcoal); margin-bottom: 12px; letter-spacing: 1px; }
+  .section-title { font-size: 18.4px; font-weight: 700; line-height: 1.8; color: var(--charcoal); margin-bottom: 40px; letter-spacing: 1px; padding-bottom: 5px; }
+  .section-divider { border: none; border-top: 1px solid var(--tag-surface); margin: 0; }
+
+  .section-warm { background: var(--tag-surface); padding: 80px 32px; }
+  .section-warm-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--white); border: 1px solid var(--tag-surface); border-radius: 8px; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-size: 14.4px; font-weight: 700; margin-bottom: 4px; color: var(--charcoal); letter-spacing: 0.15px; }
+  .color-swatch-hex { font-size: 12px; color: var(--charcoal); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11.2px; color: var(--charcoal); margin-top: 4px; opacity: 0.75; }
+  .color-group-label { font-size: 14.4px; font-weight: 700; color: var(--charcoal); margin: 24px 0 12px; letter-spacing: 1px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--tag-surface); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--charcoal); opacity: 0.65; margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--tag-surface); color: var(--charcoal); font-size: 11px; padding: 2px 10px; border-radius: 50px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--charcoal); margin-top: 12px; opacity: 0.7; letter-spacing: 0.15px; }
+
+  /* TAG ROW */
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .tag-pill {
+    display: inline-block; background: var(--tag-surface); color: var(--charcoal);
+    padding: 5px 15px; border-radius: 50px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 600;
+    line-height: 1.8; letter-spacing: 0.15px;
+    text-decoration: none;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+  .card { background: var(--white); position: relative; }
+  .card-image { background: linear-gradient(135deg, #d4cfc8, #aaa098); height: 240px; position: relative; }
+  .card-overlay-tag { position: absolute; bottom: 16px; left: 16px; }
+  .card-body { padding: 16px 4px; }
+  .card-eyebrow { font-size: 12px; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; letter-spacing: 0.15px; }
+  .card h3 { font-size: 16px; font-weight: 700; line-height: 1.8; color: var(--charcoal); margin-bottom: 8px; letter-spacing: 0.15px; }
+  .card p { font-size: 14.4px; font-weight: 400; color: var(--charcoal); line-height: 1.8; letter-spacing: 0.15px; }
+  .card-meta { font-size: 14.4px; font-weight: 400; color: var(--charcoal); margin-top: 12px; opacity: 0.7; letter-spacing: 0.15px; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-size: 32px; font-weight: 700; line-height: 1.5; color: var(--heading); margin-bottom: 24px; letter-spacing: 0.15px; }
+  .article-preview h2 { font-size: 18.4px; font-weight: 700; line-height: 1.8; color: var(--charcoal); margin: 32px 0 12px; letter-spacing: 1px; }
+  .article-preview p { font-size: 16px; font-weight: 400; line-height: 1.8; letter-spacing: 0.15px; margin-bottom: 20px; color: var(--charcoal); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-size: 14.4px; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; letter-spacing: 0.15px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--charcoal);
+    border: 1px solid var(--warm-gray); padding: 12px 20px; border-radius: 50px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    letter-spacing: 0.15px;
+  }
+  .form-input:focus { border-color: var(--charcoal); }
+
+  /* SWIPER BULLETS */
+  .swiper-bullets { display: flex; gap: 8px; margin: 16px 0; }
+  .swiper-bullet { width: 10px; height: 10px; border-radius: 50%; background: var(--bullet-inactive); opacity: 0.5; }
+  .swiper-bullet.active { background: var(--bullet-active); opacity: 1; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--charcoal); border-radius: 4px; }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11.2px; color: var(--charcoal); margin-top: 8px; opacity: 0.7; letter-spacing: 0.15px; }
+
+  /* FOOTER */
+  .footer { padding: 40px 32px; text-align: center; background: var(--warm-gray); color: var(--charcoal); font-size: 11.2px; letter-spacing: 0.15px; }
+  .footer a { color: var(--charcoal); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">MARUNI</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Story</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Products</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">公式オンラインショップ</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>1928 / Hiroshima<br>Crafting Furniture for the Next 100 Years</h1>
+    <p class="hero-lead">マルニ木工（maruni.com）から抽出したデザイントークンのカタログ。游ゴシック中心の素朴な組版、暖灰色の本文 (#414141)、pill 型 CTA、palt を使わない素のメトリクス。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">商品を見る</a>
+      <a class="btn-tab-corner" href="#">公式オンラインショップはこちら</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">PRIMARY</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#414141"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#414141</div><div class="color-swatch-role">本文・見出し・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#363636"></div><div class="color-swatch-info"><div class="color-swatch-name">Heading</div><div class="color-swatch-hex">#363636</div><div class="color-swatch-role">h1 のみ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b4afaf"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Gray</div><div class="color-swatch-hex">#b4afaf</div><div class="color-swatch-role">フッター・タブ</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE / NEUTRAL</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eeebea"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeebea"></div><div class="color-swatch-info"><div class="color-swatch-name">Tag Surface</div><div class="color-swatch-hex">#eeebea</div><div class="color-swatch-role">タグ・地域 pill 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(255,255,255,0.85); position: relative;"><div style="position:absolute; inset:0; background: linear-gradient(135deg, #b4afaf, #888); z-index: -1;"></div></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay (写真上)</div><div class="color-swatch-hex">rgba(255,255,255,0.85)</div><div class="color-swatch-role">半透明白タグ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:32px; font-weight:700; line-height:1.125; letter-spacing:0.15px; color:var(--heading);">Page Title — マルニ木工</div>
+    <div class="type-meta">32px / 700 / line-height: 1.125 (36px) / letter-spacing: 0.15px<span class="type-context">h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:19.2px; font-weight:700; line-height:1.8; letter-spacing:0.15px;">広島から世界へ — Hero Subtitle (h3)</div>
+    <div class="type-meta">19.2px / 700 / line-height: 1.8 (34.56px)<span class="type-context">h3 white</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18.4px; font-weight:700; line-height:1.8; letter-spacing:1px;">納入事例 — Section Title (h2)</div>
+    <div class="type-meta">18.4px / 700 / line-height: 1.8 (33.12px) / letter-spacing: 1px<span class="type-context">h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.25; letter-spacing:0.15px;">商品を探す — Body Section Title (h2)</div>
+    <div class="type-meta">16px / 700 / line-height: 1.25 (20px)<span class="type-context">h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.8; letter-spacing:0.15px;">MARUNI60 — Card Title (h4)</div>
+    <div class="type-meta">16px / 700 / line-height: 1.8 (28.8px)<span class="type-context">h4</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.8; letter-spacing:0.15px;">本文 — 1928年から続く伝承技術と革新的な創造力をもって、100年先も定番として愛される家具をつくり続けています。広島の小さな工房から、世界の家具へ。Body 16px / 400 / line-height: 1.8 / letter-spacing: 0.15px。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.8 (28.8px) / letter-spacing: 0.15px<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14.4px; font-weight:400; line-height:1.8; letter-spacing:0.15px; opacity:0.8;">2026.5.1 — Body Small / 日付・補足</div>
+    <div class="type-meta">14.4px / 400 / line-height: 1.8 (25.92px)<span class="type-context">Small</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11.2px; font-weight:400; line-height:1.8; letter-spacing:0.15px; opacity:0.7;">© MARUNI WOOD INDUSTRY INC. All Rights Reserved. — Copyright</div>
+    <div class="type-meta">11.2px / 400 / line-height: 1.8 (20.16px)<span class="type-context">Copyright</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-warm" id="article">
+<div class="section-warm-inner">
+  <div class="section-label">03 / STORY — 工芸品としての家具</div>
+  <h2 class="section-title">100年先も愛される家具</h2>
+  <div class="article-preview">
+    <h1>HIROSHIMA に込めた思想</h1>
+    <p>2008年、マルニ木工は深澤直人デザインによる椅子「HIROSHIMA」を発表しました。普遍的な美しさと、座る人の身体に寄り添う有機的なフォルム。それは、手仕事の温かみと、工業生産の正確さが両立した、新しい時代の椅子の姿でした。</p>
+    <h2>木と向き合う仕事</h2>
+    <p>木は、生きていた素材です。乾燥の度合い、年輪の方向、節の有無。一本一本の木が持つ表情を見極め、最適な部位を選び抜く。その判断は、何十年もの経験を持つ職人にしかできません。</p>
+    <p>マルニ木工の家具づくりは、木と向き合うことから始まります。目で見て、手で触れて、香りを確かめる。素材本来の力を引き出すこと。それが、100年先も愛される家具の条件です。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">すべての納入事例を見る</a><div class="button-label">Primary CTA / radius 50px</div></div>
+    <div class="button-item"><a class="btn-overlay" href="#">詳しく見る</a><div class="button-label">Overlay (rgba 白)</div></div>
+    <div class="button-item"><a class="btn-tab-corner" href="#">公式オンラインショップ</a><div class="button-label">Tab corner / 右上のみ角丸</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px">タグ / 地域セレクター</div>
+  <div class="tag-row">
+    <a class="tag-pill" href="#">東京</a>
+    <a class="tag-pill" href="#">大阪</a>
+    <a class="tag-pill" href="#">広島（LECT）</a>
+    <a class="tag-pill" href="#">広島（廿日市）</a>
+    <a class="tag-pill" href="#">福岡</a>
+  </div>
+
+  <div class="color-group-label" style="margin-top:32px">スワイパー Bullets</div>
+  <div class="swiper-bullets">
+    <div class="swiper-bullet"></div>
+    <div class="swiper-bullet"></div>
+    <div class="swiper-bullet active"></div>
+    <div class="swiper-bullet"></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / PRODUCTS — 商品カード</div>
+  <h2 class="section-title">商品ラインナップ</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-overlay-tag"><a class="btn-overlay" href="#">詳しく見る</a></div>
+      </div>
+      <div class="card-body">
+        <div class="card-eyebrow">CHAIR</div>
+        <h3>HIROSHIMA</h3>
+        <p>深澤直人デザイン。普遍的な美しさを追求した、マルニを代表する椅子。</p>
+        <div class="card-meta">2008 / 深澤直人</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #c9c1b8, #9c8f80);">
+        <div class="card-overlay-tag"><a class="btn-overlay" href="#">詳しく見る</a></div>
+      </div>
+      <div class="card-body">
+        <div class="card-eyebrow">SOFA</div>
+        <h3>FUGU</h3>
+        <p>ジャスパー・モリソン デザイン。ふっくらとした表情のソファ。</p>
+        <div class="card-meta">2014 / ジャスパー・モリソン</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #b4afaf, #888);">
+        <div class="card-overlay-tag"><a class="btn-overlay" href="#">詳しく見る</a></div>
+      </div>
+      <div class="card-body">
+        <div class="card-eyebrow">TABLE</div>
+        <h3>MARUNI60</h3>
+        <p>マルニのアーカイブから生まれた、定番のダイニングテーブル。</p>
+        <div class="card-meta">2014 / アーカイブ復刻</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎" value="">
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" placeholder="name@example.com" value="">
+  </div>
+  <div class="form-group">
+    <label class="form-label">お問い合わせ内容</label>
+    <input class="form-input" type="text" placeholder="HIROSHIMA Arm Chair について" value="">
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / SPACING & LAYOUT</div>
+  <h2 class="section-title">スペーシング</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:3px; height:32px;"></div><div class="spacing-value">3px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:5px; height:32px;"></div><div class="spacing-value">5px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px; height:32px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px; height:32px;"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:36px; height:32px;"></div><div class="spacing-value">36px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px; height:32px;"></div><div class="spacing-value">40px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.maruni.com/jp">www.maruni.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-08)<br>
+  © MARUNI WOOD INDUSTRY INC. — preview reproduction
+</footer>
+
+</body>
+</html>
