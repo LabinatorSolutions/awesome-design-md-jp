@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (71 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (74 sites)</a>
 </p>
 
 <table>
@@ -132,6 +132,14 @@
 <td align="center"><strong>BALMUDA</strong><br><img src="design-md/balmuda/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ほぼ日</strong><br><img src="design-md/hobonichi/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>±0</strong><br><img src="design-md/plusminuszero/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>サントリー</strong><br><img src="design-md/suntory/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>GINZA SIX</strong><br><img src="design-md/ginza6/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東京ミッドタウン</strong><br><img src="design-md/tokyo-midtown/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -265,11 +273,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [BALMUDA](https://www.balmuda.com/jp/) | Home Appliance / Product Design | [DESIGN.md](design-md/balmuda/DESIGN.md) | [preview.html](design-md/balmuda/preview.html) |
 | [Hobonichi (ほぼ日刊イトイ新聞)](https://www.1101.com/) | Web Magazine / EC | [DESIGN.md](design-md/hobonichi/DESIGN.md) | [preview.html](design-md/hobonichi/preview.html) |
 | [±0 (Plus Minus Zero)](https://www.plusminuszero.jp/) | Product Design / Home Appliance | [DESIGN.md](design-md/plusminuszero/DESIGN.md) | [preview.html](design-md/plusminuszero/preview.html) |
+| [Suntory (サントリー)](https://www.suntory.co.jp/) | Beverage / Corporate | [DESIGN.md](design-md/suntory/DESIGN.md) | [preview.html](design-md/suntory/preview.html) |
+| [GINZA SIX (銀座シックス)](https://ginza6.tokyo/) | Luxury Retail / Commercial Complex | [DESIGN.md](design-md/ginza6/DESIGN.md) | [preview.html](design-md/ginza6/preview.html) |
+| [Tokyo Midtown (東京ミッドタウン)](https://www.tokyo-midtown.com/jp/) | Urban Development / Cultural Complex | [DESIGN.md](design-md/tokyo-midtown/DESIGN.md) | [preview.html](design-md/tokyo-midtown/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (71 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (74 sites)</a>
 </p>
 
 <table>
@@ -367,6 +378,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>BALMUDA</strong><br><img src="design-md/balmuda/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Hobonichi</strong><br><img src="design-md/hobonichi/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>±0</strong><br><img src="design-md/plusminuszero/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Suntory</strong><br><img src="design-md/suntory/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>GINZA SIX</strong><br><img src="design-md/ginza6/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Tokyo Midtown</strong><br><img src="design-md/tokyo-midtown/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Suntory</title>
+<style>
+  :root {
+    /* === Suntory Color Tokens (実測値) === */
+    --brand-blue: #0075a8;
+    --brand-light-blue: #5bc2dc;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-muted: #666666;
+    --text-on-dark: #ffffff;
+
+    --bg-white: #ffffff;
+    --surface-tint: #edf4f7;
+    --surface-2: #f5f5f5;
+    --footer-dark: #003561;
+
+    --border-cta: #cccccc;
+    --border-faint: rgba(0, 0, 0, 0.08);
+
+    /* === Fonts === */
+    --font-base: "ヒラギノ角ゴ W3", "Hiragino Kaku Gothic Pro", "Yu Gothic Medium", "游ゴシック Medium", メイリオ, Meiryo, sans-serif;
+    --font-news: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16.13px; font-weight: 400; line-height: 1.7;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 76px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-faint);
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 18px; font-weight: 700;
+    color: var(--brand-blue); text-decoration: none; letter-spacing: 1.12px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 15px; font-weight: 400; color: var(--text-secondary); text-decoration: none; letter-spacing: normal; }
+  .nav-links a:hover { color: var(--brand-blue); }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 72px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--surface-tint) 0%, #ffffff 100%);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-base); font-size: 14.11px; font-weight: 700;
+    color: var(--brand-blue); letter-spacing: 1.12px; margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: 36.65px; font-weight: 700; line-height: 1.75;
+    color: var(--text-primary); margin-bottom: 24px;
+    letter-spacing: 1.12px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.7;
+    color: var(--text-secondary); max-width: 720px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-outline {
+    display: inline-block; background: #ffffff; color: var(--text-primary);
+    padding: 20px 40px 20px 24px; border-radius: 30px;
+    border: 1px solid var(--border-cta);
+    font-family: var(--font-base); font-size: 16.13px; font-weight: 700;
+    line-height: 1.0; text-decoration: none; cursor: pointer;
+    letter-spacing: 1.12px;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: var(--surface-tint); border-color: var(--brand-blue); }
+  .btn-solid {
+    display: inline-block; background: var(--brand-blue); color: #ffffff;
+    padding: 14px 36px; border-radius: 8px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    line-height: 1.5; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+  }
+  .btn-solid:hover { opacity: 0.85; }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    color: var(--brand-blue); letter-spacing: 1.12px; margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-size: 28.45px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 48px; line-height: 1.75;
+    letter-spacing: 1.12px;
+  }
+  .section-divider { border: none; height: 1px; background: var(--border-faint); margin: 0; }
+  .section-surface { background: var(--surface-tint); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-faint); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .color-group-label {
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    color: var(--text-secondary); margin: 24px 0 10px; letter-spacing: 1.12px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-faint); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--surface-tint); color: var(--text-secondary); font-size: 10px; padding: 2px 8px; margin-left: 8px; border-radius: 4px; }
+
+  /* NEWS / PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .product-card {
+    background: #ffffff; border: 1px solid var(--border-faint); border-radius: 8px;
+    padding: 0; overflow: hidden;
+    text-decoration: none; color: var(--text-primary);
+  }
+  .product-card-image {
+    height: 180px; background: linear-gradient(135deg, var(--brand-light-blue), var(--brand-blue));
+    display: flex; align-items: center; justify-content: center;
+    color: #ffffff; font-weight: 700; font-size: 22px; letter-spacing: 1.12px;
+  }
+  .product-card-body { padding: 24px; }
+  .product-card .badge {
+    display: inline-block; background: var(--brand-blue); color: #ffffff;
+    font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 4px; margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .product-card h3 { font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; color: var(--text-primary); letter-spacing: 0.5px; }
+  .product-card p { font-size: 14px; font-weight: 400; line-height: 1.6; color: var(--text-secondary); }
+
+  /* TAGS */
+  .tag-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tag {
+    display: inline-block; background: var(--surface-tint); color: var(--text-secondary);
+    font-size: 16px; font-weight: 700; padding: 8px 16px; border-radius: 8px;
+    text-decoration: none; line-height: 24px;
+  }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-muted); margin-top: 12px; }
+
+  /* HERO COPY (large feature) */
+  .feature-copy {
+    padding: 96px 32px;
+    background: var(--surface-tint);
+    text-align: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .feature-copy-jp {
+    font-size: 36.65px; font-weight: 700; line-height: 1.75;
+    color: var(--brand-blue); margin-bottom: 16px; letter-spacing: 1.12px;
+  }
+  .feature-copy-sub {
+    font-size: 16px; font-weight: 400; line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 1.12px; }
+  .form-input {
+    width: 100%; background: var(--surface-tint); color: var(--text-secondary);
+    border: 1px solid transparent; padding: 12px 16px; border-radius: 8px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-blue); background: #ffffff; }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-blue); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--surface-tint); border: 1px solid var(--border-faint); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--brand-blue); opacity: 0.4; }
+  .width-bar-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 32px 40px;
+    background: var(--footer-dark);
+    color: #ffffff;
+    text-align: center;
+    font-size: 13px; line-height: 1.7;
+  }
+  .footer a { color: #ffffff; text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1, .feature-copy-jp { font-size: 28px; }
+    .section-title { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .feature-copy { padding: 64px 20px; }
+    .product-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">SUNTORY</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">design system preview</div>
+  <h1>水と生きる SUNTORY</h1>
+  <p>Suntory（suntory.co.jp）から抽出したデザイントークンのカタログ。游ゴシック / ヒラギノの OS フォント、薄い水色面、Suntory Blue の outline pill CTA。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-outline" href="#">すべての商品一覧</a>
+    <a class="btn-solid" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0075a8"></div><div class="color-swatch-info"><div class="color-swatch-name">Suntory Blue</div><div class="color-swatch-hex">#0075a8</div><div class="color-swatch-role">アクセント・バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5bc2dc"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Blue</div><div class="color-swatch-hex">#5bc2dc</div><div class="color-swatch-role">軽やかなアクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・見出し（純黒）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">News 本文</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">注釈</div></div></div>
+  </div>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#edf4f7; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Tint</div><div class="color-swatch-hex">#edf4f7</div><div class="color-swatch-role">最頻出の薄水色面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface 2</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">補助面</div></div></div>
+  </div>
+
+  <div class="color-group-label">cta border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">outline pill 細罫線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-surface" style="max-width:none;">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:0 32px;">
+  <div class="section-eyebrow">02 / typography — 実測値</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:36.65px; font-weight:700; line-height:1.75; color:#000000; letter-spacing:1.12px;">水と生きる SUNTORY</div>
+    <div class="type-meta">ヒラギノ角ゴ W3 / 36.65px / 700 / line-height: 1.75 (64.13px) / letter-spacing: 1.12px<span class="type-context">Hero h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-news); font-size:28px; font-weight:700; line-height:2.28; color:#333333;">最新のニュースリリース</div>
+    <div class="type-meta">ヒラギノ角ゴ Pro W3 / 28px / 700 / line-height: 2.28 (63.84px)<span class="type-context">News h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24.42px; font-weight:700; line-height:2.0; color:#000000; letter-spacing:1.12px;">商品 / キャンペーン / ニュース</div>
+    <div class="type-meta">ヒラギノ角ゴ W3 / 24.42px / 700 / line-height: 2.0 (48.83px) / letter-spacing: 1.12px<span class="type-context">Sub-Heading</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:700; line-height:1.0; color:#000000;">事業領域</div>
+    <div class="type-meta">ヒラギノ角ゴ W3 / 18px / 700 / line-height: 1.0<span class="type-context">Item Title (nav)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-news); font-size:16px; font-weight:400; line-height:1.7; color:#333333; max-width:720px;">サントリーグループは「人と自然と響きあい、 豊かな生活文化を創造し、 『人間の生命の輝き』をめざす」を企業理念として、世界中のお客様に愛されるブランドを提供するグローバル飲料食品メーカーです。</div>
+    <div class="type-meta">ヒラギノ角ゴ Pro W3 / 16px / 400 / line-height: 1.7 (27.2px)<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14.11px; font-weight:700; line-height:1.75; color:#000000;">最新のお知らせ</div>
+    <div class="type-meta">ヒラギノ角ゴ W3 / 14.11px / 700 / line-height: 1.75 (24.7px)<span class="type-context">Caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.33; color:#000000;">© SUNTORY HOLDINGS LIMITED.</div>
+    <div class="type-meta">ヒラギノ角ゴ W3 / 12px / 400 / line-height: 1.33 (16px)<span class="type-context">Small</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LARGE COPY -->
+<section style="background: var(--surface-tint);">
+  <div class="feature-copy">
+    <div class="feature-copy-jp">水と生きる</div>
+    <div class="feature-copy-sub">Mizu To Ikiru — Suntory のコーポレートメッセージ</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS / NEWS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / products — news cards</div>
+  <h2 class="section-title">News Releases</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">News</div>
+      <div class="product-card-body">
+        <span class="badge">2026.05.07</span>
+        <h3>新商品「天然水スパークリング 春みかん」発売のお知らせ</h3>
+        <p>サントリー食品インターナショナルは、人気の「天然水スパークリング」シリーズに新フレーバーを追加します。</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">Campaign</div>
+      <div class="product-card-body">
+        <span class="badge">キャンペーン</span>
+        <h3>BOSS ボトルキャンペーン2026夏</h3>
+        <p>缶コーヒー BOSS のキャンペーンが開幕。応募で抽選 1,000 名様に景品をプレゼント。</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">Group</div>
+      <div class="product-card-body">
+        <span class="badge">グループ会社</span>
+        <h3>サントリー美術館「水と日本美術」展のお知らせ</h3>
+        <p>東京・六本木のサントリー美術館にて、企画展「水と日本美術」を開催します。</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section section-surface" style="max-width:none;" id="buttons">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:0 32px;">
+  <div class="section-eyebrow">04 / buttons</div>
+  <h2 class="section-title">Buttons & Tags</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline" href="#">すべての商品一覧</a><div class="button-label">Outline Pill (radius 30px)</div></div>
+    <div class="button-item"><a class="btn-solid" href="#">検索する</a><div class="button-label">Solid Blue (radius 8px)</div></div>
+  </div>
+
+  <h3 style="font-size:18px; font-weight:700; margin:48px 0 16px; letter-spacing:1.12px;">Category Tags</h3>
+  <div class="tag-row">
+    <a class="tag" href="#">商品</a>
+    <a class="tag" href="#">キャンペーン・CM</a>
+    <a class="tag" href="#">ニュースリリース</a>
+    <a class="tag" href="#">グループ会社</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / forms</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group">
+    <label class="form-label">キーワードで検索</label>
+    <input class="form-input" type="text" placeholder="商品名・キーワード">
+    <div class="form-state-label">デフォルト — 背景 #edf4f7 / radius 8px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">キーワードで検索</label>
+    <input class="form-input form-input--focus" type="text" value="天然水">
+    <div class="form-state-label">フォーカス — border 1px solid #0075a8 / 背景 #ffffff</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section section-surface" style="max-width:none;" id="layout">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:0 32px;">
+  <div class="section-eyebrow">06 / layout</div>
+  <h2 class="section-title">Spacing &amp; Width</h2>
+  <h3 style="font-size:18px; font-weight:700; margin:16px 0 12px; letter-spacing:1.12px;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px"></div><div class="spacing-value">120px</div></div>
+  </div>
+
+  <h3 style="font-size:18px; font-weight:700; margin:32px 0 12px; letter-spacing:1.12px;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Bleed Hero <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Section <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Body Text <span class="width-bar-value">720px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:52%"></div></div></div>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.suntory.co.jp/">suntory.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>
