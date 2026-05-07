@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 21_21 DESIGN SIGHT</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 21_21 DESIGN SIGHT 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-light: #f3f3f3;
+    --bg-mid: #cccccc;
+    --bg-dark: #1a1a1a;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    --text-strong: #000000;
+    --text-body: #333333;
+    --text-inverse: #ffffff;
+    --text-muted: #999999;
+
+    --brand-blue: #0090df;
+    --accent-orange: #ff9900;
+
+    --border-default: #cccccc;
+    --border-blue: #0090df;
+
+    /* === Fonts ===
+       実サイトは Noto Sans Japanese 単独。Google Fonts の Noto Sans JP で代替
+    */
+    --font-base: "Noto Sans JP", "Noto Sans Japanese", meiryo, "MS PGothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 48px;
+    --space-xxl: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-body);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    background: var(--bg-primary);
+    height: 80px;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 16px; font-weight: 600;
+    color: var(--brand-blue);
+    text-decoration: none;
+    line-height: 16px;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    display: block;
+    padding: 30px 18px;
+    font-size: 14px; font-weight: 600;
+    line-height: 1;
+    color: var(--text-strong);
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--brand-blue); }
+
+  /* LANGUAGE PILLS (circular) */
+  .lang-pills { display: flex; gap: 8px; align-items: center; }
+  .lang-pill {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px; font-weight: 400;
+    text-decoration: none;
+    color: var(--text-body);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-default);
+  }
+  .lang-pill.active {
+    background: var(--brand-blue);
+    color: var(--text-inverse);
+    border-color: var(--brand-blue);
+  }
+  .lang-pill:not(.active):hover { color: var(--brand-blue); border-color: var(--brand-blue); }
+
+  /* HERO */
+  .hero {
+    background: var(--bg-primary);
+    padding: 100px 32px 60px;
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero .meta {
+    font-size: 12px; font-weight: 400;
+    color: var(--brand-blue);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 32px; font-weight: 600; line-height: 1.4;
+    color: var(--text-strong);
+    margin-bottom: 24px;
+  }
+  .hero p.lead {
+    font-size: 14px; font-weight: 400; line-height: 24px;
+    color: var(--text-body);
+    max-width: 760px;
+    margin: 0 0 32px;
+  }
+
+  /* BUTTONS */
+  .btn-outline {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--brand-blue);
+    border: 2px solid var(--brand-blue);
+    border-radius: 5px;
+    padding: 18px 32px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-outline:hover { background: var(--brand-blue); color: var(--text-inverse); }
+  .btn-outline--inverse {
+    color: var(--text-inverse);
+    border-color: var(--text-inverse);
+    background: transparent;
+  }
+  .btn-outline--inverse:hover { background: var(--text-inverse); color: var(--brand-blue); }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px 60px; max-width: 1200px; margin: 0 auto; }
+  .section--soft { background: var(--bg-light); max-width: none; }
+  .section--dark { background: var(--bg-dark); color: var(--text-inverse); max-width: none; }
+  .section--inner { max-width: 1200px; margin: 0 auto; padding: 80px 32px 60px; }
+
+  .section-header {
+    text-align: left;
+    margin-bottom: 48px;
+    border-bottom: 2px solid var(--brand-blue);
+    padding-bottom: 16px;
+  }
+  .section-en {
+    display: block;
+    font-size: 24px; font-weight: 600;
+    color: var(--text-strong);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .section-ja {
+    display: block;
+    font-size: 12px; font-weight: 400;
+    color: var(--brand-blue);
+  }
+  .section--dark .section-en { color: var(--text-inverse); }
+  .section--dark .section-ja { color: var(--bg-light); }
+
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+  .color-swatch { background: var(--bg-primary); }
+  .color-swatch-block { height: 110px; width: 100%; }
+  .color-swatch-info { padding: 16px 4px; }
+  .color-swatch-name {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-strong);
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--text-body);
+    font-family: var(--font-mono);
+  }
+  .color-swatch-role {
+    font-size: 12px;
+    color: var(--text-body);
+    margin-top: 8px;
+    line-height: 20px;
+  }
+  .color-group-label {
+    font-size: 14px; font-weight: 600;
+    color: var(--brand-blue);
+    margin: 32px 0 16px;
+    text-align: left;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-default);
+    text-align: left;
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-body);
+    margin-top: 10px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-light);
+    color: var(--text-body);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-base);
+  }
+
+  /* EXHIBITION CARDS */
+  .exhibition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+  }
+  .exhibition-card {
+    text-decoration: none;
+    color: var(--text-body);
+    text-align: left;
+    position: relative;
+    background: var(--bg-primary);
+  }
+  .exhibition-thumb {
+    aspect-ratio: 16 / 9;
+    background: var(--bg-light);
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .exhibition-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .badge-new {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--accent-orange);
+    color: var(--text-inverse);
+    font-size: 10px;
+    font-weight: 400;
+    padding: 4px 10px;
+    line-height: 1.2;
+  }
+  .exhibition-period {
+    font-size: 12px;
+    color: var(--brand-blue);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .exhibition-title {
+    font-size: 16px; font-weight: 600; line-height: 1.5;
+    color: var(--text-strong);
+    margin-bottom: 8px;
+  }
+  .exhibition-meta {
+    font-size: 12px; line-height: 20px;
+    color: var(--text-body);
+  }
+
+  /* DARK BANNER */
+  .banner-dark {
+    background: var(--brand-blue);
+    color: var(--text-inverse);
+    padding: 100px 32px;
+    text-align: left;
+    max-width: none;
+  }
+  .banner-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .banner-dark h2 {
+    font-size: 28px; font-weight: 600; line-height: 1.4;
+    margin-bottom: 24px;
+    color: var(--text-inverse);
+  }
+  .banner-dark p {
+    font-size: 14px; line-height: 24px;
+    color: var(--text-inverse);
+    max-width: 720px;
+    margin-bottom: 32px;
+  }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .badge-orange-flat {
+    display: inline-block;
+    background: var(--accent-orange);
+    color: var(--text-inverse);
+    font-size: 10px; font-weight: 400;
+    padding: 4px 10px;
+  }
+  .badge-blue {
+    display: inline-block;
+    background: var(--brand-blue);
+    color: var(--text-inverse);
+    font-size: 12px; font-weight: 600;
+    padding: 6px 14px;
+  }
+  .badge-blue-outline {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--brand-blue);
+    border: 2px solid var(--brand-blue);
+    font-size: 12px; font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 5px;
+  }
+  .filter-chip {
+    display: inline-block;
+    color: var(--text-body);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  .filter-chip.active { color: var(--brand-blue); border-bottom-color: var(--brand-blue); }
+
+  /* FORM */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-size: 14px; font-weight: 600;
+    color: var(--brand-blue);
+    margin-bottom: 8px;
+    line-height: 24px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-body);
+    border: 1px solid var(--border-default);
+    padding: 12px 14px;
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    line-height: 24px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-blue); border-width: 2px; padding: 11px 13px; }
+  .form-state-label {
+    font-size: 11px;
+    color: var(--text-body);
+    margin-top: 6px;
+    font-family: var(--font-mono);
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--brand-blue);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-body); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--text-strong);
+    color: var(--text-inverse);
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .footer a { color: var(--text-inverse); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .nav-links { display: none; }
+    .section, .section--inner { padding: 60px 24px; }
+    .section-en { font-size: 20px; }
+    .banner-dark h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">21_21 DESIGN SIGHT</a>
+  <ul class="nav-links">
+    <li><a href="#">PROGRAM</a></li>
+    <li><a href="#colors">VISIT</a></li>
+    <li><a href="#typography">ABOUT</a></li>
+    <li><a href="#products">SHOP</a></li>
+  </ul>
+  <div class="lang-pills">
+    <a href="#" class="lang-pill active">JPN</a>
+    <a href="#" class="lang-pill">ENG</a>
+    <a href="#" class="lang-pill">CHN</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="meta">PROGRAM</div>
+  <h1>デザインを通じて、日常の発見を共有する。</h1>
+  <p class="lead">21_21 DESIGN SIGHT のデザインシステム。Noto Sans Japanese 単独で和文・欧文を組み、見出しは weight 600 / 本文は 400 の二段階で構成。シアンブルー <code>#0090df</code> をリンク色・h4 見出し・主要 CTA に大胆に使い、letter-spacing は <code>normal</code>、palt は使わず Noto Sans のメトリクスをそのまま活かす美術館的編集 UI。computed style 実測値（2026-05-08 取得）に基づく。</p>
+  <a class="btn-outline" href="#products">展覧会一覧を見る</a>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-header">
+    <span class="section-en">Palette</span>
+    <span class="section-ja">カラーパレット</span>
+  </div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0090df"></div><div class="color-swatch-info"><div class="color-swatch-name">21_21 Cyan Blue</div><div class="color-swatch-hex">#0090df</div><div class="color-swatch-role">リンク・h4 見出し・CTA 線色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; box-shadow:inset 0 0 0 1px #cccccc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Page White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">強調見出し</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff9900"></div><div class="color-swatch-info"><div class="color-swatch-name">NEW Orange</div><div class="color-swatch-hex">#ff9900</div><div class="color-swatch-role">展覧会 NEW バッジ専用</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface / Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">カテゴリ帯・ローディング</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Gray</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">罫線・区切り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文（純黒ではない）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-header">
+    <span class="section-en">Typography</span>
+    <span class="section-ja">タイポグラフィ階層</span>
+  </div>
+
+  <div style="max-width:900px;">
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:32px; font-weight:600; line-height:1.4; color:var(--text-strong);">展覧会タイトル ／ ヒーロー見出し</div>
+      <div class="type-meta">32px / 600 / line-height 1.4 / color #000<span class="type-context">ヒーロー h1</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:16px; font-weight:600; line-height:24px; color:var(--brand-blue);">ご利用案内 ／ 開館時間と料金</div>
+      <div class="type-meta">16px / 600 / line-height 24px / color #0090df<span class="type-context">h4 サイドバー見出し</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:16px; font-weight:600; line-height:1.0; color:var(--brand-blue);">21_21 DESIGN SIGHT</div>
+      <div class="type-meta">16px / 600 / line-height 1.0 / color #0090df<span class="type-context">h3 ロゴテキスト</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:14px; font-weight:600; line-height:1.0; color:var(--text-strong);">本文小見出し ／ Section subheading</div>
+      <div class="type-meta">14px / 600 / line-height 1.0 / color #000<span class="type-context">h3 reg 本文小見出し</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:24px; color:var(--text-body);">本文テキスト ／ 21_21 DESIGN SIGHT は、東京都港区赤坂9-7-6 東京ミッドタウン ミッドタウン・ガーデン内に位置するデザインミュージアムです。三宅一生・佐藤卓・深澤直人を館長に、日常生活からデザインを発見・発信する場として 2007 年に開館。Noto Sans Japanese 単独で組まれた本文は letter-spacing normal、palt を使わない自然な約物処理が特徴です。</div>
+      <div class="type-meta">14px / 400 / line-height 24px (1.71) / color #333 / letter-spacing normal<span class="type-context">本文 p reg</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:20px; color:var(--text-body);">注釈 ／ *ギャラリー3はプログラムによって異なります。詳細は各展覧会ページをご覧ください。</div>
+      <div class="type-meta">12px / 400 / line-height 20px / color #333<span class="type-context">注釈 p sml</span></div>
+    </div>
+    <div class="type-sample">
+      <div>
+        <a href="#" class="lang-pill active" style="margin-right:8px;">JPN</a>
+        <a href="#" class="lang-pill" style="margin-right:8px;">ENG</a>
+        <a href="#" class="lang-pill" style="margin-right:24px;">CHN</a>
+        <a href="#" class="btn-outline" style="margin-right:12px;">来館する</a>
+        <span class="badge-orange-flat">NEW</span>
+      </div>
+      <div class="type-meta">UI: 円形ピル radius 50% / 線ボタン 2px solid #0090df radius 5px / NEW バッジ #ff9900<span class="type-context">UI セット</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXHIBITIONS -->
+<section class="section--soft">
+<div class="section--inner" id="exhibitions">
+  <div class="section-header">
+    <span class="section-en">Programs / 開催中の展覧会</span>
+    <span class="section-ja">プログラム</span>
+  </div>
+
+  <div class="badge-row" style="margin-bottom:32px;">
+    <span class="filter-chip active">ALL</span>
+    <span class="filter-chip">企画展</span>
+    <span class="filter-chip">ギャラリー3</span>
+    <span class="filter-chip">トーク</span>
+    <span class="filter-chip">ワークショップ</span>
+  </div>
+
+  <div class="exhibition-grid">
+    <a href="#" class="exhibition-card">
+      <div class="badge-new">NEW</div>
+      <div class="exhibition-thumb"><div class="exhibition-thumb-overlay">EXHIBITION / 01</div></div>
+      <div class="exhibition-period">2026.04.13 – 09.07</div>
+      <div class="exhibition-title">日常の発見 — デザインのめがね</div>
+      <div class="exhibition-meta">企画展 ／ ディレクター: 佐藤卓</div>
+    </a>
+    <a href="#" class="exhibition-card">
+      <div class="badge-new">NEW</div>
+      <div class="exhibition-thumb"><div class="exhibition-thumb-overlay">EXHIBITION / 02</div></div>
+      <div class="exhibition-period">2026.05.20 – 08.30</div>
+      <div class="exhibition-title">PLAY ／ 遊びのデザイン</div>
+      <div class="exhibition-meta">ギャラリー3 ／ ディレクター: 深澤直人</div>
+    </a>
+    <a href="#" class="exhibition-card">
+      <div class="exhibition-thumb"><div class="exhibition-thumb-overlay">EXHIBITION / 03</div></div>
+      <div class="exhibition-period">2026.06.01 – 11.15</div>
+      <div class="exhibition-title">素材と道具 — 触れることの意味</div>
+      <div class="exhibition-meta">企画展 ／ 共同ディレクター</div>
+    </a>
+  </div>
+
+  <div style="text-align:left; margin-top:48px;">
+    <a class="btn-outline" href="#">過去の展覧会一覧</a>
+  </div>
+</div>
+</section>
+
+<!-- BLUE BANNER -->
+<div class="banner-dark">
+  <div class="banner-dark-inner">
+    <h2>ご利用案内 ／ Information</h2>
+    <p>開館時間 10:00–19:00（最終入場 18:30）／ 火曜休館。シアンブルー <code>#0090df</code> 面の上では、本文・見出しともに白文字で組み、CTA は白の outline ボタン（border 2px solid #fff / radius 5px）で反転表示します。</p>
+    <a class="btn-outline btn-outline--inverse" href="#">アクセス・チケット</a>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- BADGES -->
+<section class="section" id="badges">
+  <div class="section-header">
+    <span class="section-en">Badges &amp; Pills</span>
+    <span class="section-ja">バッジ・ピル要素</span>
+  </div>
+
+  <div class="badge-row" style="margin-bottom:24px;">
+    <a href="#" class="lang-pill active">JPN</a>
+    <a href="#" class="lang-pill">ENG</a>
+    <a href="#" class="lang-pill">CHN</a>
+    <span class="badge-orange-flat">NEW</span>
+    <span class="badge-blue">企画展</span>
+    <span class="badge-blue-outline">トーク</span>
+  </div>
+  <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-body);">
+    円形ピル radius 50%（言語切替）／ 矩形 NEW バッジ #ff9900（展覧会限定）／ シアンブルー塗り・線バッジ #0090df
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-header">
+    <span class="section-en">Forms</span>
+    <span class="section-ja">フォーム要素</span>
+  </div>
+  <div style="max-width:480px;">
+    <div class="form-group"><label class="form-label">サイト内検索 / Search</label><input class="form-input" type="text" placeholder="展覧会名・キーワードで検索"><div class="form-state-label">デフォルト — border 1px solid #cccccc / radius 5px</div></div>
+    <div class="form-group"><label class="form-label">メールアドレス / Email</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border 2px solid #0090df</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-header">
+    <span class="section-en">Spacing</span>
+    <span class="section-ja">スペーシング</span>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">XL · 48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">XXL · 80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.2121designsight.jp/">21_21 DESIGN SIGHT</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>

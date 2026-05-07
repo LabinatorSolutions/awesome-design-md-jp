@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Pen Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant+Garamond:wght@300;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: Pen Online 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-soft: #f6f6f6;
+    --bg-modal: #86878d;
+    --bg-mid: #9d9d9d;
+    --bg-dark: #6f6f74;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    --text-primary: #000000;
+    --text-inverse: #ffffff;
+    --text-muted: #86878d;
+
+    --border-default: #000000;
+    --border-light: #cccccc;
+
+    /* === Fonts ===
+       Optima Nova LT Pro は有償。Marcellus / Cormorant Garamond を Google Fonts 代替に
+       FOT-筑紫ゴシック Pr5 D は Adobe Fonts 有償。Noto Sans JP weight 500 で代替
+    */
+    --font-jp: "Noto Sans JP", "FOT-筑紫ゴシック Pr5 D", sans-serif;
+    --font-en-medium: Optima, "Marcellus", "Cormorant Garamond", "OptimaNovaLTPro-Medium", sans-serif;
+    --font-en-light: Optima, "Cormorant Garamond", "OptimaNovaLTPro-Light", sans-serif;
+    --font-mix: "Noto Sans JP", "TsuGoProB-SyntaxNextLTProM", "FOT-筑紫ゴシック Pr5 D", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 48px;
+    --space-xxl: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.7;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    background: var(--bg-primary);
+    height: 80px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-en-medium);
+    font-size: 28px; font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    line-height: 1;
+    letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en-medium);
+    font-size: 16px; font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.48px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-feature-settings: "palt";
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-utility { display: flex; gap: 16px; align-items: center; }
+
+  /* HERO */
+  .hero {
+    background: var(--bg-primary);
+    padding: 100px 32px 60px;
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero .meta {
+    font-family: var(--font-en-medium);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 1.32px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-en-light);
+    font-size: 56px; font-weight: 300; line-height: 1.2;
+    letter-spacing: 1.6px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .hero p.lead {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 500; line-height: 1.8;
+    color: var(--text-primary);
+    letter-spacing: 0.48px;
+    max-width: 800px;
+    margin: 0 0 32px;
+    font-feature-settings: "palt";
+  }
+
+  /* BUTTONS */
+  .btn-line {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    border-radius: 0;
+    padding: 4px 14px 3px;
+    font-family: var(--font-en-medium);
+    font-size: 14px; font-weight: 500;
+    line-height: 23px;
+    letter-spacing: 0.48px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    font-feature-settings: "palt";
+  }
+  .btn-line:hover { background: var(--text-primary); color: var(--text-inverse); }
+
+  .btn-fill {
+    display: inline-block;
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    border: 1px solid var(--text-primary);
+    border-radius: 0;
+    padding: 8px 24px;
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 500;
+    line-height: 16px;
+    letter-spacing: normal;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-fill:hover { background: var(--bg-modal); border-color: var(--bg-modal); }
+
+  .btn-outline-jp {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    border-radius: 0;
+    padding: 8px 24px;
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.448px;
+    text-decoration: none;
+    cursor: pointer;
+    font-feature-settings: "palt";
+  }
+  .btn-outline-jp:hover { background: var(--text-primary); color: var(--text-inverse); }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px 60px; max-width: 1200px; margin: 0 auto; }
+  .section--soft { background: var(--bg-soft); max-width: none; }
+  .section--dark { background: var(--bg-modal); color: var(--text-inverse); max-width: none; }
+  .section--inner { max-width: 1200px; margin: 0 auto; padding: 80px 32px 60px; }
+
+  .section-header {
+    text-align: left;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 16px;
+  }
+  .section-en {
+    display: block;
+    font-family: var(--font-en-light);
+    font-size: 40px; font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.45;
+    letter-spacing: 1.6px;
+  }
+  .section-ja {
+    display: block;
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.48px;
+    font-feature-settings: "palt";
+  }
+  .section--dark .section-en { color: var(--text-inverse); }
+  .section--dark .section-ja { color: var(--text-inverse); }
+  .section--dark .section-header { border-bottom-color: var(--text-inverse); }
+
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+  .color-swatch { background: var(--bg-primary); }
+  .color-swatch-block { height: 110px; width: 100%; }
+  .color-swatch-info { padding: 16px 4px; }
+  .color-swatch-name {
+    font-family: var(--font-en-medium);
+    font-size: 14px; font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+    letter-spacing: 0.48px;
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+  .color-swatch-role {
+    font-family: var(--font-jp);
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-top: 8px;
+    line-height: 20px;
+    font-feature-settings: "palt";
+  }
+  .color-group-label {
+    font-family: var(--font-en-medium);
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    margin: 32px 0 16px;
+    text-align: left;
+    letter-spacing: 0.48px;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+    text-align: left;
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-primary);
+    margin-top: 10px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-soft);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-jp);
+  }
+
+  /* ARTICLE CARDS */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 48px 32px;
+  }
+  .article-card {
+    text-decoration: none;
+    color: var(--text-primary);
+    text-align: left;
+  }
+  .article-thumb {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-soft);
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .article-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    font-family: var(--font-en-medium);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .article-cat {
+    font-family: var(--font-en-medium);
+    font-size: 12px;
+    color: var(--text-primary);
+    letter-spacing: 1.32px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .article-title {
+    font-family: var(--font-mix);
+    font-size: 20px; font-weight: 500; line-height: 1.5;
+    color: var(--text-primary);
+    letter-spacing: 3.36px;  /* 0.168em — Pen 雑誌の象徴 */
+    margin-bottom: 12px;
+    font-feature-settings: "palt";
+  }
+  .article-meta {
+    font-family: var(--font-jp);
+    font-size: 13px; line-height: 1.6;
+    color: var(--text-primary);
+    letter-spacing: 1.456px;  /* 0.112em */
+  }
+
+  /* DARK BANNER */
+  .banner-dark {
+    background: var(--bg-modal);
+    color: var(--text-inverse);
+    padding: 100px 32px;
+    max-width: none;
+  }
+  .banner-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .banner-dark .nav-cat {
+    font-family: var(--font-en-light);
+    font-size: 32px; font-weight: 300;
+    letter-spacing: 1.28px;
+    color: var(--text-inverse);
+    margin-bottom: 24px;
+    line-height: 1.3;
+  }
+  .banner-dark .nav-sub {
+    font-family: var(--font-en-medium);
+    font-size: 16px; font-weight: 500;
+    letter-spacing: 0.48px;
+    color: var(--text-inverse);
+    margin-right: 24px;
+    text-decoration: none;
+    line-height: 2.4;
+  }
+  .banner-dark .nav-sub:hover { opacity: 0.7; }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .badge-line {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--text-primary);
+    font-family: var(--font-en-medium);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    text-transform: uppercase;
+  }
+  .badge-fill {
+    display: inline-block;
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 500;
+    padding: 4px 12px;
+  }
+  .filter-chip {
+    display: inline-block;
+    color: var(--text-primary);
+    font-family: var(--font-en-medium);
+    font-size: 14px;
+    letter-spacing: 0.48px;
+    padding: 8px 16px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .filter-chip.active { border-bottom-color: var(--text-primary); }
+
+  /* FORM */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-en-medium);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0.48px;
+    text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 10px 14px;
+    border-radius: 0;
+    font-family: var(--font-jp);
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: normal;
+    outline: none;
+    transition: background 0.15s;
+    font-feature-settings: "palt";
+  }
+  .form-input:focus, .form-input--focus { background: var(--bg-soft); }
+  .form-state-label {
+    font-size: 11px;
+    color: var(--text-primary);
+    margin-top: 6px;
+    font-family: var(--font-mono);
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-primary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    font-family: var(--font-en-medium);
+    font-size: 12px;
+    letter-spacing: 0.48px;
+  }
+  .footer a { color: var(--text-inverse); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 36px; }
+    .nav-links { display: none; }
+    .section, .section--inner { padding: 60px 24px; }
+    .section-en { font-size: 28px; }
+    .article-title { font-size: 16px; letter-spacing: 2.5px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Pen</a>
+  <ul class="nav-links">
+    <li><a href="#">Art&amp;Design</a></li>
+    <li><a href="#colors">Watch</a></li>
+    <li><a href="#typography">Lifestyle</a></li>
+    <li><a href="#products">Travel</a></li>
+    <li><a href="#products">Magazine</a></li>
+  </ul>
+  <div class="nav-utility">
+    <a class="btn-line" href="#">Search</a>
+    <a class="btn-fill" href="#">ログイン</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="meta">EDITORIAL · DESIGN · CULTURE</div>
+  <h1>Latest from Pen Online.</h1>
+  <p class="lead">Pen Online のデザインシステム。Optima Nova LT Pro（欧文）と FOT-筑紫ゴシック Pr5 D（和文）の有償フォント混植で、雑誌的な格調を再現するモノクロームエディトリアル UI。記事タイトルには <code>letter-spacing: 4.032px</code> = <code>0.168em</code> という非常に広い字送りを与え、雑誌『Pen』の組版を Web で再現する。weight は CSS 上 400 で固定し、書体名側で重みを切り替える Adobe Fonts 流の運用。computed style 実測値（2026-05-08 取得）に基づく。</p>
+  <a class="btn-outline-jp" href="#products">最新記事を読む</a>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-header">
+    <span class="section-en">Palette</span>
+    <span class="section-ja">カラーパレット ／ モノクローム</span>
+  </div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Pen Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・見出し・ロゴ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; box-shadow:inset 0 0 0 1px #cccccc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Page White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f6"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Surface</div><div class="color-swatch-hex">#f6f6f6</div><div class="color-swatch-role">補助面・サムネイル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#86878d"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Modal</div><div class="color-swatch-hex">#86878d</div><div class="color-swatch-role">ハンバーガー展開時</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9d9d9d"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Inner Mid</div><div class="color-swatch-hex">#9d9d9d</div><div class="color-swatch-role">Series 等カテゴリ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6f6f74"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Inner Dark</div><div class="color-swatch-hex">#6f6f74</div><div class="color-swatch-role">Magazine 帯</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-header">
+    <span class="section-en">Typography</span>
+    <span class="section-ja">タイポグラフィ階層 ／ Pen 雑誌組版の再現</span>
+  </div>
+
+  <div style="max-width:1000px;">
+    <div class="type-sample">
+      <div style="font-family:var(--font-en-light); font-size:56px; font-weight:300; line-height:1.2; letter-spacing:1.6px; color:var(--text-primary);">Latest</div>
+      <div class="type-meta">56px / 300 / line-height 1.2 / letter-spacing 1.6px (0.04em)<span class="type-context">Display Optima Light</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-en-light); font-size:24px; font-weight:300; line-height:1.0; letter-spacing:0.96px; color:var(--text-primary);">Art &amp; Design</div>
+      <div class="type-meta">24px / 300 / line-height 1.0 / letter-spacing 0.96px (0.04em)<span class="type-context">大ナビカテゴリ</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-mix); font-size:24px; font-weight:500; line-height:1.5; letter-spacing:4.032px; color:var(--text-primary); font-feature-settings:'palt';">【厚さ10㎜以下の薄型パーペチュアルカレンダーの腕時計3選】</div>
+      <div class="type-meta"><strong>24px / 500 / line-height 1.5 / letter-spacing 4.032px (0.168em)</strong> ← 雑誌『Pen』の象徴<span class="type-context">記事タイトル h2 (筑紫+Syntax 混植)</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-en-medium); font-size:16px; font-weight:500; line-height:1.0; letter-spacing:0.48px; color:var(--text-primary);">Pen Membership · Pen Meet · Login · Search</div>
+      <div class="type-meta">16px / 500 / line-height 1.0 / letter-spacing 0.48px (0.03em)<span class="type-context">ナビ Optima Medium</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-jp); font-size:16px; font-weight:500; line-height:1.8; letter-spacing:normal; color:var(--text-primary); font-feature-settings:'palt';">本文テキスト ／ Pen Online は 1998 年創刊のカルチャー・デザイン誌『Pen』のオンライン版です。FOT-筑紫ゴシック Pr5 D（D = Demi Bold 相当）と Optima Nova LT Pro（Medium / Light）の有償フォント混植で、雑誌の権威性と現代性を両立する編集タイポグラフィを実現しています。letter-spacing は要素ごとに細かく設計され、記事タイトルでは 0.168em まで広げる雑誌的字送りが特徴。</div>
+      <div class="type-meta">16px / 500 / line-height 1.8 / letter-spacing normal / palt on<span class="type-context">本文 body 筑紫ゴシック</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-jp); font-size:14px; font-weight:500; line-height:1.6; letter-spacing:1.568px; color:var(--text-primary); font-feature-settings:'palt';">記事メタ情報 ／ Series · Magazine · Editor's Pick</div>
+      <div class="type-meta">14px / 500 / line-height 22.4px (1.6) / letter-spacing 1.568px (0.112em)<span class="type-context">記事メタ h2 sml</span></div>
+    </div>
+    <div class="type-sample">
+      <div>
+        <a class="btn-line" href="#" style="margin-right:12px;">Buy Now</a>
+        <a class="btn-fill" href="#" style="margin-right:12px;">ログイン</a>
+        <a class="btn-outline-jp" href="#">新規会員登録</a>
+      </div>
+      <div class="type-meta">CTA: 白地黒線（販売）／ 黒地白文字（機能）／ 透明地黒線・和文（登録）<span class="type-context">ボタン3種</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="section--soft">
+<div class="section--inner" id="articles">
+  <div class="section-header">
+    <span class="section-en">Articles</span>
+    <span class="section-ja">最新記事 ／ Editorial Grid</span>
+  </div>
+
+  <div class="badge-row" style="margin-bottom:48px;">
+    <span class="filter-chip active">All</span>
+    <span class="filter-chip">Art&amp;Design</span>
+    <span class="filter-chip">Watch</span>
+    <span class="filter-chip">Travel</span>
+    <span class="filter-chip">Lifestyle</span>
+    <span class="filter-chip">Magazine</span>
+  </div>
+
+  <div class="article-grid">
+    <a href="#" class="article-card">
+      <div class="article-thumb"><div class="article-thumb-overlay">ART · DESIGN / 01</div></div>
+      <div class="article-cat">ART &amp; DESIGN</div>
+      <div class="article-title">【特集】 北欧モダニズムの再考 — フィンランドの巨匠たち</div>
+      <div class="article-meta">2026.05.08 · Editor's Pick · Pen Magazine #543</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb"><div class="article-thumb-overlay">WATCH / 02</div></div>
+      <div class="article-cat">WATCH</div>
+      <div class="article-title">【厚さ10㎜以下の薄型パーペチュアル】3選を読み解く</div>
+      <div class="article-meta">2026.05.06 · Watch &amp; Jewelry · 連載</div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="article-thumb"><div class="article-thumb-overlay">TRAVEL / 03</div></div>
+      <div class="article-cat">TRAVEL</div>
+      <div class="article-title">京都 ／ 老舗茶舗のスペースデザイン</div>
+      <div class="article-meta">2026.05.03 · City Guide · 写真特集</div>
+    </a>
+  </div>
+
+  <div style="text-align:left; margin-top:48px;">
+    <a class="btn-line" href="#">View All Articles</a>
+  </div>
+</div>
+</section>
+
+<!-- NAV BANNER (Modal Gray) -->
+<div class="banner-dark">
+  <div class="banner-dark-inner">
+    <div class="nav-cat">Art &amp; Design</div>
+    <div style="margin-bottom: 32px;">
+      <a class="nav-sub" href="#">Pen Membership</a>
+      <a class="nav-sub" href="#">Pen Meet</a>
+      <a class="nav-sub" href="#">Series</a>
+      <a class="nav-sub" href="#">Magazine</a>
+    </div>
+    <div class="nav-cat">Watch &amp; Jewelry</div>
+    <div>
+      <a class="nav-sub" href="#">Editor's Pick</a>
+      <a class="nav-sub" href="#">Brand Stories</a>
+      <a class="nav-sub" href="#">Archive</a>
+    </div>
+    <div style="margin-top:48px; font-family:var(--font-en-medium); font-size:11px; letter-spacing:0.48px; color:var(--text-inverse);">© CE Media House Inc.. — Nav modal background #86878d</div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- BADGES -->
+<section class="section" id="badges">
+  <div class="section-header">
+    <span class="section-en">Badges &amp; Tags</span>
+    <span class="section-ja">バッジ・ラベル</span>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge-line">Buy Now</span>
+    <span class="badge-line">Subscribe</span>
+    <span class="badge-line">Pen Magazine</span>
+    <span class="badge-fill">特集</span>
+    <span class="badge-fill">連載</span>
+    <span class="badge-fill">編集部おすすめ</span>
+  </div>
+  <div style="margin-top:24px; font-family:var(--font-mono); font-size:11px; color:var(--text-primary);">
+    白地黒線（雑誌タグ風）／ 黒地白文字（強調ラベル）— アクセント色なし
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-header">
+    <span class="section-en">Forms</span>
+    <span class="section-ja">フォーム要素</span>
+  </div>
+  <div style="max-width:480px;">
+    <div class="form-group"><label class="form-label">Search / 検索</label><input class="form-input" type="text" placeholder="記事・特集名で検索"><div class="form-state-label">デフォルト — border 1px solid #000 / radius 0</div></div>
+    <div class="form-group"><label class="form-label">Email / メールアドレス</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — bg #f6f6f6 (微差で示す)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-header">
+    <span class="section-en">Spacing</span>
+    <span class="section-ja">スペーシング</span>
+  </div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L · 24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">XL · 48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">XXL · 80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.pen-online.jp/">Pen Online</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>

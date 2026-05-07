@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (59 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (62 sites)</a>
 </p>
 
 <table>
@@ -116,6 +116,14 @@
 <td align="center"><strong>Mazda</strong><br><img src="design-md/mazda/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BRUTUS</strong><br><img src="design-md/brutus/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ACTUS</strong><br><img src="design-md/actus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KINTO</strong><br><img src="design-md/kinto/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>21_21 DS</strong><br><img src="design-md/2121designsight/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Pen Online</strong><br><img src="design-md/penonline/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -237,11 +245,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Mazda](https://www.mazda.com/ja/) | Automotive / Corporate | [DESIGN.md](design-md/mazda/DESIGN.md) | [preview.html](design-md/mazda/preview.html) |
 | [BRUTUS](https://brutus.jp/) | Magazine / Editorial | [DESIGN.md](design-md/brutus/DESIGN.md) | [preview.html](design-md/brutus/preview.html) |
 | [ACTUS](https://www.actus-interior.com/) | Furniture / Interior Retail | [DESIGN.md](design-md/actus/DESIGN.md) | [preview.html](design-md/actus/preview.html) |
+| [KINTO](https://kinto.co.jp/) | Lifestyle / Tableware | [DESIGN.md](design-md/kinto/DESIGN.md) | [preview.html](design-md/kinto/preview.html) |
+| [21_21 DESIGN SIGHT](https://www.2121designsight.jp/) | Design Museum | [DESIGN.md](design-md/2121designsight/DESIGN.md) | [preview.html](design-md/2121designsight/preview.html) |
+| [Pen Online](https://www.pen-online.jp/) | Magazine / Editorial | [DESIGN.md](design-md/penonline/DESIGN.md) | [preview.html](design-md/penonline/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (59 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (62 sites)</a>
 </p>
 
 <table>
@@ -323,6 +334,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Mazda</strong><br><img src="design-md/mazda/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BRUTUS</strong><br><img src="design-md/brutus/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ACTUS</strong><br><img src="design-md/actus/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KINTO</strong><br><img src="design-md/kinto/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>21_21 DS</strong><br><img src="design-md/2121designsight/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Pen Online</strong><br><img src="design-md/penonline/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

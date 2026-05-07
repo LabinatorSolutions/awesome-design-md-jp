@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KINTO</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400&family=Libre+Baskerville:wght@400&family=Noto+Sans+JP:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: KINTO 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-light: #e6e6e6;
+    --bg-soft: #f7f8f8;
+    --bg-soft-2: #f0f0f0;
+    --bg-warm: #cec7bb;
+    --bg-mid: #4e4e4e;
+    --bg-dark: #1a1a1a;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    --text-primary: #555555;
+    --text-strong: #000000;
+    --text-inverse: #ffffff;
+    --text-muted: #9f9f9f;
+
+    --border-default: #9f9f9f;
+    --border-light: #e6e6e6;
+
+    --accent-orange: #ff4500;
+
+    /* === Fonts ===
+       Swis721 → Helvetica fallback (bitstream commercial)
+       Instrument Sans → Google Fonts (free)
+       baskerville-urw → Libre Baskerville substitute (Google Fonts)
+       和文: ヒラギノ角ゴ Pro chain (NOT ProN)
+    */
+    --font-body: "Instrument Sans", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", メイリオ, Meiryo, sans-serif;
+    --font-sans: "Helvetica Neue", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", メイリオ, Meiryo, sans-serif;
+    --font-serif: "Libre Baskerville", serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 32px;
+    --space-xl: 64px;
+    --space-xxl: 120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: var(--bg-primary);
+    height: 80px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-sans);
+    font-size: 22px; font-weight: 400;
+    color: var(--text-strong);
+    text-decoration: none;
+    letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    display: block;
+    padding: 30px 18px;
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 400;
+    line-height: 1;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.6px;
+    font-feature-settings: "palt";
+  }
+  .nav-links a:hover { color: var(--text-strong); }
+  .nav-utility { display: flex; gap: 16px; font-size: 12px; }
+  .nav-utility a { color: var(--text-primary); text-decoration: none; letter-spacing: 0.6px; font-family: var(--font-sans); }
+
+  /* HERO */
+  .hero {
+    background: var(--bg-soft);
+    padding: 120px 40px 100px;
+    text-align: center;
+  }
+  .hero .meta {
+    font-family: var(--font-sans);
+    font-size: 11px; font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 1.32px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: 36px; font-weight: 400; line-height: 1.4;
+    letter-spacing: 2px;
+    color: var(--text-strong);
+    margin-bottom: 24px;
+  }
+  .hero p.lead {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary);
+    letter-spacing: 0.6px;
+    max-width: 760px;
+    margin: 0 auto 48px;
+    font-feature-settings: "palt";
+  }
+
+  /* BUTTONS */
+  .btn-outline {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-muted);
+    border: 1px solid var(--border-default);
+    border-radius: 0;
+    padding: 10px 30px;
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    font-feature-settings: "palt";
+  }
+  .btn-outline:hover { color: var(--text-strong); border-color: var(--text-strong); }
+
+  .btn-orange {
+    display: inline-block;
+    background: var(--accent-orange);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: 0;
+    padding: 8px 22px;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0.6px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 25px 0;
+  }
+  .btn-orange:hover { background: #e63d00; }
+
+  /* SECTIONS */
+  .section { padding: 100px 40px 80px; max-width: 1440px; margin: 0 auto; }
+  .section--soft { background: var(--bg-soft); max-width: none; }
+  .section--soft-2 { background: var(--bg-soft-2); max-width: none; }
+  .section--dark { background: var(--bg-dark); color: var(--text-inverse); max-width: none; }
+  .section--inner { max-width: 1440px; margin: 0 auto; padding: 100px 40px 80px; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .section-en {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 28px; font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    color: var(--text-strong);
+  }
+  .section-ja {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 1.44px;
+    text-transform: uppercase;
+  }
+  .section--dark .section-en { color: var(--text-inverse); }
+  .section--dark .section-ja { color: var(--bg-light); }
+
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  /* COLORS */
+  .color-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+  .color-swatch { background: var(--bg-primary); }
+  .color-swatch-block { height: 110px; width: 100%; }
+  .color-swatch-info { padding: 16px 4px; }
+  .color-swatch-name {
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--text-strong);
+    letter-spacing: 0.6px;
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+  }
+  .color-swatch-role {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: 1.32px;
+    font-feature-settings: "palt";
+  }
+  .color-group-label {
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 400;
+    color: var(--text-strong);
+    margin: 32px 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: left;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+    text-align: left;
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-soft-2);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-body);
+    letter-spacing: 0.6px;
+  }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 48px 32px;
+  }
+  .product-card {
+    text-decoration: none;
+    color: var(--text-primary);
+    text-align: left;
+    position: relative;
+  }
+  .product-thumb {
+    aspect-ratio: 1 / 1;
+    background: var(--bg-light);
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .product-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .product-cat {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1.32px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .product-name {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    color: var(--text-strong);
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+    font-feature-settings: "palt";
+  }
+  .product-price {
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 400;
+    color: var(--text-strong);
+    letter-spacing: 1.3px;
+  }
+  .product-price .sale { color: var(--accent-orange); }
+
+  .badge-orange {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--accent-orange);
+    color: var(--text-inverse);
+    font-family: var(--font-body);
+    font-size: 10px;
+    line-height: 22px;
+    letter-spacing: 0.6px;
+    padding: 0 10px;
+  }
+
+  /* DARK BANNER */
+  .banner-dark {
+    background: var(--bg-dark);
+    color: var(--text-inverse);
+    padding: 120px 40px;
+    text-align: center;
+  }
+  .banner-dark h2 {
+    font-family: var(--font-serif);
+    font-size: 32px; font-weight: 400; line-height: 1.4;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    color: var(--text-inverse);
+  }
+  .banner-dark p {
+    font-family: var(--font-body);
+    font-size: 14px; line-height: 1.8;
+    letter-spacing: 0.6px;
+    max-width: 640px;
+    margin: 0 auto 48px;
+    color: var(--bg-light);
+    font-feature-settings: "palt";
+  }
+  .banner-dark .btn-outline {
+    background: transparent;
+    color: var(--text-inverse);
+    border-color: var(--text-inverse);
+  }
+  .banner-dark .btn-outline:hover { background: var(--text-inverse); color: var(--bg-dark); }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .badge-pill-orange {
+    display: inline-block;
+    background: var(--accent-orange);
+    color: var(--text-inverse);
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.6px;
+    padding: 4px 14px;
+  }
+  .badge-tile {
+    display: inline-block;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 1.44px;
+    padding: 8px 16px;
+    border: 1px solid var(--bg-light);
+  }
+  .filter-chip {
+    display: inline-block;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+  }
+  .filter-chip.active { color: var(--text-strong); border-bottom-color: var(--text-strong); }
+
+  /* FORM */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 11px; font-weight: 400;
+    color: var(--text-strong);
+    margin-bottom: 8px;
+    letter-spacing: 1.32px;
+    text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 10px 14px;
+    border-radius: 0;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 26px;
+    letter-spacing: 1.3px;
+    outline: none;
+    transition: border-color 0.15s;
+    font-feature-settings: "palt";
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-strong); }
+  .form-state-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+  }
+
+  /* COUNTRY SELECTOR */
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .country-tile {
+    background: var(--bg-light);
+    border: 1px solid var(--bg-light);
+    text-align: center;
+    padding: 12px 0;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 1.44px;
+    color: var(--text-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-feature-settings: "palt";
+  }
+  .country-tile:hover { background: var(--bg-soft-2); border-color: var(--text-strong); color: var(--text-strong); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-strong);
+    margin-bottom: 6px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 40px;
+    text-align: center;
+    background: var(--bg-mid);
+    color: var(--text-inverse);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+  }
+  .footer a { color: var(--text-inverse); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; letter-spacing: 1px; }
+    .nav-links { display: none; }
+    .section, .section--inner { padding: 80px 24px; }
+    .section-en { font-size: 22px; }
+    .banner-dark h2 { font-size: 24px; }
+    .country-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">KINTO</a>
+  <ul class="nav-links">
+    <li><a href="#">PRODUCT</a></li>
+    <li><a href="#colors">SHOP</a></li>
+    <li><a href="#typography">CONCEPT</a></li>
+    <li><a href="#products">JOURNAL</a></li>
+    <li><a href="#products">SUSTAINABILITY</a></li>
+  </ul>
+  <div class="nav-utility">
+    <a href="#">SEARCH</a>
+    <a href="#">LOGIN</a>
+    <a href="#">CART (0)</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="meta">CONCEPT</div>
+  <h1>Lifestyle for Lasting Beauty</h1>
+  <p class="lead">KINTO のデザインシステム。3 系統の欧文（Instrument Sans / Swis721 / baskerville-urw）と、ヒラギノ角ゴ Pro 先頭の伝統的なクロスプラットフォーム・フォールバックチェーンを組み合わせた、編集的なタイポグラフィが特徴。weight は全要素 400 で統一し、letter-spacing は小さい文字ほど広げる（11px に 0.12em）。本文 16px / line-height 1.8、palt 全面適用。computed style 実測値（2026-05-08 取得）に基づく。</p>
+  <a class="btn-outline" href="#products">VIEW PRODUCTS</a>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-header">
+    <span class="section-en">Palette</span>
+    <span class="section-ja">カラーパレット</span>
+  </div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff4500"></div><div class="color-swatch-info"><div class="color-swatch-name">KINTO Orange</div><div class="color-swatch-hex">#ff4500</div><div class="color-swatch-role">Wishlist・限定機能</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#555555"></div><div class="color-swatch-info"><div class="color-swatch-name">KINTO Charcoal</div><div class="color-swatch-hex">#555555</div><div class="color-swatch-role">本文・基調テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; box-shadow:inset 0 0 0 1px #e6e6e6;"></div><div class="color-swatch-info"><div class="color-swatch-name">Page White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e6e6e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Surface</div><div class="color-swatch-hex">#e6e6e6</div><div class="color-swatch-role">カントリー・カテゴリ帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Surface</div><div class="color-swatch-hex">#f7f8f8</div><div class="color-swatch-role">POPULAR PRODUCTS 帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Surface 2</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">検索ヒント帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cec7bb"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Beige</div><div class="color-swatch-hex">#cec7bb</div><div class="color-swatch-role">ライフスタイル写真帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a1a"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Surface</div><div class="color-swatch-hex">#1a1a1a</div><div class="color-swatch-role">フッターロゴ帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4e4e4e"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Mid</div><div class="color-swatch-hex">#4e4e4e</div><div class="color-swatch-role">フッター本文背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text / Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Strong</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">商品名・タイトル強調</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9f9f9f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted / Border</div><div class="color-swatch-hex">#9f9f9f</div><div class="color-swatch-role">placeholder / フォーム線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section--soft">
+<div class="section--inner" id="typography">
+  <div class="section-header">
+    <span class="section-en">Typography</span>
+    <span class="section-ja">タイポグラフィ階層</span>
+  </div>
+
+  <div style="max-width:900px; margin: 0 auto;">
+    <div class="type-sample">
+      <div style="font-family:var(--font-serif); font-size:36px; font-weight:400; line-height:1.4; letter-spacing:2px; color:var(--text-strong);">Lifestyle Hero ／ baskerville-urw</div>
+      <div class="type-meta">36px / 400 / line-height 1.4 / letter-spacing 2px / serif<span class="type-context">大見出し serif（特集ヒーロー）</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-sans); font-size:25px; font-weight:400; line-height:1.0; letter-spacing:2px; color:var(--text-strong); font-feature-settings:'palt';">Home — Lifestyle Category</div>
+      <div class="type-meta">25px / 400 / line-height 1.0 / letter-spacing 2px (0.08em)<span class="type-context">大カテゴリ h2 (Swis721/serif)</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-body); font-size:16px; font-weight:400; line-height:1.8; letter-spacing:0.6px; color:var(--text-primary); font-feature-settings:'palt';">本文テキスト ／ KINTO のサイトでは、欧文を Instrument Sans（本文）/ Swis721（汎用）/ baskerville-urw（大見出し）の3系統で使い分け、編集的なタイポグラフィを組みます。和文フォールバックは "ヒラギノ角ゴ Pro" 先頭の伝統的なクロスプラットフォーム・チェーン。本文 16px / line-height 1.8 / letter-spacing 0.6px (0.0375em)、palt を全面適用して約物の自然なスペースを確保します。</div>
+      <div class="type-meta">16px / 400 / line-height 1.80 / letter-spacing 0.6px (0.0375em) / palt<span class="type-context">本文 body</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-sans); font-size:13px; font-weight:400; line-height:2.0; letter-spacing:1.3px; color:var(--text-primary); font-feature-settings:'palt';">フォーム入力 ／ Swis721 フォントでフォームを組み、letter-spacing 1.3px (0.10em) で字間を広げます。</div>
+      <div class="type-meta">13px / 400 / line-height 2.0 / letter-spacing 1.3px (0.10em)<span class="type-context">入力欄 input</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-sans); font-size:12px; font-weight:400; line-height:1.3; letter-spacing:0.6px; color:var(--text-primary); font-feature-settings:'palt';">ナビゲーション ／ PRODUCT / SHOP / CONCEPT / JOURNAL</div>
+      <div class="type-meta">12px / 400 / line-height 1.30 / letter-spacing 0.6px (0.05em)<span class="type-context">グローバルナビ h2 small</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-sans); font-size:11px; font-weight:400; line-height:1.0; letter-spacing:1.32px; color:var(--text-primary); text-transform:uppercase; font-feature-settings:'palt';">CAPTION ／ View more / 11px キャプション</div>
+      <div class="type-meta">11px / 400 / line-height 1.0 / letter-spacing 1.32px (0.12em) — smaller = wider<span class="type-context">小ラベル・キャプション</span></div>
+    </div>
+    <div class="type-sample">
+      <div>
+        <a class="btn-outline" href="#" style="margin-right:12px;">送信</a>
+        <a class="btn-orange" href="#">My Wishlist</a>
+      </div>
+      <div class="type-meta">CTA: 細罫線白地 #9f9f9f / KINTO オレンジ #ff4500（限定機能のみ）<span class="type-context">ボタン</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PRODUCT GRID -->
+<section class="section" id="products">
+  <div class="section-header">
+    <span class="section-en">Popular Products</span>
+    <span class="section-ja">プロダクト</span>
+  </div>
+
+  <div class="badge-row" style="margin-bottom:48px; justify-content:center;">
+    <span class="filter-chip active">ALL</span>
+    <span class="filter-chip">DRINKWARE</span>
+    <span class="filter-chip">TABLEWARE</span>
+    <span class="filter-chip">TEAPOT</span>
+    <span class="filter-chip">VASE</span>
+    <span class="filter-chip">INTERIOR</span>
+  </div>
+
+  <div class="product-grid">
+    <a href="#" class="product-card">
+      <div class="product-thumb"><div class="product-thumb-overlay">DRINKWARE / 01</div></div>
+      <div class="product-cat">DRINKWARE</div>
+      <div class="product-name">CAST ダブルウォール グラス 240ml</div>
+      <div class="product-price">¥2,200</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="badge-orange">NEW</div>
+      <div class="product-thumb" style="background:#f7f8f8"><div class="product-thumb-overlay">TEAPOT / 02</div></div>
+      <div class="product-cat">TEAPOT</div>
+      <div class="product-name">UNITEA ティーポット 460ml</div>
+      <div class="product-price">¥3,300</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-thumb" style="background:#cec7bb"><div class="product-thumb-overlay">TABLEWARE / 03</div></div>
+      <div class="product-cat">TABLEWARE</div>
+      <div class="product-name">CERAMIC LAB プレート 23cm / グレー</div>
+      <div class="product-price">¥2,640</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-thumb" style="background:#f0f0f0"><div class="product-thumb-overlay">VASE / 04</div></div>
+      <div class="product-cat">VASE</div>
+      <div class="product-name">SACCO ベース 2 / クリアブルー</div>
+      <div class="product-price"><span class="sale">¥3,520</span> <span style="text-decoration:line-through; color:var(--text-muted); font-size:11px;">¥4,400</span></div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-top:64px;">
+    <a class="btn-outline" href="#">VIEW ALL PRODUCTS</a>
+  </div>
+</section>
+
+<!-- DARK BANNER -->
+<div class="banner-dark">
+  <h2>Lifestyle for Lasting Beauty</h2>
+  <p>KINTO は 1972 年、滋賀の信楽から始まったテーブルウェアブランドです。暗色面 #1a1a1a の上では、見出しを baskerville-urw の serif で組み、本文を Instrument Sans で組みます。CTA は白枠の outline ボタンで反転表示します。</p>
+  <a class="btn-outline" href="#">VIEW CONCEPT</a>
+</div>
+
+<hr class="section-divider">
+
+<!-- BADGES -->
+<section class="section" id="badges">
+  <div class="section-header">
+    <span class="section-en">Badges</span>
+    <span class="section-ja">バッジ・ラベル</span>
+  </div>
+
+  <div class="badge-row" style="justify-content:center;">
+    <span class="badge-pill-orange">SALE</span>
+    <span class="badge-pill-orange">LIMITED</span>
+    <span class="badge-tile">NEW</span>
+    <span class="badge-tile">RESTOCK</span>
+    <span class="badge-tile">EXCLUSIVE</span>
+  </div>
+  <div style="text-align:center; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:var(--text-muted); letter-spacing:0.5px;">
+    KINTO オレンジ #ff4500 はキャンペーン時のみ／NEW タイルは Light Surface
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COUNTRY SELECTOR -->
+<section class="section" id="country">
+  <div class="section-header">
+    <span class="section-en">Country</span>
+    <span class="section-ja">カントリーセレクタ（フッター）</span>
+  </div>
+  <div class="country-grid">
+    <a class="country-tile" href="#">USA</a>
+    <a class="country-tile" href="#">Canada</a>
+    <a class="country-tile" href="#">Europe</a>
+    <a class="country-tile" href="#">UK</a>
+    <a class="country-tile" href="#">Asia</a>
+    <a class="country-tile" href="#">Japan</a>
+  </div>
+  <div style="text-align:center; margin-top:24px; font-family:var(--font-mono); font-size:11px; color:var(--text-muted); letter-spacing:0.5px;">
+    bg #e6e6e6 / radius 0 / letter-spacing 1.44px (0.12em) / line-height 48px
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-header">
+    <span class="section-en">Forms</span>
+    <span class="section-ja">フォーム要素</span>
+  </div>
+  <div style="max-width:480px; margin: 0 auto;">
+    <div class="form-group"><label class="form-label">サイト内検索 / SEARCH</label><input class="form-input" type="text" placeholder="商品名・カテゴリで検索"><div class="form-state-label">デフォルト — border 1px solid #9f9f9f / radius 0</div></div>
+    <div class="form-group"><label class="form-label">メールアドレス / EMAIL</label><input class="form-input form-input--focus" type="email" value="news@example.com"><div class="form-state-label">フォーカス — border-color #000</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-header">
+    <span class="section-en">Spacing</span>
+    <span class="section-ja">スペーシング</span>
+  </div>
+  <div class="spacing-row" style="justify-content:center;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS · 4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">L · 32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">XL · 64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px"></div><div class="spacing-value">XXL · 120px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://kinto.co.jp/">KINTO</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>
