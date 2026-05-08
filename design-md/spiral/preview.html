@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Spiral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --text-primary: #111111;
+    --text-black: #000000;
+    --text-muted: #999999;
+    --tag-bg: #111111;
+    --tag-text: #eeeeee;
+    --bg-primary: #ffffff;
+    --overlay: rgba(0,0,0,0.5);
+    /* === Fonts 実測値 === */
+    --font-base: Roboto, "Noto Sans JP", serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-black);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .nav-brand {
+    font-size: 19px; font-weight: 300; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.02em; line-height: 1.0;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 400; color: var(--text-muted);
+    text-decoration: none; letter-spacing: 0.04em; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-lang {
+    font-size: 12px; font-weight: 400; color: var(--text-muted);
+    letter-spacing: normal; line-height: 1.2;
+  }
+  .nav-lang span { color: var(--text-primary); }
+
+  /* HERO */
+  .hero { padding: 120px 48px 96px; text-align: center; }
+  .hero h1 {
+    font-size: 48px; font-weight: 700; line-height: 1.0;
+    letter-spacing: 0.02em; color: var(--text-primary); margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 13px; font-weight: 400; line-height: 1.69;
+    letter-spacing: 0.02em;
+    color: var(--text-muted); max-width: 520px; margin: 0 auto;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 48px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-size: 38px; font-weight: 400; line-height: 1.3;
+    letter-spacing: 0.02em; margin-bottom: 48px;
+  }
+  .section-divider { border: none; border-top: 1px solid #e0e0e0; margin: 0; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: #fff; border: 1px solid #e0e0e0; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); letter-spacing: 0.02em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: Roboto, monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .color-group-label { font-size: 10px; font-weight: 700; color: var(--text-muted); margin: 32px 0 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #e0e0e0; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: Roboto, monospace; font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 10px; letter-spacing: 0.01em; }
+  .type-context { display: inline-block; background: #f5f5f5; color: var(--text-muted); font-size: 10px; padding: 2px 8px; margin-left: 8px; letter-spacing: 0.02em; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    background: var(--tag-bg); color: var(--tag-text);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+    padding: 2px 10.5px; line-height: 1.5;
+    border-radius: 0; /* 角なし: Spiral の特徴 */
+    text-decoration: none;
+  }
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .tag-item { text-align: center; }
+  .tag-label { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 8px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .card { background: #fff; }
+  .card-image { width: 100%; aspect-ratio: 4/3; background: #f0f0f0; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder { font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; }
+  .card .tag { margin-bottom: 10px; }
+  .card h3 { font-size: 16px; font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: var(--text-muted); line-height: 1.69; letter-spacing: 0.02em; }
+  .card-date { font-size: 12px; color: var(--text-muted); margin-top: 10px; letter-spacing: 0.02em; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 48px; font-weight: 700; line-height: 1.0;
+    letter-spacing: 0.02em; margin-bottom: 20px;
+  }
+  .article-preview .article-meta {
+    font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em;
+    margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0;
+  }
+  .article-preview h2 {
+    font-size: 38px; font-weight: 400; line-height: 1.3;
+    letter-spacing: 0.02em; margin: 40px 0 16px;
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400; line-height: 1.69;
+    letter-spacing: 0.02em; margin-bottom: 20px; color: var(--text-primary);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 400px; }
+  .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.02em; }
+  .form-input {
+    width: 100%; background: transparent; color: var(--text-primary);
+    border: none; border-bottom: 1px solid #e0e0e0;
+    padding: 8px 0; font-family: var(--font-base); font-size: 16px;
+    font-feature-settings: "palt"; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input:focus, .form-input--focus { border-bottom-color: var(--text-primary); }
+  .form-state-label { font-size: 10px; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.02em; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card { background: #fff; padding: 32px; text-align: center; border: 1px solid #e0e0e0; }
+  .elevation-label { font-size: 12px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.02em; }
+  .elevation-desc { font-size: 11px; color: var(--text-muted); }
+
+  /* LAYOUT */
+  .layout-demo { margin-top: 32px; }
+  .layout-bar { height: 36px; background: #f5f5f5; border: 1px solid #e0e0e0; margin-bottom: 10px; position: relative; display: flex; align-items: center; padding: 0 16px; }
+  .layout-bar-inner { height: 100%; background: var(--text-primary); opacity: 0.06; position: absolute; left: 0; top: 0; }
+  .layout-bar-label { font-size: 12px; font-weight: 700; color: var(--text-primary); position: relative; z-index: 1; letter-spacing: 0.02em; }
+  .layout-bar-value { font-size: 11px; color: var(--text-muted); font-family: Roboto, monospace; margin-left: auto; position: relative; z-index: 1; }
+
+  /* WEIGHT SHOWCASE */
+  .weight-showcase { margin-top: 32px; }
+  .weight-item { margin-bottom: 16px; }
+  .weight-label { font-size: 10px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px; text-align: center;
+    font-size: 11px; color: var(--text-muted); letter-spacing: 0.02em;
+    border-top: 1px solid #e0e0e0;
+  }
+  .footer a { color: var(--text-primary); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero { padding: 80px 24px 64px; }
+    .hero h1 { font-size: 32px; }
+    .nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 24px; }
+    .section-title { font-size: 28px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 32px; }
+    .article-preview h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Spiral</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#tags">Tags</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-lang"><span>JP</span> / EN</div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Spiral</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、レイアウトの全値を可視化。computed style 実測値に基づく。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Core</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#111111"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#111111</div><div class="color-swatch-role">本文・見出し・タグ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">body デフォルト色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Muted & Tags</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">非アクティブ・補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Tag Text</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">黒タグ上のテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.5)"></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay</div><div class="color-swatch-hex">rgba(0,0,0,0.5)</div><div class="color-swatch-role">モーダル・オーバーレイ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography -- computed style 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:48px; font-weight:700; line-height:1.0; letter-spacing:0.02em;">Section Heading</div>
+    <div class="type-meta">48px / 700 / line-height: 1.0 / letter-spacing: 0.02em<span class="type-context">h2 トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:38px; font-weight:400; line-height:1.3; letter-spacing:0.02em;">Page Title</div>
+    <div class="type-meta">38px / 400 / line-height: 1.3 / letter-spacing: 0.02em<span class="type-context">h2 トピックス</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:35px; font-weight:700; line-height:1.5; letter-spacing:0.01em;">Dropdown Menu Title</div>
+    <div class="type-meta">35px / 700 / line-height: 1.5 / letter-spacing: 0.01em<span class="type-context">ドロップダウン</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:19px; font-weight:300; line-height:1.0; letter-spacing:0.02em;">Spiral Market / CAFE AALTO</div>
+    <div class="type-meta">19px / 300 / line-height: 1.0 / letter-spacing: 0.02em<span class="type-context">ナビ施設名</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.2; letter-spacing:0.01em;">Nav Primary Link</div>
+    <div class="type-meta">16px / 700 / line-height: 1.2 / letter-spacing: 0.01em<span class="type-context">ナビ主要リンク</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5; letter-spacing:normal;">本文テキスト -- Spiral は槇文彦が設計した複合文化施設です。1985年の開館以来、アート、デザイン、音楽、演劇など多様な文化プログラムを展開しています。建築そのものが作品であり、らせん状のスロープが地下から屋上まで空間をつなぎます。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">本文デフォルト</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:400; line-height:1.69; letter-spacing:0.02em; color:#999999;">説明テキスト -- 展覧会やイベントの詳細情報。日時、会場、料金などの補足的な情報を伝える。</div>
+    <div class="type-meta">13px / 400 / line-height: 1.69 / letter-spacing: 0.02em / color: #999999<span class="type-context">説明</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.04em; color:#999999;">Tagline -- SPIRAL IS A MULTI-PURPOSE CULTURAL COMPLEX</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5 / letter-spacing: 0.04em<span class="type-context">キャッチコピー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:10px; font-weight:700; line-height:1.5; letter-spacing:0.05em; display:inline-block; background:#111111; color:#eeeeee; padding:2px 10.5px;">SPIRAL GARDEN</div>
+    <div class="type-meta">10px / 700 / line-height: 1.5 / letter-spacing: 0.05em / tag style<span class="type-context">ロケーションタグ</span></div>
+  </div>
+
+  <!-- Weight Showcase -->
+  <div class="weight-showcase" style="margin-top:48px; padding-top:32px; border-top:1px solid #e0e0e0;">
+    <div class="section-label">Weight Variety</div>
+    <div style="margin-top:16px;">
+      <div class="weight-item">
+        <div class="weight-label">300 Light</div>
+        <div style="font-size:24px; font-weight:300; line-height:1.2; letter-spacing:0.02em;">Spiral Market -- 生活を美しくする</div>
+      </div>
+      <div class="weight-item">
+        <div class="weight-label">400 Regular</div>
+        <div style="font-size:24px; font-weight:400; line-height:1.2; letter-spacing:0.02em;">Spiral Market -- 生活を美しくする</div>
+      </div>
+      <div class="weight-item">
+        <div class="weight-label">500 Medium</div>
+        <div style="font-size:24px; font-weight:500; line-height:1.2; letter-spacing:0.02em;">Spiral Market -- 生活を美しくする</div>
+      </div>
+      <div class="weight-item">
+        <div class="weight-label">700 Bold</div>
+        <div style="font-size:24px; font-weight:700; line-height:1.2; letter-spacing:0.02em;">Spiral Market -- 生活を美しくする</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section" id="article">
+  <div class="section-label">03 / Article -- 記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>建築と文化の交差点</h1>
+    <div class="article-meta">
+      <span class="tag" style="margin-right:8px;">SPIRAL GARDEN</span>
+      2026.05.08 -- 2026.06.30
+    </div>
+    <p>槇文彦による建築空間は、らせん状のスロープを中心に据え、来訪者を自然な動線で導きます。ガラスと金属、コンクリートの素材感が、光の移ろいとともに表情を変えていきます。</p>
+    <h2>空間とデザインの対話</h2>
+    <p>Spiral Garden では、現代アートからプロダクトデザインまで、領域を横断する展示を年間を通じて開催しています。ギャラリー空間は可変的で、展示の性格に応じて姿を変えます。ABCabc 123 のように欧文と和文が混在するテキストも、Roboto と Noto Sans JP の組合せで美しく表示されます。</p>
+    <p>CAFE AALTO では、アルヴァ・アアルトの家具に囲まれた空間で、フィンランドの食文化とともにアートを体験できます。建築、デザイン、食が一体となった文化体験が Spiral の特徴です。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TAGS / BUTTONS -->
+<section class="section" id="tags">
+  <div class="section-label">04 / Tags & Badges</div>
+  <h2 class="section-title">タグバリエーション</h2>
+  <div class="tag-row">
+    <div class="tag-item"><span class="tag">SPIRAL GARDEN</span><div class="tag-label">ギャラリー</div></div>
+    <div class="tag-item"><span class="tag">SPIRAL HALL</span><div class="tag-label">ホール</div></div>
+    <div class="tag-item"><span class="tag">CAFE AALTO</span><div class="tag-label">カフェ</div></div>
+    <div class="tag-item"><span class="tag">SPIRAL MARKET</span><div class="tag-label">ショップ</div></div>
+    <div class="tag-item"><span class="tag">SPIRAL ONLINE STORE</span><div class="tag-label">オンライン</div></div>
+  </div>
+  <div style="margin-top:32px;">
+    <div class="section-label" style="margin-bottom:12px;">Tag Specs</div>
+    <div class="type-meta">bg: #111111 / text: #eeeeee / 10px / weight: 700 / letter-spacing: 0.05em / padding: 2px 10.5px / border-radius: 0px</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"><span class="card-image-placeholder">Exhibition Image</span></div>
+      <span class="tag">SPIRAL GARDEN</span>
+      <h3>現代アートの新潮流展</h3>
+      <p>新進気鋭のアーティスト12名による、メディアの境界を超えた表現の可能性を探る展覧会。絵画、彫刻、映像、インスタレーション。</p>
+      <div class="card-date">2026.05.01 -- 2026.05.31</div>
+    </div>
+    <div class="card">
+      <div class="card-image"><span class="card-image-placeholder">Product Image</span></div>
+      <span class="tag">SPIRAL MARKET</span>
+      <h3>北欧デザインフェア 2026</h3>
+      <p>フィンランド、スウェーデン、デンマークのデザイナーによるプロダクトを集めた期間限定ショップ。暮らしに寄り添うデザイン。</p>
+      <div class="card-date">2026.06.01 -- 2026.06.15</div>
+    </div>
+    <div class="card">
+      <div class="card-image"><span class="card-image-placeholder">Event Image</span></div>
+      <span class="tag">SPIRAL HALL</span>
+      <h3>音と空間のインスタレーション</h3>
+      <p>サウンドアーティストと建築家のコラボレーション。Spiral Hall の音響特性を活かした没入型の体験。</p>
+      <div class="card-date">2026.07.10 -- 2026.07.20</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">Search</label>
+    <input class="form-input" type="text" placeholder="キーワードを入力">
+    <div class="form-state-label">デフォルト -- border: none, border-bottom: 1px solid #e0e0e0</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Search (Focus)</label>
+    <input class="form-input form-input--focus" type="text" value="spiral garden">
+    <div class="form-state-label">フォーカス -- border-bottom-color: #111111</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし。ほぼすべての要素に適用。余白で構造を表現</div></div>
+    <div class="elevation-card" style="border:none; box-shadow:0 0 0 1px #e0e0e0;"><div class="elevation-label">Border Only</div><div class="elevation-desc">1px solid #e0e0e0 のみ。カード区切り等</div></div>
+    <div class="elevation-card" style="border:none; background:rgba(0,0,0,0.5); color:#fff;"><div class="elevation-label" style="color:#fff;">Overlay</div><div class="elevation-desc" style="color:rgba(255,255,255,0.7);">rgba(0,0,0,0.5) モーダル背景</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト</h2>
+
+  <div class="layout-demo">
+    <div class="layout-bar"><div class="layout-bar-inner" style="width:100%"></div><span class="layout-bar-label">Full Width</span><span class="layout-bar-value">100%</span></div>
+    <div class="layout-bar"><div class="layout-bar-inner" style="width:70%"></div><span class="layout-bar-label">Content Area</span><span class="layout-bar-value">~960px</span></div>
+    <div class="layout-bar"><div class="layout-bar-inner" style="width:45%"></div><span class="layout-bar-label">Article Text</span><span class="layout-bar-value">~640px</span></div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="section-label" style="margin-bottom:12px;">Grid: Event Cards</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:8px;">
+      <div style="height:48px; background:#f5f5f5; border:1px solid #e0e0e0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999;">1/3</div>
+      <div style="height:48px; background:#f5f5f5; border:1px solid #e0e0e0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999;">1/3</div>
+      <div style="height:48px; background:#f5f5f5; border:1px solid #e0e0e0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999;">1/3</div>
+    </div>
+    <div class="type-meta">3-column grid / gap: 16-32px / イベント・展示一覧</div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.spiral.co.jp/">spiral.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-05-08）
+</footer>
+
+</body>
+</html>

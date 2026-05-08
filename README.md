@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (104 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (107 sites)</a>
 </p>
 
 <table>
@@ -177,9 +177,9 @@
 <tr>
 <td align="center"><strong>1616/arita</strong><br><img src="design-md/1616arita/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>THREE</strong><br><img src="design-md/three/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Blue Bottle</strong><br><img src="design-md/bluebottlecoffee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HASAMI</strong><br><img src="design-md/hasami-porcelain/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Spiral</strong><br><img src="design-md/spiral/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -346,11 +346,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Soup Stock Tokyo (スープストックトーキョー)](https://www.soup-stock-tokyo.com/) | Food / Restaurant | [DESIGN.md](design-md/soupstocktokyo/DESIGN.md) | [preview.html](design-md/soupstocktokyo/preview.html) |
 | [1616 / arita japan](https://www.1616arita.jp/) | Porcelain / Product Design | [DESIGN.md](design-md/1616arita/DESIGN.md) | [preview.html](design-md/1616arita/preview.html) |
 | [THREE (スリー)](https://www.threecosmetics.com/) | Cosmetics / Beauty | [DESIGN.md](design-md/three/DESIGN.md) | [preview.html](design-md/three/preview.html) |
+| [Blue Bottle Coffee Japan (ブルーボトルコーヒー)](https://store.bluebottlecoffee.jp/) | Cafe / EC | [DESIGN.md](design-md/bluebottlecoffee/DESIGN.md) | [preview.html](design-md/bluebottlecoffee/preview.html) |
+| [HASAMI PORCELAIN (ハサミポーセリン)](https://www.hasami-porcelain.com/) | Porcelain / Product Design | [DESIGN.md](design-md/hasami-porcelain/DESIGN.md) | [preview.html](design-md/hasami-porcelain/preview.html) |
+| [Spiral (スパイラル)](https://www.spiral.co.jp/) | Art / Cultural Complex | [DESIGN.md](design-md/spiral/DESIGN.md) | [preview.html](design-md/spiral/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (104 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (107 sites)</a>
 </p>
 
 <table>
@@ -493,9 +496,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>1616/arita</strong><br><img src="design-md/1616arita/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>THREE</strong><br><img src="design-md/three/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Blue Bottle</strong><br><img src="design-md/bluebottlecoffee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HASAMI</strong><br><img src="design-md/hasami-porcelain/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Spiral</strong><br><img src="design-md/spiral/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
