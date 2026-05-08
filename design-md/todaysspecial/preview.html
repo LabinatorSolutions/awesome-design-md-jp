@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: TODAY'S SPECIAL（トゥデイズスペシャル）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Noto+Sans+JP:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === TODAY'S SPECIAL Color Tokens === */
+    --ink-black: #000000;
+    --charcoal: #222222;
+    --dot-active: #707070;
+    --dot-inactive: #aaaaaa;
+    --surface-white: #ffffff;
+    --surface-light: #f7f7f7;
+    --border-color: #000000;
+
+    /* === Fonts ===
+       実サイトは Lato（英文見出し）+ Noto Sans JP（和文）。
+       preview では Google Fonts の Lato / Noto Sans JP で再現。 */
+    --font-heading: Lato, serif;
+    --font-body: "Noto Sans JP", "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック体, YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px;
+    background: var(--surface-white);
+    border-bottom: 1px solid var(--surface-light);
+  }
+  .nav-brand {
+    font-family: var(--font-body); font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    color: var(--charcoal); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-cta {
+    display: inline-block; background: var(--ink-black); color: var(--surface-white);
+    padding: 10px 24px; border-radius: 0; border: 1px solid var(--ink-black);
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--surface-white);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero-section-label {
+    font-family: var(--font-heading); font-size: 32px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin-bottom: 8px; letter-spacing: 0.05em;
+  }
+  .hero-subtitle {
+    font-family: var(--font-body); font-size: 20px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin-bottom: 24px;
+  }
+  .hero-lead {
+    font-size: 14px; font-weight: 400; line-height: 1.57;
+    color: var(--charcoal); max-width: 640px; margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--ink-black); color: var(--surface-white);
+    padding: 12px 32px; border: 1px solid var(--ink-black); border-radius: 0;
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-secondary {
+    display: inline-block; background: var(--surface-white); color: var(--charcoal);
+    padding: 12px 32px; border: 1px solid var(--ink-black); border-radius: 0;
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-primary-jp {
+    display: inline-block; background: var(--ink-black); color: var(--surface-white);
+    padding: 12px 32px; border: 1px solid var(--ink-black); border-radius: 0;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* DOT PAGINATION */
+  .dot-row { display: flex; gap: 12px; align-items: center; margin-top: 24px; }
+  .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1px solid var(--dot-active); background: var(--surface-white);
+  }
+  .dot.active { background: var(--dot-active); }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400;
+    color: var(--dot-active); margin-bottom: 12px; letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-family: var(--font-heading); font-size: 32px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin-bottom: 8px; letter-spacing: 0.05em;
+  }
+  .section-subtitle {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--surface-light); margin: 0; }
+
+  .section-alt { background: var(--surface-light); padding: 80px 32px; }
+  .section-alt-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid var(--surface-light); overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-heading); font-size: 14px; font-weight: 400; margin-bottom: 4px; color: var(--charcoal); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 12px; color: var(--dot-active); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 12px; color: var(--dot-active); margin-top: 4px; }
+  .color-group-label { font-family: var(--font-heading); font-size: 14px; font-weight: 400; color: var(--charcoal); margin: 24px 0 12px; letter-spacing: 0.05em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--surface-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--dot-active); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--dot-active); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--dot-active); margin-top: 12px; letter-spacing: 0.05em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { height: 280px; background-size: cover; background-position: center; }
+  .card-image.food { background: linear-gradient(135deg, #e8e4de, #c8c4be); }
+  .card-image.craft { background: linear-gradient(135deg, #d4d0ca, #a8a4a0); }
+  .card-image.kitchen { background: linear-gradient(135deg, #f0ece6, #d8d4ce); }
+  .card-image.gift { background: linear-gradient(135deg, #e0dcd6, #b8b4ae); }
+  .card-body { padding: 16px 0; }
+  .card-eyebrow { font-family: var(--font-heading); font-size: 12px; font-weight: 400; color: var(--dot-active); margin-bottom: 6px; letter-spacing: 0.05em; }
+  .card h3 { font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--charcoal); margin-bottom: 8px; }
+  .card p { font-size: 12px; font-weight: 400; line-height: 1.83; color: var(--dot-active); }
+  .card-meta { font-family: var(--font-heading); font-size: 14px; font-weight: 400; color: var(--charcoal); margin-top: 12px; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview .article-section-heading {
+    font-family: var(--font-heading); font-size: 32px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin-bottom: 8px; letter-spacing: 0.05em;
+  }
+  .article-preview .article-section-sub {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin-bottom: 32px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-body); font-size: 20px; font-weight: 400; line-height: 1.5;
+    color: var(--charcoal); margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.57;
+    margin-bottom: 20px; color: var(--charcoal);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--charcoal); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--charcoal);
+    border: 1px solid var(--ink-black); padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+    letter-spacing: 0.05em; font-feature-settings: "palt";
+  }
+  .form-input:focus { border-color: var(--charcoal); box-shadow: 0 0 0 1px var(--charcoal); }
+  .form-input.error { border-color: #c00; }
+  .form-error { font-size: 12px; color: #c00; margin-top: 4px; }
+
+  .form-row-check { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .form-checkbox {
+    appearance: none; -webkit-appearance: none;
+    width: 16px; height: 16px; border: 1px solid var(--ink-black); border-radius: 0;
+    background: var(--surface-white); cursor: pointer; flex-shrink: 0;
+  }
+  .form-checkbox:checked { background: var(--ink-black); }
+  .form-radio {
+    appearance: none; -webkit-appearance: none;
+    width: 16px; height: 16px; border: 1px solid var(--ink-black); border-radius: 50%;
+    background: transparent; cursor: pointer; flex-shrink: 0;
+  }
+  .form-radio:checked { background: var(--ink-black); border-color: var(--ink-black); }
+  .form-check-label { font-size: 14px; color: var(--charcoal); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-item { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-heading); font-size: 14px; color: var(--charcoal); margin-bottom: 8px; }
+  .elevation-desc { font-size: 12px; color: var(--dot-active); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--ink-black); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--dot-active); margin-top: 8px; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { border: 1px solid var(--surface-light); padding: 24px; margin-top: 32px; }
+  .layout-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .layout-cell { background: var(--surface-light); height: 80px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--dot-active); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px; background: var(--surface-light);
+    font-size: 14px; line-height: 1.5;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px; }
+  .footer-col h4 { font-family: var(--font-heading); font-size: 14px; font-weight: 400; margin-bottom: 12px; letter-spacing: 0.05em; color: var(--charcoal); }
+  .footer-col a { display: block; color: var(--charcoal); text-decoration: none; opacity: 0.7; margin-bottom: 6px; font-size: 14px; font-weight: 100; }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 32px; padding-top: 24px;
+    border-top: 1px solid var(--dot-inactive);
+    font-size: 12px; color: var(--dot-active); font-weight: 100;
+  }
+
+  @media (max-width: 769px) {
+    .hero-section-label { font-size: 24px; }
+    .section-title { font-size: 24px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-alt { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">TODAY'S SPECIAL</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Products</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ONLINE STORE</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-section-label">TODAY'S SPECIAL</div>
+    <div class="hero-subtitle">"今日を特別にする"食と暮らしのDIY"</div>
+    <p class="hero-lead">TODAY'S SPECIAL（todaysspecial.jp）から抽出したデザイントークンのカタログ。Lato（英文見出し）と Noto Sans JP（和文）のデュアルフォント、font-feature-settings: "palt" のグローバル適用、letter-spacing 0.05em の均一な間合い、border-radius 0 の完全矩形 CTA、#222222 / #000000 / #f7f7f7 のモノクロームパレット。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">VIEW MORE</a>
+      <a class="btn-secondary" href="#">ONLINE STORE</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <h2 class="section-title">COLOR PALETTE</h2>
+  <div class="section-subtitle">カラーパレット</div>
+
+  <div class="color-group-label">BRAND</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">Primary CTA・ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">テキストの基本色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#707070"></div><div class="color-swatch-info"><div class="color-swatch-name">Dot Active</div><div class="color-swatch-hex">#707070</div><div class="color-swatch-role">ドットナビ（アクティブ）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#aaaaaa"></div><div class="color-swatch-info"><div class="color-swatch-name">Dot Inactive</div><div class="color-swatch-hex">#aaaaaa</div><div class="color-swatch-role">ドットナビ（非アクティブ）</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">フッター・交互セクション</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY</div>
+  <h2 class="section-title">TYPOGRAPHY</h2>
+  <div class="section-subtitle">タイポグラフィ階層 — 実測値</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:32px; font-weight:400; line-height:1.5; color:var(--charcoal);">SEASONAL NEWS</div>
+    <div class="type-meta">Lato / 32px / 400 / line-height: 1.5 (48px) / letter-spacing: 0.05em<span class="type-context">h2 section</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:20px; font-weight:400; line-height:1.5; color:var(--charcoal);">"今日を特別にする"食と暮らしのDIY"</div>
+    <div class="type-meta">Noto Sans JP / 20px / 400 / line-height: 1.5 (30px) / letter-spacing: 0.05em<span class="type-context">h3 concept</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:18px; font-weight:400; line-height:1.5; color:var(--charcoal);">ONLINE STORE</div>
+    <div class="type-meta">Noto Sans JP / 18px / 400 / line-height: 1.5 (27px) / letter-spacing: 0.05em<span class="type-context">nav link</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:16px; font-weight:400; line-height:1.5; color:var(--charcoal);">TODAY'S SPECIAL — Logo Text</div>
+    <div class="type-meta">Noto Sans JP / 16px / 400 / line-height: 1.5 (24px) / letter-spacing: 0.05em<span class="type-context">h1 logo</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:400; line-height:1.57; color:var(--charcoal);">今日をどう楽しむ？ ジャムを煮たり、棚をペイントしたり、花を活けたり。暮らしの中の「つくること」を、もっと自由に、もっと楽しく。TODAY'S SPECIAL は食卓から部屋づくりまで、日々の「手ざわり」を大切にするライフスタイルストアです。</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.57 (22px) / letter-spacing: 0.05em<span class="type-context">body / p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:400; line-height:1.43; color:var(--charcoal);">CONCEPT 今日をどう楽しむ？</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.43 (20px) / letter-spacing: 0.05em<span class="type-context">span label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:12px; font-weight:400; line-height:1.83; color:var(--dot-active);">複数選択可</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 1.83 (22px) / letter-spacing: 0.05em<span class="type-context">small / caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:100; line-height:1.5; color:var(--charcoal);">Privacy policy — Footer Thin Link (weight 100)</div>
+    <div class="type-meta">Noto Sans JP / 14px / <strong>100</strong> / line-height: 1.5 (21px)<span class="type-context">footer link</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-alt" id="article">
+<div class="section-alt-inner">
+  <div class="section-label">03 / ARTICLE</div>
+  <h2 class="section-title">CONCEPT</h2>
+  <div class="section-subtitle">今日をどう楽しむ？</div>
+  <div class="article-preview">
+    <div class="article-section-heading">SEASONAL NEWS</div>
+    <div class="article-section-sub">シーズナルニュース</div>
+    <h2>暮らしの「手ざわり」を大切に</h2>
+    <p>朝、焙煎したてのコーヒーを淹れる。週末に台所の棚を好きな色にペイントする。季節の花を一輪、食卓に飾る。TODAY'S SPECIAL が提案するのは、そんな日常の中にある小さな「つくること」の喜びです。</p>
+    <h2>食と暮らしの DIY</h2>
+    <p>手を動かすことで、ものとの距離が近くなる。自分で選んだ道具で自分の空間を整えていく。それは特別な技術を必要としない、日々の暮らしの中の DIY。食材を切り、器を選び、テーブルを拭く。その一つひとつが、今日を特別にしていきます。</p>
+    <p>自由が丘の路地を入ったところにある店舗では、食品から日用品、園芸用品まで、暮らしを構成する道具たちが静かに並んでいます。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <h2 class="section-title">BUTTONS</h2>
+  <div class="section-subtitle">ボタンバリエーション</div>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary" href="#">VIEW MORE</a><div class="button-label">Primary / Ink Black / radius 0</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">VIEW MORE</a><div class="button-label">Secondary / White / radius 0</div></div>
+    <div class="button-item"><a class="btn-primary-jp" href="#">検索</a><div class="button-label">Primary JP / Noto Sans JP</div></div>
+    <div class="button-item"><a class="btn-primary-jp" href="#">Contact</a><div class="button-label">Contact / radius 0</div></div>
+  </div>
+
+  <div class="color-group-label">DOT PAGINATION</div>
+  <div class="dot-row">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <div style="margin-top:8px;"><span class="type-meta">16px / border 1px solid #707070 / active: bg #707070 / radius 50%</span></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / PRODUCTS</div>
+  <h2 class="section-title">SEASONAL PICKS</h2>
+  <div class="section-subtitle">季節のおすすめ</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image food"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">FOOD</div>
+        <h3>自家製グラノーラキット</h3>
+        <p>オーツ麦とナッツを好みでミックス。朝の一皿を自分で作る。</p>
+        <div class="card-meta">&yen;2,640</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image craft"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">CRAFT</div>
+        <h3>真鍮カトラリーセット</h3>
+        <p>使い込むほどに表情が変わる真鍮の食卓道具。</p>
+        <div class="card-meta">&yen;5,500</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image kitchen"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">KITCHEN</div>
+        <h3>手吹きガラスのピッチャー</h3>
+        <p>一つひとつ異なる揺らぎが涼やかな食卓を演出。</p>
+        <div class="card-meta">&yen;4,180</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image gift"></div>
+      <div class="card-body">
+        <div class="card-eyebrow">GIFT</div>
+        <h3>TODAY'S SPECIAL ギフトボックス</h3>
+        <p>食品と日用品を自由に詰め合わせる贈り物。</p>
+        <div class="card-meta">&yen;3,300</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-alt" id="forms">
+<div class="section-alt-inner">
+  <div class="section-label">06 / FORMS</div>
+  <h2 class="section-title">FORMS</h2>
+  <div class="section-subtitle">フォーム要素</div>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:32px; max-width:100%;">
+    <!-- Default -->
+    <div>
+      <div class="color-group-label" style="margin-top:0;">DEFAULT</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+    </div>
+    <!-- Focus -->
+    <div>
+      <div class="color-group-label" style="margin-top:0;">FOCUS</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" value="山田 太郎" style="border-color:var(--charcoal); box-shadow: 0 0 0 1px var(--charcoal);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" value="yamada@example.com" style="border-color:var(--charcoal); box-shadow: 0 0 0 1px var(--charcoal);">
+      </div>
+    </div>
+    <!-- Error -->
+    <div>
+      <div class="color-group-label" style="margin-top:0;">ERROR</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input error" type="text" value="">
+        <div class="form-error">お名前を入力してください</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input error" type="email" value="invalid-email">
+        <div class="form-error">正しいメールアドレスを入力してください</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">CHECKBOX / RADIO</div>
+  <div class="form-row-check">
+    <input class="form-checkbox" type="checkbox" checked>
+    <span class="form-check-label">利用規約に同意する</span>
+  </div>
+  <div class="form-row-check">
+    <input class="form-checkbox" type="checkbox">
+    <span class="form-check-label">メールマガジンを受け取る</span>
+  </div>
+  <div style="margin-top:16px;">
+    <div class="form-row-check">
+      <input class="form-radio" type="radio" name="delivery" checked>
+      <span class="form-check-label">宅配便</span>
+    </div>
+    <div class="form-row-check">
+      <input class="form-radio" type="radio" name="delivery">
+      <span class="form-check-label">店舗受取</span>
+    </div>
+  </div>
+  <div style="margin-top:8px; font-size:12px; color:var(--dot-active); line-height:1.83;">複数選択可</div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / ELEVATION</div>
+  <h2 class="section-title">DEPTH & ELEVATION</h2>
+  <div class="section-subtitle">奥行きと立体感</div>
+  <div class="elevation-grid">
+    <div class="elevation-item" style="background:var(--surface-white);">
+      <div class="elevation-label">Level 0</div>
+      <div class="elevation-desc">none — 標準</div>
+    </div>
+    <div class="elevation-item" style="background:var(--surface-white); border:1px solid var(--ink-black);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">border 1px solid #000 — CTA・入力</div>
+    </div>
+    <div class="elevation-item" style="background:var(--surface-white); border:1px solid var(--dot-active);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">border 1px solid #707070 — ドットナビ</div>
+    </div>
+    <div class="elevation-item" style="background:var(--surface-light);">
+      <div class="elevation-label">Surface</div>
+      <div class="elevation-desc">#f7f7f7 — 面の切り替え</div>
+    </div>
+  </div>
+  <p style="margin-top:24px; font-size:14px; color:var(--dot-active); line-height:1.57;">TODAY'S SPECIAL はシャドウを一切使わない。白と #f7f7f7 の面の切り替え、#000000 ボーダーだけで空間を構成する。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section-alt" id="layout">
+<div class="section-alt-inner">
+  <div class="section-label">08 / LAYOUT</div>
+  <h2 class="section-title">LAYOUT</h2>
+  <div class="section-subtitle">レイアウト・スペーシング</div>
+
+  <div class="color-group-label">SPACING SCALE</div>
+  <div class="spacing-row" style="margin-bottom:32px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px; height:32px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px; height:32px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; height:32px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label">GRID — 4 Column</div>
+  <div class="layout-demo">
+    <div class="layout-grid">
+      <div class="layout-cell">1</div>
+      <div class="layout-cell">2</div>
+      <div class="layout-cell">3</div>
+      <div class="layout-cell">4</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>SHOP</h4>
+      <a href="#">自由が丘店</a>
+      <a href="#">渋谷店</a>
+      <a href="#">オンラインストア</a>
+    </div>
+    <div class="footer-col">
+      <h4>FOOD</h4>
+      <a href="#">調味料</a>
+      <a href="#">コーヒー・お茶</a>
+      <a href="#">お菓子</a>
+      <a href="#">キッチン道具</a>
+    </div>
+    <div class="footer-col">
+      <h4>LIVING</h4>
+      <a href="#">インテリア</a>
+      <a href="#">ガーデン</a>
+      <a href="#">ステーショナリー</a>
+    </div>
+    <div class="footer-col">
+      <h4>ABOUT</h4>
+      <a href="#">TODAY'S SPECIAL について</a>
+      <a href="#">お問い合わせ</a>
+      <a href="#">Privacy policy</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from todaysspecial.jp DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    ※ Lato / Noto Sans JP（Google Fonts）で再現。font-feature-settings: "palt" グローバル適用。フォールバックは Yu Gothic Medium / Hiragino
+  </div>
+</footer>
+
+</body>
+</html>

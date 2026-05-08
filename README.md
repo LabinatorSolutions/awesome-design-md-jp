@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (107 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (110 sites)</a>
 </p>
 
 <table>
@@ -180,6 +180,14 @@
 <td align="center"><strong>Blue Bottle</strong><br><img src="design-md/bluebottlecoffee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HASAMI</strong><br><img src="design-md/hasami-porcelain/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Spiral</strong><br><img src="design-md/spiral/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MARKS&WEB</strong><br><img src="design-md/marksandweb/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>TODAY'S SPECIAL</strong><br><img src="design-md/todaysspecial/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>cado</strong><br><img src="design-md/cado/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -349,11 +357,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Blue Bottle Coffee Japan (ブルーボトルコーヒー)](https://store.bluebottlecoffee.jp/) | Cafe / EC | [DESIGN.md](design-md/bluebottlecoffee/DESIGN.md) | [preview.html](design-md/bluebottlecoffee/preview.html) |
 | [HASAMI PORCELAIN (ハサミポーセリン)](https://www.hasami-porcelain.com/) | Porcelain / Product Design | [DESIGN.md](design-md/hasami-porcelain/DESIGN.md) | [preview.html](design-md/hasami-porcelain/preview.html) |
 | [Spiral (スパイラル)](https://www.spiral.co.jp/) | Art / Cultural Complex | [DESIGN.md](design-md/spiral/DESIGN.md) | [preview.html](design-md/spiral/preview.html) |
+| [MARKS&WEB (マークスアンドウェブ)](https://www.marksandweb.com/) | Natural Cosmetics / EC | [DESIGN.md](design-md/marksandweb/DESIGN.md) | [preview.html](design-md/marksandweb/preview.html) |
+| [TODAY'S SPECIAL (トゥデイズスペシャル)](https://www.todaysspecial.jp/) | Lifestyle Store / EC | [DESIGN.md](design-md/todaysspecial/DESIGN.md) | [preview.html](design-md/todaysspecial/preview.html) |
+| [cado (カドー)](https://cado.com/) | Home Appliance / Product Design | [DESIGN.md](design-md/cado/DESIGN.md) | [preview.html](design-md/cado/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (107 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (110 sites)</a>
 </p>
 
 <table>
@@ -499,6 +510,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Blue Bottle</strong><br><img src="design-md/bluebottlecoffee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HASAMI</strong><br><img src="design-md/hasami-porcelain/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Spiral</strong><br><img src="design-md/spiral/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MARKS&WEB</strong><br><img src="design-md/marksandweb/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>TODAY'S SPECIAL</strong><br><img src="design-md/todaysspecial/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>cado</strong><br><img src="design-md/cado/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
