@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (101 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (104 sites)</a>
 </p>
 
 <table>
@@ -172,6 +172,14 @@
 <td align="center"><strong>TRAVELER'S</strong><br><img src="design-md/travelers-company/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Dandelion</strong><br><img src="design-md/dandelionchocolate/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HIGASHIYA</strong><br><img src="design-md/higashiya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Soup Stock</strong><br><img src="design-md/soupstocktokyo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>1616/arita</strong><br><img src="design-md/1616arita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>THREE</strong><br><img src="design-md/three/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -335,11 +343,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [TRAVELER'S COMPANY (トラベラーズカンパニー)](https://www.travelers-company.com/) | Stationery / Lifestyle | [DESIGN.md](design-md/travelers-company/DESIGN.md) | [preview.html](design-md/travelers-company/preview.html) |
 | [Dandelion Chocolate (ダンデライオン・チョコレート)](https://dandelionchocolate.jp/) | Craft Chocolate / Food | [DESIGN.md](design-md/dandelionchocolate/DESIGN.md) | [preview.html](design-md/dandelionchocolate/preview.html) |
 | [HIGASHIYA (ひがしや)](https://www.higashiya.com/) | Japanese Confectionery / Food | [DESIGN.md](design-md/higashiya/DESIGN.md) | [preview.html](design-md/higashiya/preview.html) |
+| [Soup Stock Tokyo (スープストックトーキョー)](https://www.soup-stock-tokyo.com/) | Food / Restaurant | [DESIGN.md](design-md/soupstocktokyo/DESIGN.md) | [preview.html](design-md/soupstocktokyo/preview.html) |
+| [1616 / arita japan](https://www.1616arita.jp/) | Porcelain / Product Design | [DESIGN.md](design-md/1616arita/DESIGN.md) | [preview.html](design-md/1616arita/preview.html) |
+| [THREE (スリー)](https://www.threecosmetics.com/) | Cosmetics / Beauty | [DESIGN.md](design-md/three/DESIGN.md) | [preview.html](design-md/three/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (101 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (104 sites)</a>
 </p>
 
 <table>
@@ -477,6 +488,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>TRAVELER'S</strong><br><img src="design-md/travelers-company/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Dandelion</strong><br><img src="design-md/dandelionchocolate/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HIGASHIYA</strong><br><img src="design-md/higashiya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Soup Stock</strong><br><img src="design-md/soupstocktokyo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>1616/arita</strong><br><img src="design-md/1616arita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>THREE</strong><br><img src="design-md/three/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

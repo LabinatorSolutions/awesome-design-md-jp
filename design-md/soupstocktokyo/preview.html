@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Soup Stock Tokyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --text-primary: #333333;
+    --text-secondary: #999999;
+    --text-pagination: #666666;
+    --bg-primary: #ffffff;
+    --bg-surface: #f8f8f8;
+    --border-default: #cccccc;
+    --border-light: #eeeeee;
+    --border-divider: #e0e0e0;
+    --footer-bg: #333333;
+    --footer-text: #ffffff;
+
+    /* === Fonts === */
+    /* a-otf-ryumin-pr6n は Adobe Fonts（ドメインライセンス）のため
+       Google Fonts の Shippori Mincho で代替。Morisawa 系で字形が近い */
+    --font-mincho: "Shippori Mincho", "Yu Mincho", YuMincho, serif;
+    --font-date: "Times New Roman", Times, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 32px;
+    --space-xl: 64px;
+    --space-xxl: 120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-mincho);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.15em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-l); height: 60px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-divider);
+  }
+  .nav-brand {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.2em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mincho);
+    font-size: 11px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.15em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-secondary); }
+
+  /* HERO */
+  .hero {
+    padding: 80px var(--space-l) 64px;
+    text-align: center;
+    background: var(--bg-surface);
+  }
+  .hero h1 {
+    font-family: var(--font-mincho);
+    font-size: 40px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.15em;
+    font-feature-settings: "palt";
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+  .hero p {
+    font-family: var(--font-mincho);
+    font-size: 16px; font-weight: 400; line-height: 2.5;
+    letter-spacing: 0.15em;
+    color: var(--text-secondary);
+    max-width: 620px; margin: 0 auto var(--space-l);
+  }
+
+  /* SECTIONS */
+  .section { padding: var(--space-xl) var(--space-l); max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 11px; font-weight: 400; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: var(--space-s);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--font-mincho);
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.15em;
+    font-feature-settings: "palt";
+    margin-bottom: var(--space-l);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-divider); margin: 0; }
+
+  .section-gray { background: var(--bg-surface); padding: var(--space-xl) var(--space-l); }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: var(--bg-primary); border: 1px solid var(--border-light); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-sans); font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--text-primary); letter-spacing: normal; }
+  .color-swatch-hex { font-family: var(--font-date); font-size: 12px; color: var(--text-secondary); letter-spacing: normal; }
+  .color-swatch-role { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); margin-top: 3px; letter-spacing: normal; }
+  .color-group-label { font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: var(--text-secondary); margin: 24px 0 10px; letter-spacing: 0.05em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-date); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; letter-spacing: normal; }
+  .type-context { display: inline-block; background: var(--bg-surface); color: var(--text-secondary); font-family: var(--font-sans); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; letter-spacing: normal; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-mincho);
+    font-size: 40px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.15em; font-feature-settings: "palt";
+    margin-bottom: var(--space-m);
+  }
+  .article-preview h2 {
+    font-family: var(--font-mincho);
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.15em; font-feature-settings: "palt";
+    margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-family: var(--font-mincho);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-m);
+  }
+  .article-preview .lede {
+    font-family: var(--font-sans);
+    font-size: 16px; line-height: 2.5; letter-spacing: 0.15em;
+    color: var(--text-secondary);
+  }
+  .article-preview .date {
+    font-family: var(--font-date);
+    font-size: 14px; color: var(--text-primary);
+    letter-spacing: normal; margin-bottom: var(--space-m);
+  }
+  .article-preview .category {
+    font-family: var(--font-sans);
+    font-size: 12px; color: var(--text-secondary);
+    letter-spacing: 0.15em; margin-bottom: var(--space-s);
+  }
+  .article-readmore {
+    font-family: var(--font-mincho);
+    font-size: 14px; color: var(--text-primary);
+    text-decoration: none; letter-spacing: normal;
+    transition: color 0.2s;
+  }
+  .article-readmore:hover { color: var(--text-secondary); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-sans); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; letter-spacing: normal; }
+
+  .btn-outline {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 8px 16px; border-radius: 4px;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-sans); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+  .btn-outline:hover { background: var(--bg-surface); }
+
+  .btn-footer {
+    display: inline-block; background: transparent; color: var(--footer-text);
+    padding: 8px 16px; border-radius: 4px;
+    border: 1px solid var(--footer-text);
+    font-family: var(--font-sans); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+  }
+
+  .btn-readmore {
+    display: inline-block; background: none; border: none;
+    font-family: var(--font-mincho); font-size: 14px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+    transition: color 0.2s;
+  }
+  .btn-readmore:hover { color: var(--text-secondary); }
+  .btn-readmore::after { content: " \2192"; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0 0 20px 0;
+  }
+  .card-img {
+    width: 100%; aspect-ratio: 4/3;
+    background: var(--bg-surface);
+    margin-bottom: var(--space-m);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary); font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+  .card-category {
+    font-family: var(--font-sans);
+    font-size: 12px; color: var(--text-secondary);
+    letter-spacing: 0.15em; margin-bottom: var(--space-xs);
+  }
+  .card h3 {
+    font-family: var(--font-mincho);
+    font-size: 18px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-s);
+  }
+  .card p {
+    font-family: var(--font-mincho);
+    font-size: 14px; color: var(--text-secondary);
+    line-height: 1.8; letter-spacing: 0.1em;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 400; color: var(--text-primary);
+    margin-bottom: 6px; letter-spacing: 0.05em;
+  }
+  .form-input {
+    width: 100%; background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 8px 12px; border-radius: 4px;
+    font-family: var(--font-sans); font-size: 14px; outline: none;
+    letter-spacing: normal;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--text-secondary); }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); box-shadow: 0 0 0 1px var(--text-primary); }
+  .form-input--error { border-color: #c0392b; box-shadow: 0 0 0 1px #c0392b; }
+  .form-error-text { font-family: var(--font-sans); font-size: 12px; color: #c0392b; margin-top: 4px; letter-spacing: normal; }
+  .form-state-label { font-family: var(--font-sans); font-size: 11px; color: var(--text-secondary); margin-top: 4px; letter-spacing: normal; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--bg-primary); border-radius: 4px; padding: 24px;
+    text-align: center; border: 1px solid var(--border-light);
+  }
+  .elevation-label { font-family: var(--font-sans); font-size: 13px; font-weight: 400; margin-bottom: 4px; letter-spacing: normal; }
+  .elevation-desc { font-family: var(--font-date); font-size: 11px; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--text-secondary); border-radius: 2px; margin-bottom: 6px; height: 28px; opacity: 0.4; }
+  .spacing-value { font-family: var(--font-date); font-size: 11px; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 4px; margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--text-secondary); border-radius: 3px; opacity: 0.15; }
+  .width-bar-label { font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); margin-bottom: 4px; letter-spacing: normal; }
+  .width-bar-value { font-family: var(--font-date); font-size: 12px; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* FOOTER */
+  .site-footer {
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    padding: var(--space-xl) var(--space-l) var(--space-l);
+  }
+  .site-footer .footer-inner { max-width: 940px; margin: 0 auto; }
+  .site-footer .footer-brand {
+    font-family: var(--font-mincho);
+    font-size: 16px; letter-spacing: 0.2em;
+    margin-bottom: var(--space-l);
+  }
+  .site-footer .footer-links {
+    display: flex; gap: var(--space-xl); flex-wrap: wrap;
+    margin-bottom: var(--space-l);
+  }
+  .site-footer .footer-col h4 {
+    font-family: var(--font-mincho);
+    font-size: 13px; font-weight: 400; letter-spacing: 0.15em;
+    margin-bottom: var(--space-m);
+    opacity: 0.7;
+  }
+  .site-footer .footer-col ul { list-style: none; }
+  .site-footer .footer-col li { margin-bottom: var(--space-s); }
+  .site-footer .footer-col a {
+    font-family: var(--font-mincho);
+    font-size: 12px; color: var(--footer-text); text-decoration: none;
+    letter-spacing: 0.1em; opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .site-footer .footer-col a:hover { opacity: 1; }
+  .site-footer .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: var(--space-m);
+    text-align: center;
+  }
+  .site-footer .footer-bottom p {
+    font-family: var(--font-sans);
+    font-size: 11px; opacity: 0.5;
+    letter-spacing: 0.05em; line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 14px; line-height: 2.0; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 26px; }
+    .site-footer .footer-links { flex-direction: column; gap: var(--space-l); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Soup Stock Tokyo</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Soup Stock Tokyo</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。明朝体と広い字間が織りなす、温かくミニマルな世界観を可視化。computed style 実測値に基づく。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文・見出し（純黒不使用）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">補足・カテゴリ・日付</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Pagination Active</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">ページネーション・中間色</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border & Divider</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ボタン・フォーム枠線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#e0e0e0</div><div class="color-swatch-role">区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Card Border</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">カード間の微細な境界</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:40px; font-weight:400; line-height:1.5; letter-spacing:0.15em; font-feature-settings:'palt';">世の中の体温をあげる</div>
+    <div class="type-meta">Display (h1) — Ryumin / 40px / 400 / line-height: 1.5 / letter-spacing: 0.15em / palt: on<span class="type-context">hero</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:24px; font-weight:400; line-height:1.5; letter-spacing:0.15em; font-feature-settings:'palt';">今週のスープのこと</div>
+    <div class="type-meta">Heading 2 — Ryumin / 24px / 400 / line-height: 1.5 / letter-spacing: 0.15em / palt: on<span class="type-context">section</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:18px; font-weight:400; line-height:1.5; letter-spacing:0.05em;">東京ボルシチ</div>
+    <div class="type-meta">Heading 3 (Card) — Ryumin / 18px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">card</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:14px; font-weight:400; line-height:1.8; letter-spacing:0.05em;">オマール海老のビスクが新登場いたしました。</div>
+    <div class="type-meta">Heading 3 (News) — Ryumin / 14px / 400 / line-height: 1.8 / letter-spacing: 0.05em<span class="type-context">news list</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:16px; font-weight:400; line-height:1.8; letter-spacing:0.15em;">スープは、毎日の食卓に温もりを届けるためのもの。季節の食材をていねいに選び、素材の力を引き出す調理法でひとつひとつ仕上げています。一口飲むと、からだの奥からじんわりと温かくなる。そんなスープをお届けしたいと考えています。</div>
+    <div class="type-meta">Body (Ryumin) — 16px / 400 / line-height: 1.8 / letter-spacing: 0.15em<span class="type-context">article</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-sans); font-size:16px; font-weight:400; line-height:2.5; letter-spacing:0.15em; color:var(--text-secondary);">素材の力を引き出す調理法で、ひとつひとつていねいに仕上げたスープをお届けします。</div>
+    <div class="type-meta">Lede — sans-serif / 16px / 400 / line-height: 2.5 / letter-spacing: 0.15em<span class="type-context">lede</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-sans); font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.15em; color:var(--text-secondary);">SEASONAL MENU</div>
+    <div class="type-meta">Category — sans-serif / 12px / 400 / line-height: 1.5 / letter-spacing: 0.15em<span class="type-context">category label</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:10.48px; font-weight:400; line-height:1.5; letter-spacing:0.15em;">MENU&ensp;&ensp;STORY&ensp;&ensp;SHOP&ensp;&ensp;ONLINE SHOP</div>
+    <div class="type-meta">Nav Link — Ryumin / 10.48px / 400 / line-height: 1.5 / letter-spacing: 0.15em<span class="type-context">navigation</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-date); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:normal;">2024.12.15</div>
+    <div class="type-meta">Date — Times New Roman / 14px / 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">date</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:normal;">ReadMore <span style="font-family:var(--font-sans);">&rarr;</span></div>
+    <div class="type-meta">ReadMore — Ryumin / 14px / 400 / letter-spacing: normal<span class="type-context">link</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <div class="category">STORY</div>
+    <h1>スープのある一日のこと</h1>
+    <div class="date">2024.12.15</div>
+    <p class="lede">朝の光が差し込むキッチンで、ゆっくりとスープを温める。それだけで、一日の始まりが少しだけ豊かになる。</p>
+    <h2>素材のこと</h2>
+    <p>わたしたちが大切にしているのは、素材そのものの力です。旬の野菜をていねいに選び、時間をかけて煮込むことで、食材が持つ本来の甘みや香りを引き出します。化学調味料に頼らず、素材の声に耳を傾ける。それが Soup Stock Tokyo のスープづくりの原点です。</p>
+    <h2>季節とともに</h2>
+    <p>春には新たまねぎのポタージュ、夏にはガスパチョ、秋には栗のスープ、冬にはオマール海老のビスク。季節の移ろいとともにメニューが変わる。それは、自然のリズムに寄り添いたいという、わたしたちの願いでもあります。</p>
+    <a class="article-readmore" href="#">ReadMore &rarr;</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-outline" href="#">文字サイズ</a>
+      <div class="button-label">Outline (Accessibility)</div>
+    </div>
+    <div class="button-item" style="background:var(--footer-bg); padding:16px 24px; border-radius:4px;">
+      <a class="btn-footer" href="#">オンラインショップ</a>
+      <div class="button-label" style="color:rgba(255,255,255,0.5);">Footer Outline</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-readmore" href="#">ReadMore</a>
+      <div class="button-label">Text Link + Arrow</div>
+    </div>
+  </div>
+  <div style="margin-top:32px; padding:20px; background:var(--bg-surface); border-radius:4px;">
+    <p style="font-family:var(--font-sans); font-size:13px; color:var(--text-secondary); line-height:1.8; letter-spacing:normal;">
+      <strong style="font-weight:400; color:var(--text-primary);">Note:</strong> Soup Stock Tokyo は派手な CTA ボタンを持たない。インタラクションの誘導は、明朝体のテキストリンクと矢印（&rarr;）で行う。
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">soup photo</div>
+      <div class="card-category">SEASONAL MENU</div>
+      <h3>東京ボルシチ</h3>
+      <p>ビーツの甘みと酸味が溶け合う、Soup Stock Tokyo の定番。サワークリームを添えて。</p>
+    </div>
+    <div class="card">
+      <div class="card-img">soup photo</div>
+      <div class="card-category">GRAND MENU</div>
+      <h3>オマール海老のビスク</h3>
+      <p>オマール海老の殻を贅沢に使い、濃厚な旨みを引き出した看板スープ。</p>
+    </div>
+    <div class="card">
+      <div class="card-img">soup photo</div>
+      <div class="card-category">SEASONAL MENU</div>
+      <h3>とうもろこしとさつま芋のスープ</h3>
+      <p>夏の太陽を浴びたとうもろこしの甘さと、さつま芋のやさしい味わい。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト &#8212; border: #cccccc, radius: 4px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="田中太郎">
+    <div class="form-state-label">フォーカス &#8212; border: #333333</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー &#8212; border: #c0392b</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。標準状態</div>
+    </div>
+    <div class="elevation-card" style="background:var(--bg-surface); border-color:var(--border-divider);">
+      <div class="elevation-label">Surface Light</div>
+      <div class="elevation-desc">#f8f8f8 面でセクション分割</div>
+    </div>
+    <div class="elevation-card" style="background:var(--footer-bg); color:var(--footer-text); border-color:var(--footer-bg);">
+      <div class="elevation-label" style="color:var(--footer-text);">Footer Dark</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.5);">#333333 面で対比</div>
+    </div>
+    <div class="elevation-card" style="border-top:3px solid var(--border-divider);">
+      <div class="elevation-label">Divider</div>
+      <div class="elevation-desc">#e0e0e0 の区切り線</div>
+    </div>
+  </div>
+  <div style="margin-top:24px; padding:20px; background:var(--bg-surface); border-radius:4px;">
+    <p style="font-family:var(--font-sans); font-size:13px; color:var(--text-secondary); line-height:1.8; letter-spacing:normal;">
+      Soup Stock Tokyo はドロップシャドウを使わない。深度は面色の切り替え（白 / ライトグレー / ダーク）と区切り線で表現する。
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング &amp; コンテンツ幅</h2>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:120px;"></div><div class="spacing-value">120px</div></div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">~1000px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Body <span class="width-bar-value">~620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:62%"></div></div></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Soup Stock Tokyo</div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>MENU</h4>
+        <ul>
+          <li><a href="#">今週のスープ</a></li>
+          <li><a href="#">グランドメニュー</a></li>
+          <li><a href="#">季節のスープ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SHOP</h4>
+        <ul>
+          <li><a href="#">店舗一覧</a></li>
+          <li><a href="#">オンラインショップ</a></li>
+          <li><a href="#">出店情報</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>STORY</h4>
+        <ul>
+          <li><a href="#">ブランドについて</a></li>
+          <li><a href="#">お知らせ</a></li>
+          <li><a href="#">採用情報</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Generated from <a href="https://www.soup-stock-tokyo.com/" style="color:rgba(255,255,255,0.7); text-decoration:underline;">soup-stock-tokyo.com</a> DESIGN.md &#8212; awesome-design-md-jp / computed style 実測値</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
