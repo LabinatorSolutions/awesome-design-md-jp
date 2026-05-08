@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: BOTANIST（ボタニスト）</title>
+<!--
+  Original fonts (Adobe Fonts, domain-licensed):
+    - Yu Gothic Pr6N M / B (Morisawa) — Japanese text
+    - new-atten — European display text
+  Google Fonts substitutes:
+    - Zen Kaku Gothic New — close to Yu Gothic Pr6N (Morisawa family)
+    - Josefin Sans — geometric sans, similar clean feel to new-atten
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === BOTANIST Color Tokens === */
+    --gray-blue: #e6e9ed;
+    --dark-charcoal: #1f2529;
+    --near-white: #fcfcfc;
+    --light-gray: #f0f0f0;
+    --text-primary: #222222;
+    --text-secondary: #787b80;
+    --text-muted: #bcbfc3;
+    --text-on-dark: #ffffff;
+    --surface-gray-blue: #e6e9ed;
+    --surface-near-white: #fcfcfc;
+    --surface-light-gray: #f0f0f0;
+    --surface-dark: #1f2529;
+    --cta-glass: rgba(255, 255, 255, 0.2);
+    --cta-glass-hover: rgba(255, 255, 255, 0.35);
+    --error: #c0392b;
+
+    /* === Font ===
+       Original: Yu Gothic Pr6N M/B (Adobe Fonts) + new-atten (Adobe Fonts)
+       Substitute: Zen Kaku Gothic New (Google Fonts) + Josefin Sans (Google Fonts)
+       BOTANIST uses a two-font system: Japanese text + European display. */
+    --font-jp: "Yu Gothic Pr6N M", "Yu Gothic Pr6N B", "Zen Kaku Gothic New", "Yu Gothic", "YuGothic", sans-serif;
+    --font-en: "new-atten", "Josefin Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-gray-blue);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400; line-height: 2.0;
+    letter-spacing: 0.05em;
+    font-feature-settings: normal; /* palt NOT used */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--near-white);
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .nav-brand {
+    font-family: var(--font-en); font-size: 20px; font-weight: 700; line-height: 1.2;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en); font-size: 13px; font-weight: 400;
+    color: var(--text-secondary); text-decoration: none; letter-spacing: 0.05em; line-height: 1.6;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-en); font-size: 13px;
+    color: var(--text-secondary); letter-spacing: 0.05em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 40px 80px;
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(31,37,41,0.3) 0%, rgba(31,37,41,0.7) 100%);
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-section-label {
+    font-family: var(--font-en);
+    font-size: 15px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-jp);
+    font-size: 52px; font-weight: 400; line-height: 1.35;
+    letter-spacing: 0.1em; margin-bottom: 32px;
+    color: var(--text-on-dark);
+  }
+  .hero-lead {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400; line-height: 2.0;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.75); max-width: 680px; margin: 0 auto 48px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-glass {
+    display: inline-block; background: var(--cta-glass); color: var(--text-on-dark);
+    padding: 14px 36px; border: none; border-radius: 0;
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.08em; text-decoration: none; cursor: pointer;
+    text-transform: uppercase; transition: background 0.3s;
+  }
+  .btn-glass:hover { background: var(--cta-glass-hover); }
+  .btn-solid {
+    display: inline-block; background: var(--dark-charcoal); color: var(--text-on-dark);
+    padding: 14px 36px; border: none; border-radius: 0;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em; text-decoration: none; cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  .btn-solid:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 14px 36px; border: 1px solid var(--text-primary); border-radius: 0;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em; text-decoration: none; cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-ghost:hover { background: var(--text-primary); color: var(--text-on-dark); }
+  .btn-ghost-on-dark {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 14px 36px; border: 1px solid rgba(255,255,255,0.4); border-radius: 0;
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.08em; text-decoration: none; cursor: pointer;
+    text-transform: uppercase; transition: background 0.3s, border-color 0.3s;
+  }
+  .btn-ghost-on-dark:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+  .btn-text-link {
+    display: inline-block; background: none; color: var(--text-primary);
+    padding: 0; border: none; border-bottom: 1px solid var(--text-primary);
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em; text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 11px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-en); font-size: 28px; font-weight: 300;
+    line-height: 1.2; color: var(--text-primary); margin-bottom: 4px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .section-subtitle {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.6; color: var(--text-secondary); letter-spacing: 0.05em;
+    margin-bottom: 48px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--light-gray); margin: 0; }
+
+  .section-gb { background: var(--surface-gray-blue); padding: 80px 40px; }
+  .section-gb-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-dark { background: var(--surface-dark); padding: 80px 40px; color: var(--text-on-dark); }
+  .section-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--text-on-dark); }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.5); }
+  .section-dark .section-label { color: rgba(255,255,255,0.4); }
+
+  .section-white { background: var(--near-white); padding: 80px 40px; }
+  .section-white-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--near-white); overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-en); font-size: 12px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-jp); font-size: 11px; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.02em; }
+  .color-group-label { font-family: var(--font-en); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin: 28px 0 12px; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 36px; padding-bottom: 32px; border-bottom: 1px solid var(--light-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 14px; letter-spacing: 0; line-height: 1.6; }
+  .type-context { display: inline-block; background: var(--light-gray); color: var(--text-secondary); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-jp); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 14px; letter-spacing: 0.02em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+  .card { background: var(--near-white); position: relative; }
+  .card-image { background: var(--light-gray); height: 360px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-en); font-size: 14px; color: var(--text-muted);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .card-body { padding: 20px 0; }
+  .card-category {
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card h3 {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 500;
+    line-height: 1.6; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0;
+  }
+  .card-price {
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    color: var(--text-primary); letter-spacing: 0.03em;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview .product-label {
+    font-family: var(--font-en); font-size: 15px; font-weight: 400;
+    line-height: 1.6; letter-spacing: 0.05em; color: rgba(255,255,255,0.5); margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .product-preview h1 {
+    font-family: var(--font-jp); font-size: 40px; font-weight: 400;
+    line-height: 1.35; color: var(--text-on-dark); margin-bottom: 24px;
+    letter-spacing: 0.15em;
+  }
+  .product-preview p {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.75); margin-bottom: 24px;
+  }
+  .product-preview .product-en-heading {
+    font-family: var(--font-en); font-size: 32px; font-weight: 300;
+    line-height: 1.1; letter-spacing: 0.03em; color: var(--text-on-dark); margin: 48px 0 12px;
+    text-transform: uppercase;
+  }
+  .product-preview .product-jp-heading {
+    font-family: var(--font-jp); font-size: 18px; font-weight: 500;
+    line-height: 1.5; letter-spacing: 0; color: var(--text-on-dark); margin-bottom: 20px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-jp); font-size: 13px; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.03em;
+  }
+  .form-input {
+    width: 100%; background: var(--near-white); color: var(--text-primary);
+    border: 1px solid var(--text-muted); padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.05em; outline: none;
+    font-feature-settings: normal;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--dark-charcoal); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-jp); font-size: 12px; color: var(--error); margin-top: 6px; letter-spacing: 0.02em; }
+  .form-input::placeholder { color: var(--text-muted); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 36px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-en); font-size: 13px; font-weight: 400; margin-bottom: 10px; letter-spacing: 0.05em; }
+  .elevation-desc { font-family: var(--font-jp); font-size: 12px; color: var(--text-secondary); letter-spacing: 0.02em; line-height: 1.8; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+  .spacing-block { background: var(--dark-charcoal); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 10px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 28px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en); font-size: 12px; font-weight: 400; letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 40px 32px;
+    background: var(--surface-dark); color: var(--text-on-dark);
+    font-size: 13px; line-height: 1.8;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;
+  }
+  .footer-tagline {
+    font-family: var(--font-jp); font-size: 28px; font-weight: 400;
+    line-height: 1.35; letter-spacing: 0.15em; color: var(--text-on-dark);
+    margin-bottom: 48px; max-width: 1200px; margin-left: auto; margin-right: auto;
+    padding: 0 40px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    margin-bottom: 16px; letter-spacing: 0.15em; color: var(--text-on-dark);
+    text-transform: uppercase;
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-jp); color: var(--text-on-dark);
+    text-decoration: none; opacity: 0.5; margin-bottom: 10px; font-size: 13px;
+    letter-spacing: 0.05em; transition: opacity 0.2s;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: var(--font-en); font-size: 11px; opacity: 0.3;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 28px; }
+    .hero { padding: 72px 20px 56px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-gb { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .section-white { padding: 56px 20px; }
+    .section-title { font-size: 22px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+    .product-preview h1 { font-size: 24px; }
+    .product-preview .product-en-heading { font-size: 22px; }
+    .footer-tagline { font-size: 20px; padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Botanist</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">Search</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-section-label">Botanist Official</div>
+    <h1>答えはきっと<br>自然の中にある。</h1>
+    <p class="hero-lead">BOTANIST（botanistofficial.com）から抽出したデザイントークンのカタログ。Yu Gothic Pr6N + new-atten の二書体システム、font-feature-settings: normal（palt 不使用）、グレーブルー #e6e9ed と ダークチャコール #1f2529 のナチュラルパレット、rgba(255,255,255,0.2) の半透明ガラス CTA、radius 0px のシャープエッジ。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-glass" href="#">Shop Now</a>
+      <a class="btn-ghost-on-dark" href="#">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title">Color Palette</div>
+  <div class="section-subtitle">カラーパレット</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e6e9ed"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray Blue</div><div class="color-swatch-hex">#e6e9ed</div><div class="color-swatch-role">メイン背景（94箇所）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1f2529"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Charcoal</div><div class="color-swatch-hex">#1f2529</div><div class="color-swatch-role">フッター・ダークセクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#787b80"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#787b80</div><div class="color-swatch-role">ラベル・補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bcbfc3"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#bcbfc3</div><div class="color-swatch-role">控えめな補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク背景上の白テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e6e9ed"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray Blue</div><div class="color-swatch-hex">#e6e9ed</div><div class="color-swatch-role">メイン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fcfcfc; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Near White</div><div class="color-swatch-hex">#fcfcfc</div><div class="color-swatch-role">コンテンツエリア</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light Gray</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">カード・区切り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1f2529"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#1f2529</div><div class="color-swatch-role">フッター・ダークセクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Interactive</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(255,255,255,0.2); border-bottom:1px solid #ddd; background-color:#1f2529; background-image:none; position:relative;"><div style="position:absolute;inset:0;background:rgba(255,255,255,0.2);"></div></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Glass</div><div class="color-swatch-hex">rgba(255,255,255,0.2)</div><div class="color-swatch-role">半透明 CTA（ダーク背景上）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c0392b"></div><div class="color-swatch-info"><div class="color-swatch-name">Error</div><div class="color-swatch-hex">#c0392b</div><div class="color-swatch-role">フォームエラー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">Typography</div>
+  <div class="section-subtitle">タイポグラフィ -- Yu Gothic Pr6N（和文）+ new-atten（欧文ディスプレイ）二書体システム / palt 不使用</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:52px; font-weight:400; line-height:1.35; letter-spacing:0.1em; color:var(--text-primary);">答えはきっと自然の中にある。</div>
+    <div class="type-meta">Yu Gothic Pr6N M / 52px / 400 / line-height: 1.35 / letter-spacing: 0.1em<span class="type-context">Hero Display</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:40px; font-weight:400; line-height:1.35; letter-spacing:0.15em; color:var(--text-primary);">植物と共に生きる。</div>
+    <div class="type-meta">Yu Gothic Pr6N M / 40px / 400 / line-height: 1.35 / letter-spacing: 0.15em<span class="type-context">Footer Tagline</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:32px; font-weight:300; line-height:1.1; letter-spacing:0.03em; color:var(--text-primary); text-transform:uppercase;">Special</div>
+    <div class="type-meta">new-atten / 32px / 400 / line-height: 1.1 / letter-spacing: 0.03em<span class="type-context">Section Display EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:21px; font-weight:400; line-height:1.6; letter-spacing:0; color:var(--text-primary); text-transform:uppercase;">Haircare</div>
+    <div class="type-meta">new-atten / 21px / 400 / line-height: 1.6 / letter-spacing: 0<span class="type-context">Category Label EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:18px; font-weight:500; line-height:1.5; letter-spacing:0; color:var(--text-primary);">商品について知る</div>
+    <div class="type-meta">Yu Gothic Pr6N B / 18px / 400 / line-height: 1.5 / letter-spacing: 0<span class="type-context">Section Title JP</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:500; line-height:1.6; letter-spacing:0; color:var(--text-primary);">ボタニカルシャンプー モイスト</div>
+    <div class="type-meta">Yu Gothic Pr6N B / 16px / 400 / line-height: 1.6 / letter-spacing: 0<span class="type-context">Product Name</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:15px; font-weight:400; line-height:1.6; letter-spacing:0; color:var(--text-secondary); text-transform:uppercase;">Mission</div>
+    <div class="type-meta">new-atten / 15px / 400 / line-height: 1.6 / letter-spacing: 0<span class="type-context">Section Label EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:400; line-height:2.0; letter-spacing:0.05em; color:var(--text-primary);">BOTANISTは、植物の恵みを生かし、髪と身体を健やかに保つためのプロダクトをお届けしています。自然由来の成分にこだわり、毎日のケアに心地よさと豊かさを。答えはきっと、自然の中にあると私たちは信じています。</div>
+    <div class="type-meta">Yu Gothic Pr6N M / 16px / 400 / line-height: 2.0 / letter-spacing: 0.05em<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:16px; font-weight:700; line-height:1.6; letter-spacing:0; color:var(--text-primary); text-transform:uppercase;">Home</div>
+    <div class="type-meta">new-atten / 16px / 700 / line-height: 1.6 / letter-spacing: 0<span class="type-context">Nav Brand EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:12px; font-weight:400; line-height:1.6; letter-spacing:0; color:var(--text-secondary);">ヘアケア / ボディケア / ライフスタイル</div>
+    <div class="type-meta">Yu Gothic Pr6N M / 12px / 400 / line-height: 1.6 / letter-spacing: 0<span class="type-context">Nav Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:10px; font-weight:400; line-height:normal; letter-spacing:0; color:var(--text-secondary);">*個人の感想です。効果効能を保証するものではありません。</div>
+    <div class="type-meta">Yu Gothic Pr6N M / 10px / 400 / line-height: normal / letter-spacing: 0<span class="type-context">Caption</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT / ARTICLE -->
+<section class="section-dark" id="product">
+<div class="section-dark-inner">
+  <div class="section-label">03 / Product</div>
+  <div class="section-title">Product</div>
+  <div class="section-subtitle">プロダクトページサンプル</div>
+  <div class="product-preview">
+    <div class="product-label">Haircare</div>
+    <h1>植物と共に生きる。</h1>
+    <p>BOTANISTは、植物由来の成分を豊富に配合し、髪と地肌をやさしくケアするボタニカルシャンプー&トリートメントです。自然の恵みを凝縮した処方で、洗い上がりのなめらかさと指通りの良さを実感していただけます。</p>
+    <div class="product-en-heading">Special</div>
+    <div class="product-jp-heading">こだわりの成分</div>
+    <p>厳選されたボタニカルウォーターと植物由来の洗浄成分を使用。石鹸ベースでありながら、クリーミーな泡立ちと優れた洗浄力を両立しました。グリーンアップルとローズの香りが、毎日のバスタイムを特別な時間に変えます。</p>
+    <div style="margin-top:40px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a class="btn-glass" href="#">Add to Cart</a>
+      <a class="btn-ghost-on-dark" href="#">Details</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title">Buttons</div>
+  <div class="section-subtitle">ボタン -- radius 0px シャープエッジ / 半透明ガラス CTA</div>
+
+  <div style="font-family:var(--font-en); font-size:11px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.15em; text-transform:uppercase;">Light Background</div>
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item"><a class="btn-solid" href="#">購入する</a><div class="button-label">Solid / #1f2529 / radius 0</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">詳しく見る</a><div class="button-label">Ghost / border / radius 0</div></div>
+    <div class="button-item"><a class="btn-text-link" href="#">もっと見る</a><div class="button-label">Text Link / border-bottom</div></div>
+  </div>
+
+  <div style="background:var(--dark-charcoal); padding:40px; margin-top:8px;">
+    <div style="font-family:var(--font-en); font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:20px; letter-spacing:0.15em; text-transform:uppercase;">Dark Background</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-glass" href="#">Shop Now</a><div class="button-label" style="color:rgba(255,255,255,0.4)">Glass / rgba(255,255,255,0.2) / radius 0</div></div>
+      <div class="button-item"><a class="btn-ghost-on-dark" href="#">Learn More</a><div class="button-label" style="color:rgba(255,255,255,0.4)">Ghost on Dark / border / radius 0</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gb" id="cards">
+<div class="section-gb-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title">Product Cards</div>
+  <div class="section-subtitle">商品カード -- shadow なし / radius 0 / フラット</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Haircare</div>
+        <h3>ボタニカルシャンプー モイスト</h3>
+        <div class="card-price">&yen;1,540</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Bodycare</div>
+        <h3>ボタニカルボディーソープ モイスト</h3>
+        <div class="card-price">&yen;1,100</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Skincare</div>
+        <h3>ボタニカルフェイスウォッシュ</h3>
+        <div class="card-price">&yen;1,650</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Haircare</div>
+        <h3>ボタニカルトリートメント モイスト</h3>
+        <div class="card-price">&yen;1,540</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-white" id="forms">
+<div class="section-white-inner">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title">Forms</div>
+  <div class="section-subtitle">フォーム -- radius 0px / focus: border #1f2529</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-en); font-size:11px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.15em; text-transform:uppercase;">Default</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-en); font-size:11px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.15em; text-transform:uppercase;">Focus</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区..." style="border-color:var(--dark-charcoal);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="ご質問・ご要望をご記入ください" style="resize:vertical; font-feature-settings:normal;"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title">Depth & Elevation</div>
+  <div class="section-subtitle">奥行き -- シャドウなし、色面と透明度で構成</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--near-white);">
+      <div class="elevation-label">Level 0 -- Near White</div>
+      <div class="elevation-desc">コンテンツカード面。#fcfcfc</div>
+    </div>
+    <div class="elevation-card" style="background:var(--gray-blue);">
+      <div class="elevation-label">Level 1 -- Gray Blue</div>
+      <div class="elevation-desc">メイン背景面。#e6e9ed</div>
+    </div>
+    <div class="elevation-card" style="background:var(--light-gray);">
+      <div class="elevation-label">Level 2 -- Light Gray</div>
+      <div class="elevation-desc">区切り・プレースホルダ。#f0f0f0</div>
+    </div>
+    <div class="elevation-card" style="background:var(--dark-charcoal); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 3 -- Dark Charcoal</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.5);">ダークセクション。#1f2529</div>
+    </div>
+    <div class="elevation-card" style="background:var(--dark-charcoal); color:var(--text-on-dark); position:relative;">
+      <div style="position:absolute;inset:0;background:rgba(255,255,255,0.2);"></div>
+      <div style="position:relative;">
+        <div class="elevation-label" style="color:var(--text-on-dark);">Level 4 -- Glass</div>
+        <div class="elevation-desc" style="color:rgba(255,255,255,0.5);">半透明オーバーレイ。rgba(255,255,255,0.2)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title">Layout</div>
+  <div class="section-subtitle">レイアウト -- spacing scale & grid</div>
+
+  <div class="spacing-row" style="margin-bottom:48px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px; height:36px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:36px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:36px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:36px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px; height:36px;"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px; height:36px;"></div><div class="spacing-value">120px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--near-white); color:var(--text-primary);">Near White #fcfcfc</div>
+    <div class="layout-box" style="background:var(--gray-blue); color:var(--text-primary);">Gray Blue #e6e9ed</div>
+    <div class="layout-box" style="background:var(--surface-dark); color:var(--text-on-dark);">Dark #1f2529</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-tagline">答えはきっと自然の中にある。</div>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Haircare</h4>
+      <a href="#">ボタニカルシャンプー</a>
+      <a href="#">ボタニカルトリートメント</a>
+      <a href="#">ボタニカルヘアオイル</a>
+      <a href="#">ボタニカルヘアマスク</a>
+    </div>
+    <div class="footer-col">
+      <h4>Bodycare</h4>
+      <a href="#">ボタニカルボディーソープ</a>
+      <a href="#">ボタニカルボディーミルク</a>
+      <a href="#">ボタニカルハンドクリーム</a>
+    </div>
+    <div class="footer-col">
+      <h4>Skincare</h4>
+      <a href="#">ボタニカルフェイスウォッシュ</a>
+      <a href="#">ボタニカルローション</a>
+      <a href="#">ボタニカルセラム</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="#">About BOTANIST</a>
+      <a href="#">Store List</a>
+      <a href="#">Contact</a>
+      <a href="#">Careers</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from botanistofficial.com DESIGN.md -- awesome-design-md-jp / computed style (2026-05-09)<br>
+    Yu Gothic Pr6N + new-atten (Adobe Fonts) &rarr; Zen Kaku Gothic New + Josefin Sans (Google Fonts substitute)
+  </div>
+</footer>
+
+</body>
+</html>

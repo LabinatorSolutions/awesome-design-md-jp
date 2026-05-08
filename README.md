@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (125 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (128 sites)</a>
 </p>
 
 <table>
@@ -204,6 +204,14 @@
 <td align="center"><strong>SANU</strong><br><img src="design-md/sanu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Francfranc</strong><br><img src="design-md/francfranc/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KEYUCA</strong><br><img src="design-md/keyuca/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Minimal</strong><br><img src="design-md/minimal/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>ORBIS</strong><br><img src="design-md/orbis/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BOTANIST</strong><br><img src="design-md/botanist/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -391,11 +399,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [SANU 2nd Home](https://sa-nu.com/) | Second Home / Hospitality | [DESIGN.md](design-md/sanu/DESIGN.md) | [preview.html](design-md/sanu/preview.html) |
 | [Francfranc (フランフラン)](https://francfranc.com/) | Interior / Lifestyle EC | [DESIGN.md](design-md/francfranc/DESIGN.md) | [preview.html](design-md/francfranc/preview.html) |
 | [KEYUCA (ケユカ)](https://www.keyuca.com/) | Furniture / Lifestyle EC | [DESIGN.md](design-md/keyuca/DESIGN.md) | [preview.html](design-md/keyuca/preview.html) |
+| [Minimal (ミニマル)](https://mini-mal.tokyo/) | Craft Chocolate / D2C | [DESIGN.md](design-md/minimal/DESIGN.md) | [preview.html](design-md/minimal/preview.html) |
+| [ORBIS (オルビス)](https://www.orbis.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/orbis/DESIGN.md) | [preview.html](design-md/orbis/preview.html) |
+| [BOTANIST (ボタニスト)](https://botanistofficial.com/) | Botanical Hair & Body Care | [DESIGN.md](design-md/botanist/DESIGN.md) | [preview.html](design-md/botanist/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (125 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (128 sites)</a>
 </p>
 
 <table>
@@ -565,6 +576,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>SANU</strong><br><img src="design-md/sanu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Francfranc</strong><br><img src="design-md/francfranc/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KEYUCA</strong><br><img src="design-md/keyuca/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Minimal</strong><br><img src="design-md/minimal/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>ORBIS</strong><br><img src="design-md/orbis/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BOTANIST</strong><br><img src="design-md/botanist/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

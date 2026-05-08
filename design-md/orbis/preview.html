@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ORBIS（オルビス）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === ORBIS Color Tokens === */
+    --brand-cream: #fff7ed;
+    --brand-coral: #ef857d;
+    --cta-brown-gray: #5c5a5a;
+    --text-primary: #231815;
+    --text-on-cta: #ffffff;
+    --border: #e0e0e0;
+    --border-tag: #cdcdcd;
+    --surface: #f8f8f8;
+    --surface-footer: #fafafa;
+    --background: #ffffff;
+    --success-green: #69b35e;
+    --gold-premium: #9d8735;
+    --tint-blue: #e5f0f5;
+    --tint-green: #ebf6ef;
+    --tint-pink: #f7e8ee;
+    --tint-yellow-green: #f7f9e1;
+    --error: #c0392b;
+
+    /* === Font ===
+       ORBIS は Open Sans（欧文先行）+ 游ゴシック体フルチェーン。
+       palt なし、letter-spacing normal。本文 wt 500。 */
+    --font-base: "Open Sans", 游ゴシック体, YuGothic, "游ゴシック Medium",
+      "Yu Gothic Medium", "YuGothic Medium", 游ゴシック, "Yu Gothic",
+      "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo,
+      sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--background);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500; line-height: 1.8;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 13px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+  }
+  .nav-icon {
+    display: inline-flex; align-items: center; gap: 16px;
+    font-family: var(--font-base); font-size: 12px;
+    color: var(--text-primary);
+  }
+  .nav-badge {
+    display: inline-block; background: var(--brand-coral); color: #fff;
+    font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px;
+    line-height: 1.0; vertical-align: middle;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 40px 72px;
+    background: var(--brand-cream);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero-kicker {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 500; line-height: 1.8;
+    color: var(--cta-brown-gray); margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 700; line-height: 1.0;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .hero-lead {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500; line-height: 1.8;
+    color: var(--text-primary); max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--cta-brown-gray); color: var(--text-on-cta);
+    padding: 10px 28px; border: none; border-radius: 0px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; line-height: 1.5;
+  }
+  .btn-secondary {
+    display: inline-block; background: var(--background); color: var(--cta-brown-gray);
+    padding: 10px 28px; border: 1px solid var(--cta-brown-gray); border-radius: 0px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; line-height: 1.5;
+  }
+  .btn-tag {
+    display: inline-block; background: var(--brand-cream); color: var(--text-primary);
+    padding: 6px 20px; border: 1px solid var(--border-tag); border-radius: 40px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; line-height: 1.5;
+  }
+  .btn-filter {
+    display: inline-block; background: var(--background); color: var(--text-primary);
+    padding: 8px 10px; border: 1px solid var(--border); border-radius: 0px;
+    font-family: var(--font-base); font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer; line-height: 1.5;
+  }
+  .badge-shipping {
+    display: inline-block; background: var(--success-green); color: #fff;
+    padding: 3px 8px; border-radius: 2px;
+    font-family: var(--font-base); font-size: 11px; font-weight: 700; line-height: 1.0;
+  }
+  .badge-premium {
+    display: inline-block; background: var(--gold-premium); color: #fff;
+    padding: 3px 8px; border-radius: 2px;
+    font-family: var(--font-base); font-size: 11px; font-weight: 700; line-height: 1.0;
+  }
+
+  /* SECTIONS */
+  .section { padding: 72px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-base); font-size: 12px; font-weight: 700;
+    color: var(--cta-brown-gray); margin-bottom: 6px; letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-family: var(--font-base); font-size: 20px; font-weight: 700;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 6px;
+  }
+  .section-subtitle {
+    font-family: var(--font-base); font-size: 13px; font-weight: 500;
+    line-height: 1.8; color: var(--cta-brown-gray);
+    margin-bottom: 36px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .section-cream { background: var(--brand-cream); padding: 72px 40px; }
+  .section-cream-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-surface { background: var(--surface); padding: 72px 40px; }
+  .section-surface-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .color-swatch { background: var(--background); border: 1px solid var(--border); overflow: hidden; }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-family: var(--font-base); font-size: 12px; font-weight: 700; margin-bottom: 3px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--cta-brown-gray); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-base); font-size: 11px; color: var(--cta-brown-gray); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-base); font-size: 12px; font-weight: 700; color: var(--cta-brown-gray); margin: 20px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--cta-brown-gray); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface); color: var(--cta-brown-gray); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-base); font-size: 11px; font-weight: 500; color: var(--cta-brown-gray); margin-top: 10px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .card { background: var(--background); position: relative; }
+  .card-image { background: var(--surface); height: 300px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-base); font-size: 13px; color: var(--cta-brown-gray);
+  }
+  .card-badge { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; }
+  .card-body { padding: 14px 0; }
+  .card-category {
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    color: var(--cta-brown-gray); margin-bottom: 4px;
+  }
+  .card h3 {
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 6px;
+  }
+  .card-price {
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+  }
+  .card-price-sale {
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    color: var(--brand-coral);
+  }
+  .card-price-original {
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    color: var(--cta-brown-gray); text-decoration: line-through; margin-left: 6px;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview .product-kicker {
+    font-family: var(--font-base); font-size: 13px; font-weight: 500;
+    line-height: 1.8; color: var(--cta-brown-gray); margin-bottom: 8px;
+  }
+  .product-preview h1 {
+    font-family: var(--font-base); font-size: 20px; font-weight: 700;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 16px;
+  }
+  .product-preview p {
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    line-height: 1.8; color: var(--text-primary); margin-bottom: 16px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-base); font-size: 18px; font-weight: 700;
+    line-height: 1.8; color: var(--text-primary); margin: 32px 0 12px;
+  }
+  .product-preview .product-price {
+    font-family: var(--font-base); font-size: 20px; font-weight: 700;
+    color: var(--text-primary); margin: 16px 0;
+  }
+  .product-preview .product-price .tax {
+    font-size: 13px; font-weight: 500; color: var(--cta-brown-gray);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-base); font-size: 13px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: var(--background); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 10px 12px; border-radius: 0px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--cta-brown-gray); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-base); font-size: 11px; color: var(--error); margin-top: 4px; }
+  .form-input::placeholder { color: var(--border-tag); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .elevation-card { padding: 28px 20px; text-align: center; }
+  .elevation-label { font-family: var(--font-base); font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-base); font-size: 11px; color: var(--cta-brown-gray); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--cta-brown-gray); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--cta-brown-gray); margin-top: 6px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .layout-box {
+    height: 110px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 40px 28px;
+    background: var(--surface-footer); color: var(--text-primary);
+    font-size: 12px; line-height: 1.5;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 28px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-base); font-size: 13px; font-weight: 700;
+    margin-bottom: 12px; color: var(--text-primary);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-base); color: var(--cta-brown-gray);
+    text-decoration: none; margin-bottom: 6px; font-size: 12px; font-weight: 500;
+  }
+  .footer-col a:hover { color: var(--text-primary); }
+  .footer-meta {
+    text-align: center; margin-top: 36px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-base); font-size: 11px; color: var(--cta-brown-gray);
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .hero { padding: 56px 20px 48px; }
+    .nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-cream { padding: 48px 20px; }
+    .section-surface { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">ORBIS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <div class="nav-icon">
+    <span>Search</span>
+    <span>Cart <span class="nav-badge">3</span></span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">SKIN CARE</div>
+    <h1>肌が本来持つ力を引き出す</h1>
+    <p class="hero-lead">ORBIS（orbis.co.jp）から抽出したデザイントークンのカタログ。Open Sans + 游ゴシック体の欧文先行スタック、font-feature-settings: normal（palt なし）、letter-spacing: normal、ウォームブラウン #231815 + クリーム #fff7ed + コーラル #ef857d のウォームトーン、radius 0px シャープ CTA + radius 40px pill タグの二極構成。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">商品を探す</a>
+      <a class="btn-secondary" href="#">ブランドについて</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <div class="section-title">カラーパレット</div>
+  <div class="section-subtitle">Color Palette</div>
+
+  <div class="color-group-label">ブランド</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff7ed"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Cream</div><div class="color-swatch-hex">#fff7ed</div><div class="color-swatch-role">セクション背景・タグ面色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ef857d"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Coral</div><div class="color-swatch-hex">#ef857d</div><div class="color-swatch-role">価格ハイライト・バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5c5a5a"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Brown-Gray</div><div class="color-swatch-hex">#5c5a5a</div><div class="color-swatch-role">プライマリCTA背景・ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">テキスト & ニュートラル</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#231815"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#231815</div><div class="color-swatch-role">本文テキスト（ウォームブラウン）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on CTA</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">CTA上の白テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e0e0e0</div><div class="color-swatch-role">区切り線・フィルタ枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cdcdcd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Tag</div><div class="color-swatch-hex">#cdcdcd</div><div class="color-swatch-role">タグ pill のボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">サーフェス</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">ニアホワイト面（最頻出）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Footer</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff7ed"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Cream</div><div class="color-swatch-hex">#fff7ed</div><div class="color-swatch-role">ブランドクリーム面</div></div></div>
+  </div>
+
+  <div class="color-group-label">セマンティック</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#69b35e"></div><div class="color-swatch-info"><div class="color-swatch-name">Success Green</div><div class="color-swatch-hex">#69b35e</div><div class="color-swatch-role">送料無料バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9d8735"></div><div class="color-swatch-info"><div class="color-swatch-name">Gold Premium</div><div class="color-swatch-hex">#9d8735</div><div class="color-swatch-role">会員・プレミアム表示</div></div></div>
+  </div>
+
+  <div class="color-group-label">ティント（カテゴリ淡色面）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5f0f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Tint Blue</div><div class="color-swatch-hex">#e5f0f5</div><div class="color-swatch-role">水色面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebf6ef"></div><div class="color-swatch-info"><div class="color-swatch-name">Tint Green</div><div class="color-swatch-hex">#ebf6ef</div><div class="color-swatch-role">薄緑面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7e8ee"></div><div class="color-swatch-info"><div class="color-swatch-name">Tint Pink</div><div class="color-swatch-hex">#f7e8ee</div><div class="color-swatch-role">薄桃面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f9e1"></div><div class="color-swatch-info"><div class="color-swatch-name">Tint Yellow-Green</div><div class="color-swatch-hex">#f7f9e1</div><div class="color-swatch-role">薄黄緑面</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY</div>
+  <div class="section-title">タイポグラフィ</div>
+  <div class="section-subtitle">Typography -- Open Sans + 游ゴシック体 / palt なし / letter-spacing normal / 本文 wt 500</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:28px; font-weight:700; line-height:1.0; color:var(--text-primary);">商品を探す</div>
+    <div class="type-meta">Open Sans + YuGothic / 28px / 700 / line-height: 1.0<span class="type-context">Heading 2 (large)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:20px; font-weight:700; line-height:1.5; color:var(--text-primary);">スキンケア・基礎化粧品</div>
+    <div class="type-meta">Open Sans + YuGothic / 20px / 700 / line-height: 1.5<span class="type-context">Heading 1 (category)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:18px; font-weight:700; line-height:1.8; color:var(--text-primary);">オルビスユー ローション</div>
+    <div class="type-meta">Open Sans + YuGothic / 18px / 700 / line-height: 1.8<span class="type-context">Heading 3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:500; line-height:1.8; color:var(--text-primary);">肌が本来持つ力を活かし、うるおいに満ちた肌へ導くスキンケアシリーズ。洗顔、化粧水、保湿液の3ステップで、透明感のある素肌を目指します。科学的なアプローチで開発された処方が、年齢とともに変化する肌に寄り添います。</div>
+    <div class="type-meta">Open Sans + YuGothic / 14px / 500 / line-height: 1.8<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:500; line-height:1.5; color:var(--text-primary);">オルビスユー ドット エッセンスローション</div>
+    <div class="type-meta">Open Sans + YuGothic / 14px / 500 / line-height: 1.5<span class="type-context">Product Name</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:13px; font-weight:500; line-height:1.8; color:var(--text-primary);">※医薬部外品。使用上の注意をよくお読みの上、お使いください。</div>
+    <div class="type-meta">Open Sans + YuGothic / 13px / 500 / line-height: 1.8<span class="type-context">Small</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:700; line-height:1.0; color:var(--text-primary);">NEW</div>
+    <div class="type-meta">Open Sans + YuGothic / 12px / 700 / line-height: 1.0<span class="type-context">Nav Badge</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:500; line-height:1.0; color:var(--cta-brown-gray);">Copyright ORBIS Inc.</div>
+    <div class="type-meta">Open Sans + YuGothic / 12px / 500 / line-height: 1.0<span class="type-context">Footer</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-cream" id="product">
+<div class="section-cream-inner">
+  <div class="section-label">03 / PRODUCT</div>
+  <div class="section-title">プロダクト</div>
+  <div class="section-subtitle">Product Page Sample</div>
+  <div class="product-preview">
+    <div class="product-kicker">SKIN CARE</div>
+    <h1>オルビスユー ドット エッセンスローション</h1>
+    <p>年齢とともに変化する肌にアプローチ。独自成分が角層のすみずみまで浸透し、肌にハリとうるおいを与えます。とろみのあるテクスチャーが肌に心地よくなじみ、使うたびに透明感のあるふっくらとした肌へ導きます。</p>
+    <div class="product-price">&yen;3,630 <span class="tax">(税込)</span></div>
+    <div class="product-heading">成分について</div>
+    <p>ポーラ・オルビスグループの研究力を結集。肌のメカニズムに着目した独自の保湿成分を配合しています。パラベンフリー、合成界面活性剤不使用、無香料、無着色。敏感になりがちな大人の肌にもやさしい処方です。</p>
+    <div style="margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;">
+      <a class="btn-primary" href="#">カートに入れる</a>
+      <a class="btn-secondary" href="#">お気に入りに追加</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <div class="section-title">ボタン</div>
+  <div class="section-subtitle">Buttons -- CTA radius 0px (sharp) / Tag radius 40px (pill) の二極構成</div>
+  <div class="button-row" style="margin-bottom:28px;">
+    <div class="button-item"><a class="btn-primary" href="#">カートに入れる</a><div class="button-label">Primary / filled #5c5a5a / radius 0 / 700</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">詳しく見る</a><div class="button-label">Secondary / outline #5c5a5a / radius 0 / 500</div></div>
+    <div class="button-item"><a class="btn-tag" href="#">化粧水</a><div class="button-label">Tag / pill / bg #fff7ed / radius 40px</div></div>
+    <div class="button-item"><a class="btn-filter" href="#">価格が安い順</a><div class="button-label">Filter / outline #e0e0e0 / radius 0</div></div>
+  </div>
+
+  <div class="button-row" style="margin-bottom:28px;">
+    <div class="button-item"><span class="badge-shipping">送料無料</span><div class="button-label">Badge / #69b35e</div></div>
+    <div class="button-item"><span class="badge-premium">MEMBER</span><div class="button-label">Badge / #9d8735</div></div>
+  </div>
+
+  <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+    <a class="btn-tag" href="#">スキンケア</a>
+    <a class="btn-tag" href="#">メイクアップ</a>
+    <a class="btn-tag" href="#">ボディケア</a>
+    <a class="btn-tag" href="#">ヘアケア</a>
+    <a class="btn-tag" href="#">サプリメント</a>
+    <a class="btn-tag" href="#">限定品</a>
+  </div>
+  <div class="button-label" style="margin-top:12px;">Tag Pill Row -- カテゴリナビゲーション</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-surface" id="cards">
+<div class="section-surface-inner">
+  <div class="section-label">05 / CARDS</div>
+  <div class="section-title">商品カード</div>
+  <div class="section-subtitle">Product Cards -- shadow なし / radius 0 / ウォームブラウンテキスト</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-badge"><span class="badge-shipping">送料無料</span></div>
+      <div class="card-body">
+        <div class="card-category">スキンケア</div>
+        <h3>オルビスユー ドット エッセンスローション</h3>
+        <div class="card-price">&yen;3,630</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">スキンケア</div>
+        <h3>オルビスユー ローション</h3>
+        <div class="card-price">&yen;2,970</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-badge">
+        <span class="badge-premium">MEMBER</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">メイクアップ</div>
+        <h3>リンクル ホワイト UV プロテクター</h3>
+        <div><span class="card-price-sale">&yen;2,640</span><span class="card-price-original">&yen;3,520</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">ボディケア</div>
+        <h3>リリースバイタッチ ボディシャンプー</h3>
+        <div class="card-price">&yen;1,430</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <div class="section-title">フォーム</div>
+  <div class="section-subtitle">Forms -- radius 0px / focus: border #5c5a5a</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-base); font-size:12px; color:var(--cta-brown-gray); margin-bottom:16px; font-weight:700;">デフォルト</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-base); font-size:12px; color:var(--cta-brown-gray); margin-bottom:16px; font-weight:700;">フォーカス状態</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都品川区..." style="border-color:var(--cta-brown-gray);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="ご質問・ご要望をご記入ください" style="resize:vertical;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / ELEVATION</div>
+  <div class="section-title">奥行き</div>
+  <div class="section-subtitle">Depth & Elevation -- 面色の切り替えで空間を構成</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--background); border:1px solid var(--border);">
+      <div class="elevation-label">Level 0 -- White</div>
+      <div class="elevation-desc">標準背景。影なし。#ffffff</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface); border:1px solid var(--border);">
+      <div class="elevation-label">Level 0 -- Surface</div>
+      <div class="elevation-desc">ニアホワイト面。#f8f8f8</div>
+    </div>
+    <div class="elevation-card" style="background:var(--brand-cream); border:1px solid var(--border);">
+      <div class="elevation-label">Level 0 -- Cream</div>
+      <div class="elevation-desc">ブランドクリーム面。#fff7ed</div>
+    </div>
+    <div class="elevation-card" style="background:var(--background); border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+      <div class="elevation-label">Level 1 -- Hover</div>
+      <div class="elevation-desc">ホバー時の控えめな影</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / LAYOUT</div>
+  <div class="section-title">レイアウト</div>
+  <div class="section-subtitle">Layout -- spacing scale & surface grid</div>
+
+  <div class="spacing-row" style="margin-bottom:36px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:6px; height:32px;"></div><div class="spacing-value">6px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px; height:32px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px; height:32px;"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px; height:32px;"></div><div class="spacing-value">48px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--background); color:var(--text-primary); border:1px solid var(--border);">WHITE #fff</div>
+    <div class="layout-box" style="background:var(--brand-cream); color:var(--text-primary);">CREAM #fff7ed</div>
+    <div class="layout-box" style="background:var(--surface); color:var(--text-primary);">SURFACE #f8f8f8</div>
+  </div>
+  <div class="layout-demo" style="margin-top:16px;">
+    <div class="layout-box" style="background:var(--tint-blue); color:var(--text-primary);">TINT BLUE #e5f0f5</div>
+    <div class="layout-box" style="background:var(--tint-green); color:var(--text-primary);">TINT GREEN #ebf6ef</div>
+    <div class="layout-box" style="background:var(--tint-pink); color:var(--text-primary);">TINT PINK #f7e8ee</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>スキンケア</h4>
+      <a href="#">オルビスユー</a>
+      <a href="#">オルビスユー ドット</a>
+      <a href="#">クリアフル</a>
+      <a href="#">アクアフォース</a>
+    </div>
+    <div class="footer-col">
+      <h4>メイクアップ</h4>
+      <a href="#">ベースメイク</a>
+      <a href="#">UV ケア</a>
+      <a href="#">ポイントメイク</a>
+      <a href="#">リップ</a>
+    </div>
+    <div class="footer-col">
+      <h4>ボディケア</h4>
+      <a href="#">ボディシャンプー</a>
+      <a href="#">ヘアケア</a>
+      <a href="#">インナーケア</a>
+    </div>
+    <div class="footer-col">
+      <h4>ブランド</h4>
+      <a href="#">ORBISについて</a>
+      <a href="#">店舗一覧</a>
+      <a href="#">お問い合わせ</a>
+      <a href="#">会員登録</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from orbis.co.jp DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    Open Sans + 游ゴシック体 欧文先行スタック / font-feature-settings: normal / letter-spacing: normal / wt 500
+  </div>
+</footer>
+
+</body>
+</html>

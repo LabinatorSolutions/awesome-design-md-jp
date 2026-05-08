@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Minimal（ミニマル）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Minimal Color Tokens === */
+    --dark-primary: #262626;
+    --dark-secondary: #333333;
+    --text-primary: #000000;
+    --text-secondary: #707070;
+    --text-disabled: #d8d8d8;
+    --text-on-dark: #ffffff;
+    --surface: #fcfcfc;
+    --surface-light: #eeeeee;
+    --surface-gray: #eaeaea;
+    --accent-blue-green: #366b93;
+    --accent-teal: #6eaab4;
+    --accent-green: #578a3d;
+    --error: #c0392b;
+
+    /* === Font ===
+       Minimal は Poppins を第一候補に置く欧文優先の二層フォントシステム。
+       日本語は游ゴシック体にフォールバック。 */
+    --font-base: Poppins, "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600; line-height: 1.6;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--surface-gray);
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 20px; font-weight: 700; line-height: 1.2;
+    color: var(--dark-primary); text-decoration: none; letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 13px; font-weight: 600;
+    color: var(--text-secondary); text-decoration: none; line-height: 1.4;
+  }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-base); font-size: 13px;
+    color: var(--dark-secondary); letter-spacing: normal;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 100px;
+    background: var(--dark-primary);
+    color: var(--text-on-dark);
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 36px; font-weight: 600; line-height: 1.4;
+    letter-spacing: normal; margin-bottom: 24px;
+    color: var(--text-on-dark);
+  }
+  .hero-section-title {
+    font-family: var(--font-base);
+    font-size: 12.8px; font-weight: 700; line-height: 1.4;
+    letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero-lead {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    color: rgba(255,255,255,0.8); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--dark-secondary); color: var(--surface);
+    padding: 8px 10px; border: none; border-radius: 2px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    letter-spacing: normal; text-decoration: none; cursor: pointer;
+  }
+  .btn-outline-white {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 12px 20px; border: 1px solid var(--text-on-dark); border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    letter-spacing: normal; text-decoration: none; cursor: pointer;
+  }
+  .btn-outline-dark {
+    display: inline-block; background: transparent; color: var(--dark-secondary);
+    padding: 8px 10px; border: 1px solid var(--dark-secondary); border-radius: 0;
+    font-family: var(--font-base); font-size: 11.2px; font-weight: 600;
+    letter-spacing: normal; text-decoration: none; cursor: pointer;
+  }
+  .btn-dark-filled {
+    display: inline-block; background: var(--dark-primary); color: var(--text-on-dark);
+    padding: 10px 4px; border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    letter-spacing: normal; text-decoration: none; cursor: pointer;
+  }
+  .btn-pill {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 10px 30px; border: 1px solid var(--text-primary); border-radius: 100px;
+    font-family: var(--font-base); font-size: 13px; font-weight: 600;
+    letter-spacing: normal; text-decoration: none; cursor: pointer;
+  }
+  .tag {
+    display: inline-block; background: var(--surface-light); color: var(--dark-primary);
+    padding: 10px 4px; border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 13px; font-weight: 600;
+    letter-spacing: normal; text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-base); font-size: 12.8px; font-weight: 700;
+    color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-base); font-size: 36px; font-weight: 600;
+    line-height: 1.4; color: var(--dark-primary); margin-bottom: 8px;
+    letter-spacing: 0.09em; text-transform: uppercase;
+  }
+  .section-subtitle {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    line-height: 1.6; color: var(--text-secondary); letter-spacing: normal;
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--surface-gray); margin: 0; }
+
+  .section-accent { padding: 80px 40px; color: var(--text-on-dark); }
+  .section-accent-inner { max-width: 1200px; margin: 0 auto; }
+  .section-accent .section-title { color: var(--text-on-dark); }
+  .section-accent .section-subtitle { color: rgba(255,255,255,0.6); }
+  .section-accent .section-label { color: rgba(255,255,255,0.6); }
+
+  .section-light { background: var(--surface-light); padding: 80px 40px; }
+  .section-light-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface); border: 1px solid var(--surface-gray); overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-base); font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-base); font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+  .color-group-label { font-family: var(--font-base); font-size: 12.8px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--surface-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--text-secondary); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-base); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 12px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+  .card { background: var(--surface); position: relative; }
+  .card-image { background: var(--dark-primary); height: 340px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-base); font-size: 14px; color: rgba(255,255,255,0.4);
+    letter-spacing: normal;
+  }
+  .card-body { padding: 16px 0; }
+  .card-category {
+    font-family: var(--font-base); font-size: 12.8px; font-weight: 700;
+    color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .card h3 {
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    line-height: 1.4; color: var(--text-primary); margin-bottom: 8px; letter-spacing: normal;
+  }
+  .card-price {
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    color: var(--text-secondary); letter-spacing: normal;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview h1 {
+    font-family: var(--font-base); font-size: 36px; font-weight: 600;
+    line-height: 1.4; color: var(--text-on-dark); margin-bottom: 16px;
+    letter-spacing: normal;
+  }
+  .product-preview .product-category {
+    font-family: var(--font-base); font-size: 12.8px; font-weight: 700;
+    line-height: 1.4; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .product-preview p {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    line-height: 1.6; letter-spacing: normal;
+    color: rgba(255,255,255,0.85); margin-bottom: 20px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-base); font-size: 20px; font-weight: 600;
+    line-height: 1.4; letter-spacing: normal; color: var(--text-on-dark); margin: 40px 0 16px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-base); font-size: 12.8px; font-weight: 700;
+    line-height: 1.4; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-base); font-size: 13px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: #ffffff; color: var(--text-primary);
+    border: 1px solid var(--surface-gray); padding: 12px 16px; border-radius: 2px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: normal; outline: none;
+  }
+  .form-input:focus { border-color: var(--dark-secondary); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-base); font-size: 11px; color: var(--error); margin-top: 4px; }
+  .form-input::placeholder { color: var(--text-secondary); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-base); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .elevation-desc { font-family: var(--font-base); font-size: 11px; color: var(--text-secondary); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--dark-secondary); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base); font-size: 12px; font-weight: 600; letter-spacing: normal;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 40px 32px;
+    background: var(--dark-primary); color: var(--text-on-dark);
+    font-size: 13px; line-height: 1.6;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-base); font-size: 13px; font-weight: 700;
+    margin-bottom: 16px; letter-spacing: normal; color: var(--text-on-dark);
+    text-transform: uppercase;
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-base); color: var(--text-on-dark);
+    text-decoration: none; opacity: 0.6; margin-bottom: 8px; font-size: 13px;
+    letter-spacing: normal; font-weight: 400;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-base); font-size: 11px; opacity: 0.4;
+    font-weight: 400;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-light { padding: 56px 20px; }
+    .section-accent { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Minimal</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">Cart</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-section-title">Bean to Bar Chocolate</div>
+    <h1>チョコレートを、新しくする。</h1>
+    <p class="hero-lead">Minimal（mini-mal.tokyo）から抽出したデザイントークンのカタログ。Poppins + 游ゴシック体の欧文優先二層フォント、body weight 600、palt 未使用、#333333 ダーク CTA + radius 2px、#fcfcfc オフホワイト背景。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-outline-white" href="#">Shop Chocolate</a>
+      <a class="btn-outline-white" href="#">Our Story</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title">Colors</div>
+  <div class="section-subtitle">Color Palette</div>
+
+  <div class="color-group-label">Dark</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#262626"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Primary</div><div class="color-swatch-hex">#262626</div><div class="color-swatch-role">ダーク面・CTA 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Secondary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">CTA ボタン・テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Brand Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#366b93"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue-Green</div><div class="color-swatch-hex">#366b93</div><div class="color-swatch-role">Products ヒーロー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6eaab4"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal</div><div class="color-swatch-hex">#6eaab4</div><div class="color-swatch-role">セクション背景・プロモ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#578a3d"></div><div class="color-swatch-info"><div class="color-swatch-name">Green</div><div class="color-swatch-hex">#578a3d</div><div class="color-swatch-role">素材訴求セクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#707070"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#707070</div><div class="color-swatch-role">キャプション・価格</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d8d8d8"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Disabled</div><div class="color-swatch-hex">#d8d8d8</div><div class="color-swatch-role">無効状態テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク背景上の白テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fcfcfc; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#fcfcfc</div><div class="color-swatch-role">標準背景（オフホワイト）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">タグ・フィルター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eaeaea"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#eaeaea</div><div class="color-swatch-role">ボーダー・区切り線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">Typography</div>
+  <div class="section-subtitle">Typography -- Poppins + YuGothic / body weight 600 / palt off</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:36px; font-weight:600; line-height:1.4; letter-spacing:normal; color:var(--dark-primary);">チョコレートを、新しくする。</div>
+    <div class="type-meta">Poppins + YuGothic / 36px / 600 / line-height: 1.4 / letter-spacing: normal<span class="type-context">Hero Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:36px; font-weight:600; line-height:1.4; letter-spacing:3.24px; color:var(--dark-primary); text-transform:uppercase;">Products</div>
+    <div class="type-meta">Poppins / 36px / 600 / line-height: 1.4 / letter-spacing: 3.24px (0.09em)<span class="type-context">Section Header EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:24px; font-weight:600; line-height:1.4; letter-spacing:normal; color:var(--dark-primary);">カカオの個性を引き出す</div>
+    <div class="type-meta">Poppins + YuGothic / 24px / 600 / line-height: 1.4 / letter-spacing: normal<span class="type-context">Heading 2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:20px; font-weight:600; line-height:1.4; letter-spacing:normal; color:var(--dark-primary);">素材と製法について</div>
+    <div class="type-meta">Poppins + YuGothic / 20px / 600 / line-height: 1.4 / letter-spacing: normal<span class="type-context">Heading 3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:700; line-height:1.4; letter-spacing:normal; color:var(--dark-primary);">インドネシア産カカオ</div>
+    <div class="type-meta">Poppins + YuGothic / 16px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">Heading 4</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12.8px; font-weight:700; line-height:1.4; letter-spacing:1px; color:var(--text-secondary); text-transform:uppercase;">Chocolate Bar</div>
+    <div class="type-meta">Poppins / 12.8px / 700 / line-height: 1.4 / letter-spacing: 1px (0.078em)<span class="type-context">Heading 5 / Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:400; line-height:1.6; letter-spacing:normal; color:var(--text-primary);">カカオ豆からチョコレートになるまでのすべての工程を、東京の工房で行っています。産地ごとに異なるカカオの個性を最大限に引き出すため、焙煎温度や時間を一つひとつ調整。余計なものを加えず、カカオ本来の風味をお届けします。</div>
+    <div class="type-meta">Poppins + YuGothic / 14px / 400 / line-height: 1.6 / letter-spacing: normal<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:700; line-height:1.4; letter-spacing:normal; color:var(--text-primary);">Minimal Works Nutty</div>
+    <div class="type-meta">Poppins + YuGothic / 16px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">Product Name</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:13px; font-weight:400; line-height:1.6; letter-spacing:normal; color:var(--text-secondary);">&yen;1,350 (tax incl.)</div>
+    <div class="type-meta">Poppins + YuGothic / 13px / 400 / line-height: 1.6 / color: #707070<span class="type-context">Price / Caption</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-accent" id="product" style="background: var(--accent-blue-green);">
+<div class="section-accent-inner">
+  <div class="section-label">03 / Product</div>
+  <div class="section-title" style="letter-spacing: normal;">Product</div>
+  <div class="section-subtitle">Product Page Sample -- accent surface #366b93</div>
+  <div class="product-preview">
+    <div class="product-category">Chocolate Bar</div>
+    <h1>Minimal Works Nutty</h1>
+    <p>カカオ豆からチョコレートになるまでのすべての工程を東京の工房で行う Bean to Bar チョコレート。産地ごとに異なるカカオの個性を最大限に引き出し、余計なものを加えず、素材の力だけで仕上げています。</p>
+    <div class="product-heading">素材について</div>
+    <div class="product-sub">Ingredients</div>
+    <p>インドネシア・スラウェシ島のカカオ豆を使用。ナッツのような香ばしさと、ほのかな酸味が特徴です。カカオニブ、砂糖、カカオバターのみで構成。乳化剤・香料不使用。</p>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a class="btn-primary" href="#" style="background: var(--surface); color: var(--dark-primary);">カートに入れる</a>
+      <a class="btn-outline-white" href="#">詳しく見る</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title">Buttons</div>
+  <div class="section-subtitle">Buttons -- 5 variants / radius 2px micro-rounded or 0px flat or 100px pill</div>
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#">カートに入れる</a><div class="button-label">Primary / filled #333 / radius 2px</div></div>
+    <div class="button-item"><a class="btn-outline-dark" href="#">詳しく見る</a><div class="button-label">Outline Dark / border #333 / radius 0</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">Shop All</a><div class="button-label">Pill / border #000 / radius 100px</div></div>
+    <div class="button-item"><span class="tag">ナッティ</span><div class="button-label">Tag / bg #eee / radius 0</div></div>
+  </div>
+
+  <div style="background:var(--dark-primary); padding:32px; margin-top:16px;">
+    <div style="font-family:var(--font-base); font-size:12.8px; color:rgba(255,255,255,0.5); margin-bottom:16px; letter-spacing:1px; text-transform:uppercase;">Dark Surface</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-outline-white" href="#">Shop Chocolate</a><div class="button-label" style="color:rgba(255,255,255,0.5)">Outline White / border #fff / radius 0</div></div>
+      <div class="button-item"><a class="btn-dark-filled" href="#" style="background:var(--surface); color:var(--dark-primary); padding:8px 10px; border-radius:2px;">購入する</a><div class="button-label" style="color:rgba(255,255,255,0.5)">Inverted / bg #fcfcfc / radius 2px</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-light-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title" style="color:var(--dark-primary);">Cards</div>
+  <div class="section-subtitle" style="color:var(--text-secondary);">Product Cards -- shadow none / radius 0 / dark image</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Chocolate Bar</div>
+        <h3>Minimal Works Nutty</h3>
+        <div class="card-price">&yen;1,350</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: #3a2a1f;">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Chocolate Bar</div>
+        <h3>Minimal Works Fruity</h3>
+        <div class="card-price">&yen;1,350</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: #2a2a2a;">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Chocolate Spread</div>
+        <h3>チョコレートスプレッド</h3>
+        <div class="card-price">&yen;1,620</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: #1e1e1e;">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Gift Set</div>
+        <h3>ギフトボックス 3枚セット</h3>
+        <div class="card-price">&yen;4,050</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title">Forms</div>
+  <div class="section-subtitle">Forms -- radius 2px / focus: border #333333</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-base); font-size:12.8px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:1px; text-transform:uppercase;">Default</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-base); font-size:12.8px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:1px; text-transform:uppercase;">Focus</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区..." style="border-color:var(--dark-secondary);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="ご質問・ご要望をご記入ください" style="resize:vertical;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title">Elevation</div>
+  <div class="section-subtitle">Depth & Elevation -- shadow none / color surface contrast</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface); border:1px solid var(--surface-gray);">
+      <div class="elevation-label">Level 0 -- Surface</div>
+      <div class="elevation-desc">標準背景 #fcfcfc。影なし</div>
+    </div>
+    <div class="elevation-card" style="background:var(--dark-primary); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 1 -- Dark</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">ヒーロー・CTA・フッター #262626</div>
+    </div>
+    <div class="elevation-card" style="background:var(--accent-blue-green); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 2 -- Accent</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">プロダクトアクセント面 #366b93</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-light); border:1px solid var(--surface-gray);">
+      <div class="elevation-label">Level 3 -- Light</div>
+      <div class="elevation-desc">タグ・フィルター面 #eeeeee</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title">Layout</div>
+  <div class="section-subtitle">Layout -- spacing scale & grid</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px; height:32px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px; height:32px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px; height:32px;"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:30px; height:32px;"></div><div class="spacing-value">30px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--dark-primary); color:var(--text-on-dark);">DARK #262626</div>
+    <div class="layout-box" style="background:var(--accent-blue-green); color:var(--text-on-dark);">ACCENT #366b93</div>
+    <div class="layout-box" style="background:var(--surface); color:var(--text-primary); border:1px solid var(--surface-gray);">SURFACE #fcfcfc</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Chocolate</h4>
+      <a href="#">Chocolate Bar</a>
+      <a href="#">Chocolate Spread</a>
+      <a href="#">Chocolate Sand</a>
+      <a href="#">Gift Set</a>
+    </div>
+    <div class="footer-col">
+      <h4>Gateau</h4>
+      <a href="#">Rich Gateau Chocolat</a>
+      <a href="#">Cheesecake</a>
+      <a href="#">Raisin Sand</a>
+    </div>
+    <div class="footer-col">
+      <h4>Experience</h4>
+      <a href="#">Workshop</a>
+      <a href="#">Cafe</a>
+      <a href="#">Store</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="#">About Minimal</a>
+      <a href="#">Bean to Bar</a>
+      <a href="#">Contact</a>
+      <a href="#">Careers</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from mini-mal.tokyo DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    Poppins (Google Fonts) + 游ゴシック体 / body weight 600 / font-feature-settings: normal
+  </div>
+</footer>
+
+</body>
+</html>
