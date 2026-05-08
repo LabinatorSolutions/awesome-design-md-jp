@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (92 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (95 sites)</a>
 </p>
 
 <table>
@@ -156,6 +156,14 @@
 <td align="center"><strong>Vermicular</strong><br><img src="design-md/vermicular/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TRUNK(HOTEL)</strong><br><img src="design-md/trunk-hotel/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>アマン東京</strong><br><img src="design-md/aman-tokyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>土屋鞄</strong><br><img src="design-md/tsuchiya-kaban/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>HARIO</strong><br><img src="design-md/hario/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>能作</strong><br><img src="design-md/nousaku/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Aesop</strong><br><img src="design-md/aesop/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOMORROWLAND</strong><br><img src="design-md/tomorrowland/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カルビー</strong><br><img src="design-md/calbee/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -310,11 +318,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Tsuchiya Kaban (土屋鞄製造所)](https://tsuchiya-kaban.jp/) | Leather Goods / Heritage Craft | [DESIGN.md](design-md/tsuchiya-kaban/DESIGN.md) | [preview.html](design-md/tsuchiya-kaban/preview.html) |
 | [HARIO (ハリオ)](https://www.hario.com/) | Glass / Coffee Equipment | [DESIGN.md](design-md/hario/DESIGN.md) | [preview.html](design-md/hario/preview.html) |
 | [Nousaku (能作)](https://www.nousaku.co.jp/) | Tin Craft / Heritage Manufacturing | [DESIGN.md](design-md/nousaku/DESIGN.md) | [preview.html](design-md/nousaku/preview.html) |
+| [Aesop (イソップ)](https://www.aesop.com/jp/) | Luxury Skincare / Beauty | [DESIGN.md](design-md/aesop/DESIGN.md) | [preview.html](design-md/aesop/preview.html) |
+| [TOMORROWLAND (トゥモローランド)](https://www.tomorrowland.co.jp/) | Fashion / Apparel | [DESIGN.md](design-md/tomorrowland/DESIGN.md) | [preview.html](design-md/tomorrowland/preview.html) |
+| [Calbee (カルビー)](https://www.calbee.co.jp/) | Consumer Food / Corporate | [DESIGN.md](design-md/calbee/DESIGN.md) | [preview.html](design-md/calbee/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (92 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (95 sites)</a>
 </p>
 
 <table>
@@ -441,9 +452,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>HARIO</strong><br><img src="design-md/hario/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>能作</strong><br><img src="design-md/nousaku/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Aesop</strong><br><img src="design-md/aesop/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOMORROWLAND</strong><br><img src="design-md/tomorrowland/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Calbee</strong><br><img src="design-md/calbee/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
