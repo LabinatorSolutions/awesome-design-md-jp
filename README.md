@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (86 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (89 sites)</a>
 </p>
 
 <table>
@@ -153,9 +153,9 @@
 <tr>
 <td align="center"><strong>AKOMEYA</strong><br><img src="design-md/akomeya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>森美術館</strong><br><img src="design-md/mori-art-museum/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Vermicular</strong><br><img src="design-md/vermicular/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TRUNK(HOTEL)</strong><br><img src="design-md/trunk-hotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>アマン東京</strong><br><img src="design-md/aman-tokyo/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -304,11 +304,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [sacai (サカイ)](https://www.sacai.jp/) | Fashion / Apparel | [DESIGN.md](design-md/sacai/DESIGN.md) | [preview.html](design-md/sacai/preview.html) |
 | [AKOMEYA TOKYO (アコメヤ トーキョー)](https://www.akomeya.jp/) | Lifestyle / Specialty Grocery | [DESIGN.md](design-md/akomeya/DESIGN.md) | [preview.html](design-md/akomeya/preview.html) |
 | [Mori Art Museum (森美術館)](https://www.mori.art.museum/jp/) | Contemporary Art Museum | [DESIGN.md](design-md/mori-art-museum/DESIGN.md) | [preview.html](design-md/mori-art-museum/preview.html) |
+| [Vermicular (バーミキュラ)](https://www.vermicular.jp/) | Cookware / Product Design | [DESIGN.md](design-md/vermicular/DESIGN.md) | [preview.html](design-md/vermicular/preview.html) |
+| [TRUNK(HOTEL)](https://trunk-hotel.com/) | Boutique Hotel / Hospitality | [DESIGN.md](design-md/trunk-hotel/DESIGN.md) | [preview.html](design-md/trunk-hotel/preview.html) |
+| [Aman Tokyo (アマン東京)](https://www.aman.com/ja-jp/resorts/aman-tokyo) | Luxury Hotel / Hospitality | [DESIGN.md](design-md/aman-tokyo/DESIGN.md) | [preview.html](design-md/aman-tokyo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (86 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (89 sites)</a>
 </p>
 
 <table>
@@ -427,9 +430,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>AKOMEYA</strong><br><img src="design-md/akomeya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Mori Art Museum</strong><br><img src="design-md/mori-art-museum/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>Vermicular</strong><br><img src="design-md/vermicular/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TRUNK(HOTEL)</strong><br><img src="design-md/trunk-hotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Aman Tokyo</strong><br><img src="design-md/aman-tokyo/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

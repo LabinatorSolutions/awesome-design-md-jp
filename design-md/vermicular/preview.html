@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Vermicular</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400&family=Shippori+Mincho:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Vermicular Color Tokens（実測値）=== */
+    --vm-text: #222426;
+    --vm-heading: #46413c;
+    --vm-muted: #beb9b4;
+    --vm-dark: #413c37;
+    --vm-red: #c11920;
+
+    --vm-bg: #faf7f5;
+    --vm-surface: #ecebe7;
+    --vm-overlay: rgba(236, 236, 237, 0.7);
+    --vm-white: #ffffff;
+
+    /* === Typography === */
+    --font-mincho: "Shippori Mincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HGS明朝B", "ＭＳ Ｐ明朝", serif, YuMincho, 游明朝体, 游明朝, "Yu Mincho", Meiryo, メイリオ, sans-serif;
+    --font-serif-en: "Crimson Pro", serif;
+    --font-gothic: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, 游ゴシック体, "ヒラギノ角ゴ Pro W3", メイリオ, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--vm-bg);
+    color: var(--vm-text);
+    font-family: var(--font-gothic);
+    font-size: 13px; font-weight: 300; line-height: 1.67;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--vm-bg);
+    border-bottom: 1px solid var(--vm-muted);
+  }
+  .nav-brand {
+    font-family: var(--font-gothic);
+    font-size: 26px; font-weight: 300;
+    color: var(--vm-text);
+    text-decoration: none;
+    letter-spacing: normal;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mincho);
+    font-size: 13.5px; font-weight: 300;
+    color: var(--vm-text);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links a:hover { color: var(--vm-muted); }
+  .nav-cta {
+    font-family: var(--font-serif-en);
+    font-size: 10.8px; font-weight: 300;
+    color: var(--vm-text);
+    background: var(--vm-bg);
+    border-radius: 27px;
+    padding: 6px 20px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-cta:hover { background: var(--vm-heading); color: var(--vm-bg); }
+
+  /* HERO */
+  .hero {
+    padding: 96px 40px 80px;
+    text-align: center;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-serif-en);
+    font-size: 12.6px; font-weight: 300;
+    color: var(--vm-muted);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+  .hero h1 {
+    font-family: var(--font-mincho);
+    font-size: 25.2px; font-weight: 300;
+    color: var(--vm-heading);
+    margin-bottom: 24px;
+    line-height: 1.78;
+    letter-spacing: 0.2em;
+  }
+  .hero p {
+    font-family: var(--font-mincho);
+    font-size: 13.5px; font-weight: 300;
+    line-height: 1.67;
+    letter-spacing: 0.04em;
+    color: var(--vm-text);
+    max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--vm-bg); color: var(--vm-text);
+    padding: 8px 28px;
+    border: 1px solid var(--vm-muted);
+    border-radius: 27px;
+    font-family: var(--font-serif-en);
+    font-size: 10.8px; font-weight: 300;
+    text-decoration: none; cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s;
+  }
+  .btn-pill:hover { background: var(--vm-heading); color: var(--vm-bg); border-color: var(--vm-heading); }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-serif-en);
+    font-size: 12.6px; font-weight: 300;
+    color: var(--vm-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-family: var(--font-mincho);
+    font-size: 25.2px; font-weight: 300;
+    color: var(--vm-heading);
+    margin-bottom: 48px;
+    line-height: 1.67;
+    letter-spacing: 0.2em;
+  }
+  .section-divider { border: none; height: 1px; background: var(--vm-muted); margin: 0; opacity: 0.4; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: var(--vm-white); overflow: hidden; border-radius: 4px; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name {
+    font-family: var(--font-serif-en);
+    font-size: 11px; font-weight: 300;
+    margin-bottom: 4px; color: var(--vm-heading);
+    letter-spacing: 0.05em;
+  }
+  .color-swatch-hex { font-size: 11px; color: var(--vm-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--vm-muted); margin-top: 4px; font-family: var(--font-mincho); letter-spacing: 0.04em; }
+  .color-group-label {
+    font-family: var(--font-serif-en);
+    font-size: 12px; font-weight: 300;
+    color: var(--vm-muted);
+    margin: 24px 0 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid rgba(190,185,180,0.3); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--vm-muted); margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--vm-heading); color: var(--vm-bg); font-size: 10px; padding: 2px 8px; margin-left: 8px; font-family: var(--font-serif-en); letter-spacing: 0.05em; }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
+  .product-card {
+    background: transparent;
+    text-decoration: none; color: var(--vm-text);
+    display: flex; flex-direction: column;
+  }
+  .product-card-image {
+    aspect-ratio: 1/1;
+    background: linear-gradient(135deg, var(--vm-heading), var(--vm-dark));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--vm-bg);
+    font-family: var(--font-serif-en);
+    font-weight: 300; font-size: 21.6px;
+    letter-spacing: 0.025em;
+  }
+  .product-card-image.b { background: linear-gradient(135deg, var(--vm-surface), var(--vm-bg)); color: var(--vm-heading); }
+  .product-card-image.c { background: linear-gradient(135deg, #c11920, #8a1118); color: var(--vm-bg); }
+  .product-card-body { padding: 20px 0 0; }
+  .product-card h3 {
+    font-family: var(--font-serif-en);
+    font-size: 19.8px; font-weight: 300;
+    line-height: 1.42; margin-bottom: 4px;
+    color: var(--vm-text);
+    letter-spacing: 0.025em;
+  }
+  .product-card .sub {
+    font-family: var(--font-mincho);
+    font-size: 13.5px; font-weight: 300;
+    line-height: 1.67; color: var(--vm-heading);
+    letter-spacing: 0.04em;
+  }
+  .product-card p { font-size: 13px; font-weight: 300; line-height: 1.67; color: var(--vm-muted); margin-top: 4px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--vm-muted); margin-top: 12px; }
+
+  /* FEATURE COPY */
+  .feature-copy {
+    padding: 96px 40px;
+    background: var(--vm-heading);
+    color: var(--vm-bg);
+    text-align: center;
+  }
+  .feature-copy-large {
+    font-family: var(--font-mincho);
+    font-size: 25.2px; font-weight: 300;
+    line-height: 1.78;
+    color: var(--vm-bg);
+    margin-bottom: 16px;
+    letter-spacing: 0.2em;
+  }
+  .feature-copy-sub {
+    font-family: var(--font-serif-en);
+    font-size: 12.6px; font-weight: 300;
+    line-height: 1.67;
+    color: var(--vm-muted);
+    letter-spacing: 0.05em;
+  }
+  .feature-cta {
+    margin-top: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--vm-bg);
+    padding: 8px 28px;
+    border: 1px solid var(--vm-bg);
+    border-radius: 27px;
+    font-family: var(--font-serif-en);
+    font-size: 10.8px; font-weight: 300;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-mincho);
+    font-size: 12px; font-weight: 300;
+    color: var(--vm-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .form-input {
+    width: 100%; background: var(--vm-white);
+    color: var(--vm-text);
+    border: 1px solid var(--vm-muted);
+    padding: 10px 14px;
+    border-radius: 0;
+    font-family: var(--font-gothic);
+    font-size: 13px; font-weight: 300;
+    line-height: 1.67;
+    letter-spacing: normal;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--vm-heading); }
+  .form-input--error { border-color: var(--vm-red); }
+  .form-state-label { font-size: 11px; color: var(--vm-muted); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--vm-heading); height: 32px; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--vm-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 40px;
+    background: var(--vm-dark);
+    color: var(--vm-muted);
+    text-align: center;
+    font-family: var(--font-mincho);
+    font-size: 12px; font-weight: 300; line-height: 1.67;
+    letter-spacing: 0.04em;
+  }
+  .footer a { color: var(--vm-bg); text-decoration: underline; }
+  .footer p { margin-bottom: 4px; }
+
+  @media (max-width: 769px) {
+    .hero h1, .feature-copy-large { font-size: 20px; letter-spacing: 0.15em; }
+    .section-title { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .feature-copy { padding: 64px 20px; }
+    .product-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">VERMICULAR</a>
+  <ul class="nav-links">
+    <li><a href="#colors">製品ラインナップ</a></li>
+    <li><a href="#typography">レシピ</a></li>
+    <li><a href="#products">私たちについて</a></li>
+    <li><a href="#forms">お知らせ</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ONLINE SHOP</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">DESIGN SYSTEM PREVIEW</div>
+  <h1>手料理と生きよう。</h1>
+  <p>Vermicular（vermicular.jp）から抽出したデザイントークンのカタログ。明朝体の見出し＋Crimson Pro の英文、Yu Gothic の極細ウェイト、温もりのあるオフホワイト背景で構成された、日本の手仕事を体現するプロダクトサイト。実サイトの computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-pill" href="#">ONLINE SHOP</a>
+    <a class="btn-pill" href="#">VERMICULAR VILLAGE</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand / Foreground</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222426"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#222426</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#46413c"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal Brown</div><div class="color-swatch-hex">#46413c</div><div class="color-swatch-role">見出し・セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#413c37"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Brown</div><div class="color-swatch-hex">#413c37</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#beb9b4"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Gray</div><div class="color-swatch-hex">#beb9b4</div><div class="color-swatch-role">キャプション・補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c11920"></div><div class="color-swatch-info"><div class="color-swatch-name">Vermicular Red</div><div class="color-swatch-hex">#c11920</div><div class="color-swatch-role">アクセント（限定使用）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface / Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#faf7f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Off-white</div><div class="color-swatch-hex">#faf7f5</div><div class="color-swatch-role">メイン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ecebe7"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Surface</div><div class="color-swatch-hex">#ecebe7</div><div class="color-swatch-role">代替面色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">フィルター切替背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #eee;"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・フォーム背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / Typography（実測値）</div>
+  <h2 class="section-title">タイポグラフィ</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:37.8px; font-weight:300; line-height:1.67; color:#46413c; letter-spacing:0.2em;">目指し続けたのは、<br>世界一、素材本来の味を<br>引き出す鍋。</div>
+    <div class="type-meta">A1 Mincho (→ Shippori Mincho) / 37.8px / 300 / line-height: 1.67 / letter-spacing: 0.2em<span class="type-context">HERO H2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:25.2px; font-weight:300; line-height:1.67; color:#46413c; letter-spacing:0.2em;">手間暇を惜しまずに丁寧に作った製品を</div>
+    <div class="type-meta">A1 Mincho / 25.2px / 300 / line-height: 1.67 / letter-spacing: 0.2em<span class="type-context">SECTION H2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:12.6px; font-weight:300; line-height:1.67; color:#46413c; letter-spacing:0.1em;">コンセプト</div>
+    <div class="type-meta">A1 Mincho / 12.6px / 300 / letter-spacing: 0.1em<span class="type-context">OVERLINE LABEL</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-serif-en); font-size:21.6px; font-weight:300; line-height:1.25; color:#222426; letter-spacing:0.025em;">Oven Pot 2</div>
+    <div class="type-meta">Crimson Pro / 21.6px / 300 / line-height: 1.25 / letter-spacing: 0.025em<span class="type-context">PRODUCT H3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-serif-en); font-size:19.8px; font-weight:300; line-height:1.42; color:#222426; letter-spacing:normal;">Repair Program</div>
+    <div class="type-meta">Crimson Pro / 19.8px / 300 / line-height: 1.42<span class="type-context">SUB H3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:13.5px; font-weight:300; line-height:1.67; color:#222426; letter-spacing:0.04em; max-width:640px;">バーミキュラは、愛知県名古屋市で1936年に創業した町工場から生まれた鋳物ホーロー鍋ブランドです。「手料理と生きよう。」を掲げ、素材本来の味を最大限に引き出す無水調理を可能にする精密な鋳造技術が特徴です。日本の手仕事の精神を、現代のキッチンに届けています。</div>
+    <div class="type-meta">A1 Mincho / 13.5px / 300 / line-height: 1.67 / letter-spacing: 0.04em<span class="type-context">BODY</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:13px; font-weight:300; line-height:1.67; color:#222426; letter-spacing:normal; max-width:640px;">製品仕様や技術的な詳細は、ゴシック体で記述されます。精密な数値データやスペック表に使用。</div>
+    <div class="type-meta">Yu Gothic Medium / 13px / 300 / line-height: 1.67 / letter-spacing: normal<span class="type-context">BODY GOTHIC</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-serif-en); font-size:12.6px; font-weight:300; line-height:1.67; color:#beb9b4; letter-spacing:normal;">VERMICULAR VILLAGE（ 愛知・名古屋 ）</div>
+    <div class="type-meta">Crimson Pro / 12.6px / 300 / color: #beb9b4<span class="type-context">CAPTION EN</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FEATURE COPY -->
+<section style="background: #46413c;">
+  <div class="feature-copy">
+    <div class="feature-copy-large">一生使ってほしいから、<br>一生サポートします</div>
+    <div class="feature-copy-sub">VERMICULAR LIFETIME REPAIR GUARANTEE</div>
+    <a class="feature-cta" href="#">ONLINE SHOP</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / Products</div>
+  <h2 class="section-title">製品ラインナップ</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">Oven Pot 2</div>
+      <div class="product-card-body">
+        <h3>Oven Pot 2</h3>
+        <div class="sub">オーブンポット 2</div>
+        <p>素材本来の味を引き出す、究極の無水調理鍋</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image b">Frying Pan</div>
+      <div class="product-card-body">
+        <h3>Frying Pan</h3>
+        <div class="sub">フライパン</div>
+        <p>鋳物ホーローの蓄熱性で、瞬間蒸発を実現</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image c">Rice Pot</div>
+      <div class="product-card-body">
+        <h3>Rice Pot</h3>
+        <div class="sub">ライスポット</div>
+        <p>世界一おいしいご飯を目指した、炊飯専用鍋</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / Buttons</div>
+  <h2 class="section-title">ボタン</h2>
+
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-pill" href="#">ONLINE SHOP</a>
+      <div class="button-label">PILL CTA<br>radius 27px / Crimson Pro 10.8px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-pill" style="background:var(--vm-heading); color:var(--vm-bg); border-color:var(--vm-heading);" href="#">VIEW DETAIL</a>
+      <div class="button-label">PILL DARK<br>bg #46413c / radius 27px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-pill" style="border-color:var(--vm-muted); color:var(--vm-muted);" href="#">SOLD OUT</a>
+      <div class="button-label">DISABLED<br>muted border + text</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / Forms</div>
+  <h2 class="section-title">フォーム</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+    <div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" placeholder="example@vermicular.jp">
+        <div class="form-state-label">DEFAULT — border #beb9b4</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input form-input--focus" value="example@vermicular.jp">
+        <div class="form-state-label">FOCUS — border #46413c</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label" style="color:#c11920;">メールアドレス</label>
+        <input class="form-input form-input--error" value="invalid email">
+        <div class="form-state-label" style="color:#c11920;">ERROR — border #c11920</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">06 / Elevation & Radius</div>
+  <h2 class="section-title">深度と角丸</h2>
+
+  <p style="margin-bottom: 24px; color: var(--vm-muted); max-width: 640px; font-family: var(--font-mincho); letter-spacing: 0.04em;">Vermicular はフラットデザインが基調。影は使わず、面色の切替と罫線でセクションを分ける。唯一の例外は ONLINE SHOP の pill ボタン（radius 27px）。</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px;">
+    <div style="padding: 24px; background: var(--vm-white); border: 1px solid var(--vm-muted); border-radius: 0;">
+      <div style="font-family:var(--font-serif-en); font-size:12px; font-weight:300; letter-spacing:0.05em; margin-bottom:8px;">RADIUS 0</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--vm-muted);">カード・フォーム（角丸なし）</div>
+    </div>
+    <div style="padding: 24px; background: var(--vm-white); border: 1px solid var(--vm-muted); border-radius: 27px;">
+      <div style="font-family:var(--font-serif-en); font-size:12px; font-weight:300; letter-spacing:0.05em; margin-bottom:8px;">RADIUS 27</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--vm-muted);">CTA ボタン（pill 形状）</div>
+    </div>
+    <div style="padding: 24px; background: var(--vm-surface); border: none; border-radius: 0;">
+      <div style="font-family:var(--font-serif-en); font-size:12px; font-weight:300; letter-spacing:0.05em; margin-bottom:8px;">FLAT SURFACE</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--vm-muted);">面色の切替で奥行きを表現</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-eyebrow">07 / Layout</div>
+  <h2 class="section-title">レイアウト</h2>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px"></div><div class="spacing-value">96px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>このページは Vermicular 公式サイト（vermicular.jp）から抽出した DESIGN.md のショーケース。</p>
+  <p>A1 Mincho + Crimson Pro + Yu Gothic / weight 300 / palt on / letter-spacing 0.2em 見出し / warm off-white #faf7f5</p>
+  <p style="margin-top: 16px;">© VERMICULAR / 本プレビューは awesome-design-md-jp の参照サンプルです。</p>
+</footer>
+
+</body>
+</html>
