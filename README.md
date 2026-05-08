@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (116 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (119 sites)</a>
 </p>
 
 <table>
@@ -193,9 +193,9 @@
 <tr>
 <td align="center"><strong>HERALBONY</strong><br><img src="design-md/heralbony/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>北欧暮らし</strong><br><img src="design-md/hokuohkurashi/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>cowcamo</strong><br><img src="design-md/cowcamo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FABRIC TOKYO</strong><br><img src="design-md/fabrictokyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>objcts.io</strong><br><img src="design-md/objcts-io/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -374,11 +374,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [NOT A HOTEL](https://notahotel.com/) | Architecture / Hospitality | [DESIGN.md](design-md/notahotel/DESIGN.md) | [preview.html](design-md/notahotel/preview.html) |
 | [HERALBONY (ヘラルボニー)](https://www.heralbony.com/) | Art / Social Enterprise | [DESIGN.md](design-md/heralbony/DESIGN.md) | [preview.html](design-md/heralbony/preview.html) |
 | [北欧、暮らしの道具店](https://hokuohkurashi.com/) | Lifestyle EC / Media Commerce | [DESIGN.md](design-md/hokuohkurashi/DESIGN.md) | [preview.html](design-md/hokuohkurashi/preview.html) |
+| [cowcamo（カウカモ）](https://cowcamo.jp/) | Real Estate / Marketplace | [DESIGN.md](design-md/cowcamo/DESIGN.md) | [preview.html](design-md/cowcamo/preview.html) |
+| [FABRIC TOKYO](https://fabric-tokyo.com/) | D2C Fashion / Custom Order | [DESIGN.md](design-md/fabrictokyo/DESIGN.md) | [preview.html](design-md/fabrictokyo/preview.html) |
+| [objcts.io](https://objcts.io/) | D2C Leather Goods | [DESIGN.md](design-md/objcts-io/DESIGN.md) | [preview.html](design-md/objcts-io/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (116 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (119 sites)</a>
 </p>
 
 <table>
@@ -537,9 +540,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>HERALBONY</strong><br><img src="design-md/heralbony/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>北欧暮らし</strong><br><img src="design-md/hokuohkurashi/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>cowcamo</strong><br><img src="design-md/cowcamo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FABRIC TOKYO</strong><br><img src="design-md/fabrictokyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>objcts.io</strong><br><img src="design-md/objcts-io/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

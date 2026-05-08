@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: FABRIC TOKYO（ファブリックトーキョー）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --primary-dark: #333333;
+    --black: #000000;
+    --white: #ffffff;
+    --surface-gray: #edf0f2;
+    --secondary-gray: #9ca3af;
+    --border: #d1d5db;
+    --muted-text: #95a0a5;
+    --info-surface: #eff6ff;
+    --text-primary: #333333;
+    --text-secondary: #95a0a5;
+    --bg-primary: #ffffff;
+    --bg-secondary: #edf0f2;
+    --bg-dark: #000000;
+
+    /* === Semantic 推奨値 === */
+    --danger: #dc2626;
+    --success: #16a34a;
+    --warning: #d97706;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.10);
+
+    /* === Fonts === */
+    /* 実サイトは Lato + ヒラギノ角ゴシック Pro のフォールバック */
+    /* preview では Google Fonts の Lato + Noto Sans JP で代替 */
+    --font-base: "Lato", "Noto Sans JP", "Hiragino Kaku Gothic Pro", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 9999px;
+    --radius-outline-pill: 150px;
+
+    /* === Spacing (8px base) === */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-8: 48px;
+    --space-10: 64px;
+    --space-12: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-6); height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--primary-dark); text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 12.5px; font-weight: 500;
+    color: var(--primary-dark); text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.5; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--primary-dark); color: var(--white);
+    padding: 8px 20px; border-radius: var(--radius-pill);
+    font-size: 12.5px; font-weight: 500; letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.7; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 120px var(--space-6) 100px;
+    text-align: center;
+    background: var(--black);
+    color: var(--white);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(51,51,51,0.95) 0%, rgba(0,0,0,0.85) 100%);
+    z-index: 1;
+  }
+  .hero > * { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 12.5px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: var(--space-5);
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.075em;
+    font-feature-settings: "palt";
+    color: var(--white); margin-bottom: var(--space-4);
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.7);
+    max-width: 600px; margin: 0 auto var(--space-6);
+  }
+  .hero-buttons { display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--primary-dark); color: var(--white);
+    padding: 12px 32px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.7; }
+  .btn-primary-white {
+    display: inline-block; background: var(--white); color: var(--primary-dark);
+    padding: 12px 32px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary-white:hover { opacity: 0.7; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--primary-dark);
+    padding: 12px 32px; border-radius: var(--radius-outline-pill);
+    border: 1px solid var(--primary-dark);
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline:hover { background: rgba(51,51,51,0.05); }
+  .btn-outline-white {
+    display: inline-block; background: transparent; color: var(--white);
+    padding: 12px 32px; border-radius: var(--radius-outline-pill);
+    border: 1px solid var(--white);
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+  /* SECTIONS */
+  .section { padding: var(--space-10) var(--space-6); max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 12.5px; font-weight: 500; color: var(--muted-text);
+    text-transform: uppercase; margin-bottom: var(--space-2); letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 400; line-height: 2.0;
+    letter-spacing: 0.075em;
+    margin-bottom: var(--space-6);
+    color: var(--text-primary);
+  }
+  .section-title-en {
+    font-size: 18.75px; font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-6);
+    color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .section-gray { background: var(--bg-secondary); padding: var(--space-10) var(--space-6); }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-dark { background: var(--black); padding: var(--space-10) var(--space-6); color: var(--white); }
+  .section-dark .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: var(--text-primary); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 12px; color: var(--muted-text); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-size: 11px; color: var(--muted-text); margin-top: 3px; letter-spacing: 0.03em; }
+  .color-group-label { font-size: 13px; font-weight: 500; color: var(--muted-text); margin: 24px 0 10px; letter-spacing: 0.05em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--muted-text); margin-top: 8px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--bg-secondary); color: var(--muted-text); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; letter-spacing: 0; }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .product-card {
+    background: var(--surface-gray); border-radius: var(--radius-xl);
+    padding: var(--space-5); text-align: center;
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .product-card:hover { box-shadow: var(--elevation-2); }
+  .product-card-image {
+    width: 100%; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #d1d5db 0%, #edf0f2 100%);
+    border-radius: var(--radius-lg); margin-bottom: var(--space-4);
+  }
+  .product-card h3 {
+    font-size: 15px; font-weight: 400;
+    letter-spacing: 0.05em; color: var(--text-primary);
+    margin-bottom: var(--space-2);
+  }
+  .product-card .price {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em; color: var(--muted-text);
+  }
+  .product-card .price em {
+    font-style: normal; font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* ARTICLE / ORDER FLOW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 20px; font-weight: 400; line-height: 2.0;
+    letter-spacing: 0.075em; font-feature-settings: "palt";
+    margin-bottom: var(--space-4);
+  }
+  .article-preview h2 {
+    font-size: 18.75px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin: 24px 0 12px;
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.05em;
+    margin-bottom: var(--space-4); color: var(--text-primary);
+  }
+  .article-callout {
+    background: var(--info-surface);
+    padding: 20px 24px; border-radius: var(--radius-md);
+    margin: 24px 0; font-size: 14px; line-height: 1.8; letter-spacing: 0.05em;
+    border-left: 3px solid var(--primary-dark);
+  }
+
+  /* TAG BUTTONS */
+  .tag-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .tag-active {
+    display: inline-block; background: var(--primary-dark); color: var(--white);
+    padding: 6px 18px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.05em; cursor: pointer; transition: opacity 0.15s;
+  }
+  .tag-active:hover { opacity: 0.7; }
+  .tag-inactive {
+    display: inline-block; background: var(--secondary-gray); color: var(--white);
+    padding: 6px 18px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.05em; cursor: pointer; transition: opacity 0.15s;
+  }
+  .tag-inactive:hover { opacity: 0.7; }
+
+  /* BUTTON SHOWCASE */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--muted-text); margin-top: 8px; letter-spacing: 0.05em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: var(--space-5);
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #d1d5db 0%, #edf0f2 100%);
+    border-radius: var(--radius-lg); margin-bottom: var(--space-4);
+  }
+  .card h3 {
+    font-size: 15px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em; margin-bottom: var(--space-2);
+  }
+  .card p { font-size: 14px; color: var(--muted-text); line-height: 1.5; letter-spacing: 0.05em; }
+  .card-link {
+    font-size: 13px; color: var(--text-primary); text-decoration: underline;
+    margin-top: 12px; display: inline-block; letter-spacing: 0.05em;
+  }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.05em;
+  }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 12px 16px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base); font-size: 14px; letter-spacing: 0.05em;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--muted-text); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.12);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+  }
+  .form-state-label { font-size: 12px; color: var(--muted-text); margin-top: 6px; font-family: var(--font-mono); letter-spacing: 0; }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; letter-spacing: 0.03em; }
+  .form-submit-row { margin-top: var(--space-5); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-xl);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--border);
+  }
+  .elevation-label { font-size: 14px; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--muted-text); word-break: break-all; line-height: 1.5; letter-spacing: 0; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--primary-dark); border-radius: 2px; margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted-text); letter-spacing: 0; }
+  .spacing-name { font-size: 12px; font-weight: 500; color: var(--text-primary); letter-spacing: 0.05em; }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--primary-dark);
+    margin-bottom: 8px;
+  }
+
+  /* WIDTH BARS */
+  .width-bar { height: 32px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--primary-dark); border-radius: 7px; opacity: 0.15; }
+  .width-bar-label { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; letter-spacing: 0.05em; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--muted-text); letter-spacing: 0; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px var(--space-6);
+    text-align: center;
+    background: var(--black);
+    color: rgba(255,255,255,0.5);
+    font-family: var(--font-base);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .footer-brand {
+    font-size: 14px; font-weight: 700;
+    color: var(--white); letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+  }
+  .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-5); }
+  .footer-links a {
+    font-size: 11px; font-weight: 400;
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.2); margin: var(--space-5) auto; }
+
+  @media (max-width: 769px) {
+    .hero { padding: 80px 20px 64px; }
+    .hero h1 { font-size: 22px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .section-title { font-size: 18px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== STICKY NAV ===== -->
+<nav class="nav">
+  <a class="nav-brand" href="#">FABRIC TOKYO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ORDER NOW</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-eyebrow">Custom Order Suit &amp; Shirt</div>
+  <h1>あなただけの一着を、<br>オンラインから。</h1>
+  <p>FABRIC TOKYO のデザインシステムをカタログ化したプレビューです。computed style 実測値に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary-white" href="#">オーダーを始める</a>
+    <a class="btn-outline-white" href="#">来店予約</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 01 COLORS ===== -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Primary</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Primary Dark</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">テキスト・CTA 背景・タグ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #d1d5db"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・CTA テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#edf0f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#edf0f2</div><div class="color-swatch-role">商品カード背景・セクション面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eff6ff"></div><div class="color-swatch-info"><div class="color-swatch-name">Info Surface</div><div class="color-swatch-hex">#eff6ff</div><div class="color-swatch-role">案内・注意書き面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#95a0a5"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted Text</div><div class="color-swatch-hex">#95a0a5</div><div class="color-swatch-role">補足テキスト・プレースホルダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9ca3af"></div><div class="color-swatch-info"><div class="color-swatch-name">Secondary Gray</div><div class="color-swatch-hex">#9ca3af</div><div class="color-swatch-role">非アクティブタグ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d1d5db"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#d1d5db</div><div class="color-swatch-role">区切り線・入力欄ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc2626"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#dc2626</div><div class="color-swatch-role">エラー・削除（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#16a34a"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#16a34a</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d97706"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d97706</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 02 TYPOGRAPHY ===== -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:400; line-height:2.0; letter-spacing:0.075em; font-feature-settings:'palt';">あなただけの一着を、オンラインから。 &mdash; H2 Main</div>
+    <div class="type-meta">20px / 400 / line-height 2.0 / letter-spacing 0.075em / palt: あり<span class="type-context">メイン見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18.75px; font-weight:700; line-height:1.5; letter-spacing:0.1em; text-transform:uppercase;">PICKUP &mdash; H2 Section (English)</div>
+    <div class="type-meta">18.75px / 700 / line-height 1.5 / letter-spacing 0.1em / uppercase<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:15px; font-weight:400; line-height:1.5; letter-spacing:0.05em;">カスタムオーダースーツ &mdash; H3 Product</div>
+    <div class="type-meta">15px / 400 / line-height 1.5 / letter-spacing 0.05em<span class="type-context">商品名</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.05em; color:var(--text-primary);">本文テキスト &mdash; FABRIC TOKYO は体型データをもとに、あなただけの一着をつくるカスタムオーダーブランドです。日本語の組版において letter-spacing: 0.05em をボディにも適用するのが本ブランドの大きな特徴。ゆとりあるトラッキングがラグジュアリーな印象を生み出します。</div>
+    <div class="type-meta">14px / 400 / line-height 1.5 / letter-spacing 0.05em<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12.5px; font-weight:500; line-height:1.5; letter-spacing:0.1em; text-transform:uppercase;">ORDER &middot; SUIT &middot; SHIRT &middot; CASUAL &mdash; Nav</div>
+    <div class="type-meta">12.5px / 500 / line-height 1.5 / letter-spacing 0.1em / uppercase<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.05em; color:var(--muted-text);">補足テキスト &mdash; お届けは約4週間後となります。採寸データは保存され、次回以降のオーダーにもご利用いただけます。</div>
+    <div class="type-meta">14px / 400 / line-height 1.5 / letter-spacing 0.05em / color #95a0a5<span class="type-context">Muted</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:400; line-height:1.5; letter-spacing:0.1em; color:rgba(255,255,255,0.5); background:var(--black); padding:12px 16px; border-radius:var(--radius-md);">FABRIC TOKYO &copy; 2025 &mdash; Footer</div>
+    <div class="type-meta">11px / 400 / letter-spacing 0.1em / Lato / white on black<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:28px; font-weight:300; line-height:1.2; letter-spacing:0.05em;">¥38,000 <span style="font-size:14px; font-weight:400; color:var(--muted-text);">（税込）</span></div>
+    <div class="type-meta">Lato 300 / 28px / 数字・価格表示<span class="type-context">商品詳細</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 03 PRODUCT (ORDER FLOW) ===== -->
+<section class="section-gray" id="products">
+<div class="section-inner">
+  <div class="section-label">03 / Products</div>
+  <h2 class="section-title-en">ORDER ITEMS</h2>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-image"></div>
+      <h3>カスタムオーダースーツ</h3>
+      <div class="price"><em>¥38,000</em>〜（税込）</div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image" style="background:linear-gradient(135deg, #b8c0c8 0%, #edf0f2 100%);"></div>
+      <h3>カスタムオーダーシャツ</h3>
+      <div class="price"><em>¥6,500</em>〜（税込）</div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image" style="background:linear-gradient(135deg, #c8c0b8 0%, #edf0f2 100%);"></div>
+      <h3>カジュアルジャケット</h3>
+      <div class="price"><em>¥22,000</em>〜（税込）</div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image" style="background:linear-gradient(135deg, #a8b0b8 0%, #edf0f2 100%);"></div>
+      <h3>カスタムオーダーパンツ</h3>
+      <div class="price"><em>¥16,000</em>〜（税込）</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 04 ARTICLE / ORDER FLOW ===== -->
+<section class="section" id="article">
+  <div class="section-label">04 / Article</div>
+  <h2 class="section-title">オーダーフローの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>カスタムオーダーの流れ</h1>
+    <p>FABRIC TOKYO のオーダー体験は、店舗での採寸からスタートします。一度計測すれば、体型データはクラウドに保存。以降はオンラインからいつでもオーダーが可能です。</p>
+    <h2>STEP 01 &mdash; MEASUREMENT</h2>
+    <p>全国の店舗で約30分の採寸を行います。肩幅、胸囲、ウエスト、股下など20箇所以上を計測し、3Dデータとして記録。骨格や姿勢の特徴も反映されます。</p>
+    <div class="article-callout">
+      スーツのフィット感は、生地の落ち感とあわせて最終調整します。Super 120's 以上のウール素材は、ドレープ性が高く、身体に沿うシルエットが生まれます。
+    </div>
+    <h2>STEP 02 &mdash; FABRIC</h2>
+    <p>200 種類以上の生地から、用途と好みに合わせてお選びいただけます。ビジネスシーンには通気性の高いトロピカルウール、カジュアルにはコットンリネンがおすすめです。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 05 BUTTONS ===== -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#">同意してログイン</a><div class="button-label">Primary Pill</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">DESIGN.md を読む</a><div class="button-label">Outline Pill</div></div>
+    <div class="button-item"><a class="btn-primary" href="#" style="background:var(--danger);">削除する</a><div class="button-label">Danger Pill</div></div>
+  </div>
+
+  <div style="margin-bottom:24px;">
+    <div class="section-label" style="margin-bottom:12px;">Tags</div>
+    <div class="tag-row">
+      <button class="tag-active">スーツ</button>
+      <button class="tag-active">シャツ</button>
+      <button class="tag-inactive">ジャケット</button>
+      <button class="tag-inactive">パンツ</button>
+      <button class="tag-inactive">カジュアル</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label" style="margin-bottom:12px;">On Dark</div>
+    <div style="background:var(--black); padding:32px; border-radius:var(--radius-lg); display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+      <a class="btn-primary-white" href="#">オーダーを始める</a>
+      <a class="btn-outline-white" href="#">来店予約</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 06 CARDS ===== -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">06 / Cards</div>
+  <h2 class="section-title-en">PICKUP</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"></div>
+      <h3>初めてのオーダースーツガイド</h3>
+      <p>採寸から受け取りまで、カスタムオーダーの全工程を写真つきで解説。初めての方も安心してオーダーいただけます。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+    <div class="card" style="box-shadow:var(--elevation-2);">
+      <div class="card-image" style="background:linear-gradient(135deg, #b8c0c8 0%, #edf0f2 100%);"></div>
+      <h3>2025 春夏コレクション</h3>
+      <p>トロピカルウールやリネン混紡など、春夏に最適な新作ファブリックが入荷。涼しげなネイビーとグレーを中心にラインナップ。</p>
+      <a class="card-link" href="#">コレクションを見る</a>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:linear-gradient(135deg, #c8c0b8 0%, #edf0f2 100%);"></div>
+      <h3>お手入れガイド：ウールスーツ編</h3>
+      <p>ブラッシングの方法からクリーニングの頻度まで。正しいケアでスーツを長く美しく保つためのポイントをまとめました。</p>
+      <a class="card-link" href="#">ガイドを読む</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 07 FORMS ===== -->
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input" type="text" placeholder="name@example.com">
+      <div class="form-state-label">デフォルト &mdash; border: #d1d5db, radius: 9999px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">パスワード</label>
+      <input class="form-input form-input--focus" type="password" value="mypassword123">
+      <div class="form-state-label">フォーカス &mdash; border: #333333, shadow: rgba(51,51,51,0.12)</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--error" type="text" value="invalid@">
+      <div class="form-error-text">正しいメールアドレスを入力してください。</div>
+      <div class="form-state-label">エラー &mdash; border: #dc2626 (danger)</div>
+    </div>
+  </div>
+  <div class="form-submit-row">
+    <a class="btn-primary" href="#">同意してログイン</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 08 ELEVATION ===== -->
+<section class="section" id="elevation">
+  <div class="section-label">08 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 16px 40px rgba(0,0,0,0.10)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===== 09 LAYOUT ===== -->
+<section class="section" id="layout">
+  <div class="section-label">09 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+
+  <div class="color-group-label">Spacing Scale (8px base)</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4</div><div class="spacing-name">1</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8</div><div class="spacing-name">2</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px;"></div><div class="spacing-value">12</div><div class="spacing-name">3</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16</div><div class="spacing-name">4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24</div><div class="spacing-name">5</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32</div><div class="spacing-name">6</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48</div><div class="spacing-name">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64</div><div class="spacing-name">10</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80</div><div class="spacing-name">12</div></div>
+  </div>
+
+  <div class="color-group-label">Border Radius</div>
+  <div class="radius-row" style="margin-bottom:32px;">
+    <div class="radius-item"><div class="radius-block" style="border-radius:4px;"></div><div class="spacing-value">4px</div><div class="spacing-name">SM</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:8px;"></div><div class="spacing-value">8px</div><div class="spacing-name">MD</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:16px;"></div><div class="spacing-value">16px</div><div class="spacing-name">LG</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:24px;"></div><div class="spacing-value">24px</div><div class="spacing-name">XL (Card)</div></div>
+    <div class="radius-item"><div class="radius-block" style="border-radius:9999px;"></div><div class="spacing-value">9999px</div><div class="spacing-name">Pill</div></div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Content <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:64.6%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Form Container <span class="width-bar-value">480px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:50%"></div></div></div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-brand">FABRIC TOKYO</div>
+  <div class="footer-links">
+    <a href="#">Company</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact</a>
+    <a href="#">Stores</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div>Generated from <a href="https://fabric-tokyo.com/" style="color:rgba(255,255,255,0.7); text-decoration:underline;">fabric-tokyo.com</a> DESIGN.md &mdash; awesome-design-md-jp / computed style 実測値</div>
+</footer>
+
+</body>
+</html>
