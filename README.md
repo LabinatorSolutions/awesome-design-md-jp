@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (131 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (134 sites)</a>
 </p>
 
 <table>
@@ -212,6 +212,14 @@
 <td align="center"><strong>KASHIYAMA</strong><br><img src="design-md/kashiyama/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TENTIAL</strong><br><img src="design-md/tential/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>10YC</strong><br><img src="design-md/10yc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LUMINE</strong><br><img src="design-md/lumine/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>nanamica</strong><br><img src="design-md/nanamica/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IPSA</strong><br><img src="design-md/ipsa/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -405,11 +413,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [KASHIYAMA (カシヤマ)](https://kashiyama1927.jp/) | Custom Order Suits / Fashion | [DESIGN.md](design-md/kashiyama/DESIGN.md) | [preview.html](design-md/kashiyama/preview.html) |
 | [TENTIAL](https://tential.jp/) | Wellness / Conditioning EC | [DESIGN.md](design-md/tential/DESIGN.md) | [preview.html](design-md/tential/preview.html) |
 | [10YC](https://10yc.jp/) | D2C Fashion / Sustainability | [DESIGN.md](design-md/10yc/DESIGN.md) | [preview.html](design-md/10yc/preview.html) |
+| [LUMINE (ルミネ)](https://www.lumine.ne.jp/) | Fashion Retail / Commercial Complex | [DESIGN.md](design-md/lumine/DESIGN.md) | [preview.html](design-md/lumine/preview.html) |
+| [nanamica (ナナミカ)](https://www.nanamica.com/) | Premium Outdoor / Fashion | [DESIGN.md](design-md/nanamica/DESIGN.md) | [preview.html](design-md/nanamica/preview.html) |
+| [IPSA (イプサ)](https://www.ipsa.co.jp/) | Cosmetics / Skincare | [DESIGN.md](design-md/ipsa/DESIGN.md) | [preview.html](design-md/ipsa/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (131 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (134 sites)</a>
 </p>
 
 <table>
@@ -587,6 +598,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>KASHIYAMA</strong><br><img src="design-md/kashiyama/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TENTIAL</strong><br><img src="design-md/tential/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>10YC</strong><br><img src="design-md/10yc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LUMINE</strong><br><img src="design-md/lumine/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>nanamica</strong><br><img src="design-md/nanamica/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IPSA</strong><br><img src="design-md/ipsa/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

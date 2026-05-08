@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: LUMINE（ルミネ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --black: #000000;
+    --cta-gray: #777777;
+    --separator: #d9d9d9;
+    --info-blue: #d9e7f1;
+    --tag-surface: #f7f7f7;
+    --white: #ffffff;
+    --slider-overlay: rgba(0, 0, 0, 0.6);
+
+    --text-primary: #000000;
+    --text-inverse: #ffffff;
+    --bg-primary: #ffffff;
+    --bg-surface: #f7f7f7;
+
+    /* === Recommended semantic === */
+    --danger: #cc0000;
+    --success: #2d8c3c;
+    --warning: #c08000;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.16);
+    --elevation-2: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.10);
+
+    /* === Fonts === */
+    --font-base: Inter, "Noto Sans JP", sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0.05em;
+    font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    border-bottom: 1px solid var(--tag-surface);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 500;
+    color: var(--black); text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 15px; font-weight: 400;
+    color: var(--black); text-decoration: none;
+    letter-spacing: 0.024em;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.5; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--cta-gray); color: var(--white);
+    padding: 10px 20px; border-radius: var(--radius-lg);
+    font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--bg-primary);
+    text-align: left;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero-tagline {
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--cta-gray);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 12px;
+    max-width: 880px;
+  }
+  .hero-sub {
+    font-size: 12px; font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 32px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.6; letter-spacing: 0.05em;
+    color: var(--black);
+    max-width: 640px; margin: 0 0 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--cta-gray); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius-lg);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: var(--tag-surface); color: var(--black);
+    padding: 12px 24px; border-radius: var(--radius-lg);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+    border: none;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: #eeeeee; }
+  .btn-link {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--black);
+    padding: 12px 0; border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; border: none;
+    border-bottom: 1px solid var(--black);
+  }
+  .btn-link:hover { opacity: 0.5; }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 500; color: var(--cta-gray);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title-en {
+    font-size: 28px; font-weight: 500; line-height: 1.3;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+  .section-title-ja {
+    font-size: 12px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    color: var(--black);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--tag-surface);
+    margin: 0;
+  }
+  .section-surface { background: var(--bg-surface); padding: 80px 32px; }
+  .section-surface .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-dark { background: var(--black); color: var(--white); padding: 80px 32px; }
+  .section-dark .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--separator); }
+  .section-dark .section-title-en { color: var(--white); }
+  .section-dark .section-title-ja { color: var(--white); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-lg); overflow: hidden; background: var(--white); border: 1px solid var(--tag-surface); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--black); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 12px; color: var(--cta-gray); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-size: 11px; color: var(--cta-gray); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 500; color: var(--black); margin: 24px 0 12px; letter-spacing: 0.05em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--tag-surface); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--cta-gray); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--tag-surface); color: var(--cta-gray); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-md); margin-left: 8px; font-family: var(--font-base); }
+
+  /* ARTICLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview .article-heading-en {
+    font-size: 28px; font-weight: 500; line-height: 1.3;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .article-preview .article-heading-ja {
+    font-size: 12px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+  }
+  .article-preview h2 {
+    font-size: 28px; font-weight: 500; line-height: 1.3;
+    letter-spacing: 0.05em;
+    margin: 40px 0 4px;
+  }
+  .article-preview .h2-sub {
+    font-size: 12px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    color: var(--black);
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.7; letter-spacing: 0.05em;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .article-preview p.helper {
+    color: var(--cta-gray); font-size: 14px; line-height: 1.5;
+  }
+  .article-callout {
+    background: var(--info-blue);
+    padding: 16px 16px 16px 20px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    border-left: 3px solid #a8c8de;
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.6; letter-spacing: 0.05em;
+    box-shadow: var(--elevation-1);
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--tag-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); transform: translateY(-2px); }
+  .card-image {
+    width: 100%; height: 200px;
+    background: var(--tag-surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--cta-gray); letter-spacing: 0.05em;
+  }
+  .card-body { padding: 20px 24px 24px; }
+  .card-tag {
+    display: inline-block; font-size: 12px; font-weight: 400;
+    background: var(--tag-surface); color: var(--black);
+    padding: 4px 10px; border-radius: var(--radius-lg);
+    margin-bottom: 12px; letter-spacing: 0.05em;
+  }
+  .card h3 {
+    font-size: 16px; font-weight: 500; line-height: 1.3;
+    letter-spacing: 0.05em; margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em; color: var(--cta-gray);
+    margin-bottom: 16px;
+  }
+  .card-cta {
+    display: inline-flex; align-items: center;
+    background: var(--cta-gray); color: var(--white);
+    padding: 8px 16px; border-radius: var(--radius-lg);
+    font-size: 14px; font-weight: 400; letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .card-cta:hover { opacity: 0.8; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--cta-gray); margin-top: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* TAG ROW */
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--black); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--separator);
+    padding: 12px 16px; border-radius: var(--radius-md);
+    font-family: var(--font-base);
+    font-size: 16px; letter-spacing: 0.05em;
+    font-feature-settings: "palt" 1;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--separator); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--black);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.12);
+  }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; letter-spacing: 0.05em; }
+  .form-state-label { font-size: 12px; color: var(--cta-gray); margin-top: 6px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--tag-surface);
+  }
+  .elevation-label { font-size: 14px; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--cta-gray); word-break: break-all; line-height: 1.5; letter-spacing: 0; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--black); border-radius: 2px; margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--cta-gray); letter-spacing: 0; }
+  .spacing-name { font-size: 12px; font-weight: 500; color: var(--black); letter-spacing: 0.05em; }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--black);
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--black);
+    font-size: 12px; color: var(--separator);
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+  }
+  .footer a { color: var(--white); text-decoration: underline; }
+  .footer-brand {
+    font-size: 20px; font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .hero { padding: 64px 20px 56px; }
+    .hero h1 { font-size: 22px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-surface { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .section-title-en { font-size: 22px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h2 { font-size: 22px; }
+    .article-preview .article-heading-en { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">LUMINE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">SHOP SEARCH</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-tagline">わたしらしくをあたらしく</div>
+  <h1>Fashion &amp; Lifestyle</h1>
+  <div class="hero-sub">ファッション &amp; ライフスタイル</div>
+  <p>LUMINE のデザインシステムをカタログ化したプレビューです。トップページの computed style 実測値（2026-05-09 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">SHOP SEARCH</a>
+    <a class="btn-secondary" href="#">NEWS</a>
+    <a class="btn-link" href="#">READ MORE</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title-en">Color Palette</div>
+  <div class="section-title-ja">カラーパレット</div>
+
+  <div class="color-group-label">Brand — Monochrome Scale</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">テキスト・フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#777777"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Gray</div><div class="color-swatch-hex">#777777</div><div class="color-swatch-role">CTA ボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Separator</div><div class="color-swatch-hex">#d9d9d9</div><div class="color-swatch-role">境界線・セパレーター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Tag Surface</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">タグ・ボタン面（出現24回）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9e7f1"></div><div class="color-swatch-info"><div class="color-swatch-name">Info Blue</div><div class="color-swatch-hex">#d9e7f1</div><div class="color-swatch-role">インフォパネル背景（唯一の有彩色）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Overlay</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.6)"></div><div class="color-swatch-info"><div class="color-swatch-name">Slider Overlay</div><div class="color-swatch-hex">rgba(0,0,0,0.6)</div><div class="color-swatch-role">スライダー上のテキスト視認性確保</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">エラー・削除（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2d8c3c"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2d8c3c</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c08000"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#c08000</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title-en">Typography Hierarchy</div>
+  <div class="section-title-ja">タイポグラフィ階層</div>
+
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:500; line-height:1.3; letter-spacing:0.05em;">Fashion & Lifestyle — H2 English</div>
+    <div style="font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.05em; margin-top:4px;">ファッション & ライフスタイル — H2 Japanese</div>
+    <div class="type-meta">EN: 28px / 500 / lh 1.3 / ls 0.05em &nbsp;|&nbsp; JA: 12px / 400 / lh 1.5 / ls 0.05em<span class="type-context">二層見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.15; letter-spacing:0.05em;">本文テキスト — ルミネは、駅から街へ、街から駅へ。毎日の通り道が、新しい出会いの場所になる。ファッションとライフスタイルを通じて、あなたらしさを応援します。line-height: 1.15 はファッションビルならではのコンパクトな行間です。</div>
+    <div class="type-meta">16px / 400 / lh 1.15 / ls 0.05em<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:15px; font-weight:400; line-height:1.6; letter-spacing:0.024em;">ナビゲーション — NEWS / SHOP / EVENT / FASHION / BEAUTY</div>
+    <div class="type-meta">15px / 400 / lh 1.6 / ls 0.024em<span class="type-context">Nav Link</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.2; letter-spacing:0.05em;">ラベル 14px — ショップ検索 / READ MORE / タグラベル</div>
+    <div class="type-meta">14px / 400 / lh 1.2 / ls 0.05em<span class="type-context">Label / CTA</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.0; letter-spacing:0.05em;">ラベル 12px — LUMINE EST / 2F / OPEN 11:00-21:00</div>
+    <div class="type-meta">12px / 400 / lh 1.0 / ls 0.05em<span class="type-context">Small Label</span></div>
+  </div>
+  <div class="type-sample" style="background:var(--black); color:var(--white); padding:20px; border-radius:var(--radius-lg);">
+    <div style="font-size:16px; font-weight:400; line-height:1.15; letter-spacing:0.05em;">フッターテキスト — 黒背景に白文字。ルミネの店舗情報やリンクをコンパクトに配置。</div>
+    <div class="type-meta" style="color:var(--separator);">16px / 400 / lh 1.15 / ls 0.05em / color #ffffff on #000000<span class="type-context" style="background:rgba(255,255,255,0.15); color:var(--separator);">Footer</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-surface" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <div class="section-title-en">Editorial Sample</div>
+  <div class="section-title-ja">エディトリアル組版サンプル</div>
+  <div class="article-preview">
+    <div class="article-heading-en">Season Collection</div>
+    <div class="article-heading-ja">シーズンコレクション</div>
+    <p>今シーズンのトレンドを、ルミネ各館のショップからセレクト。新しい自分に出会うためのスタイリング提案を、ファッション・ビューティ・ライフスタイルの3つの切り口でお届けします。</p>
+
+    <h2>Styling Proposal</h2>
+    <div class="h2-sub">スタイリング提案</div>
+    <p>パーソナルカラーや骨格診断をベースに、似合うアイテムを見つけるお手伝い。プロのスタイリストが、あなたの「わたしらしさ」を引き出します。ルミネ新宿・横浜・大宮の各館で予約受付中です。</p>
+
+    <div class="article-callout">
+      <strong>Information:</strong> ルミネカードでのお支払いはいつでも5%OFF。さらにルミネカード会員限定のお得な情報をお届けしています。詳しくはインフォメーションカウンターまで。
+    </div>
+
+    <p class="helper">※ 写真はイメージです。在庫状況は各ショップにてご確認ください。価格は税込表記です。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title-en">Button Variations</div>
+  <div class="section-title-ja">ボタンバリエーション</div>
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item"><a class="btn-primary" href="#">SHOP SEARCH</a><div class="button-label">Primary CTA — #777777 / radius 8px</div></div>
+    <div class="button-item"><a class="btn-primary" href="#">READ MORE</a><div class="button-label">Primary CTA — #777777 / radius 8px</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">NEWS</a><div class="button-label">Secondary — #f7f7f7 / radius 8px</div></div>
+    <div class="button-item">
+      <a href="#" style="display:inline-flex; align-items:center; background:var(--tag-surface); color:var(--black); padding:8px 16px; border-radius:var(--radius-md); font-size:14px; font-weight:400; letter-spacing:0.05em; text-decoration:none; border:none;">MENU</a>
+      <div class="button-label">Header Button — #f7f7f7 / radius 4px</div>
+    </div>
+    <div class="button-item"><a class="btn-link" href="#">MORE</a><div class="button-label">Text Link — underline</div></div>
+  </div>
+
+  <div class="color-group-label">Tags</div>
+  <div class="tag-row">
+    <span style="display:inline-block; background:var(--tag-surface); color:var(--black); padding:6px 12px; border-radius:var(--radius-lg); font-size:14px; letter-spacing:0.05em;">LUMINE EST</span>
+    <span style="display:inline-block; background:var(--tag-surface); color:var(--black); padding:6px 12px; border-radius:var(--radius-lg); font-size:14px; letter-spacing:0.05em;">LUMINE 1</span>
+    <span style="display:inline-block; background:var(--tag-surface); color:var(--black); padding:6px 12px; border-radius:var(--radius-lg); font-size:14px; letter-spacing:0.05em;">LUMINE 2</span>
+    <span style="display:inline-block; background:var(--tag-surface); color:var(--black); padding:6px 12px; border-radius:var(--radius-lg); font-size:12px; letter-spacing:0.05em;">FASHION</span>
+    <span style="display:inline-block; background:var(--tag-surface); color:var(--black); padding:6px 12px; border-radius:var(--radius-lg); font-size:12px; letter-spacing:0.05em;">BEAUTY</span>
+    <span style="display:inline-block; background:var(--tag-surface); color:var(--black); padding:6px 12px; border-radius:var(--radius-lg); font-size:12px; letter-spacing:0.05em;">LIFESTYLE</span>
+  </div>
+
+  <div class="color-group-label" style="margin-top:32px;">Info Panel</div>
+  <div class="article-callout" style="max-width:480px;">
+    <strong>Information:</strong> 営業時間の変更やイベント情報はこちらからご確認ください。
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-surface" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title-en">Card Components</div>
+  <div class="section-title-ja">カードコンポーネント</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">SHOP IMAGE</div>
+      <div class="card-body">
+        <span class="card-tag">FASHION</span>
+        <h3>UNITED ARROWS</h3>
+        <p>LUMINE 1 / 3F — セレクトショップの定番。上質な日常着を提案するライフスタイルブランド。</p>
+        <a class="card-cta" href="#">SHOP DETAIL</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">SHOP IMAGE</div>
+      <div class="card-body">
+        <span class="card-tag">BEAUTY</span>
+        <h3>THREE</h3>
+        <p>LUMINE 2 / 1F — 自然の力を活かしたメイクアップ & スキンケアブランド。</p>
+        <a class="card-cta" href="#">SHOP DETAIL</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">SHOP IMAGE</div>
+      <div class="card-body">
+        <span class="card-tag">LIFESTYLE</span>
+        <h3>Afternoon Tea LIVING</h3>
+        <p>LUMINE EST / B1F — 生活雑貨とティータイムを彩るインテリア & キッチン用品。</p>
+        <a class="card-cta" href="#">SHOP DETAIL</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title-en">Form Elements</div>
+  <div class="section-title-ja">フォーム要素</div>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">Shop Name</label>
+      <input class="form-input" type="text" placeholder="UNITED ARROWS">
+      <div class="form-state-label">Default — border #d9d9d9 / radius 4px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input form-input--focus" type="email" value="info@lumine.ne.jp">
+      <div class="form-state-label">Focus — border #000000 / shadow 2px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">電話番号の形式が正しくありません</div>
+      <div class="form-state-label">Error — border #cc0000 / shadow 2px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-surface" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title-en">Depth &amp; Elevation</div>
+  <div class="section-title-ja">エレベーション</div>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">none</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 1px 3px rgba(0,0,0,0.16)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.10)</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title-en">Spacing &amp; Radius</div>
+  <div class="section-title-ja">スペーシング &amp; ラディウス</div>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:3px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">3px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Large</div>
+      <div class="spacing-value">8px</div>
+    </div>
+  </div>
+  <div style="margin-top:16px; font-size:14px; color:var(--cta-gray); letter-spacing:0.05em;">
+    LUMINE は pill（9999px）を使用しない。すべて 3〜8px の控えめな角丸。
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">LUMINE</div>
+  Generated from <a href="https://www.lumine.ne.jp/">lumine.ne.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-09）<br>
+  Font: Inter + Noto Sans JP（Google Fonts）/ font-feature-settings: "palt" 1 / letter-spacing: 0.05em 一律
+</footer>
+
+</body>
+</html>

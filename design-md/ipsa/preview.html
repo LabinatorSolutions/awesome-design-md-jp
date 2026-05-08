@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: IPSA（イプサ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --text-primary: #181818;
+    --text-secondary: #323232;
+    --text-muted: #969696;
+    --bg-primary: #ffffff;
+    --bg-cream: #fffef8;
+    --bg-warm-yellow: #fffae7;
+    --bg-light-gray: #f9f9f9;
+    --bg-footer: #323232;
+    --bg-dark-hero: #090f27;
+    --text-footer: #fffcf4;
+    --border-primary: #c9c9c9;
+    --border-secondary: #d6d6d6;
+    --border-separator: #dcdcdc;
+    --tag-bg: #323232;
+    --tag-text: #fffcf4;
+    --overlay-dark: rgba(50,50,50,0.5);
+    --overlay-search: rgba(239,237,234,0.5);
+    /* === Elevation === */
+    --elevation-1: 0 1px 3px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.1);
+    /* === Fonts === */
+    /* MFW-HiraKakuProN（ヒラギノ角ゴ ProN Web Font）の代替として Noto Sans JP を使用 */
+    --font-w3: "Noto Sans JP", sans-serif; /* W3 → 300 */
+    --font-w4: "Noto Sans JP", sans-serif; /* W4 → 400 */
+    --font-w5: "Noto Sans JP", sans-serif; /* W5 → 500 */
+    --font-w6: "Noto Sans JP", sans-serif; /* W6 → 700 */
+    --font-system: -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-w3);
+    font-size: 16px; font-weight: 300; line-height: 1.5;
+    letter-spacing: normal;
+    font-feature-settings: "kern";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-separator);
+  }
+  .nav-brand {
+    font-family: var(--font-w5); font-size: 18px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.15em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-w5); font-size: 12px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-muted); }
+  .nav-search {
+    display: inline-block; background: transparent; color: var(--text-secondary);
+    padding: 6px 16px; border: 1px solid var(--border-primary); border-radius: 0;
+    font-family: var(--font-w3); font-size: 12px; font-weight: 300;
+    text-decoration: none; cursor: pointer; transition: all 0.15s;
+  }
+  .nav-search:hover { background: var(--tag-bg); color: var(--tag-text); border-color: var(--tag-bg); }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-cream); }
+  .hero h1 {
+    font-family: var(--font-w4); font-size: 36px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: "kern";
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-family: var(--font-w3); font-size: 16px; font-weight: 300; line-height: 1.87;
+    color: var(--text-secondary); max-width: 580px; margin: 0 auto 32px;
+  }
+  .hero-tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block; background: var(--tag-bg); color: var(--tag-text);
+    padding: 5px 11px; border-radius: 2px; border: none;
+    font-family: var(--font-w5); font-size: 11px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .tag:hover { opacity: 0.8; }
+  .tag-outline {
+    display: inline-block; background: transparent; color: var(--text-secondary);
+    padding: 5px 11px; border-radius: 2px;
+    border: 1px solid var(--border-primary);
+    font-family: var(--font-w5); font-size: 11px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: all 0.15s;
+  }
+  .tag-outline:hover { background: var(--bg-light-gray); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-w5); font-size: 10px; font-weight: 500;
+    color: var(--text-muted); text-transform: uppercase;
+    margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--font-w6); font-size: 20px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: "kern";
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-separator); margin: 0; }
+
+  .section-cream { background: var(--bg-cream); padding: 64px 32px; }
+  .section-cream .section-inner { max-width: 940px; margin: 0 auto; }
+  .section-warm { background: var(--bg-warm-yellow); padding: 64px 32px; }
+  .section-warm .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--border-separator); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-w5); font-size: 12px; font-weight: 500; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: "SF Mono", "Consolas", "Menlo", monospace; }
+  .color-swatch-role { font-size: 10px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-w5); font-size: 12px; font-weight: 500; color: var(--text-muted); margin: 24px 0 10px; letter-spacing: 0.05em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-separator); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: "SF Mono", "Consolas", "Menlo", monospace; font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-cream); color: var(--text-secondary); font-size: 10px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; font-family: var(--font-w5); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-w3); font-size: 11px; font-weight: 300; color: var(--text-muted); margin-top: 8px; }
+  .btn-dark {
+    display: inline-block; background: var(--tag-bg); color: var(--tag-text);
+    padding: 10px 24px; border-radius: 2px; border: none;
+    font-family: var(--font-w5); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-dark:hover { opacity: 0.8; }
+  .btn-outline-dark {
+    display: inline-block; background: transparent; color: var(--text-secondary);
+    padding: 10px 24px; border-radius: 2px;
+    border: 1px solid var(--border-primary);
+    font-family: var(--font-w5); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-outline-dark:hover { background: var(--bg-light-gray); }
+  .btn-square {
+    display: inline-block; background: transparent; color: var(--text-secondary);
+    padding: 10px 24px; border-radius: 0; border: 1px solid var(--tag-bg);
+    font-family: var(--font-w5); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-square:hover { background: var(--tag-bg); color: var(--tag-text); }
+  .btn-chakra {
+    display: inline-block; background: var(--tag-bg); color: var(--tag-text);
+    padding: 10px 24px; border-radius: 4px; border: none;
+    font-family: var(--font-w5); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-chakra:hover { opacity: 0.8; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--border-separator); border-radius: 4px;
+    overflow: hidden; transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image { width: 100%; height: 200px; object-fit: cover; background: var(--bg-cream); display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder { font-family: var(--font-w5); font-size: 14px; color: var(--text-muted); }
+  .card-body { padding: 16px; }
+  .card h3 { font-family: var(--font-w6); font-size: 14px; font-weight: 700; line-height: 1.5; letter-spacing: normal; margin-bottom: 8px; }
+  .card p { font-family: var(--font-w3); font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; }
+  .card-price { font-family: var(--font-w5); font-size: 14px; font-weight: 500; color: var(--text-primary); margin-top: 12px; }
+  .card-tags { display: flex; gap: 6px; margin-top: 12px; }
+  .card-tag { font-family: var(--font-w5); font-size: 10px; font-weight: 500; color: var(--text-muted); background: var(--bg-light-gray); padding: 2px 8px; border-radius: 2px; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-w6); font-size: 24px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: "kern"; margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-w5); font-size: 20px; font-weight: 500; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: "kern"; margin: 24px 0 12px;
+  }
+  .article-preview p {
+    font-family: var(--font-w3); font-size: 15px; font-weight: 300; line-height: 1.87;
+    letter-spacing: normal; font-feature-settings: "kern";
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview .caption {
+    font-family: var(--font-w5); font-size: 10px; font-weight: 500;
+    color: var(--text-muted); margin-top: -8px; margin-bottom: 16px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-family: var(--font-w5); font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-primary); padding: 8px 12px; border-radius: 4px;
+    font-family: var(--font-w3); font-size: 16px; font-weight: 300; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-secondary); }
+  .form-input--error { border-color: #b22323; box-shadow: none; }
+  .form-select {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-secondary); padding: 8px 12px; border-radius: 4px;
+    font-family: var(--font-w3); font-size: 16px; font-weight: 300; outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23323232' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+  }
+  .form-state-label { font-family: var(--font-w3); font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  .form-error-text { font-family: var(--font-w3); font-size: 11px; color: #b22323; margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 4px; padding: 24px; text-align: center; border: 1px solid var(--border-separator); }
+  .elevation-label { font-family: var(--font-w5); font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .elevation-desc { font-family: "SF Mono", "Consolas", "Menlo", monospace; font-size: 10px; color: var(--text-muted); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--text-secondary); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: "SF Mono", "Consolas", "Menlo", monospace; font-size: 10px; font-weight: 400; color: var(--text-muted); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-cream); border: 1px solid var(--border-separator); border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--text-secondary); border-radius: 3px; opacity: 0.15; }
+  .width-bar-label { font-family: var(--font-w5); font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: "SF Mono", "Consolas", "Menlo", monospace; font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px; background: var(--bg-footer); text-align: center;
+  }
+  .footer-brand { font-family: var(--font-w5); font-size: 16px; font-weight: 500; color: var(--text-footer); letter-spacing: 0.15em; margin-bottom: 16px; }
+  .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+  .footer-links a { font-family: var(--font-w6); font-size: 14px; font-weight: 700; color: var(--text-footer); text-decoration: none; letter-spacing: 0.036em; }
+  .footer-links a:hover { opacity: 0.7; }
+  .footer-sub { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+  .footer-sub a { font-family: var(--font-w3); font-size: 12px; font-weight: 300; color: var(--text-muted); text-decoration: none; }
+  .footer-copy { font-family: var(--font-w3); font-size: 11px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 14px; line-height: 1.75; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-cream { padding: 48px 20px; }
+    .section-warm { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview p { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">IPSA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-search" href="#">検索</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>IPSA — イプサ</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。ヒラギノ角ゴ ProN Web Font（MFW-HiraKakuProN）の4ウェイト体系、ウォームカラーパレット、kern ベースのタイポグラフィを可視化。computed style 実測値に基づく。</p>
+  <div class="hero-tags">
+    <a class="tag" href="#">化粧水</a>
+    <a class="tag" href="#">乳液</a>
+    <a class="tag" href="#">ME</a>
+    <a class="tag" href="#">美容液</a>
+    <a class="tag" href="#">ギフト</a>
+    <a class="tag-outline" href="#">すべて見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand — Warm Palette</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fffef8; border: 1px solid #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Cream</div><div class="color-swatch-hex">#fffef8</div><div class="color-swatch-role">ウォームサーフェス</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fffae7; border: 1px solid #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Yellow</div><div class="color-swatch-hex">#fffae7</div><div class="color-swatch-role">ハイライト面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fffcf4; border: 1px solid #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Off-White</div><div class="color-swatch-hex">#fffcf4</div><div class="color-swatch-role">フッターテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#181818"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#181818</div><div class="color-swatch-role">本文（ニア・ブラック）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#323232"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#323232</div><div class="color-swatch-role">補助テキスト・ヒーロー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#969696"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#969696</div><div class="color-swatch-role">フッターサブメニュー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">メインページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9f9f9; border: 1px solid #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f9f9f9</div><div class="color-swatch-role">タブ非活性</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#323232"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Dark</div><div class="color-swatch-hex">#323232</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#090f27"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Hero</div><div class="color-swatch-hex">#090f27</div><div class="color-swatch-role">アバウトセクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c9c9c9"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Primary</div><div class="color-swatch-hex">#c9c9c9</div><div class="color-swatch-role">フォーム入力欄</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d6d6d6"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Secondary</div><div class="color-swatch-hex">#d6d6d6</div><div class="color-swatch-role">セレクトボックス</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dcdcdc"></div><div class="color-swatch-info"><div class="color-swatch-name">Separator</div><div class="color-swatch-hex">#dcdcdc</div><div class="color-swatch-role">区切り線</div></div></div>
+  </div>
+
+  <div class="color-group-label">Overlay</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(50,50,50,0.5)"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Overlay</div><div class="color-swatch-hex">rgba(50,50,50,0.5)</div><div class="color-swatch-role">メニューオーバーレイ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(239,237,234,0.5); border: 1px solid #dcdcdc;"></div><div class="color-swatch-info"><div class="color-swatch-name">Search Overlay</div><div class="color-swatch-hex">rgba(239,237,234,0.5)</div><div class="color-swatch-role">検索オーバーレイ（ウォーム）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値（Noto Sans JP で代替表示）</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-w4); font-size:49px; font-weight:400; line-height:1.5; letter-spacing:normal; font-feature-settings:'kern'; color:var(--text-secondary);">肌の美しさは、生命力</div>
+    <div class="type-meta">49px / W4 (400) / line-height: 1.5 / letter-spacing: normal / kern: あり<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-system); font-size:28px; font-weight:700; line-height:1.2; letter-spacing:normal;">ページタイトル — H1</div>
+    <div class="type-meta">28px / 700 / line-height: 1.2 / system-ui stack<span class="type-context">h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w5); font-size:20px; font-weight:500; line-height:1.5; letter-spacing:normal; font-feature-settings:'kern';">セクションタイトル — Section Title</div>
+    <div class="type-meta">20px / W5 (500) / line-height: 1.5 / letter-spacing: normal<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w3); font-size:16px; font-weight:300; line-height:1.5; letter-spacing:normal; font-feature-settings:'kern';">本文テキスト — 肌本来の美しさを引き出すために、一人ひとりの肌を見つめ、最適なケアを提案します。letter-spacing は normal。kern のみ適用し、palt は使いません。</div>
+    <div class="type-meta">16px / W3 (300) / line-height: 1.5 / letter-spacing: normal / kern: あり / palt: なし<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w3); font-size:15px; font-weight:300; line-height:1.87; letter-spacing:normal; font-feature-settings:'kern';">ニュース本文 — 行間を広めに取り、長文でも読みやすさを確保します。line-height: 1.87 は IPSA ニュースページの実測値です。</div>
+    <div class="type-meta">15px / W3 (300) / line-height: 1.87 / letter-spacing: normal<span class="type-context">ニュース</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w6); font-size:14px; font-weight:700; line-height:1.5; letter-spacing:0.036em; color:var(--text-secondary);">フッタータイトル — Footer Title</div>
+    <div class="type-meta">14px / W6 (700) / line-height: 1.5 / letter-spacing: 0.036em<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w5); font-size:12px; font-weight:500; line-height:1.5; letter-spacing:normal;">ナビリンク — Nav Link (12px)</div>
+    <div class="type-meta">12px / W5 (500) / line-height: 1.5<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w5); font-size:11px; font-weight:500; line-height:1.55; letter-spacing:normal; color:var(--text-secondary);">ニューストピック — News Topic (11px)</div>
+    <div class="type-meta">11px / W5 (500) / line-height: 1.55<span class="type-context">トピックラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w5); font-size:10px; font-weight:500; line-height:1.5; letter-spacing:normal; color:var(--text-secondary);">キャプション — Caption (10px)</div>
+    <div class="type-meta">10px / W5 (500) / line-height: 1.5<span class="type-context">キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-w5); font-size:10px; font-weight:500; line-height:1.2; letter-spacing:-0.05em;">スモールリンク — Small Link (-0.05em)</div>
+    <div class="type-meta">10px / W5 (500) / line-height: 1.2 / letter-spacing: -0.05em — 唯一の負トラッキング<span class="type-context">小テキスト</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-cream" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — スキンケア記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>パーソナライズドスキンケアの科学</h1>
+    <p>肌は一人ひとり異なります。季節や体調、生活環境によっても日々変化する肌の状態を正確に捉え、最適なケアを提案することが、美しさを引き出す第一歩です。</p>
+    <h2>肌診断テクノロジー</h2>
+    <p>独自の肌測定技術により、水分量・皮脂量・キメ・透明感など複数の指標を総合的に分析します。17タイプに分類されたレシピから、あなたの肌に最適な1本を導き出します。ABCabc 123</p>
+    <div class="caption">※ 肌診断は店頭カウンターにて無料で受けられます</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタン・タグバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="btn-dark" href="#">カートに入れる</a><div class="button-label">Dark (radius: 2px)</div></div>
+    <div class="button-item"><a class="btn-outline-dark" href="#">詳しく見る</a><div class="button-label">Outline (radius: 2px)</div></div>
+    <div class="button-item"><a class="btn-square" href="#">検索する</a><div class="button-label">Square (radius: 0)</div></div>
+    <div class="button-item"><a class="btn-chakra" href="#">肌診断を始める</a><div class="button-label">Chakra (radius: 4px)</div></div>
+  </div>
+  <div class="color-group-label">Tags</div>
+  <div class="button-row">
+    <div class="button-item"><a class="tag" href="#">化粧水</a><div class="button-label">Tag Dark</div></div>
+    <div class="button-item"><a class="tag" href="#">ME</a><div class="button-label">Tag Dark</div></div>
+    <div class="button-item"><a class="tag" href="#">ギフト</a><div class="button-label">Tag Dark</div></div>
+    <div class="button-item"><a class="tag-outline" href="#">美容液</a><div class="button-label">Tag Outline</div></div>
+    <div class="button-item"><a class="tag-outline" href="#">すべて</a><div class="button-label">Tag Outline</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-warm" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards — 商品カード</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"><span class="card-image-placeholder">ME レギュラー 1</span></div>
+      <div class="card-body">
+        <h3>ME レギュラー 1</h3>
+        <p>みずみずしいうるおいで満たし、キメの整ったみずみずしい肌へ導く薬用化粧液。</p>
+        <div class="card-price">¥6,050（税込）</div>
+        <div class="card-tags"><span class="card-tag">化粧水</span><span class="card-tag">ME</span></div>
+      </div>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-2);">
+      <div class="card-image" style="background: var(--bg-warm-yellow);"><span class="card-image-placeholder">ザ・タイムR アクア</span></div>
+      <div class="card-body">
+        <h3>ザ・タイムR アクア</h3>
+        <p>独自の保湿技術「アクアプレゼンターIII」を搭載。うるおい持続力に優れた薬用化粧水。</p>
+        <div class="card-price">¥4,400（税込）</div>
+        <div class="card-tags"><span class="card-tag">化粧水</span><span class="card-tag">ベストセラー</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><span class="card-image-placeholder">クリエイティブオイル</span></div>
+      <div class="card-body">
+        <h3>クリエイティブオイル シアーゴールド</h3>
+        <p>肌にも髪にも使えるマルチユースオイル。ツヤと輝きを与えるシアーゴールドの仕上がり。</p>
+        <div class="card-price">¥4,950（税込）</div>
+        <div class="card-tags"><span class="card-tag">美容液</span><span class="card-tag">マルチユース</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 花子">
+    <div class="form-state-label">デフォルト — border: #c9c9c9, radius: 4px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="hanako@example.com">
+    <div class="form-state-label">フォーカス — border: #323232</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="0312345">
+    <div class="form-error-text">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー — border: #b22323</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">容量</label>
+    <select class="form-select">
+      <option>175mL（レギュラーサイズ）</option>
+      <option>50mL（トライアルサイズ）</option>
+    </select>
+    <div class="form-state-label">セレクト — border: #d6d6d6, radius: 4px</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ（基本）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 1px 3px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 12px rgba(0,0,0,0.1)</div></div>
+    <div class="elevation-card" style="background: rgba(50,50,50,0.5); color: #fff;"><div class="elevation-label" style="color:var(--text-footer);">Dark Overlay</div><div class="elevation-desc" style="color:var(--text-muted);">rgba(50,50,50,0.5)</div></div>
+    <div class="elevation-card" style="background: rgba(239,237,234,0.5);"><div class="elevation-label">Search Overlay</div><div class="elevation-desc">rgba(239,237,234,0.5) — ウォーム</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & コンテンツ幅</h2>
+
+  <div class="color-group-label">Spacing Scale（Chakra UI ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Content <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Narrow Content <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:52%"></div></div></div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">IPSA</div>
+  <div class="footer-links">
+    <a href="#">スキンケア</a>
+    <a href="#">メイクアップ</a>
+    <a href="#">ベースメイク</a>
+    <a href="#">肌診断</a>
+  </div>
+  <div class="footer-sub">
+    <a href="#">お問い合わせ</a>
+    <a href="#">店舗情報</a>
+    <a href="#">会社概要</a>
+    <a href="#">プライバシーポリシー</a>
+  </div>
+  <div class="footer-copy">
+    Generated from <a href="https://www.ipsa.co.jp/" style="color:var(--text-muted); text-decoration:underline;">ipsa.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-09）
+  </div>
+</footer>
+
+</body>
+</html>
