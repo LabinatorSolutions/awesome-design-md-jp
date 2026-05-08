@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (89 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (92 sites)</a>
 </p>
 
 <table>
@@ -307,11 +307,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Vermicular (バーミキュラ)](https://www.vermicular.jp/) | Cookware / Product Design | [DESIGN.md](design-md/vermicular/DESIGN.md) | [preview.html](design-md/vermicular/preview.html) |
 | [TRUNK(HOTEL)](https://trunk-hotel.com/) | Boutique Hotel / Hospitality | [DESIGN.md](design-md/trunk-hotel/DESIGN.md) | [preview.html](design-md/trunk-hotel/preview.html) |
 | [Aman Tokyo (アマン東京)](https://www.aman.com/ja-jp/resorts/aman-tokyo) | Luxury Hotel / Hospitality | [DESIGN.md](design-md/aman-tokyo/DESIGN.md) | [preview.html](design-md/aman-tokyo/preview.html) |
+| [Tsuchiya Kaban (土屋鞄製造所)](https://tsuchiya-kaban.jp/) | Leather Goods / Heritage Craft | [DESIGN.md](design-md/tsuchiya-kaban/DESIGN.md) | [preview.html](design-md/tsuchiya-kaban/preview.html) |
+| [HARIO (ハリオ)](https://www.hario.com/) | Glass / Coffee Equipment | [DESIGN.md](design-md/hario/DESIGN.md) | [preview.html](design-md/hario/preview.html) |
+| [Nousaku (能作)](https://www.nousaku.co.jp/) | Tin Craft / Heritage Manufacturing | [DESIGN.md](design-md/nousaku/DESIGN.md) | [preview.html](design-md/nousaku/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (89 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (92 sites)</a>
 </p>
 
 <table>
@@ -433,6 +436,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Vermicular</strong><br><img src="design-md/vermicular/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TRUNK(HOTEL)</strong><br><img src="design-md/trunk-hotel/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Aman Tokyo</strong><br><img src="design-md/aman-tokyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>土屋鞄</strong><br><img src="design-md/tsuchiya-kaban/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>HARIO</strong><br><img src="design-md/hario/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>能作</strong><br><img src="design-md/nousaku/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
