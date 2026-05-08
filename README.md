@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (128 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (131 sites)</a>
 </p>
 
 <table>
@@ -209,9 +209,9 @@
 <tr>
 <td align="center"><strong>ORBIS</strong><br><img src="design-md/orbis/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BOTANIST</strong><br><img src="design-md/botanist/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>KASHIYAMA</strong><br><img src="design-md/kashiyama/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TENTIAL</strong><br><img src="design-md/tential/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>10YC</strong><br><img src="design-md/10yc/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -402,11 +402,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Minimal (ミニマル)](https://mini-mal.tokyo/) | Craft Chocolate / D2C | [DESIGN.md](design-md/minimal/DESIGN.md) | [preview.html](design-md/minimal/preview.html) |
 | [ORBIS (オルビス)](https://www.orbis.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/orbis/DESIGN.md) | [preview.html](design-md/orbis/preview.html) |
 | [BOTANIST (ボタニスト)](https://botanistofficial.com/) | Botanical Hair & Body Care | [DESIGN.md](design-md/botanist/DESIGN.md) | [preview.html](design-md/botanist/preview.html) |
+| [KASHIYAMA (カシヤマ)](https://kashiyama1927.jp/) | Custom Order Suits / Fashion | [DESIGN.md](design-md/kashiyama/DESIGN.md) | [preview.html](design-md/kashiyama/preview.html) |
+| [TENTIAL](https://tential.jp/) | Wellness / Conditioning EC | [DESIGN.md](design-md/tential/DESIGN.md) | [preview.html](design-md/tential/preview.html) |
+| [10YC](https://10yc.jp/) | D2C Fashion / Sustainability | [DESIGN.md](design-md/10yc/DESIGN.md) | [preview.html](design-md/10yc/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (128 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (131 sites)</a>
 </p>
 
 <table>
@@ -581,9 +584,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>ORBIS</strong><br><img src="design-md/orbis/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BOTANIST</strong><br><img src="design-md/botanist/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>KASHIYAMA</strong><br><img src="design-md/kashiyama/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TENTIAL</strong><br><img src="design-md/tential/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>10YC</strong><br><img src="design-md/10yc/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
