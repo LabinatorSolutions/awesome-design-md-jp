@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (95 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (98 sites)</a>
 </p>
 
 <table>
@@ -164,6 +164,14 @@
 <td align="center"><strong>Aesop</strong><br><img src="design-md/aesop/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOMORROWLAND</strong><br><img src="design-md/tomorrowland/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>カルビー</strong><br><img src="design-md/calbee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>YAECA</strong><br><img src="design-md/yaeca/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CLASKA</strong><br><img src="design-md/claska/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DEAN&amp;DELUCA</strong><br><img src="design-md/deandeluca/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -321,11 +329,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Aesop (イソップ)](https://www.aesop.com/jp/) | Luxury Skincare / Beauty | [DESIGN.md](design-md/aesop/DESIGN.md) | [preview.html](design-md/aesop/preview.html) |
 | [TOMORROWLAND (トゥモローランド)](https://www.tomorrowland.co.jp/) | Fashion / Apparel | [DESIGN.md](design-md/tomorrowland/DESIGN.md) | [preview.html](design-md/tomorrowland/preview.html) |
 | [Calbee (カルビー)](https://www.calbee.co.jp/) | Consumer Food / Corporate | [DESIGN.md](design-md/calbee/DESIGN.md) | [preview.html](design-md/calbee/preview.html) |
+| [YAECA (ヤエカ)](https://yaeca.com/) | Fashion / Lifestyle | [DESIGN.md](design-md/yaeca/DESIGN.md) | [preview.html](design-md/yaeca/preview.html) |
+| [CLASKA (クラスカ)](https://www.claska.com/) | Design / Lifestyle | [DESIGN.md](design-md/claska/DESIGN.md) | [preview.html](design-md/claska/preview.html) |
+| [DEAN & DELUCA (ディーンアンドデルーカ)](https://www.deandeluca.co.jp/) | Premium Food / Lifestyle | [DESIGN.md](design-md/deandeluca/DESIGN.md) | [preview.html](design-md/deandeluca/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (95 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (98 sites)</a>
 </p>
 
 <table>
@@ -455,6 +466,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Aesop</strong><br><img src="design-md/aesop/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOMORROWLAND</strong><br><img src="design-md/tomorrowland/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Calbee</strong><br><img src="design-md/calbee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>YAECA</strong><br><img src="design-md/yaeca/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CLASKA</strong><br><img src="design-md/claska/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DEAN&amp;DELUCA</strong><br><img src="design-md/deandeluca/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
