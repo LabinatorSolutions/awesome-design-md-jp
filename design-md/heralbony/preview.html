@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: HERALBONY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === HERALBONY Color Tokens (computed style) === */
+
+    /* Primary */
+    --brand-navy: #21428b;
+    --brand-dark: #1c1b1b;
+
+    /* Semantic */
+    --color-sold-out: #c9c9c9;
+    --color-new-badge: #333333;
+
+    /* Neutral */
+    --text-primary: #333333;
+    --text-secondary: #444444;
+    --text-tertiary: #6a6a6a;
+    --text-artist: #232425;
+    --border: #b1b0ad;
+    --border-header: #dedede;
+    --bg-white: #ffffff;
+    --bg-warm: #fbf9f4;
+    --bg-news: #fbfcf9;
+    --surface-header: #fcfcfc;
+    --surface-light: #efefef;
+
+    /* Accent */
+    --accent-featured: #dbbcd2;
+    --accent-tab-active: #52514f;
+
+    /* Error */
+    --color-error: #c0392b;
+
+    /* === Typography === */
+    --font-body: "Noto Sans Japanese", "Noto Sans JP", sans-serif;
+    --font-heading: "Noto Sans", "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Spacing === */
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 40px;
+    --space-xl: 64px;
+    --space-xxl: 100px;
+
+    /* === Radius === */
+    --radius-pill: 450px;
+    --radius-pill-lg: 900px;
+    --radius-tab: 34px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 35px; height: 60px;
+    background: var(--surface-header);
+    border-bottom: 1px solid var(--border-header);
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    padding: 100px 35px 80px;
+    text-align: center;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .hero-tagline {
+    font-family: var(--font-heading);
+    font-size: 30px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.3em;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .hero-brand {
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 700;
+    color: var(--brand-navy);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 400;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+  .hero p {
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 640px; margin: 32px auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--brand-navy); color: var(--bg-white);
+    padding: 14px 28px;
+    border: 1px solid var(--text-secondary);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.2em;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg-white); color: var(--text-primary);
+    padding: 14px 32px;
+    border: 1px solid var(--text-primary);
+    border-radius: var(--radius-pill-lg);
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .btn-secondary:hover { background: var(--text-primary); color: var(--bg-white); }
+  .btn-secondary .arrow { margin-left: 40px; }
+
+  .btn-tab {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-secondary);
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--radius-tab);
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-tab:hover { background: var(--surface-light); }
+  .btn-tab.active {
+    background: var(--accent-tab-active);
+    color: var(--bg-white);
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 35px; max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 30px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 48px;
+    line-height: 1.4;
+    letter-spacing: 0.2em;
+  }
+  .section-divider { border: none; height: 1px; background: var(--border-header); margin: 0; }
+  .section-bg-warm { background: var(--bg-warm); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: var(--bg-white); border: 1px solid var(--border-header); overflow: hidden; border-radius: 4px; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name {
+    font-family: var(--font-heading);
+    font-size: 12px; font-weight: 500;
+    margin-bottom: 4px; color: var(--text-primary);
+    letter-spacing: 0.03em;
+  }
+  .color-swatch-hex { font-size: 11px; color: var(--text-tertiary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; font-family: var(--font-body); }
+  .color-group-label {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-tertiary);
+    margin: 24px 0 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-header); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 12px; }
+  .type-context {
+    display: inline-block;
+    background: var(--brand-navy); color: var(--bg-white);
+    font-size: 10px; padding: 2px 8px; margin-left: 8px;
+    font-family: var(--font-heading); letter-spacing: 0.05em;
+    border-radius: 2px;
+  }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .product-card {
+    background: var(--bg-white);
+    text-decoration: none; color: var(--text-primary);
+    display: flex; flex-direction: column;
+  }
+  .product-card-image {
+    aspect-ratio: 1/1;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 500; font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--bg-white);
+    overflow: hidden;
+  }
+  .product-card-image.art-a { background: linear-gradient(135deg, #e8c4d8, #7b9ec9, #e2d4a0); }
+  .product-card-image.art-b { background: linear-gradient(135deg, #4a6fa5, #c8a2c8, #f0e68c); }
+  .product-card-image.art-c { background: linear-gradient(135deg, #d4a574, #8fbc8f, #dda0dd); }
+  .product-card-image.art-d { background: linear-gradient(135deg, #87ceeb, #ffa07a, #98fb98); }
+  .product-card-body { padding: 16px 0; }
+  .product-card .artist-name {
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 500;
+    color: var(--brand-navy);
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+  .product-card h3 {
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.38; margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .product-card .price {
+    font-family: var(--font-heading);
+    font-size: 15px; font-weight: 400;
+    color: var(--text-secondary);
+  }
+  .product-card .badge {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    margin-bottom: 8px;
+  }
+  .badge-new { background: var(--color-new-badge); color: var(--bg-white); }
+  .badge-sold { background: var(--color-sold-out); color: var(--bg-white); }
+
+  /* BUTTONS SECTION */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 12px; }
+
+  /* MANIFESTO */
+  .manifesto {
+    padding: 100px 35px;
+    background: var(--bg-warm);
+    text-align: center;
+  }
+  .manifesto-tagline {
+    font-family: var(--font-heading);
+    font-size: 30px; font-weight: 500;
+    line-height: 1.7;
+    color: var(--text-primary);
+    letter-spacing: 0.3em;
+    margin-bottom: 40px;
+  }
+  .manifesto-body {
+    font-family: var(--font-body);
+    font-size: 20px; font-weight: 400;
+    line-height: 2.2;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    max-width: 720px; margin: 0 auto 40px;
+  }
+
+  /* FEATURED ARTIST */
+  .featured-artist {
+    padding: 80px 35px;
+    background: var(--accent-featured);
+    text-align: center;
+  }
+  .featured-label {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .featured-name {
+    font-family: var(--font-heading);
+    font-size: 30px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.2em;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .featured-desc {
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 560px; margin: 0 auto;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+  }
+  .form-input {
+    width: 100%; background: var(--bg-white);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 0;
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.65;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-navy); }
+  .form-input--error { border-color: var(--color-error); }
+  .form-state-label { font-size: 11px; color: var(--text-tertiary); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-navy); height: 32px; margin-bottom: 8px; border-radius: 2px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 35px;
+    background: var(--bg-white);
+    color: var(--text-tertiary);
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400; line-height: 1.65;
+    letter-spacing: 0.03em;
+    border-top: 1px solid var(--border-header);
+  }
+  .footer a { color: var(--brand-navy); text-decoration: underline; }
+  .footer p { margin-bottom: 4px; }
+
+  @media (max-width: 767px) {
+    .hero-tagline, .manifesto-tagline { font-size: 22px; letter-spacing: 0.2em; }
+    .section-title { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .manifesto { padding: 64px 20px; }
+    .featured-artist { padding: 56px 20px; }
+    .product-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">HERALBONY</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-tagline">異彩を、放て。</div>
+  <div class="hero-brand">HERALBONY</div>
+  <div class="hero-sub">Art for Social Good</div>
+  <p>HERALBONY（heralbony.com）から抽出したデザイントークンのカタログ。Noto Sans JP 統一、ネイビーブランドカラー #21428b、pill CTA（radius 450px+）、高い letter-spacing（0.2-0.3em）のギャラリー的フラットデザイン。知的障害のあるアーティストの作品をプロダクトとして展開するソーシャルブランドのデザインシステム。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">コレクションを見る</a>
+    <a class="btn-secondary" href="#">ブランドストーリー <span class="arrow">&rarr;</span></a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Primary</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#21428b"></div><div class="color-swatch-info"><div class="color-swatch-name">Navy</div><div class="color-swatch-hex">#21428b</div><div class="color-swatch-role">CTA背景・アーティスト名・アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1c1b1b"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#1c1b1b</div><div class="color-swatch-role">ボタンデフォルト背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c9c9c9"></div><div class="color-swatch-info"><div class="color-swatch-name">Sold Out</div><div class="color-swatch-hex">#c9c9c9</div><div class="color-swatch-role">売り切れバッジ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">NEW Badge</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">NEWラベル背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">見出し・商品タイトル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6a6a6a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Tertiary</div><div class="color-swatch-hex">#6a6a6a</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b1b0ad"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#b1b0ad</div><div class="color-swatch-role">標準ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #dedede"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fbf9f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Beige</div><div class="color-swatch-hex">#fbf9f4</div><div class="color-swatch-role">ブランドストーリー・ニュースレター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fbfcf9"></div><div class="color-swatch-info"><div class="color-swatch-name">News BG</div><div class="color-swatch-hex">#fbfcf9</div><div class="color-swatch-role">お知らせセクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fcfcfc"></div><div class="color-swatch-info"><div class="color-swatch-name">Header</div><div class="color-swatch-hex">#fcfcfc</div><div class="color-swatch-role">グローバルヘッダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">薄い面色</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dbbcd2"></div><div class="color-swatch-info"><div class="color-swatch-name">Featured Artist</div><div class="color-swatch-hex">#dbbcd2</div><div class="color-swatch-role">月間フィーチャーアーティスト背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#52514f"></div><div class="color-swatch-info"><div class="color-swatch-name">Tab Active</div><div class="color-swatch-hex">#52514f</div><div class="color-swatch-role">タブ切替アクティブ背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / Typography (computed style)</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:30px; font-weight:500; line-height:1.7; color:var(--text-primary); letter-spacing:0.3em;">異彩を、放て。</div>
+    <div class="type-meta">Noto Sans JP / 30px / 500 / line-height: 1.7 / letter-spacing: 0.3em<span class="type-context">DISPLAY</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:30px; font-weight:500; line-height:1.4; color:var(--text-primary); letter-spacing:0.2em;">お知らせ</div>
+    <div class="type-meta">Noto Sans JP / 30px / 500 / line-height: 1.4 / letter-spacing: 0.2em<span class="type-context">HEADING 1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:20px; font-weight:400; line-height:1.38; color:var(--text-primary);">アートハンカチ「無題」 佐々木早苗</div>
+    <div class="type-meta">Noto Sans JP / 20px / 400 / line-height: 1.38 / letter-spacing: normal<span class="type-context">HEADING 2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:18px; font-weight:400; line-height:1.65; color:var(--text-primary); letter-spacing:0.03em;">HERALBONY POP UP STORE開催のお知らせ</div>
+    <div class="type-meta">Noto Sans JP / 18px / 400 / line-height: 1.65 / letter-spacing: 0.03em<span class="type-context">HEADING 3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:16px; font-weight:700; line-height:1.65; color:var(--text-primary); letter-spacing:0.1em;">ファッション</div>
+    <div class="type-meta">Noto Sans JP / 16px / 700 / line-height: 1.65 / letter-spacing: 0.1em<span class="type-context">HEADING 4</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.65; color:var(--text-secondary); max-width:640px;">HERALBONYは、知的障害のある作家が描くアート作品をファッションアイテムやインテリアプロダクトとして展開しています。一人ひとりの「異彩」を社会に届け、障害のイメージを変えていくことを目指しています。</div>
+    <div class="type-meta">Noto Sans JP / 15px / 400 / line-height: 1.65 / letter-spacing: normal<span class="type-context">BODY</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:20px; font-weight:400; line-height:2.2; color:var(--text-secondary); letter-spacing:0.1em; max-width:640px;">アートには、見る人の心を揺さぶる力がある。私たちは、その力を信じています。</div>
+    <div class="type-meta">Noto Sans JP / 20px / 400 / line-height: 2.2 / letter-spacing: 0.1em<span class="type-context">BODY MANIFESTO</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:16px; font-weight:500; line-height:1.6; color:var(--brand-navy); letter-spacing:0.03em;">佐々木 早苗</div>
+    <div class="type-meta">Noto Sans JP / 16px / 500 / line-height: 1.6 / letter-spacing: 0.03em / color: #21428b<span class="type-context">ARTIST NAME</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:13px; font-weight:500; line-height:1.53; color:var(--text-tertiary); letter-spacing:0.05em;">FEATURED ARTIST OF THE MONTH</div>
+    <div class="type-meta">Noto Sans JP / 13px / 500 / line-height: 1.53 / letter-spacing: 0.05em<span class="type-context">CAPTION</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:13px; font-weight:700; line-height:1.65; color:var(--text-primary); letter-spacing:0.03em;">VIEW ALL ARTISTS</div>
+    <div class="type-meta">Noto Sans JP / 13px / 700 / line-height: 1.65 / letter-spacing: 0.03em<span class="type-context">SMALL</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BRAND STORY / MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-tagline">異彩を、放て。</div>
+  <div class="manifesto-body">知的障害のある作家たちが生み出すアートには、既成概念を超えた圧倒的なエネルギーが宿る。その異彩を、ファッションやプロダクトを通じて日常へ届ける。</div>
+  <a class="btn-primary" href="#">ブランドストーリーを見る</a>
+</section>
+
+<!-- FEATURED ARTIST -->
+<section class="featured-artist">
+  <div class="featured-label">FEATURED ARTIST OF THE MONTH</div>
+  <div class="featured-name">佐々木 早苗</div>
+  <div class="featured-desc">力強い色彩と独創的な構図で知られるアーティスト。繰り返される幾何学的なパターンとビビッドな色使いが特徴の作品群は、国内外で高い評価を受けている。</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ART PRODUCT SHOWCASE -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / Art Products</div>
+  <h2 class="section-title">Collection</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image art-a">ART SCARF</div>
+      <div class="product-card-body">
+        <span class="badge badge-new">NEW</span>
+        <div class="artist-name">佐々木 早苗</div>
+        <h3>アートスカーフ「無題」</h3>
+        <div class="price">&yen;16,500 (tax incl.)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image art-b">ART HANDKERCHIEF</div>
+      <div class="product-card-body">
+        <div class="artist-name">八重樫 季良</div>
+        <h3>アートハンカチ「おりがみ日記」</h3>
+        <div class="price">&yen;3,300 (tax incl.)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image art-c">ART PANEL</div>
+      <div class="product-card-body">
+        <div class="artist-name">小林 覚</div>
+        <h3>アートパネル「夢の花」</h3>
+        <div class="price">&yen;44,000 (tax incl.)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image art-d">NECKTIE</div>
+      <div class="product-card-body">
+        <span class="badge badge-sold">SOLD OUT</span>
+        <div class="artist-name">高橋 南</div>
+        <h3>アートネクタイ「星と海」</h3>
+        <div class="price">&yen;11,000 (tax incl.)</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / Buttons</div>
+  <h2 class="section-title">Buttons</h2>
+
+  <div class="button-row" style="margin-bottom: 40px;">
+    <div class="button-item">
+      <a class="btn-primary" href="#">コレクションを見る</a>
+      <div class="button-label">PRIMARY NAVY PILL<br>bg #21428b / radius 450px / 14px / 400</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">ブランドストーリー <span class="arrow">&rarr;</span></a>
+      <div class="button-label">SECONDARY OUTLINE PILL<br>border #333 / radius 900px / 16px / 500</div>
+    </div>
+  </div>
+
+  <div class="button-row" style="margin-bottom: 40px;">
+    <div class="button-item">
+      <a class="btn-primary" style="background:var(--brand-dark); border-color:var(--brand-dark); font-family:var(--font-heading);" href="#">カートに入れる</a>
+      <div class="button-label">DARK PILL<br>bg #1c1b1b / radius 450px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-primary" style="background:#000000; border-color:#000000; padding:0 16px; font-size:16px; font-weight:500; font-family:var(--font-heading);" href="#">&#x1F50D;</a>
+      <div class="button-label">SEARCH SUBMIT<br>bg #000 / radius 450px</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 12px;">
+    <div class="color-group-label">Page Switcher Tabs</div>
+  </div>
+  <div class="button-row">
+    <div class="button-item">
+      <div style="display:flex; gap:8px; background:var(--surface-light); padding:4px; border-radius:var(--radius-tab);">
+        <a class="btn-tab active" href="#">すべて</a>
+        <a class="btn-tab" href="#">ファッション</a>
+        <a class="btn-tab" href="#">アート</a>
+        <a class="btn-tab" href="#">インテリア</a>
+      </div>
+      <div class="button-label">PAGE SWITCHER TAB<br>active bg #52514f / radius 34px / 14px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section section-bg-warm" id="cards">
+  <div class="section-eyebrow">05 / Cards</div>
+  <h2 class="section-title">Cards</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+    <!-- News Card -->
+    <div style="background:var(--bg-white); padding:24px;">
+      <div style="font-family:var(--font-heading); font-size:13px; font-weight:500; color:var(--text-tertiary); letter-spacing:0.05em; margin-bottom:12px;">2026.05.01</div>
+      <div style="font-family:var(--font-heading); font-size:18px; font-weight:400; line-height:1.65; color:var(--text-primary); letter-spacing:0.03em; margin-bottom:12px;">HERALBONY POP UP STORE 東京ミッドタウンにて開催</div>
+      <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.65; color:var(--text-secondary);">知的障害のあるアーティストの作品を間近でご覧いただける、期間限定ポップアップストアを開催いたします。</div>
+    </div>
+    <!-- Artist Card -->
+    <div style="background:var(--bg-white); padding:24px;">
+      <div style="aspect-ratio:4/3; background:linear-gradient(135deg, #e8c4d8, #7b9ec9); margin-bottom:16px; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:14px; color:var(--bg-white); letter-spacing:0.1em;">ARTWORK</div>
+      <div style="font-family:var(--font-heading); font-size:16px; font-weight:500; color:var(--brand-navy); letter-spacing:0.03em; line-height:1.6; margin-bottom:4px;">八重樫 季良</div>
+      <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.65; color:var(--text-secondary);">繊細な色使いと緻密なパターンが特徴のアーティスト。</div>
+    </div>
+    <!-- Category Card -->
+    <div style="background:var(--bg-white); padding:24px;">
+      <div style="font-family:var(--font-heading); font-size:16px; font-weight:700; line-height:1.65; color:var(--text-primary); letter-spacing:0.1em; margin-bottom:12px;">ファッション</div>
+      <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.65; color:var(--text-secondary); margin-bottom:16px;">スカーフ、ネクタイ、ハンカチなど、日常に異彩を添えるファッションアイテム。</div>
+      <a class="btn-secondary" href="#" style="font-size:14px; padding:10px 24px; font-family:var(--font-heading);">商品を見る <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">06 / Forms</div>
+  <h2 class="section-title">Forms</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+    <div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" placeholder="example@heralbony.com">
+        <div class="form-state-label">DEFAULT - border #b1b0ad / radius 0</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input form-input--focus" value="customer@heralbony.com">
+        <div class="form-state-label">FOCUS - border #21428b (navy)</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label" style="color:var(--color-error);">メールアドレス</label>
+        <input class="form-input form-input--error" value="invalid email">
+        <div class="form-state-label" style="color:var(--color-error);">ERROR - border #c0392b</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px; max-width:480px;">
+    <div class="form-group">
+      <label class="form-label">ニュースレターを購読する</label>
+      <div style="display:flex; gap:8px;">
+        <input class="form-input" placeholder="メールアドレスを入力" style="flex:1;">
+        <a class="btn-primary" href="#" style="white-space:nowrap; font-family:var(--font-heading);">登録する</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">07 / Elevation</div>
+  <h2 class="section-title">Elevation</h2>
+
+  <p style="margin-bottom:24px; color:var(--text-tertiary); max-width:640px; font-family:var(--font-body); font-size:15px; line-height:1.65;">HERALBONY はシャドウを使わないフラットデザイン。背景色の切り替え（#ffffff / #fbf9f4 / #fbfcf9 / #dbbcd2）で視覚的な段差を表現する。</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+    <div style="padding:24px; background:var(--bg-white); border:1px solid var(--border-header);">
+      <div style="font-family:var(--font-heading); font-size:13px; font-weight:500; letter-spacing:0.05em; margin-bottom:8px; color:var(--text-primary);">Level 0 - White</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary);">shadow: none / #ffffff</div>
+    </div>
+    <div style="padding:24px; background:var(--bg-warm);">
+      <div style="font-family:var(--font-heading); font-size:13px; font-weight:500; letter-spacing:0.05em; margin-bottom:8px; color:var(--text-primary);">Level 0 - Warm</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary);">shadow: none / #fbf9f4</div>
+    </div>
+    <div style="padding:24px; background:var(--bg-news);">
+      <div style="font-family:var(--font-heading); font-size:13px; font-weight:500; letter-spacing:0.05em; margin-bottom:8px; color:var(--text-primary);">Level 0 - News</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary);">shadow: none / #fbfcf9</div>
+    </div>
+    <div style="padding:24px; background:var(--accent-featured);">
+      <div style="font-family:var(--font-heading); font-size:13px; font-weight:500; letter-spacing:0.05em; margin-bottom:8px; color:var(--text-primary);">Level 0 - Featured</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary);">shadow: none / #dbbcd2</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-eyebrow">08 / Layout</div>
+  <h2 class="section-title">Layout</h2>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:100px"></div><div class="spacing-value">100px</div></div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="color-group-label">Grid</div>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-top:16px;">
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+    </div>
+    <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); margin-top:8px;">Product grid: 4 columns (desktop) / max-width: ~1200px / padding: 20-35px</div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+      <div style="background:var(--brand-navy); opacity:0.15; height:80px; border-radius:2px;"></div>
+    </div>
+    <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); margin-top:8px;">News card grid: 3 columns (desktop)</div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="color-group-label">Border Radius</div>
+    <div style="display:flex; gap:24px; flex-wrap:wrap; margin-top:16px; align-items:center;">
+      <div style="text-align:center;">
+        <div style="width:80px; height:40px; background:var(--brand-navy); border-radius:450px;"></div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); margin-top:8px;">450px (pill)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:120px; height:40px; background:var(--bg-white); border:1px solid var(--text-primary); border-radius:900px;"></div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); margin-top:8px;">900px (pill lg)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:80px; height:36px; background:var(--accent-tab-active); border-radius:34px;"></div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); margin-top:8px;">34px (tab)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:120px; height:40px; background:var(--bg-white); border:1px solid var(--border); border-radius:0;"></div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-tertiary); margin-top:8px;">0px (input)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>HERALBONY (heralbony.com) computed style DESIGN.md showcase.</p>
+  <p>Noto Sans JP / 15px base / line-height 1.65 / Navy #21428b / pill CTA / flat design</p>
+  <p style="margin-top:16px;">awesome-design-md-jp preview</p>
+</footer>
+
+</body>
+</html>

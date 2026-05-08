@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (113 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (116 sites)</a>
 </p>
 
 <table>
@@ -188,6 +188,14 @@
 <td align="center"><strong>SHIRO</strong><br><img src="design-md/shiro/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TRUCK</strong><br><img src="design-md/truck-furniture/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IKEUCHI</strong><br><img src="design-md/ikeuchi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NOT A HOTEL</strong><br><img src="design-md/notahotel/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>HERALBONY</strong><br><img src="design-md/heralbony/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>北欧暮らし</strong><br><img src="design-md/hokuohkurashi/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -363,11 +371,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [SHIRO (シロ)](https://shiro-shiro.jp/) | Natural Cosmetics / Beauty | [DESIGN.md](design-md/shiro/DESIGN.md) | [preview.html](design-md/shiro/preview.html) |
 | [TRUCK FURNITURE (トラックファニチャー)](https://www.truck-furniture.co.jp/) | Furniture / Handcraft | [DESIGN.md](design-md/truck-furniture/DESIGN.md) | [preview.html](design-md/truck-furniture/preview.html) |
 | [IKEUCHI ORGANIC (イケウチオーガニック)](https://www.ikeuchi.org/) | Organic Towel / Lifestyle | [DESIGN.md](design-md/ikeuchi/DESIGN.md) | [preview.html](design-md/ikeuchi/preview.html) |
+| [NOT A HOTEL](https://notahotel.com/) | Architecture / Hospitality | [DESIGN.md](design-md/notahotel/DESIGN.md) | [preview.html](design-md/notahotel/preview.html) |
+| [HERALBONY (ヘラルボニー)](https://www.heralbony.com/) | Art / Social Enterprise | [DESIGN.md](design-md/heralbony/DESIGN.md) | [preview.html](design-md/heralbony/preview.html) |
+| [北欧、暮らしの道具店](https://hokuohkurashi.com/) | Lifestyle EC / Media Commerce | [DESIGN.md](design-md/hokuohkurashi/DESIGN.md) | [preview.html](design-md/hokuohkurashi/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (113 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (116 sites)</a>
 </p>
 
 <table>
@@ -521,6 +532,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>SHIRO</strong><br><img src="design-md/shiro/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TRUCK</strong><br><img src="design-md/truck-furniture/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IKEUCHI</strong><br><img src="design-md/ikeuchi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NOT A HOTEL</strong><br><img src="design-md/notahotel/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>HERALBONY</strong><br><img src="design-md/heralbony/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>北欧暮らし</strong><br><img src="design-md/hokuohkurashi/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
