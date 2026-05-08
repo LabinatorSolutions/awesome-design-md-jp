@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (98 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (101 sites)</a>
 </p>
 
 <table>
@@ -169,9 +169,9 @@
 <tr>
 <td align="center"><strong>CLASKA</strong><br><img src="design-md/claska/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DEAN&amp;DELUCA</strong><br><img src="design-md/deandeluca/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>TRAVELER'S</strong><br><img src="design-md/travelers-company/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Dandelion</strong><br><img src="design-md/dandelionchocolate/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HIGASHIYA</strong><br><img src="design-md/higashiya/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -332,11 +332,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [YAECA (ヤエカ)](https://yaeca.com/) | Fashion / Lifestyle | [DESIGN.md](design-md/yaeca/DESIGN.md) | [preview.html](design-md/yaeca/preview.html) |
 | [CLASKA (クラスカ)](https://www.claska.com/) | Design / Lifestyle | [DESIGN.md](design-md/claska/DESIGN.md) | [preview.html](design-md/claska/preview.html) |
 | [DEAN & DELUCA (ディーンアンドデルーカ)](https://www.deandeluca.co.jp/) | Premium Food / Lifestyle | [DESIGN.md](design-md/deandeluca/DESIGN.md) | [preview.html](design-md/deandeluca/preview.html) |
+| [TRAVELER'S COMPANY (トラベラーズカンパニー)](https://www.travelers-company.com/) | Stationery / Lifestyle | [DESIGN.md](design-md/travelers-company/DESIGN.md) | [preview.html](design-md/travelers-company/preview.html) |
+| [Dandelion Chocolate (ダンデライオン・チョコレート)](https://dandelionchocolate.jp/) | Craft Chocolate / Food | [DESIGN.md](design-md/dandelionchocolate/DESIGN.md) | [preview.html](design-md/dandelionchocolate/preview.html) |
+| [HIGASHIYA (ひがしや)](https://www.higashiya.com/) | Japanese Confectionery / Food | [DESIGN.md](design-md/higashiya/DESIGN.md) | [preview.html](design-md/higashiya/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (98 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (101 sites)</a>
 </p>
 
 <table>
@@ -471,9 +474,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>CLASKA</strong><br><img src="design-md/claska/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DEAN&amp;DELUCA</strong><br><img src="design-md/deandeluca/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>TRAVELER'S</strong><br><img src="design-md/travelers-company/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Dandelion</strong><br><img src="design-md/dandelionchocolate/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HIGASHIYA</strong><br><img src="design-md/higashiya/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

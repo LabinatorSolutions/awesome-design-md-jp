@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: HIGASHIYA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Shippori+Mincho:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: HIGASHIYA 実測値 === */
+    --bg-primary: #ffffff;
+    --text-primary: #000000;
+
+    /* === Fonts ===
+       Granjon LT W01 Roman → Cormorant Garamond (Google Fonts substitute — same old-style serif)
+       HGKyokashotai (教科書体) → Shippori Mincho (Google Fonts — 教科書体に近い柔らかい明朝)
+       Helvetica W01 Light Cn → Helvetica Neue Light (system fallback)
+    */
+    --font-main: "Cormorant Garamond", "Granjon LT W01 Roman", "Garamond W01", HGKyokashotai, DF-KyouKaShoR-W3, 游明朝, "Yu Mincho", YuMincho, "Shippori Mincho", serif;
+    --font-label: "Helvetica Neue", "Helvetica W01 Light Cn", HGKyokashotai, serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.15;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HEADER */
+  .g-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 60px 30px;
+    border-bottom: 1px solid var(--text-primary);
+  }
+  .g-header-logo {
+    font-family: var(--font-main);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: normal;
+  }
+  .g-header-utility {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .g-header-utility a {
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 1.6px;
+  }
+  .g-header-lang {
+    font-family: var(--font-label);
+    font-size: 10px;
+    letter-spacing: 1.6px;
+    color: var(--text-primary);
+  }
+
+  /* NAV */
+  .g-nav {
+    padding: 60px 60px 40px;
+    border-bottom: 1px solid var(--text-primary);
+  }
+  .g-nav-list {
+    list-style: none;
+    display: flex;
+    gap: 48px;
+  }
+  .g-nav-item a {
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.0;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .g-nav-item a:hover {
+    opacity: 0.6;
+  }
+  .g-nav-sub {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    font-family: var(--font-main);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 160px 60px 140px;
+    text-align: center;
+  }
+  .hero-page-title {
+    font-family: var(--font-main);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 1.76px;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 48px;
+  }
+  .hero-description {
+    font-family: var(--font-main);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--text-primary);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 100px 60px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-border {
+    border-top: 1px solid var(--text-primary);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .section-en {
+    display: block;
+    font-family: var(--font-main);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 1.76px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+  .section-ja {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.72px;
+  }
+
+  /* COLORS */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0;
+  }
+  .color-swatch-block {
+    height: 140px;
+    width: 100%;
+    border: 1px solid var(--text-primary);
+  }
+  .color-swatch-info { padding: 20px 4px; }
+  .color-swatch-name {
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .color-swatch-hex {
+    font-size: 11px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+  }
+  .color-swatch-role {
+    font-size: 11px;
+    color: var(--text-primary);
+    margin-top: 8px;
+    opacity: 0.6;
+    font-family: var(--font-main);
+    line-height: 1.6;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample {
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--text-primary);
+    text-align: left;
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-primary);
+    opacity: 0.5;
+    margin-top: 16px;
+    letter-spacing: 0.5px;
+  }
+  .type-context {
+    display: inline-block;
+    border: 1px solid var(--text-primary);
+    color: var(--text-primary);
+    font-size: 10px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    font-family: var(--font-label);
+    letter-spacing: 0.5px;
+  }
+
+  /* ARTICLE LIST */
+  .article-list {
+    list-style: none;
+  }
+  .article-item {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--text-primary);
+    display: flex;
+    gap: 32px;
+    align-items: baseline;
+  }
+  .article-item:first-child {
+    border-top: 1px solid var(--text-primary);
+  }
+  .article-date {
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.72px;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    width: 100px;
+  }
+  .article-title {
+    font-family: var(--font-main);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--text-primary);
+  }
+  .article-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .article-title a:hover { opacity: 0.6; }
+
+  /* SHOP LIST */
+  .shop-list {
+    list-style: none;
+  }
+  .shop-item {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--text-primary);
+  }
+  .shop-item:first-child {
+    border-top: 1px solid var(--text-primary);
+  }
+  .shop-name {
+    font-family: var(--font-main);
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .shop-address {
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 2.5;
+    color: var(--text-primary);
+  }
+
+  /* FOOTER */
+  .g-footer {
+    padding: 60px;
+    text-align: center;
+    border-top: 1px solid var(--text-primary);
+  }
+  .g-footer-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 24px;
+  }
+  .g-footer-links a {
+    font-family: var(--font-main);
+    font-size: 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: normal;
+  }
+  .g-footer-links a:hover { opacity: 0.6; }
+  .g-footer-copy {
+    font-family: var(--font-label);
+    font-size: 10px;
+    color: var(--text-primary);
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--text-primary);
+    margin-bottom: 8px;
+    height: 28px;
+  }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; color: var(--text-primary); opacity: 0.5; }
+
+  @media (max-width: 769px) {
+    .g-header { padding: 24px 24px 20px; }
+    .g-nav { padding: 40px 24px 30px; }
+    .g-nav-list { flex-direction: column; gap: 24px; }
+    .hero { padding: 80px 24px 60px; }
+    .section { padding: 60px 24px; }
+    .article-item { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="g-header">
+  <a class="g-header-logo" href="#">HIGASHIYA</a>
+  <div class="g-header-utility">
+    <a href="#">オンラインショップ</a>
+    <span class="g-header-lang">EN / JA</span>
+  </div>
+</header>
+
+<nav class="g-nav">
+  <ul class="g-nav-list">
+    <li class="g-nav-item">
+      <a href="#">はじめに</a>
+    </li>
+    <li class="g-nav-item">
+      <a href="#colors">果子</a>
+      <div class="g-nav-sub">ひと口果子 ／ 真 ／ 棹 ／ 揚</div>
+    </li>
+    <li class="g-nav-item">
+      <a href="#typography">折弁</a>
+    </li>
+    <li class="g-nav-item">
+      <a href="#article">店</a>
+    </li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-page-title">菓子をもって<br>日本の食文化の新たなかたちを提案する</div>
+  <div class="hero-description">HIGASHIYA のデザインシステム。Granjon（16世紀フランス活字）と教科書体（日本の書写教育用書体）を混植する、西洋のクラシシズムと日本の書道精神の融合。純黒 #000 × 純白 #fff のモノクローム。body 10px。ボタンUIゼロ。テキストリンクのみ。ギャラリーの展示キャプションのような控えめさ。computed style 実測値（2026-05-08 取得）に基づく。</div>
+</section>
+
+<!-- COLORS -->
+<section class="section section-border" id="colors">
+  <div class="section-header">
+    <span class="section-en">Palette</span>
+    <span class="section-ja">カラーパレット</span>
+  </div>
+
+  <div class="color-grid">
+    <div>
+      <div class="color-swatch-block" style="background:#000000"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Black</div>
+        <div class="color-swatch-hex">#000000</div>
+        <div class="color-swatch-role">テキスト・罫線・すべてのUI要素。純黒のみ使用</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-block" style="background:#ffffff"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">White</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">ページ背景。色彩をCSSでは一切使わない</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px; font-family:var(--font-mono); font-size:10px; opacity:0.5; text-align:center;">
+    サイトの朱色・和紙テクスチャはCSS背景色ではなく画像として配置。デザインシステムとしてはモノクロームのみ
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="section section-border" id="typography">
+  <div class="section-header">
+    <span class="section-en">Typography</span>
+    <span class="section-ja">タイポグラフィ階層</span>
+  </div>
+
+  <div style="max-width:900px; margin: 0 auto;">
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:36px; font-weight:400; line-height:1.4; color:var(--text-primary);">HIGASHIYA</div>
+      <div class="type-meta">36px / 400 / line-height 1.4 / Granjon LT W01 Roman<span class="type-context">ロゴ h1</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:22px; font-weight:400; line-height:1.4; letter-spacing:1.76px; color:var(--text-primary);">店 ／ Page Title</div>
+      <div class="type-meta">22px / 400 / line-height 1.4 / letter-spacing 1.76px (0.08em)<span class="type-context">ページ見出し h2</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:20px; font-weight:400; line-height:1.4; color:var(--text-primary);">HIGASHIYA GINZA</div>
+      <div class="type-meta">20px / 400 / line-height 1.4<span class="type-context">セクション見出し h3</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:18px; font-weight:400; line-height:1.0; color:var(--text-primary);">はじめに ／ 果子 ／ 折弁 ／ 店</div>
+      <div class="type-meta">18px / 400 / line-height 1.0 / Granjon + 教科書体<span class="type-context">メインナビゲーション a</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:13px; font-weight:400; line-height:1.75; color:var(--text-primary);">季節の生菓子のご案内。ひとつひとつ手作りの果子は、移ろう季節の風情を映します。「和菓子」を現代の日本のライフスタイルに合うかたちで再解釈し、素材の持つ力を最大限に引き出した味わいをお届けします。</div>
+      <div class="type-meta">13px / 400 / line-height 1.75 (22.75px)<span class="type-context">本文 p</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-label); font-size:12px; font-weight:300; line-height:1.75; letter-spacing:0.72px; color:var(--text-primary);">2026.05.08</div>
+      <div class="type-meta">12px / 300 / line-height 1.75 / letter-spacing 0.72px (0.06em) / Helvetica W01 Light Cn<span class="type-context">日付ラベル</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-label); font-size:12px; font-weight:300; line-height:2.5; letter-spacing:1.6px; color:var(--text-primary);">オンラインショップ</div>
+      <div class="type-meta">12px / 300 / line-height 2.5 / letter-spacing 1.6px (0.133em) / Helvetica Cn<span class="type-context">ヘッダーリンク a</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:14px; font-weight:400; line-height:2.5; color:var(--text-primary);">東京都中央区銀座 1-7-7 ポーラ銀座ビル 2F</div>
+      <div class="type-meta">14px / 400 / line-height 2.5 (35px)<span class="type-context">住所 li</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-main); font-size:10px; font-weight:400; line-height:2.5; color:var(--text-primary);">body テキスト — gallery caption size。通常の Web サイトの約 60%。</div>
+      <div class="type-meta">10px / 400 / line-height 1.15 (11.5px) — body base size<span class="type-context">ボディ基底サイズ</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE LIST -->
+<section class="section section-border" id="article">
+  <div class="section-header">
+    <span class="section-en">News</span>
+    <span class="section-ja">お知らせ</span>
+  </div>
+
+  <ul class="article-list">
+    <li class="article-item">
+      <span class="article-date">2026.05.06</span>
+      <span class="article-title"><a href="#">季節の生菓子のご案内</a></span>
+    </li>
+    <li class="article-item">
+      <span class="article-date">2026.04.28</span>
+      <span class="article-title"><a href="#">端午の節句 柏餅・粽のご案内</a></span>
+    </li>
+    <li class="article-item">
+      <span class="article-date">2026.04.15</span>
+      <span class="article-title"><a href="#">新緑の和三盆・青梅の寒天 期間限定販売</a></span>
+    </li>
+    <li class="article-item">
+      <span class="article-date">2026.03.20</span>
+      <span class="article-title"><a href="#">春の折弁 — 桜と筍のお弁当のご案内</a></span>
+    </li>
+  </ul>
+</section>
+
+<!-- SHOP LIST -->
+<section class="section section-border" id="shops">
+  <div class="section-header">
+    <span class="section-en">Shops</span>
+    <span class="section-ja">店</span>
+  </div>
+
+  <ul class="shop-list">
+    <li class="shop-item">
+      <div class="shop-name">HIGASHIYA GINZA</div>
+      <div class="shop-address">東京都中央区銀座 1-7-7 ポーラ銀座ビル 2F</div>
+    </li>
+    <li class="shop-item">
+      <div class="shop-name">HIGASHIYA man</div>
+      <div class="shop-address">東京都港区南青山 3-17-14</div>
+    </li>
+  </ul>
+</section>
+
+<!-- SPACING -->
+<section class="section section-border" id="spacing">
+  <div class="section-header">
+    <span class="section-en">Spacing</span>
+    <span class="section-ja">余白</span>
+  </div>
+  <div class="spacing-row" style="justify-content:center;">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S · 8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M · 16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">L · 32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:60px"></div><div class="spacing-value">XL · 60px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:100px"></div><div class="spacing-value">XXL · 100px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:160px"></div><div class="spacing-value">XXXL · 160px</div></div>
+  </div>
+</section>
+
+<footer class="g-footer">
+  <ul class="g-footer-links">
+    <li><a href="#">Privacy policy</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+  <div class="g-footer-copy">
+    Generated from <a href="https://www.higashiya.com/" style="color:var(--text-primary); text-decoration:underline;">HIGASHIYA</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-08）
+  </div>
+</footer>
+
+</body>
+</html>
