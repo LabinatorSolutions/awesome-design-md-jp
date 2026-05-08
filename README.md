@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (83 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (86 sites)</a>
 </p>
 
 <table>
@@ -148,6 +148,14 @@
 <td align="center"><strong>POSTALCO</strong><br><img src="design-md/postalco/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>OSAJI</strong><br><img src="design-md/osaji/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>45R</strong><br><img src="design-md/45r/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>sacai</strong><br><img src="design-md/sacai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>AKOMEYA</strong><br><img src="design-md/akomeya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>森美術館</strong><br><img src="design-md/mori-art-museum/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -293,11 +301,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [POSTALCO (ポスタルコ)](https://www.postalco.net/) | Leather / Stationery / Design Studio | [DESIGN.md](design-md/postalco/DESIGN.md) | [preview.html](design-md/postalco/preview.html) |
 | [OSAJI (オサジ)](https://osaji.net/) | Skincare / Lifestyle | [DESIGN.md](design-md/osaji/DESIGN.md) | [preview.html](design-md/osaji/preview.html) |
 | [45R (フォーティーファイブアール)](https://www.45r.jp/) | Fashion / Apparel / Heritage | [DESIGN.md](design-md/45r/DESIGN.md) | [preview.html](design-md/45r/preview.html) |
+| [sacai (サカイ)](https://www.sacai.jp/) | Fashion / Apparel | [DESIGN.md](design-md/sacai/DESIGN.md) | [preview.html](design-md/sacai/preview.html) |
+| [AKOMEYA TOKYO (アコメヤ トーキョー)](https://www.akomeya.jp/) | Lifestyle / Specialty Grocery | [DESIGN.md](design-md/akomeya/DESIGN.md) | [preview.html](design-md/akomeya/preview.html) |
+| [Mori Art Museum (森美術館)](https://www.mori.art.museum/jp/) | Contemporary Art Museum | [DESIGN.md](design-md/mori-art-museum/DESIGN.md) | [preview.html](design-md/mori-art-museum/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (83 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (86 sites)</a>
 </p>
 
 <table>
@@ -411,6 +422,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>POSTALCO</strong><br><img src="design-md/postalco/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>OSAJI</strong><br><img src="design-md/osaji/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>45R</strong><br><img src="design-md/45r/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>sacai</strong><br><img src="design-md/sacai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>AKOMEYA</strong><br><img src="design-md/akomeya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Mori Art Museum</strong><br><img src="design-md/mori-art-museum/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>

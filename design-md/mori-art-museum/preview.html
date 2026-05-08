@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 森美術館 Mori Art Museum</title>
+<style>
+  :root {
+    /* === Mori Art Museum Color Tokens (実測値) === */
+    --mori-crimson: #bf0d3e;       /* ブランドカラー */
+    --mori-text: #252525;          /* 本文 */
+    --mori-mid-gray: #4c4c4c;      /* 補助 */
+    --mori-soft-gray: #7f7f7f;     /* キャプション */
+    --mori-strong-bg: #333333;     /* ヘッダー暗 */
+
+    --pure-white: #ffffff;
+    --page-surface: #f8f8f8;       /* セカンダリナビ */
+    --section-surface: #f5f5f5;    /* セクション帯 */
+    --tag-surface: #ebebeb;        /* タグ・バッジ */
+
+    --soft-border: #e5e5e5;
+
+    /* === Fonts === */
+    /* Note: 実サイトは MoriLogoB というカスタムロゴフォントを使用。
+       本プレビューでは代替として Marcellus（Google Fonts）または親フォントを使用 */
+    --font-base: "Hiragino Sans", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-logo: "Bodoni 72", "Didot", Georgia, serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--pure-white);
+    color: var(--mori-text);
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 400; line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* TOP DARK BAR */
+  .strong-bar {
+    background: var(--mori-strong-bg);
+    color: var(--pure-white);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400;
+  }
+  .strong-bar a { color: var(--pure-white); text-decoration: none; margin-left: 16px; }
+
+  /* HEADER (light) */
+  .header {
+    background: var(--page-surface);
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--soft-border);
+  }
+  .header-left, .header-right { display: flex; align-items: center; gap: 24px; }
+  .header-brand {
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+  .header-brand-logo {
+    font-family: var(--font-logo);
+    font-size: 48px; font-weight: 400;
+    color: var(--mori-crimson);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+  .header-brand-name {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 700;
+    color: var(--mori-text);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+  .header a {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    color: var(--mori-text);
+    text-decoration: none;
+  }
+  .header-cta {
+    background: var(--pure-white);
+    color: var(--mori-crimson) !important;
+    border: 1px solid var(--mori-crimson);
+    padding: 13px 18px;
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700 !important;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 24px;
+    background: linear-gradient(135deg, #2a1419, #432028);
+    color: var(--pure-white);
+    text-align: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 700;
+    color: var(--mori-crimson);
+    background: var(--pure-white);
+    display: inline-block;
+    padding: 5px 10px;
+    margin-bottom: 24px;
+    line-height: 2.0;
+    letter-spacing: 0.04em;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 27px; font-weight: 700;
+    color: var(--pure-white);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .hero-date {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--mori-crimson);
+    background: var(--pure-white);
+    display: inline-block;
+    padding: 6px 14px;
+    margin-bottom: 32px;
+  }
+  .hero p {
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.75;
+    color: var(--pure-white);
+    max-width: 640px; margin: 0 auto 40px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 700;
+    color: var(--mori-crimson);
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 700;
+    color: var(--mori-text);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .section-subtitle {
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    color: var(--mori-mid-gray);
+    margin-bottom: 48px;
+    line-height: 1.75;
+  }
+  .section-divider { border: none; height: 1px; background: var(--soft-border); margin: 0; }
+  .section-banner { background: var(--section-surface); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: var(--pure-white); border: 1px solid var(--soft-border); overflow: hidden; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 4px; color: var(--mori-text);
+  }
+  .color-swatch-hex { font-size: 11px; color: var(--mori-soft-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--mori-mid-gray); margin-top: 4px; font-family: var(--font-base); }
+  .color-group-label {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--mori-crimson);
+    margin: 24px 0 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--soft-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--mori-soft-gray); margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--mori-crimson); color: var(--pure-white); font-size: 10px; padding: 2px 8px; margin-left: 8px; letter-spacing: 0.04em; font-family: var(--font-base); font-weight: 700; }
+
+  /* EXHIBITION CARDS */
+  .exhibition-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .exhibition-card {
+    background: var(--pure-white);
+    text-decoration: none; color: var(--mori-text);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .exhibition-card-image {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #2a1419, #6b3038);
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    color: var(--pure-white);
+    font-family: var(--font-base);
+    font-weight: 400; font-size: 13px;
+    padding: 16px;
+    position: relative;
+  }
+  .exhibition-card-image.b { background: linear-gradient(135deg, #1f2a3a, #3d4d65); }
+  .exhibition-card-image.c { background: linear-gradient(135deg, #4a3818, #7a5e34); }
+  .exhibition-card-body { padding: 16px 0; }
+  .exhibition-card-date {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--mori-crimson);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .exhibition-card h3 {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 700;
+    line-height: 1.5; margin-bottom: 8px;
+    color: var(--mori-text);
+  }
+  .exhibition-card .crimson-strong {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 700;
+    color: var(--mori-crimson);
+    line-height: 1.5; margin-bottom: 8px;
+  }
+  .exhibition-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .tag {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 700;
+    color: var(--mori-crimson);
+    padding: 5px 10px;
+    background: var(--tag-surface);
+    line-height: 1.5;
+  }
+  .badge-filled {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--pure-white);
+    background: var(--mori-crimson);
+    padding: 4px 10px;
+    line-height: 1.0;
+    display: inline-block;
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--mori-soft-gray); margin-top: 12px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--pure-white);
+    color: var(--mori-crimson);
+    padding: 13px 22px;
+    border: 1px solid var(--mori-crimson);
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-primary:hover { background: var(--mori-crimson); color: var(--pure-white); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--mori-crimson);
+    color: var(--pure-white);
+    padding: 13px 22px;
+    border: 1px solid var(--mori-crimson);
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* INFO BANNER (gray) */
+  .info-banner {
+    padding: 64px 24px;
+    background: var(--section-surface);
+    text-align: center;
+  }
+  .info-banner-eyebrow {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 700;
+    color: var(--mori-crimson);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .info-banner-title {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--mori-text);
+    margin-bottom: 16px;
+  }
+  .info-banner-sub {
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.75;
+    color: var(--mori-mid-gray);
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--mori-text);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: var(--pure-white);
+    color: var(--mori-text);
+    border: 1px solid #cccccc;
+    padding: 12px 14px;
+    border-radius: 5px;
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.18s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--mori-crimson); }
+  .form-input--error { border-color: var(--mori-crimson); background: rgba(191, 13, 62, 0.05); }
+  .form-state-label { font-size: 11px; color: var(--mori-soft-gray); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--mori-crimson); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--mori-soft-gray); }
+
+  /* SURFACE STACK */
+  .surface-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .surface-card {
+    height: 120px; padding: 16px;
+    border: 1px solid var(--soft-border);
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .surface-card .name { font-family: var(--font-base); font-size: 13px; font-weight: 700; }
+  .surface-card .hex { font-family: var(--font-mono); font-size: 11px; }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 24px 40px;
+    background: var(--mori-strong-bg);
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400; line-height: 1.75;
+  }
+  .footer a { color: var(--pure-white); text-decoration: underline; }
+  .footer-logo {
+    font-family: var(--font-logo);
+    font-size: 48px; font-weight: 400;
+    color: var(--mori-crimson);
+    margin-bottom: 16px;
+  }
+  .footer-tiny {
+    font-family: var(--font-base);
+    font-size: 11px; color: rgba(255, 255, 255, 0.55); margin-top: 24px;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1, .info-banner-title, .section-title { font-size: 20px; }
+    .header { flex-direction: column; gap: 12px; }
+    .section { padding: 56px 20px; }
+    .info-banner { padding: 48px 20px; }
+    .exhibition-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top dark bar -->
+<div class="strong-bar">
+  <span>Mori Art Museum / 53F Roppongi Hills Mori Tower</span>
+  <span>
+    <a href="#">JP</a>
+    <a href="#">EN</a>
+    <a href="#">CH</a>
+    <a href="#">KR</a>
+  </span>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <a href="#colors">展覧会</a>
+    <a href="#typography">教育普及</a>
+    <a href="#products">パブリック</a>
+    <a href="#buttons">来館案内</a>
+  </div>
+  <div class="header-brand">
+    <div class="header-brand-logo">M</div>
+    <div class="header-brand-name">MORI ART MUSEUM 森美術館</div>
+  </div>
+  <div class="header-right">
+    <a href="#">アクセス</a>
+    <a href="#">ニュース</a>
+    <a class="header-cta" href="#">チケットの購入</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">DESIGN SYSTEM PREVIEW</div>
+  <h1>森美術館のデザインシステム<br>クリムゾン #bf0d3e と整然とした構造</h1>
+  <div class="hero-date">2026.5.8 / 実測ベース</div>
+  <p>森美術館（mori.art.museum/jp）から抽出したデザイントークンのカタログ。Hiragino Sans + クリムゾン #bf0d3e を中心とした美術館サイトの設計。実サイトの computed style 実測値に基づく。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+  <p class="section-subtitle">無彩色のキャンバスにクリムゾンを点在させる、美術館サイトの色設計。</p>
+
+  <div class="color-group-label">BRAND</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bf0d3e"></div><div class="color-swatch-info"><div class="color-swatch-name">Mori Crimson</div><div class="color-swatch-hex">#bf0d3e</div><div class="color-swatch-role">ブランド・見出し・CTA・タグ</div></div></div>
+  </div>
+
+  <div class="color-group-label">FOREGROUND</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#252525"></div><div class="color-swatch-info"><div class="color-swatch-name">Body Black</div><div class="color-swatch-hex">#252525</div><div class="color-swatch-role">本文・h1〜h3</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4c4c4c"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Gray</div><div class="color-swatch-hex">#4c4c4c</div><div class="color-swatch-role">補助・ナビ補助</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7f7f7f"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Gray</div><div class="color-swatch-hex">#7f7f7f</div><div class="color-swatch-role">キャプション・date</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Strong BG</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ヘッダー暗色帯</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">本体・モーダル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Surface</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">セカンダリナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Surface</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">セクション帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Tag Surface</div><div class="color-swatch-hex">#ebebeb</div><div class="color-swatch-role">タグ・バッジ（出現 12）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-banner" style="max-width: none;">
+  <div style="max-width:1200px; margin: 0 auto; padding: 80px 24px;">
+    <div class="section-eyebrow">02 / TYPOGRAPHY — 実測値</div>
+    <h2 class="section-title">タイポグラフィ</h2>
+    <p class="section-subtitle">Hiragino Sans + Hiragino Kaku Gothic ProN + メイリオの教科書的なチェーン。本文 line-height は 1.75 と広め。</p>
+
+    <div class="type-sample">
+      <div style="font-family:var(--font-logo); font-size:48px; font-weight:400; line-height:1.0; color:#bf0d3e;">M</div>
+      <div class="type-meta">MoriLogoB / 48px / 400 / line-height: 1.0 / color #bf0d3e<span class="type-context">LOGO (custom)</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:27px; font-weight:700; line-height:1.5; color:#252525;">展覧会のお知らせ</div>
+      <div class="type-meta">Hiragino Sans / 27px / 700 / line-height: 1.5 (40.5px)<span class="type-context">H1 HERO</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:18px; font-weight:700; line-height:1.0; color:#bf0d3e;">ロン・ミュエク 2026.4.2 — 9.23</div>
+      <div class="type-meta">Hiragino Sans / 18px / 700 / line-height: 1.0 / color #bf0d3e<span class="type-context">STRONG CRIMSON</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:15px; font-weight:700; line-height:1.5; color:#252525;">来館のご案内・チケット情報</div>
+      <div class="type-meta">Hiragino Sans / 15px / 700 / line-height: 1.5 (22.5px)<span class="type-context">H2 SECTION</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:15px; font-weight:400; line-height:1.75; color:#252525; max-width:640px;">森美術館は六本木ヒルズ森タワー 53 階に位置する現代アートを専門とする美術館です。1997 年の構想を経て 2003 年にオープン。「現代性」「国際性」を二大コンセプトに、独自のテーマで構成された企画展、教育普及プログラム、講演会など多角的な活動を展開しています。</div>
+      <div class="type-meta">Hiragino Sans / 15px / 400 / line-height: 1.75 (26.25px) / color #252525<span class="type-context">BODY 標準</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:13px; font-weight:700; line-height:1.4; color:#bf0d3e;">2026.4.2 [WED] — 9.23 [SUN]</div>
+      <div class="type-meta">Hiragino Sans / 13px / 700 / line-height: 1.4 / color #bf0d3e<span class="type-context">DATE LABEL</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+        <span class="tag">展覧会関連</span>
+        <span class="tag">スクール</span>
+        <span class="tag">シンポジウム</span>
+        <span class="tag">アーティスト・トーク</span>
+      </div>
+      <div class="type-meta">Hiragino Sans / 11px / 700 / line-height: 2.0 (22.75px) / color #bf0d3e / bg #ebebeb<span class="type-context">TAG / BADGE</span></div>
+    </div>
+    <div class="type-sample">
+      <div><span class="badge-filled">参加受付中</span></div>
+      <div class="type-meta">Hiragino Sans / 13px / 700 / line-height: 1.0 / color #ffffff / bg #bf0d3e<span class="type-context">FILLED BADGE</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:11px; font-weight:400; line-height:1.75; color:#7f7f7f;">＊本記事は森美術館の公式情報をもとにレイアウトサンプルとして作成したものです。</div>
+      <div class="type-meta">Hiragino Sans / 11px / 400 / line-height: 1.75 (19.25px) / color #7f7f7f<span class="type-context">FOOTER NOTE</span></div>
+    </div>
+    <div class="type-sample">
+      <div style="font-family:var(--font-base); font-size:10px; font-weight:400; line-height:2.0; color:#4c4c4c;">HOME &gt; 展覧会 &gt; 開催中の展覧会 &gt; 詳細</div>
+      <div class="type-meta">Hiragino Sans / 10px / 400 / line-height: 2.0 / color #4c4c4c<span class="type-context">CAPTION</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- EXHIBITIONS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / EXHIBITIONS — 開催スケジュール</div>
+  <h2 class="section-title">開催中・近日開催</h2>
+  <p class="section-subtitle">展覧会カードはクリムゾンの日付ラベルで識別。タグで関連プログラムを表示。</p>
+
+  <div class="exhibition-grid">
+    <a class="exhibition-card" href="#">
+      <div class="exhibition-card-image"><span class="badge-filled">開催中</span></div>
+      <div class="exhibition-card-body">
+        <div class="exhibition-card-date">2026.4.2 [WED] — 9.23 [SUN]</div>
+        <h3>ロン・ミュエク 個展</h3>
+        <div class="crimson-strong">圧倒的なリアリズムで描く、人間の存在</div>
+        <div class="exhibition-card-tags">
+          <span class="tag">展覧会関連</span>
+          <span class="tag">アーティスト・トーク</span>
+        </div>
+      </div>
+    </a>
+    <a class="exhibition-card" href="#">
+      <div class="exhibition-card-image b"></div>
+      <div class="exhibition-card-body">
+        <div class="exhibition-card-date">2026.10.15 [THU] — 2027.3.20 [SUN]</div>
+        <h3>ニュー・テクノロジーと身体</h3>
+        <div class="crimson-strong">人工知能・仮想空間と現代美術の交差点</div>
+        <div class="exhibition-card-tags">
+          <span class="tag">展覧会関連</span>
+          <span class="tag">シンポジウム</span>
+          <span class="tag">スクール</span>
+        </div>
+      </div>
+    </a>
+    <a class="exhibition-card" href="#">
+      <div class="exhibition-card-image c"></div>
+      <div class="exhibition-card-body">
+        <div class="exhibition-card-date">2027.5.10 [MON] — 9.30 [WED]</div>
+        <h3>アジアの現代写真</h3>
+        <div class="crimson-strong">アジア各地の写真表現を一望する大規模展</div>
+        <div class="exhibition-card-tags">
+          <span class="tag">展覧会関連</span>
+          <span class="tag">教育プログラム</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- INFO BANNER (gray) -->
+<section class="info-banner">
+  <div class="info-banner-eyebrow">PUBLIC PROGRAM</div>
+  <div class="info-banner-title">トーク・教育普及プログラム</div>
+  <div class="info-banner-sub">展覧会に関連するアーティスト・トーク、シンポジウム、ファミリープログラム、ナイトトークなど、多様な公開プログラムを開催しています。</div>
+  <a class="btn-primary" href="#">プログラムを見る</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / BUTTONS</div>
+  <h2 class="section-title">ボタンの種類</h2>
+
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-primary" href="#">来館のご案内</a>
+      <div class="button-label">PRIMARY (Outline)<br>白塗 + クリムゾン文字 + radius 5px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">チケットの購入</a>
+      <div class="button-label">SECONDARY (Filled)<br>クリムゾン塗 + 白文字 + radius 5px</div>
+    </div>
+    <div class="button-item">
+      <span class="tag">スクール</span>
+      <div class="button-label">TAG / FILTER<br>11px weight 700 / radius 0</div>
+    </div>
+    <div class="button-item">
+      <span class="badge-filled">参加受付中</span>
+      <div class="button-label">FILLED BADGE<br>13px / クリムゾン背景</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / FORMS</div>
+  <h2 class="section-title">入会・お問い合わせ</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+    <div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス（必須）</label>
+        <input class="form-input" placeholder="example@mori.art.museum">
+        <div class="form-state-label">DEFAULT — border #cccccc / radius 5px</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス（必須）</label>
+        <input class="form-input form-input--focus" value="example@mori.art.museum">
+        <div class="form-state-label">FOCUS — border #bf0d3e</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label" style="color:var(--mori-crimson);">メールアドレス（必須）</label>
+        <input class="form-input form-input--error" value="不正な形式です">
+        <div class="form-state-label" style="color:var(--mori-crimson);">ERROR — border + bg tint</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">06 / ELEVATION & SURFACE</div>
+  <h2 class="section-title">面の重なり（影なし）</h2>
+
+  <p style="margin-bottom: 24px; color: var(--mori-text); max-width: 720px; font-size: 15px; font-weight: 400; line-height: 1.75;">森美術館は影を使わず、サーフェス色の濃淡で領域を分ける。クリムゾンのアクセントだけが目線を集める。</p>
+
+  <div class="surface-stack">
+    <div class="surface-card" style="background:#ffffff;"><div class="name">Pure White</div><div class="hex">#ffffff</div></div>
+    <div class="surface-card" style="background:#f8f8f8;"><div class="name">Page Surface</div><div class="hex">#f8f8f8</div></div>
+    <div class="surface-card" style="background:#f5f5f5;"><div class="name">Section Surface</div><div class="hex">#f5f5f5</div></div>
+    <div class="surface-card" style="background:#ebebeb;"><div class="name">Tag Surface</div><div class="hex">#ebebeb</div></div>
+    <div class="surface-card" style="background:#333333; color: var(--pure-white);"><div class="name" style="color:var(--pure-white);">Strong BG</div><div class="hex" style="color:var(--pure-white);">#333333</div></div>
+    <div class="surface-card" style="background:#bf0d3e; color: var(--pure-white);"><div class="name" style="color:var(--pure-white);">Mori Crimson</div><div class="hex" style="color:var(--pure-white);">#bf0d3e</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-eyebrow">07 / LAYOUT — SPACING</div>
+  <h2 class="section-title">余白のスケール</h2>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS<br>4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S<br>8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M<br>16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L<br>24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">XL<br>40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">XXL<br>64px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-logo">M</div>
+  <p>このページは森美術館 / Mori Art Museum 公式サイト（mori.art.museum/jp）から抽出した DESIGN.md のショーケース。</p>
+  <p>Hiragino Sans の本文 ／ MoriLogoB のロゴ ／ #bf0d3e のクリムゾン ／ 影なしフラットデザイン</p>
+  <p class="footer-tiny">© Mori Art Museum. 本プレビューは awesome-design-md-jp の参照サンプルです。</p>
+</footer>
+
+</body>
+</html>

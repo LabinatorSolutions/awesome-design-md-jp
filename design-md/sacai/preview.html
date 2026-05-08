@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: sacai</title>
+<style>
+  :root {
+    /* === sacai Color Tokens (実測値) === */
+    --sacai-black: #000000;
+    --sacai-charcoal: #1f1f1f;
+    --sacai-mid-gray: #333333;
+    --sacai-soft-gray: #939393;
+    --sacai-muted: rgba(0, 0, 0, 0.65);
+    --sacai-label-muted: rgba(0, 0, 0, 0.6);
+
+    --pure-white: #ffffff;
+    --banner-surface: #efefef;
+    --divider: #d9d9d9;
+    --soft-border: rgba(0, 0, 0, 0.1);
+
+    /* === sacai Typography Tokens (実サイト Custom Properties) === */
+    --heading-font-family: Helvetica, "Noto Sans JP", sans-serif, -apple-system, Arial, sans-serif;
+    --text-font-family: Helvetica, "Noto Sans JP", sans-serif, -apple-system, Arial, sans-serif;
+    --button-font: normal 400 13px / 1.65 Helvetica, "Noto Sans JP", sans-serif, -apple-system, Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    --heading-letter-spacing: -0.02em;
+    --heading-text-transform: uppercase;
+    --heading-font-weight: 700;
+
+    /* === sacai Container Tokens === */
+    --container-xxs: 27.5rem;
+    --container-xs: 42.5rem;
+    --container-sm: 61.25rem;
+    --container-md: 71.875rem;
+    --container-lg: 78.75rem;
+    --container-xl: 85rem;
+    --container-gutter: 24px;
+
+    --section-vertical: 3rem;
+    --section-stack-gap: 2.25rem;
+
+    --form-gap: 1.25rem;
+    --fieldset-gap: 1rem;
+    --form-control-gap: 0.625rem;
+    --input-padding-block: 0.65rem;
+    --input-padding-inline: 0.8rem;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--pure-white);
+    color: var(--sacai-black);
+    font-family: var(--text-font-family);
+    font-size: 14px; font-weight: 400; line-height: 1.65;
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 64px;
+    background: var(--pure-white);
+    border-bottom: 1px solid var(--soft-border);
+  }
+  .nav-brand {
+    font-family: var(--heading-font-family);
+    font-size: 22px; font-weight: 700;
+    color: var(--sacai-black);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--text-font-family);
+    font-size: 14px; font-weight: 700;
+    color: var(--sacai-black);
+    text-decoration: none;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--sacai-soft-gray); }
+
+  /* HERO */
+  .hero {
+    padding: 96px 24px 72px;
+    text-align: center;
+    background: var(--pure-white);
+    max-width: var(--container-md);
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: var(--text-font-family);
+    font-size: 12px; font-weight: 700;
+    color: var(--sacai-charcoal);
+    margin-bottom: 16px;
+    letter-spacing: -0.24px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--heading-font-family);
+    font-size: 32px; font-weight: 700;
+    color: var(--sacai-black);
+    margin-bottom: 24px;
+    line-height: 1.65;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.65;
+    color: var(--sacai-black);
+    max-width: 640px; margin: 0 auto 40px;
+    letter-spacing: 0;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--sacai-black);
+    padding: 10.4px 28px;
+    border: 1px solid var(--sacai-black);
+    border-radius: 0;
+    font-family: var(--text-font-family);
+    font-size: 13px; font-weight: 700;
+    line-height: 1.65;
+    text-decoration: none; cursor: pointer;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    transition: all 0.18s;
+  }
+  .btn-ghost:hover { background: var(--sacai-black); color: var(--pure-white); }
+  .btn-fill {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--pure-white); color: var(--sacai-mid-gray);
+    padding: 10px 25px;
+    border: 1px solid var(--sacai-charcoal);
+    border-radius: 2px;
+    font-family: var(--text-font-family);
+    font-size: 14px; font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none; cursor: pointer;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .btn-fill:hover { background: var(--sacai-charcoal); color: var(--pure-white); }
+
+  /* SECTIONS */
+  .section { padding: 80px 24px; max-width: var(--container-md); margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--text-font-family);
+    font-size: 12px; font-weight: 700;
+    color: var(--sacai-soft-gray);
+    margin-bottom: 8px;
+    letter-spacing: -0.24px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--heading-font-family);
+    font-size: 28px; font-weight: 700;
+    color: var(--sacai-charcoal);
+    margin-bottom: 48px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .section-divider { border: none; height: 1px; background: var(--divider); margin: 0; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: var(--pure-white); border: 1px solid var(--soft-border); overflow: hidden; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name {
+    font-family: var(--text-font-family);
+    font-size: 12px; font-weight: 700;
+    margin-bottom: 4px; color: var(--sacai-charcoal);
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .color-swatch-hex { font-size: 11px; color: var(--sacai-muted); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-size: 11px; color: var(--sacai-muted); margin-top: 4px; letter-spacing: 0; }
+  .color-group-label {
+    font-family: var(--text-font-family);
+    font-size: 12px; font-weight: 700;
+    color: var(--sacai-soft-gray);
+    margin: 24px 0 10px;
+    letter-spacing: -0.24px;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--soft-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--sacai-muted); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--sacai-black); color: var(--pure-white); font-size: 10px; padding: 2px 8px; margin-left: 8px; letter-spacing: 0; text-transform: uppercase; font-family: var(--text-font-family); }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+  .product-card {
+    background: transparent;
+    text-decoration: none; color: var(--sacai-black);
+    display: flex; flex-direction: column;
+  }
+  .product-card-image {
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #1f1f1f, #333333);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--pure-white);
+    font-family: var(--heading-font-family);
+    font-weight: 700; font-size: 18px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .product-card-image.b { background: linear-gradient(135deg, #939393, #d9d9d9); color: var(--sacai-black); }
+  .product-card-image.c { background: linear-gradient(135deg, #efefef, #ffffff); color: var(--sacai-charcoal); border: 1px solid var(--soft-border); }
+  .product-card-body { padding: 16px 0 0; }
+  .product-card h3 {
+    font-family: var(--heading-font-family);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.7; margin-bottom: 4px;
+    color: var(--sacai-black);
+    letter-spacing: -0.32px;
+    text-transform: uppercase;
+  }
+  .product-card p { font-size: 14px; font-weight: 400; line-height: 1.65; color: var(--sacai-muted); letter-spacing: 0; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--sacai-muted); margin-top: 12px; letter-spacing: 0; }
+
+  /* FEATURE COPY */
+  .feature-copy {
+    padding: 96px 24px;
+    background: var(--sacai-black);
+    color: var(--pure-white);
+    text-align: center;
+  }
+  .feature-copy-large {
+    font-family: var(--heading-font-family);
+    font-size: 32px; font-weight: 700;
+    line-height: 1.2;
+    color: var(--pure-white);
+    margin-bottom: 16px;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
+  }
+  .feature-copy-sub {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 0;
+  }
+  .feature-cta {
+    margin-top: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--pure-white);
+    padding: 10.4px 28px;
+    border: 1px solid var(--pure-white);
+    border-radius: 0;
+    font-family: var(--text-font-family);
+    font-size: 13px; font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--text-font-family);
+    font-size: 12px; font-weight: 400;
+    color: var(--sacai-label-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0;
+  }
+  .form-input {
+    width: 100%; background: var(--pure-white);
+    color: var(--sacai-black);
+    border: 1px solid var(--soft-border);
+    padding: 10.4px 12.8px;
+    border-radius: 0;
+    font-family: var(--text-font-family);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: 0;
+    outline: none;
+    transition: border-color 0.18s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--sacai-black); }
+  .form-input--error { border-color: #c0392b; }
+  .form-state-label { font-size: 11px; color: var(--sacai-muted); margin-top: 6px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--sacai-black); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--sacai-muted); letter-spacing: 0; }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--soft-border); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--sacai-black); }
+  .width-bar-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--sacai-charcoal);
+    margin-bottom: 4px;
+    letter-spacing: -0.24px;
+    text-transform: uppercase;
+  }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--sacai-muted); letter-spacing: 0; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 24px;
+    background: var(--pure-white);
+    color: var(--sacai-muted);
+    text-align: center;
+    font-size: 12px; font-weight: 400; line-height: 1.65;
+    letter-spacing: 0;
+    border-top: 1px solid var(--soft-border);
+  }
+  .footer a { color: var(--sacai-black); text-decoration: underline; }
+  .footer p { margin-bottom: 4px; }
+
+  @media (max-width: 769px) {
+    .hero h1, .feature-copy-large { font-size: 22px; letter-spacing: -0.44px; }
+    .section-title { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .feature-copy { padding: 64px 20px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">sacai</a>
+  <ul class="nav-links">
+    <li><a href="#colors">COLLECTION</a></li>
+    <li><a href="#typography">RUNWAY</a></li>
+    <li><a href="#products">SHOP</a></li>
+    <li><a href="#buttons">JOURNAL</a></li>
+    <li><a href="#forms">CONTACT</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">DESIGN SYSTEM PREVIEW</div>
+  <h1>SPRING CAPSULE COLLECTION</h1>
+  <p>sacai（sacai.jp）から抽出したデザイントークンのカタログ。Helvetica + 大文字 + 負の letter-spacing で構成された骨太なミニマル EC。実サイトの computed style 実測値および CSS Custom Properties に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-ghost" href="#">EXPLORE COLLECTION</a>
+    <a class="btn-fill" href="#">JOIN MAILING LIST</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / COLORS</div>
+  <h2 class="section-title">COLOR PALETTE</h2>
+
+  <div class="color-group-label">BRAND / FOREGROUND</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">SACAI BLACK</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・リンク・ロゴ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1f1f1f"></div><div class="color-swatch-info"><div class="color-swatch-name">CHARCOAL</div><div class="color-swatch-hex">#1f1f1f</div><div class="color-swatch-role">h2 / h3 見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">MID GRAY</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ボタン内テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#939393"></div><div class="color-swatch-info"><div class="color-swatch-name">SOFT GRAY</div><div class="color-swatch-hex">#939393</div><div class="color-swatch-role">控えめなリンク色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.65)"></div><div class="color-swatch-info"><div class="color-swatch-name">MUTED</div><div class="color-swatch-hex">rgba(0,0,0,0.65)</div><div class="color-swatch-role">補助テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">PURE WHITE</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">BANNER SURFACE</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">埋込スクリプト等</div></div></div>
+  </div>
+
+  <div class="color-group-label">BORDER / DIVIDER</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">DIVIDER</div><div class="color-swatch-hex">#d9d9d9</div><div class="color-swatch-role">区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.1)"></div><div class="color-swatch-info"><div class="color-swatch-name">SOFT BORDER</div><div class="color-swatch-hex">rgba(0,0,0,0.1)</div><div class="color-swatch-role">フォーム・控えめな枠</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">TYPOGRAPHY</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--heading-font-family); font-size:32px; font-weight:700; line-height:1.65; color:#000000; letter-spacing:-0.64px; text-transform:uppercase;">SPRING CAPSULE COLLECTION</div>
+    <div class="type-meta">Helvetica / 32px / 700 / line-height: 1.65 / letter-spacing: -0.64px / uppercase<span class="type-context">HERO H1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--heading-font-family); font-size:28px; font-weight:700; line-height:1.2; color:#1f1f1f; letter-spacing:-0.02em; text-transform:uppercase;">RUNWAY ARCHIVE</div>
+    <div class="type-meta">Helvetica / 28px / 700 / line-height: normal / letter-spacing: -0.02em / uppercase<span class="type-context">H2 SECTION</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--heading-font-family); font-size:22px; font-weight:700; line-height:1.2; color:#1f1f1f; letter-spacing:-0.02em; text-transform:uppercase;">CHITOSE ABE INTERVIEW</div>
+    <div class="type-meta">Helvetica / 22px / 700 / line-height: normal / letter-spacing: -0.02em<span class="type-context">H3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--heading-font-family); font-size:18px; font-weight:700; line-height:1.6; color:#000000; letter-spacing:-0.36px; text-transform:uppercase;">MA-1 / DOWN HYBRID JACKET</div>
+    <div class="type-meta">Helvetica / 18px / 700 / line-height: 1.6 (28.8px) / letter-spacing: -0.36px<span class="type-context">CARD TITLE</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--text-font-family); font-size:16px; font-weight:700; line-height:1.7; color:#000000; letter-spacing:-0.32px;">ハイブリッドの美学を、日常の服に。</div>
+    <div class="type-meta">Helvetica / 16px / 700 / line-height: 1.7 (27.2px) / letter-spacing: -0.32px<span class="type-context">SECTION LEAD</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--text-font-family); font-size:14px; font-weight:400; line-height:1.65; color:#000000; letter-spacing:0; max-width:640px;">sacai は 1999 年、阿部千登勢が東京で立ち上げたファッションブランド。既存のアイテムをハイブリッドに再構築する独自のデザイン言語で、世界の都市で展開される。デイリーウェアからショーピースまで、衣服に新しい可能性を見出すコレクションを発表してきた。</div>
+    <div class="type-meta">Helvetica / 14px / 400 / line-height: 1.65 (23.1px) / letter-spacing: 0<span class="type-context">BODY</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--text-font-family); font-size:14px; font-weight:700; line-height:1.3; color:#1f1f1f; letter-spacing:0;">SS 2026 デリバリースケジュール</div>
+    <div class="type-meta">Helvetica / 14px / 700 / line-height: 1.3 (18.2px)<span class="type-context">BODY BOLD</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--text-font-family); font-size:13px; font-weight:700; line-height:1.65; color:#000000; letter-spacing:0; text-transform:uppercase;">ADD TO BAG</div>
+    <div class="type-meta">Helvetica / 13px / 700 / line-height: 1.65 (21.45px) / uppercase<span class="type-context">BUTTON</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--text-font-family); font-size:12px; font-weight:700; line-height:1.65; color:#000000; letter-spacing:-0.24px;">ITEM CODE: 25-A0801</div>
+    <div class="type-meta">Helvetica / 12px / 700 / line-height: 1.65 (19.8px) / letter-spacing: -0.24px<span class="type-context">CAPTION</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--text-font-family); font-size:12px; font-weight:400; line-height:1.65; color:rgba(0,0,0,0.6); letter-spacing:0;">EMAIL ADDRESS（必須）</div>
+    <div class="type-meta">Helvetica / 12px / 400 / color rgba(0,0,0,0.6)<span class="type-context">FORM LABEL</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FEATURE COPY (BLACK) -->
+<section style="background: #000000;">
+  <div class="feature-copy">
+    <div class="feature-copy-large">A NEW CHAPTER FOR sacai</div>
+    <div class="feature-copy-sub">SPRING / SUMMER 2026 — DELIVERED IN PHASES</div>
+    <a class="feature-cta" href="#">SHOP THE COLLECTION</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / PRODUCTS — COLLECTION</div>
+  <h2 class="section-title">COLLECTION</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">SS 26 / 01</div>
+      <div class="product-card-body">
+        <h3>HYBRID MA-1 JACKET</h3>
+        <p>MA-1 とウールコートを再構築したハイブリッドアウター</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image b">SS 26 / 02</div>
+      <div class="product-card-body">
+        <h3>SUITING SHIRT DRESS</h3>
+        <p>テーラリングとシャツワンピを織り混ぜたドレス</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image c">SS 26 / 03</div>
+      <div class="product-card-body">
+        <h3>NYLON DENIM PANT</h3>
+        <p>デニムとナイロンパンツの構造を入れ替えたボトムス</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / BUTTONS</div>
+  <h2 class="section-title">BUTTONS</h2>
+
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-ghost" href="#">EXPLORE COLLECTION</a>
+      <div class="button-label">PRIMARY GHOST<br>border 1px / radius 0 / uppercase</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-fill" href="#">JOIN MAILING LIST</a>
+      <div class="button-label">SECONDARY<br>white bg / border 1px / radius 2px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-ghost" style="border-color: var(--sacai-soft-gray); color: var(--sacai-soft-gray);" href="#">SOLD OUT</a>
+      <div class="button-label">DISABLED<br>soft gray border</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / FORMS</div>
+  <h2 class="section-title">FORMS</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+    <div>
+      <div class="form-group">
+        <label class="form-label">EMAIL ADDRESS（必須）</label>
+        <input class="form-input" placeholder="example@sacai.jp">
+        <div class="form-state-label">DEFAULT — border rgba(0,0,0,0.1)</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label">EMAIL ADDRESS（必須）</label>
+        <input class="form-input form-input--focus" value="example@sacai.jp">
+        <div class="form-state-label">FOCUS — border #000000</div>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label class="form-label" style="color:#c0392b;">EMAIL ADDRESS（必須）</label>
+        <input class="form-input form-input--error" value="invalid email">
+        <div class="form-state-label" style="color:#c0392b;">ERROR — border #c0392b</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION & RADIUS -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">06 / ELEVATION & RADIUS</div>
+  <h2 class="section-title">FLAT BY DESIGN</h2>
+
+  <p style="margin-bottom: 24px; color: var(--sacai-muted); max-width: 640px;">sacai のデザインシステムは <code style="font-family:var(--font-mono);">box-shadow: none</code> を貫く。奥行きは罫線 1px と余白だけで作る。border-radius は 0px、最大でも 2px。</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px;">
+    <div style="padding: 24px; border: 1px solid var(--sacai-black); border-radius: 0;">
+      <div style="font-family:var(--text-font-family); font-size:13px; font-weight:700; letter-spacing:0; text-transform:uppercase; margin-bottom:8px;">RADIUS 0</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--sacai-muted);">border 1px / shadow none</div>
+    </div>
+    <div style="padding: 24px; border: 1px solid var(--sacai-charcoal); border-radius: 2px;">
+      <div style="font-family:var(--text-font-family); font-size:13px; font-weight:700; letter-spacing:0; text-transform:uppercase; margin-bottom:8px;">RADIUS 2</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--sacai-muted);">最大角丸（事実上 0 と等価）</div>
+    </div>
+    <div style="padding: 24px; border: 1px solid var(--soft-border); border-radius: 0;">
+      <div style="font-family:var(--text-font-family); font-size:13px; font-weight:700; letter-spacing:0; text-transform:uppercase; margin-bottom:8px;">SOFT BORDER</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--sacai-muted);">rgba(0,0,0,0.1) の控えめな罫線</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-eyebrow">07 / LAYOUT — CONTAINER 変数</div>
+  <h2 class="section-title">CONTAINER WIDTHS</h2>
+
+  <div class="width-bar-label">CONTAINER XXS</div>
+  <div class="width-bar"><div class="width-bar-inner" style="width:25%"></div></div>
+  <div class="width-bar-value">--container-xxs-max-width: 27.5rem (440px)</div>
+
+  <div class="width-bar-label" style="margin-top:24px;">CONTAINER XS</div>
+  <div class="width-bar"><div class="width-bar-inner" style="width:38%"></div></div>
+  <div class="width-bar-value">--container-xs-max-width: 42.5rem (680px)</div>
+
+  <div class="width-bar-label" style="margin-top:24px;">CONTAINER SM</div>
+  <div class="width-bar"><div class="width-bar-inner" style="width:55%"></div></div>
+  <div class="width-bar-value">--container-sm-max-width: 61.25rem (980px)</div>
+
+  <div class="width-bar-label" style="margin-top:24px;">CONTAINER MD</div>
+  <div class="width-bar"><div class="width-bar-inner" style="width:65%"></div></div>
+  <div class="width-bar-value">--container-md-max-width: 71.875rem (1150px)</div>
+
+  <div class="width-bar-label" style="margin-top:24px;">CONTAINER LG</div>
+  <div class="width-bar"><div class="width-bar-inner" style="width:75%"></div></div>
+  <div class="width-bar-value">--container-lg-max-width: 78.75rem (1260px)</div>
+
+  <div class="width-bar-label" style="margin-top:24px;">CONTAINER XL</div>
+  <div class="width-bar"><div class="width-bar-inner" style="width:85%"></div></div>
+  <div class="width-bar-value">--container-xl-max-width: 85rem (1360px)</div>
+
+  <h2 class="section-title" style="margin-top: 48px;">SPACING SCALE</h2>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:10px"></div><div class="spacing-value">10.4px<br>input padding-block</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:13px"></div><div class="spacing-value">12.8px<br>input padding-inline</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px<br>fieldset gap</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px"></div><div class="spacing-value">20px<br>form gap</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px<br>container gutter</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:36px"></div><div class="spacing-value">36px<br>section stack</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">48px<br>section vertical</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>このページは sacai 公式サイト（sacai.jp）から抽出した DESIGN.md のショーケース。</p>
+  <p>Helvetica + Noto Sans JP / 全大文字見出し / letter-spacing: -0.02em / 影なし / 黒・白・グレーのみ</p>
+  <p style="margin-top: 16px;">© sacai Co., Ltd. / 本プレビューは awesome-design-md-jp の参照サンプルです。</p>
+</footer>
+
+</body>
+</html>
