@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MOTHERHOUSE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Lato (Google Fonts) + Noto Sans JP as substitute for Yu Gothic (domain-licensed) -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === MOTHERHOUSE Color Tokens === */
+    /* Primary */
+    --cta-gray: #656565;
+    --text-charcoal: #121212;
+
+    /* Accent */
+    --surface-beige: #edeadd;
+    --blue-accent: #377dff;
+
+    /* Text */
+    --text-primary: #121212;
+    --text-dark: #3a3a3a;
+    --text-medium: #353535;
+    --text-body: #202020;
+    --text-secondary: #656565;
+    --text-muted: #555555;
+    --text-on-dark: #ffffff;
+
+    /* Surface */
+    --surface-white: #ffffff;
+    --surface-light: #f2f2f2;
+    --surface-divider: #dadada;
+    --surface-card: #f5f5f5;
+    --surface-overlay: rgba(255, 255, 255, 0.3);
+
+    /* Border */
+    --border-natural: #dbd9cd;
+    --border-store: #f8f8f8;
+
+    /* Error */
+    --error: #c0392b;
+
+    /* === Font ===
+       MOTHERHOUSE uses Lato (Google Fonts) as the primary western font,
+       with Yu Gothic / YuGothic as Japanese fallback.
+       For this preview, Noto Sans JP substitutes for Yu Gothic
+       since Yu Gothic requires local installation. */
+    --font-body: Lato, "Noto Sans JP", 游ゴシック体, "Yu Gothic", YuGothic, "Hiragino Kaku Gothic Pro", meiryo, sans-serif;
+    --font-heading: Lato, Arial, Helvetica, "Noto Sans JP", 游ゴシック体, "Yu Gothic", YuGothic, "Hiragino Kaku Gothic Pro", meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400; line-height: 1.75;
+    letter-spacing: normal;
+    font-feature-settings: normal; /* palt NOT applied */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--surface-white);
+    border-bottom: 1px solid #eee;
+  }
+  .nav-brand {
+    font-family: var(--font-heading); font-size: 18px; font-weight: 700; line-height: 1.2;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.14em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-heading); font-size: 13px; font-weight: 400;
+    color: var(--text-secondary); text-decoration: none; letter-spacing: 0.6px; line-height: 1.8;
+  }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-heading); font-size: 10px; font-weight: 700;
+    color: var(--text-primary); letter-spacing: 0.6px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 40px 80px;
+    background: var(--surface-white);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 26px; font-weight: 400; line-height: 1.19;
+    letter-spacing: 3px; margin-bottom: 24px;
+    color: var(--text-dark);
+  }
+  .hero-section-title {
+    font-family: var(--font-heading);
+    font-size: 40px; font-weight: 700; line-height: 1.8;
+    letter-spacing: 0.14em; color: var(--text-primary); margin-bottom: 32px;
+  }
+  .hero-lead {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400; line-height: 1.75;
+    letter-spacing: normal;
+    color: var(--text-body); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--cta-gray); color: var(--text-on-dark);
+    padding: 10px 42px; border: none; border-radius: 3px;
+    font-family: var(--font-heading); font-size: 12px; font-weight: 600;
+    letter-spacing: 1.68px; line-height: 1.8; text-decoration: none; cursor: pointer;
+  }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 10px 42px; border: 4px solid var(--border-store); border-radius: 0;
+    font-family: var(--font-heading); font-size: 16px; font-weight: 400;
+    letter-spacing: 3px; line-height: 32px; text-decoration: none; cursor: pointer;
+  }
+  .btn-tab {
+    display: inline-block; background: var(--surface-white); color: var(--text-muted);
+    padding: 8px 20px; border: 1px solid var(--border-natural); border-radius: 5px;
+    font-family: var(--font-body); font-size: 10px; font-weight: 400;
+    letter-spacing: 0.6px; text-decoration: none; cursor: pointer;
+  }
+  .btn-newsletter {
+    display: inline-block; background: var(--cta-gray); color: var(--text-on-dark);
+    padding: 0 42px; border: none; border-radius: 0;
+    font-family: var(--font-heading); font-size: 12px; font-weight: 600;
+    letter-spacing: 1.68px; line-height: 35px; text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 600;
+    color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 1.68px;
+  }
+  .section-title {
+    font-family: var(--font-heading); font-size: 26px; font-weight: 400;
+    line-height: 1.19; color: var(--text-dark); margin-bottom: 8px;
+    letter-spacing: 3px;
+  }
+  .section-subtitle {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    line-height: 1.75; color: var(--text-secondary); letter-spacing: normal;
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid #eee; margin: 0; }
+
+  .section-beige { background: var(--surface-beige); padding: 80px 40px; }
+  .section-beige-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-light { background: var(--surface-light); padding: 80px 40px; }
+  .section-light-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-gray { background: var(--cta-gray); padding: 80px 40px; color: var(--text-on-dark); }
+  .section-gray-inner { max-width: 1200px; margin: 0 auto; }
+  .section-gray .section-title { color: var(--text-on-dark); }
+  .section-gray .section-subtitle { color: rgba(255,255,255,0.6); }
+  .section-gray .section-label { color: rgba(255,255,255,0.5); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid #eee; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-heading); font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 1.68px; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-body); font-size: 11px; color: var(--text-muted); margin-top: 4px; letter-spacing: normal; }
+  .color-group-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; color: var(--text-secondary); margin: 24px 0 12px; letter-spacing: 1.68px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--text-secondary); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-body); font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 12px; letter-spacing: normal; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { background: var(--surface-light); height: 340px; display: flex; align-items: center; justify-content: center; border-radius: 0; }
+  .card-image-placeholder {
+    font-family: var(--font-heading); font-size: 14px; color: var(--text-secondary);
+    letter-spacing: 1.68px;
+  }
+  .card-body { padding: 16px 0; }
+  .card-category {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 600;
+    color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 1.68px;
+  }
+  .card h3 {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    line-height: 1.75; color: var(--text-body); margin-bottom: 8px; letter-spacing: normal;
+  }
+  .card-price {
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400;
+    color: var(--text-primary); letter-spacing: normal;
+  }
+  .card-origin {
+    font-family: var(--font-body); font-size: 11px; font-weight: 400;
+    color: var(--text-secondary); margin-top: 4px; letter-spacing: normal;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview h2 {
+    font-family: var(--font-heading); font-size: 26px; font-weight: 400;
+    line-height: 1.19; color: var(--text-dark); margin-bottom: 16px;
+    letter-spacing: 3px;
+  }
+  .product-preview .product-category {
+    font-family: var(--font-heading); font-size: 17px; font-weight: 700;
+    line-height: 1.8; letter-spacing: 0.14em; color: var(--text-secondary); margin-bottom: 24px;
+  }
+  .product-preview p {
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    line-height: 1.75; letter-spacing: normal;
+    color: var(--text-body); margin-bottom: 20px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-heading); font-size: 24px; font-weight: 400;
+    line-height: 1.25; letter-spacing: 5px; color: var(--text-dark); margin: 40px 0 16px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-body); font-size: 15px; font-weight: 500;
+    line-height: 1.47; letter-spacing: normal; color: var(--text-secondary); margin-bottom: 12px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-body); font-size: 12px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 1.68px;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--text-body);
+    border: 1px solid #ccc; padding: 12px 16px; border-radius: 3px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    letter-spacing: normal; outline: none;
+    font-feature-settings: normal;
+  }
+  .form-input:focus { border-color: var(--text-primary); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-body); font-size: 11px; color: var(--error); margin-top: 4px; letter-spacing: normal; }
+  .form-input::placeholder { color: var(--text-secondary); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-heading); font-size: 12px; font-weight: 600; margin-bottom: 8px; letter-spacing: 1.68px; }
+  .elevation-desc { font-family: var(--font-body); font-size: 11px; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--cta-gray); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-size: 12px; font-weight: 400; letter-spacing: 1.68px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 40px 32px;
+    background: var(--surface-card); color: var(--text-body);
+    font-size: 12px; line-height: 1.75;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 600;
+    margin-bottom: 16px; letter-spacing: 1.68px; color: var(--text-primary);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-body); color: var(--text-secondary);
+    text-decoration: none; margin-bottom: 8px; font-size: 12px;
+    letter-spacing: normal;
+  }
+  .footer-col a:hover { color: var(--text-primary); }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--border-natural);
+    font-family: var(--font-body); font-size: 11px; color: var(--text-secondary);
+    letter-spacing: normal;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .hero-section-title { font-size: 28px; }
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-beige { padding: 56px 20px; }
+    .section-light { padding: 56px 20px; }
+    .section-gray { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">MOTHERHOUSE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">MYPAGE</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-section-title">MOTHERHOUSE</div>
+    <h1>ONLINE STORE</h1>
+    <p class="hero-lead">MOTHERHOUSE (mother-house.jp) から抽出したデザイントークンのカタログ。Lato + 游ゴシック体の欧文先頭フォントシステム、font-feature-settings: normal (palt 未適用)、ミッドグレー CTA #656565、ベージュ #edeadd のナチュラルトーン。見出しに広い letter-spacing (3-5px)。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">オンラインストアを見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <div class="section-title">カラーパレット</div>
+  <div class="section-subtitle">Color Palette</div>
+
+  <div class="color-group-label">PRIMARY</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#656565"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Gray</div><div class="color-swatch-hex">#656565</div><div class="color-swatch-role">CTA ボタン背景・ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#121212"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Charcoal</div><div class="color-swatch-hex">#121212</div><div class="color-swatch-role">最も深いテキスト・ベースカラー</div></div></div>
+  </div>
+
+  <div class="color-group-label">ACCENT</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#edeadd"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige</div><div class="color-swatch-hex">#edeadd</div><div class="color-swatch-role">ステートメント背景・クラフト感</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#377dff"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Accent</div><div class="color-swatch-hex">#377dff</div><div class="color-swatch-role">限定的に使用</div></div></div>
+  </div>
+
+  <div class="color-group-label">TEXT</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#121212"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#121212</div><div class="color-swatch-role">メインテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3a3a3a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark</div><div class="color-swatch-hex">#3a3a3a</div><div class="color-swatch-role">セクション見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#353535"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Medium</div><div class="color-swatch-hex">#353535</div><div class="color-swatch-role">サブ見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#202020"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#202020</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#656565"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#656565</div><div class="color-swatch-role">補足テキスト・ショップ説明</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#555555"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#555555</div><div class="color-swatch-role">イベント・タブテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">CTA・カテゴリオーバーレイ上の白テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">SURFACE</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">セカンダリ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dadada"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Divider</div><div class="color-swatch-hex">#dadada</div><div class="color-swatch-role">カテゴリタブ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Card</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">カード・フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#edeadd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Beige</div><div class="color-swatch-hex">#edeadd</div><div class="color-swatch-role">ステートメント背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">BORDER</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dbd9cd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Natural</div><div class="color-swatch-hex">#dbd9cd</div><div class="color-swatch-role">イベントカード枠線・タブ枠線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Store</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">「お店を探す」ボタン枠線 (4px)</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY</div>
+  <div class="section-title">タイポグラフィ</div>
+  <div class="section-subtitle">Typography -- Lato + 游ゴシック体 / palt 未適用 / 見出し letter-spacing 広め</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:40px; font-weight:700; line-height:1.8; letter-spacing:0.14em; color:var(--text-primary);">WOMEN</div>
+    <div class="type-meta">Lato + Yu Gothic / 40px / 700 / line-height: 1.8 / letter-spacing: 0.14em (5.6px)<span class="type-context">Category Overlay</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:26px; font-weight:400; line-height:1.19; letter-spacing:3px; color:var(--text-dark);">ONLINE STORE</div>
+    <div class="type-meta">Lato + Arial / 26px / 400 / line-height: 1.19 / letter-spacing: 3px<span class="type-context">Heading 2 (section)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:24px; font-weight:400; line-height:1.25; letter-spacing:5px; color:var(--text-dark);">SHOP & FACTORY</div>
+    <div class="type-meta">Lato + Arial / 24px / 400 / line-height: 1.25 / letter-spacing: 5px<span class="type-context">Heading 2 (shop)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:17px; font-weight:700; line-height:1.8; letter-spacing:0.14em; color:var(--text-on-dark); background:var(--cta-gray); display:inline-block; padding:4px 16px;">GOODS</div>
+    <div class="type-meta">Lato + Arial / 17px / 700 / line-height: 1.8 / letter-spacing: 0.14em<span class="type-context">Category Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:12px; font-weight:400; line-height:1.0; letter-spacing:0.1em; color:var(--text-primary);">NEW TOPICS</div>
+    <div class="type-meta">Lato + Arial / 12px / 400 / line-height: 1.0 / letter-spacing: 0.1em<span class="type-context">Heading 3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:400; line-height:1.75; letter-spacing:normal; color:var(--text-body);">途上国から世界に通用するブランドをつくる。バングラデシュ、ネパール、インドネシア、スリランカ、ミャンマー、インド。6カ国の素材と職人の手仕事から生まれるバッグやジュエリー。大量生産では届かない、ものづくりの温度を届けます。</div>
+    <div class="type-meta">Lato + Yu Gothic / 14px / 400 / line-height: 1.75 / letter-spacing: normal<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:15px; font-weight:500; line-height:1.47; letter-spacing:normal; color:var(--text-secondary);">東京・銀座をはじめ全国に直営店を展開。バッグの修理工房を併設した店舗も。</div>
+    <div class="type-meta">Lato + Yu Gothic / 15px / 500 / line-height: 1.47 / letter-spacing: normal / color: #656565<span class="type-context">Body (shop desc)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:14px; font-weight:400; line-height:1.43; letter-spacing:0.6px; color:var(--text-secondary);">バングラデシュの革職人が語る、ものづくりへの想い</div>
+    <div class="type-meta">Lato + Arial / 14px / 400 / line-height: 1.43 / letter-spacing: 0.6px / color: #656565<span class="type-context">Article Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:13px; font-weight:400; line-height:1.8; letter-spacing:0.6px; color:var(--text-body);">バッグ</div>
+    <div class="type-meta">Lato / 13px / 400 / line-height: 1.8 / letter-spacing: 0.6px<span class="type-context">Nav Link</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:13px; font-weight:400; line-height:3.08; letter-spacing:2px; color:var(--text-body);">JEWELRY</div>
+    <div class="type-meta">Lato + Arial / 13px / 400 / line-height: 3.08 / letter-spacing: 2px<span class="type-context">Header Menu</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:10px; font-weight:700; line-height:1.8; letter-spacing:0.6px; color:var(--text-primary);">MYPAGE</div>
+    <div class="type-meta">10px / 700 / line-height: 1.8 / letter-spacing: 0.6px<span class="type-context">Nav Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-heading); font-size:12px; font-weight:600; line-height:1.8; letter-spacing:1.68px; color:var(--text-on-dark); background:var(--cta-gray); display:inline-block; padding:10px 42px; border-radius:3px;">オンラインストアを見る</div>
+    <div class="type-meta">Lato + Arial / 12px / 600 / line-height: 1.8 / letter-spacing: 1.68px (0.14em)<span class="type-context">CTA Text</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-beige" id="product">
+<div class="section-beige-inner">
+  <div class="section-label" style="color:var(--text-secondary);">03 / PRODUCT</div>
+  <div class="section-title" style="color:var(--text-dark);">プロダクト</div>
+  <div class="section-subtitle" style="color:var(--text-secondary);">Product Page Sample -- Bags & Accessories from Developing Countries</div>
+  <div class="product-preview">
+    <div class="product-category">BAGS</div>
+    <h2>Zafar アンティークスクエアバックパック</h2>
+    <p>バングラデシュの熟練した革職人が一つひとつ手作業で仕上げるレザーバックパック。上質な牛革に独自のアンティーク加工を施し、使い込むほどに深みを増す風合いが生まれます。A4サイズの書類やノートPCが収まる実用的な容量と、背面のファスナーポケットで日常使いの快適さを両立。</p>
+    <div class="product-heading">CRAFTSMANSHIP</div>
+    <div class="product-sub">素材と職人について</div>
+    <p>バングラデシュは世界有数の皮革産地。マザーハウスの自社工場では、現地の職人たちが伝統的な技法と最新の品質管理を組み合わせ、世界基準のバッグを生み出しています。一つのバッグが完成するまでに、裁断、縫製、仕上げを含む約50の工程を経ます。</p>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a class="btn-primary" href="#">詳しく見る</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <div class="section-title">ボタン</div>
+  <div class="section-subtitle">Buttons -- CTA Gray #656565 / radius 2-3px / 12px SemiBold 600 / shadow なし</div>
+
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#">オンラインストアを見る</a><div class="button-label">Primary CTA / filled #656565 / radius 3px / 600</div></div>
+    <div class="button-item"><a class="btn-newsletter" href="#">メールマガジンに登録する</a><div class="button-label">Newsletter CTA / filled #656565 / radius 0 / 600</div></div>
+    <div class="button-item"><a class="btn-tab" href="#">イベントをさがす</a><div class="button-label">Tab / border #dbd9cd / radius 5px / 400</div></div>
+    <div class="button-item"><a class="btn-tab" href="#">コラムをよむ</a><div class="button-label">Tab / border #dbd9cd / radius 5px / 400</div></div>
+  </div>
+
+  <div style="background:var(--cta-gray); padding:32px; margin-top:16px;">
+    <div style="font-family:var(--font-heading); font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:16px; letter-spacing:1.68px;">ダーク背景 (CTA Gray #656565)</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-outline" href="#">お店を探す</a><div class="button-label" style="color:rgba(255,255,255,0.5);">Outline / 4px solid #f8f8f8 / radius 0 / 400</div></div>
+      <div class="button-item"><a class="btn-primary" href="#" style="background:var(--surface-white); color:var(--cta-gray);">詳しく見る</a><div class="button-label" style="color:rgba(255,255,255,0.5);">反転 / 白背景 + #656565 テキスト</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-light-inner">
+  <div class="section-label">05 / CARDS</div>
+  <div class="section-title">製品カード</div>
+  <div class="section-subtitle">Product Cards -- shadow なし / radius 0 / フラット</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">BAGS</div>
+        <h3>Zafar アンティークスクエアバックパック</h3>
+        <div class="card-price">&yen;59,400</div>
+        <div class="card-origin">Made in Bangladesh</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">BAGS</div>
+        <h3>Rinne トートバッグ</h3>
+        <div class="card-price">&yen;34,100</div>
+        <div class="card-origin">Made in Bangladesh</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">JEWELRY</div>
+        <h3>ヨルグラスピアス</h3>
+        <div class="card-price">&yen;16,500</div>
+        <div class="card-origin">Made in Indonesia</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">GOODS</div>
+        <h3>ネパールシルクストール</h3>
+        <div class="card-price">&yen;12,100</div>
+        <div class="card-origin">Made in Nepal</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <div class="section-title">フォーム</div>
+  <div class="section-subtitle">Forms -- radius 3px / focus: border #121212</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-heading); font-size:12px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:1.68px;">デフォルト</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-heading); font-size:12px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:1.68px;">フォーカス状態</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都台東区..." style="border-color:var(--text-primary);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="ご質問・ご要望をご記入ください" style="resize:vertical; font-feature-settings:normal;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / ELEVATION</div>
+  <div class="section-title">奥行き</div>
+  <div class="section-subtitle">Depth & Elevation -- シャドウ一切なし (--media-shadow-opacity: 0.0)、色面コントラストのみ</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid #eee;">
+      <div class="elevation-label">Level 0 -- White</div>
+      <div class="elevation-desc">標準背景。影なし。#ffffff</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-light);">
+      <div class="elevation-label">Level 1 -- Light</div>
+      <div class="elevation-desc">セカンダリ面。影なし。#f2f2f2</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-beige);">
+      <div class="elevation-label">Level 2 -- Beige</div>
+      <div class="elevation-desc">ステートメント面。影なし。#edeadd</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-overlay); border:1px solid #eee;">
+      <div class="elevation-label">Level 3 -- Overlay</div>
+      <div class="elevation-desc">半透明オーバーレイ。rgba(255,255,255,0.3)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / LAYOUT</div>
+  <div class="section-title">レイアウト</div>
+  <div class="section-subtitle">Layout -- spacing scale & grid</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:10px; height:32px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:30px; height:32px;"></div><div class="spacing-value">30px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:42px; height:32px;"></div><div class="spacing-value">42px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; height:32px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--surface-white); color:var(--text-body); border:1px solid #eee;">WHITE #fff</div>
+    <div class="layout-box" style="background:var(--surface-light); color:var(--text-body);">LIGHT #f2f2f2</div>
+    <div class="layout-box" style="background:var(--surface-beige); color:var(--text-body);">BEIGE #edeadd</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>BAGS</h4>
+      <a href="#">バックパック</a>
+      <a href="#">トートバッグ</a>
+      <a href="#">ショルダーバッグ</a>
+      <a href="#">ビジネスバッグ</a>
+    </div>
+    <div class="footer-col">
+      <h4>JEWELRY</h4>
+      <a href="#">ピアス・イヤリング</a>
+      <a href="#">ネックレス</a>
+      <a href="#">リング</a>
+      <a href="#">ブレスレット</a>
+    </div>
+    <div class="footer-col">
+      <h4>GOODS</h4>
+      <a href="#">ストール</a>
+      <a href="#">財布・小物</a>
+      <a href="#">ポーチ</a>
+    </div>
+    <div class="footer-col">
+      <h4>BRAND</h4>
+      <a href="#">マザーハウスについて</a>
+      <a href="#">お店を探す</a>
+      <a href="#">修理・お手入れ</a>
+      <a href="#">採用情報</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from mother-house.jp DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    Lato (Google Fonts) + Noto Sans JP (Yu Gothic 代替) / font-feature-settings: normal (palt 未適用) / CTA Gray #656565
+  </div>
+</footer>
+
+</body>
+</html>

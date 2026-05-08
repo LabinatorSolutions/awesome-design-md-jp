@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: uka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === uka Color Tokens === */
+    --primary-color: #333333;
+    --primaryHeavy-color: #414c55;
+    --primaryPale-color: #5d6d7a;
+    --primaryLight-color: #92a7b6;
+    --navy-accent: #2a3650;
+
+    --text-primary: #333333;
+    --text-body: #454545;
+    --text-secondary: #7b7b7b;
+    --text-dark: #676a71;
+    --text-on-dark: #ffffff;
+
+    --surface-white: #ffffff;
+    --surface-light: #f1f2f4;
+    --surface-gray-light: #ededf1;
+    --surface-dark: #333333;
+    --surface-product-nav: #676a71;
+
+    --error: #c0392b;
+
+    /* === Font === */
+    --font-jp: "Zen Kaku Gothic New", sans-serif;
+    --font-en: "Instrument Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.025em;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--surface-white);
+    border-bottom: 1px solid #eee;
+  }
+  .nav-brand {
+    font-family: var(--font-en); font-size: 20px; font-weight: 400; line-height: 1.2;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    color: var(--text-body); text-decoration: none; letter-spacing: 0.1em; line-height: 1.5;
+  }
+  .nav-icon {
+    display: inline-flex; gap: 16px; font-family: var(--font-jp); font-size: 14px;
+    color: var(--text-primary); letter-spacing: 0.025em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 100px;
+    background: var(--surface-white);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-en);
+    font-size: 50px; font-weight: 400; line-height: 1.28;
+    letter-spacing: 0.1em; margin-bottom: 32px;
+    color: var(--text-primary);
+  }
+  .hero-statement {
+    font-family: var(--font-jp);
+    font-size: 18px; font-weight: 400; line-height: 2.0;
+    letter-spacing: normal; color: var(--text-primary); margin-bottom: 32px;
+  }
+  .hero-lead {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.025em;
+    color: var(--text-body); max-width: 640px; margin: 0 auto;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-en); font-size: 28px; font-weight: 400;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+  .section-subtitle {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.5; color: var(--text-secondary); letter-spacing: 0.025em;
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid #eee; margin: 0; }
+
+  .section-light { background: var(--surface-light); padding: 80px 40px; }
+  .section-light-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-dark { background: var(--surface-dark); padding: 80px 40px; color: var(--text-on-dark); }
+  .section-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--text-on-dark); }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.6); }
+  .section-dark .section-label { color: rgba(255,255,255,0.5); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid #eee; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-jp); font-size: 12px; font-weight: 500; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.025em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-jp); font-size: 11px; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.025em; }
+  .color-group-label { font-family: var(--font-en); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin: 24px 0 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--text-secondary); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-jp); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0.025em; }
+
+  /* CATEGORY CARD BUTTON */
+  .btn-category {
+    display: inline-block; background: var(--surface-light); color: var(--text-body);
+    padding: 14px 32px; border: none; border-radius: 8px;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em; text-decoration: none; cursor: pointer;
+    font-feature-settings: "palt";
+  }
+  .btn-category-dark {
+    display: inline-block; background: var(--surface-product-nav); color: var(--text-on-dark);
+    padding: 14px 32px; border: none; border-radius: 8px;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em; text-decoration: none; cursor: pointer;
+    font-feature-settings: "palt";
+  }
+  .btn-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-primary);
+    padding: 8px; border: none;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em; cursor: pointer;
+  }
+  .btn-news {
+    display: inline-block; background: var(--surface-white); color: var(--text-body);
+    padding: 14px 32px; border: none; border-radius: 0;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em; text-decoration: none; cursor: pointer;
+    font-feature-settings: "palt";
+  }
+  .btn-service {
+    display: inline-block; background: var(--text-dark); color: var(--text-on-dark);
+    padding: 16px 40px; border: none; border-radius: 0;
+    font-family: var(--font-en); font-size: 19.2px; font-weight: 400;
+    letter-spacing: 0.18em; text-decoration: none; cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { height: 280px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-en); font-size: 14px; color: var(--text-secondary);
+    letter-spacing: 0.1em;
+  }
+  .card-body { padding: 16px 0; }
+  .card-date {
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 4px; letter-spacing: 0.05em;
+  }
+  .card-category-tag {
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 0.025em;
+  }
+  .card h3 {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    line-height: 1.65; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.025em;
+  }
+  .card-subtitle {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 500;
+    color: var(--text-secondary); letter-spacing: 0.025em;
+  }
+
+  /* PRODUCT CARD */
+  .product-card-name {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 500;
+    line-height: 1.45; color: var(--text-primary); margin-bottom: 4px; letter-spacing: 0.025em;
+  }
+  .product-card-sub {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 500;
+    color: var(--text-secondary); letter-spacing: 0.025em;
+  }
+
+  /* PHILOSOPHY CARD */
+  .philosophy-card {
+    background: var(--surface-light); padding: 48px 40px; margin-bottom: 24px;
+  }
+  .philosophy-card-title {
+    font-family: var(--font-en); font-size: 30px; font-weight: 400;
+    line-height: 1.0; letter-spacing: 0.04em; color: var(--text-primary); margin-bottom: 8px;
+  }
+  .philosophy-card-subtitle {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 24px; letter-spacing: 0.025em;
+  }
+  .philosophy-card-body {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    line-height: 2.4; letter-spacing: normal; color: var(--text-primary);
+  }
+
+  /* PRODUCT SECTION */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview .product-section-en {
+    font-family: var(--font-en); font-size: 28px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.1em; color: var(--text-on-dark); margin-bottom: 8px;
+  }
+  .product-preview .product-section-jp {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.025em; color: rgba(255,255,255,0.6); margin-bottom: 32px;
+  }
+  .product-preview h1 {
+    font-family: var(--font-en); font-size: 50px; font-weight: 400;
+    line-height: 1.28; color: var(--text-on-dark); margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+  .product-preview .product-name-jp {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 500;
+    line-height: 1.45; letter-spacing: 0.025em; color: var(--text-on-dark); margin-bottom: 8px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 500;
+    line-height: 1.5; letter-spacing: 0.025em; color: rgba(255,255,255,0.6); margin-bottom: 24px;
+  }
+  .product-preview p {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    line-height: 1.6; letter-spacing: 0.025em;
+    color: rgba(255,255,255,0.85); margin-bottom: 20px;
+  }
+  .product-preview .statement-text {
+    font-family: var(--font-jp); font-size: 18px; font-weight: 400;
+    line-height: 2.0; letter-spacing: normal;
+    color: var(--text-on-dark); margin: 40px 0 20px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-jp); font-size: 14px; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.025em;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--text-primary);
+    border: 1px solid #ccc; padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em; outline: none;
+    font-feature-settings: "palt";
+  }
+  .form-input:focus { border-color: var(--text-primary); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-jp); font-size: 12px; color: var(--error); margin-top: 4px; letter-spacing: 0.025em; }
+  .form-input::placeholder { color: var(--text-secondary); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-en); font-size: 14px; font-weight: 400; margin-bottom: 8px; letter-spacing: 0.1em; }
+  .elevation-desc { font-family: var(--font-jp); font-size: 12px; color: var(--text-secondary); letter-spacing: 0.025em; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--primary-color); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en); font-size: 12px; font-weight: 400; letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 40px 32px;
+    background: var(--surface-dark); color: var(--text-on-dark);
+    font-size: 14px; line-height: 1.6;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    margin-bottom: 16px; letter-spacing: 0.1em; color: var(--text-on-dark);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-jp); color: var(--text-on-dark);
+    text-decoration: none; opacity: 0.6; margin-bottom: 8px; font-size: 14px;
+    letter-spacing: 0.025em;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-jp); font-size: 12px; opacity: 0.4;
+    letter-spacing: 0.025em;
+  }
+
+  /* NOTIFICATION BAR */
+  .notification-bar {
+    background: var(--surface-dark); color: var(--text-on-dark);
+    padding: 12px 40px; text-align: center;
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400;
+    line-height: 1.65; letter-spacing: 0.025em;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; }
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-light { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+    .philosophy-card { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="notification-bar">uka store GINZA SIX 6/1 OPEN</div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">uka</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">Search / Cart</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Lineup</h1>
+    <div class="hero-statement">うれしくって、うつくしいほうへ</div>
+    <p class="hero-lead">uka (uka.co.jp) から抽出したデザイントークンのカタログ。Zen Kaku Gothic New + Instrument Sans のデュアルフォントシステム、font-feature-settings: "palt" グローバル適用、line-height 三段階（1.6 / 2.0 / 2.4）、チャコールグレー #333333 と白の二色パレット、radius 8px のカテゴリカード。computed style 実測値に基づく。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title">Color Palette</div>
+  <div class="section-subtitle">チャコールグレーと白の二色構成。--primary-color: #333333</div>
+
+  <div class="color-group-label">Primary</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">--primary-color / ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#414c55"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal Heavy</div><div class="color-swatch-hex">#414c55</div><div class="color-swatch-role">--primaryHeavy-color</div></div></div>
+  </div>
+
+  <div class="color-group-label">Sub Colors</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5d6d7a"></div><div class="color-swatch-info"><div class="color-swatch-name">Slate</div><div class="color-swatch-hex">#5d6d7a</div><div class="color-swatch-role">--primaryPale-color</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#92a7b6"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Slate</div><div class="color-swatch-hex">#92a7b6</div><div class="color-swatch-role">--primaryLight-color</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2a3650"></div><div class="color-swatch-info"><div class="color-swatch-name">Navy</div><div class="color-swatch-hex">#2a3650</div><div class="color-swatch-role">ダークアクセント（限定的）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">メインテキスト / --color-black</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#454545"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#454545</div><div class="color-swatch-role">本文・リンクテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7b7b7b"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#7b7b7b</div><div class="color-swatch-role">--color-gray / サブタイトル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#676a71"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark</div><div class="color-swatch-hex">#676a71</div><div class="color-swatch-role">--color-gray-dark / プロダクトナビ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク背景上の白テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f2f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f1f2f4</div><div class="color-swatch-role">セカンダリ背景（ライトブルーグレー）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ededf1"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray Light</div><div class="color-swatch-hex">#ededf1</div><div class="color-swatch-role">--color-gray-light / カード背景等</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">通知バー・フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#676a71"></div><div class="color-swatch-info"><div class="color-swatch-name">Product Nav</div><div class="color-swatch-hex">#676a71</div><div class="color-swatch-role">プロダクトナビゲーション面</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">Typography</div>
+  <div class="section-subtitle">Zen Kaku Gothic New + Instrument Sans デュアルフォントシステム / palt グローバル適用</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:50px; font-weight:400; line-height:1.28; letter-spacing:0.1em; color:var(--text-primary);">Lineup</div>
+    <div class="type-meta">Instrument Sans / 50px / 400 / line-height: 1.28 / letter-spacing: 0.1em<span class="type-context">Display (h1)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:28px; font-weight:400; line-height:1.5; letter-spacing:0.1em; color:var(--text-primary);">Products</div>
+    <div class="type-meta">Instrument Sans / 28px / 400 / line-height: 1.5 / letter-spacing: 0.1em<span class="type-context">Heading 2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:30px; font-weight:400; line-height:1.0; letter-spacing:0.04em; color:var(--text-primary);">Our Philosophy</div>
+    <div class="type-meta">Instrument Sans / 30px / 400 / line-height: 1.0 / letter-spacing: 0.04em<span class="type-context">Heading 3 EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:19.2px; font-weight:400; line-height:1.1; letter-spacing:0.18em; color:var(--text-primary);">Salon</div>
+    <div class="type-meta">Instrument Sans / 19.2px / 400 / line-height: 1.1 / letter-spacing: 0.18em<span class="type-context">Heading 3 Service</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:20px; font-weight:400; line-height:1.5; letter-spacing:0.18em; color:var(--text-on-dark); background:var(--text-dark); padding:12px 20px; display:inline-block;">Gift</div>
+    <div class="type-meta">Instrument Sans / 20px / 400 / line-height: 1.5 / letter-spacing: 0.18em / white on dark<span class="type-context">Banner EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:500; line-height:1.45; letter-spacing:0.025em; color:var(--text-primary);">スカルプブラシ ケンザン</div>
+    <div class="type-meta">Zen Kaku Gothic New / 16px / 500 / line-height: 1.45 / letter-spacing: 0.025em<span class="type-context">Heading 3 JP</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:400; line-height:1.65; letter-spacing:0.025em; color:var(--text-primary);">uka ストア 銀座 シックス店オープンのお知らせ</div>
+    <div class="type-meta">Zen Kaku Gothic New / 16px / 400 / line-height: 1.65 / letter-spacing: 0.025em<span class="type-context">Heading 3 News</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:20px; font-weight:500; line-height:1.6; letter-spacing:0.025em; color:var(--text-primary);">Global Presence</div>
+    <div class="type-meta">Zen Kaku Gothic New / 20px / 500 / line-height: 1.6 / letter-spacing: 0.025em<span class="type-context">Link Card Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:400; line-height:1.6; letter-spacing:0.025em; color:var(--text-primary);">指先から気分を変える。ネイルカラーは色を纏うだけでなく、自分自身を整える時間。ukaのネイルオイルは爪を保湿しながら、ほのかな香りで心を解きほぐします。</div>
+    <div class="type-meta">Zen Kaku Gothic New / 16px / 400 / line-height: 1.6 / letter-spacing: 0.025em<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:18px; font-weight:400; line-height:2.0; letter-spacing:normal; color:var(--text-primary);">うれしくって、うつくしいほうへ。<br>uka は、髪、肌、爪先から気持ちを整え、<br>毎日をすこし前向きにするお手伝いをします。</div>
+    <div class="type-meta">Zen Kaku Gothic New / 18px / 400 / line-height: 2.0 / letter-spacing: normal<span class="type-context">Statement</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:400; line-height:2.4; letter-spacing:normal; color:var(--text-primary);">わたしたちは、髪を整え、爪を彩り、肌を慈しむことが、自分自身を大切にすることの第一歩だと考えています。日々のケアを通じて、内側からの美しさと向き合う時間を提案します。</div>
+    <div class="type-meta">Zen Kaku Gothic New / 16px / 400 / line-height: 2.4 / letter-spacing: normal<span class="type-context">Card Description (Philosophy)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:14px; font-weight:500; line-height:1.5; letter-spacing:0.025em; color:var(--text-secondary);">ヘッドスパ・トリートメント</div>
+    <div class="type-meta">Zen Kaku Gothic New / 14px / 500 / line-height: 1.5 / letter-spacing: 0.025em / color: #7b7b7b<span class="type-context">Subtitle</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.025em; color:var(--text-primary);">東京・恵比寿</div>
+    <div class="type-meta">Zen Kaku Gothic New / 14px / 400 / line-height: 1.5 / letter-spacing: 0.025em<span class="type-context">Subtitle Small</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:16px; font-weight:400; line-height:1.65; letter-spacing:0.025em; color:var(--text-on-dark); background:var(--surface-dark); padding:12px 20px; display:inline-block;">uka store GINZA SIX 6/1 OPEN</div>
+    <div class="type-meta">Zen Kaku Gothic New / 16px / 400 / line-height: 1.65 / letter-spacing: 0.025em / white on #333<span class="type-context">Notification</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-dark" id="product">
+<div class="section-dark-inner">
+  <div class="section-label">03 / Product</div>
+  <div class="section-title">Products</div>
+  <div class="section-subtitle">uka is a total beauty brand from Ebisu, Tokyo</div>
+  <div class="product-preview">
+    <div class="product-section-en">Hair Care</div>
+    <div class="product-section-jp">ヘアケア</div>
+    <div class="product-name-jp">スカルプブラシ ケンザン</div>
+    <div class="product-sub">頭皮ケア・シャンプーブラシ</div>
+    <p>シャンプー時に頭皮を心地よく刺激するスカルプブラシ。硬さの異なるシリコンピンが汚れをしっかり落としながら、サロンのヘッドスパのような気持ちよさを実現します。お風呂上がりの指通りが変わる、毎日のケアアイテムです。</p>
+
+    <div class="statement-text">うれしくって、うつくしいほうへ。<br>頭皮を整えることが、美しい髪の第一歩。</div>
+
+    <div style="margin-top:40px;">
+      <div class="product-section-en">Nail Care</div>
+      <div class="product-section-jp">ネイルケア</div>
+      <div class="product-name-jp">uka ネイルオイル 13:00</div>
+      <div class="product-sub">ネイルケアオイル</div>
+      <p>ランチのあとの気分転換に。レモンとミントの香りが午後の始まりをすっきり整えます。乾燥した爪まわりに塗ることで、健やかな爪を育てます。時間帯をコンセプトにしたukaならではのネイルオイルです。</p>
+    </div>
+
+    <div style="margin-top:40px;">
+      <div class="product-section-en">Fragrance</div>
+      <div class="product-section-jp">フレグランス</div>
+      <div class="product-name-jp">uka ヘアオイル レイニーウォーク</div>
+      <div class="product-sub">ヘアケア・フレグランス</div>
+      <p>雨の日も気分が上がるように。グリーンフローラルの香りとともに、うるおいを与えながら髪をまとめます。湿気による広がりを抑え、自然なツヤを引き出すマルチユースなヘアオイルです。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title">Buttons</div>
+  <div class="section-subtitle">カード型のクリッカブル要素が主体 / カテゴリカード radius 8px / shadow なし</div>
+
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-category" href="#">ヘアケア</a><div class="button-label">Category Card / #f1f2f4 / radius 8px / 400</div></div>
+    <div class="button-item"><a class="btn-category" href="#">ネイルカラー</a><div class="button-label">Category Card / #f1f2f4 / radius 8px / 400</div></div>
+    <div class="button-item"><a class="btn-category" href="#">スカルプケア</a><div class="button-label">Category Card / #f1f2f4 / radius 8px / 400</div></div>
+    <div class="button-item"><a class="btn-category" href="#">フレグランス</a><div class="button-label">Category Card / #f1f2f4 / radius 8px / 400</div></div>
+  </div>
+
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-news" href="#">ニュースカード</a><div class="button-label">News Card / #fff / radius 0 / 400</div></div>
+    <div class="button-item"><span class="btn-icon">&#9776; Menu</span><div class="button-label">Header Icon / transparent / 400</div></div>
+    <div class="button-item"><span class="btn-icon">&#128269; Search</span><div class="button-label">Header Icon / transparent / 400</div></div>
+  </div>
+
+  <div style="background:var(--surface-dark); padding:32px; margin-top:16px;">
+    <div style="font-family:var(--font-en); font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:16px; letter-spacing:0.1em;">Dark surface</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-category-dark" href="#">Salon</a><div class="button-label" style="color:rgba(255,255,255,0.5)">Category Card / #676a71 / radius 8px</div></div>
+      <div class="button-item"><a class="btn-service" href="#">Salon</a><div class="button-label" style="color:rgba(255,255,255,0.5)">Service / Instrument Sans / 0.18em</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-light-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title">Cards</div>
+  <div class="section-subtitle">ニュースカード / プロダクトカード / フィロソフィーカード / shadow なし</div>
+
+  <!-- News Cards -->
+  <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin-bottom:16px; letter-spacing:0.1em; text-transform:uppercase;">News Cards</div>
+  <div class="card-grid" style="margin-bottom:48px;">
+    <div class="card">
+      <div class="card-image" style="background:#e8e9ec;">
+        <div class="card-image-placeholder">News Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-date">2026.05.01</div>
+        <div class="card-category-tag">お知らせ</div>
+        <h3>uka store GINZA SIX 6月1日オープンのお知らせ</h3>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:#e8e9ec;">
+        <div class="card-image-placeholder">News Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-date">2026.04.20</div>
+        <div class="card-category-tag">新製品</div>
+        <h3>夏限定ネイルカラー "Sea Breeze Collection" 発売</h3>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:#e8e9ec;">
+        <div class="card-image-placeholder">News Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-date">2026.04.10</div>
+        <div class="card-category-tag">イベント</div>
+        <h3>uka ヘッドスパ体験イベント in 恵比寿サロン</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Cards -->
+  <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin-bottom:16px; letter-spacing:0.1em; text-transform:uppercase;">Product Cards</div>
+  <div class="card-grid" style="margin-bottom:48px;">
+    <div class="card">
+      <div class="card-image" style="background:#e8e9ec;">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="product-card-name">スカルプブラシ ケンザン</div>
+        <div class="product-card-sub">頭皮ケア・シャンプーブラシ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:#e8e9ec;">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="product-card-name">uka ネイルオイル 13:00</div>
+        <div class="product-card-sub">ネイルケアオイル</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:#e8e9ec;">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="product-card-name">uka ヘアオイル レイニーウォーク</div>
+        <div class="product-card-sub">ヘアケア・フレグランス</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Philosophy Cards -->
+  <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin-bottom:16px; letter-spacing:0.1em; text-transform:uppercase;">Philosophy Cards</div>
+  <div class="philosophy-card">
+    <div class="philosophy-card-title">Our Philosophy</div>
+    <div class="philosophy-card-subtitle">わたしたちの考え</div>
+    <div class="philosophy-card-body">わたしたちは、髪を整え、爪を彩り、肌を慈しむことが、自分自身を大切にすることの第一歩だと考えています。日々のケアを通じて、内側からの美しさと向き合う時間を提案します。うれしくって、うつくしいほうへ。それがukaの願いです。</div>
+  </div>
+  <div class="philosophy-card">
+    <div class="philosophy-card-title">Craftsmanship</div>
+    <div class="philosophy-card-subtitle">ものづくり</div>
+    <div class="philosophy-card-body">サロンで培った技術と知識を、プロダクトに落とし込む。スカルプブラシのピン一本の硬さ、ネイルオイルの香りの配合、ヘアオイルのテクスチャー。すべてに理由があり、すべてがサロンの現場から生まれています。</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title">Forms</div>
+  <div class="section-subtitle">radius 0 / focus: border #333333 / palt 適用</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.1em;">Default</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="田中 美咲">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.1em;">Focus state</div>
+      <div class="form-group">
+        <label class="form-label">ご住所</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区恵比寿..." style="border-color:var(--text-primary);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="サロン予約・製品に関するご質問をご記入ください" style="resize:vertical; font-feature-settings:'palt';"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title">Depth & Elevation</div>
+  <div class="section-subtitle">シャドウなし。白 / ライトブルーグレー / チャコールの面切り替えで空間を構成</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid #eee;">
+      <div class="elevation-label">Level 0 -- Flat</div>
+      <div class="elevation-desc">すべての要素。shadow: none</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid #eee;">
+      <div class="elevation-label">Level 1 -- White</div>
+      <div class="elevation-desc">通常面。#ffffff</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-light);">
+      <div class="elevation-label">Level 2 -- Light</div>
+      <div class="elevation-desc">セカンダリ面。#f1f2f4 ライトブルーグレー</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-product-nav); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 3 -- Nav</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">プロダクトナビ面。#676a71</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-dark); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 4 -- Dark</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">通知バー・フッター。#333333</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title">Layout</div>
+  <div class="section-subtitle">Spacing scale & section backgrounds</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px; height:32px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px; height:32px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px; height:32px;"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin-bottom:16px; letter-spacing:0.1em; text-transform:uppercase;">Section Backgrounds</div>
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--surface-white); color:var(--text-primary); border:1px solid #eee;">WHITE #fff</div>
+    <div class="layout-box" style="background:var(--surface-light); color:var(--text-primary);">LIGHT #f1f2f4</div>
+    <div class="layout-box" style="background:var(--surface-dark); color:var(--text-on-dark);">DARK #333</div>
+  </div>
+
+  <div style="font-family:var(--font-en); font-size:12px; color:var(--text-secondary); margin:32px 0 16px; letter-spacing:0.1em; text-transform:uppercase;">Line-height Scale</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px;">
+    <div style="background:var(--surface-light); padding:24px;">
+      <div style="font-family:var(--font-jp); font-size:16px; line-height:1.6; letter-spacing:0.025em; color:var(--text-primary); margin-bottom:12px;">指先から気分を変える。ネイルカラーは色を纏うだけでなく、自分自身を整える時間。</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); letter-spacing:0;">line-height: 1.6 (Body)</div>
+    </div>
+    <div style="background:var(--surface-light); padding:24px;">
+      <div style="font-family:var(--font-jp); font-size:18px; line-height:2.0; letter-spacing:normal; color:var(--text-primary); margin-bottom:12px;">うれしくって、うつくしいほうへ。毎日をすこし前向きに。</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); letter-spacing:0;">line-height: 2.0 (Statement)</div>
+    </div>
+    <div style="background:var(--surface-light); padding:24px;">
+      <div style="font-family:var(--font-jp); font-size:16px; line-height:2.4; letter-spacing:normal; color:var(--text-primary); margin-bottom:12px;">わたしたちは、髪を整え、爪を彩り、肌を慈しむことの第一歩だと考えています。</div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); letter-spacing:0;">line-height: 2.4 (Philosophy)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Hair Care</h4>
+      <a href="#">スカルプブラシ ケンザン</a>
+      <a href="#">uka ヘアオイル レイニーウォーク</a>
+      <a href="#">uka シャンプー Wake Up!</a>
+      <a href="#">uka トリートメント Nighty Night</a>
+    </div>
+    <div class="footer-col">
+      <h4>Nail Care</h4>
+      <a href="#">uka ネイルオイル 13:00</a>
+      <a href="#">uka ネイルオイル 24:45</a>
+      <a href="#">uka カラーベースコート</a>
+      <a href="#">uka ネイルカラー</a>
+    </div>
+    <div class="footer-col">
+      <h4>Salon</h4>
+      <a href="#">uka 東京ミッドタウン 六本木</a>
+      <a href="#">uka 恵比寿三越</a>
+      <a href="#">uka GINZA SIX</a>
+      <a href="#">uka 丸の内</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="#">ukaについて</a>
+      <a href="#">店舗一覧</a>
+      <a href="#">お問い合わせ</a>
+      <a href="#">採用情報</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from uka.co.jp DESIGN.md -- awesome-design-md-jp / computed style (2026-05-09)<br>
+    Zen Kaku Gothic New + Instrument Sans / font-feature-settings: "palt" / line-height: 1.6 / 2.0 / 2.4
+  </div>
+</footer>
+
+</body>
+</html>

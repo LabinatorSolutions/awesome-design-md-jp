@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (119 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (122 sites)</a>
 </p>
 
 <table>
@@ -196,6 +196,14 @@
 <td align="center"><strong>cowcamo</strong><br><img src="design-md/cowcamo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>FABRIC TOKYO</strong><br><img src="design-md/fabrictokyo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>objcts.io</strong><br><img src="design-md/objcts-io/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Goldwin</strong><br><img src="design-md/goldwin/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>MOTHERHOUSE</strong><br><img src="design-md/motherhouse/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>uka</strong><br><img src="design-md/uka/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
@@ -377,11 +385,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [cowcamo（カウカモ）](https://cowcamo.jp/) | Real Estate / Marketplace | [DESIGN.md](design-md/cowcamo/DESIGN.md) | [preview.html](design-md/cowcamo/preview.html) |
 | [FABRIC TOKYO](https://fabric-tokyo.com/) | D2C Fashion / Custom Order | [DESIGN.md](design-md/fabrictokyo/DESIGN.md) | [preview.html](design-md/fabrictokyo/preview.html) |
 | [objcts.io](https://objcts.io/) | D2C Leather Goods | [DESIGN.md](design-md/objcts-io/DESIGN.md) | [preview.html](design-md/objcts-io/preview.html) |
+| [Goldwin (ゴールドウイン)](https://www.goldwin.co.jp/) | Outdoor / Sports Apparel | [DESIGN.md](design-md/goldwin/DESIGN.md) | [preview.html](design-md/goldwin/preview.html) |
+| [MOTHERHOUSE (マザーハウス)](https://www.mother-house.jp/) | Bags / Social Enterprise | [DESIGN.md](design-md/motherhouse/DESIGN.md) | [preview.html](design-md/motherhouse/preview.html) |
+| [uka (ウカ)](https://www.uka.co.jp/) | Beauty / Nail Care | [DESIGN.md](design-md/uka/DESIGN.md) | [preview.html](design-md/uka/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (119 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (122 sites)</a>
 </p>
 
 <table>
@@ -543,6 +554,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>cowcamo</strong><br><img src="design-md/cowcamo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>FABRIC TOKYO</strong><br><img src="design-md/fabrictokyo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>objcts.io</strong><br><img src="design-md/objcts-io/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Goldwin</strong><br><img src="design-md/goldwin/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>MOTHERHOUSE</strong><br><img src="design-md/motherhouse/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>uka</strong><br><img src="design-md/uka/preview-screenshot.png" width="120"></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </table>
