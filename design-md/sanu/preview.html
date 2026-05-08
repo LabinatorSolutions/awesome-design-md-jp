@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SANU</title>
+<!--
+  Font Substitutions (Adobe Fonts → Google Fonts):
+  - dnp-shuei-gothic-gin-std → Zen Kaku Gothic New (Japanese gothic)
+  - stahlkl → Playfair Display (decorative serif for English labels)
+  - UniversLTPro → Inter (neutral sans for English body)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --color-black: #322e21;
+    --color-main: #ec572e;
+    --color-main-hover: #d44e28;
+    --color-beige: #e9e3d1;
+    --color-beige-deep: #d1c8a6;
+    --color-beige-deep2: #d9c9a1;
+    --color-beige-light: #f2eee4;
+    --color-white: #ffffff;
+    --color-grey-brown: #605d55;
+    --color-light-grey: #f3f3f3;
+    --color-border: #eaeaea;
+    --color-error: #FA4616;
+    --color-success: #6ea80b;
+    --color-line-green: #4cc764;
+    /* === Fonts === */
+    --font-gothic: "Zen Kaku Gothic New", sans-serif;
+    --font-serif-en: "Playfair Display", serif;
+    --font-sans-en: "Inter", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(50,46,33,0.06);
+    --elevation-2: 0 4px 16px rgba(50,46,33,0.08);
+    --elevation-3: 0 8px 32px rgba(50,46,33,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-gothic);
+    font-size: 18px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.01em;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-brand {
+    font-family: var(--font-serif-en);
+    font-size: 22px; font-weight: 600; color: var(--color-black);
+    text-decoration: none; letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-sans-en);
+    font-size: 13px; font-weight: 500; color: var(--color-grey-brown);
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-black); }
+  .nav-cta {
+    display: inline-block; background: var(--color-main); color: var(--color-white);
+    padding: 8px 24px; border-radius: 500px;
+    font-family: var(--font-gothic); font-size: 14px; font-weight: 700;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--color-main-hover); }
+
+  /* HERO */
+  .hero {
+    padding: 100px 40px 80px; text-align: center;
+    background: var(--color-beige-light);
+  }
+  .hero-label {
+    font-family: var(--font-serif-en);
+    font-size: 14px; font-weight: 400; color: var(--color-grey-brown);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-gothic);
+    font-size: 34px; font-weight: 600; line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: var(--color-black); margin-bottom: 20px;
+  }
+  .hero p {
+    font-family: var(--font-gothic);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--color-grey-brown); max-width: 560px; margin: 0 auto 36px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS (global) */
+  .btn-primary {
+    display: inline-block; background: var(--color-main); color: var(--color-white);
+    padding: 12px 40px; border-radius: 500px; border: none;
+    font-family: var(--font-gothic); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--color-main-hover); }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--color-black);
+    padding: 12px 32px; border-radius: 500px;
+    border: 1px solid var(--color-black);
+    font-family: var(--font-gothic); font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--color-black); color: var(--color-white); }
+  .btn-outline-white {
+    display: inline-block; background: transparent; color: var(--color-white);
+    padding: 12px 32px; border-radius: 500px;
+    border: 1px solid var(--color-white);
+    font-family: var(--font-gothic); font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-white:hover { background: var(--color-white); color: var(--color-black); }
+  .btn-line {
+    display: inline-block; background: var(--color-white); color: var(--color-line-green);
+    padding: 12px 32px; border-radius: 500px;
+    border: 1px solid var(--color-line-green);
+    font-family: var(--font-gothic); font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-line:hover { background: #f0faf2; }
+
+  /* SECTIONS */
+  .section { padding: 72px 40px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-serif-en);
+    font-size: 13px; font-weight: 400; color: var(--color-grey-brown);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-family: var(--font-gothic);
+    font-size: 24px; font-weight: 600; line-height: 1.4;
+    letter-spacing: 0.01em;
+    margin-bottom: 36px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+
+  .section-beige { background: var(--color-beige-light); padding: 72px 40px; }
+  .section-beige .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .section-dark { background: var(--color-black); padding: 72px 40px; color: var(--color-white); }
+  .section-dark .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--color-beige-deep); }
+  .section-dark .section-title { color: var(--color-white); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 8px; overflow: hidden; background: var(--color-white); box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: var(--color-black); }
+  .color-swatch-hex { font-size: 12px; color: var(--color-grey-brown); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--color-grey-brown); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 600; color: var(--color-grey-brown); margin: 28px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--color-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--color-grey-brown); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--color-beige-light); color: var(--color-grey-brown); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* BUTTONS SECTION */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--color-grey-brown); margin-top: 10px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--color-white); border: 1px solid var(--color-border);
+    border-radius: 8px; padding: 24px;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image {
+    width: 100%; height: 160px; border-radius: 4px; margin-bottom: 16px;
+    object-fit: cover;
+  }
+  .card-tag {
+    display: inline-block; font-family: var(--font-sans-en);
+    font-size: 11px; font-weight: 500; color: var(--color-grey-brown);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-family: var(--font-gothic);
+    font-size: 18px; font-weight: 600; line-height: 1.4;
+    letter-spacing: 0.01em; margin-bottom: 8px;
+  }
+  .card p { font-size: 14px; color: var(--color-grey-brown); line-height: 1.6; }
+  .card-link {
+    font-family: var(--font-sans-en);
+    font-size: 13px; color: var(--color-main); text-decoration: none;
+    margin-top: 12px; display: inline-block; font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .card-link:hover { opacity: 0.7; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview .article-label {
+    font-family: var(--font-serif-en);
+    font-size: 14px; font-weight: 400; color: var(--color-grey-brown);
+    letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  .article-preview h1 {
+    font-family: var(--font-gothic);
+    font-size: 30px; font-weight: 600; line-height: 1.4;
+    letter-spacing: 0.01em; margin-bottom: 20px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-gothic);
+    font-size: 24px; font-weight: 600; line-height: 1.4;
+    letter-spacing: 0.01em; margin: 28px 0 12px;
+  }
+  .article-preview p {
+    font-family: var(--font-gothic);
+    font-size: 18px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.01em;
+    margin-bottom: 18px; color: var(--color-black);
+  }
+  .article-preview .en-label {
+    font-family: var(--font-serif-en);
+    font-size: 30px; font-weight: 400; line-height: 1.0;
+    color: var(--color-grey-brown); margin-bottom: 8px;
+  }
+  .article-preview blockquote {
+    border-left: 3px solid var(--color-main);
+    padding: 12px 20px; margin: 20px 0;
+    background: var(--color-beige-light);
+    font-size: 16px; line-height: 1.8; color: var(--color-grey-brown);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 420px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--color-black); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--color-white); color: var(--color-black);
+    border: 1px solid var(--color-border); padding: 12px 16px; border-radius: 4px;
+    font-family: var(--font-gothic); font-size: 16px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: #aaa; }
+  .form-input:focus, .form-input--focus { border-color: var(--color-black); }
+  .form-input--error { border-color: var(--color-error); }
+  .form-error-text { font-size: 12px; color: var(--color-error); margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--color-grey-brown); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--color-white); border-radius: 8px; padding: 28px;
+    text-align: center; border: 1px solid var(--color-border);
+  }
+  .elevation-label { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--color-grey-brown); word-break: break-all; }
+
+  /* SPACING / LAYOUT */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-main); border-radius: 3px; margin-bottom: 6px; height: 28px; opacity: 0.7; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--color-grey-brown); }
+
+  .width-bar { height: 32px; background: var(--color-beige-light); border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--color-main); border-radius: 7px; opacity: 0.25; }
+  .width-bar-label { font-size: 13px; font-weight: 600; color: var(--color-black); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--color-grey-brown); }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px; text-align: center;
+    background: var(--color-black); color: var(--color-beige-deep);
+    font-size: 12px;
+  }
+  .footer a { color: var(--color-main); text-decoration: underline; }
+
+  /* RESPONSIVE */
+  @media (max-width: 769px) {
+    .hero { padding: 64px 20px 56px; }
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 14px; line-height: 1.7; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-beige { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 24px; }
+    .article-preview p { font-size: 16px; }
+    .color-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">SANU</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">TOUR BOOKING</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">Design System Preview</div>
+  <h1>Design System Preview<br>SANU 2nd Home</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。自然と共生するセカンドホームの世界観を、カラー・フォント・コンポーネントで可視化。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">TOUR BOOKING</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ec572e"></div><div class="color-swatch-info"><div class="color-swatch-name">Main (CTA)</div><div class="color-swatch-hex">#ec572e</div><div class="color-swatch-role">主要アクション・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d44e28"></div><div class="color-swatch-info"><div class="color-swatch-name">Main Hover</div><div class="color-swatch-hex">#d44e28</div><div class="color-swatch-role">CTA ホバー時</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#322e21"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#322e21</div><div class="color-swatch-role">テキスト・ボーダー主色</div></div></div>
+  </div>
+
+  <div class="color-group-label">Beige / Earth Tones</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2eee4"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige Light</div><div class="color-swatch-hex">#f2eee4</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e9e3d1"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige</div><div class="color-swatch-hex">#e9e3d1</div><div class="color-swatch-role">カード背景・アクセント面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9c9a1"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige Deep 2</div><div class="color-swatch-hex">#d9c9a1</div><div class="color-swatch-role">装飾・補助アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d1c8a6"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige Deep</div><div class="color-swatch-hex">#d1c8a6</div><div class="color-swatch-role">装飾ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #eaeaea"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Grey</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">入力背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#605d55"></div><div class="color-swatch-info"><div class="color-swatch-name">Grey Brown</div><div class="color-swatch-hex">#605d55</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eaeaea"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#eaeaea</div><div class="color-swatch-role">標準ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#FA4616"></div><div class="color-swatch-info"><div class="color-swatch-name">Error</div><div class="color-swatch-hex">#FA4616</div><div class="color-swatch-role">エラー・バリデーション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6ea80b"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#6ea80b</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4cc764"></div><div class="color-swatch-info"><div class="color-swatch-name">LINE Green</div><div class="color-swatch-hex">#4cc764</div><div class="color-swatch-role">LINE CTA</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:34px; font-weight:600; line-height:1.4; letter-spacing:0.01em;">自然と暮らす、もうひとつの家。</div>
+    <div class="type-meta">Display: Zen Kaku Gothic New / 34px / 600 / line-height: 1.4 / letter-spacing: 0.01em / palt: on<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:30px; font-weight:600; line-height:1.4; letter-spacing:0.01em;">セカンドホームという選択肢</div>
+    <div class="type-meta">H1: Zen Kaku Gothic New / 30px / 600 / line-height: 1.4 / letter-spacing: 0.01em<span class="type-context">ページタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-serif-en); font-size:30px; font-weight:400; line-height:1.0; color:var(--color-grey-brown); margin-bottom:6px;">Second Home</div>
+    <div style="font-family:var(--font-gothic); font-size:24px; font-weight:600; line-height:1.4; letter-spacing:0.01em;">森の中に佇む住まい</div>
+    <div class="type-meta">H2 (EN label + JP title): Playfair Display 30px/400 + Zen Kaku Gothic New 24px/600<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:24px; font-weight:600; line-height:1.4; letter-spacing:0.01em;">建築とランドスケープ</div>
+    <div class="type-meta">H3: Zen Kaku Gothic New / 24px / 600 / line-height: 1.4 / letter-spacing: 0.01em<span class="type-context">小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:18px; font-weight:400; line-height:1.5; letter-spacing:0.01em;">本文テキスト — SANUのセカンドホームは、自然豊かな環境に佇む木造建築です。都市生活の延長ではなく、自然の中で過ごす時間そのものを設計しています。ABCabc 123</div>
+    <div class="type-meta">Body: Zen Kaku Gothic New / 18px / 400 / line-height: 1.5 / palt: on<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:16px; font-weight:400; line-height:1.5; color:var(--color-grey-brown);">補足テキスト — Body Small (16px)。自然の中に佇むキャビンの詳細情報。</div>
+    <div class="type-meta">Body Small: 16px / 400 / line-height: 1.5 / color: Grey Brown</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.03em; color:var(--color-grey-brown);">キャプション — SANU 2nd Home / 白樺 / 2024</div>
+    <div class="type-meta">Caption: 12px / 400 / line-height: 1.5 / letter-spacing: 0.03em<span class="type-context">キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-sans-en); font-size:13px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--color-grey-brown);">Tour Booking &mdash; Reservation</div>
+    <div class="type-meta">English UI Label: Inter / 13px / 500 / letter-spacing: 0.06em / uppercase<span class="type-context">ナビ・ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-serif-en); font-size:36px; font-weight:400; line-height:1.1; letter-spacing:0.02em;">Living with Nature</div>
+    <div class="type-meta">English Display: Playfair Display / 36px / 400 / line-height: 1.1 / decorative serif<span class="type-context">装飾見出し</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-beige" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事・コンテンツの組版サンプル</h2>
+  <div class="article-preview">
+    <div class="en-label">Living in the Forest</div>
+    <h1>森の中の暮らしが教えてくれること</h1>
+    <p>朝、窓を開けると針葉樹の香りが部屋に満ちる。鳥のさえずりが目覚まし時計の代わりになり、窓越しに見える木漏れ日が時間の流れを教えてくれる。</p>
+    <h2>建築と自然の境界</h2>
+    <p>SANUのキャビンは、自然と対立する構造物ではなく、森の一部として存在することを目指しています。大きな窓は額縁のように風景を切り取り、室内にいながら四季の移ろいを感じることができます。</p>
+    <blockquote>Live with nature, not against it. 自然と共に生きることが、SANUの設計思想の根幹です。</blockquote>
+    <p>木材は地域の間伐材を活用し、建築プロセスそのものが森林の循環に寄与しています。それは持続可能性の追求であると同時に、土地への敬意の表明でもあります。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">TOUR BOOKING</a><div class="button-label">Primary CTA (pill)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">MORE DETAILS</a><div class="button-label">Outline (pill)</div></div>
+    <div class="button-item"><a class="btn-line" href="#">LINE で相談</a><div class="button-label">LINE CTA</div></div>
+  </div>
+  <div style="background:var(--color-black); padding:32px; border-radius:8px; margin-top:16px;">
+    <div class="button-row" style="margin-bottom:0;">
+      <div class="button-item"><a class="btn-outline-white" href="#">VIEW CABINS</a><div class="button-label" style="color:var(--color-beige-deep);">Outline on Dark</div></div>
+      <div class="button-item"><a class="btn-primary" href="#">TOUR BOOKING</a><div class="button-label" style="color:var(--color-beige-deep);">Primary on Dark</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">キャビンカード</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background:linear-gradient(135deg, #a8c6a0 0%, #7d9b6e 100%);"></div>
+      <div class="card-tag">Shirahama</div>
+      <h3>SANU 2nd Home 白浜</h3>
+      <p>太平洋を望む白浜の丘に佇むキャビン。潮風と波音に包まれた、海辺のセカンドホーム。</p>
+      <a class="card-link" href="#">View Details &rarr;</a>
+    </div>
+    <div class="card" style="box-shadow:var(--elevation-2);">
+      <div class="card-image" style="background:linear-gradient(135deg, #8ba88a 0%, #556b4e 100%);"></div>
+      <div class="card-tag">Yatsugatake</div>
+      <h3>SANU 2nd Home 八ヶ岳</h3>
+      <p>標高1,000mの高原に広がる森の中のキャビン。四季折々の表情を見せる八ヶ岳の自然と共に暮らす。</p>
+      <a class="card-link" href="#">View Details &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:linear-gradient(135deg, #b8ccd4 0%, #7a9caa 100%);"></div>
+      <div class="card-tag">Karuizawa</div>
+      <h3>SANU 2nd Home 軽井沢</h3>
+      <p>静寂の森に佇む軽井沢のキャビン。木漏れ日の下、創造的な時間を過ごすためのセカンドホーム。</p>
+      <a class="card-link" href="#">View Details &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #eaeaea, radius: 4px, padding: 12px 16px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="山田 太郎">
+    <div class="form-state-label">フォーカス — border-color: #322e21</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="text" value="090-xxxx">
+    <div class="form-error-text">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー — border-color: #FA4616</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0</div>
+      <div class="elevation-desc">none (border only)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 8px rgba(50,46,33,0.06)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 16px rgba(50,46,33,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-3);">
+      <div class="elevation-label">Level 3</div>
+      <div class="elevation-desc">0 8px 32px rgba(50,46,33,0.12)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+
+  <h3 style="font-size:16px; font-weight:600; margin-bottom:20px;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px;"></div><div class="spacing-value">12px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px;"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <h3 style="font-size:16px; font-weight:600; margin-bottom:20px; margin-top:40px;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Content <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Body <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:66.7%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Form Width <span class="width-bar-value">420px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:43.75%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Card Min Width <span class="width-bar-value">280px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:29.2%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://sa-nu.com/">sa-nu.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

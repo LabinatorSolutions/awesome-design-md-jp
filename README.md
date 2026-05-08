@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (122 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (125 sites)</a>
 </p>
 
 <table>
@@ -201,9 +201,9 @@
 <tr>
 <td align="center"><strong>MOTHERHOUSE</strong><br><img src="design-md/motherhouse/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>uka</strong><br><img src="design-md/uka/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>SANU</strong><br><img src="design-md/sanu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Francfranc</strong><br><img src="design-md/francfranc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KEYUCA</strong><br><img src="design-md/keyuca/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -388,11 +388,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Goldwin (ゴールドウイン)](https://www.goldwin.co.jp/) | Outdoor / Sports Apparel | [DESIGN.md](design-md/goldwin/DESIGN.md) | [preview.html](design-md/goldwin/preview.html) |
 | [MOTHERHOUSE (マザーハウス)](https://www.mother-house.jp/) | Bags / Social Enterprise | [DESIGN.md](design-md/motherhouse/DESIGN.md) | [preview.html](design-md/motherhouse/preview.html) |
 | [uka (ウカ)](https://www.uka.co.jp/) | Beauty / Nail Care | [DESIGN.md](design-md/uka/DESIGN.md) | [preview.html](design-md/uka/preview.html) |
+| [SANU 2nd Home](https://sa-nu.com/) | Second Home / Hospitality | [DESIGN.md](design-md/sanu/DESIGN.md) | [preview.html](design-md/sanu/preview.html) |
+| [Francfranc (フランフラン)](https://francfranc.com/) | Interior / Lifestyle EC | [DESIGN.md](design-md/francfranc/DESIGN.md) | [preview.html](design-md/francfranc/preview.html) |
+| [KEYUCA (ケユカ)](https://www.keyuca.com/) | Furniture / Lifestyle EC | [DESIGN.md](design-md/keyuca/DESIGN.md) | [preview.html](design-md/keyuca/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (122 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (125 sites)</a>
 </p>
 
 <table>
@@ -559,9 +562,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>MOTHERHOUSE</strong><br><img src="design-md/motherhouse/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>uka</strong><br><img src="design-md/uka/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>SANU</strong><br><img src="design-md/sanu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Francfranc</strong><br><img src="design-md/francfranc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KEYUCA</strong><br><img src="design-md/keyuca/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
