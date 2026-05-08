@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (110 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (113 sites)</a>
 </p>
 
 <table>
@@ -185,9 +185,9 @@
 <tr>
 <td align="center"><strong>TODAY'S SPECIAL</strong><br><img src="design-md/todaysspecial/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>cado</strong><br><img src="design-md/cado/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>SHIRO</strong><br><img src="design-md/shiro/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TRUCK</strong><br><img src="design-md/truck-furniture/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IKEUCHI</strong><br><img src="design-md/ikeuchi/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -360,11 +360,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [MARKS&WEB (マークスアンドウェブ)](https://www.marksandweb.com/) | Natural Cosmetics / EC | [DESIGN.md](design-md/marksandweb/DESIGN.md) | [preview.html](design-md/marksandweb/preview.html) |
 | [TODAY'S SPECIAL (トゥデイズスペシャル)](https://www.todaysspecial.jp/) | Lifestyle Store / EC | [DESIGN.md](design-md/todaysspecial/DESIGN.md) | [preview.html](design-md/todaysspecial/preview.html) |
 | [cado (カドー)](https://cado.com/) | Home Appliance / Product Design | [DESIGN.md](design-md/cado/DESIGN.md) | [preview.html](design-md/cado/preview.html) |
+| [SHIRO (シロ)](https://shiro-shiro.jp/) | Natural Cosmetics / Beauty | [DESIGN.md](design-md/shiro/DESIGN.md) | [preview.html](design-md/shiro/preview.html) |
+| [TRUCK FURNITURE (トラックファニチャー)](https://www.truck-furniture.co.jp/) | Furniture / Handcraft | [DESIGN.md](design-md/truck-furniture/DESIGN.md) | [preview.html](design-md/truck-furniture/preview.html) |
+| [IKEUCHI ORGANIC (イケウチオーガニック)](https://www.ikeuchi.org/) | Organic Towel / Lifestyle | [DESIGN.md](design-md/ikeuchi/DESIGN.md) | [preview.html](design-md/ikeuchi/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (110 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (113 sites)</a>
 </p>
 
 <table>
@@ -515,9 +518,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>TODAY'S SPECIAL</strong><br><img src="design-md/todaysspecial/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>cado</strong><br><img src="design-md/cado/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>SHIRO</strong><br><img src="design-md/shiro/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TRUCK</strong><br><img src="design-md/truck-furniture/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IKEUCHI</strong><br><img src="design-md/ikeuchi/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
