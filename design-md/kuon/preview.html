@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KUON</title>
+<!--
+  Font note:
+  KUON uses "New York" (Apple's system serif) as its primary typeface.
+  Since New York is not available outside Apple devices, this preview substitutes
+  "Cormorant Garamond" (Google Fonts) for Latin text and "Noto Serif JP" for Japanese.
+  Both are elegant serifs that approximate the editorial, refined character of New York.
+  On Apple devices, "New York" will be preferred via the font-family stack.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Noto+Serif+JP:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === KUON Color Tokens === */
+    --brand-navy: #2a305c;
+    --text-primary: #121212;
+    --text-secondary: #525252;
+    --text-on-dark: #ffffff;
+    --surface-white: #ffffff;
+    --surface-gray: #f3f3f3;
+    --error: #b0291e;
+
+    /* === Font ===
+       KUON は全テキストにセリフ体のみを使用する。
+       "New York" (Apple system serif) → "Cormorant Garamond" + "Noto Serif JP" で代替。
+       ウェイトは 400 のみ。ボールドは使用しない。
+       font-feature-settings: normal（palt 非適用）。 */
+    --font-base: "New York", "Cormorant Garamond", "Noto Serif JP", serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.0375em;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 48px;
+    background: var(--surface-white);
+    border-bottom: 1px solid rgba(18,18,18,0.1);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 400; line-height: 1.2;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.18em;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.0375em; line-height: 1.8;
+  }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-base); font-size: 14px;
+    color: var(--text-primary); letter-spacing: 0.0375em;
+  }
+
+  /* ANNOUNCEMENT BAR */
+  .announcement {
+    background: var(--brand-navy);
+    padding: 10px 48px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 11.7px; font-weight: 400;
+    line-height: 1.3; letter-spacing: 1px;
+    color: var(--text-on-dark);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 48px 100px;
+    background: var(--surface-white);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-family: var(--font-base);
+    font-size: 11.7px; font-weight: 400; line-height: 1.3;
+    letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 36px; font-weight: 400; line-height: 1.25;
+    letter-spacing: 0.54px; margin-bottom: 28px;
+    color: var(--text-primary);
+  }
+  .hero-lead {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.0375em;
+    color: var(--text-secondary); max-width: 640px; margin: 0 auto 48px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--brand-navy); color: var(--text-on-dark);
+    padding: 0 30px; height: 45px;
+    border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer;
+  }
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--brand-navy);
+    padding: 0 30px; height: 45px;
+    border: 1px solid var(--brand-navy); border-radius: 0;
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer;
+  }
+  .btn-text {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-primary);
+    padding: 0; border: none; border-radius: 0;
+    border-bottom: 1px solid var(--text-primary);
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer;
+    padding-bottom: 2px;
+  }
+  .btn-text-on-dark {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-on-dark);
+    padding: 0; border: none; border-radius: 0;
+    border-bottom: 1px solid var(--text-on-dark);
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer;
+    padding-bottom: 2px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-base); font-size: 11.7px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 8px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-base); font-size: 21.6px; font-weight: 400;
+    line-height: 1.3; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: 0.54px;
+  }
+  .section-subtitle {
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.8; color: var(--text-secondary); letter-spacing: 0.0375em;
+    margin-bottom: 48px;
+  }
+  .section-divider { border: none; border-top: 1px solid rgba(18,18,18,0.1); margin: 0; }
+
+  .section-gray { background: var(--surface-gray); padding: 80px 48px; }
+  .section-gray-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-dark { background: var(--brand-navy); padding: 80px 48px; color: var(--text-on-dark); }
+  .section-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--text-on-dark); }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.65); }
+  .section-dark .section-label { color: rgba(255,255,255,0.5); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid rgba(18,18,18,0.1); overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-base); font-size: 13px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.5px; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-base); font-size: 11px; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.03em; }
+  .color-group-label {
+    font-family: var(--font-base); font-size: 11.7px; font-weight: 400;
+    color: var(--text-secondary); margin: 24px 0 12px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 36px; padding-bottom: 32px; border-bottom: 1px solid rgba(18,18,18,0.08); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-gray); color: var(--text-secondary); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-base); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0.04em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image {
+    background: var(--surface-gray); height: 380px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-image-placeholder {
+    font-family: var(--font-base); font-size: 11.7px; color: var(--text-secondary);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .card-body { padding: 18px 0 0; }
+  .card-category {
+    font-family: var(--font-base); font-size: 11.7px; font-weight: 400;
+    color: var(--text-secondary); margin-bottom: 6px;
+    letter-spacing: 1px; text-transform: uppercase; line-height: 1.3;
+  }
+  .card h3 {
+    font-family: var(--font-base); font-size: 16.2px; font-weight: 400;
+    line-height: 1.3; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: 0;
+  }
+  .card-price {
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    color: var(--text-primary); letter-spacing: 0.0375em;
+  }
+
+  /* ARTICLE / PRODUCT */
+  .article-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .article-image-block {
+    background: var(--surface-gray); height: 560px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-image-placeholder {
+    font-family: var(--font-base); font-size: 11.7px; color: var(--text-secondary);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .article-content { padding-top: 24px; }
+  .article-eyebrow {
+    font-family: var(--font-base); font-size: 11.7px; font-weight: 400;
+    line-height: 1.3; letter-spacing: 1px;
+    color: var(--text-secondary); margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .article-content h2 {
+    font-family: var(--font-base); font-size: 21.6px; font-weight: 400;
+    line-height: 1.3; letter-spacing: 0.54px;
+    color: var(--text-on-dark); margin-bottom: 24px;
+  }
+  .article-content p {
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.0375em;
+    color: rgba(255,255,255,0.8); margin-bottom: 20px;
+  }
+  .article-content .detail-heading {
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.3; letter-spacing: 1px;
+    color: rgba(255,255,255,0.55); margin: 36px 0 8px;
+    text-transform: uppercase;
+  }
+  .article-content .detail-value {
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.0375em;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 28px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    color: var(--text-primary); margin-bottom: 10px; letter-spacing: 1px;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--text-primary);
+    border: none; border-bottom: 1px solid rgba(18,18,18,0.25);
+    padding: 12px 0; border-radius: 0;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em; outline: none;
+    font-feature-settings: normal;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-bottom-color: var(--brand-navy); }
+  .form-input.error { border-bottom-color: var(--error); }
+  .form-error { font-family: var(--font-base); font-size: 13px; color: var(--error); margin-top: 6px; letter-spacing: 0.04em; }
+  .form-input::placeholder { color: var(--text-secondary); }
+
+  .form-input-box {
+    width: 100%; background: var(--surface-white); color: var(--text-primary);
+    border: none; border-radius: 0;
+    padding: 15px; outline: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.025em;
+    font-feature-settings: normal;
+  }
+  .form-input-box::placeholder { color: var(--text-secondary); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 36px 28px; text-align: center; }
+  .elevation-label { font-family: var(--font-base); font-size: 13px; font-weight: 400; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .elevation-desc { font-family: var(--font-base); font-size: 12px; color: var(--text-secondary); letter-spacing: 0.04em; line-height: 1.6; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--brand-navy); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 48px 36px;
+    background: var(--surface-gray); color: var(--text-primary);
+    font-size: 14px; line-height: 1.8;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-base); font-size: 11.7px; font-weight: 400;
+    margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-primary);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-base); color: var(--text-primary);
+    text-decoration: none; opacity: 0.6; margin-bottom: 10px; font-size: 14px;
+    letter-spacing: 0.0375em;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 48px; padding-top: 28px;
+    border-top: 1px solid rgba(18,18,18,0.1);
+    font-family: var(--font-base); font-size: 11px; opacity: 0.45;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 26px; }
+    .hero { padding: 80px 24px 64px; }
+    .nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .announcement { padding: 10px 24px; }
+    .section { padding: 56px 24px; }
+    .section-gray { padding: 56px 24px; }
+    .section-dark { padding: 56px 24px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+    .article-layout { grid-template-columns: 1fr; }
+    .article-image-block { height: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement">SS26 Collection — Now Available Online &nbsp;|&nbsp; Free Shipping on Orders Over ¥30,000</div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">KUON</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">Search</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Spring / Summer 2026</div>
+    <h1>Echoes of Cloth —<br>Sashiko &amp; Boro Reimagined</h1>
+    <p class="hero-lead">KUON（kuon.tokyo）から抽出したデザイントークンのカタログ。New York セリフ体のみのフォントシステム、weight 400 統一、border-radius 0px の鋭角 CTA、ネイビー #2a305c の単一アクセントカラー、font-feature-settings: normal（palt 非適用）。実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">Shop Collection</a>
+      <a class="btn-secondary" href="#">View Lookbook</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title">カラーパレット</div>
+  <div class="section-subtitle">Color Palette — ネイビー単色アクセント、白と淡いグレーのフラット構成</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#2a305c"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Brand Navy</div>
+        <div class="color-swatch-hex">#2a305c</div>
+        <div class="color-swatch-role">CTA・ボタン・Announcement Bar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#121212"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Primary</div>
+        <div class="color-swatch-hex">#121212</div>
+        <div class="color-swatch-role">本文・見出し・カード名</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#525252"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Secondary</div>
+        <div class="color-swatch-hex">#525252</div>
+        <div class="color-swatch-role">キャプション・サブテキスト（rgba(18,18,18,.75) 相当）</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text on Dark</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">ネイビー背景上の白テキスト</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface White</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">標準背景・カード背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#f3f3f3"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface Gray</div>
+        <div class="color-swatch-hex">#f3f3f3</div>
+        <div class="color-swatch-role">フッター・画像プレースホルダー・セカンダリ面</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#2a305c"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface Dark</div>
+        <div class="color-swatch-hex">#2a305c</div>
+        <div class="color-swatch-role">プロダクト詳細・強調セクション背景</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Functional</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#b0291e"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Error</div>
+        <div class="color-swatch-hex">#b0291e</div>
+        <div class="color-swatch-role">フォームエラー</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">タイポグラフィ</div>
+  <div class="section-subtitle">Typography — New York serif 単一システム / weight 400 統一 / palt 非適用</div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:36px; font-weight:400; line-height:1.25; letter-spacing:0.54px; color:var(--text-primary);">Echoes of Cloth — Sashiko &amp; Boro Reimagined</div>
+    <div class="type-meta">New York / 36px / 400 / line-height: 1.25 / letter-spacing: 0.54px<span class="type-context">h1 / Page Heading</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:21.6px; font-weight:400; line-height:1.3; letter-spacing:0.54px; color:var(--text-primary);">Spring / Summer 2026 Collection</div>
+    <div class="type-meta">New York / 21.6px / 400 / line-height: 1.3 / letter-spacing: 0.54px<span class="type-context">h2 / Banner Heading</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:400; line-height:1.3; letter-spacing:0.54px; color:var(--text-primary);">Sashiko Docking Tee</div>
+    <div class="type-meta">New York / 18px / 400 / line-height: 1.3 / letter-spacing: 0.54px<span class="type-context">h3 / Card Large</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16.2px; font-weight:400; line-height:1.3; color:var(--text-primary);">Boro Patchwork Jacket — Limited Edition</div>
+    <div class="type-meta">New York / 16.2px / 400 / line-height: 1.3 / letter-spacing: 0<span class="type-context">h3 / Card Small</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.8; letter-spacing:0.0375em; color:var(--text-primary);">刺し子は、布を補強するための反復した刺繍技法から生まれた。江戸時代の日本において、衣類の保温性を高め、擦り切れを防ぐために発展した職人の知恵である。KUONはその技法を現代的なシルエットに再解釈し、手仕事の痕跡をそのままに纏える服へと昇華している。</div>
+    <div class="type-meta">New York / 16px / 400 / line-height: 1.8 / letter-spacing: 0.0375em (0.6px)<span class="type-context">Body</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11.7px; font-weight:400; line-height:1.3; letter-spacing:1px; color:var(--text-secondary); text-transform:uppercase;">SS26 Collection — Now Available Online</div>
+    <div class="type-meta">New York / 11.7px / 400 / line-height: 1.3 / letter-spacing: 1px<span class="type-context">Caption / Announcement</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.8; letter-spacing:0.0375em; color:var(--text-primary);">Collection &nbsp;&nbsp;Lookbook &nbsp;&nbsp;About &nbsp;&nbsp;Stockists</div>
+    <div class="type-meta">New York / 14px / 400 / line-height: 1.8 / letter-spacing: 0.0375em<span class="type-context">Nav Link</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.5; letter-spacing:1px; color:var(--text-primary);">¥42,000 &nbsp;(税込)</div>
+    <div class="type-meta">New York / 16px / 400 / line-height: 1.5 / letter-spacing: 1px<span class="type-context">Label / Price</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT / ARTICLE -->
+<section class="section-dark" id="product">
+  <div class="section-dark-inner">
+    <div class="section-label">03 / Product</div>
+    <div class="section-title" style="color:var(--text-on-dark);">プロダクト</div>
+    <div class="section-subtitle" style="color:rgba(255,255,255,0.6);">Product Page Sample — editorial layout</div>
+
+    <div class="article-layout">
+      <div class="article-image-block">
+        <div class="article-image-placeholder">Product Image</div>
+      </div>
+      <div class="article-content">
+        <div class="article-eyebrow">SS26 / Outerwear</div>
+        <h2>Boro Patchwork Jacket</h2>
+        <p>襤褸（ぼろ）の技法に着想を得た、パッチワーク・ジャケット。使い古した布を継ぎ合わせることで生まれる独特の陰影と、世代を超えて使われてきた布の記憶を纏う。コットンとリネンの素材を混在させ、着込むほどに表情が変わる一着。</p>
+        <p>日本の職人が手作業で仕上げる刺繍は、衣服を補強しながら、着用者の痕跡を織り込んでゆく。KUONの服は、作られた瞬間よりも、まとわれる時間の中で完成する。</p>
+
+        <div class="detail-heading">Material</div>
+        <div class="detail-value">Cotton 60% / Linen 40%<br>刺し子糸：綿 100%</div>
+
+        <div class="detail-heading">Origin</div>
+        <div class="detail-value">Made in Japan</div>
+
+        <div style="margin-top:40px; display:flex; gap:16px; flex-wrap:wrap;">
+          <a class="btn-primary" href="#">カートに入れる</a>
+          <a class="btn-text-on-dark" href="#">詳細を見る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title">ボタン</div>
+  <div class="section-subtitle">Buttons — border-radius 0px（角なし）/ weight 400 / letter-spacing 1px</div>
+
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item">
+      <a class="btn-primary" href="#">カートに入れる</a>
+      <div class="button-label">Primary / bg #2a305c / white / radius 0 / height 45px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">View Lookbook</a>
+      <div class="button-label">Secondary / outline #2a305c / transparent bg / radius 0</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text" href="#">詳細を見る</a>
+      <div class="button-label">Text Link / border-bottom / weight 400</div>
+    </div>
+  </div>
+
+  <div style="background:var(--brand-navy); padding:40px; margin-top:8px;">
+    <div style="font-family:var(--font-base); font-size:11.7px; color:rgba(255,255,255,0.45); margin-bottom:20px; letter-spacing:1px; text-transform:uppercase;">Dark Surface</div>
+    <div class="button-row">
+      <div class="button-item">
+        <a class="btn-primary" href="#" style="background:var(--surface-white); color:var(--brand-navy);">Shop Now</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.5);">反転 / 白背景 + #2a305c テキスト</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-secondary" href="#" style="border-color:var(--text-on-dark); color:var(--text-on-dark);">View Details</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.5);">アウトライン / 白ボーダー</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-text-on-dark" href="#">もっと見る</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.5);">Text Link / white / border-bottom</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+  <div class="section-gray-inner">
+    <div class="section-label">05 / Cards</div>
+    <div class="section-title">製品カード</div>
+    <div class="section-subtitle">Product Cards — shadow なし / radius 0 / border なし / ギャラリーライク</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image">
+          <div class="card-image-placeholder">Product Image</div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Tops</div>
+          <h3>Sashiko Docking Tee</h3>
+          <div class="card-price">¥28,600</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">
+          <div class="card-image-placeholder">Product Image</div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Outerwear</div>
+          <h3>Boro Patchwork Jacket</h3>
+          <div class="card-price">¥88,000</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">
+          <div class="card-image-placeholder">Product Image</div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Bottoms</div>
+          <h3>Indigo Dyed Wide Trousers</h3>
+          <div class="card-price">¥52,800</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">
+          <div class="card-image-placeholder">Product Image</div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Tops</div>
+          <h3>Kogin Embroidery Shirt</h3>
+          <div class="card-price">¥44,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title">フォーム</div>
+  <div class="section-subtitle">Forms — border なし / bottom-border のみ / focus: #2a305c</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:56px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-base); font-size:11.7px; color:var(--text-secondary); margin-bottom:24px; letter-spacing:1px; text-transform:uppercase;">デフォルト</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc-invalid">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-base); font-size:11.7px; color:var(--text-secondary); margin-bottom:24px; letter-spacing:1px; text-transform:uppercase;">フォーカス状態・検索入力</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区…" style="border-bottom-color:var(--brand-navy);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="ご質問・ご要望をご記入ください" style="resize:vertical; border-bottom-color:var(--brand-navy);"></textarea>
+      </div>
+      <div class="form-group" style="margin-top:24px;">
+        <label class="form-label">検索（Box 型）</label>
+        <div style="background:var(--surface-gray); display:flex; align-items:center;">
+          <input class="form-input-box" type="text" placeholder="商品を検索…" style="flex:1;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title">奥行き</div>
+  <div class="section-subtitle">Depth &amp; Elevation — 実質フラット。KUON はシャドウを使用しない</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid rgba(18,18,18,0.1);">
+      <div class="elevation-label">Level 0 — White</div>
+      <div class="elevation-desc">標準背景。shadow なし<br>#ffffff</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-gray);">
+      <div class="elevation-label">Level 0 — Gray</div>
+      <div class="elevation-desc">フッター・画像背景。shadow なし<br>#f3f3f3</div>
+    </div>
+    <div class="elevation-card" style="background:var(--brand-navy); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 0 — Navy</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">強調セクション・CTA背景。shadow なし<br>#2a305c</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px; padding:24px 28px; background:var(--surface-gray); font-family:var(--font-base); font-size:14px; color:var(--text-secondary); letter-spacing:0.04em; line-height:1.8; border-left:2px solid var(--brand-navy);">
+    KUON のデザインシステムは深度 0 のみで構成される。色面の切り替えとホワイトスペースだけで階層を表現する。box-shadow は全要素で未使用。
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title">レイアウト</div>
+  <div class="section-subtitle">Layout — spacing scale &amp; color zones</div>
+
+  <div class="spacing-row" style="margin-bottom:48px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px; height:32px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px; height:32px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px; height:32px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px; height:32px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; height:32px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--brand-navy); color:var(--text-on-dark);">NAVY #2a305c</div>
+    <div class="layout-box" style="background:var(--surface-gray); color:var(--text-primary);">GRAY #f3f3f3</div>
+    <div class="layout-box" style="background:var(--surface-white); color:var(--text-primary); border:1px solid rgba(18,18,18,0.1);">WHITE #ffffff</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Collection</h4>
+      <a href="#">SS26</a>
+      <a href="#">FW25</a>
+      <a href="#">Archive</a>
+    </div>
+    <div class="footer-col">
+      <h4>Category</h4>
+      <a href="#">Tops</a>
+      <a href="#">Outerwear</a>
+      <a href="#">Bottoms</a>
+      <a href="#">Accessories</a>
+    </div>
+    <div class="footer-col">
+      <h4>Information</h4>
+      <a href="#">About KUON</a>
+      <a href="#">Stockists</a>
+      <a href="#">Lookbook</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Shipping &amp; Returns</a>
+      <a href="#">Care Instructions</a>
+      <a href="#">Size Guide</a>
+      <a href="#">FAQ</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from kuon.tokyo DESIGN.md — awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    New York → Cormorant Garamond + Noto Serif JP（Google Fonts 代替）/ weight 400 統一 / font-feature-settings: normal / border-radius 0px
+  </div>
+</footer>
+
+</body>
+</html>

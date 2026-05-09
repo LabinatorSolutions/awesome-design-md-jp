@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (140 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (143 sites)</a>
 </p>
 
 <table>
@@ -223,6 +223,11 @@
 <td align="center"><strong>SONY</strong><br><img src="design-md/sony/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DESCENTE</strong><br><img src="design-md/descente/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOTO</strong><br><img src="design-md/toto/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>KUON</strong><br><img src="design-md/kuon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ReFa</strong><br><img src="design-md/refa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>mt</strong><br><img src="design-md/mt/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -424,11 +429,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [SONY (ソニー)](https://www.sony.co.jp/) | Electronics / Entertainment | [DESIGN.md](design-md/sony/DESIGN.md) | [preview.html](design-md/sony/preview.html) |
 | [DESCENTE (デサント)](https://www.descente.co.jp/) | Sportswear / Corporate | [DESIGN.md](design-md/descente/DESIGN.md) | [preview.html](design-md/descente/preview.html) |
 | [TOTO](https://jp.toto.com/) | Housing Equipment / Corporate | [DESIGN.md](design-md/toto/DESIGN.md) | [preview.html](design-md/toto/preview.html) |
+| [KUON (クオン)](https://kuon.tokyo/) | Fashion / Artisanal Menswear | [DESIGN.md](design-md/kuon/DESIGN.md) | [preview.html](design-md/kuon/preview.html) |
+| [ReFa (リファ)](https://www.refa.net/) | Beauty Device / Premium Beauty | [DESIGN.md](design-md/refa/DESIGN.md) | [preview.html](design-md/refa/preview.html) |
+| [mt masking tape](https://www.masking-tape.jp/) | Stationery / Design Tape | [DESIGN.md](design-md/mt/DESIGN.md) | [preview.html](design-md/mt/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (140 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (143 sites)</a>
 </p>
 
 <table>
@@ -617,6 +625,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>SONY</strong><br><img src="design-md/sony/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DESCENTE</strong><br><img src="design-md/descente/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOTO</strong><br><img src="design-md/toto/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>KUON</strong><br><img src="design-md/kuon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ReFa</strong><br><img src="design-md/refa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>mt</strong><br><img src="design-md/mt/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

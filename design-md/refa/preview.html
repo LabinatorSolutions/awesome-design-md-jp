@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ReFa（リファ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === ReFa Color Tokens === */
+    --brand-dark: #231815;
+    --text-primary: #231815;
+    --text-on-dark: #ffffff;
+    --surface-light: #ebeef0;
+    --surface-white: #ffffff;
+    --error: #c0392b;
+    --overlay: rgba(35, 24, 21, 0.08);
+
+    /* === Fonts ===
+       ReFa はデュアルフォントシステム。
+       英語見出し: Figtree（幾何学的サンセリフ、大きく劇的に）
+       日本語全般: Noto Sans JP
+       preview では Yakuhanjp の代わりに Noto Sans JP を使用。 */
+    --font-en: Figtree, sans-serif;
+    --font-jp: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; line-height: 1.86;
+    letter-spacing: 0.1em;
+    font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--surface-white);
+    border-bottom: 1px solid #eee;
+  }
+  .nav-brand {
+    font-family: var(--font-en); font-size: 18px; font-weight: 400; line-height: 1.0;
+    color: var(--brand-dark); text-decoration: none; letter-spacing: 0.2em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.1em; line-height: 1.86;
+  }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-en); font-size: 12px;
+    color: var(--text-primary); letter-spacing: 0.1em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 100px;
+    background: var(--brand-dark);
+    color: var(--text-on-dark);
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 700; line-height: 1.67;
+    letter-spacing: 1.2px; margin-bottom: 32px;
+    color: rgba(255,255,255,0.6);
+  }
+  .hero h1 {
+    font-family: var(--font-en);
+    font-size: 50px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 5px; margin-bottom: 40px;
+    color: var(--text-on-dark);
+  }
+  .hero-lead {
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; line-height: 1.86;
+    letter-spacing: 1.4px;
+    color: rgba(255,255,255,0.75); max-width: 640px; margin: 0 auto 48px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-outline-dark {
+    display: inline-block; background: transparent; color: var(--brand-dark);
+    padding: 12px 36px; border: 1px solid var(--brand-dark); border-radius: 30px;
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    letter-spacing: 1.2px; text-decoration: none; cursor: pointer; line-height: 1.86;
+  }
+  .btn-outline-light {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 12px 36px; border: 1px solid var(--text-on-dark); border-radius: 30px;
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    letter-spacing: 1.2px; text-decoration: none; cursor: pointer; line-height: 1.86;
+  }
+  .btn-text-link {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 0; border: none; border-radius: 0;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.1em; text-decoration: none; cursor: pointer;
+    border-bottom: 1px solid var(--text-primary); padding-bottom: 2px;
+  }
+  .btn-text-link-light {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 0; border: none; border-radius: 0;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.1em; text-decoration: none; cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.6); padding-bottom: 2px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 10px; font-weight: 400;
+    color: rgba(35,24,21,0.4); margin-bottom: 8px; letter-spacing: 0.2em;
+  }
+  .section-title {
+    font-family: var(--font-en); font-size: 50px; font-weight: 400;
+    line-height: 1.0; color: var(--brand-dark); margin-bottom: 8px;
+    letter-spacing: 5px;
+  }
+  .section-subtitle {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.86; color: rgba(35,24,21,0.5); letter-spacing: 0.1em;
+    margin-bottom: 48px;
+  }
+  .section-divider { border: none; border-top: 1px solid #e8e8e8; margin: 0; }
+
+  .section-light { background: var(--surface-light); padding: 80px 40px; }
+  .section-light-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-dark { background: var(--brand-dark); padding: 80px 40px; color: var(--text-on-dark); }
+  .section-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--text-on-dark); }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.5); }
+  .section-dark .section-label { color: rgba(255,255,255,0.4); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid #eee; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-jp); font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.1em; }
+  .color-swatch-hex { font-size: 11px; color: rgba(35,24,21,0.5); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-jp); font-size: 11px; color: rgba(35,24,21,0.4); margin-top: 4px; letter-spacing: 0.05em; }
+  .color-group-label { font-family: var(--font-en); font-size: 10px; font-weight: 400; color: rgba(35,24,21,0.4); margin: 24px 0 12px; letter-spacing: 0.2em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 36px; padding-bottom: 32px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: rgba(35,24,21,0.4); margin-top: 14px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-light); color: rgba(35,24,21,0.5); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-jp); font-size: 11px; font-weight: 400; color: rgba(35,24,21,0.5); margin-top: 12px; letter-spacing: 0.05em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { background: var(--surface-light); height: 320px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-en); font-size: 12px; color: rgba(35,24,21,0.4);
+    letter-spacing: 0.1em;
+  }
+  .card-body { padding: 20px 0; }
+  .card-category {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    color: rgba(35,24,21,0.5); margin-bottom: 6px; letter-spacing: 1.4px; line-height: 1.86;
+  }
+  .card h3 {
+    font-family: var(--font-jp); font-size: 12px; font-weight: 700;
+    line-height: 1.0; color: var(--text-primary); margin-bottom: 12px; letter-spacing: 1.2px;
+  }
+  .card-price {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    color: var(--text-primary); letter-spacing: 0.1em;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 720px; margin: 0 auto; }
+  .product-category {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.86; letter-spacing: 1.4px; color: rgba(255,255,255,0.55); margin-bottom: 16px;
+  }
+  .product-preview h2 {
+    font-family: var(--font-en);
+    font-size: 30px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 3px; margin-bottom: 8px;
+    color: var(--text-on-dark);
+  }
+  .product-preview .product-name-jp {
+    font-family: var(--font-jp); font-size: 12px; font-weight: 700;
+    line-height: 1.0; letter-spacing: 1.2px;
+    color: rgba(255,255,255,0.7); margin-bottom: 32px;
+  }
+  .product-preview p {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.86; letter-spacing: 1.4px;
+    color: rgba(255,255,255,0.8); margin-bottom: 20px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-en); font-size: 24px; font-weight: 400;
+    line-height: 1.0; letter-spacing: 2.4px; color: var(--text-on-dark); margin: 48px 0 12px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-jp); font-size: 10px; font-weight: 400;
+    line-height: 1.6; letter-spacing: 2px; color: rgba(255,255,255,0.4); margin-bottom: 16px;
+  }
+  .product-spec-list {
+    list-style: none; margin-bottom: 32px;
+  }
+  .product-spec-list li {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.86; letter-spacing: 1.4px; color: rgba(255,255,255,0.7);
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-jp); font-size: 12px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--text-primary);
+    border: 1px solid rgba(35,24,21,0.25); padding: 12px 16px; border-radius: 2px;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.1em; line-height: 1.86; outline: none;
+    font-feature-settings: "palt" 1;
+  }
+  .form-input:focus { border-color: var(--brand-dark); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-jp); font-size: 11px; color: var(--error); margin-top: 4px; letter-spacing: 0.05em; }
+  .form-input::placeholder { color: rgba(35,24,21,0.3); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-en); font-size: 12px; font-weight: 400; margin-bottom: 8px; letter-spacing: 0.1em; }
+  .elevation-desc { font-family: var(--font-jp); font-size: 11px; color: rgba(35,24,21,0.5); letter-spacing: 0.05em; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--brand-dark); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: rgba(35,24,21,0.4); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en); font-size: 11px; font-weight: 400; letter-spacing: 0.1em;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 40px 32px;
+    background: var(--brand-dark); color: var(--text-on-dark);
+    font-size: 12px; line-height: 1.86;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-en); font-size: 10px; font-weight: 400;
+    margin-bottom: 16px; letter-spacing: 0.2em; color: rgba(255,255,255,0.5);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-jp); color: var(--text-on-dark);
+    text-decoration: none; opacity: 0.6; margin-bottom: 8px; font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-jp); font-size: 11px; opacity: 0.35;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; letter-spacing: 3px; }
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-light { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .section-title { font-size: 32px; letter-spacing: 3px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">ReFa</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <span class="nav-icon">Search</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">BEAUTY TECH BRAND</div>
+    <h1>ONLINE SHOP</h1>
+    <p class="hero-lead">ReFa（refa.net）から抽出したデザイントークンのカタログ。Figtree（英語見出し）と Noto Sans JP（日本語）のデュアルフォントシステム、font-feature-settings: "palt" グローバル適用、letter-spacing 0.1em 全要素統一、ダークチョコレートブラウン #231815 と白の二極パレット、pill形状アウトライン CTA（radius 30px）。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-outline-light" href="#">ONLINE SHOP</a>
+      <a class="btn-text-link-light" href="#">詳しく見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <div class="section-title">Colors</div>
+  <div class="section-subtitle">カラーパレット — アクセントカラーなし。タイポグラフィと製品写真がブランドを語る</div>
+
+  <div class="color-group-label">BRAND</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#231815"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Dark</div><div class="color-swatch-hex">#231815</div><div class="color-swatch-role">テキスト・ヒーロー背景・フッター。ダークチョコレートブラウン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">On-dark Text</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">暗い背景・スライダー上のテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">NEUTRAL</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#231815"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#231815</div><div class="color-swatch-role">本文・見出し。サイト全体で一貫して使用</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebeef0; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#ebeef0</div><div class="color-swatch-role">カード背景・スライド背景。わずかにブルーがかったライトグレー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ標準背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">FUNCTIONAL</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(35,24,21,0.08); border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay</div><div class="color-swatch-hex">rgba(35,24,21,.08)</div><div class="color-swatch-role">ホバーオーバーレイ・モーダル背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY</div>
+  <div class="section-title">Typography</div>
+  <div class="section-subtitle">デュアルフォント — Figtree（英語見出し）+ Noto Sans JP（日本語）/ palt グローバル適用 / letter-spacing 0.1em 全要素統一</div>
+
+  <div class="type-sample">
+    <div style="font-family: Figtree, sans-serif; font-size:50px; font-weight:400; line-height:1.0; letter-spacing:5px; color:var(--brand-dark);">BEAUTECH DRYER</div>
+    <div class="type-meta">Figtree / 50px / 400 / line-height: 1.0 / letter-spacing: 5px (0.1em)<span class="type-context">Section Heading EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: Figtree, sans-serif; font-size:30px; font-weight:400; line-height:1.0; letter-spacing:3px; color:var(--brand-dark);">CARAT RAY FACE</div>
+    <div class="type-meta">Figtree / 30px / 400 / line-height: 1.0 / letter-spacing: 3px (0.1em)<span class="type-context">Sub Heading EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: 'Noto Sans JP', sans-serif; font-size:24px; font-weight:400; line-height:1.86; letter-spacing:2.4px; color:var(--brand-dark);">リファ ビューテック ドライヤー</div>
+    <div class="type-meta">Noto Sans JP / 24px / 400 / line-height: 1.86 / letter-spacing: 2.4px (0.1em)<span class="type-context">Brand Name JP</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: 'Noto Sans JP', sans-serif; font-size:14px; font-weight:400; line-height:1.86; letter-spacing:1.4px; color:var(--brand-dark);">ヘアケア</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.86 / letter-spacing: 1.4px (0.1em)<span class="type-context">Category Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: 'Noto Sans JP', sans-serif; font-size:12px; font-weight:700; line-height:1.0; letter-spacing:1.2px; color:var(--brand-dark);">ReFa BEAUTECH DRYER PRO</div>
+    <div class="type-meta">Noto Sans JP / 12px / 700 / line-height: 1.0 / letter-spacing: 1.2px (0.1em)<span class="type-context">Product Name</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: 'Noto Sans JP', sans-serif; font-size:14px; font-weight:400; line-height:1.86; letter-spacing:1.4px; color:var(--brand-dark);">プラチナGPSコア電球を使用した独自技術が、頭皮へのさわやかな刺激と美しいツヤ髪を実現。熱ダメージを最小限に抑えながら、素早く乾かすことができます。日常のヘアケアをワンランク上に引き上げる、プレミアムビューティデバイス。</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.86 / letter-spacing: 1.4px<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: Figtree, sans-serif; font-size:12px; font-weight:400; line-height:1.86; letter-spacing:1.2px; color:var(--brand-dark);">SKINCARE / HAIRCARE / BODYCARE</div>
+    <div class="type-meta">Figtree / 12px / 400 / line-height: 1.86 / letter-spacing: 1.2px<span class="type-context">Nav Label EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: 'Noto Sans JP', sans-serif; font-size:12px; font-weight:700; line-height:1.67; letter-spacing:1.2px; color:rgba(35,24,21,0.6);">BEAUTY TECH BRAND</div>
+    <div class="type-meta">Noto Sans JP / 12px / 700 / line-height: 1.67 / letter-spacing: 1.2px<span class="type-context">Hero Slider Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: 'Noto Sans JP', sans-serif; font-size:10px; font-weight:400; line-height:1.6; letter-spacing:2px; color:rgba(35,24,21,0.4);">※本製品は医療機器ではありません。効果には個人差があります。</div>
+    <div class="type-meta">Noto Sans JP / 10px / 400 / line-height: 1.6 / letter-spacing: 2px (0.2em)<span class="type-context">Small / Legal</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-dark" id="product">
+<div class="section-dark-inner">
+  <div class="section-label">03 / PRODUCT</div>
+  <div class="section-title" style="font-family: Figtree, sans-serif; color: var(--text-on-dark);">Product</div>
+  <div class="section-subtitle">プロダクトページサンプル — Product Page Sample</div>
+  <div class="product-preview">
+    <div class="product-category">HAIRCARE</div>
+    <h2>BEAUTECH DRYER</h2>
+    <div class="product-name-jp">ReFa ビューテック ドライヤー プロ</div>
+    <p>独自のプラチナGPSコア電球技術により、頭皮への心地よい刺激と美しいツヤ髪を同時に実現。高速乾燥と熱ダメージ低減を両立し、毎日のヘアケアに革新をもたらすプレミアムビューティデバイスです。</p>
+    <div class="product-heading">TECHNOLOGY</div>
+    <div class="product-sub">独自技術</div>
+    <p>「プラチナGPSコア電球」が発する複合的な光の刺激が、頭皮環境を整えながら毛髪のキューティクルを保護。国内外での特許技術を搭載し、サロンクオリティの仕上がりを自宅で体験できます。</p>
+    <ul class="product-spec-list">
+      <li>風量：1.9 m³/min</li>
+      <li>重量：440g</li>
+      <li>コード長：1.8m</li>
+    </ul>
+    <div style="margin-top:32px; display:flex; gap:20px; flex-wrap:wrap; align-items:center;">
+      <a class="btn-outline-light" href="#">ONLINE SHOP</a>
+      <a class="btn-text-link-light" href="#">製品詳細を見る</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <div class="section-title">Buttons</div>
+  <div class="section-subtitle">ボタン — pill形状（border-radius 30px）/ アウトラインのみ / 塗りつぶしなし</div>
+
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item">
+      <a class="btn-outline-dark" href="#">ONLINE SHOP</a>
+      <div class="button-label">Outline CTA / border #231815 / radius 30px / Figtree 12px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text-link" href="#">詳しく見る</a>
+      <div class="button-label">Text Link / border-bottom / Noto Sans JP 14px</div>
+    </div>
+  </div>
+
+  <div style="background:var(--brand-dark); padding:40px; margin-top:16px;">
+    <div style="font-family: Figtree, sans-serif; font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:20px; letter-spacing:0.2em;">DARK BACKGROUND</div>
+    <div class="button-row">
+      <div class="button-item">
+        <a class="btn-outline-light" href="#">ONLINE SHOP</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.4);">Outline CTA / border #fff / ダーク背景</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-text-link-light" href="#">製品詳細を見る</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.4);">Text Link / white / ダーク背景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-light-inner">
+  <div class="section-label">05 / CARDS</div>
+  <div class="section-title" style="font-family: Figtree, sans-serif;">Cards</div>
+  <div class="section-subtitle" style="margin-bottom:40px;">製品カード — Product Cards / #ebeef0 背景 / shadow なし / フラット</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">HAIRCARE</div>
+        <h3>ReFa BEAUTECH DRYER PRO</h3>
+        <div class="card-price">&yen;53,900</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">SKINCARE</div>
+        <h3>ReFa CARAT RAY FACE</h3>
+        <div class="card-price">&yen;44,000</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">BODYCARE</div>
+        <h3>ReFa LUMI STOP</h3>
+        <div class="card-price">&yen;26,400</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">SKINCARE</div>
+        <h3>ReFa FINE BUBBLE S</h3>
+        <div class="card-price">&yen;55,000</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <div class="section-title">Forms</div>
+  <div class="section-subtitle">フォーム — border 1px / radius 2px / focus: border #231815</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family: Figtree, sans-serif; font-size:10px; color:rgba(35,24,21,0.4); margin-bottom:20px; letter-spacing:0.2em;">DEFAULT</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family: Figtree, sans-serif; font-size:10px; color:rgba(35,24,21,0.4); margin-bottom:20px; letter-spacing:0.2em;">FOCUS STATE</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区..." style="border-color:var(--brand-dark);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="ご質問・ご要望をご記入ください" style="resize:vertical; font-feature-settings:'palt' 1;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / ELEVATION</div>
+  <div class="section-title">Elevation</div>
+  <div class="section-subtitle">奥行き — Depth & Elevation / 基本フラット。背景色の面と製品写真の立体感で奥行きを表現</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid #eee;">
+      <div class="elevation-label">Level 0 -- White</div>
+      <div class="elevation-desc">ページ標準背景。影なし。#ffffff</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-light);">
+      <div class="elevation-label">Level 1 -- Surface Light</div>
+      <div class="elevation-desc">カード・スライド背景面。#ebeef0</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid #eee; box-shadow:0 2px 8px rgba(35,24,21,0.08);">
+      <div class="elevation-label">Level 2 -- Hover Shadow</div>
+      <div class="elevation-desc">ホバー時のカード等（推定）。rgba(35,24,21,0.08)</div>
+    </div>
+    <div class="elevation-card" style="background:var(--brand-dark); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 3 -- Brand Dark</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.5);">ヒーロー・フッター背景面。#231815</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / LAYOUT</div>
+  <div class="section-title">Layout</div>
+  <div class="section-subtitle">レイアウト — spacing scale / max-width 1440px / horizontal padding 40〜60px</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px / XS</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px / S</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px / M</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px; height:32px;"></div><div class="spacing-value">64px / L</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px; height:32px;"></div><div class="spacing-value">96px / XL</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--brand-dark); color:var(--text-on-dark);">DARK #231815</div>
+    <div class="layout-box" style="background:var(--surface-light); color:var(--text-primary);">LIGHT #ebeef0</div>
+    <div class="layout-box" style="background:var(--surface-white); color:var(--text-primary); border:1px solid #eee;">WHITE #ffffff</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>SKINCARE</h4>
+      <a href="#">ReFa CARAT RAY FACE</a>
+      <a href="#">ReFa FINE BUBBLE S</a>
+      <a href="#">ReFa MEDI LIFT</a>
+      <a href="#">ReFa GRACE HEAD SPA</a>
+    </div>
+    <div class="footer-col">
+      <h4>HAIRCARE</h4>
+      <a href="#">ReFa BEAUTECH DRYER PRO</a>
+      <a href="#">ReFa BEAUTECH DRYER</a>
+      <a href="#">ReFa BEAUTECH STRAIGHT IRON</a>
+    </div>
+    <div class="footer-col">
+      <h4>BODYCARE</h4>
+      <a href="#">ReFa LUMI STOP</a>
+      <a href="#">ReFa FINE BUBBLE L</a>
+      <a href="#">ReFa CAXA RAY</a>
+    </div>
+    <div class="footer-col">
+      <h4>BRAND</h4>
+      <a href="#">ReFaについて</a>
+      <a href="#">ストア一覧</a>
+      <a href="#">お問い合わせ</a>
+      <a href="#">よくあるご質問</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from refa.net DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    Figtree（英語見出し）+ Noto Sans JP（日本語）デュアルフォントシステム / font-feature-settings: "palt" グローバル適用 / letter-spacing 0.1em 全要素統一
+  </div>
+</footer>
+
+</body>
+</html>
