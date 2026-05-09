@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (134 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (137 sites)</a>
 </p>
 
 <table>
@@ -217,9 +217,9 @@
 <tr>
 <td align="center"><strong>nanamica</strong><br><img src="design-md/nanamica/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IPSA</strong><br><img src="design-md/ipsa/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>YAMAP</strong><br><img src="design-md/yamap/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>COHINA</strong><br><img src="design-md/cohina/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>and wander</strong><br><img src="design-md/andwander/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>
@@ -416,11 +416,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [LUMINE (ルミネ)](https://www.lumine.ne.jp/) | Fashion Retail / Commercial Complex | [DESIGN.md](design-md/lumine/DESIGN.md) | [preview.html](design-md/lumine/preview.html) |
 | [nanamica (ナナミカ)](https://www.nanamica.com/) | Premium Outdoor / Fashion | [DESIGN.md](design-md/nanamica/DESIGN.md) | [preview.html](design-md/nanamica/preview.html) |
 | [IPSA (イプサ)](https://www.ipsa.co.jp/) | Cosmetics / Skincare | [DESIGN.md](design-md/ipsa/DESIGN.md) | [preview.html](design-md/ipsa/preview.html) |
+| [YAMAP (ヤマップ)](https://yamap.com/) | Outdoor / Community App | [DESIGN.md](design-md/yamap/DESIGN.md) | [preview.html](design-md/yamap/preview.html) |
+| [COHINA (コヒナ)](https://cohina.net/) | D2C Fashion / Petite | [DESIGN.md](design-md/cohina/DESIGN.md) | [preview.html](design-md/cohina/preview.html) |
+| [and wander (アンドワンダー)](https://www.andwander.com/) | Outdoor Fashion / Technical Wear | [DESIGN.md](design-md/andwander/DESIGN.md) | [preview.html](design-md/andwander/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (134 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (137 sites)</a>
 </p>
 
 <table>
@@ -603,9 +606,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>nanamica</strong><br><img src="design-md/nanamica/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IPSA</strong><br><img src="design-md/ipsa/preview-screenshot.png" width="120"></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>YAMAP</strong><br><img src="design-md/yamap/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>COHINA</strong><br><img src="design-md/cohina/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>and wander</strong><br><img src="design-md/andwander/preview-screenshot.png" width="120"></td>
 <td></td>
 </tr>
 </table>

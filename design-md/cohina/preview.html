@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: COHINA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --brand-cream: #faf7f2;
+    --brand-dark: #121212;
+    --brand-dark-soft: rgba(18,18,18,0.75);
+    --accent-gold: #f6d579;
+    --accent-blue: #97c5d9;
+    --accent-rose: #ba827e;
+    --accent-taupe: #aca59b;
+    --charcoal: #2c2b2b;
+    --near-black: #181818;
+    --slate: #63666f;
+    --brown: #877976;
+    --warm-taupe-bg: #d1caba;
+    --light-gray: #efefef;
+    --light-sage: #eff2f5;
+    --warm-beige: #e8e6da;
+    --muted-slate: #ccced3;
+    --white: #ffffff;
+    --danger: #ed2a3e;
+    --success: #3a7d44;
+    --warning: #c49000;
+
+    /* === Typography === */
+    --font-body: "Noto Sans JP", Assistant, sans-serif;
+    /* Optima is macOS-only. No perfect Google Fonts substitute exists — use serif fallback */
+    --font-display: Optima, "Optima nova", "Times New Roman", serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Border Radius === */
+    --radius-none: 0px;
+    --radius-small: 5px;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0,0,0,0.04);
+    --elevation-2: 0 4px 16px rgba(0,0,0,0.06);
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    --space-4xl: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--brand-cream);
+    color: var(--brand-dark-soft);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 var(--space-xl); height: 56px;
+    background: var(--brand-cream);
+    border-bottom: 1px solid rgba(18,18,18,0.08);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; max-width: 1200px;
+  }
+  .nav-links {
+    display: flex; gap: var(--space-lg); list-style: none;
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+  }
+  .nav-links a {
+    color: var(--brand-dark-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--brand-dark); }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--brand-dark);
+    text-decoration: none;
+  }
+  .nav-right {
+    display: flex; align-items: center; gap: var(--space-md);
+    font-family: var(--font-display);
+    font-size: 13px; letter-spacing: 0.08em;
+  }
+  .nav-right a {
+    color: var(--brand-dark-soft);
+    text-decoration: none;
+  }
+  .nav-cart {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--brand-dark);
+    color: var(--white);
+    padding: 11px 20px;
+    border-radius: var(--radius-small);
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 400;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cart:hover { opacity: 0.8; }
+
+  /* === HERO === */
+  .hero {
+    padding: var(--space-4xl) var(--space-xl) var(--space-3xl);
+    text-align: center;
+    background: var(--brand-cream);
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 40px; font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.015em;
+    color: var(--brand-dark);
+    margin-bottom: var(--space-lg);
+  }
+  .hero p {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 400;
+    line-height: 2.0;
+    letter-spacing: 0.1em;
+    color: var(--brand-dark-soft);
+    max-width: 520px;
+    margin: 0 auto var(--space-xl);
+  }
+  .hero-buttons {
+    display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;
+  }
+
+  /* === BUTTONS === */
+  .btn-primary {
+    display: inline-block;
+    background: var(--brand-dark);
+    color: var(--white);
+    padding: 14px 30px;
+    border-radius: var(--radius-none);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--brand-dark);
+    padding: 16px 80px;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--brand-dark);
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(18,18,18,0.04); }
+  .btn-collection {
+    display: inline-block;
+    background: var(--accent-taupe);
+    color: var(--white);
+    padding: 14px 24px;
+    border-radius: var(--radius-small);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-collection:hover { opacity: 0.85; }
+  .btn-cart {
+    display: inline-block;
+    background: var(--brand-dark);
+    color: var(--white);
+    padding: 11px 20px;
+    border-radius: var(--radius-small);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-cart:hover { opacity: 0.8; }
+
+  /* === SECTIONS === */
+  .section {
+    padding: var(--space-3xl) var(--space-xl);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 400;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-sm);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 25px; font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    color: var(--brand-dark);
+    margin-bottom: var(--space-xl);
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(18,18,18,0.08);
+    margin: 0;
+  }
+  .section-cream {
+    background: var(--warm-beige);
+    padding: var(--space-3xl) var(--space-xl);
+  }
+  .section-cream .section-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* === COLORS === */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 12px;
+    margin-bottom: var(--space-lg);
+  }
+  .color-swatch {
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: var(--elevation-1);
+  }
+  .color-swatch-block { height: 68px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name {
+    font-size: 12px; font-weight: 500;
+    margin-bottom: 2px;
+    color: var(--brand-dark);
+    letter-spacing: 0.02em;
+  }
+  .color-swatch-hex {
+    font-size: 11px;
+    color: var(--slate);
+    font-family: var(--font-mono);
+  }
+  .color-swatch-role {
+    font-size: 10px;
+    color: var(--slate);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+  .color-group-label {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 400;
+    color: var(--slate);
+    letter-spacing: 0.1em;
+    margin: var(--space-lg) 0 10px;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample {
+    margin-bottom: 28px;
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid rgba(18,18,18,0.06);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 400;
+    color: var(--slate);
+    margin-top: var(--space-sm);
+    letter-spacing: 0;
+  }
+  .type-context {
+    display: inline-block;
+    background: rgba(18,18,18,0.04);
+    color: var(--slate);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: var(--space-sm);
+  }
+
+  /* === PRODUCT CARDS === */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-lg);
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .product-card:hover { box-shadow: var(--elevation-2); }
+  .product-image {
+    width: 100%;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--white);
+    letter-spacing: 0.15em;
+  }
+  .product-info { padding: var(--space-md); }
+  .product-brand {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--slate);
+    margin-bottom: var(--space-xs);
+  }
+  .product-name {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    color: var(--brand-dark);
+    margin-bottom: var(--space-sm);
+  }
+  .product-price {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 500;
+    color: var(--brand-dark);
+    letter-spacing: 0.04em;
+  }
+  .product-price-tax {
+    font-size: 11px; font-weight: 400;
+    color: var(--slate);
+    margin-left: 2px;
+  }
+  .product-size {
+    font-size: 11px; font-weight: 400;
+    color: var(--accent-taupe);
+    margin-top: var(--space-xs);
+    letter-spacing: 0.06em;
+  }
+
+  /* === BUTTONS SECTION === */
+  .button-row {
+    display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+  .button-item { text-align: center; }
+  .button-label {
+    font-size: 11px; font-weight: 400;
+    color: var(--slate);
+    margin-top: var(--space-sm);
+    letter-spacing: 0.02em;
+  }
+
+  /* === CARDS === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--white);
+    letter-spacing: 0.15em;
+  }
+  .card-body { padding: var(--space-lg); }
+  .card h3 {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    color: var(--brand-dark);
+    margin-bottom: var(--space-sm);
+  }
+  .card p {
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    color: var(--brand-dark-soft);
+  }
+  .card-link {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--brand-dark);
+    text-decoration: none;
+    margin-top: var(--space-md);
+    padding-bottom: 1px;
+    border-bottom: 1px solid var(--brand-dark);
+    transition: opacity 0.2s;
+  }
+  .card-link:hover { opacity: 0.6; }
+
+  /* === FORMS === */
+  .form-group {
+    margin-bottom: 20px;
+    max-width: 440px;
+  }
+  .form-label {
+    display: block;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--brand-dark);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--white);
+    color: var(--brand-dark);
+    border: 1px solid rgba(18,18,18,0.15);
+    padding: 12px 14px;
+    border-radius: var(--radius-small);
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input::placeholder {
+    color: var(--muted-slate);
+    letter-spacing: 0.04em;
+  }
+  .form-input:focus,
+  .form-input--focus {
+    border-color: var(--brand-dark);
+    box-shadow: 0 0 0 2px rgba(18,18,18,0.08);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 2px rgba(237,42,62,0.12);
+  }
+  .form-error-text {
+    font-size: 11px;
+    color: var(--danger);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+  .form-state-label {
+    font-size: 10px;
+    color: var(--slate);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  .form-newsletter {
+    background: var(--warm-beige);
+    padding: var(--space-xl);
+    border-radius: var(--radius-small);
+    max-width: 440px;
+    margin-top: var(--space-xl);
+  }
+  .form-newsletter h3 {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--brand-dark);
+    margin-bottom: var(--space-sm);
+  }
+  .form-newsletter p {
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: 0.08em;
+    color: var(--brand-dark-soft);
+    margin-bottom: var(--space-md);
+  }
+  .form-newsletter-row {
+    display: flex; gap: var(--space-sm);
+  }
+  .form-newsletter-row .form-input {
+    flex: 1;
+  }
+
+  /* === ELEVATION === */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .elevation-card {
+    background: var(--white);
+    border-radius: var(--radius-small);
+    padding: var(--space-xl);
+    text-align: center;
+  }
+  .elevation-label {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--brand-dark);
+    margin-bottom: var(--space-xs);
+  }
+  .elevation-desc {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--slate);
+    word-break: break-all;
+  }
+
+  /* === LAYOUT === */
+  .layout-demo {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+  .layout-block {
+    background: var(--warm-beige);
+    border-radius: var(--radius-small);
+    padding: var(--space-lg);
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--slate);
+  }
+  .layout-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--slate);
+    margin-top: var(--space-sm);
+    letter-spacing: 0;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--near-black);
+    color: rgba(255,255,255,0.6);
+    padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+    text-align: center;
+  }
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--white);
+    margin-bottom: var(--space-lg);
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    list-style: none;
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.04em;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-copy a {
+    color: var(--accent-gold);
+    text-decoration: underline;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 13px; }
+    .nav-links { display: none; }
+    .nav-right { display: none; }
+    .section { padding: var(--space-2xl) var(--space-md); }
+    .section-cream { padding: var(--space-2xl) var(--space-md); }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+    .card-grid { grid-template-columns: 1fr; }
+    .btn-secondary { padding: 14px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <ul class="nav-links">
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#product">Product</a></li>
+    </ul>
+    <a class="nav-brand" href="#">COHINA</a>
+    <div class="nav-right">
+      <a href="#buttons">Buttons</a>
+      <a href="#forms">Forms</a>
+      <a class="nav-cart" href="#">Cart (0)</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>小さいサイズの、<br>いちばん素敵な服。</h1>
+  <p>155cm以下の小柄な女性のために、シルエット・丈感・バランスのすべてを設計したブランド。着る人の個性がいちばん美しく見える服をつくっています。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">COLLECTION</a>
+    <a class="btn-secondary" href="#">ABOUT COHINA</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#faf7f2; border-bottom:1px solid rgba(18,18,18,0.08)"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Cream</div><div class="color-swatch-hex">#faf7f2</div><div class="color-swatch-role">メイン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#121212"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Dark</div><div class="color-swatch-hex">#121212</div><div class="color-swatch-role">テキスト・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(18,18,18,0.75)"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Soft</div><div class="color-swatch-hex">rgba(18,18,18,0.75)</div><div class="color-swatch-role">本文テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6d579"></div><div class="color-swatch-info"><div class="color-swatch-name">Gold</div><div class="color-swatch-hex">#f6d579</div><div class="color-swatch-role">ゴールドアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#97c5d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue</div><div class="color-swatch-hex">#97c5d9</div><div class="color-swatch-role">くすみブルー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ba827e"></div><div class="color-swatch-info"><div class="color-swatch-name">Rose</div><div class="color-swatch-hex">#ba827e</div><div class="color-swatch-role">ローズ・モーヴ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#aca59b"></div><div class="color-swatch-info"><div class="color-swatch-name">Taupe</div><div class="color-swatch-hex">#aca59b</div><div class="color-swatch-role">コレクションCTA</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2c2b2b"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#2c2b2b</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#181818"></div><div class="color-swatch-info"><div class="color-swatch-name">Near Black</div><div class="color-swatch-hex">#181818</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#63666f"></div><div class="color-swatch-info"><div class="color-swatch-name">Slate</div><div class="color-swatch-hex">#63666f</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#877976"></div><div class="color-swatch-info"><div class="color-swatch-name">Brown</div><div class="color-swatch-hex">#877976</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d1caba"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Taupe BG</div><div class="color-swatch-hex">#d1caba</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef; border-bottom:1px solid rgba(18,18,18,0.06)"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#efefef</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eff2f5; border-bottom:1px solid rgba(18,18,18,0.06)"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Sage</div><div class="color-swatch-hex">#eff2f5</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8e6da; border-bottom:1px solid rgba(18,18,18,0.06)"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Beige</div><div class="color-swatch-hex">#e8e6da</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ccced3; border-bottom:1px solid rgba(18,18,18,0.06)"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted Slate</div><div class="color-swatch-hex">#ccced3</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ed2a3e"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#ed2a3e</div><div class="color-swatch-role">エラー・注意</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3a7d44"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#3a7d44</div><div class="color-swatch-role">成功・在庫あり</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c49000"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#c49000</div><div class="color-swatch-role">警告・残りわずか</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Type Hierarchy</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:40px; font-weight:400; line-height:1.4; letter-spacing:0.015em; color:var(--brand-dark);">Display Heading — H1</div>
+    <div class="type-meta">Optima / 40px / 400 / line-height: 1.4 / letter-spacing: 0.015em<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:25px; font-weight:400; line-height:1.2; letter-spacing:0.2em; color:var(--brand-dark);">Section Heading — H2</div>
+    <div class="type-meta">Optima / 25px / 400 / line-height: 1.2 / letter-spacing: 0.2em<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:20px; font-weight:400; line-height:1.2; letter-spacing:0.2em; color:var(--brand-dark);">Small Heading — H2 small</div>
+    <div class="type-meta">Optima / 20px / 400 / line-height: 1.2 / letter-spacing: 0.2em<span class="type-context">サブセクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:13px; font-weight:400; line-height:1.7; letter-spacing:0.1em; color:var(--brand-dark);">本文見出し — H3 (Noto Sans JP)</div>
+    <div class="type-meta">Noto Sans JP / 13px / 400 / line-height: 1.7 / letter-spacing: 0.1em<span class="type-context">商品名等</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.1em; color:var(--brand-dark-soft);">本文テキスト — 小柄な女性のために、丈感もシルエットも、すべてのバランスを設計しています。体型にフィットするだけでなく、着る人の個性がいちばん美しく見える服を目指して。ABCabc 123</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.5 / letter-spacing: 0.1em<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:500; line-height:1.5; letter-spacing:0.1em; color:var(--brand-dark);">本文テキスト Medium — 500ウェイト</div>
+    <div class="type-meta">Noto Sans JP / 14px / 500 / line-height: 1.5 / letter-spacing: 0.1em<span class="type-context">価格・強調</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:12px; font-weight:400; line-height:1.7; letter-spacing:0.1em; color:var(--brand-dark-soft);">キャプション — 素材: リネン55% コットン45% / サイズ展開: XS・S</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 1.7 / letter-spacing: 0.1em<span class="type-context">キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:13px; font-weight:400; line-height:1.5; letter-spacing:0.08em; color:var(--brand-dark-soft);">Nav Link — Optima (13px)</div>
+    <div class="type-meta">Optima / 13px / 400 / letter-spacing: 0.08em<span class="type-context">ナビゲーション</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-cream" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product</div>
+  <h2 class="section-title">Product Cards</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-image" style="background:var(--accent-taupe);">COHINA</div>
+      <div class="product-info">
+        <div class="product-brand">COHINA</div>
+        <div class="product-name">リネンブレンドワンピース</div>
+        <div class="product-price">&yen;12,980<span class="product-price-tax">(税込)</span></div>
+        <div class="product-size">XS / S</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image" style="background:var(--accent-rose);">COHINA</div>
+      <div class="product-info">
+        <div class="product-brand">COHINA</div>
+        <div class="product-name">コットンテーパードパンツ</div>
+        <div class="product-price">&yen;9,680<span class="product-price-tax">(税込)</span></div>
+        <div class="product-size">XS / S</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image" style="background:var(--accent-blue);">COHINA</div>
+      <div class="product-info">
+        <div class="product-brand">COHINA</div>
+        <div class="product-name">シアーブラウス</div>
+        <div class="product-price">&yen;8,580<span class="product-price-tax">(税込)</span></div>
+        <div class="product-size">XS / S</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image" style="background:var(--warm-taupe-bg);">COHINA</div>
+      <div class="product-info">
+        <div class="product-brand">COHINA</div>
+        <div class="product-name">ウールカシミヤノーカラーコート</div>
+        <div class="product-price">&yen;29,800<span class="product-price-tax">(税込)</span></div>
+        <div class="product-size">XS / S</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Button Variants</h2>
+
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-primary" href="#">COLLECTION</a>
+      <div class="button-label">Primary CTA<br>radius: 0px / 15px / 400</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">ABOUT</a>
+      <div class="button-label">Secondary Bordered<br>radius: 5px / 13px / 400</div>
+    </div>
+  </div>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-collection" href="#">VIEW COLLECTION</a>
+      <div class="button-label">Collection CTA<br>bg: taupe / radius: 5px / 16px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-cart" href="#">Add to Cart</a>
+      <div class="button-label">Cart CTA<br>radius: 5px / 12px</div>
+    </div>
+  </div>
+
+  <div style="margin-top:var(--space-xl);">
+    <div class="color-group-label">State</div>
+    <div class="button-row">
+      <div class="button-item">
+        <a class="btn-primary" href="#" style="opacity:0.8;">COLLECTION</a>
+        <div class="button-label">Hover (opacity: 0.8)</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-primary" href="#" style="opacity:0.5; cursor:not-allowed;">COLLECTION</a>
+        <div class="button-label">Disabled (opacity: 0.5)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Card Components</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background:var(--accent-taupe);">Spring Collection</div>
+      <div class="card-body">
+        <h3>2026 Spring Collection</h3>
+        <p>春の新作コレクション。リネンやコットンの軽やかな素材で、小柄な女性のシルエットを美しく。</p>
+        <a class="card-link" href="#">View Collection</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:var(--accent-rose);">Styling Guide</div>
+      <div class="card-body">
+        <h3>小柄さんのスタイリングガイド</h3>
+        <p>155cm以下の方に向けた着こなしのコツ。丈感の選び方、バランスの取り方をご紹介。</p>
+        <a class="card-link" href="#">Read More</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:var(--accent-blue);">Size Guide</div>
+      <div class="card-body">
+        <h3>サイズガイド</h3>
+        <p>XS・Sサイズの採寸表と、お客さまの体型別フィッティングアドバイス。</p>
+        <a class="card-link" href="#">View Guide</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">Form Elements</h2>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">Default — border: rgba(18,18,18,0.15) / radius: 5px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="田中 花子">
+    <div class="form-state-label">Focus — border: #121212 / shadow: rgba(18,18,18,0.08)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">Error — border: #ed2a3e (danger)</div>
+  </div>
+
+  <div class="form-newsletter">
+    <h3>Newsletter</h3>
+    <p>新作やセール情報をいち早くお届けします。</p>
+    <div class="form-newsletter-row">
+      <input class="form-input" type="email" placeholder="メールアドレス">
+      <button class="btn-primary" style="padding:12px 20px; font-size:13px; white-space:nowrap;">登録する</button>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border:1px solid rgba(18,18,18,0.08);">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし（COHINA のデフォルト）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 8px rgba(0,0,0,0.04)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 16px rgba(0,0,0,0.06)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Layout Grid</h2>
+
+  <div class="color-group-label">4-Column Product Grid</div>
+  <div class="layout-demo" style="grid-template-columns:repeat(4,1fr);">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+    <div class="layout-block">4</div>
+  </div>
+  <div class="layout-label">grid-template-columns: repeat(4, 1fr) / gap: 16px</div>
+
+  <div class="color-group-label" style="margin-top:var(--space-xl);">2-Column Feature</div>
+  <div class="layout-demo" style="grid-template-columns:1fr 1fr;">
+    <div class="layout-block" style="aspect-ratio:4/3;">Image</div>
+    <div class="layout-block" style="aspect-ratio:4/3;">Text Content</div>
+  </div>
+  <div class="layout-label">grid-template-columns: 1fr 1fr / gap: 16px</div>
+
+  <div class="color-group-label" style="margin-top:var(--space-xl);">Full-Width Hero</div>
+  <div class="layout-demo" style="grid-template-columns:1fr;">
+    <div class="layout-block" style="padding:var(--space-2xl);">Full Width — max-width: 1200px / padding: 0 32px</div>
+  </div>
+  <div class="layout-label">max-width: 1200px / margin: 0 auto</div>
+
+  <div class="color-group-label" style="margin-top:var(--space-xl);">Spacing Scale</div>
+  <div style="display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-top:var(--space-md);">
+    <div style="text-align:center;"><div style="width:4px; height:4px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">4px</div></div>
+    <div style="text-align:center;"><div style="width:8px; height:8px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">8px</div></div>
+    <div style="text-align:center;"><div style="width:16px; height:16px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">16px</div></div>
+    <div style="text-align:center;"><div style="width:24px; height:24px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">24px</div></div>
+    <div style="text-align:center;"><div style="width:32px; height:32px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">32px</div></div>
+    <div style="text-align:center;"><div style="width:48px; height:28px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">48px</div></div>
+    <div style="text-align:center;"><div style="width:64px; height:28px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">64px</div></div>
+    <div style="text-align:center;"><div style="width:80px; height:28px; background:var(--accent-taupe); border-radius:1px; margin:0 auto 6px;"></div><div style="font-family:var(--font-mono); font-size:10px; color:var(--slate);">80px</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">COHINA</div>
+  <ul class="footer-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Collection</a></li>
+    <li><a href="#">Styling</a></li>
+    <li><a href="#">Size Guide</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+  <div class="footer-copy">
+    Generated from <a href="https://www.cohina.net/">cohina.net</a> DESIGN.md — awesome-design-md-jp
+  </div>
+</footer>
+
+</body>
+</html>

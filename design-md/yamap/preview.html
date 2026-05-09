@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: YAMAP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --brand-red: #e60012;
+    --black: #222222;
+    --dark: #000000;
+    --gray-text: #757575;
+    --surface: #f0f0f0;
+    --border: #d8d8d8;
+    --white: #ffffff;
+    --overlay: rgba(0,0,0,0.6);
+    --link-blue: #0000ee;
+    --danger: #cc0000;
+    --success: #1a8a1a;
+    --warning: #cc8800;
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0,0,0,0.06);
+    --elevation-2: 0 8px 24px rgba(0,0,0,0.10);
+    /* === Fonts === */
+    --font-body: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
+    /* === Border Radius === */
+    --radius-card: 10px;
+    --radius-pill: 9999px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-body);
+    font-size: 20px; font-weight: 700; color: var(--black); text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-brand-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; background: var(--brand-red); border-radius: 4px;
+    color: var(--white); font-size: 14px; font-weight: 700; font-family: var(--font-body);
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700; color: var(--black); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--brand-red); }
+  .nav-cta {
+    display: inline-block; background: var(--brand-red); color: var(--white);
+    padding: 8px 20px; border-radius: var(--radius-pill);
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px; text-align: center;
+    background: linear-gradient(180deg, var(--white) 0%, var(--surface) 100%);
+  }
+  .hero h1 {
+    font-family: var(--font-body);
+    font-size: 40px; font-weight: 700; line-height: 1.5;
+    color: var(--black); margin-bottom: 16px;
+  }
+  .hero p {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--gray-text); max-width: 540px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--brand-red); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-body); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-block; background: var(--dark); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-body); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-secondary:hover { opacity: 0.85; }
+  .btn-tertiary {
+    display: inline-block; background: var(--surface); color: var(--black);
+    padding: 10px 24px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-tertiary:hover { background: var(--border); }
+  .btn-card-link {
+    display: inline-block; background: var(--surface); color: var(--link-blue);
+    padding: 8px 16px; border-radius: var(--radius-card); border: none;
+    font-family: var(--font-body); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-card-link:hover { background: var(--border); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 700; color: var(--gray-text);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-family: var(--font-body);
+    font-size: 36px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 32px; color: var(--black);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-gray { background: var(--surface); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-card); overflow: hidden; background: var(--white); box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-body); font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--black); }
+  .color-swatch-hex { font-size: 12px; color: var(--gray-text); font-family: "SF Mono", "Fira Code", Consolas, monospace; }
+  .color-swatch-role { font-family: var(--font-body); font-size: 11px; color: var(--gray-text); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--gray-text); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: "SF Mono", "Fira Code", Consolas, monospace;
+    font-size: 12px; font-weight: 400; color: var(--gray-text); margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block; background: var(--surface); color: var(--gray-text);
+    font-family: var(--font-body); font-size: 11px; padding: 2px 8px;
+    border-radius: 4px; margin-left: 8px;
+  }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview h2 {
+    font-family: var(--font-body);
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 16px; color: var(--black);
+  }
+  .article-preview p {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    margin-bottom: 16px; color: var(--black);
+  }
+  .article-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .article-tag {
+    display: inline-block; background: var(--surface); color: var(--gray-text);
+    padding: 4px 12px; border-radius: var(--radius-pill);
+    font-family: var(--font-body); font-size: 12px; font-weight: 400;
+  }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-body); font-size: 12px; font-weight: 400; color: var(--gray-text); margin-top: 8px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius-card); overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image {
+    width: 100%; height: 140px; object-fit: cover;
+    background: var(--surface); display: flex; align-items: center; justify-content: center;
+    color: var(--gray-text); font-family: var(--font-body); font-size: 14px;
+  }
+  .card-body { padding: 16px; }
+  .card h3 {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 6px; color: var(--black);
+  }
+  .card p {
+    font-family: var(--font-body);
+    font-size: 14px; color: var(--gray-text); line-height: 1.5;
+  }
+  .card-meta {
+    font-family: var(--font-body);
+    font-size: 12px; color: var(--gray-text); margin-top: 8px;
+  }
+
+  /* FORMS */
+  .form-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block; font-family: var(--font-body);
+    font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--border); padding: 10px 12px; border-radius: var(--radius-card);
+    font-family: var(--font-body); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 3px rgba(230,0,18,0.15);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(204,0,0,0.15);
+  }
+  .form-state-label { font-family: var(--font-body); font-size: 11px; color: var(--gray-text); margin-top: 4px; }
+  .form-error-text { font-family: var(--font-body); font-size: 12px; color: var(--danger); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-card);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--border);
+  }
+  .elevation-label { font-family: var(--font-body); font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--black); }
+  .elevation-desc {
+    font-family: "SF Mono", "Fira Code", Consolas, monospace;
+    font-size: 11px; color: var(--gray-text); word-break: break-all;
+  }
+
+  /* LAYOUT */
+  .layout-demo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .layout-box {
+    height: 80px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-card); display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-size: 12px; font-weight: 700; color: var(--gray-text);
+  }
+  .layout-demo-2col { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .layout-demo-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .layout-box-main {
+    height: 120px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-card); display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-size: 12px; font-weight: 700; color: var(--gray-text);
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px; text-align: center;
+    background: var(--dark); color: rgba(255,255,255,0.7);
+    font-family: var(--font-body); font-size: 12px;
+  }
+  .footer-brand {
+    font-family: var(--font-body);
+    font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 12px;
+  }
+  .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: var(--font-body);
+    font-size: 14px; color: rgba(255,255,255,0.7); text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .elevation-grid { grid-template-columns: 1fr; }
+    .layout-demo { grid-template-columns: repeat(2, 1fr); }
+    .layout-demo-2col { grid-template-columns: 1fr; }
+    .layout-demo-3col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="nav-brand-mark">Y</span>
+    YAMAP
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">無料ではじめる</a>
+</nav>
+
+<section class="hero">
+  <h1>日本の山を、もっと楽しく。</h1>
+  <p>YAMAPは登山・アウトドアの活動を記録・共有できるプラットフォーム。地図、天気、コミュニティで、すべての山の体験をサポートします。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">無料ではじめる</a>
+    <a class="btn-secondary" href="#">アプリをダウンロード</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--brand-red)"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#e60012</div><div class="color-swatch-role">ブランドカラー・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--dark)"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ダークCTA・フッター</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--black)"></div><div class="color-swatch-info"><div class="color-swatch-name">Primary Text</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--gray-text)"></div><div class="color-swatch-info"><div class="color-swatch-name">Secondary Text</div><div class="color-swatch-hex">#757575</div><div class="color-swatch-role">補足テキスト・キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--link-blue)"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Blue</div><div class="color-swatch-hex">#0000ee</div><div class="color-swatch-role">テキストリンク</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--white); border-bottom: 1px solid var(--border)"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--surface)"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">セクション・カード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--border)"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#d8d8d8</div><div class="color-swatch-role">区切り線・ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--overlay)"></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay</div><div class="color-swatch-hex">rgba(0,0,0,0.6)</div><div class="color-swatch-role">モーダル背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--success)"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#1a8a1a</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--danger)"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">エラー・削除</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background: var(--warning)"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#cc8800</div><div class="color-swatch-role">警告・注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 40px; font-weight: 700; line-height: 1.5;">日本の山を、もっと楽しく。</div>
+    <div class="type-meta">H2 Hero / 40px / 700 / line-height: 1.5<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 36px; font-weight: 700; line-height: 1.5;">登山・アウトドアの活動記録</div>
+    <div class="type-meta">H2 Section / 36px / 700 / line-height: 1.5<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 24px; font-weight: 700; line-height: 1.5;">安全に山を楽しむために</div>
+    <div class="type-meta">H2 Medium / 24px / 700 / line-height: 1.5<span class="type-context">コンテンツ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 20px; font-weight: 700; line-height: 1.5;">屋久島トレッキングガイド</div>
+    <div class="type-meta">H3 / 20px / 700 / line-height: 1.5<span class="type-context">小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 16px; font-weight: 700; line-height: 1.5;">初心者におすすめの登山コース</div>
+    <div class="type-meta">H3 Small / 16px / 700 / line-height: 1.5<span class="type-context">カード見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 16px; font-weight: 400; line-height: 1.5;">山の天気は変わりやすく、午後から雷雨になることも珍しくありません。登山計画を立てる際は、天気予報を必ず確認し、余裕を持ったスケジュールを組みましょう。ABCabc 123</div>
+    <div class="type-meta">Body / 16px / 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--gray-text);">2024年8月15日 / 北アルプス / 累積標高差 1,200m</div>
+    <div class="type-meta">Caption / 14px / 400 / line-height: 1.5 / color: --gray-text<span class="type-context">補足情報</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--gray-text);">3時間前 / 5.2km / 450kcal消費</div>
+    <div class="type-meta">Small / 12px / 400 / line-height: 1.5 / color: --gray-text<span class="type-context">メタ情報</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size: 14px; font-weight: 700; line-height: 1.5;">マイページ</div>
+    <div class="type-meta">Nav / 14px / 700 / line-height: 1.5<span class="type-context">ナビゲーション</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事・マガジン組版サンプル</h2>
+  <div class="article-preview">
+    <h2>秋の涸沢カールで紅葉登山を楽しむ</h2>
+    <p>北アルプスの涸沢カールは、日本屈指の紅葉スポットとして知られています。標高2,300mに広がるカール地形を、ナナカマドやダケカンバが鮮やかに彩ります。</p>
+    <p>上高地から横尾を経由して涸沢まで約6時間。テント泊や涸沢ヒュッテでの山小屋泊を組み合わせることで、ゆったりとした山旅を楽しめます。夜には満天の星空が広がり、朝にはモルゲンロートに染まる穂高連峰を望めます。</p>
+    <h2>必要な装備と注意点</h2>
+    <p>10月の涸沢は氷点下になることもあります。防寒着、レインウェア、ヘッドランプは必須です。登山届の提出を忘れずに。YAMAPの地図は電波の届かない山中でも使えるオフライン対応です。</p>
+    <div class="article-tags">
+      <span class="article-tag">紅葉</span>
+      <span class="article-tag">北アルプス</span>
+      <span class="article-tag">涸沢カール</span>
+      <span class="article-tag">テント泊</span>
+      <span class="article-tag">秋山</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">活動日記を書く</a><div class="button-label">Primary CTA (pill)</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">詳しく見る</a><div class="button-label">Secondary CTA (pill)</div></div>
+    <div class="button-item"><a class="btn-tertiary" href="#">もっと見る</a><div class="button-label">Tertiary (pill)</div></div>
+    <div class="button-item"><a class="btn-card-link" href="#">この山の情報を見る</a><div class="button-label">Card Link (radius 10px)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">&#x26F0; 登山ガイド</div>
+      <div class="card-body">
+        <h3>登山ガイド</h3>
+        <p>初心者から上級者まで、レベルに合った登山情報をお届け</p>
+        <div class="card-meta">1,250本の記事</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">&#x1F4D6; 活動日記</div>
+      <div class="card-body">
+        <h3>活動日記</h3>
+        <p>みんなの登山記録を写真付きで共有。ルートの参考に</p>
+        <div class="card-meta">850万件の活動記録</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">&#x1F5FA; モデルコース</div>
+      <div class="card-body">
+        <h3>モデルコース</h3>
+        <p>おすすめのルートや所要時間がわかるモデルコース集</p>
+        <div class="card-meta">3,800コース</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">&#x26C5; 山の天気</div>
+      <div class="card-body">
+        <h3>山の天気</h3>
+        <p>山頂や登山口の天気予報をリアルタイムで確認</p>
+        <div class="card-meta">全国の主要な山に対応</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input" type="text" placeholder="name@example.com">
+      <div class="form-state-label">デフォルト -- border: #d8d8d8, radius: 10px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">ユーザー名</label>
+      <input class="form-input form-input--focus" type="text" value="yamap_taro">
+      <div class="form-state-label">フォーカス -- border: #e60012 (brand-red)</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--error" type="text" value="invalid@">
+      <div class="form-error-text">正しいメールアドレスを入力してください</div>
+      <div class="form-state-label">エラー -- border: #cc0000 (danger)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">box-shadow: none<br>ボーダーのみ</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06)<br>カード・リスト</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.10)<br>ホバー・モーダル</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウトグリッド</h2>
+
+  <div style="font-family: var(--font-body); font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--black);">4-Column Grid (gap: 16px)</div>
+  <div class="layout-demo">
+    <div class="layout-box">1 / 4</div>
+    <div class="layout-box">2 / 4</div>
+    <div class="layout-box">3 / 4</div>
+    <div class="layout-box">4 / 4</div>
+  </div>
+
+  <div style="font-family: var(--font-body); font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--black);">2-Column (Main + Sidebar)</div>
+  <div class="layout-demo-2col">
+    <div class="layout-box-main">Main Content (2fr)</div>
+    <div class="layout-box-main">Sidebar (1fr)</div>
+  </div>
+
+  <div style="font-family: var(--font-body); font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--black);">3-Column Grid</div>
+  <div class="layout-demo-3col">
+    <div class="layout-box-main">1 / 3</div>
+    <div class="layout-box-main">2 / 3</div>
+    <div class="layout-box-main">3 / 3</div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">YAMAP</div>
+  <div class="footer-links">
+    <a href="#">YAMAPについて</a>
+    <a href="#">利用規約</a>
+    <a href="#">プライバシーポリシー</a>
+    <a href="#">お問い合わせ</a>
+    <a href="#">採用情報</a>
+  </div>
+  <div>Generated from <a href="https://yamap.com/" style="color: var(--brand-red); text-decoration: underline;">yamap.com</a> DESIGN.md &mdash; awesome-design-md-jp</div>
+</footer>
+
+</body>
+</html>
