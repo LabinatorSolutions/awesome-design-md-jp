@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (176 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (179 sites)</a>
 </p>
 
 <table>
@@ -271,6 +271,9 @@
 <td align="center"><strong>WACOAL</strong><br><img src="design-md/wacoal/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TIGER</strong><br><img src="design-md/tiger/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>キユーピー</strong><br><img src="design-md/kewpie/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>visvim</strong><br><img src="design-md/visvim/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NEIGHBORHOOD</strong><br><img src="design-md/neighborhood/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Afternoon Tea</strong><br><img src="design-md/afternoontea/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -508,11 +511,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [WACOAL (ワコール)](https://www.wacoal.jp/) | Apparel / Innerwear | [DESIGN.md](design-md/wacoal/DESIGN.md) | [preview.html](design-md/wacoal/preview.html) |
 | [TIGER (タイガー魔法瓶)](https://www.tiger-corporation.com/) | Home Appliance / Thermos | [DESIGN.md](design-md/tiger/DESIGN.md) | [preview.html](design-md/tiger/preview.html) |
 | [KEWPIE (キユーピー)](https://www.kewpie.co.jp/) | Food & Beverage / Consumer | [DESIGN.md](design-md/kewpie/DESIGN.md) | [preview.html](design-md/kewpie/preview.html) |
+| [visvim (ビズビム)](https://www.visvim.tv/) | Fashion / Premium Lifestyle | [DESIGN.md](design-md/visvim/DESIGN.md) | [preview.html](design-md/visvim/preview.html) |
+| [NEIGHBORHOOD (ネイバーフッド)](https://www.neighborhood.jp/) | Fashion / Streetwear | [DESIGN.md](design-md/neighborhood/DESIGN.md) | [preview.html](design-md/neighborhood/preview.html) |
+| [Afternoon Tea (アフタヌーンティー)](https://www.afternoon-tea.net/) | Lifestyle / Retail | [DESIGN.md](design-md/afternoontea/DESIGN.md) | [preview.html](design-md/afternoontea/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (176 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (179 sites)</a>
 </p>
 
 <table>
@@ -749,6 +755,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>WACOAL</strong><br><img src="design-md/wacoal/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TIGER</strong><br><img src="design-md/tiger/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kewpie</strong><br><img src="design-md/kewpie/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>visvim</strong><br><img src="design-md/visvim/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NEIGHBORHOOD</strong><br><img src="design-md/neighborhood/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Afternoon Tea</strong><br><img src="design-md/afternoontea/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

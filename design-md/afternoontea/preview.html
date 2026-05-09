@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Afternoon Tea</title>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Afternoon Tea Color Tokens (実測値) === */
+    --at-green: #006450;
+    --at-green-dark: #006654;
+    --text-primary: #555555;
+    --text-secondary: #696969;
+    --link-default: #0000ee;
+
+    --white: #ffffff;
+    --section-gray: #ededed;
+    --soft-gray: #f5f5f5;
+    --border-gray: #e1e1e1;
+    --cookie-toggle-on: #e3eee3;
+
+    --overlay-arrow: rgba(0, 0, 0, 0.3);
+    --header-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px 0px;
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "MS PGothic", "ＭＳ Ｐゴシック", sans-serif;
+    --font-dosis: Dosis, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 1.12px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    box-shadow: var(--header-shadow);
+  }
+  .nav-brand {
+    font-family: var(--font-dosis); font-size: 20px; font-weight: 500;
+    color: var(--at-green); text-decoration: none; letter-spacing: 1.12px;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 1.12px;
+  }
+  .nav-links a:hover { color: var(--at-green); }
+
+  /* SUB-BRAND TABS */
+  .sub-brand-tabs {
+    display: flex; background: var(--section-gray);
+  }
+  .sub-brand-tab {
+    flex: 1; text-align: center;
+    padding: 14px 0;
+    font-family: var(--font-base); font-size: 28px; font-weight: 400;
+    color: var(--white); background: var(--at-green);
+    text-decoration: none; letter-spacing: 1.12px;
+    line-height: 1.93;
+  }
+  .sub-brand-tab:nth-child(2) { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px;
+    text-align: center;
+    background: var(--white);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-dosis); font-size: 14px; font-weight: 500;
+    color: var(--at-green); margin-bottom: 16px;
+    letter-spacing: 3.2px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 500; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 20px;
+    letter-spacing: 1.12px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary); max-width: 640px; margin: 0 auto 32px;
+    letter-spacing: 1.12px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--at-green); color: var(--white);
+    padding: 12px 32px;
+    border: 1px solid var(--at-green);
+    border-radius: 0px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    line-height: 1.5; text-decoration: none; cursor: pointer;
+    letter-spacing: 1.12px;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--at-green);
+    padding: 12px 32px;
+    border: 3px solid var(--at-green);
+    border-radius: 0px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 500;
+    line-height: 1.5; text-decoration: none; cursor: pointer;
+    letter-spacing: 1.12px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--at-green); color: var(--white); }
+  .btn-arrow {
+    display: inline-block; background: transparent; color: var(--at-green);
+    padding: 4px 0;
+    border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    line-height: 1.0; text-decoration: none; cursor: pointer;
+    letter-spacing: 1.12px;
+  }
+  .btn-arrow::after { content: " >"; font-size: 12px; }
+  .btn-arrow:hover { opacity: 0.7; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-dosis); font-size: 14px; font-weight: 500;
+    color: var(--at-green); letter-spacing: 3.2px; margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-dosis);
+    font-size: 28px; font-weight: 500;
+    color: var(--at-green); margin-bottom: 40px; line-height: 1.5;
+    letter-spacing: 3.2px;
+    text-transform: uppercase;
+  }
+  .section-title-jp {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 40px; line-height: 1.5;
+    letter-spacing: 1.12px;
+  }
+  .section-divider { border: none; height: 1px; background: var(--border-gray); margin: 0; }
+  .section-gray-bg { background: var(--section-gray); }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { background: var(--white); border: 1px solid var(--border-gray); overflow: hidden; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 500; margin-bottom: 4px; color: var(--text-primary);
+    letter-spacing: 1.12px;
+  }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: normal; }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 4px; letter-spacing: 1.12px; }
+  .color-group-label {
+    font-family: var(--font-dosis); font-size: 14px; font-weight: 500;
+    color: var(--at-green); margin: 24px 0 10px; letter-spacing: 3.2px;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 12px; letter-spacing: normal; }
+  .type-context { display: inline-block; background: var(--at-green); color: var(--white); font-size: 10px; padding: 2px 8px; margin-left: 8px; letter-spacing: 1.12px; text-transform: uppercase; }
+
+  /* ARTICLE CARDS */
+  .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .article-card {
+    background: var(--white);
+    text-decoration: none; color: var(--text-primary);
+    display: flex; flex-direction: column;
+  }
+  .article-card-image {
+    aspect-ratio: 16/10; background: linear-gradient(135deg, #e8e0d4, #c8b8a4);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white); font-family: var(--font-dosis); font-weight: 500; font-size: 18px;
+    letter-spacing: 3.2px;
+  }
+  .article-card-image.green { background: linear-gradient(135deg, #a8d5c8, #006450); }
+  .article-card-image.warm { background: linear-gradient(135deg, #f0e0d0, #d4b896); }
+  .article-card-image.cool { background: linear-gradient(135deg, #d8e8e4, #88b8a8); }
+  .article-card-body { padding: 16px 0 0; }
+  .article-card h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 500; line-height: 1.5; margin-bottom: 8px;
+    color: var(--at-green); letter-spacing: 1.12px;
+  }
+  .article-card p { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--text-primary); letter-spacing: 1.12px; }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 12px; letter-spacing: normal; }
+
+  /* CARDS section */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+    padding: 20px;
+    border-radius: 0px;
+  }
+  .card h4 {
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    color: var(--at-green); margin-bottom: 8px; letter-spacing: 1.12px;
+  }
+  .card p {
+    font-size: 12px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary); letter-spacing: 1.12px;
+  }
+  .card-price {
+    font-family: var(--font-dosis); font-size: 16px; font-weight: 500;
+    color: var(--text-primary); margin-top: 12px; letter-spacing: 1.12px;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-base);
+    font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: 1.12px;
+  }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-primary);
+    border: 1px solid #d1d1d1;
+    padding: 10px 16px; border-radius: 0px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: 1.12px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--at-green); }
+  .form-input::placeholder { color: var(--text-secondary); }
+  .form-input--error { border-color: #cc3333; }
+  .form-error-text { font-size: 12px; color: #cc3333; margin-top: 6px; letter-spacing: 1.12px; }
+  .form-input--search {
+    border-radius: 50px;
+    padding: 6px 35px 6px 15px;
+    font-size: 12.8px;
+  }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 6px; font-family: var(--font-mono); letter-spacing: normal; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-item {
+    padding: 24px; background: var(--white);
+    border: 1px solid var(--border-gray);
+    text-align: center;
+  }
+  .elevation-item.shadow-1 { box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px 0px; border: none; }
+  .elevation-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 8px; letter-spacing: normal; }
+  .elevation-name { font-size: 12px; font-weight: 500; color: var(--text-primary); letter-spacing: 1.12px; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--at-green); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--section-gray); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--at-green); }
+  .width-bar-label { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; letter-spacing: 1.12px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px 32px;
+    background: var(--white);
+    color: var(--text-primary);
+    text-align: center;
+    font-size: 12px; font-weight: 400; line-height: 1.5; letter-spacing: 1.12px;
+    border-top: 1px solid var(--border-gray);
+  }
+  .footer a { color: var(--at-green); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer p { margin-bottom: 4px; }
+  .footer-tiny {
+    font-family: var(--font-base);
+    font-size: 11px; color: var(--text-secondary); letter-spacing: 1.12px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .section-title { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .sub-brand-tab { font-size: 20px; }
+    .article-grid { grid-template-columns: 1fr; gap: 16px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Afternoon Tea</a>
+  <ul class="nav-links">
+    <li><a href="#colors">LIVING</a></li>
+    <li><a href="#typography">TEAROOM</a></li>
+    <li><a href="#article">BAKERY</a></li>
+    <li><a href="#buttons">Online Store</a></li>
+    <li><a href="#forms">MEMBERS</a></li>
+  </ul>
+</nav>
+
+<div class="sub-brand-tabs">
+  <a class="sub-brand-tab" href="#">LIVING</a>
+  <a class="sub-brand-tab" href="#">TEAROOM</a>
+</div>
+
+<section class="hero">
+  <div class="hero-eyebrow">design system preview</div>
+  <h1>季節のおすすめ</h1>
+  <p>Afternoon Tea（afternoon-tea.net）から抽出したデザイントークンのカタログ。ディープグリーン #006450 + Noto Sans JP + Dosis + wide letter-spacing 1.12px。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">Afternoon Tea MEMBERS</a>
+    <a class="btn-outline" href="#">Online Store</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">brand / accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#006450"></div><div class="color-swatch-info"><div class="color-swatch-name">AT Green</div><div class="color-swatch-hex">#006450</div><div class="color-swatch-role">ブランド支配色（CTA・見出し・ナビ）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#006654"></div><div class="color-swatch-info"><div class="color-swatch-name">AT Green Dark</div><div class="color-swatch-hex">#006654</div><div class="color-swatch-role">ダイアログ Apply ボタン</div></div></div>
+  </div>
+
+  <div class="color-group-label">foreground</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#555555"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#555555</div><div class="color-swatch-role">本文・ナビ・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#696969"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#696969</div><div class="color-swatch-role">補助テキスト・h3/h4</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0000ee"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Default</div><div class="color-swatch-hex">#0000ee</div><div class="color-swatch-role">ブラウザデフォルト青</div></div></div>
+  </div>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・ヘッダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ededed"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Gray</div><div class="color-swatch-hex">#ededed</div><div class="color-swatch-role">セクション背景・帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Soft Gray</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">ナビ領域背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e1e1e1"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Gray</div><div class="color-swatch-hex">#e1e1e1</div><div class="color-swatch-role">区切り線・フッター罫線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e3eee3"></div><div class="color-swatch-info"><div class="color-swatch-name">Cookie Toggle On</div><div class="color-swatch-hex">#e3eee3</div><div class="color-swatch-role">トグル ON 背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-gray-bg" style="max-width:none;">
+<div class="section-inner" style="max-width:960px; margin:0 auto; padding:64px 32px;">
+  <div class="section-eyebrow">02 / typography</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:28px; font-weight:400; line-height:1.93; color:var(--white); background:var(--at-green); padding:14px 24px; letter-spacing:1.12px; display:inline-block;">LIVING</div>
+    <div class="type-meta">Noto Sans JP / 28px / 400 / line-height: 1.93 (54px) / letter-spacing: 1.12px / bg #006450<span class="type-context">Nav Tab</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-dosis); font-size:28px; font-weight:500; line-height:1.5; color:var(--at-green); letter-spacing:3.2px;">BRAND</div>
+    <div class="type-meta">Dosis / 28px / 500 / line-height: 1.5 (42px) / letter-spacing: 3.2px (0.114em)<span class="type-context">Section EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-dosis); font-size:24px; font-weight:700; line-height:1.5; color:var(--text-primary); background:var(--section-gray); padding:8px 16px; display:inline-block; letter-spacing:1.12px;">LIVING</div>
+    <div class="type-meta">Dosis / 24px / 700 / bg #ededed / letter-spacing: 1.12px<span class="type-context">Nav Section</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:500; line-height:1.5; color:var(--text-primary); letter-spacing:1.12px;">季節のおすすめ</div>
+    <div class="type-meta">Noto Sans JP / 24px / 500 / line-height: 1.5 (36px) / letter-spacing: 1.12px<span class="type-context">Section JP</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:500; line-height:1.5; color:var(--at-green); letter-spacing:1.12px;">ペコちゃんと初コラボレーション！</div>
+    <div class="type-meta">Noto Sans JP / 20px / 500 / line-height: 1.5 (30px) / color #006450<span class="type-context">h2 Article</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:500; line-height:1.5; color:var(--at-green); letter-spacing:1.36px;">重要なお知らせ</div>
+    <div class="type-meta">Noto Sans JP / 16px / 500 / line-height: 1.5 (24px) / letter-spacing: 1.36px (0.085em) / color #006450<span class="type-context">h2 Notice</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.7; color:var(--at-green); letter-spacing:1.12px; max-width:640px;">5月1日(9:59)までご注文受付中！母の日に選びたい生花アレンジメント</div>
+    <div class="type-meta">Noto Sans JP / 16px / 400 / line-height: 1.7 (27.2px) / color #006450<span class="type-context">Article Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.5; color:var(--text-primary); letter-spacing:1.12px; max-width:640px;">Afternoon Tea は、1981年に東京・渋谷で生まれたライフスタイルブランドです。日常を彩る雑貨やティーウェア、季節のギフトを通じて、暮らしの中にある小さな幸せをお届けしています。</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.5 (21px) / letter-spacing: 1.12px<span class="type-context">Body Small</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:500; line-height:1.0; color:var(--at-green); letter-spacing:1.12px;">重要なお知らせ一覧へ ></div>
+    <div class="type-meta">Noto Sans JP / 14px / 500 / line-height: 1.0 / color #006450<span class="type-context">Arrow Link</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:500; line-height:1.5; color:var(--text-primary); letter-spacing:1.12px;">ショップ検索 | LIVING | TEAROOM | BAKERY</div>
+    <div class="type-meta">Noto Sans JP / 12px / 500 / line-height: 1.5 (18px) / letter-spacing: 1.12px<span class="type-context">Footer Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.5; color:var(--text-primary); letter-spacing:1.12px;">26.02.04 Afternoon Tea TEAROOM、Afternoon Tea BAKERY、Afternoon Tea LOVE&TABLE</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 1.5 (18px) / letter-spacing: 1.12px<span class="type-context">Notice Item</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT -->
+<section class="section" id="article">
+  <div class="section-eyebrow">03 / article</div>
+  <h2 class="section-title">Pickup</h2>
+
+  <div class="article-grid">
+    <a class="article-card" href="#">
+      <div class="article-card-image green">LIVING</div>
+      <div class="article-card-body">
+        <h3>ペコちゃんと初コラボレーション！</h3>
+        <p>不二家とアフタヌーンティーのスペシャルコラボレーションアイテムが登場。ティーウェアや雑貨を展開。</p>
+      </div>
+    </a>
+    <a class="article-card" href="#">
+      <div class="article-card-image warm">TEAROOM</div>
+      <div class="article-card-body">
+        <h3>ハンディファンが、今年もアップデートして登場！</h3>
+        <p>暑い季節に欠かせないハンディファン。今年もデザインと機能をアップデート。</p>
+      </div>
+    </a>
+    <a class="article-card" href="#">
+      <div class="article-card-image cool">GIFT</div>
+      <div class="article-card-body">
+        <h3>母の日に選びたい生花アレンジメント</h3>
+        <p>感謝の気持ちを込めて贈りたい、季節の花を使ったフラワーギフト。</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section section-gray-bg" style="max-width:none;" id="buttons">
+<div class="section-inner" style="max-width:960px; margin:0 auto; padding:64px 32px;">
+  <div class="section-eyebrow">04 / buttons</div>
+  <h2 class="section-title">Buttons</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary" href="#">Afternoon Tea MEMBERS</a><div class="button-label">Primary (radius 0px) / #006450</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">Online Store</a><div class="button-label">Outline (border 3px) / #006450</div></div>
+    <div class="button-item"><a class="btn-arrow" href="#">重要なお知らせ一覧へ</a><div class="button-label">Arrow Link / #006450</div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-dosis); font-size:18px; font-weight:500; margin:40px 0 16px; letter-spacing:3.2px; color: var(--at-green); text-transform: uppercase;">Sub-brand Navigation</h3>
+  <div class="button-row" style="gap: 0;">
+    <a href="#" style="font-family: var(--font-base); font-size: 28px; font-weight: 400; color: var(--white); background: var(--at-green); text-decoration: none; letter-spacing: 1.12px; padding: 14px 32px; line-height: 1.93;">LIVING</a>
+    <a href="#" style="font-family: var(--font-base); font-size: 28px; font-weight: 400; color: var(--white); background: var(--at-green); text-decoration: none; letter-spacing: 1.12px; padding: 14px 32px; line-height: 1.93; opacity: 0.85;">TEAROOM</a>
+  </div>
+  <div class="button-label" style="margin-top: 12px;">Nav Tab / 28px / bg #006450 / white</div>
+
+  <h3 style="font-family: var(--font-dosis); font-size:18px; font-weight:500; margin:40px 0 16px; letter-spacing:3.2px; color: var(--at-green); text-transform: uppercase;">Section Nav</h3>
+  <div class="button-row" style="gap: 16px;">
+    <span style="font-family: var(--font-dosis); font-size: 24px; font-weight: 700; color: var(--text-primary); background: var(--section-gray); padding: 8px 20px; letter-spacing: 1.12px;">LIVING</span>
+    <span style="font-family: var(--font-dosis); font-size: 24px; font-weight: 700; color: var(--text-primary); background: var(--section-gray); padding: 8px 20px; letter-spacing: 1.12px;">TEAROOM</span>
+  </div>
+  <div class="button-label" style="margin-top: 12px;">Dosis / 24px / 700 / bg #ededed</div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-eyebrow">05 / cards</div>
+  <h2 class="section-title">Cards</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>花柄マグカップ</h4>
+      <p>アフタヌーンティーらしい花柄のティーウェア。毎日の暮らしを彩る一品。</p>
+      <div class="card-price">&yen;1,650</div>
+    </div>
+    <div class="card">
+      <h4>リネンテーブルクロス</h4>
+      <p>上質なリネン素材を使った、シンプルで上品なテーブルクロス。</p>
+      <div class="card-price">&yen;3,300</div>
+    </div>
+    <div class="card">
+      <h4>アロマキャンドル</h4>
+      <p>穏やかな香りで、リラックスした時間をお過ごしいただけます。</p>
+      <div class="card-price">&yen;2,200</div>
+    </div>
+    <div class="card">
+      <h4>レモンケーキセット</h4>
+      <p>爽やかなレモン風味のケーキ。ティータイムのお供に。</p>
+      <div class="card-price">&yen;1,980</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section section-gray-bg" style="max-width:none;" id="forms">
+<div class="section-inner" style="max-width:960px; margin:0 auto; padding:64px 32px;">
+  <div class="section-eyebrow">06 / forms</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group">
+    <label class="form-label">検索</label>
+    <input class="form-input form-input--search" type="text" placeholder="商品を検索...">
+    <div class="form-state-label">検索ボックス — border-radius: 50px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">デフォルト</label>
+    <input class="form-input" type="text" placeholder="お名前を入力してください">
+    <div class="form-state-label">デフォルト — border: 1px solid #d1d1d1</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">フォーカス</label>
+    <input class="form-input form-input--focus" type="email" value="member@example.com">
+    <div class="form-state-label">フォーカス — border: 1px solid #006450</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">エラー</label>
+    <input class="form-input form-input--error" type="text" value="">
+    <div class="form-error-text">必須項目です</div>
+    <div class="form-state-label">エラー — border: 1px solid #cc3333</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">07 / elevation</div>
+  <h2 class="section-title">Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-item">
+      <div class="elevation-name">Level 0 — Flat</div>
+      <div class="elevation-label">box-shadow: none / border: 1px solid #e1e1e1</div>
+    </div>
+    <div class="elevation-item shadow-1">
+      <div class="elevation-name">Level 1 — Header</div>
+      <div class="elevation-label">box-shadow: rgba(0,0,0,0.1) 0 2px 2px 0</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section section-gray-bg" style="max-width:none;" id="layout">
+<div class="section-inner" style="max-width:960px; margin:0 auto; padding:64px 32px;">
+  <div class="section-eyebrow">08 / layout</div>
+  <h2 class="section-title">Spacing &amp; Width</h2>
+  <h3 style="font-family: var(--font-dosis); font-size:16px; font-weight:500; margin:16px 0 12px; letter-spacing:3.2px; color: var(--at-green); text-transform: uppercase;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-dosis); font-size:16px; font-weight:500; margin:32px 0 12px; letter-spacing:3.2px; color: var(--at-green); text-transform: uppercase;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Bleed Banner <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Section <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:72%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Body Text <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:48%"></div></div></div>
+</div>
+</section>
+
+<footer class="footer">
+  <p>Generated from <a href="https://www.afternoon-tea.net/">afternoon-tea.net</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-09）</p>
+  <p class="footer-tiny">Afternoon Tea is a brand by SAZABY LEAGUE, Ltd. — preview uses Google Fonts (Noto Sans JP + Dosis)</p>
+</footer>
+
+</body>
+</html>

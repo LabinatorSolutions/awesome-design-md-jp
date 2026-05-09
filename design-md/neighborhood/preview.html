@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: NEIGHBORHOOD</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === NEIGHBORHOOD Color Tokens (実測値) === */
+    --nbhd-black: #222222;
+    --nbhd-secondary: #aaaaaa;
+    --nbhd-muted: #999999;
+    --nbhd-red: #da2c4d;
+
+    --pure-white: #ffffff;
+    --light-gray: #f5f5f5;
+    --system-button: #efefef;
+
+    --border-dark: #222222;
+    --border-input: #dddddd;
+    --warning-bg: #f7dc9d;
+
+    /* === Fonts ===
+       Note: 実サイトは HelveticaLTWXX-BoldCond（ライセンスフォント）と
+       TsukuGoPr5-D（Fontworks ライセンス）を使用。
+       本プレビューでは代替として:
+       - HelveticaLTWXX-BoldCond → Oswald (Google Fonts, condensed sans)
+       - TsukuGoPr5-D → Zen Kaku Gothic New (Google Fonts, Fontworks 系) */
+    --font-condensed: "Oswald", HelveticaLTWXX-BoldCond, HelveticaNeue-CondensedBold, "Helvetica Neue", Helvetica, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", YuGothic, -apple-system, "system-ui", sans-serif;
+    --font-body: "Zen Kaku Gothic New", TsukuGoPr5-D, TsukuARdGothic-Regular, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
+    --font-system: sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--pure-white);
+    color: var(--nbhd-black);
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400; line-height: 1.15;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 56px;
+    background: var(--pure-white);
+    border-bottom: none;
+  }
+  .nav-brand {
+    font-family: var(--font-condensed); font-size: 26px; font-weight: 700;
+    color: var(--nbhd-black); text-decoration: none; letter-spacing: normal;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    color: var(--nbhd-black); text-decoration: none; letter-spacing: normal;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-links a.active { font-weight: 700; }
+
+  /* HERO */
+  .hero {
+    padding: 0;
+    position: relative;
+    background: var(--nbhd-black);
+    min-height: 520px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 40%, #222222 100%);
+    opacity: 0.9;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    text-align: center; padding: 80px 32px;
+  }
+  .hero h1 {
+    font-family: var(--font-condensed);
+    font-size: 62px; font-weight: 400; line-height: 1.15;
+    color: var(--pure-white);
+    letter-spacing: -3.1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400; line-height: 1.4;
+    color: var(--nbhd-secondary);
+    letter-spacing: -0.13px;
+    max-width: 560px; margin: 0 auto 32px;
+  }
+  .hero-viewmore {
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400; line-height: 1.15;
+    color: var(--pure-white);
+    letter-spacing: -0.65px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .hero-viewmore:hover { border-bottom-color: var(--pure-white); }
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400;
+    color: var(--nbhd-black);
+    letter-spacing: -0.65px;
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-condensed); font-size: 11px; font-weight: 400;
+    color: var(--nbhd-secondary); letter-spacing: normal; margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-condensed);
+    font-size: 33px; font-weight: 400;
+    color: var(--nbhd-black); margin-bottom: 48px; line-height: 1.15;
+    letter-spacing: -1.65px;
+    text-transform: uppercase;
+  }
+  .section-divider { border: none; height: 1px; background: var(--light-gray); margin: 0; }
+  .section-gray { background: var(--light-gray); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; border: 1px solid var(--light-gray); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; background: var(--pure-white); }
+  .color-swatch-name {
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400; margin-bottom: 4px; color: var(--nbhd-black);
+    letter-spacing: normal; text-transform: uppercase;
+  }
+  .color-swatch-hex { font-size: 11px; color: var(--nbhd-secondary); font-family: var(--font-mono); letter-spacing: normal; }
+  .color-swatch-role { font-size: 11px; color: var(--nbhd-secondary); margin-top: 4px; letter-spacing: normal; }
+  .color-group-label {
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    color: var(--nbhd-black); margin: 24px 0 10px; letter-spacing: -0.65px;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--light-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--nbhd-secondary); margin-top: 12px; letter-spacing: normal; }
+  .type-context { display: inline-block; background: var(--nbhd-black); color: var(--pure-white); font-family: var(--font-condensed); font-size: 10px; padding: 2px 8px; margin-left: 8px; letter-spacing: normal; text-transform: uppercase; border-radius: 0; }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .product-card {
+    background: transparent;
+    text-decoration: none; color: var(--nbhd-black);
+    display: flex; flex-direction: column;
+  }
+  .product-card-image {
+    aspect-ratio: 1/1; background: var(--light-gray);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--nbhd-secondary); font-family: var(--font-condensed); font-weight: 400; font-size: 13px; letter-spacing: -0.65px;
+    text-transform: uppercase;
+  }
+  .product-card-image.dark { background: linear-gradient(135deg, #2a2a2a, #3d3d3d); color: var(--pure-white); }
+  .product-card-image.mid { background: linear-gradient(135deg, #4a4a4a, #666666); color: var(--pure-white); }
+  .product-card-body { padding: 10px 0 0; }
+  .product-card .product-type {
+    font-family: var(--font-condensed);
+    font-size: 11px; font-weight: 400; line-height: 1.15; margin-bottom: 2px;
+    color: var(--nbhd-secondary); letter-spacing: normal;
+    text-transform: uppercase;
+  }
+  .product-card .product-name {
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400; line-height: 1.15; margin-bottom: 4px;
+    color: var(--nbhd-black); letter-spacing: normal;
+    text-transform: uppercase;
+  }
+  .product-card .product-price {
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400; line-height: 1.15;
+    color: var(--nbhd-secondary); letter-spacing: normal;
+  }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--nbhd-secondary); margin-top: 12px; letter-spacing: normal; }
+
+  /* CTA Buttons */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--nbhd-black); color: var(--pure-white);
+    padding: 13px 10px;
+    border: 1px solid var(--nbhd-black);
+    border-radius: 0;
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    line-height: 1.15; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    min-width: 160px;
+  }
+  .btn-primary:hover { background: #000000; border-color: #000000; }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--pure-white); color: var(--nbhd-black);
+    padding: 13px 10px;
+    border: 1px solid var(--nbhd-black);
+    border-radius: 0;
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    line-height: 1.15; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    min-width: 160px;
+  }
+  .btn-secondary:hover { background: var(--nbhd-black); color: var(--pure-white); }
+
+  .btn-system {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--system-button); color: #000000;
+    padding: 1px 6px;
+    border: none; border-radius: 0;
+    font-family: var(--font-system); font-size: 13px; font-weight: 400;
+    line-height: 1.15; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+  }
+
+  .btn-tertiary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--system-button); color: #000000;
+    padding: 1px 6px;
+    border: none; border-radius: 0;
+    font-family: var(--font-system); font-size: 12px; font-weight: 400;
+    line-height: 1.15; text-decoration: none; cursor: pointer;
+    letter-spacing: normal;
+  }
+
+  /* HERO COPY (large feature) */
+  .feature-copy {
+    padding: 96px 20px;
+    background: var(--light-gray);
+    text-align: center;
+  }
+  .feature-copy-inner {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .feature-copy-large {
+    font-family: var(--font-condensed);
+    font-size: 33px; font-weight: 400; line-height: 1.15;
+    color: var(--nbhd-black); margin-bottom: 16px;
+    letter-spacing: -1.65px;
+    text-transform: uppercase;
+  }
+  .feature-copy-sub {
+    font-family: var(--font-condensed);
+    font-size: 13px; font-weight: 400; line-height: 1.4;
+    color: var(--nbhd-secondary);
+    letter-spacing: -0.13px;
+    max-width: 480px; margin: 0 auto;
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-condensed);
+    font-size: 11px; font-weight: 400; color: var(--nbhd-secondary); margin-bottom: 8px;
+    letter-spacing: normal;
+    text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%; background: var(--pure-white); color: var(--nbhd-black);
+    border: none; border-bottom: 1px solid var(--border-input);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-body); font-size: 13px; font-weight: 400;
+    letter-spacing: normal; outline: none; line-height: 1.15;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-bottom-color: var(--nbhd-black); }
+  .form-input::placeholder { color: var(--nbhd-secondary); }
+  .form-input--search {
+    border-bottom: none;
+    background: var(--light-gray);
+    padding: 0 6px;
+    line-height: 40px;
+  }
+  .form-input--subscribe {
+    background: var(--pure-white);
+    padding: 0 15px;
+    border: none;
+    border-bottom: 1px solid var(--border-input);
+    font-family: var(--font-system);
+  }
+  .form-input--error { border-bottom-color: var(--nbhd-red); }
+  .form-error {
+    font-family: var(--font-condensed); font-size: 11px; color: var(--nbhd-red);
+    margin-top: 4px; letter-spacing: normal;
+  }
+  .form-state-label { font-size: 11px; color: var(--nbhd-secondary); margin-top: 6px; font-family: var(--font-mono); letter-spacing: normal; }
+
+  /* CARDS (standalone showcase) */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--pure-white); border: 1px solid var(--light-gray);
+    border-radius: 0; overflow: hidden;
+  }
+  .card-image {
+    height: 200px; background: var(--light-gray);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-condensed); font-size: 13px; color: var(--nbhd-secondary);
+    letter-spacing: -0.65px; text-transform: uppercase;
+  }
+  .card-body { padding: 16px; }
+  .card-body h3 {
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    color: var(--nbhd-black); margin-bottom: 6px; letter-spacing: normal;
+    text-transform: uppercase; line-height: 1.15;
+  }
+  .card-body p {
+    font-family: var(--font-body); font-size: 13px; font-weight: 400;
+    color: var(--nbhd-secondary); line-height: 1.4; letter-spacing: -0.13px;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: flex; gap: 32px; flex-wrap: wrap; }
+  .elevation-item { text-align: center; }
+  .elevation-box {
+    width: 120px; height: 80px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 11px; color: var(--nbhd-secondary);
+    margin-bottom: 8px; border-radius: 0;
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--nbhd-black); height: 32px; border-radius: 0; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--nbhd-secondary); }
+
+  /* WIDTH */
+  .width-bar { height: 32px; background: var(--light-gray); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--nbhd-black); }
+  .width-bar-label {
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    color: var(--nbhd-black); margin-bottom: 4px; letter-spacing: normal;
+    text-transform: uppercase;
+  }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--nbhd-secondary); letter-spacing: normal; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 20px 24px;
+    background: var(--nbhd-black);
+    color: var(--pure-white);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .footer-subscribe {
+    display: flex; gap: 0; max-width: 400px;
+  }
+  .footer-subscribe input {
+    flex: 1; background: var(--pure-white); color: var(--nbhd-black);
+    border: none; border-radius: 0; padding: 0 15px;
+    font-family: var(--font-system); font-size: 13px; font-weight: 400;
+    outline: none;
+  }
+  .footer-subscribe button {
+    background: var(--nbhd-black); color: var(--pure-white);
+    border: 1px solid var(--pure-white); border-radius: 0;
+    padding: 13px 10px;
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    letter-spacing: normal; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .footer-subscribe button:hover { background: var(--pure-white); color: var(--nbhd-black); }
+  .footer-links {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: var(--font-condensed); font-size: 13px; font-weight: 400;
+    letter-spacing: normal;
+  }
+  .footer-links a { color: var(--pure-white); text-decoration: none; text-transform: uppercase; }
+  .footer-links a:hover { opacity: 0.6; }
+  .footer-copyright {
+    font-family: var(--font-condensed); font-size: 10px; font-weight: 400;
+    color: var(--nbhd-muted); letter-spacing: normal;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 36px; letter-spacing: -1.8px; }
+    .section-title { font-size: 24px; letter-spacing: -1.2px; }
+    .feature-copy-large { font-size: 24px; letter-spacing: -1.2px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 16px; }
+    .feature-copy { padding: 64px 16px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .footer-links { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">NEIGHBORHOOD</a>
+  <ul class="nav-links">
+    <li><a href="#colors">BRANDS</a></li>
+    <li><a href="#typography">CATEGORIES</a></li>
+    <li><a href="#products">NEW ARRIVALS</a></li>
+    <li><a href="#buttons">LOOKBOOK</a></li>
+    <li><a href="#forms" class="active">NEWS</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>CRAFT WITH PRIDE</h1>
+    <p>NEIGHBORHOOD founded in 1994 in Harajuku Tokyo. Motorcycle culture, military and outdoor influences with meticulous craftsmanship.</p>
+    <a class="hero-viewmore" href="#">VIEW MORE</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand / Foreground</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">NBHD Black</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">テキスト・CTA 支配色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#aaaaaa"></div><div class="color-swatch-info"><div class="color-swatch-name">Secondary</div><div class="color-swatch-hex">#aaaaaa</div><div class="color-swatch-role">商品ラベル・価格</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">コピーライト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#da2c4d"></div><div class="color-swatch-info"><div class="color-swatch-name">NBHD Red</div><div class="color-swatch-hex">#da2c4d</div><div class="color-swatch-role">CSS変数 --red（アクセント）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">面色（最多使用、16箇所）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">System Button</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">システムボタン背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border / Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Input Border</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">フォーム入力欄</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7dc9d"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#f7dc9d</div><div class="color-swatch-role">警告背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-gray" style="max-width:none;" id="typography">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:64px 20px;">
+  <div class="section-eyebrow">02 / typography -- computed style</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:62px; font-weight:400; line-height:1.15; color:#ffffff; letter-spacing:-3.1px; text-transform:uppercase; background:#222222; padding:32px; display:inline-block;">NEIGHBORHOOD</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 62px / 400 / line-height: 1.15 (71.3px) / letter-spacing: -3.1px / color #ffffff<span class="type-context">h2 Hero</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:33px; font-weight:400; line-height:1.15; color:#222222; letter-spacing:-1.65px; text-transform:uppercase;">NEW ARRIVALS</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 33px / 400 / line-height: 1.15 (37.95px) / letter-spacing: -1.65px<span class="type-context">h2 Section</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:26px; font-weight:700; line-height:1.15; color:#222222; letter-spacing:normal; text-transform:uppercase;">NEIGHBORHOOD</div>
+    <div class="type-meta">Helvetica / 26px / 700 / line-height: 1.15 (29.9px) / letter-spacing: normal<span class="type-context">h1 Logo</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:13px; font-weight:400; line-height:1.15; color:#222222; letter-spacing:normal; text-transform:uppercase;">BRANDS -- CATEGORIES -- NEW ARRIVALS -- LOOKBOOK -- NEWS</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 13px / 400 / line-height: 1.15 (14.95px) / letter-spacing: normal<span class="type-context">Nav</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:13px; font-weight:700; line-height:1.15; color:#222222; letter-spacing:normal; text-transform:uppercase;">日本語 — English — 한국어</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 13px / 700 / line-height: 1.15 / letter-spacing: normal<span class="type-context">Nav Active</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:13px; font-weight:400; line-height:1.15; color:#222222; letter-spacing:normal;">1994年、東京・原宿で創業。モーターサイクルカルチャー、ミリタリー、アウトドアの影響を受けた緻密なクラフツマンシップ。</div>
+    <div class="type-meta">TsukuGoPr5-D / 13px / 400 / line-height: 1.15 (14.95px) / letter-spacing: normal<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:13px; font-weight:400; line-height:1.4; color:#aaaaaa; letter-spacing:-0.13px;">NEIGHBORHOOD founded in 1994 in Harajuku Tokyo. "Craft with Pride" is the ethos that drives every piece — from heavyweight cotton tees to intricate leather goods.</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 13px / 400 / line-height: 1.4 (18.2px) / letter-spacing: -0.13px / color #aaaaaa<span class="type-context">Description</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:11px; font-weight:400; line-height:1.15; color:#aaaaaa; letter-spacing:normal; text-transform:uppercase;">NEIGHBORHOOD</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 11px / 400 / line-height: 1.15 (12.65px) / color #aaaaaa<span class="type-context">Product Type</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:13px; font-weight:400; line-height:1.15; color:#aaaaaa; letter-spacing:normal; text-transform:uppercase;">NH X AIRBUGGY . DOME3 LARGE SET</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 13px / 400 / line-height: 1.15 / color #aaaaaa<span class="type-context">Product Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:13px; font-weight:400; line-height:1.15; color:#aaaaaa; letter-spacing:normal;">¥99,000</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 13px / 400 / line-height: 1.15 / color #aaaaaa<span class="type-context">Price</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:13px; font-weight:400; line-height:1.15; color:#ffffff; letter-spacing:-0.65px; text-transform:uppercase; background:#222222; padding:8px 16px; display:inline-block;">VIEW MORE</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 13px / 400 / line-height: 1.15 / letter-spacing: -0.65px / color #ffffff<span class="type-context">View More</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-condensed); font-size:10px; font-weight:400; line-height:1.15; color:#999999; letter-spacing:normal; text-transform:uppercase;">© NEIGHBORHOOD CO.,LTD. ALL RIGHTS RESERVED</div>
+    <div class="type-meta">HelveticaLTWXX-BoldCond / 10px / 400 / line-height: 1.15 (11.5px) / color #999999<span class="type-context">Copyright</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LARGE COPY -->
+<section class="feature-copy">
+  <div class="feature-copy-inner">
+    <div class="feature-copy-large">2026 SPRING & SUMMER COLLECTION</div>
+    <div class="feature-copy-sub">Motorcycle culture, military and outdoor influences with meticulous craftsmanship. Every piece is built to last.</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / products -- collection</div>
+  <h2 class="section-title">New Arrivals</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image dark">NH / 01</div>
+      <div class="product-card-body">
+        <p class="product-type">NEIGHBORHOOD</p>
+        <p class="product-name">NH . TRAD / C-CREW . LS</p>
+        <p class="product-price">¥14,300</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">NH / 02</div>
+      <div class="product-card-body">
+        <p class="product-type">NEIGHBORHOOD</p>
+        <p class="product-name">MIL-BDU / C-JKT . LS</p>
+        <p class="product-price">¥52,800</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image mid">NH / 03</div>
+      <div class="product-card-body">
+        <p class="product-type">NEIGHBORHOOD</p>
+        <p class="product-name">NH X AIRBUGGY . DOME3 LARGE SET</p>
+        <p class="product-price">¥99,000</p>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">NH / 04</div>
+      <div class="product-card-body">
+        <p class="product-type">NEIGHBORHOOD</p>
+        <p class="product-name">DOG CLEANUP CASE</p>
+        <p class="product-price">¥8,800</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section section-gray" style="max-width:none;" id="buttons">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:64px 20px;">
+  <div class="section-eyebrow">04 / buttons</div>
+  <h2 class="section-title">Buttons</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary" href="#">SUBSCRIBE</a><div class="button-label">Primary / bg #222222 / radius 0</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">VIEW ALL</a><div class="button-label">Secondary / outline / radius 0</div></div>
+    <div class="button-item"><button class="btn-system">送信</button><div class="button-label">System / bg #efefef / radius 0</div></div>
+    <div class="button-item"><button class="btn-tertiary">更新</button><div class="button-label">Tertiary / 12px / bg #efefef</div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-condensed); font-size:33px; font-weight:400; margin:48px 0 16px; letter-spacing:-1.65px; color: var(--nbhd-black); text-transform: uppercase;">Navigation</h3>
+  <div class="button-row" style="gap: 24px; margin-bottom: 24px;">
+    <a href="#" style="font-family: var(--font-condensed); font-size: 13px; font-weight: 400; color: var(--nbhd-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">BRANDS</a>
+    <a href="#" style="font-family: var(--font-condensed); font-size: 13px; font-weight: 400; color: var(--nbhd-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">CATEGORIES</a>
+    <a href="#" style="font-family: var(--font-condensed); font-size: 13px; font-weight: 700; color: var(--nbhd-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">NEWS</a>
+    <a href="#" style="font-family: var(--font-condensed); font-size: 13px; font-weight: 400; color: var(--nbhd-black); text-decoration: none; letter-spacing: normal; text-transform: uppercase;">LOOKBOOK</a>
+  </div>
+  <div class="button-row" style="gap: 24px;">
+    <a href="#" style="font-family: var(--font-condensed); font-size: 13px; font-weight: 400; color: var(--pure-white); text-decoration: none; letter-spacing: -0.65px; text-transform: uppercase; background: var(--nbhd-black); padding: 8px 16px; display: inline-block;">VIEW MORE</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-eyebrow">05 / cards</div>
+  <h2 class="section-title">Cards</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #2a2a2a, #444);">
+        <span style="color: #fff;">LOOKBOOK</span>
+      </div>
+      <div class="card-body">
+        <h3>2026 SS COLLECTION</h3>
+        <p>モーターサイクルカルチャーとミリタリーの影響を受けた最新コレクション。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <span>COLLABORATION</span>
+      </div>
+      <div class="card-body">
+        <h3>NH X AIRBUGGY</h3>
+        <p>NEIGHBORHOODとAIRBUGGYのコラボレーションアイテム。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #4a4a4a, #666);">
+        <span style="color: #fff;">NEWS</span>
+      </div>
+      <div class="card-body">
+        <h3>STORE INFORMATION</h3>
+        <p>直営店舗の最新情報とイベントスケジュール。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section section-gray" style="max-width:none;" id="forms">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:64px 20px;">
+  <div class="section-eyebrow">06 / forms</div>
+  <h2 class="section-title">Forms</h2>
+
+  <div class="form-group">
+    <label class="form-label">Search</label>
+    <input class="form-input form-input--search" type="text" placeholder="Search products...">
+    <div class="form-state-label">検索入力 — TsukuGoPr5-D / 13px / line-height: 40px / bg #f5f5f5 / no border</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email Address</label>
+    <input class="form-input form-input--subscribe" type="email" placeholder="Enter your email">
+    <div class="form-state-label">デフォルト — sans-serif / 13px / border-bottom: 1px solid #dddddd</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email Address</label>
+    <input class="form-input form-input--subscribe form-input--focus" type="email" value="subscriber@neighborhood.jp">
+    <div class="form-state-label">フォーカス — border-bottom: 1px solid #222222</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email Address</label>
+    <input class="form-input form-input--subscribe form-input--error" type="email" value="invalid-email">
+    <div class="form-error">有効なメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー — border-bottom: 1px solid #da2c4d</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section">
+  <div class="section-eyebrow">07 / elevation</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-item">
+      <div class="elevation-box" style="background: var(--pure-white); border: 1px solid var(--light-gray);">none</div>
+      <div class="button-label">Level 0 — flat (default)</div>
+    </div>
+    <div class="elevation-item">
+      <div class="elevation-box" style="background: var(--light-gray);">surface</div>
+      <div class="button-label">Level 1 — #f5f5f5 面色</div>
+    </div>
+    <div class="elevation-item">
+      <div class="elevation-box" style="background: var(--nbhd-black); color: var(--pure-white);">dark</div>
+      <div class="button-label">Level 2 — #222222 暗色面</div>
+    </div>
+  </div>
+  <p style="font-family: var(--font-condensed); font-size: 13px; color: var(--nbhd-secondary); margin-top: 24px; letter-spacing: -0.13px; line-height: 1.4;">
+    NEIGHBORHOOD は box-shadow を一切使わない。奥行きは色の切り替え（白 → #f5f5f5 → #222222）のみで表現する。border-radius: 0px + shadow: none の組み合わせがブランドの硬質さを形成する。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section section-gray" style="max-width:none;" id="layout">
+<div class="section-inner" style="max-width:1100px; margin:0 auto; padding:64px 20px;">
+  <div class="section-eyebrow">08 / layout</div>
+  <h2 class="section-title">Spacing &amp; Width</h2>
+
+  <h3 style="font-family: var(--font-condensed); font-size:13px; font-weight:400; margin:16px 0 12px; letter-spacing:normal; color: var(--nbhd-black); text-transform: uppercase;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:6px"></div><div class="spacing-value">6px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:15px"></div><div class="spacing-value">15px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px"></div><div class="spacing-value">20px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:35px"></div><div class="spacing-value">35px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <h3 style="font-family: var(--font-condensed); font-size:13px; font-weight:400; margin:32px 0 12px; letter-spacing:normal; color: var(--nbhd-black); text-transform: uppercase;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Bleed Hero <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Product Grid <span class="width-bar-value">~100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:92%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Description Text <span class="width-bar-value">~560px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:40%"></div></div></div>
+
+  <h3 style="font-family: var(--font-condensed); font-size:13px; font-weight:400; margin:32px 0 12px; letter-spacing:normal; color: var(--nbhd-black); text-transform: uppercase;">Letter-Spacing Scale (negative)</h3>
+  <div style="margin-bottom: 24px;">
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px;">
+      <span style="font-family:var(--font-condensed); font-size:33px; font-weight:400; color:var(--nbhd-black); letter-spacing:-3.1px; text-transform:uppercase;">TIGHT</span>
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--nbhd-secondary);">-3.1px (h2 hero)</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px;">
+      <span style="font-family:var(--font-condensed); font-size:24px; font-weight:400; color:var(--nbhd-black); letter-spacing:-1.65px; text-transform:uppercase;">TIGHTER</span>
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--nbhd-secondary);">-1.65px (h2 section)</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px;">
+      <span style="font-family:var(--font-condensed); font-size:16px; font-weight:400; color:var(--nbhd-black); letter-spacing:-0.65px; text-transform:uppercase;">COMPRESSED</span>
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--nbhd-secondary);">-0.65px (VIEW MORE)</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 16px;">
+      <span style="font-family:var(--font-condensed); font-size:13px; font-weight:400; color:var(--nbhd-black); letter-spacing:normal; text-transform:uppercase;">NORMAL</span>
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--nbhd-secondary);">normal (nav, body)</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-subscribe">
+      <input type="email" placeholder="Enter your email">
+      <button>SUBSCRIBE</button>
+    </div>
+    <div class="footer-links">
+      <a href="#">HOME</a>
+      <a href="#">BRANDS</a>
+      <a href="#">NEWS</a>
+      <a href="#">STORES</a>
+      <a href="#">CONTACT</a>
+    </div>
+    <p class="footer-copyright">Generated from <a href="https://www.neighborhood.jp/" style="color: var(--nbhd-muted); text-decoration: underline;">neighborhood.jp</a> DESIGN.md -- awesome-design-md-jp / computed style (2026-05-09)</p>
+    <p class="footer-copyright">© NEIGHBORHOOD CO.,LTD. ALL RIGHTS RESERVED -- preview replaces HelveticaLTWXX-BoldCond with Oswald, TsukuGoPr5-D with Zen Kaku Gothic New</p>
+  </div>
+</footer>
+
+</body>
+</html>
