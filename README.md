@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (173 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (176 sites)</a>
 </p>
 
 <table>
@@ -266,6 +266,11 @@
 <td align="center"><strong>KOSÉ</strong><br><img src="design-md/kose/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CASIO</strong><br><img src="design-md/casio/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HOSOO</strong><br><img src="design-md/hosoo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>WACOAL</strong><br><img src="design-md/wacoal/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TIGER</strong><br><img src="design-md/tiger/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>キユーピー</strong><br><img src="design-md/kewpie/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -500,11 +505,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [KOSÉ (コーセー)](https://www.kose.co.jp/) | Cosmetics / Beauty EC | [DESIGN.md](design-md/kose/DESIGN.md) | [preview.html](design-md/kose/preview.html) |
 | [CASIO (カシオ)](https://www.casio.co.jp/) | Electronics / Corporate | [DESIGN.md](design-md/casio/DESIGN.md) | [preview.html](design-md/casio/preview.html) |
 | [HOSOO (細尾)](https://hosoo.co.jp/) | Textile / Heritage Craft | [DESIGN.md](design-md/hosoo/DESIGN.md) | [preview.html](design-md/hosoo/preview.html) |
+| [WACOAL (ワコール)](https://www.wacoal.jp/) | Apparel / Innerwear | [DESIGN.md](design-md/wacoal/DESIGN.md) | [preview.html](design-md/wacoal/preview.html) |
+| [TIGER (タイガー魔法瓶)](https://www.tiger-corporation.com/) | Home Appliance / Thermos | [DESIGN.md](design-md/tiger/DESIGN.md) | [preview.html](design-md/tiger/preview.html) |
+| [KEWPIE (キユーピー)](https://www.kewpie.co.jp/) | Food & Beverage / Consumer | [DESIGN.md](design-md/kewpie/DESIGN.md) | [preview.html](design-md/kewpie/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (173 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (176 sites)</a>
 </p>
 
 <table>
@@ -736,6 +744,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>KOSÉ</strong><br><img src="design-md/kose/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CASIO</strong><br><img src="design-md/casio/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HOSOO</strong><br><img src="design-md/hosoo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>WACOAL</strong><br><img src="design-md/wacoal/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TIGER</strong><br><img src="design-md/tiger/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kewpie</strong><br><img src="design-md/kewpie/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
