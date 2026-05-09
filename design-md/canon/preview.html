@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Canon（キヤノン）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canon-red: #cc0000;
+    --canon-dark-red: #771f1f;
+    --near-black: #222222;
+    --header-black: #141414;
+    --placeholder: #727272;
+    --border: #dbdbdb;
+    --border-light: #e6e6e6;
+    --divider: #c3c3c3;
+    --white: #ffffff;
+    --near-white: #fafafa;
+    --light-pink: #ffebeb;
+    --light-gray: #f4f4f4;
+    --section-bg: #f8f8f8;
+    --overlay: rgba(0,0,0,0.4);
+    --text-primary: #222222;
+    --text-header: #141414;
+    --danger: #cc0000;
+    --success: #00875a;
+    --warning: #cc7700;
+    --elevation-1: 3px 3px 10px rgba(0,0,0,0.1);
+    --font-base: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white); color: var(--text-primary);
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white); border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand { font-size: 20px; font-weight: 700; color: var(--text-header); text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--near-black); text-decoration: none; }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--near-black);
+    padding: 10px 24px; border-radius: 40px;
+    border: 1px solid var(--near-black);
+    font-size: 14px; font-weight: 700; text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--canon-red); color: var(--white); border-color: var(--canon-red); }
+  .hero {
+    padding: 96px 32px 80px; background: var(--white);
+    max-width: 1200px; margin: 0 auto;
+  }
+  .hero h1 { font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 20px; }
+  .hero p { font-size: 16px; line-height: 1.65; color: var(--near-black); max-width: 640px; margin-bottom: 32px; }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-pill {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--near-black);
+    padding: 18px 32px; border-radius: 40px;
+    border: 1px solid var(--near-black);
+    font-family: var(--font-base); font-size: 15px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-pill:hover { background: var(--canon-red); color: var(--white); border-color: var(--canon-red); }
+  .btn-pill-white {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--near-black);
+    padding: 18px 32px; border-radius: 40px;
+    border: 1px solid var(--white);
+    font-family: var(--font-base); font-size: 15px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-pill-white:hover { background: var(--canon-red); color: var(--white); }
+  .btn-kv {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--near-black);
+    padding: 18px 24px; border-radius: 6px;
+    border: 1px solid var(--border);
+    box-shadow: var(--elevation-1);
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--placeholder); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.06em; }
+  .section-title { font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 48px; }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+  .section-gray { background: var(--light-gray); padding: 80px 32px; }
+  .section-gray .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-red { background: var(--canon-red); padding: 80px 32px; color: var(--white); }
+  .section-red .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-red .section-label { color: rgba(255,255,255,0.5); }
+  .section-red .section-title { color: var(--white); }
+  .section-pink { background: var(--light-pink); padding: 80px 32px; }
+  .section-pink .section-inner { max-width: 1200px; margin: 0 auto; }
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--border-light); border-radius: 6px; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--placeholder); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--placeholder); margin-top: 4px; }
+  .color-group-label { font-size: 14px; font-weight: 700; margin: 24px 0 12px; }
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--placeholder); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--light-gray); color: var(--placeholder); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; font-family: var(--font-base); }
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .product-card { background: var(--white); border-radius: 0; overflow: hidden; }
+  .product-card-img { width: 100%; height: 200px; background: var(--light-gray); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--placeholder); }
+  .product-card-body { padding: 24px; }
+  .product-card h3 { font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+  .product-card p { font-size: 16px; color: var(--near-black); line-height: 1.65; margin-bottom: 16px; }
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
+  .article-preview h2 { font-size: 22px; font-weight: 700; line-height: 1.3; margin: 40px 0 16px; }
+  .article-preview p { font-size: 16px; line-height: 1.65; margin-bottom: 20px; }
+  .article-preview .sub-title { font-size: 18px; font-weight: 400; line-height: 1.46; color: var(--near-black); margin-bottom: 16px; }
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; color: var(--placeholder); margin-top: 8px; font-family: var(--font-mono); }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 900px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--near-white); color: var(--near-black);
+    border: 1px solid var(--border-light); padding: 8px 20px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--placeholder); }
+  .form-input:focus, .form-input--focus { border-color: var(--near-black); background: var(--white); }
+  .form-input--error { border-color: var(--danger); background: var(--white); }
+  .form-state-label { font-size: 12px; color: var(--placeholder); margin-top: 6px; font-family: var(--font-mono); }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; }
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { background: var(--white); border-radius: 6px; padding: 32px 24px; text-align: center; border: 1px solid var(--border-light); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--placeholder); word-break: break-all; line-height: 1.5; }
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--canon-red); margin-bottom: 8px; height: 32px; }
+  .spacing-name { font-size: 12px; font-weight: 700; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--placeholder); }
+  .footer {
+    padding: 40px 32px; text-align: center;
+    background: var(--light-gray); color: var(--placeholder); font-size: 12px;
+  }
+  .footer a { color: var(--near-black); text-decoration: underline; }
+  @media (max-width: 769px) {
+    .hero { padding: 64px 20px 56px; }
+    .hero h1 { font-size: 24px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section, .section-gray, .section-red, .section-pink { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-brand" href="#">Canon</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">製品情報</a>
+</nav>
+
+<section class="hero">
+  <h1>映像の力で、世界を変える。</h1>
+  <p class="sub-title" style="font-size:18px; font-weight:400; line-height:1.46; margin-bottom:16px;">キヤノンマーケティングジャパングループ</p>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。canon.jp の computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-pill" href="#">個人のお客さまトップ</a>
+    <a class="btn-kv" href="#">詳細へ</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Canon Red</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">ブランドカラー・カード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#771f1f"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Red</div><div class="color-swatch-hex">#771f1f</div><div class="color-swatch-role">スキップリンク</div></div></div>
+  </div>
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Near Black</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#141414"></div><div class="color-swatch-info"><div class="color-swatch-name">Header Black</div><div class="color-swatch-hex">#141414</div><div class="color-swatch-role">ヘッダーロゴ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#727272"></div><div class="color-swatch-info"><div class="color-swatch-name">Placeholder</div><div class="color-swatch-hex">#727272</div><div class="color-swatch-role">入力プレースホルダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dbdbdb"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#dbdbdb</div><div class="color-swatch-role">ボタン枠線</div></div></div>
+  </div>
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">メイン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffebeb; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Pink</div><div class="color-swatch-hex">#ffebeb</div><div class="color-swatch-role">ニュースカード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Near White</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">入力欄背景</div></div></div>
+  </div>
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0000</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00875a"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#00875a</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc7700"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#cc7700</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title" style="font-size:30px;">タイポグラフィ階層</h2>
+  <div class="type-sample"><div style="font-size:38px; font-weight:700; line-height:1.2;">企業情報 &#8212; Section Title (H2)</div><div class="type-meta">38px / 700 / lh 1.2<span class="type-context">トップ</span></div></div>
+  <div class="type-sample"><div style="font-size:36px; font-weight:700; line-height:1.2;">Canon Marketing Japan &#8212; H3 Large</div><div class="type-meta">36px / 700 / lh 1.2<span class="type-context">企業名</span></div></div>
+  <div class="type-sample"><div style="font-size:30px; font-weight:700; line-height:1.6;">個人のお客さま &#8212; H3 Card</div><div class="type-meta">30px / 700 / lh 1.6<span class="type-context">顧客カード</span></div></div>
+  <div class="type-sample"><div style="font-size:28px; font-weight:700; line-height:1.3;">ページタイトル &#8212; H1 Page</div><div class="type-meta">28px / 700 / lh 1.3<span class="type-context">下層ページ</span></div></div>
+  <div class="type-sample"><div style="font-size:22px; font-weight:700; line-height:1.8; letter-spacing:0.03em;">日常をより豊かに、よりあざやかに &#8212; Card Desc</div><div class="type-meta">22px / 700 / lh 1.8 / ls 0.03em<span class="type-context">カード説明</span></div></div>
+  <div class="type-sample"><div style="font-size:18px; font-weight:400; line-height:1.46;">キヤノンマーケティングジャパングループ &#8212; Sub Title</div><div class="type-meta">18px / 400 / lh 1.46<span class="type-context">サブタイトル</span></div></div>
+  <div class="type-sample"><div style="font-size:16px; font-weight:400; line-height:1.65;">本文テキスト &#8212; 日本国内を中心にマーケティング活動とソリューション提供を行っています。キヤノン製品事業とITソリューション事業を組み合わせた価値を提供しています。</div><div class="type-meta">16px / 400 / lh 1.65<span class="type-context">本文</span></div></div>
+  <div class="type-sample"><div style="font-size:14px; font-weight:700; line-height:1.5;">ナビメニュータイトル &#8212; Nav Title (14px/700)</div><div class="type-meta">14px / 700 / lh 1.5<span class="type-context">ナビ</span></div></div>
+  <div class="type-sample"><div style="font-size:15px; font-weight:400; line-height:1.6; color:var(--text-header);">&#169; Canon Marketing Japan Inc. &#8212; Copyright (15px)</div><div class="type-meta">15px / 400 / lh 1.6 / color #141414<span class="type-context">フッター</span></div></div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="article">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title" style="font-size:30px;">記事組版サンプル</h2>
+  <div class="article-preview">
+    <h1>イメージング技術の未来</h1>
+    <div class="sub-title">キヤノンが描く映像とプリントの新時代</div>
+    <p>カメラ、プリンター、複合機、医療機器。キヤノンの光学技術はさまざまな分野で活用され、人々の暮らしとビジネスを支えています。</p>
+    <h2>ミラーレスカメラの進化</h2>
+    <p>EOS R システムは、RFマウントレンズとの組み合わせにより、かつてない映像表現を実現します。プロフェッショナルからアマチュアまで、あらゆる撮影者の創造力に応えます。</p>
+    <p style="color:var(--placeholder);">※ 製品の仕様は予告なく変更される場合があります。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title" style="font-size:30px;">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-pill" href="#">個人のお客さまトップ</a><div class="button-label">Pill / 15px bold / radius 40 / border #222</div></div>
+    <div class="button-item"><a class="btn-kv" href="#">詳細へ</a><div class="button-label">KV Button / radius 6 / shadow / border #dbdbdb</div></div>
+  </div>
+  <div style="margin-top:48px; background:var(--canon-red); padding:40px; border-radius:0;">
+    <div class="button-row">
+      <div class="button-item"><a class="btn-pill-white" href="#">個人のお客さまトップ</a><div class="button-label" style="color:rgba(255,255,255,0.5);">Pill on Red / white border / hover → red bg</div></div>
+      <div class="button-item"><a class="btn-pill-white" href="#">法人のお客さまトップ</a><div class="button-label" style="color:rgba(255,255,255,0.5);">Pill on Red / same style</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-pink" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title" style="font-size:30px;">カードコンポーネント</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-img">Product Image</div>
+      <div class="product-card-body">
+        <h3>EOS R5 Mark II</h3>
+        <p>プロフェッショナルの要求に応える、フルサイズミラーレスカメラのフラッグシップ。</p>
+        <a class="btn-pill" href="#" style="padding:12px 24px; font-size:14px;">詳しく見る</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img">Product Image</div>
+      <div class="product-card-body">
+        <h3>PIXUS TS8730</h3>
+        <p>スマホから直接プリント。高画質と使いやすさを両立したインクジェット複合機。</p>
+        <a class="btn-pill" href="#" style="padding:12px 24px; font-size:14px;">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title" style="font-size:30px;">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">製品名・型番で検索</label>
+      <input class="form-input" type="text" placeholder="例：EOS R5">
+      <div class="form-state-label">Default / bg #fafafa / border #e6e6e6</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="user@example.com">
+      <div class="form-state-label">Focus / border #222222</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">正しい電話番号を入力してください</div>
+      <div class="form-state-label">Error / border #cc0000</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title" style="font-size:30px;">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし &#8212; 標準要素</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">3px 3px 10px rgba(0,0,0,0.1)</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-red">
+<div class="section-inner">
+  <div class="section-label">Canon Red Section</div>
+  <h2 class="section-title">日常をより豊かに、よりあざやかに</h2>
+  <p style="font-size:16px; line-height:1.65; color:rgba(255,255,255,0.9); max-width:640px; margin-bottom:24px;">キヤノンの個人のお客さま向け商品・サービス情報の紹介ページです。</p>
+  <a class="btn-pill-white" href="#">個人のお客さまトップ</a>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title" style="font-size:30px;">スペーシング & レイアウト</h2>
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px"></div><div class="spacing-name">S</div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-name">XL</div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-name">XXL</div><div class="spacing-value">64px</div></div>
+  </div>
+  <div class="color-group-label" style="margin-top:40px;">Border Radius</div>
+  <div style="display:flex; gap:24px; flex-wrap:wrap;">
+    <div style="text-align:center;"><div style="width:96px; height:64px; background:var(--border); border-radius:0;"></div><div class="spacing-name" style="margin-top:8px;">0px</div><div class="spacing-value">基本要素</div></div>
+    <div style="text-align:center;"><div style="width:96px; height:64px; background:var(--border); border-radius:6px;"></div><div class="spacing-name" style="margin-top:8px;">6px</div><div class="spacing-value">KV ボタン</div></div>
+    <div style="text-align:center;"><div style="width:120px; height:48px; background:var(--border); border-radius:40px;"></div><div class="spacing-name" style="margin-top:8px;">40px</div><div class="spacing-value">Pill CTA</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://canon.jp/">canon.jp</a> DESIGN.md &#8212; awesome-design-md-jp / computed style 実測値（2026-05-09）
+</footer>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: LOFT（ロフト）</title>
+<style>
+  :root {
+    --loft-yellow: #fdd000;
+    --yellow-dark: #eba700;
+    --new-red: #e40012;
+    --black: #000000;
+    --dark-gray: #333333;
+    --mid-gray: #666666;
+    --light-gray: #999999;
+    --border-gray: #cccccc;
+    --btn-gray: #eeeeee;
+    --input-gray: #e1e2e5;
+    --white: #ffffff;
+    --warm-white: #fffbf4;
+    --bg-gray: #f4f4f4;
+    --footer-gray: #f1f1f1;
+    --help-bg: #fafafa;
+    --category-bg: #f3f2db;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-date: #999999;
+    --danger: #e40012;
+    --success: #00875a;
+    --warning: #eba700;
+    --font-corporate: YuGothic, "游ゴシック", メイリオ, Meiryo, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", sans-serif;
+    --font-content: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS P Gothic", sans-serif;
+    --font-store: メイリオ, Meiryo, "ＭＳ ゴシック", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-corporate);
+    font-size: 16px; font-weight: 400; line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--loft-yellow);
+  }
+  .nav-brand { font-size: 22px; font-weight: 700; color: var(--black); text-decoration: none; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 700; color: var(--black); text-decoration: none; }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--black);
+    padding: 6px 16px; border-radius: 3px;
+    border: 1px solid var(--border-gray);
+    font-size: 12px; font-weight: 700; text-decoration: none;
+  }
+  .hero {
+    padding: 80px 32px 64px;
+    background: var(--warm-white);
+    max-width: 1200px; margin: 0 auto;
+  }
+  .hero h1 { font-family: var(--font-content); font-size: 28px; font-weight: 700; line-height: 1.4; margin-bottom: 16px; font-feature-settings: "kern"; }
+  .hero p { font-family: var(--font-content); font-size: 14px; line-height: 1.5; color: var(--dark-gray); max-width: 600px; margin-bottom: 24px; font-feature-settings: "kern"; }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .section { padding: 64px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--mid-gray); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.06em; }
+  .section-title { font-family: var(--font-content); font-size: 18px; font-weight: 700; line-height: 1.4; margin-bottom: 40px; font-feature-settings: "kern"; }
+  .section-divider { border: none; border-top: 1px solid var(--border-gray); margin: 0; }
+  .section-gray { background: var(--bg-gray); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-warm { background: var(--warm-white); padding: 64px 32px; }
+  .section-warm .section-inner { max-width: 1200px; margin: 0 auto; }
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--border-gray); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 11px; color: var(--mid-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 10px; color: var(--mid-gray); margin-top: 2px; line-height: 1.4; }
+  .color-group-label { font-size: 13px; font-weight: 700; margin: 20px 0 10px; }
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--mid-gray); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-gray); color: var(--mid-gray); font-size: 10px; padding: 1px 6px; margin-left: 6px; font-family: var(--font-corporate); }
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .product-card { background: var(--white); border: 1px solid var(--border-gray); }
+  .product-card-img { width: 100%; height: 160px; background: var(--bg-gray); display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--mid-gray); }
+  .product-card-body { padding: 16px; }
+  .product-card h3 { font-family: var(--font-store); font-size: 12px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+  .product-card .price { font-family: var(--font-store); font-size: 14px; font-weight: 700; color: var(--black); }
+  .product-card .date { font-family: var(--font-store); font-size: 12px; color: var(--text-date); margin-top: 4px; }
+  .badge-new { display: inline-block; background: var(--new-red); color: var(--white); font-size: 11px; padding: 2px 4px; margin-right: 4px; }
+  .btn-outline {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--black);
+    padding: 4px 16px; border-radius: 5px;
+    border: 1px solid var(--border-gray);
+    font-family: var(--font-store); font-size: 12px; font-weight: 700;
+    text-decoration: none; cursor: pointer; line-height: 40px;
+  }
+  .btn-outline:hover { background: var(--bg-gray); }
+  .btn-outline-sm {
+    display: inline-flex; align-items: center;
+    background: var(--btn-gray); color: var(--black);
+    padding: 4px 8px; border-radius: 3px; border: none;
+    font-family: var(--font-store); font-size: 11px;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-search {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: #111111;
+    padding: 6px 12px; border-radius: 3px;
+    border: 1px solid var(--border-gray);
+    font-family: var(--font-store); font-size: 12px;
+    cursor: pointer;
+  }
+  .btn-link {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: #1f2022;
+    padding: 8px 32px 8px 8px; border-radius: 0;
+    border: 1px solid #a2a1ab;
+    font-family: var(--font-content); font-size: 16px;
+    text-decoration: none; font-feature-settings: "kern";
+  }
+  .button-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 11px; color: var(--mid-gray); margin-top: 6px; font-family: var(--font-mono); }
+  .article-preview { max-width: 680px; margin: 0 auto; font-family: var(--font-content); font-feature-settings: "kern"; }
+  .article-preview h1 { font-size: 16px; font-weight: 700; line-height: 1.4; margin-bottom: 16px; }
+  .article-preview h2 { font-size: 14px; font-weight: 700; line-height: 1.4; margin: 32px 0 12px; }
+  .article-preview p { font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+  .article-preview .date { font-size: 12px; color: var(--text-date); margin-bottom: 12px; }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-family: var(--font-store); font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--input-gray); color: var(--black);
+    border: none; padding: 8px 10px; border-radius: 0 3px 3px 0;
+    font-family: var(--font-store); font-size: 12px; outline: none;
+  }
+  .form-input::placeholder { color: var(--mid-gray); }
+  .form-input:focus, .form-input--focus { background: var(--white); border: 1px solid var(--dark-gray); }
+  .form-input--error { background: var(--white); border: 1px solid var(--danger); }
+  .form-state-label { font-size: 10px; color: var(--mid-gray); margin-top: 4px; font-family: var(--font-mono); }
+  .form-error-text { font-size: 11px; color: var(--danger); margin-top: 4px; }
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--white); padding: 28px 20px; text-align: center; border: 1px solid var(--border-gray); }
+  .elevation-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--mid-gray); }
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--loft-yellow); margin-bottom: 6px; height: 28px; }
+  .spacing-name { font-size: 11px; font-weight: 700; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; color: var(--mid-gray); }
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--footer-gray); color: var(--mid-gray); font-size: 11px;
+  }
+  .footer a { color: var(--black); text-decoration: underline; }
+  @media (max-width: 769px) {
+    .hero { padding: 48px 16px 40px; }
+    .hero h1 { font-size: 22px; }
+    .nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .section, .section-gray, .section-warm { padding: 40px 16px; }
+    .section-title { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-brand" href="#">LOFT</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ネットストア</a>
+</nav>
+
+<section class="hero">
+  <h1>生活雑貨の最前線。<br>ロフトで見つける、暮らしのアイデア</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。loft.co.jp の computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-outline" href="#">季節の特集・おすすめ特集一覧はこちら</a>
+    <a class="btn-outline-sm" href="#">店舗情報</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fdd000"></div><div class="color-swatch-info"><div class="color-swatch-name">LOFT Yellow</div><div class="color-swatch-hex">#fdd000</div><div class="color-swatch-role">ヘッダー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eba700"></div><div class="color-swatch-info"><div class="color-swatch-name">Yellow Dark</div><div class="color-swatch-hex">#eba700</div><div class="color-swatch-role">アクセント・矢印</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e40012"></div><div class="color-swatch-info"><div class="color-swatch-name">NEW Red</div><div class="color-swatch-hex">#e40012</div><div class="color-swatch-role">NEW!! バッジ</div></div></div>
+  </div>
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Gray</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ストア本文</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Gray</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補助UI</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">日付テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ボタン枠線</div></div></div>
+  </div>
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">メイン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fffbf4; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm White</div><div class="color-swatch-hex">#fffbf4</div><div class="color-swatch-role">サイドバー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f1f1; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Gray</div><div class="color-swatch-hex">#f1f1f1</div><div class="color-swatch-role">フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f2db; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Category</div><div class="color-swatch-hex">#f3f2db</div><div class="color-swatch-role">カテゴリーBG</div></div></div>
+  </div>
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e40012"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#e40012</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00875a"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#00875a</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eba700"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#eba700</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+  <div class="type-sample"><div style="font-family:var(--font-content); font-size:18px; font-weight:700; line-height:1.0; font-feature-settings:'kern';">セクション見出し &#8212; H2 (18px/700)</div><div class="type-meta">18px / 700 / lh 1.0 / kern<span class="type-context">ネットストア</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-content); font-size:16px; font-weight:700; line-height:1.4; font-feature-settings:'kern';">重要なお知らせ &#8212; H2 (16px/700)</div><div class="type-meta">16px / 700 / lh 1.4 / kern<span class="type-context">コーポレート</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-content); font-size:14px; font-weight:400; line-height:1.4; font-feature-settings:'kern';">お知らせリスト項目 &#8212; H3 (14px/400)</div><div class="type-meta">14px / 400 / lh 1.4 / kern<span class="type-context">コーポレート</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-content); font-size:16px; font-weight:400; line-height:1.875; font-feature-settings:'kern';">本文テキスト &#8212; ロフトは文房具、雑貨、コスメ、健康グッズなど、暮らしを彩る生活雑貨の専門店です。新しい発見と出会いをお届けするライフスタイルストアとして、お客様の毎日をもっと楽しく、もっと便利に。</div><div class="type-meta">16px / 400 / lh 1.875 / kern<span class="type-context">コーポレート</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-store); font-size:12px; font-weight:400; line-height:1.3;">商品タイトルテキスト &#8212; ストア (12px/400)</div><div class="type-meta">12px / 400 / lh 1.3<span class="type-context">ネットストア</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-store); font-size:12px; font-weight:400; line-height:1.0; color:var(--text-date);">2026.05.08 &#8212; Date (12px)</div><div class="type-meta">12px / 400 / lh 1.0 / color #999999<span class="type-context">ネットストア</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-corporate); font-size:14px; font-weight:700; line-height:1.0;">ナビゲーション &#8212; Nav (14px/700)</div><div class="type-meta">14px / 700 / lh 1.0<span class="type-context">ヘッダー</span></div></div>
+  <div class="type-sample"><div><span class="badge-new">NEW!!</span><span style="font-family:var(--font-content); font-size:13px; font-feature-settings:'kern';">ニュースタイトル &#8212; News (13px) + NEW Badge</span></div><div class="type-meta">badge: 11px / bg #e40012 / padding 2px | title: 13px / 400<span class="type-context">コーポレート</span></div></div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="article">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事組版サンプル</h2>
+  <div class="article-preview">
+    <div class="date">2026.05.08</div>
+    <h1>文房具の新しいトレンド &#8212; 2026年春の注目アイテム</h1>
+    <p>毎年進化する文房具シーン。今年の春は「書く体験」を見直すアイテムが注目を集めています。デジタル全盛の時代だからこそ、手書きの温もりが見直されています。</p>
+    <h2>万年筆の再ブーム</h2>
+    <p>初心者向けのエントリーモデルから、老舗メーカーの限定品まで。インクの色選びも楽しみのひとつ。ロフトでは常時200色以上のボトルインクを取り揃えています。</p>
+    <p style="color:var(--text-date); font-size:12px;">※ 在庫状況は店舗によって異なります。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-warm" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline" href="#">季節の特集一覧はこちら</a><div class="button-label">Primary / 12px bold / radius 5 / border #ccc</div></div>
+    <div class="button-item"><a class="btn-outline-sm" href="#">カラーをみる</a><div class="button-label">Secondary / 11px / bg #eee / radius 3</div></div>
+    <div class="button-item"><a class="btn-search" href="#">詳細検索</a><div class="button-label">Search / 12px / radius 3 / border #ccc</div></div>
+    <div class="button-item"><a class="btn-link" href="#">偽通販サイトにご注意ください ＞</a><div class="button-label">Link / 16px / border #a2a1ab / radius 0</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-img">Product Image</div>
+      <div class="product-card-body">
+        <h3><span class="badge-new">NEW!!</span>カンロ「ピュレグミ」リラックマコラボ</h3>
+        <div class="price">¥324（税込）</div>
+        <div class="date">2026.05.08</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img">Product Image</div>
+      <div class="product-card-body">
+        <h3>ジェットストリーム 4&amp;1 限定カラー</h3>
+        <div class="price">¥1,100（税込）</div>
+        <div class="date">2026.05.05</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img">Product Image</div>
+      <div class="product-card-body">
+        <h3>クリエイターmeets ロフト オリジナルポーチ</h3>
+        <div class="price">¥1,650（税込）</div>
+        <div class="date">2026.04.28</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-img">Product Image</div>
+      <div class="product-card-body">
+        <h3><span class="badge-new">NEW!!</span>UV対策 フェイスパウダー</h3>
+        <div class="price">¥2,200（税込）</div>
+        <div class="date">2026.05.07</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">キーワードで検索</label>
+      <input class="form-input" type="text" placeholder="商品名・ブランド名">
+      <div class="form-state-label">Default / bg #e1e2e5 / radius 0 3px 3px 0</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="user@example.com">
+      <div class="form-state-label">Focus / bg #fff / border 1px #333</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="">
+      <div class="form-error-text">入力してください</div>
+      <div class="form-state-label">Error / border 1px #e40012</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし &#8212; 全要素（フラット基調）</div></div>
+  </div>
+  <p style="font-size:13px; color:var(--mid-gray); margin-top:16px;">LOFT はフラットデザインが基本。box-shadow の使用は実測されなかった。</p>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="layout">
+<div class="section-inner">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-name">XL</div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XXL</div><div class="spacing-value">48px</div></div>
+  </div>
+  <div class="color-group-label" style="margin-top:32px;">Border Radius</div>
+  <div style="display:flex; gap:16px; flex-wrap:wrap;">
+    <div style="text-align:center;"><div style="width:64px; height:44px; background:var(--border-gray); border-radius:0;"></div><div class="spacing-name" style="margin-top:6px;">0px</div><div class="spacing-value">Link Button</div></div>
+    <div style="text-align:center;"><div style="width:64px; height:44px; background:var(--border-gray); border-radius:3px;"></div><div class="spacing-name" style="margin-top:6px;">3px</div><div class="spacing-value">Search / Tag</div></div>
+    <div style="text-align:center;"><div style="width:64px; height:44px; background:var(--border-gray); border-radius:5px;"></div><div class="spacing-name" style="margin-top:6px;">5px</div><div class="spacing-value">Primary CTA</div></div>
+  </div>
+  <div class="color-group-label" style="margin-top:32px;">Content Width</div>
+  <p style="font-size:13px; color:var(--mid-gray);">Corporate: max-width 980px / Store: max-width 960px / 2-column layout (store)</p>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.loft.co.jp/">loft.co.jp</a> DESIGN.md &#8212; awesome-design-md-jp / computed style 実測値（2026-05-09）
+</footer>
+</body>
+</html>

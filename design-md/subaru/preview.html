@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SUBARU（スバル）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --subaru-blue: #00205b;
+    --blue-active: #014e98;
+    --blue-bright: #1371c3;
+    --blue-accent: #0e4bef;
+    --dark-blue-gray: #27455c;
+    --blue-gray-light: #dde2e6;
+    --green: #468254;
+    --black: #000000;
+    --mid-gray: #666666;
+    --light-section: #f0f3f5;
+    --border-gray: #e5e5e5;
+    --surface: #fafafa;
+    --white: #ffffff;
+    --dark-bg: #151b17;
+    --text-primary: #000000;
+    --danger: #cc0000;
+    --success: #468254;
+    --warning: #cc7700;
+    --font-base: "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --font-date: "Inter", YakuHanJPs, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white); color: var(--text-primary);
+    font-family: var(--font-base); font-size: 16px; font-weight: 300;
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white); border-bottom: 1px solid var(--border-gray);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 20px; font-weight: 300; color: var(--black); text-decoration: none;
+  }
+  .nav-brand-icon {
+    display: inline-block; width: 28px; height: 28px;
+    background: var(--subaru-blue); border-radius: 0;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 16px; font-weight: 300; color: var(--black); text-decoration: none; padding: 8px 0; }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--blue-active); color: var(--white);
+    padding: 10px 24px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    text-decoration: none;
+  }
+  .hero {
+    padding: 96px 32px 80px; background: var(--white);
+    max-width: 1280px; margin: 0 auto;
+  }
+  .hero h1 { font-size: 40px; font-weight: 300; line-height: 1.4; margin-bottom: 20px; }
+  .hero p { font-size: 16px; font-weight: 300; line-height: 1.5; color: var(--black); max-width: 640px; margin-bottom: 32px; }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-blue {
+    display: inline-flex; align-items: center;
+    background: var(--blue-active); color: var(--white);
+    padding: 14px 32px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-blue:hover { background: var(--subaru-blue); }
+  .btn-outline-dark {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--black);
+    padding: 14px 32px; border-radius: 0;
+    border: 1px solid var(--border-gray);
+    font-family: var(--font-base); font-size: 16px; font-weight: 300;
+    text-decoration: none; cursor: pointer;
+  }
+  .section { padding: 80px 32px; max-width: 1280px; margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--mid-gray); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.06em; }
+  .section-title { font-size: 40px; font-weight: 300; line-height: 1.4; margin-bottom: 48px; }
+  .section-divider { border: none; border-top: 1px solid var(--border-gray); margin: 0; }
+  .section-light { background: var(--light-section); padding: 80px 32px; }
+  .section-light .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-dark { background: var(--dark-blue-gray); padding: 80px 32px; color: var(--white); }
+  .section-dark .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-dark .section-label { color: rgba(255,255,255,0.4); }
+  .section-dark .section-title { color: var(--white); }
+  .section-breadcrumb { background: var(--blue-gray-light); padding: 80px 32px; }
+  .section-breadcrumb .section-inner { max-width: 1280px; margin: 0 auto; }
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--border-gray); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--mid-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--mid-gray); margin-top: 4px; }
+  .color-group-label { font-size: 14px; font-weight: 600; margin: 24px 0 12px; }
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--mid-gray); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--light-section); color: var(--mid-gray); font-size: 11px; padding: 2px 8px; margin-left: 8px; font-family: var(--font-base); font-weight: 400; }
+  .tab-row { display: flex; gap: 0; border-bottom: 2px solid var(--border-gray); margin-bottom: 32px; }
+  .tab-item { padding: 11px 24px; font-size: 20px; font-weight: 300; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .tab-item.active { color: var(--blue-active); font-weight: 600; border-bottom-color: var(--blue-active); }
+  .lineup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .lineup-card { background: var(--white); border: 1px solid var(--border-gray); overflow: hidden; }
+  .lineup-card-img { width: 100%; height: 180px; background: var(--light-section); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--mid-gray); }
+  .lineup-card-body { padding: 20px 24px; }
+  .lineup-card .category { font-size: 12px; font-weight: 300; line-height: 1.3; color: var(--black); margin-bottom: 4px; }
+  .lineup-card .car-name { font-size: 24px; font-weight: 300; line-height: 1.5; color: var(--black); }
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 { font-size: 32px; font-weight: 300; line-height: 1.375; margin-bottom: 20px; }
+  .article-preview h2 { font-size: 24px; font-weight: 300; line-height: 1.5; margin: 40px 0 16px; }
+  .article-preview p { font-size: 16px; font-weight: 300; line-height: 1.5; margin-bottom: 20px; }
+  .article-preview .date { font-family: var(--font-date); font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--black); }
+  .article-preview .note { font-size: 12px; font-weight: 300; color: var(--mid-gray); }
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; color: var(--mid-gray); margin-top: 8px; font-family: var(--font-mono); }
+  .btn-cookie {
+    display: inline-flex; align-items: center;
+    background: var(--blue-bright); color: var(--white);
+    padding: 10px 24px; border-radius: 4px; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+  }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 900px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--border-gray); padding: 10px 16px; border-radius: 8px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 300; outline: none;
+  }
+  .form-input::placeholder { color: var(--mid-gray); }
+  .form-input:focus, .form-input--focus { border-color: var(--blue-active); }
+  .form-input--error { border-color: var(--danger); }
+  .form-state-label { font-size: 12px; color: var(--mid-gray); margin-top: 6px; font-family: var(--font-mono); }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; }
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { background: var(--white); padding: 32px 24px; text-align: center; border: 1px solid var(--border-gray); }
+  .elevation-label { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--mid-gray); }
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--subaru-blue); margin-bottom: 8px; height: 32px; }
+  .spacing-name { font-size: 12px; font-weight: 600; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--mid-gray); }
+  .footer {
+    padding: 40px 32px; text-align: center;
+    background: var(--dark-blue-gray); color: rgba(255,255,255,0.6); font-size: 12px;
+  }
+  .footer a { color: var(--white); text-decoration: underline; }
+  @media (max-width: 769px) {
+    .hero { padding: 64px 20px 56px; }
+    .hero h1 { font-size: 28px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section, .section-light, .section-dark, .section-breadcrumb { padding: 56px 20px; }
+    .section-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="nav-brand" href="#"><span class="nav-brand-icon"></span> SUBARU</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#lineup">Lineup</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">来店予約</a>
+</nav>
+
+<section class="hero">
+  <h1>安心と愉しさを。<br>SUBARUのクルマづくり</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。subaru.jp の computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-blue" href="#">ラインアップを見る</a>
+    <a class="btn-outline-dark" href="#">試乗予約</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+  <div class="color-group-label">Brand — SUBARU Blue</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00205b"></div><div class="color-swatch-info"><div class="color-swatch-name">SUBARU Blue</div><div class="color-swatch-hex">#00205b</div><div class="color-swatch-role">ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#014e98"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Active</div><div class="color-swatch-hex">#014e98</div><div class="color-swatch-role">タブ active・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1371c3"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Bright</div><div class="color-swatch-hex">#1371c3</div><div class="color-swatch-role">Cookie CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0e4bef"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Accent</div><div class="color-swatch-hex">#0e4bef</div><div class="color-swatch-role">動画プログレス</div></div></div>
+  </div>
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Gray</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">注釈</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5e5e5"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e5e5e5</div><div class="color-swatch-role">区切り線</div></div></div>
+  </div>
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">メイン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">カード面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f3f5; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Section</div><div class="color-swatch-hex">#f0f3f5</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dde2e6; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Gray</div><div class="color-swatch-hex">#dde2e6</div><div class="color-swatch-role">パンくず背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27455c"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Blue Gray</div><div class="color-swatch-hex">#27455c</div><div class="color-swatch-role">ダークセクション</div></div></div>
+  </div>
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Green</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">アクセント</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-light" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+  <div class="type-sample"><div style="font-size:40px; font-weight:300; line-height:1.4;">ラインアップ &#8212; H2 Section (40px/300)</div><div class="type-meta">40px / 300 / lh 1.4 — Light ウェイトの大見出し<span class="type-context">トップ</span></div></div>
+  <div class="type-sample"><div style="font-size:32px; font-weight:300; line-height:1.375;">ニュース &#8212; H3 Sub Section (32px/300)</div><div class="type-meta">32px / 300 / lh 1.375<span class="type-context">トップ</span></div></div>
+  <div class="type-sample"><div style="font-size:24px; font-weight:300; line-height:1.5;">トレイルシーカー &#8212; Car Name (24px/300)</div><div class="type-meta">24px / 300 / lh 1.5 — 車名<span class="type-context">ラインアップ</span></div></div>
+  <div class="type-sample"><div style="font-size:20px; font-weight:300; line-height:1.5;">ナビゲーション &#8212; Nav (20px/300)</div><div class="type-meta">20px / 300 / lh 1.5<span class="type-context">ヘッダー</span></div></div>
+  <div class="type-sample"><div style="font-size:20px; font-weight:600; line-height:normal; color:var(--blue-active);">乗用車 &#8212; Tab Active (20px/600)</div><div class="type-meta">20px / 600 / color #014e98<span class="type-context">タブ active</span></div></div>
+  <div class="type-sample"><div style="font-size:16px; font-weight:300; line-height:1.5;">本文テキスト &#8212; SUBARUは、「お客様第一」を基軸に「安心と愉しさ」を提供するクルマづくりを追求しています。独自の水平対向エンジンとシンメトリカルAWDで、すべての人に安全で愉しいドライブ体験をお届けします。</div><div class="type-meta">16px / 300 / lh 1.5 — 本文の基本ウェイトは 300（Light）<span class="type-context">共通</span></div></div>
+  <div class="type-sample"><div style="font-family:var(--font-date); font-size:16px; font-weight:600; line-height:1.5;">2026.4.9 &#8212; Date (Inter/600)</div><div class="type-meta">16px / 600 / Inter (Neue Haas Grotesk 代替) + YakuHanJPs<span class="type-context">ニュース日付</span></div></div>
+  <div class="type-sample"><div style="font-size:12px; font-weight:300; line-height:1.3;">SUV &#8212; Category (12px/300)</div><div class="type-meta">12px / 300 / lh 1.3 — 車種カテゴリ<span class="type-context">ラインアップ</span></div></div>
+  <div class="type-sample"><div style="font-size:12px; font-weight:300; line-height:1.5; color:var(--mid-gray);">＊ 注釈テキスト &#8212; Note (12px/300)</div><div class="type-meta">12px / 300 / color #666666<span class="type-context">注釈</span></div></div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="lineup">
+  <div class="section-label">03 / Lineup</div>
+  <h2 class="section-title">ラインアップ</h2>
+  <div class="tab-row">
+    <div class="tab-item active">乗用車</div>
+    <div class="tab-item">STI Sport</div>
+    <div class="tab-item">特別仕様車</div>
+    <div class="tab-item">軽自動車</div>
+  </div>
+  <div class="lineup-grid">
+    <div class="lineup-card">
+      <div class="lineup-card-img">Vehicle Image</div>
+      <div class="lineup-card-body">
+        <div class="category">SUV</div>
+        <div class="car-name">フォレスター</div>
+      </div>
+    </div>
+    <div class="lineup-card">
+      <div class="lineup-card-img">Vehicle Image</div>
+      <div class="lineup-card-body">
+        <div class="category">SUV</div>
+        <div class="car-name">トレイルシーカー</div>
+      </div>
+    </div>
+    <div class="lineup-card">
+      <div class="lineup-card-img">Vehicle Image</div>
+      <div class="lineup-card-body">
+        <div class="category">SEDAN</div>
+        <div class="car-name">レヴォーグ</div>
+      </div>
+    </div>
+    <div class="lineup-card">
+      <div class="lineup-card-img">Vehicle Image</div>
+      <div class="lineup-card-body">
+        <div class="category">SPORTS</div>
+        <div class="car-name">BRZ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-light" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-blue" href="#">来店予約</a><div class="button-label">CTA / bg #014e98 / weight 600 / radius 0</div></div>
+    <div class="button-item"><a class="btn-cookie" href="#">すべて許可する</a><div class="button-label">Cookie / bg #1371c3 / radius 4</div></div>
+    <div class="button-item"><a class="btn-outline-dark" href="#">試乗予約</a><div class="button-label">Outline / weight 300 / border #e5e5e5</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / News</div>
+  <h2 class="section-title" style="font-size:32px;">ニュース</h2>
+  <div class="article-preview">
+    <div class="date">2026.4.9</div>
+    <h1>SUBARU の安全技術</h1>
+    <p>「総合安全」によって死亡・重傷交通事故件数が10年で約50％低減。アイサイトをはじめとする先進安全技術が、すべてのドライバーとその大切な人を守ります。</p>
+    <h2>シンメトリカルAWD</h2>
+    <p>水平対向エンジンを核としたシンメトリカルなパワートレーンレイアウト。低重心と左右対称の構造が、あらゆる路面状況で安定した走行を実現します。</p>
+    <p class="note">＊ 公道での実使用データに基づく。走行条件により異なります。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-light" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">車種名で検索</label>
+      <input class="form-input" type="text" placeholder="例：フォレスター">
+      <div class="form-state-label">Default / border #e5e5e5 / radius 8px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="user@example.com">
+      <div class="form-state-label">Focus / border #014e98</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="">
+      <div class="form-error-text">入力してください</div>
+      <div class="form-state-label">Error / border #cc0000</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし &#8212; 全要素（フラット基調）</div></div>
+  </div>
+  <p style="font-size:13px; font-weight:300; color:var(--mid-gray); margin-top:16px;">SUBARU はフラットデザインが基本。車両画像の存在感で視覚的な奥行きを表現。</p>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-dark">
+<div class="section-inner">
+  <div class="section-label">Dark Section Demo</div>
+  <h2 class="section-title">ダークセクション &#8212; #27455c</h2>
+  <p style="font-size:16px; font-weight:300; line-height:1.5; color:rgba(255,255,255,0.8); max-width:640px; margin-bottom:24px;">セクション背景のダークブルーグレー。安全性・信頼性のメッセージを伝えるダークセクションに使用。</p>
+  <a class="btn-blue" href="#" style="background:var(--blue-bright);">詳しく見る</a>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">XS</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px"></div><div class="spacing-name">S</div><div class="spacing-value">12px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-name">XL</div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-name">XXL</div><div class="spacing-value">64px</div></div>
+  </div>
+  <div class="color-group-label" style="margin-top:40px;">Border Radius</div>
+  <div style="display:flex; gap:24px; flex-wrap:wrap;">
+    <div style="text-align:center;"><div style="width:96px; height:64px; background:var(--border-gray); border-radius:0;"></div><div class="spacing-name" style="margin-top:8px;">0px</div><div class="spacing-value">タブ・CTA</div></div>
+    <div style="text-align:center;"><div style="width:96px; height:64px; background:var(--border-gray); border-radius:4px;"></div><div class="spacing-name" style="margin-top:8px;">4px</div><div class="spacing-value">Cookie button</div></div>
+    <div style="text-align:center;"><div style="width:96px; height:64px; background:var(--border-gray); border-radius:8px;"></div><div class="spacing-name" style="margin-top:8px;">8px</div><div class="spacing-value">Search input</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.subaru.jp/">subaru.jp</a> DESIGN.md &#8212; awesome-design-md-jp / computed style 実測値（2026-05-09）
+</footer>
+</body>
+</html>

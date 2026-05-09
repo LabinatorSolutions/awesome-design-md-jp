@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (152 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (155 sites)</a>
 </p>
 
 <table>
@@ -239,6 +239,9 @@
 <td align="center"><strong>Panasonic</strong><br><img src="design-md/panasonic/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MIKIMOTO</strong><br><img src="design-md/mikimoto/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SAPPORO</strong><br><img src="design-md/sapporo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LOFT</strong><br><img src="design-md/loft/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Canon</strong><br><img src="design-md/canon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SUBARU</strong><br><img src="design-md/subaru/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -452,11 +455,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Panasonic (パナソニック)](https://www.panasonic.com/jp/) | Electronics / Consumer Tech | [DESIGN.md](design-md/panasonic/DESIGN.md) | [preview.html](design-md/panasonic/preview.html) |
 | [MIKIMOTO (ミキモト)](https://www.mikimoto.com/jp-ja/) | Luxury Jewelry / Heritage | [DESIGN.md](design-md/mikimoto/DESIGN.md) | [preview.html](design-md/mikimoto/preview.html) |
 | [SAPPORO (サッポロビール)](https://www.sapporobeer.jp/) | Beverage / Corporate | [DESIGN.md](design-md/sapporo/DESIGN.md) | [preview.html](design-md/sapporo/preview.html) |
+| [LOFT (ロフト)](https://www.loft.co.jp/) | Retail / Lifestyle | [DESIGN.md](design-md/loft/DESIGN.md) | [preview.html](design-md/loft/preview.html) |
+| [Canon (キヤノン)](https://canon.jp/) | Imaging / Electronics | [DESIGN.md](design-md/canon/DESIGN.md) | [preview.html](design-md/canon/preview.html) |
+| [SUBARU (スバル)](https://www.subaru.jp/) | Automotive | [DESIGN.md](design-md/subaru/DESIGN.md) | [preview.html](design-md/subaru/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (152 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (155 sites)</a>
 </p>
 
 <table>
@@ -661,6 +667,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Panasonic</strong><br><img src="design-md/panasonic/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MIKIMOTO</strong><br><img src="design-md/mikimoto/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SAPPORO</strong><br><img src="design-md/sapporo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LOFT</strong><br><img src="design-md/loft/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Canon</strong><br><img src="design-md/canon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SUBARU</strong><br><img src="design-md/subaru/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
