@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (164 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (167 sites)</a>
 </p>
 
 <table>
@@ -255,6 +255,9 @@
 <td align="center"><strong>CFCL</strong><br><img src="design-md/cfcl/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>D-BROS</strong><br><img src="design-md/d-bros/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SIGMA</strong><br><img src="design-md/sigma/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>伊藤園</strong><br><img src="design-md/itoen/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カインズ</strong><br><img src="design-md/cainz/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カゴメ</strong><br><img src="design-md/kagome/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -480,11 +483,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [CFCL](https://www.cfcl.jp/) | Fashion / 3D Knit | [DESIGN.md](design-md/cfcl/DESIGN.md) | [preview.html](design-md/cfcl/preview.html) |
 | [D-BROS (ディーブロス)](https://www.d-bros.jp/) | Design Products / Lifestyle | [DESIGN.md](design-md/d-bros/DESIGN.md) | [preview.html](design-md/d-bros/preview.html) |
 | [SIGMA (シグマ)](https://www.sigma-global.com/jp/) | Camera / Optical Equipment | [DESIGN.md](design-md/sigma/DESIGN.md) | [preview.html](design-md/sigma/preview.html) |
+| [ITO EN (伊藤園)](https://www.itoen.co.jp/) | Beverage / Tea | [DESIGN.md](design-md/itoen/DESIGN.md) | [preview.html](design-md/itoen/preview.html) |
+| [CAINZ (カインズ)](https://www.cainz.com/) | Home Improvement / Retail EC | [DESIGN.md](design-md/cainz/DESIGN.md) | [preview.html](design-md/cainz/preview.html) |
+| [Kagome (カゴメ)](https://www.kagome.co.jp/) | Food & Beverage / Corporate | [DESIGN.md](design-md/kagome/DESIGN.md) | [preview.html](design-md/kagome/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (164 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (167 sites)</a>
 </p>
 
 <table>
@@ -705,6 +711,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>CFCL</strong><br><img src="design-md/cfcl/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>D-BROS</strong><br><img src="design-md/d-bros/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SIGMA</strong><br><img src="design-md/sigma/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ITO EN</strong><br><img src="design-md/itoen/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CAINZ</strong><br><img src="design-md/cainz/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kagome</strong><br><img src="design-md/kagome/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
