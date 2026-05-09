@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (143 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (146 sites)</a>
 </p>
 
 <table>
@@ -228,6 +228,9 @@
 <td align="center"><strong>KUON</strong><br><img src="design-md/kuon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ReFa</strong><br><img src="design-md/refa/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>mt</strong><br><img src="design-md/mt/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FUJIFILM</strong><br><img src="design-md/fujifilm/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>UNITED ARROWS</strong><br><img src="design-md/united-arrows/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KIRIN</strong><br><img src="design-md/kirin/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -432,11 +435,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [KUON (クオン)](https://kuon.tokyo/) | Fashion / Artisanal Menswear | [DESIGN.md](design-md/kuon/DESIGN.md) | [preview.html](design-md/kuon/preview.html) |
 | [ReFa (リファ)](https://www.refa.net/) | Beauty Device / Premium Beauty | [DESIGN.md](design-md/refa/DESIGN.md) | [preview.html](design-md/refa/preview.html) |
 | [mt masking tape](https://www.masking-tape.jp/) | Stationery / Design Tape | [DESIGN.md](design-md/mt/DESIGN.md) | [preview.html](design-md/mt/preview.html) |
+| [FUJIFILM (富士フイルム)](https://www.fujifilm.com/jp/ja) | Imaging / Healthcare / Corporate | [DESIGN.md](design-md/fujifilm/DESIGN.md) | [preview.html](design-md/fujifilm/preview.html) |
+| [UNITED ARROWS (ユナイテッドアローズ)](https://www.united-arrows.co.jp/) | Fashion / Select Shop Corporate | [DESIGN.md](design-md/united-arrows/DESIGN.md) | [preview.html](design-md/united-arrows/preview.html) |
+| [KIRIN (キリン)](https://www.kirin.co.jp/) | Beverage / Corporate | [DESIGN.md](design-md/kirin/DESIGN.md) | [preview.html](design-md/kirin/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (143 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (146 sites)</a>
 </p>
 
 <table>
@@ -630,6 +636,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>KUON</strong><br><img src="design-md/kuon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ReFa</strong><br><img src="design-md/refa/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>mt</strong><br><img src="design-md/mt/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FUJIFILM</strong><br><img src="design-md/fujifilm/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>UNITED ARROWS</strong><br><img src="design-md/united-arrows/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KIRIN</strong><br><img src="design-md/kirin/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
