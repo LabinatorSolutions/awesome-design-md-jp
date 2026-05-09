@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (158 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (161 sites)</a>
 </p>
 
 <table>
@@ -247,6 +247,9 @@
 <td align="center"><strong>博報堂</strong><br><img src="design-md/hakuhodo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Cygames</strong><br><img src="design-md/cygames/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>OWNDAYS</strong><br><img src="design-md/owndays/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LEMNOS</strong><br><img src="design-md/lemnos/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>GU</strong><br><img src="design-md/gu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CITIZEN</strong><br><img src="design-md/citizen/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -466,11 +469,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Hakuhodo (博報堂)](https://www.hakuhodo.co.jp/) | Advertising / Agency | [DESIGN.md](design-md/hakuhodo/DESIGN.md) | [preview.html](design-md/hakuhodo/preview.html) |
 | [Cygames (サイゲームス)](https://www.cygames.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/cygames/DESIGN.md) | [preview.html](design-md/cygames/preview.html) |
 | [OWNDAYS (オンデーズ)](https://www.owndays.com/jp/ja) | Eyewear / Retail | [DESIGN.md](design-md/owndays/DESIGN.md) | [preview.html](design-md/owndays/preview.html) |
+| [Lemnos (タカタレムノス)](https://www.lemnos.jp/) | Design Clock / Product Design | [DESIGN.md](design-md/lemnos/DESIGN.md) | [preview.html](design-md/lemnos/preview.html) |
+| [GU (ジーユー)](https://www.gu-global.com/jp/ja/) | Fashion / Apparel EC | [DESIGN.md](design-md/gu/DESIGN.md) | [preview.html](design-md/gu/preview.html) |
+| [CITIZEN (シチズン)](https://citizen.jp/) | Watch / EC | [DESIGN.md](design-md/citizen/DESIGN.md) | [preview.html](design-md/citizen/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (158 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (161 sites)</a>
 </p>
 
 <table>
@@ -683,6 +689,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Hakuhodo</strong><br><img src="design-md/hakuhodo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Cygames</strong><br><img src="design-md/cygames/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>OWNDAYS</strong><br><img src="design-md/owndays/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LEMNOS</strong><br><img src="design-md/lemnos/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>GU</strong><br><img src="design-md/gu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CITIZEN</strong><br><img src="design-md/citizen/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

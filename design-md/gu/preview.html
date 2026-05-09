@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: GU Japan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- GUNextLight / GUNextRegular 代替として Inter + Noto Sans JP を使用 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Brand Colors 実測値 === */
+    --brand-red: #ee0000;
+    --dark-teal: #274558;
+    --eco-green: #468254;
+    --cookie-blue: #3860be;
+
+    /* === Text 実測値 === */
+    --text-primary: #000000;
+    --text-dark: #1b1b1b;
+    --text-secondary: #696969;
+
+    /* === Background 実測値 === */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f4f4;
+
+    /* === Border 実測値 === */
+    --border-default: #dadada;
+
+    /* === Elevation 実測値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    /* === Spacing (ito-font-* ユーティリティ推定値) === */
+    --spacing-xs: 4px;
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+
+    /* === Fonts === */
+    --font-body: "Inter", "Noto Sans JP", "Hiragino Kaku Gothic Pro", "Hiragino Sans", Meiryo, "MS PGothic", "BIZ UDGothic", "BIZ UDPGothic", "Helvetica Neue", Helvetica, Arial, -apple-system, system-ui, sans-serif;
+    --font-price: "Inter", "Noto Sans JP", "Segoe UI", "Helvetica Neue", Helvetica, Arial, -apple-system, system-ui, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 24px;
+    padding: 0 24px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--text-primary);
+    flex-shrink: 0;
+  }
+  .nav-logo {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.05em;
+  }
+  .nav-brand-text {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.3;
+  }
+  .nav-tabs { display: flex; gap: 32px; flex: 1; }
+  .nav-tabs a {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 300;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.015em;
+    transition: color 0.15s;
+  }
+  .nav-tabs a.active { color: var(--text-primary); }
+  .nav-tabs a:hover { color: var(--text-primary); }
+  .nav-icons { display: flex; gap: 8px; }
+  .nav-icon {
+    width: 44px; height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: none; background: transparent;
+    cursor: pointer; color: var(--text-primary);
+    font-size: 18px;
+  }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    min-height: 400px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 64px 24px;
+  }
+  .hero-content { max-width: 720px; }
+  .hero-headline {
+    font-family: var(--font-body);
+    font-size: 32px; font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: 0.015em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: 17px; font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+  }
+  .hero-price-row {
+    display: flex; align-items: baseline; justify-content: center; gap: 12px;
+    margin-bottom: 8px;
+  }
+  .hero-price {
+    font-family: var(--font-price);
+    font-size: 36px; font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.015em;
+    color: var(--brand-red);
+  }
+  .hero-price-original {
+    font-family: var(--font-price);
+    font-size: 18px; font-weight: 300;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+  }
+  .hero-sale-term {
+    font-size: 13px; font-weight: 300;
+    color: var(--brand-red);
+    letter-spacing: 0.015em;
+    margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* === SECTIONS === */
+  .section { padding: 64px 24px; max-width: 1440px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-body);
+    font-size: 24px; font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: 0.015em;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+  .section-gray { background: var(--bg-secondary); padding: 64px 24px; }
+  .section-gray .section-inner { max-width: 1440px; margin: 0 auto; }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { background: #fff; border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px; }
+  .color-swatch-name { font-size: 14px; font-weight: 300; margin-bottom: 4px; color: var(--text-primary); line-height: 1.4; }
+  .color-swatch-hex { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+  .color-swatch-role { font-size: 12px; font-weight: 300; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+  .color-group-label {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 700; color: var(--text-secondary);
+    margin: 32px 0 12px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px; color: var(--text-secondary);
+    margin-top: 12px;
+    font-weight: 400;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-secondary); color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 300; padding: 2px 8px; margin-left: 8px;
+  }
+
+  /* === PRODUCT GRID === */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px 16px; }
+  .product-card {
+    background: #fff;
+    text-decoration: none; color: inherit;
+    transition: opacity 0.2s;
+  }
+  .product-card:hover { opacity: 0.85; }
+  .product-card-image {
+    aspect-ratio: 3 / 4;
+    background: var(--bg-secondary);
+    margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 300; letter-spacing: 0.05em;
+  }
+  .product-card-image.gradient-1 { background: linear-gradient(135deg, #e8e0d4 0%, #c4b5a0 100%); color: #666; }
+  .product-card-image.gradient-2 { background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%); color: #999; }
+  .product-card-image.gradient-3 { background: linear-gradient(135deg, #d4e8f0 0%, #a0c8d8 100%); color: #456; }
+  .product-card-image.gradient-4 { background: linear-gradient(135deg, #f0e0e0 0%, #d8a8a8 100%); color: #866; }
+  .product-card-image.gradient-5 { background: linear-gradient(135deg, #e0e8d4 0%, #b0c8a0 100%); color: #565; }
+  .product-card-image.gradient-6 { background: linear-gradient(135deg, #d8d8e8 0%, #a0a0c8 100%); color: #556; }
+  .product-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    color: var(--brand-red);
+    margin-bottom: 4px;
+    letter-spacing: 0.015em;
+  }
+  .product-name {
+    font-size: 13px; font-weight: 300;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: 0.015em;
+  }
+  .product-meta {
+    font-size: 11px; font-weight: 300;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    letter-spacing: 0.015em;
+  }
+  .product-price {
+    font-family: var(--font-price);
+    font-size: 30px; font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.015em;
+    color: var(--brand-red);
+    margin-bottom: 4px;
+  }
+  .product-price-sub {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.015em;
+  }
+  .product-price-original {
+    text-decoration: line-through;
+    font-size: 14px; font-weight: 300;
+    color: var(--text-secondary);
+    margin-left: 8px;
+  }
+  .product-sale-term {
+    font-size: 13px; font-weight: 300;
+    color: var(--brand-red);
+    letter-spacing: 0.015em;
+    margin-top: 2px;
+  }
+
+  /* === BUTTONS === */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .button-label {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--text-primary); color: #fff;
+    padding: 14px 32px;
+    border: 1px solid var(--text-primary);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent; color: var(--text-primary);
+    padding: 14px 32px;
+    border: 1px solid var(--text-primary);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 300;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--bg-secondary); }
+  .btn-pill {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9); color: var(--text-primary);
+    padding: 12px 24px;
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 300;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-pill:hover { background: var(--bg-secondary); }
+  .btn-eco {
+    display: inline-block;
+    background: var(--eco-green); color: #fff;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-eco:hover { opacity: 0.85; }
+  .btn-teal {
+    display: inline-block;
+    background: var(--dark-teal); color: #fff;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-teal:hover { opacity: 0.85; }
+
+  /* Cookie Toggle */
+  .toggle-row { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+  .toggle {
+    width: 48px; height: 26px;
+    border-radius: 17px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .toggle.on { background: var(--cookie-blue); }
+  .toggle.off { background: var(--border-default); }
+  .toggle-knob {
+    width: 22px; height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute; top: 2px;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on .toggle-knob { left: 24px; }
+  .toggle.off .toggle-knob { left: 2px; }
+  .toggle-label { font-size: 14px; font-weight: 300; color: var(--text-primary); }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    padding: 24px;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card h3 {
+    font-size: 17px; font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 14px; font-weight: 300;
+    color: var(--text-dark);
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+  }
+  .card-price {
+    font-family: var(--font-price);
+    font-size: 24px; font-weight: 700;
+    color: var(--brand-red);
+    margin-top: 12px;
+    letter-spacing: 0.015em;
+  }
+  .card-link {
+    display: inline-block;
+    font-size: 13px; font-weight: 300;
+    color: var(--text-primary);
+    text-decoration: underline;
+    margin-top: 12px;
+    letter-spacing: 0.015em;
+  }
+
+  /* === FORMS === */
+  .form-grid { display: grid; gap: 20px; max-width: 480px; }
+  .form-field { display: flex; flex-direction: column; gap: 8px; }
+  .form-label {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.015em;
+  }
+  .form-input {
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+    padding: 12px 16px;
+    border: 1px solid var(--border-default);
+    border-radius: 2px;
+    color: var(--text-primary);
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
+  }
+  .form-input.focus-demo {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
+  }
+  .form-input.error {
+    border-color: var(--brand-red);
+    box-shadow: 0 0 0 1px var(--brand-red);
+  }
+  .form-error-text {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 300;
+    color: var(--brand-red);
+    letter-spacing: 0.015em;
+  }
+  .form-help {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.015em;
+  }
+  .form-state-label {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elev-block {
+    background: #fff;
+    padding: 32px;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.015em;
+  }
+  .elev-block.flat { border: 1px solid var(--border-default); }
+  .elev-block.level-1 { box-shadow: var(--elevation-1); }
+  .elev-block.level-2 { box-shadow: var(--elevation-2); }
+
+  /* === LAYOUT === */
+  .layout-demo {
+    background: var(--bg-secondary);
+    padding: 20px;
+    margin-bottom: 12px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.015em;
+  }
+  .layout-demo strong { font-weight: 700; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--text-primary); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-secondary); }
+  .spacing-label { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--text-secondary); margin-top: 2px; }
+
+  /* === FONT NOTE === */
+  .font-note {
+    background: var(--bg-secondary);
+    padding: 32px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-primary);
+    letter-spacing: 0.015em;
+  }
+  .font-note strong { font-weight: 700; }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--text-primary);
+    color: #fff;
+    padding: 48px 32px;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 300;
+    letter-spacing: 0.015em;
+    margin-top: 0;
+  }
+  .footer-inner { max-width: 1440px; margin: 0 auto; text-align: center; }
+  .footer a { color: #fff; text-decoration: underline; }
+  .footer a:hover { opacity: 0.7; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 767px) {
+    .nav { padding: 0 16px; height: 56px; gap: 12px; }
+    .nav-tabs { display: none; }
+    .hero { min-height: 320px; padding: 48px 16px; }
+    .hero-headline { font-size: 24px; }
+    .hero-price { font-size: 30px; }
+    .section { padding: 48px 16px; }
+    .section-gray { padding: 48px 16px; }
+    .section-title { font-size: 20px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 8px; }
+    .product-price { font-size: 24px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">GU</div>
+    <div class="nav-brand-text">Design System<br>Preview</div>
+  </a>
+  <div class="nav-tabs">
+    <a href="#" class="active">WOMEN</a>
+    <a href="#">MEN</a>
+    <a href="#">KIDS</a>
+    <a href="#">BABY</a>
+  </div>
+  <div class="nav-icons">
+    <button class="nav-icon" aria-label="Search">&#8981;</button>
+    <button class="nav-icon" aria-label="Account">&#9711;</button>
+    <button class="nav-icon" aria-label="Favorites">&#9825;</button>
+    <button class="nav-icon" aria-label="Cart">&#9826;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-headline">YOUR FREEDOM 自分を新しくする自由を。</h1>
+    <p class="hero-sub">もっとファッションを自由に楽しもう。GU ならトレンドアイテムがこの価格で。</p>
+    <div class="hero-price-row">
+      <div class="hero-price">&yen;990</div>
+      <div class="hero-price-original">&yen;1,490</div>
+    </div>
+    <div class="hero-sale-term">5月12日まで期間限定価格</div>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">今すぐチェック</a>
+      <a class="btn-secondary" href="#">アプリでお得に</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ee0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#ee0000</div><div class="color-swatch-role">価格・SALE テキスト専用</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#274558"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Teal</div><div class="color-swatch-hex">#274558</div><div class="color-swatch-role">セカンダリブランドカラー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ee0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger / Sale</div><div class="color-swatch-hex">#ee0000</div><div class="color-swatch-role">エラー・セール価格</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Success / Eco</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">サステナビリティ・エコ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3860be"></div><div class="color-swatch-info"><div class="color-swatch-name">Cookie Toggle</div><div class="color-swatch-hex">#3860be</div><div class="color-swatch-role">Cookie UI トグル</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト（純黒）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1b1b1b"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark</div><div class="color-swatch-hex">#1b1b1b</div><div class="color-swatch-role">一部の本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#696969"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#696969</div><div class="color-swatch-role">補助テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #dadada"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Primary</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Secondary</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">セクション背景（185箇所使用）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Surface</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">Primary CTA 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dadada"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#dadada</div><div class="color-swatch-role">区切り線・ボタン枠</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:32px; font-weight:300; line-height:1.4; letter-spacing:0.015em;">YOUR FREEDOM 自分を新しくする自由を。</div>
+    <div class="type-meta">GUNextLight (Inter 300) / 32px / <strong>300</strong> / lh: 1.4 / ls: 0.015em<span class="type-context">Hero Title</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:24px; font-weight:300; line-height:1.4; letter-spacing:0.015em;">春の新作コレクション</div>
+    <div class="type-meta">GUNextLight (Inter 300) / 24px / <strong>300</strong> / lh: 1.4 / ls: 0.015em<span class="type-context">Section H3</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:17px; font-weight:300; line-height:1.5; letter-spacing:0.015em;">トレンドを気軽に楽しめるファッションブランド。毎日のコーディネートをもっと自由に。GU ならではの価格とデザインで、あなたらしいスタイルを見つけてください。</div>
+    <div class="type-meta">GUNextLight (Inter 300) / 17px / <strong>300</strong> / lh: 1.5 / ls: 0.015em<span class="type-context">Body</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:16px; font-weight:700; line-height:1.5; letter-spacing:0.015em;">Cookie 設定の見出し</div>
+    <div class="type-meta">Hiragino Pro (Noto Sans JP 700) / 16px / <strong>700</strong> / lh: 1.5<span class="type-context">Cookie H2</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:13px; font-weight:300; line-height:1.5; letter-spacing:0.015em; color:var(--brand-red);">5月12日まで期間限定価格</div>
+    <div class="type-meta">GUNextLight (Inter 300) / 13px / 300 / lh: 1.5 / color: #ee0000<span class="type-context">Sale Term</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-price); font-size:30px; font-weight:700; line-height:1.2; letter-spacing:0.015em; color:var(--brand-red);">&yen;1,990</div>
+    <div class="type-meta">GUNextRegular (Inter 700) / 30px / <strong>700</strong> / lh: 1.2 / ls: 0.015em / color: #ee0000<span class="type-context">Price</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-price); font-size:36px; font-weight:700; line-height:1.2; letter-spacing:0.015em; color:var(--brand-red);">&yen;990</div>
+    <div class="type-meta">GUNextRegular (Inter 700) / 36px / 700 / lh: 1.2 / Hero Price<span class="type-context">Price (Large)</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-body); font-size:14px; font-weight:300; line-height:1.5; letter-spacing:0.015em; color:var(--text-secondary);">補助テキスト — メタ情報やキャプション</div>
+    <div class="type-meta">GUNextLight (Inter 300) / 14px / 300 / lh: 1.5 / color: #696969<span class="type-context">Sub Text</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-gray" id="product">
+<div class="section-inner">
+  <div class="section-eyebrow">03 / Product</div>
+  <h2 class="section-title">商品カード</h2>
+  <div class="product-grid">
+    <a href="#" class="product-card">
+      <div class="product-card-image gradient-1">BEIGE</div>
+      <div class="product-tag">SALE</div>
+      <div class="product-name">リネンブレンドオーバーサイズシャツ（半袖）</div>
+      <div class="product-meta">レディース・全6色</div>
+      <div class="product-price">&yen;990<span class="product-price-original">&yen;1,490</span></div>
+      <div class="product-sale-term">5月12日まで期間限定価格</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-card-image gradient-2">BLACK</div>
+      <div class="product-name">ドライワイドフィットTシャツ（5分袖）</div>
+      <div class="product-meta">メンズ・全8色</div>
+      <div class="product-price">&yen;790</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-card-image gradient-3">LIGHT BLUE</div>
+      <div class="product-tag">SALE</div>
+      <div class="product-name">ワイドフィットテーパードジーンズ</div>
+      <div class="product-meta">メンズ・全4色</div>
+      <div class="product-price">&yen;1,290<span class="product-price-original">&yen;1,990</span></div>
+      <div class="product-sale-term">5月15日まで期間限定価格</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-card-image gradient-4">PINK</div>
+      <div class="product-name">マーセライズコットンオーバーサイズT</div>
+      <div class="product-meta">レディース・全10色</div>
+      <div class="product-price">&yen;990</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-card-image gradient-5">OLIVE</div>
+      <div class="product-tag">新作</div>
+      <div class="product-name">シェフパンツ</div>
+      <div class="product-meta">メンズ・全5色</div>
+      <div class="product-price">&yen;1,990</div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-card-image gradient-6">LAVENDER</div>
+      <div class="product-name">プリーツスカートパンツ</div>
+      <div class="product-meta">レディース・全6色</div>
+      <div class="product-price">&yen;1,490</div>
+    </a>
+  </div>
+
+  <!-- PRICE SHOWCASE -->
+  <div style="margin-top: 48px; background: var(--bg-primary); padding: 48px 32px; text-align: center;">
+    <div style="font-family: var(--font-price); font-size: 48px; font-weight: 700; line-height: 1.2; letter-spacing: 0.015em; color: var(--brand-red);">&yen;990</div>
+    <div style="font-size: 13px; font-weight: 300; color: var(--brand-red); margin-top: 8px; letter-spacing: 0.015em;">5月12日まで期間限定価格</div>
+    <div style="font-size: 14px; font-weight: 300; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.015em;">税込</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <p style="margin-bottom: 32px; color: var(--text-secondary); font-size: 14px; line-height: 1.7; font-weight: 300; letter-spacing: 0.015em;">GU は <strong style="font-weight:700;">border-radius: 2px</strong>（ほぼ直角）が基本。Pill 型は App Download 等の特殊用途のみ。UNIQLO（radius: 0）よりわずかに角丸。</p>
+
+  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.015em;">直角コーナー（radius: 2px）</h3>
+  <div class="button-row" style="margin-bottom: 40px;">
+    <div class="button-item">
+      <button class="btn-primary">カートに追加</button>
+      <span class="button-label">Primary CTA<br>bg #000 / color #fff / radius 2px / 14px 700</span>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">商品を見る</a>
+      <span class="button-label">Secondary<br>border #000 / radius 2px / 14px 300</span>
+    </div>
+    <div class="button-item">
+      <a class="btn-eco" href="#">エコ商品を見る</a>
+      <span class="button-label">Eco<br>bg #468254 / radius 2px</span>
+    </div>
+    <div class="button-item">
+      <a class="btn-teal" href="#">特集を見る</a>
+      <span class="button-label">Dark Teal<br>bg #274558 / radius 2px</span>
+    </div>
+  </div>
+
+  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.015em;">Pill 型（radius: 999px）</h3>
+  <div class="button-row" style="margin-bottom: 40px;">
+    <div class="button-item">
+      <a class="btn-pill" href="#">App をダウンロード</a>
+      <span class="button-label">App Download Pill<br>bg rgba(255,255,255,0.9) / border #dadada / radius 999px</span>
+    </div>
+  </div>
+
+  <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.015em;">Cookie Toggle</h3>
+  <div class="toggle-row">
+    <div class="toggle on"><div class="toggle-knob"></div></div>
+    <span class="toggle-label">ON (#3860be)</span>
+  </div>
+  <div class="toggle-row" style="margin-top: 12px;">
+    <div class="toggle off"><div class="toggle-knob"></div></div>
+    <span class="toggle-label">OFF (#dadada)</span>
+  </div>
+  <div style="margin-top: 8px;">
+    <span class="button-label">Cookie Toggle / radius 17px</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-eyebrow">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>リネンブレンドコレクション</h3>
+      <p>天然素材の風合いを活かした、夏に映えるリネンブレンドアイテム。涼しげな着心地とこなれたシルエットが魅力。</p>
+      <div class="card-price">&yen;1,990</div>
+      <a class="card-link" href="#">商品を見る</a>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-1);">
+      <h3>マシュマロパンプス</h3>
+      <p>累計販売数1000万足突破の大人気シリーズ。ふわふわのクッションで、長時間歩いても疲れにくい。</p>
+      <div class="card-price">&yen;1,490</div>
+      <a class="card-link" href="#">商品を見る</a>
+    </div>
+    <div class="card">
+      <h3>GU ACTIVE</h3>
+      <p>動きやすさとデザインを両立したスポーツライン。ジムでもタウンユースでも使えるアクティブウェア。</p>
+      <div class="card-price">&yen;990</div>
+      <a class="card-link" href="#">商品を見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <form class="form-grid" onsubmit="return false;">
+    <div class="form-field">
+      <label class="form-label">メールアドレス</label>
+      <input type="email" class="form-input" placeholder="example@gu-global.com">
+      <div class="form-state-label">Default --- border: #dadada / radius: 2px</div>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">パスワード</label>
+      <input type="password" class="form-input focus-demo" value="password123">
+      <div class="form-state-label">Focus --- border: #000000 / box-shadow: 0 0 0 1px #000</div>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">郵便番号</label>
+      <input type="text" class="form-input error" value="abc-defg">
+      <div class="form-error-text">半角数字でご入力ください</div>
+      <div class="form-state-label">Error --- border: #ee0000 / box-shadow: 0 0 0 1px #ee0000</div>
+    </div>
+
+    <div style="margin-top: 8px;">
+      <button class="btn-primary" style="width: 100%;">ログイン</button>
+    </div>
+  </form>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">07 / Elevation</div>
+  <h2 class="section-title">奥行き表現</h2>
+  <p style="margin-bottom: 32px; color: var(--text-secondary); font-size: 14px; font-weight: 300; line-height: 1.7; letter-spacing: 0.015em;">GU はフラットデザインを基調。影の使用は極めて控えめで、商品カード・ボタンは影なし。</p>
+  <div class="elevation-grid">
+    <div class="elev-block flat">
+      <div style="font-weight: 700; margin-bottom: 8px;">Level 0: Flat</div>
+      <div>shadow: none<br>ほぼすべての要素</div>
+    </div>
+    <div class="elev-block level-1">
+      <div style="font-weight: 700; margin-bottom: 8px;">Level 1</div>
+      <div>0 2px 4px rgba(0,0,0,0.1)<br>ヘッダー固定時</div>
+    </div>
+    <div class="elev-block level-2">
+      <div style="font-weight: 700; margin-bottom: 8px;">Level 2</div>
+      <div>0 4px 12px rgba(0,0,0,0.15)<br>モーダル・ドロワー</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-eyebrow">08 / Layout</div>
+  <h2 class="section-title">レイアウト原則</h2>
+
+  <div class="layout-demo"><strong>HEADER:</strong> Sticky / 高さ 64px / ロゴ + カテゴリタブ + アイコン群</div>
+  <div class="layout-demo"><strong>HERO:</strong> 中央寄せ / bg #f4f4f4 / Light 見出し (300) + 赤価格 (700)</div>
+  <div class="layout-demo"><strong>PRODUCT GRID:</strong> minmax(200px, 1fr) / モバイル 2列 / デスクトップ 4列</div>
+  <div class="layout-demo"><strong>MAX WIDTH:</strong> 1440px / padding 16px (mobile) / 24px (desktop)</div>
+  <div class="layout-demo"><strong>GUTTER:</strong> 8px - 16px</div>
+  <div class="layout-demo"><strong>SECTIONS:</strong> #ffffff と #f4f4f4 の交互配置</div>
+
+  <h3 style="font-size: 16px; font-weight: 700; margin: 32px 0 16px; letter-spacing: 0.015em;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div><div class="spacing-label">XS</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div><div class="spacing-label">S</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div><div class="spacing-label">M</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div><div class="spacing-label">L</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div><div class="spacing-label">XL</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div><div class="spacing-label">XXL</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FONT NOTE -->
+<section class="section">
+  <div class="section-eyebrow">Font Note</div>
+  <h2 class="section-title">フォントの注記</h2>
+  <div class="font-note">
+    <p style="margin-bottom: 16px;">GU は独自の <strong>GUNextLight</strong>（weight 300）と <strong>GUNextRegular</strong>（weight 700）の2種類の Web フォントを配信しています。このプレビューでは <strong>Inter</strong>（Google Fonts, weight 300/700）を代替として使用しています。和文は <strong>Noto Sans JP</strong>（weight 300/700）で代替しています。</p>
+    <p style="margin-bottom: 16px;">最大の特徴は <strong>font-weight 300 が支配的</strong>であること。見出し・本文・説明文のすべてが weight 300 で統一され、太字は価格表示（GUNextRegular, 700）と Cookie UI（700）のみに限定されています。この「空気感のある軽やかなタイポグラフィ」が GU のブランドアイデンティティです。</p>
+    <p style="margin-bottom: 16px;">もうひとつの特徴は <strong>letter-spacing: 0.015em（0.48px）の全要素グローバル適用</strong>。UNIQLO が letter-spacing: normal を基本とするのに対し、GU はすべてのテキスト要素にこの微小なトラッキングを適用しています。この均一な字間が「空気感」を生む鍵になっています。</p>
+    <p>和文フォールバックは <strong>Hiragino Kaku Gothic Pro</strong>（ProN ではなく Pro）が最優先。<strong>BIZ UDGothic / BIZ UDPGothic</strong> が含まれるのは UNIQLO にはない特徴で、UD（ユニバーサルデザイン）フォントへのフォールバックを確保しています。<strong>palt / kern</strong> は一切使用せず、ベタ組（等幅送り）で統一されています。</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p>Generated from <a href="https://www.gu-global.com/jp/ja/">gu-global.com</a> DESIGN.md &mdash; <a href="https://github.com/kzhrknt/awesome-design-md-jp">awesome-design-md-jp</a> / computed style 実測値（2026-05-09）</p>
+  </div>
+</footer>
+
+</body>
+</html>
