@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: HUMAN MADE（ヒューマンメイド）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === HUMAN MADE Color Tokens === */
+    --brand-charcoal: #121212;
+    --brand-red: #ea2222;
+    --brand-navy: #083a6b;
+    --brand-yellow: #ffd83b;
+    --text-primary: #121212;
+    --text-muted: rgba(18, 18, 18, 0.85);
+    --text-light: rgba(18, 18, 18, 0.75);
+    --text-gray: #707070;
+    --text-on-dark: #ffffff;
+    --text-sale: #ed1c24;
+    --surface-white: #ffffff;
+    --surface-charcoal: #121212;
+    --accent-olive: #808000;
+    --accent-green: #7fbf50;
+    --accent-blue: #399ede;
+    --accent-pink: #f9aae7;
+    --accent-orange: #ff9800;
+    --accent-tan: #c7b376;
+    --accent-brown: #a5652a;
+    --error: #ea2222;
+
+    /* === Font ===
+       HUMAN MADE は avenir-next-lt-pro（Adobe Fonts）を使用。
+       ローカルプレビューでは Nunito Sans（Google Fonts）で代替。
+       日本語は YuGothic フォールバック。 */
+    --font-base: "Nunito Sans", "Avenir Next", 游ゴシック体, YuGothic, 游ゴシック, "Yu Gothic", "Hiragino Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 0.6px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--surface-white);
+    border-bottom: 1px solid #eee;
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 18px; font-weight: 700; line-height: 1.0;
+    color: var(--brand-charcoal); text-decoration: none; letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.6px; line-height: 1.0;
+  }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-base); font-size: 12px;
+    color: var(--text-primary); letter-spacing: 0.6px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 40px 80px;
+    background: var(--surface-charcoal);
+    color: var(--text-on-dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-accent-dots {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 40px; opacity: 0.15; z-index: 0;
+  }
+  .hero-accent-dot {
+    width: 48px; height: 48px; border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 400; line-height: 1.3;
+    letter-spacing: 0.6px; margin-bottom: 24px;
+    color: var(--text-on-dark);
+  }
+  .hero-section-title {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.2;
+    letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+  .hero-lead {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.75); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-color-bar {
+    display: flex; justify-content: center; gap: 12px; margin-bottom: 40px;
+  }
+  .hero-color-chip {
+    width: 32px; height: 32px; border-radius: 0;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--brand-charcoal); color: var(--text-on-dark);
+    padding: 16px 32px; border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer; line-height: 1.2;
+  }
+  .btn-primary-on-dark {
+    display: inline-block; background: var(--surface-white); color: var(--brand-charcoal);
+    padding: 16px 32px; border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer; line-height: 1.2;
+  }
+  .btn-ghost {
+    display: inline-block; background: transparent; color: var(--brand-charcoal);
+    padding: 16px 32px; border: 1px solid var(--brand-charcoal); border-radius: 0;
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer; line-height: 1.2;
+  }
+  .btn-ghost-on-dark {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 16px 32px; border: 1px solid var(--text-on-dark); border-radius: 0;
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    letter-spacing: 1px; text-decoration: none; cursor: pointer; line-height: 1.2;
+  }
+  .badge-sale {
+    display: inline-block; background: var(--brand-red); color: var(--text-on-dark);
+    padding: 4px 10px; border-radius: 0;
+    font-family: var(--font-base); font-size: 11px; font-weight: 400;
+    line-height: 1.2; letter-spacing: 0.6px;
+  }
+  .badge-new {
+    display: inline-block; background: var(--brand-charcoal); color: var(--text-on-dark);
+    padding: 4px 10px; border-radius: 0;
+    font-family: var(--font-base); font-size: 11px; font-weight: 400;
+    line-height: 1.2; letter-spacing: 0.6px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    color: var(--text-gray); margin-bottom: 8px; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-base); font-size: 20px; font-weight: 400;
+    line-height: 1.2; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: 0.6px;
+  }
+  .section-subtitle {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    line-height: 1.3; color: var(--text-gray); letter-spacing: 0.8px;
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid #eee; margin: 0; }
+
+  .section-light { background: #f7f7f7; padding: 80px 40px; }
+  .section-light-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-dark { background: var(--surface-charcoal); padding: 80px 40px; color: var(--text-on-dark); }
+  .section-dark-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--text-on-dark); }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.5); }
+  .section-dark .section-label { color: rgba(255,255,255,0.5); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid #eee; overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-base); font-size: 12px; font-weight: 400; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.6px; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-gray); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-base); font-size: 11px; color: var(--text-gray); margin-top: 4px; letter-spacing: 0.6px; }
+  .color-group-label { font-family: var(--font-base); font-size: 12px; font-weight: 400; color: var(--text-gray); margin: 24px 0 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-gray); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: #f7f7f7; color: var(--text-gray); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-base); font-size: 11px; font-weight: 400; color: var(--text-gray); margin-top: 12px; letter-spacing: 0.6px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { background: #f0f0f0; height: 340px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-base); font-size: 14px; color: var(--text-gray);
+    letter-spacing: 0.6px;
+  }
+  .card-badge { position: absolute; top: 12px; left: 12px; }
+  .card-body { padding: 16px 0; }
+  .card-category {
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    color: var(--text-gray); margin-bottom: 6px; letter-spacing: 0.6px;
+  }
+  .card h3 {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    line-height: 1.3; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.8px;
+  }
+  .card-price {
+    font-family: var(--font-base); font-size: 11px; font-weight: 400;
+    color: var(--text-primary); letter-spacing: 0.6px; line-height: 1.2;
+  }
+  .card-price-sale {
+    font-family: var(--font-base); font-size: 11px; font-weight: 400;
+    color: var(--text-sale); letter-spacing: 0.55px; line-height: 1.6;
+    margin-left: 8px;
+  }
+  .card-price-original {
+    font-family: var(--font-base); font-size: 11px; font-weight: 400;
+    color: var(--text-gray); letter-spacing: 0.55px; line-height: 1.6;
+    text-decoration: line-through;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview h1 {
+    font-family: var(--font-base); font-size: 24px; font-weight: 400;
+    line-height: 1.3; color: var(--text-on-dark); margin-bottom: 16px;
+    letter-spacing: 0.6px;
+  }
+  .product-preview .product-category {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    line-height: 1.2; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .product-preview p {
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    line-height: 1.6; letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.85); margin-bottom: 20px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-base); font-size: 20px; font-weight: 400;
+    line-height: 1.2; letter-spacing: 0.6px; color: var(--text-on-dark); margin: 40px 0 16px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    line-height: 1.0; letter-spacing: 0.6px; color: rgba(255,255,255,0.5); margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    color: var(--text-light); margin-bottom: 8px; letter-spacing: 0.98px;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--text-primary);
+    border: 1px solid #ced4da; padding: 12px 16px; border-radius: 4px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    letter-spacing: normal; outline: none;
+  }
+  .form-input:focus { border-color: #80bdff; box-shadow: 0 0 0 3px rgba(0,123,255,0.25); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-base); font-size: 11px; color: var(--error); margin-top: 4px; letter-spacing: 0.6px; }
+  .form-input::placeholder { color: #999; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-base); font-size: 12px; font-weight: 400; margin-bottom: 8px; letter-spacing: 0.6px; }
+  .elevation-desc { font-family: var(--font-base); font-size: 11px; color: var(--text-gray); letter-spacing: 0.6px; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--brand-charcoal); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-gray); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400; letter-spacing: 0.6px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 40px 32px;
+    background: var(--surface-charcoal); color: var(--text-on-dark);
+    font-size: 12px; line-height: 1.2;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    margin-bottom: 16px; letter-spacing: 1px; color: var(--text-on-dark);
+    text-transform: uppercase;
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-base); color: var(--text-on-dark);
+    text-decoration: none; opacity: 0.6; margin-bottom: 8px; font-size: 12px;
+    letter-spacing: 0.6px;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-base); font-size: 11px; opacity: 0.4;
+    letter-spacing: 0.6px;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-light { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">HUMAN MADE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">Cart</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-accent-dots">
+    <div class="hero-accent-dot" style="background:var(--brand-red);"></div>
+    <div class="hero-accent-dot" style="background:var(--brand-yellow);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-pink);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-green);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-blue);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-olive);"></div>
+    <div class="hero-accent-dot" style="background:var(--brand-navy);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-orange);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-tan);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-brown);"></div>
+    <div class="hero-accent-dot" style="background:var(--brand-red);"></div>
+    <div class="hero-accent-dot" style="background:var(--brand-yellow);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-pink);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-green);"></div>
+    <div class="hero-accent-dot" style="background:var(--accent-blue);"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-section-title">2025 Spring / Summer Collection</div>
+    <h1>HUMAN MADE Season 12</h1>
+    <div class="hero-color-bar">
+      <div class="hero-color-chip" style="background:var(--brand-red); width:32px; height:32px;"></div>
+      <div class="hero-color-chip" style="background:var(--brand-yellow); width:32px; height:32px;"></div>
+      <div class="hero-color-chip" style="background:var(--brand-navy); width:32px; height:32px;"></div>
+      <div class="hero-color-chip" style="background:var(--accent-pink); width:32px; height:32px;"></div>
+      <div class="hero-color-chip" style="background:var(--accent-green); width:32px; height:32px;"></div>
+      <div class="hero-color-chip" style="background:var(--accent-olive); width:32px; height:32px;"></div>
+      <div class="hero-color-chip" style="background:var(--accent-orange); width:32px; height:32px;"></div>
+    </div>
+    <p class="hero-lead">HUMAN MADE（humanmade.jp）から抽出したデザイントークンのカタログ。Avenir Next（Adobe Fonts / Nunito Sans で代替）、全テキスト font-weight: 400 の均一ウェイトシステム、letter-spacing 0.6-1px 常時適用、radius 0px のシャープエッジ CTA、チャコール #121212 基調にカラフルなアクセントパレット。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary-on-dark" href="#">SHOP NOW</a>
+      <a class="btn-ghost-on-dark" href="#">LOOKBOOK</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title">カラーパレット</div>
+  <div class="section-subtitle">Color Palette</div>
+
+  <div class="color-group-label">ブランド</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#121212"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Charcoal</div><div class="color-swatch-hex">#121212</div><div class="color-swatch-role">テキスト・CTA・フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ea2222"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#ea2222</div><div class="color-swatch-role">ハートロゴ・セールバッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#083a6b"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Navy</div><div class="color-swatch-hex">#083a6b</div><div class="color-swatch-role">アウターウェア・プロダクト配色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffd83b"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Yellow</div><div class="color-swatch-hex">#ffd83b</div><div class="color-swatch-role">アクセントカラー・グラフィック</div></div></div>
+  </div>
+
+  <div class="color-group-label">アクセント（プレイフルパレット）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#808000"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Olive</div><div class="color-swatch-hex">#808000</div><div class="color-swatch-role">ミリタリーテイスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7fbf50"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Green</div><div class="color-swatch-hex">#7fbf50</div><div class="color-swatch-role">カモ・グラフィック</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#399ede"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Blue</div><div class="color-swatch-hex">#399ede</div><div class="color-swatch-role">デニム・ライトブルー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9aae7"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Pink</div><div class="color-swatch-hex">#f9aae7</div><div class="color-swatch-role">プリント・シーズナル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff9800"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Orange</div><div class="color-swatch-hex">#ff9800</div><div class="color-swatch-role">ワークウェア・アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c7b376"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Tan</div><div class="color-swatch-hex">#c7b376</div><div class="color-swatch-role">ヴィンテージ・ベージュ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a5652a"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Brown</div><div class="color-swatch-hex">#a5652a</div><div class="color-swatch-role">レザー・アースカラー</div></div></div>
+  </div>
+
+  <div class="color-group-label">テキスト</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#121212"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#121212</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(18,18,18,0.85)"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">rgba(18,18,18,0.85)</div><div class="color-swatch-role">サブテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(18,18,18,0.75)"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Light</div><div class="color-swatch-hex">rgba(18,18,18,0.75)</div><div class="color-swatch-role">ラベル・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#707070"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Gray</div><div class="color-swatch-hex">#707070</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ed1c24"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Sale</div><div class="color-swatch-hex">#ed1c24</div><div class="color-swatch-role">セール価格</div></div></div>
+  </div>
+
+  <div class="color-group-label">サーフェス</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#121212"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Charcoal</div><div class="color-swatch-hex">#121212</div><div class="color-swatch-role">ヒーロー・フッター背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">タイポグラフィ</div>
+  <div class="section-subtitle">Typography -- 全テキスト weight 400 の均一ウェイトシステム / サイズとスペーシングのみで階層を構成</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:24px; font-weight:400; line-height:1.3; letter-spacing:0.6px; color:var(--text-primary);">HUMAN MADE Season 12 Collection</div>
+    <div class="type-meta">Nunito Sans / 24px / 400 / line-height: 1.3 / letter-spacing: 0.6px<span class="type-context">H4 Large / Featured</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:20px; font-weight:400; line-height:1.2; letter-spacing:0.6px; color:var(--text-primary);">新作コレクション</div>
+    <div class="type-meta">Nunito Sans / 20px / 400 / line-height: 1.2 / letter-spacing: 0.6px<span class="type-context">H2 / Section Heading</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:400; line-height:1.3; letter-spacing:0.8px; color:var(--text-primary);">T-SHIRTS & CUT-SEW</div>
+    <div class="type-meta">Nunito Sans / 14px / 400 / line-height: 1.3 / letter-spacing: 0.8px<span class="type-context">H3 / Sub-heading</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:400; line-height:1.6; letter-spacing:0.8px; color:var(--text-primary);">HUMAN MADE は NIGO が手がけるライフスタイルブランド。ヴィンテージのアメリカンカルチャーからインスピレーションを得たストリートウェアと、遊び心あふれるグラフィックが特徴。</div>
+    <div class="type-meta">Nunito Sans / 16px / 400 / line-height: 1.6 / letter-spacing: 0.8px<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:400; line-height:1.5; letter-spacing:0.8px; color:var(--text-primary);">素材にこだわり、ディテールを追求する。それが HUMAN MADE のものづくりの姿勢です。</div>
+    <div class="type-meta">Nunito Sans / 16px / 400 / line-height: 1.5 / letter-spacing: 0.8px<span class="type-context">Body Alt</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:400; line-height:1.0; letter-spacing:0.6px; color:var(--text-primary);">TOPS / BOTTOMS / OUTERWEAR</div>
+    <div class="type-meta">Nunito Sans / 14px / 400 / line-height: 1.0 / letter-spacing: 0.6px<span class="type-context">Nav Main</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:400; line-height:1.0; letter-spacing:0.6px; color:var(--text-primary);">Sweatshirts / Hoodies / Jackets</div>
+    <div class="type-meta">Nunito Sans / 12px / 400 / line-height: 1.0 / letter-spacing: 0.6px<span class="type-context">Nav Sub</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:400; line-height:1.6; letter-spacing:0.6px; color:var(--text-primary);">お届けまで3〜5営業日かかります。送料は全国一律 ¥550 です。</div>
+    <div class="type-meta">Nunito Sans / 12px / 400 / line-height: 1.6 / letter-spacing: 0.6px<span class="type-context">Small</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:11px; font-weight:400; line-height:1.2; letter-spacing:0.6px; color:var(--text-primary);">&yen;16,500 (税込)</div>
+    <div class="type-meta">Nunito Sans / 11px / 400 / line-height: 1.2 / letter-spacing: 0.6px<span class="type-context">Meta / Price</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="font-family: var(--font-base); font-size:11px; font-weight:400; line-height:1.6; letter-spacing:0.55px; color:var(--text-sale);">&yen;11,550</span>
+      <span style="font-family: var(--font-base); font-size:11px; font-weight:400; line-height:1.6; letter-spacing:0.55px; color:var(--text-gray); text-decoration:line-through;">&yen;16,500</span>
+    </div>
+    <div class="type-meta">Nunito Sans / 11px / 400 / line-height: 1.6 / letter-spacing: 0.55px / color: #ed1c24<span class="type-context">Sale Price</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:13px; font-weight:400; line-height:1.2; letter-spacing:1px; color:var(--text-primary);">ADD TO CART</div>
+    <div class="type-meta">Nunito Sans / 13px / 400 / line-height: 1.2 / letter-spacing: 1px<span class="type-context">Button</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:400; line-height:1.2; letter-spacing:0.6px; color:var(--text-light);">&copy; 2025 HUMAN MADE. All rights reserved.</div>
+    <div class="type-meta">Nunito Sans / 12px / 400 / line-height: 1.2 / letter-spacing: 0.6px / color: rgba(18,18,18,0.75)<span class="type-context">Footer</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-dark" id="product">
+<div class="section-dark-inner">
+  <div class="section-label">03 / Product</div>
+  <div class="section-title">プロダクト</div>
+  <div class="section-subtitle">Product Page Sample -- ストリートウェア</div>
+  <div class="product-preview">
+    <div class="product-category">T-Shirts &amp; Cut-Sew</div>
+    <h1>GRAPHIC T-SHIRT #2402</h1>
+    <p>ヴィンテージのアメリカンカルチャーとNIGOの遊び心が融合したグラフィックTシャツ。ヘビーウェイトコットンを使用し、程よいオーバーサイズシルエットに仕上げた。フロントにはハートロゴ、バックにはシーズンごとのオリジナルグラフィックをプリント。</p>
+    <div class="product-heading">素材とディテール</div>
+    <div class="product-sub">Material &amp; Details</div>
+    <p>10.2oz ヘビーウェイトコットン 100% を使用。脇下にはガゼットを配し、ヴィンテージスウェットのディテールを取り入れた。洗いをかけることで柔らかな風合いとこなれた表情を実現。ネックリブは長めのバインダー仕様で、型崩れしにくい。</p>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+      <a class="btn-primary-on-dark" href="#">カートに入れる</a>
+      <a class="btn-ghost-on-dark" href="#">サイズガイド</a>
+      <span style="font-family:var(--font-base); font-size:11px; color:rgba(255,255,255,0.85); letter-spacing:0.6px; line-height:1.2;">&yen;16,500 (税込)</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title">ボタン</div>
+  <div class="section-subtitle">Buttons -- radius 0px シャープエッジ / 全 weight 400 / letter-spacing 1px</div>
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#">ADD TO CART</a><div class="button-label">Primary / #121212 / radius 0 / 400</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">SIZE GUIDE</a><div class="button-label">Ghost / outline / radius 0 / 400</div></div>
+    <div class="button-item"><span class="badge-sale">SALE</span><div class="button-label">Badge Sale / #ea2222 / 400</div></div>
+    <div class="button-item"><span class="badge-new">NEW</span><div class="button-label">Badge New / #121212 / 400</div></div>
+  </div>
+
+  <div style="background:var(--surface-charcoal); padding:32px; margin-top:16px;">
+    <div style="font-family:var(--font-base); font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:16px; letter-spacing:1px; text-transform:uppercase;">ダーク背景</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary-on-dark" href="#">SHOP NOW</a><div class="button-label" style="color:rgba(255,255,255,0.5)">反転 / 白背景 + #121212 テキスト</div></div>
+      <div class="button-item"><a class="btn-ghost-on-dark" href="#">LOOKBOOK</a><div class="button-label" style="color:rgba(255,255,255,0.5)">Ghost / 白 outline / radius 0</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-light-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title">プロダクトカード</div>
+  <div class="section-subtitle">Product Cards -- radius 0 / shadow なし / フラット / 11px 価格表示</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background:var(--accent-blue); opacity:0.15;">
+        <div class="card-image-placeholder" style="opacity:1; color:var(--text-primary);">Product Image</div>
+      </div>
+      <div class="card-badge"><span class="badge-new">NEW</span></div>
+      <div class="card-body">
+        <div class="card-category">T-Shirts</div>
+        <h3>GRAPHIC T-SHIRT #2402</h3>
+        <div class="card-price">&yen;16,500</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:var(--brand-navy); opacity:0.15;">
+        <div class="card-image-placeholder" style="opacity:1; color:var(--text-primary);">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Hoodies</div>
+        <h3>HEART LOGO HOODIE</h3>
+        <div class="card-price">&yen;33,000</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:var(--accent-olive); opacity:0.15;">
+        <div class="card-image-placeholder" style="opacity:1; color:var(--text-primary);">Product Image</div>
+      </div>
+      <div class="card-badge"><span class="badge-sale">SALE</span></div>
+      <div class="card-body">
+        <div class="card-category">Caps</div>
+        <h3>6 PANEL TWILL CAP</h3>
+        <div style="display:flex; align-items:center;">
+          <span class="card-price-sale">&yen;8,800</span>
+          <span class="card-price-original" style="margin-left:8px;">&yen;12,100</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background:var(--accent-tan); opacity:0.15;">
+        <div class="card-image-placeholder" style="opacity:1; color:var(--text-primary);">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Bags</div>
+        <h3>MILITARY POUCH LARGE</h3>
+        <div class="card-price">&yen;22,000</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title">フォーム</div>
+  <div class="section-subtitle">Forms -- Bootstrap 由来のボーダースタイル / radius 4px / focus: #80bdff</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-base); font-size:12px; color:var(--text-gray); margin-bottom:20px; letter-spacing:1px; text-transform:uppercase;">デフォルト</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-base); font-size:12px; color:var(--text-gray); margin-bottom:20px; letter-spacing:1px; text-transform:uppercase;">フォーカス状態</div>
+      <div class="form-group">
+        <label class="form-label">住所</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区..." style="border-color:#80bdff; box-shadow:0 0 0 3px rgba(0,123,255,0.25);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">備考</label>
+        <textarea class="form-input" rows="4" placeholder="ご要望をご記入ください" style="resize:vertical;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title">奥行き</div>
+  <div class="section-subtitle">Depth & Elevation -- シャドウ最小限、色面コントラストで構成</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid #eee;">
+      <div class="elevation-label">Level 0 -- White</div>
+      <div class="elevation-desc">標準背景。影なし</div>
+    </div>
+    <div class="elevation-card" style="background:#f7f7f7; border:1px solid #eee;">
+      <div class="elevation-label">Level 1 -- Light Gray</div>
+      <div class="elevation-desc">カードグリッド背景。#f7f7f7</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-charcoal); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Level 2 -- Charcoal</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.5);">ヒーロー・フッター。#121212</div>
+    </div>
+    <div class="elevation-card" style="background:var(--brand-red); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Accent -- Red</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.75);">バッジ・セール。#ea2222</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title">レイアウト</div>
+  <div class="section-subtitle">Layout -- spacing scale & grid</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px; height:32px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px; height:32px;"></div><div class="spacing-value">12px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px; height:32px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px; height:32px;"></div><div class="spacing-value">40px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--surface-charcoal); color:var(--text-on-dark);">CHARCOAL #121212</div>
+    <div class="layout-box" style="background:#f7f7f7; color:var(--text-primary);">LIGHT #f7f7f7</div>
+    <div class="layout-box" style="background:var(--surface-white); color:var(--text-primary); border:1px solid #eee;">WHITE #fff</div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div style="font-family:var(--font-base); font-size:12px; color:var(--text-gray); margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">アクセントカラー グリッド</div>
+    <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px;">
+      <div style="height:48px; background:var(--brand-red);"></div>
+      <div style="height:48px; background:var(--brand-yellow);"></div>
+      <div style="height:48px; background:var(--brand-navy);"></div>
+      <div style="height:48px; background:var(--accent-pink);"></div>
+      <div style="height:48px; background:var(--accent-green);"></div>
+      <div style="height:48px; background:var(--accent-olive);"></div>
+      <div style="height:48px; background:var(--accent-orange);"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Tops</h4>
+      <a href="#">Tシャツ</a>
+      <a href="#">スウェット</a>
+      <a href="#">フーディ</a>
+      <a href="#">ポロシャツ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Bottoms</h4>
+      <a href="#">デニム</a>
+      <a href="#">カーゴパンツ</a>
+      <a href="#">ショーツ</a>
+      <a href="#">チノパンツ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Accessories</h4>
+      <a href="#">キャップ</a>
+      <a href="#">バッグ</a>
+      <a href="#">ソックス</a>
+      <a href="#">キーホルダー</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="#">About</a>
+      <a href="#">Stores</a>
+      <a href="#">Contact</a>
+      <a href="#">Careers</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from humanmade.jp DESIGN.md -- awesome-design-md-jp / computed style 実測値<br>
+    Nunito Sans（Google Fonts / Avenir Next 代替）/ 全テキスト weight 400 均一システム / letter-spacing 0.6-1px / radius 0px
+  </div>
+</footer>
+
+</body>
+</html>

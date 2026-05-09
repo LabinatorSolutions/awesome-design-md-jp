@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (179 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (182 sites)</a>
 </p>
 
 <table>
@@ -275,6 +275,11 @@
 <td align="center"><strong>NEIGHBORHOOD</strong><br><img src="design-md/neighborhood/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Afternoon Tea</strong><br><img src="design-md/afternoontea/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>shu uemura</strong><br><img src="design-md/shuuemura/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>YOKU MOKU</strong><br><img src="design-md/yokumoku/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HUMAN MADE</strong><br><img src="design-md/humanmade/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -514,11 +519,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [visvim (ビズビム)](https://www.visvim.tv/) | Fashion / Premium Lifestyle | [DESIGN.md](design-md/visvim/DESIGN.md) | [preview.html](design-md/visvim/preview.html) |
 | [NEIGHBORHOOD (ネイバーフッド)](https://www.neighborhood.jp/) | Fashion / Streetwear | [DESIGN.md](design-md/neighborhood/DESIGN.md) | [preview.html](design-md/neighborhood/preview.html) |
 | [Afternoon Tea (アフタヌーンティー)](https://www.afternoon-tea.net/) | Lifestyle / Retail | [DESIGN.md](design-md/afternoontea/DESIGN.md) | [preview.html](design-md/afternoontea/preview.html) |
+| [shu uemura (シュウ ウエムラ)](https://www.shuuemura.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/shuuemura/DESIGN.md) | [preview.html](design-md/shuuemura/preview.html) |
+| [YOKU MOKU (ヨックモック)](https://www.yokumoku.co.jp/) | Confectionery / Premium Gift | [DESIGN.md](design-md/yokumoku/DESIGN.md) | [preview.html](design-md/yokumoku/preview.html) |
+| [HUMAN MADE (ヒューマンメイド)](https://humanmade.jp/) | Fashion / Streetwear | [DESIGN.md](design-md/humanmade/DESIGN.md) | [preview.html](design-md/humanmade/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (179 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (182 sites)</a>
 </p>
 
 <table>
@@ -758,6 +766,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>visvim</strong><br><img src="design-md/visvim/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>NEIGHBORHOOD</strong><br><img src="design-md/neighborhood/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Afternoon Tea</strong><br><img src="design-md/afternoontea/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>shu uemura</strong><br><img src="design-md/shuuemura/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>YOKU MOKU</strong><br><img src="design-md/yokumoku/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HUMAN MADE</strong><br><img src="design-md/humanmade/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
