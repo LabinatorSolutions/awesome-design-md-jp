@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (137 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (140 sites)</a>
 </p>
 
 <table>
@@ -220,7 +220,9 @@
 <td align="center"><strong>YAMAP</strong><br><img src="design-md/yamap/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>COHINA</strong><br><img src="design-md/cohina/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>and wander</strong><br><img src="design-md/andwander/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>SONY</strong><br><img src="design-md/sony/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DESCENTE</strong><br><img src="design-md/descente/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOTO</strong><br><img src="design-md/toto/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -419,11 +421,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [YAMAP (ヤマップ)](https://yamap.com/) | Outdoor / Community App | [DESIGN.md](design-md/yamap/DESIGN.md) | [preview.html](design-md/yamap/preview.html) |
 | [COHINA (コヒナ)](https://cohina.net/) | D2C Fashion / Petite | [DESIGN.md](design-md/cohina/DESIGN.md) | [preview.html](design-md/cohina/preview.html) |
 | [and wander (アンドワンダー)](https://www.andwander.com/) | Outdoor Fashion / Technical Wear | [DESIGN.md](design-md/andwander/DESIGN.md) | [preview.html](design-md/andwander/preview.html) |
+| [SONY (ソニー)](https://www.sony.co.jp/) | Electronics / Entertainment | [DESIGN.md](design-md/sony/DESIGN.md) | [preview.html](design-md/sony/preview.html) |
+| [DESCENTE (デサント)](https://www.descente.co.jp/) | Sportswear / Corporate | [DESIGN.md](design-md/descente/DESIGN.md) | [preview.html](design-md/descente/preview.html) |
+| [TOTO](https://jp.toto.com/) | Housing Equipment / Corporate | [DESIGN.md](design-md/toto/DESIGN.md) | [preview.html](design-md/toto/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (137 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (140 sites)</a>
 </p>
 
 <table>
@@ -609,7 +614,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>YAMAP</strong><br><img src="design-md/yamap/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>COHINA</strong><br><img src="design-md/cohina/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>and wander</strong><br><img src="design-md/andwander/preview-screenshot.png" width="120"></td>
-<td></td>
+<td align="center"><strong>SONY</strong><br><img src="design-md/sony/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DESCENTE</strong><br><img src="design-md/descente/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOTO</strong><br><img src="design-md/toto/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

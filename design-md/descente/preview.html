@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: DESCENTE（デサント）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --dark-navy: #03062f;
+    --dark-surface: #1c1b1f;
+    --black: #000000;
+    --gray: #888888;
+    --gray-dark: #666666;
+    --indicator: #e4e4e4;
+    --light-surface: #f5f5f5;
+    --white: #ffffff;
+    --text-primary: #03062f;
+    --text-secondary: #888888;
+    --text-helper: #666666;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+
+    /* === Semantic (推奨) === */
+    --danger: #cf2e2e;
+    --success: #00d084;
+    --warning: #fcb900;
+
+    /* === Elevation === */
+    --elevation-0: none;
+
+    /* === Fonts === */
+    /* 実サイトは RivieraNights（カスタム書体）を使用 */
+    /* RivieraNights はデサント専用のため、Cormorant Garamond（品格あるセリフ系）で代替 */
+    --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-base: "Noto Sans JP", sans-serif;
+    --font-combined: "Cormorant Garamond", "Noto Sans JP", sans-serif;
+
+    /* === Radius === */
+    --radius-none: 0px;
+    --radius-circle: 100%;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-combined);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    border-bottom: 1px solid var(--indicator);
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 700;
+    color: var(--dark-navy); text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400;
+    color: var(--gray); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--dark-navy); }
+  .nav-links .active { color: var(--dark-navy); font-weight: 700; }
+
+  /* SECTIONS */
+  .section { padding: 64px 48px; }
+  .section-alt { background: var(--bg-secondary); }
+  .section-dark { background: var(--dark-navy); color: var(--white); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+  .section-dark .section-title { color: rgba(255, 255, 255, 0.5); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+  .color-card { border-radius: var(--radius-none); overflow: hidden; border: 1px solid var(--indicator); }
+  .color-swatch { height: 80px; }
+  .color-info { padding: 10px 12px; background: var(--white); }
+  .color-name { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+  .color-hex { font-size: 11px; color: var(--gray); }
+
+  /* TYPOGRAPHY */
+  .type-row { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--indicator); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 11px; color: var(--gray); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .type-sample-display { font-family: var(--font-display); font-size: 40px; font-weight: 400; line-height: 1.2; letter-spacing: 0.05em; }
+  .type-sample-h2 { font-family: var(--font-combined); font-size: 14px; font-weight: 700; line-height: 1.5; }
+  .type-sample-h3 { font-family: var(--font-combined); font-size: 22px; font-weight: 700; line-height: 1.2; }
+  .type-sample-body { font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-brand { font-family: var(--font-base); font-size: 14px; font-weight: 700; line-height: 1.5; }
+  .type-sample-caption { font-family: var(--font-base); font-size: 10px; font-weight: 400; line-height: 1.5; color: var(--gray-dark); }
+  .type-sample-date { font-family: var(--font-display); font-size: 14px; font-weight: 400; line-height: 1.0; color: var(--text-primary); }
+
+  /* ARTICLE */
+  .article-preview { max-width: 680px; margin: 0 auto; padding: 48px 0; }
+  .article-preview h2 { font-family: var(--font-combined); font-size: 22px; font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
+  .article-preview p { font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 1.5; margin-bottom: 16px; color: var(--text-primary); }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-menu {
+    display: inline-flex; align-items: center;
+    background: var(--light-surface); color: var(--dark-navy);
+    padding: 7px 16px;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-menu:hover { background: var(--indicator); }
+  .btn-badge {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--black);
+    padding: 5px 10px;
+    font-size: 10px; font-weight: 400;
+    border: 1px solid var(--dark-navy);
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-badge:hover { background: var(--light-surface); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .card {
+    position: relative; height: 300px;
+    overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 32px 32px;
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(3, 6, 47, 0.6);
+    z-index: 1;
+  }
+  .card-content { position: relative; z-index: 2; color: var(--white); }
+  .card-title { font-family: var(--font-combined); font-size: 22px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
+  .card-desc { font-family: var(--font-base); font-size: 14px; font-weight: 400; color: rgba(255, 255, 255, 0.7); }
+  .card:nth-child(1) { background: linear-gradient(135deg, #1a2540, #03062f); }
+  .card:nth-child(2) { background: linear-gradient(135deg, #2a3040, #03062f); }
+  .card:nth-child(3) { background: linear-gradient(135deg, #3a2540, #03062f); }
+
+  /* CAROUSEL INDICATORS */
+  .indicators { display: flex; gap: 8px; margin-top: 32px; justify-content: center; }
+  .dot { width: 10px; height: 10px; border-radius: var(--radius-circle); background: var(--indicator); }
+  .dot.active { background: var(--black); }
+
+  /* FORMS */
+  .form-section { max-width: 480px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 12px; font-weight: 500; color: var(--gray); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--indicator);
+    border-radius: var(--radius-none);
+    color: var(--text-primary); font-family: var(--font-base);
+    font-size: 14px;
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--dark-navy); }
+  .form-input::placeholder { color: var(--gray); }
+  .form-input.error { border-color: var(--danger); }
+  .form-error { font-size: 12px; color: var(--danger); margin-top: 6px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+  .elevation-box {
+    width: 160px; height: 100px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--gray);
+  }
+  .elev-0 { background: var(--light-surface); }
+
+  /* NEWS LIST */
+  .news-list { list-style: none; }
+  .news-item { display: flex; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--indicator); }
+  .news-date { font-family: var(--font-display); font-size: 14px; color: var(--text-primary); flex-shrink: 0; }
+  .news-category { font-size: 10px; padding: 5px 10px; border: 1px solid var(--dark-navy); flex-shrink: 0; }
+  .news-title { font-size: 14px; color: var(--black); }
+
+  /* LAYOUT */
+  .layout-demo { border: 1px solid var(--indicator); overflow: hidden; }
+  .layout-header { height: 64px; background: var(--white); border-bottom: 1px solid var(--indicator); display: flex; align-items: center; padding: 0 24px; }
+  .layout-header-brand { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--dark-navy); letter-spacing: 0.1em; }
+  .layout-hero { height: 200px; background: linear-gradient(135deg, #1a2540, #03062f); display: flex; align-items: center; justify-content: center; }
+  .layout-hero-text { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--white); letter-spacing: 0.05em; }
+  .layout-content { padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .layout-card { height: 80px; background: var(--light-surface); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gray); }
+  .layout-footer { height: 48px; background: var(--dark-navy); display: flex; align-items: center; padding: 0 24px; font-size: 11px; color: rgba(255, 255, 255, 0.5); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a class="nav-brand" href="#">DESCENTE</a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">BRANDSブランド</a></li>
+    <li><a href="#">企業情報</a></li>
+    <li><a href="#">サステナビリティ</a></li>
+    <li><a href="#">採用情報</a></li>
+  </ul>
+</nav>
+
+<!-- 1. Colors -->
+<section class="section">
+  <div class="section-title">1 — Colors</div>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: #03062f;"></div>
+      <div class="color-info"><div class="color-name">Dark Navy</div><div class="color-hex">#03062f</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #1c1b1f;"></div>
+      <div class="color-info"><div class="color-name">Dark Surface</div><div class="color-hex">#1c1b1f</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #000000;"></div>
+      <div class="color-info"><div class="color-name">Black</div><div class="color-hex">#000000</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #888888;"></div>
+      <div class="color-info"><div class="color-name">Gray</div><div class="color-hex">#888888</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #666666;"></div>
+      <div class="color-info"><div class="color-name">Gray Dark</div><div class="color-hex">#666666</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #e4e4e4;"></div>
+      <div class="color-info"><div class="color-name">Indicator</div><div class="color-hex">#e4e4e4</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f5f5f5;"></div>
+      <div class="color-info"><div class="color-name">Light Surface</div><div class="color-hex">#f5f5f5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ffffff; border: 1px solid #e4e4e4;"></div>
+      <div class="color-info"><div class="color-name">White</div><div class="color-hex">#ffffff</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Typography -->
+<section class="section section-alt">
+  <div class="section-title">2 — Typography</div>
+
+  <div class="type-row">
+    <div class="type-meta">Display — Cormorant Garamond 40px / Weight 400 / Line Height 1.2 / Letter Spacing 0.05em</div>
+    <div class="type-sample-display">DESCENTE — Design that moves</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Section H2 — 14px / Weight 700 / Line Height 1.5 — 英語 + 日本語併記</div>
+    <div class="type-sample-h2">BRANDSブランド</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Card H3 — 22px / Weight 700 / Line Height 1.2</div>
+    <div class="type-sample-h3">モノづくりへのこだわり</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Body — Noto Sans JP 16px / Weight 400 / Line Height 1.5</div>
+    <div class="type-sample-body">デサントは、スキー、スポーツウェアの企画・製造・販売を行う日本の総合スポーツウェアメーカーです。デサント、ルコックスポルティフ、マンシングウェア、アンブロなどのブランドを展開しています。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Brand Name — Noto Sans JP 14px / Weight 700 / Line Height 1.5</div>
+    <div class="type-sample-brand">デサント</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Caption — Noto Sans JP 10px / Weight 400 / Line Height 1.5</div>
+    <div class="type-sample-caption">日本語サブラベル</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Date — Cormorant Garamond 14px / Weight 400 / Line Height 1.0</div>
+    <div class="type-sample-date">2026.05.01</div>
+  </div>
+</section>
+
+<!-- 3. Article -->
+<section class="section">
+  <div class="section-title">3 — Article</div>
+  <div class="article-preview">
+    <h2>スポーツウェアの未来を創る</h2>
+    <p>デサントは1935年の創業以来、「スポーツを愛する人たちのために、最高のモノづくりを追求する」という理念のもと、素材開発から製品設計まで一貫したものづくりを行っています。独自の「水沢ダウン」に代表される革新的な技術と、スポーツの現場から得た知見を融合させ、アスリートから日常まで幅広いシーンに対応する製品を生み出しています。</p>
+    <p>DESCENTE ALLTERRAIN、Munsingwear、umbro、le coq sportifなど、各ブランドの個性を活かしながら、デサントグループとしての品質基準を一貫して守り続けています。</p>
+  </div>
+</section>
+
+<!-- 4. Buttons -->
+<section class="section section-alt">
+  <div class="section-title">4 — Buttons</div>
+  <div class="btn-grid">
+    <a class="btn-menu" href="#">BRANDSブランド</a>
+    <a class="btn-menu" href="#">企業情報</a>
+    <a class="btn-menu" href="#">採用情報</a>
+    <span class="btn-badge">業績について</span>
+    <span class="btn-badge">お知らせ</span>
+  </div>
+</section>
+
+<!-- 5. Cards -->
+<section class="section">
+  <div class="section-title">5 — Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">DESCENTE</div>
+        <div class="card-desc">革新的なテクノロジーとデザインの融合</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">ALLTERRAIN</div>
+        <div class="card-desc">あらゆる地形に対応するプレミアムウェア</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">Munsingwear</div>
+        <div class="card-desc">伝統と革新のゴルフウェア</div>
+      </div>
+    </div>
+  </div>
+  <div class="indicators">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</section>
+
+<!-- 6. Forms -->
+<section class="section section-alt">
+  <div class="section-title">6 — Forms</div>
+  <div class="form-section">
+    <div class="form-group">
+      <label class="form-label">Default</label>
+      <input class="form-input" type="text" placeholder="キーワードを入力">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Focus</label>
+      <input class="form-input" type="text" value="ALLTERRAIN" style="border-color: #03062f;">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Error</label>
+      <input class="form-input error" type="text" value="">
+      <div class="form-error">このフィールドは必須です</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Elevation -->
+<section class="section">
+  <div class="section-title">7 — Elevation</div>
+  <div class="elevation-grid">
+    <div class="elevation-box elev-0">Level 0 — Flat</div>
+  </div>
+  <p style="margin-top: 16px; font-size: 12px; color: var(--gray);">フラットデザイン。ドロップシャドウは使用しない。面色の切り替えで階層を表現。</p>
+</section>
+
+<!-- News List Sample -->
+<section class="section section-alt">
+  <div class="section-title">News</div>
+  <ul class="news-list">
+    <li class="news-item">
+      <span class="news-date">2026.05.01</span>
+      <span class="news-category">業績について</span>
+      <span class="news-title">2025年度通期決算概要</span>
+    </li>
+    <li class="news-item">
+      <span class="news-date">2026.04.15</span>
+      <span class="news-category">お知らせ</span>
+      <span class="news-title">UNTRIMMED SERIES 新作発表</span>
+    </li>
+    <li class="news-item">
+      <span class="news-date">2026.04.01</span>
+      <span class="news-category">お知らせ</span>
+      <span class="news-title">当社を装った悪質サイト・偽サイトにご注意ください</span>
+    </li>
+  </ul>
+</section>
+
+<!-- 8. Layout -->
+<section class="section">
+  <div class="section-title">8 — Layout</div>
+  <div class="layout-demo">
+    <div class="layout-header"><span class="layout-header-brand">DESCENTE</span></div>
+    <div class="layout-hero"><span class="layout-hero-text">Design that moves</span></div>
+    <div class="layout-content">
+      <div class="layout-card">Brand 1</div>
+      <div class="layout-card">Brand 2</div>
+      <div class="layout-card">Brand 3</div>
+    </div>
+    <div class="layout-footer">© DESCENTE LTD.</div>
+  </div>
+</section>
+
+</body>
+</html>
