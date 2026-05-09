@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KOSÉ / Maison KOSÉ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+  Web フォント方針（DESIGN.md §3.2 注記参照）:
+  - Josefin Sans: 英語セクション見出し専用。weight 300（thin）で装飾的に使用
+  - Noto Sans JP: 游ゴシック体は Web 配信されていないため代替として併読
+  - 環境固有の游ゴシック / メイリオはフォールバックチェーンで活かす
+-->
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: DESIGN.md §2 実測値ベース === */
+    --kose-coral: #ee696f;
+    --kose-coral-hover: #e05258;
+    --text-primary: #3b4043;
+    --text-black: #000000;
+    --text-inverse: #ffffff;
+    --dark-accent: #3b4043;
+    --info-blue: #56bbdc;
+    --pagination-blue: #4493c8;
+    --promo-yellow: #fbd10b;
+    --border: #c8c8c8;
+    --border-light: #e0e0e0;
+    --bg-primary: #ffffff;
+    --bg-surface: #f3f3f3;
+    --bg-surface-subtle: #f7f7f7;
+    --bg-neutral-btn: #efefef;
+    --bg-secondary-btn: #444444;
+    --footer-bg: #3b4043;
+
+    /* === Typography === */
+    --font-display: "Josefin Sans", sans-serif;
+    --font-base: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic",
+                 "メイリオ", "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Layout / Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 40px;
+    --space-xxl: 64px;
+    --container-max: 1200px;
+    --content-max: 940px;
+
+    /* === Borders / Radius === */
+    --radius-none: 0px;
+    --radius-pill: 18px;
+    --radius-small: 2px;
+
+    /* === Shadows === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 4px rgba(0,0,0,0.06);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.08);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-l);
+    height: 60px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.18em;
+  }
+  .nav-brand .coral { color: var(--kose-coral); }
+  .nav-links { display: flex; gap: var(--space-l); }
+  .nav-links a {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--kose-coral); }
+  .nav-cta {
+    display: inline-block;
+    background: var(--kose-coral);
+    color: var(--text-inverse);
+    padding: 8px 20px;
+    border: none;
+    border-radius: var(--radius-none);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--kose-coral-hover); }
+
+  /* === HERO === */
+  .hero {
+    padding: var(--space-xxl) var(--space-l) var(--space-xl);
+    text-align: center;
+    background: var(--bg-surface-subtle);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--kose-coral);
+    margin-bottom: var(--space-m);
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+  .hero p {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-primary);
+    max-width: 640px;
+    margin: 0 auto var(--space-l);
+  }
+  .hero-buttons {
+    display: flex; gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    padding: var(--space-xxl) var(--space-l);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-s);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xl);
+    text-transform: uppercase;
+  }
+  .section-gray {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .section-gray-inner {
+    padding: var(--space-xxl) var(--space-l);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+
+  /* === COLORS === */
+  .color-group-label {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    margin: var(--space-l) 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-light);
+    text-transform: uppercase;
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-none);
+    overflow: hidden;
+  }
+  .color-swatch-block {
+    height: 80px;
+    width: 100%;
+  }
+  .color-swatch-info {
+    padding: 12px 14px;
+  }
+  .color-swatch-name {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .color-swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    opacity: 0.8;
+  }
+  .color-swatch-role {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample {
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 400;
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    margin-left: 8px;
+  }
+
+  /* === ARTICLE / PRODUCT === */
+  .article-preview {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .article-preview .eyebrow {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 300;
+    color: var(--kose-coral);
+    letter-spacing: 0.18em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+  .article-preview .meta {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-m);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin: var(--space-xl) 0 var(--space-m);
+  }
+  .article-preview p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+    margin-bottom: var(--space-m);
+  }
+
+  /* Tag chips */
+  .tag-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: var(--space-l) 0;
+  }
+  .tag-chip {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-black);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 10px 12px;
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .tag-chip:hover { border-color: var(--kose-coral); color: var(--kose-coral); }
+  .tag-chip.active {
+    background: var(--kose-coral);
+    color: var(--text-inverse);
+    border-color: var(--kose-coral);
+  }
+
+  /* Product cards */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-l);
+    margin-top: var(--space-l);
+  }
+  .product-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-none);
+    overflow: hidden;
+    box-shadow: var(--elevation-0);
+    transition: box-shadow 0.2s;
+  }
+  .product-card:hover { box-shadow: var(--elevation-1); }
+  .product-card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    opacity: 0.6;
+  }
+  .product-card-image.tone-1 { background: linear-gradient(135deg, #fce4e4 0%, #f5c6c6 100%); }
+  .product-card-image.tone-2 { background: linear-gradient(135deg, #fdeee4 0%, #f5d6c4 100%); }
+  .product-card-image.tone-3 { background: linear-gradient(135deg, #e8eef5 0%, #cdd8e8 100%); }
+  .product-card-image.tone-4 { background: linear-gradient(135deg, #f0e8f5 0%, #d8cce8 100%); }
+  .product-card-body {
+    padding: var(--space-m);
+  }
+  .product-brand {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.03em;
+    margin-top: 8px;
+  }
+  .product-price small {
+    font-size: 11px; font-weight: 400;
+    opacity: 0.7;
+  }
+  .product-cta {
+    display: block;
+    width: 100%;
+    background: var(--kose-coral);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-none);
+    padding: 8px 0;
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.15s;
+  }
+  .product-cta:hover { background: var(--kose-coral-hover); }
+  .product-cta.reservation {
+    background: var(--info-blue);
+  }
+  .product-cta.reservation:hover {
+    background: #4aa8c8;
+  }
+
+  /* === BUTTONS === */
+  .button-row {
+    display: flex; gap: var(--space-l);
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .button-item { text-align: center; }
+  .button-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 400;
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-top: 8px;
+  }
+
+  .btn {
+    display: inline-block;
+    cursor: pointer;
+    font-family: var(--font-base);
+    text-decoration: none;
+    transition: opacity 0.15s, background 0.15s;
+    box-shadow: var(--elevation-0);
+    border: none;
+  }
+  .btn:hover { opacity: 0.85; }
+
+  .btn-primary {
+    background: var(--kose-coral);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border-radius: var(--radius-none);
+    font-size: 13px; font-weight: 600;
+  }
+  .btn-primary:hover { background: var(--kose-coral-hover); opacity: 1; }
+
+  .btn-secondary {
+    background: var(--dark-accent);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border-radius: var(--radius-none);
+    font-size: 14px; font-weight: 500;
+  }
+
+  .btn-secondary-alt {
+    background: var(--bg-secondary-btn);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border-radius: var(--radius-small);
+    font-size: 14px; font-weight: 500;
+  }
+
+  .btn-neutral {
+    background: var(--bg-neutral-btn);
+    color: var(--text-black);
+    padding: 12px 28px;
+    border-radius: var(--radius-none);
+    font-size: 14px; font-weight: 500;
+  }
+
+  .btn-info {
+    background: var(--info-blue);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border-radius: var(--radius-none);
+    font-size: 13px; font-weight: 600;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    padding: 10px 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-none);
+    font-size: 14px; font-weight: 400;
+  }
+
+  .btn-tag {
+    background: var(--bg-primary);
+    color: var(--text-black);
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    font-size: 11px; font-weight: 500;
+  }
+
+  /* === CARDS === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-l);
+  }
+  .card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-none);
+    overflow: hidden;
+    box-shadow: var(--elevation-0);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card-image {
+    width: 100%;
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    opacity: 0.5;
+  }
+  .card-image.img-1 { background: linear-gradient(135deg, #fce4e4 0%, #f8d0d0 100%); }
+  .card-image.img-2 { background: linear-gradient(135deg, #e8eef5 0%, #d4dde8 100%); }
+  .card-image.img-3 { background: linear-gradient(135deg, #fdeee4 0%, #f0dac8 100%); }
+  .card-body {
+    padding: var(--space-l);
+  }
+  .card .card-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 300;
+    color: var(--kose-coral);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .card p {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+  .card-link {
+    display: inline-block;
+    margin-top: var(--space-m);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 600;
+    color: var(--kose-coral);
+    letter-spacing: 0.03em;
+  }
+  .card-link:hover { opacity: 0.7; }
+
+  /* === FORMS === */
+  .form-group {
+    margin-bottom: var(--space-l);
+    max-width: 420px;
+  }
+  .form-label {
+    display: block;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-none);
+    padding: 10px 12px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    line-height: 1.5;
+    height: 44px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-primary); opacity: 0.45; }
+  .form-input:focus,
+  .form-input--focus {
+    border-color: var(--dark-accent);
+    border-width: 1px;
+  }
+  .form-input--error {
+    border-color: var(--kose-coral);
+  }
+  .form-state-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-top: 6px;
+  }
+  .form-state-label.error { color: var(--kose-coral); opacity: 1; }
+
+  /* === ELEVATION === */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-l);
+  }
+  .elevation-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-none);
+    padding: var(--space-l);
+    text-align: center;
+  }
+  .elevation-label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .elevation-desc {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-primary);
+    opacity: 0.7;
+    word-break: break-all;
+  }
+  .elevation-note {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--text-primary);
+    opacity: 0.7;
+    margin-top: var(--space-m);
+    line-height: 1.6;
+  }
+
+  /* === LAYOUT === */
+  .spacing-row {
+    display: flex; align-items: flex-end;
+    gap: var(--space-m);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-l);
+  }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--kose-coral);
+    border-radius: var(--radius-none);
+    margin-bottom: 6px;
+    width: 28px;
+  }
+  .spacing-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-primary);
+  }
+  .spacing-token {
+    font-family: var(--font-base);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .width-bar {
+    height: 32px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-none);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .width-bar-inner {
+    height: 100%;
+    background: var(--bg-surface);
+  }
+  .width-bar-label {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .width-bar-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    opacity: 0.8;
+    margin-left: 8px;
+    font-weight: 400;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--footer-bg);
+    color: var(--text-inverse);
+    padding: var(--space-xl) var(--space-l);
+    text-align: left;
+    font-family: var(--font-base);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .footer a {
+    color: var(--text-inverse);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .footer .footer-brand {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    margin-bottom: var(--space-m);
+  }
+  .footer .footer-brand .coral { color: var(--kose-coral); }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: var(--space-xl) var(--space-m) var(--space-l); }
+    .hero h1 { font-size: 20px; }
+    .section { padding: var(--space-xl) var(--space-m); }
+    .section-gray-inner { padding: var(--space-xl) var(--space-m); }
+    .section-title { font-size: 22px; }
+    .article-preview h1 { font-size: 20px; }
+    .article-preview h2 { font-size: 18px; }
+    .article-preview p { font-size: 14px; line-height: 1.85; }
+    .footer { padding: var(--space-xl) var(--space-m); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">KOS<span class="coral">E</span></a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">カートに入れる</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Maison KOSE Design System</div>
+  <h1>Design System Preview<br>KOSE -- 美しさを、もっと身近に。</h1>
+  <p>maison.kose.co.jp のデザイントークンをカタログ化。コーラルピンクのCTA、Josefin Sans のディスプレイ見出し、游ゴシック体の和文本文。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn btn-primary" href="#">DESIGN.md を読む</a>
+    <a class="btn btn-outline" href="#">ブランドサイトを見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ee696f"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">KOSE Coral</div>
+        <div class="color-swatch-hex">#ee696f</div>
+        <div class="color-swatch-role">CTA、カート、メイン強調</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#3b4043"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Dark Accent</div>
+        <div class="color-swatch-hex">#3b4043</div>
+        <div class="color-swatch-role">テキスト・セカンダリCTA</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#56bbdc"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Info / Reservation</div>
+        <div class="color-swatch-hex">#56bbdc</div>
+        <div class="color-swatch-role">予約受付中ラベル</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#4493c8"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Pagination Blue</div>
+        <div class="color-swatch-hex">#4493c8</div>
+        <div class="color-swatch-role">ページネーション番号</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#fbd10b"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Promo Yellow</div>
+        <div class="color-swatch-hex">#fbd10b</div>
+        <div class="color-swatch-role">セール・キャンペーンバナー</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e0e0e0"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Background</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">ページ背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#f3f3f3"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface</div>
+        <div class="color-swatch-hex">#f3f3f3</div>
+        <div class="color-swatch-role">カテゴリセクション面</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#f7f7f7"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface Subtle</div>
+        <div class="color-swatch-hex">#f7f7f7</div>
+        <div class="color-swatch-role">控えめなセクション背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#efefef"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Neutral Button</div>
+        <div class="color-swatch-hex">#efefef</div>
+        <div class="color-swatch-role">中立的ボタン面</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#c8c8c8"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Border</div>
+        <div class="color-swatch-hex">#c8c8c8</div>
+        <div class="color-swatch-role">チップ枠線・区切り</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#3b4043"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Footer Background</div>
+        <div class="color-swatch-hex">#3b4043</div>
+        <div class="color-swatch-role">フッター背景</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:28px; font-weight:300; letter-spacing:0.18em; color:var(--text-primary); text-transform:uppercase;">Trend Item -- Section Display</div>
+    <div class="type-meta">Josefin Sans / 28px / 300 / letter-spacing: 0.18em<span class="type-context">section heading</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:20px; font-weight:300; letter-spacing:0.18em; color:var(--text-primary); text-transform:uppercase;">Information -- Sub Display</div>
+    <div class="type-meta">Josefin Sans / 20px / 300 / letter-spacing: 0.18em<span class="type-context">sub section</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:400; color:var(--text-primary);">コンテンツ見出し -- Heading 2</div>
+    <div class="type-meta">Yu Gothic / 24px / 400 / line-height: normal<span class="type-context">content h2</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:500; color:var(--text-primary);">本文テキスト -- Body。KOSE のサイトは本文 16px / weight 500 で統一されています。ECサイトとして商品情報の可読性を確保しつつ、やや太めのウェイトで安定感を出しています。letter-spacing は normal、palt は使用しません。</div>
+    <div class="type-meta">Yu Gothic / 16px / 500 / line-height: normal / letter-spacing: normal / palt: なし<span class="type-context">body</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; letter-spacing:0.03em; color:var(--text-primary);">商品名テキスト -- Product Name（ヴィセ リシェ カラーリング アイブロウマスカラ）</div>
+    <div class="type-meta">Yu Gothic / 14px / 400 / letter-spacing: 0.03em<span class="type-context">product name</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:500; letter-spacing:0.03em; color:var(--text-primary);">&#165;3,520 <span style="font-size:11px; font-weight:400; opacity:0.7;">（税込）</span> -- Product Price</div>
+    <div class="type-meta">Yu Gothic / 14px / 500 / letter-spacing: 0.03em<span class="type-context">product price</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:600; letter-spacing:0.03em; color:var(--text-primary); text-transform:uppercase;">DECORTE -- Brand Label</div>
+    <div class="type-meta">Yu Gothic / 12px / 600 / letter-spacing: 0.03em<span class="type-context">brand label</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:13px; font-weight:600; color:var(--text-inverse); background:var(--kose-coral); display:inline-block; padding:8px 24px;">カートに入れる -- CTA Button</div>
+    <div class="type-meta">Yu Gothic / 13px / 600 / bg: #ee696f<span class="type-context">CTA</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:500; letter-spacing:0.04em; color:var(--text-primary);">ナビゲーション -- Nav Links</div>
+    <div class="type-meta">Yu Gothic / 12px / 500 / letter-spacing: 0.04-0.1em<span class="type-context">nav</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="display:inline-block; font-family:var(--font-base); font-size:11px; font-weight:500; color:var(--text-black); border:1px solid var(--border); border-radius:var(--radius-pill); padding:10px 12px;">カテゴリタグ -- Tag Chip</div>
+    <div class="type-meta">Yu Gothic / 11px / 500 / border: 1px solid #c8c8c8 / radius: 18px (pill)<span class="type-context">tag chip</span></div>
+  </div>
+
+  <p style="font-family:var(--font-mono); font-size:11px; color:var(--text-primary); opacity:0.7; margin-top:var(--space-l); line-height:1.7;">
+    Web フォント方針: <code>Josefin Sans</code>（Google Fonts）を英語ディスプレイ見出しに使用。和文は <code>Noto Sans JP</code>（Google Fonts）で游ゴシック体を代替。<br>
+    詳細は DESIGN.md &sect;3.2 注記を参照。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT -->
+<section class="section-gray" id="article">
+<div class="section-gray-inner">
+  <div class="section-label">03 / Article & Product</div>
+  <h2 class="section-title">Article & Product</h2>
+
+  <div class="article-preview">
+    <div class="eyebrow">Beauty Column</div>
+    <h1>春のベースメイク、崩れにくさの秘密。</h1>
+    <div class="meta">2026.05.09 / Maison KOSE Editorial / Reading time: 3 min</div>
+
+    <p>季節の変わり目、気温と湿度が上がるにつれてファンデーションの崩れが気になりはじめます。KOSEが長年研究してきたのは、肌表面の皮脂と水分のバランスを整えながら、化粧膜そのものを安定させる技術です。下地からパウダーまで、ひとつひとつのステップに意味があります。</p>
+
+    <h2>皮脂コントロール下地の選び方</h2>
+    <p>Tゾーンのテカリが気になる方は、皮脂吸着パウダー配合の下地を。頬の乾燥が気になる方は、保湿成分を含むタイプを部分的に使い分けるのがおすすめです。KOSEの店頭では、肌測定に基づいたパーソナルアドバイスもご利用いただけます。</p>
+
+    <!-- Tag chips -->
+    <div class="tag-row">
+      <span class="tag-chip active">ベースメイク</span>
+      <span class="tag-chip">スキンケア</span>
+      <span class="tag-chip">UV対策</span>
+      <span class="tag-chip">下地</span>
+      <span class="tag-chip">ファンデーション</span>
+      <span class="tag-chip">新商品</span>
+    </div>
+
+    <!-- Product cards -->
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-card-image tone-1">SKINCARE</div>
+        <div class="product-card-body">
+          <div class="product-brand">DECORTE</div>
+          <div class="product-name">リポソーム アドバンスト リペアセラム</div>
+          <div class="product-price">&#165;8,250 <small>（税込／30mL）</small></div>
+          <button class="product-cta">カートに入れる</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-2">MAKEUP</div>
+        <div class="product-card-body">
+          <div class="product-brand">VISEE</div>
+          <div class="product-name">リシェ カラーリング アイブロウマスカラ</div>
+          <div class="product-price">&#165;1,210 <small>（税込）</small></div>
+          <button class="product-cta">カートに入れる</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-3">BASE</div>
+        <div class="product-card-body">
+          <div class="product-brand">ESPRIQUE</div>
+          <div class="product-name">パーフェクト キープ ベース</div>
+          <div class="product-price">&#165;2,860 <small>（税込）</small></div>
+          <button class="product-cta reservation">予約受付中</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-4">FRAGRANCE</div>
+        <div class="product-card-body">
+          <div class="product-brand">JILL STUART</div>
+          <div class="product-name">クリスタルブルーム オードパルファン</div>
+          <div class="product-price">&#165;5,500 <small>（税込／30mL）</small></div>
+          <button class="product-cta">カートに入れる</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-xl); text-align:center;">
+      <a class="btn btn-secondary" href="#">すべての商品</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Buttons</h2>
+  <p style="font-size:14px; color:var(--text-primary); margin-bottom:var(--space-xl); line-height:1.7;">
+    CTA ボタンは <code style="font-family:var(--font-mono); font-size:13px;">border-radius: 0px</code> でシャープに。タグチップのみ <code style="font-family:var(--font-mono); font-size:13px;">border-radius: 18px</code> の pill 形状で柔らかさを添える。
+  </p>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn btn-primary" href="#">カートに入れる</a>
+      <div class="button-label">Primary CTA (Coral)<br>13px / 600 / radius: 0</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-secondary" href="#">すべての商品</a>
+      <div class="button-label">Secondary (Dark)<br>14px / 500 / radius: 0</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-secondary-alt" href="#">もっと見る</a>
+      <div class="button-label">Secondary Alt<br>14px / 500 / radius: 2px</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-neutral" href="#">やり直す</a>
+      <div class="button-label">Neutral<br>14px / 500 / radius: 0</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-info" href="#">予約受付中</a>
+      <div class="button-label">Info (Reservation)<br>13px / 600 / radius: 0</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-outline" href="#">もっと見る</a>
+      <div class="button-label">Outline<br>14px / 400 / radius: 0</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-tag" href="#">カテゴリ</a>
+      <div class="button-label">Tag Chip (Pill)<br>11px / 500 / radius: 18px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Cards</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image img-1">SKINCARE</div>
+      <div class="card-body">
+        <div class="card-eyebrow">Beauty Tips</div>
+        <h3>朝のスキンケア、5分で完了する時短テクニック</h3>
+        <p>化粧水・美容液・乳液の3ステップを効率よく行うための手順と、おすすめアイテムの組み合わせをご紹介します。</p>
+        <a class="card-link" href="#">続きを読む &rarr;</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image img-2">MAKEUP</div>
+      <div class="card-body">
+        <div class="card-eyebrow">New Arrival</div>
+        <h3>2026年春の新色リップ、全ラインナップ</h3>
+        <p>VISEE、ESPRIQUE、FASIO の春コレクションから、トレンドカラーをピックアップ。パーソナルカラー別のおすすめも。</p>
+        <a class="card-link" href="#">続きを読む &rarr;</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image img-3">BRAND</div>
+      <div class="card-body">
+        <div class="card-eyebrow">Brand Story</div>
+        <h3>DECORTE の美容哲学</h3>
+        <p>1970年の誕生以来、皮膚科学に基づくスキンケア研究を続けてきた DECORTE。そのものづくりの根底にある思想を紹介します。</p>
+        <a class="card-link" href="#">続きを読む &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">Forms</h2>
+  <p style="font-size:14px; color:var(--text-primary); margin-bottom:var(--space-xl); line-height:1.7;">
+    入力欄は角丸なし、44px のタッチターゲット高さを基準に。フォーカス時は border を <code style="font-family:var(--font-mono);">#3b4043</code>（Dark Accent）に切り替え、エラーは KOSE Coral を最小限に使います。
+  </p>
+
+  <div class="form-group">
+    <label class="form-label" for="email-default">メールアドレス</label>
+    <input id="email-default" class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト -- border: 1px solid #c8c8c8 / radius: 0px / height: 44px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="pw-focus">パスワード</label>
+    <input id="pw-focus" class="form-input form-input--focus" type="password" value="password1234">
+    <div class="form-state-label">フォーカス -- border: 1px solid #3b4043（Dark Accent）</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="email-error">メールアドレス</label>
+    <input id="email-error" class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-state-label error">エラー -- border: 1px solid #ee696f（KOSE Coral）</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">box-shadow: none</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 4px rgba(0,0,0,0.06)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);">
+      <div class="elevation-label">Level 3</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div>
+    </div>
+  </div>
+  <p class="elevation-note">
+    基本はフラット。商品カードのホバー時に Level 1 程度の影を足すのみ。Level 2 / 3 はモーダル・ダイアログ用の推奨値。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Layout</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:4px;"></div>
+      <div class="spacing-token">XS</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:8px;"></div>
+      <div class="spacing-token">S</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:16px;"></div>
+      <div class="spacing-token">M</div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:24px;"></div>
+      <div class="spacing-token">L</div>
+      <div class="spacing-value">24px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:40px;"></div>
+      <div class="spacing-token">XL</div>
+      <div class="spacing-value">40px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:64px;"></div>
+      <div class="spacing-token">XXL</div>
+      <div class="spacing-value">64px</div>
+    </div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-xl);">Container & Content Widths</div>
+  <div style="margin-bottom:var(--space-m);">
+    <div class="width-bar-label">Container Max <span class="width-bar-value">1200px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-m);">
+    <div class="width-bar-label">Main Content <span class="width-bar-value">940px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:78.3%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-m);">
+    <div class="width-bar-label">Article <span class="width-bar-value">680px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:56.7%"></div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-xl);">Breakpoints</div>
+  <p style="font-family:var(--font-base); font-size:14px; color:var(--text-primary); line-height:1.7;">
+    <strong style="font-weight:600;">Mobile</strong>: &le; 767px /
+    <strong style="font-weight:600;">Tablet</strong>: 768 -- 1024px /
+    <strong style="font-weight:600;">Desktop</strong>: > 1024px<br>
+    タッチターゲットは 44px &times; 44px 以上（WCAG 基準）。
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">KOS<span class="coral">E</span></div>
+  Generated from <a href="https://maison.kose.co.jp/">maison.kose.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-05-09）<br>
+  <span style="opacity:0.7;">Web fonts: Josefin Sans + Noto Sans JP（Google Fonts） / OS フォールバック: 游ゴシック体, メイリオ</span>
+</footer>
+
+</body>
+</html>

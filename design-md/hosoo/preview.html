@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: HOSOO / 細尾</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+  Web フォント方針（DESIGN.md §3 注記参照）:
+  - Shippori Mincho: 筑紫Aオールド明朝（Adobe Fonts / Fontworks）の代替
+  - Cormorant Garamond: Heldane Display/Text（Klim Type Foundry）の代替
+  - いずれもオリジナルは商用ライセンス必須のため、Google Fonts で近い書体を選択
+-->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: DESIGN.md §2 実測値ベース === */
+    --dark-charcoal: #2b2b2e;
+    --muted-gray: #949799;
+    --bg-primary: #ffffff;
+
+    /* === Typography === */
+    --font-mincho: "Shippori Mincho", "FOT-筑紫Aオールド明朝 Pr6 M",
+                   "FOT-筑紫Aオールド明朝 Pr6 B", serif;
+    --font-display: "Cormorant Garamond", "Heldane Display", serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Layout / Spacing === */
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 40px;
+    --space-xl: 80px;
+    --space-xxl: 120px;
+    --content-max: 800px;
+
+    /* === Borders / Radius === */
+    --radius: 0px;
+
+    /* === Shadows（使用しない） === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(43,43,46,0.06);
+    --elevation-2: 0 4px 16px rgba(43,43,46,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--dark-charcoal);
+    font-family: var(--font-mincho);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-l);
+    height: 72px;
+    background: var(--bg-primary);
+    border-bottom: none;
+  }
+  .nav-brand {
+    font-family: var(--font-mincho);
+    font-size: 20px; font-weight: 700;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.08em;
+  }
+  .nav-links {
+    display: flex; gap: var(--space-l);
+  }
+  .nav-links a {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 500;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.1em;
+    font-feature-settings: "liga" 0;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--muted-gray); }
+  .nav-lang {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 500;
+    color: var(--muted-gray);
+    letter-spacing: 0.08em;
+    font-feature-settings: "liga" 0;
+  }
+  .nav-lang .active { color: var(--dark-charcoal); }
+
+  /* === HERO === */
+  .hero {
+    padding: var(--space-xxl) var(--space-l) var(--space-xl);
+    text-align: center;
+    background: var(--bg-primary);
+  }
+  .hero h1 {
+    font-family: var(--font-mincho);
+    font-size: 32px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--dark-charcoal);
+    margin-bottom: var(--space-m);
+  }
+  .hero .hero-en {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+    color: var(--muted-gray);
+    max-width: 640px;
+    margin: 0 auto var(--space-l);
+  }
+  .hero .hero-links {
+    display: flex; gap: var(--space-m);
+    justify-content: center;
+  }
+  .hero .hero-links a {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 500;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.1em;
+    font-feature-settings: "liga" 0;
+    border-bottom: 1px solid var(--dark-charcoal);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .hero .hero-links a:hover {
+    color: var(--muted-gray);
+    border-color: var(--muted-gray);
+  }
+
+  /* === SECTIONS === */
+  .section {
+    padding: var(--space-xl) var(--space-l);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .section-wide {
+    padding: var(--space-xl) var(--space-l);
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(43,43,46,0.12);
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 500;
+    color: var(--muted-gray);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.14em;
+    font-feature-settings: "liga" 0;
+  }
+  .section-title {
+    font-family: var(--font-mincho);
+    font-size: 22px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--dark-charcoal);
+    margin-bottom: var(--space-l);
+  }
+  .section-gray {
+    background: #fafafa;
+    border-top: 1px solid rgba(43,43,46,0.08);
+    border-bottom: 1px solid rgba(43,43,46,0.08);
+  }
+  .section-gray-inner {
+    padding: var(--space-xl) var(--space-l);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .section-dark {
+    background: var(--dark-charcoal);
+    color: var(--bg-primary);
+  }
+  .section-dark-inner {
+    padding: var(--space-xl) var(--space-l);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+
+  /* === COLORS === */
+  .color-group-label {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 500;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.06em;
+    font-feature-settings: "liga" 0;
+    margin: var(--space-m) 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(43,43,46,0.12);
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-s);
+    margin-bottom: var(--space-m);
+  }
+  .color-swatch {
+    background: var(--bg-primary);
+    border: 1px solid rgba(43,43,46,0.12);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .color-swatch-block {
+    height: 100px;
+    width: 100%;
+  }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 600;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+    margin-bottom: 4px;
+  }
+  .color-swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dark-charcoal);
+    opacity: 0.7;
+  }
+  .color-swatch-role {
+    font-family: var(--font-mincho);
+    font-size: 12px;
+    color: var(--dark-charcoal);
+    opacity: 0.6;
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample {
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid rgba(43,43,46,0.08);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 400;
+    color: var(--muted-gray);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+  .type-context {
+    display: inline-block;
+    background: rgba(43,43,46,0.06);
+    color: var(--dark-charcoal);
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    font-feature-settings: "liga" 0;
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    margin-left: 8px;
+  }
+
+  /* === ARTICLE === */
+  .article-preview {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .article-preview .eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 500;
+    color: var(--muted-gray);
+    letter-spacing: 0.14em;
+    font-feature-settings: "liga" 0;
+    margin-bottom: var(--space-s);
+    text-transform: uppercase;
+  }
+  .article-preview h1 {
+    font-family: var(--font-mincho);
+    font-size: 28px; font-weight: 700;
+    line-height: 1.6;
+    color: var(--dark-charcoal);
+    margin-bottom: var(--space-s);
+  }
+  .article-preview .meta {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 400;
+    color: var(--muted-gray);
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-s);
+    border-bottom: 1px solid rgba(43,43,46,0.12);
+  }
+  .article-preview h2 {
+    font-family: var(--font-mincho);
+    font-size: 20px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--dark-charcoal);
+    margin: var(--space-l) 0 var(--space-s);
+  }
+  .article-preview p {
+    font-family: var(--font-mincho);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.9;
+    color: var(--dark-charcoal);
+    margin-bottom: var(--space-s);
+  }
+  .article-preview .read-more {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 500;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.1em;
+    font-feature-settings: "liga" 0;
+    border-bottom: 1px solid var(--dark-charcoal);
+    padding-bottom: 3px;
+    margin-top: var(--space-m);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .article-preview .read-more:hover {
+    color: var(--muted-gray);
+    border-color: var(--muted-gray);
+  }
+
+  /* Image placeholder for article */
+  .article-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #e8e4df 0%, #d4cec6 50%, #c8c0b5 100%);
+    margin: var(--space-l) 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-image-label {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 400;
+    color: var(--muted-gray);
+    letter-spacing: 0.12em;
+    font-feature-settings: "liga" 0;
+  }
+
+  /* === BUTTONS (Text Links) === */
+  .button-row {
+    display: flex; gap: var(--space-l);
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .button-item { text-align: center; }
+  .button-label {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 400;
+    color: var(--muted-gray);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  .text-link {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.1em;
+    font-feature-settings: "liga" 0;
+    border-bottom: 1px solid var(--dark-charcoal);
+    padding-bottom: 3px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    display: inline-block;
+  }
+  .text-link:hover {
+    color: var(--muted-gray);
+    border-color: var(--muted-gray);
+  }
+  .text-link--secondary {
+    color: var(--muted-gray);
+    border-color: var(--muted-gray);
+  }
+  .text-link--secondary:hover {
+    color: var(--dark-charcoal);
+    border-color: var(--dark-charcoal);
+  }
+  .text-link--sm { font-size: 12px; }
+  .text-link--md { font-size: 14px; }
+  .text-link--lg { font-size: 16px; }
+
+  /* Pagination dots */
+  .pagination-row {
+    display: flex; gap: 12px;
+    align-items: center;
+    margin-top: var(--space-l);
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--dark-charcoal);
+    background: var(--bg-primary);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .dot.active { background: var(--dark-charcoal); }
+  .dot:hover { background: var(--muted-gray); }
+
+  /* === CARDS === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-m);
+  }
+  .card {
+    background: var(--bg-primary);
+    border: none;
+    border-radius: var(--radius);
+    padding: 0;
+    box-shadow: var(--elevation-0);
+  }
+  .card-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: var(--space-s);
+  }
+  .card-image-label {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 400;
+    color: var(--muted-gray);
+    letter-spacing: 0.14em;
+    font-feature-settings: "liga" 0;
+    text-transform: uppercase;
+  }
+  .card .card-eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 500;
+    color: var(--muted-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-feature-settings: "liga" 0;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    font-family: var(--font-mincho);
+    font-size: 18px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--dark-charcoal);
+    margin-bottom: 10px;
+  }
+  .card p {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.8;
+    color: var(--dark-charcoal);
+    opacity: 0.85;
+  }
+  .card-link {
+    display: inline-block;
+    margin-top: var(--space-s);
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 500;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.08em;
+    font-feature-settings: "liga" 0;
+    border-bottom: 1px solid var(--dark-charcoal);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .card-link:hover { color: var(--muted-gray); border-color: var(--muted-gray); }
+
+  /* === FORMS === */
+  .form-group {
+    margin-bottom: var(--space-m);
+    max-width: 420px;
+  }
+  .form-label {
+    display: block;
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 500;
+    color: var(--dark-charcoal);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--dark-charcoal);
+    border: 1px solid var(--dark-charcoal);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-family: var(--font-mincho);
+    font-size: 16px;
+    line-height: 1.5;
+    height: 48px;
+    outline: none;
+    transition: border-width 0.15s;
+  }
+  .form-input::placeholder { color: var(--muted-gray); }
+  .form-input:focus,
+  .form-input--focus {
+    border-width: 2px;
+    padding: 11px 15px;
+  }
+  .form-input--error {
+    border-color: #8b3a3a;
+  }
+  .form-state-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted-gray);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .form-state-label.error { color: #8b3a3a; }
+
+  /* === ELEVATION === */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-m);
+  }
+  .elevation-card {
+    background: var(--bg-primary);
+    border: 1px solid rgba(43,43,46,0.12);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    text-align: center;
+  }
+  .elevation-label {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 600;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+    margin-bottom: 6px;
+  }
+  .elevation-desc {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted-gray);
+    word-break: break-all;
+  }
+  .elevation-note {
+    font-family: var(--font-mincho);
+    font-size: 13px;
+    color: var(--dark-charcoal);
+    opacity: 0.7;
+    margin-top: var(--space-s);
+    line-height: 1.8;
+  }
+
+  /* === LAYOUT === */
+  .spacing-row {
+    display: flex; align-items: flex-end;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-m);
+  }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--dark-charcoal);
+    border-radius: var(--radius);
+    margin-bottom: 6px;
+    width: 28px;
+  }
+  .spacing-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted-gray);
+  }
+  .spacing-token {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+  }
+
+  .width-bar {
+    height: 28px;
+    background: var(--bg-primary);
+    border: 1px solid rgba(43,43,46,0.12);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .width-bar-inner {
+    height: 100%;
+    background: rgba(43,43,46,0.08);
+  }
+  .width-bar-label {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 600;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+    margin-bottom: 4px;
+  }
+  .width-bar-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted-gray);
+    margin-left: 8px;
+    font-weight: 400;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--dark-charcoal);
+    color: var(--bg-primary);
+    padding: var(--space-xl) var(--space-l);
+    text-align: left;
+  }
+  .footer-inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .footer-brand {
+    font-family: var(--font-mincho);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-m);
+  }
+  .footer-text {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--bg-primary);
+    opacity: 0.6;
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+  }
+  .footer a {
+    color: var(--bg-primary);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 1px;
+  }
+  .footer .copyright {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 500;
+    color: var(--bg-primary);
+    opacity: 0.4;
+    letter-spacing: 0.04em;
+    font-feature-settings: "liga" 0;
+    margin-top: var(--space-l);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: var(--space-xl) var(--space-s) var(--space-l); }
+    .hero h1 { font-size: 24px; }
+    .section { padding: var(--space-l) var(--space-s); }
+    .section-wide { padding: var(--space-l) var(--space-s); }
+    .section-gray-inner { padding: var(--space-l) var(--space-s); }
+    .section-dark-inner { padding: var(--space-l) var(--space-s); }
+    .section-title { font-size: 18px; }
+    .article-preview h1 { font-size: 22px; }
+    .article-preview h2 { font-size: 18px; }
+    .footer { padding: var(--space-l) var(--space-s); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">HOSOO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <span class="nav-lang"><span class="active">EN</span>&ensp;/&ensp;JP</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview<br>HOSOO — 1688年、西陣に始まる</h1>
+  <div class="hero-en">A design token catalogue for hosoo.co.jp. Near-monochromatic palette, dual-serif type system, no CTA buttons. Based on computed style measurements.</div>
+  <div class="hero-links">
+    <a href="#">Read DESIGN.md</a>
+    <a href="#">Visit hosoo.co.jp</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section-wide" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand / Primary</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#2b2b2e"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Dark Charcoal</div>
+        <div class="color-swatch-hex">#2b2b2e</div>
+        <div class="color-swatch-role">テキスト・UI要素・ダーク面の唯一の色</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#949799"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Muted Gray</div>
+        <div class="color-swatch-hex">#949799</div>
+        <div class="color-swatch-role">セカンダリテキスト・著作権・言語切替</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid rgba(43,43,46,0.12)"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Background</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">ページ全体の基本背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#2b2b2e"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Dark Surface</div>
+        <div class="color-swatch-hex">#2b2b2e</div>
+        <div class="color-swatch-role">フッター背景・ハンバーガーメニュー</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Pagination</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#2b2b2e; display:flex; align-items:center; justify-content:center; gap:12px;">
+        <span style="width:12px; height:12px; border-radius:50%; background:#2b2b2e; border:2px solid #ffffff; display:inline-block;"></span>
+        <span style="width:12px; height:12px; border-radius:50%; background:transparent; border:2px solid #ffffff; display:inline-block;"></span>
+        <span style="width:12px; height:12px; border-radius:50%; background:transparent; border:2px solid #ffffff; display:inline-block;"></span>
+      </div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Pagination Dots</div>
+        <div class="color-swatch-hex">#2b2b2e / #ffffff</div>
+        <div class="color-swatch-role">アクティブ: 塗り / 非アクティブ: 枠のみ</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-family:var(--font-mincho); font-size:13px; color:var(--dark-charcoal); opacity:0.6; margin-top:var(--space-s); line-height:1.8;">
+    モノクロマティック配色。ブランド専用のアクセントカラーは存在しない——色を足さないこと自体がブランドアイデンティティ。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-wide" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:32px; font-weight:700; line-height:1.4; color:var(--dark-charcoal);">細尾 — 西陣織の伝統と革新</div>
+    <div class="type-meta">32px / 700 / line-height: 1.4 / font: Mincho (Shippori Mincho)<span class="type-context">Logo / H1</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-mincho); font-size:16px; font-weight:400; line-height:1.0; color:var(--dark-charcoal);">絹糸が織りなす光と影の調和</div>
+    <div class="type-meta">16px / 400 / line-height: 1.0 / font: Mincho / アートディレクション的にタイトな行間<span class="type-context">Body (gallery)</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:14px; font-weight:500; line-height:1.1; letter-spacing:0.1em; color:var(--dark-charcoal); font-feature-settings:'liga' 0;">Collection &ensp; About &ensp; Textile &ensp; Contact</div>
+    <div class="type-meta">14px / 500 / line-height: 1.1 / letter-spacing: 0.1em / font: Heldane Display (Cormorant Garamond) / liga: 0<span class="type-context">Nav Link</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:16px; font-weight:400; line-height:1.5; letter-spacing:0.04em; color:var(--dark-charcoal); font-feature-settings:'liga' 0;">The art of Nishijin weaving, refined over three centuries, transforms silk threads into luminous textiles that bridge tradition and contemporary design.</div>
+    <div class="type-meta">16px / 400 / line-height: 1.5 / letter-spacing: 0.04em / font: Heldane Display (Cormorant Garamond) / liga: 0<span class="type-context">Slide Text</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:13px; font-weight:500; line-height:1.4; letter-spacing:0.08em; color:var(--muted-gray); font-feature-settings:'liga' 0;">EN &ensp;/ &ensp;JP</div>
+    <div class="type-meta">13px / 500 / letter-spacing: 0.08em / color: #949799 / font: Heldane Display (Cormorant Garamond)<span class="type-context">Language Selector</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:12px; font-weight:500; line-height:1.5; letter-spacing:0.04em; color:var(--muted-gray); font-feature-settings:'liga' 0;">&copy; 2026 HOSOO Co., Ltd. All rights reserved.</div>
+    <div class="type-meta">12px / 500 / line-height: 1.5 / letter-spacing: 0.04em / color: #949799<span class="type-context">Copyright</span></div>
+  </div>
+
+  <!-- Dual type system note -->
+  <div style="margin-top:var(--space-l); padding:var(--space-m); background:rgba(43,43,46,0.03); border-left: 2px solid var(--dark-charcoal);">
+    <p style="font-family:var(--font-display); font-size:12px; font-weight:600; color:var(--dark-charcoal); letter-spacing:0.08em; font-feature-settings:'liga' 0; margin-bottom:8px;">DUAL TYPE SYSTEM</p>
+    <p style="font-family:var(--font-mincho); font-size:13px; color:var(--dark-charcoal); opacity:0.7; line-height:1.8;">
+      和文は筑紫Aオールド明朝（preview では Shippori Mincho）、欧文は Heldane Display（preview では Cormorant Garamond）の二書体構成。両方とも高品位セリフ体で統一し、ゴシック体・サンセリフ体は一切使用しない。欧文には <code style="font-family:var(--font-mono); font-size:12px;">font-feature-settings: "liga" 0</code> を適用してリガチャを無効化。
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-gray" id="article">
+<div class="section-gray-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事の組版サンプル</h2>
+
+  <div class="article-preview">
+    <div class="eyebrow">Nishijin Heritage</div>
+    <h1>西陣織の技術と革新——三百年の経糸に、現代の緯糸を通す</h1>
+    <div class="meta">2026.05.09 &ensp;/&ensp; Textile Arts &ensp;/&ensp; Reading time: 5 min</div>
+
+    <div class="article-image">
+      <span class="article-image-label">Nishijin textile close-up</span>
+    </div>
+
+    <p>西陣織は、京都・西陣の地で千年以上にわたって受け継がれてきた絹織物の技法です。経糸と緯糸の交差によって生まれる紋様は、職人の手と感性によってのみ実現される精緻な芸術です。細尾は、この伝統を守りながらも、テキスタイルとしての可能性を現代のデザインや建築の文脈で拡張することを使命としてきました。</p>
+
+    <h2>織の構造——経糸と緯糸の対話</h2>
+    <p>一反の織物には、数千本の経糸が張られます。その一本一本が、緯糸と交差するたびに異なる表情を見せ、全体としてひとつの紋様を成す。この工程は、プログラムの実行に似ていると同時に、即興演奏のような偶然性も内包しています。職人は、糸の張力、湿度、光の加減を読みながら、指先で微細な調整を行います。</p>
+
+    <h2>素材と光の関係</h2>
+    <p>絹糸は、光を反射するのではなく吸収し、ふたたび放つ性質を持っています。そのため、西陣織の表面は、時間帯や角度によって異なる色彩を見せます。この光との対話が、テキスタイルに「深み」を与え、平面でありながら空間的な印象を生み出します。</p>
+
+    <a class="read-more" href="#">Read Full Article</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS (Text Links) -->
+<section class="section-wide" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">インタラクション要素</h2>
+  <p style="font-family:var(--font-mincho); font-size:14px; color:var(--dark-charcoal); opacity:0.7; margin-bottom:var(--space-l); line-height:1.8;">
+    HOSOOのサイトにはCTAボタンが存在しません。すべてのインタラクションはテキストリンクとページネーションドットで構成されています。
+  </p>
+
+  <div class="color-group-label">Text Links</div>
+  <div class="button-row" style="margin-bottom:var(--space-l);">
+    <div class="button-item">
+      <a class="text-link text-link--lg" href="#">View Collection</a>
+      <div class="button-label">Primary / Large<br>16px / 500 / 0.1em</div>
+    </div>
+    <div class="button-item">
+      <a class="text-link text-link--md" href="#">Read More</a>
+      <div class="button-label">Primary / Medium<br>14px / 500 / 0.1em</div>
+    </div>
+    <div class="button-item">
+      <a class="text-link text-link--sm" href="#">Details</a>
+      <div class="button-label">Primary / Small<br>12px / 500 / 0.1em</div>
+    </div>
+    <div class="button-item">
+      <a class="text-link text-link--secondary text-link--md" href="#">Privacy Policy</a>
+      <div class="button-label">Secondary<br>14px / #949799</div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Pagination Dots</div>
+  <div class="pagination-row">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <div class="button-label" style="margin-top:10px;">Active: bg #2b2b2e / Inactive: bg #fff, border 1px solid #2b2b2e / border-radius: 50%</div>
+
+  <div style="margin-top:var(--space-l);">
+    <div class="color-group-label">Dark Background Variants</div>
+    <div style="background:var(--dark-charcoal); padding:var(--space-m); display:flex; gap:var(--space-l); flex-wrap:wrap; align-items:center;">
+      <a href="#" style="font-family:var(--font-display); font-size:14px; font-weight:500; color:#ffffff; letter-spacing:0.1em; font-feature-settings:'liga' 0; border-bottom:1px solid rgba(255,255,255,0.5); padding-bottom:3px;">View Collection</a>
+      <a href="#" style="font-family:var(--font-display); font-size:12px; font-weight:500; color:var(--muted-gray); letter-spacing:0.08em; font-feature-settings:'liga' 0; border-bottom:1px solid rgba(148,151,153,0.4); padding-bottom:3px;">Privacy Policy</a>
+      <span style="display:flex; gap:10px;">
+        <span style="width:10px; height:10px; border-radius:50%; background:#ffffff; border:1px solid #ffffff; display:inline-block;"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:transparent; border:1px solid rgba(255,255,255,0.5); display:inline-block;"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:transparent; border:1px solid rgba(255,255,255,0.5); display:inline-block;"></span>
+      </span>
+    </div>
+    <div class="button-label" style="margin-top:8px;">ダーク面でのテキストリンク・ドットの反転表現</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-wide" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #e8e4df 0%, #d4cec6 100%);">
+        <span class="card-image-label">Textile</span>
+      </div>
+      <div class="card-eyebrow">Collection</div>
+      <h3>HOSOO Textile — 元禄の記憶</h3>
+      <p>江戸時代の意匠を現代の織機で再解釈したコレクション。金銀糸の代わりに光学繊維を織り込み、光の角度で紋様が変化する革新的なテキスタイル。</p>
+      <a class="card-link" href="#">View Details</a>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #ddd8d0 0%, #c8bfb3 100%);">
+        <span class="card-image-label">Architecture</span>
+      </div>
+      <div class="card-eyebrow">Project</div>
+      <h3>織物と建築の接点</h3>
+      <p>テキスタイルを壁面パネルとして建築空間に導入するプロジェクト。素材の持つ柔らかさが、コンクリートとガラスの空間に温度と記憶を加えます。</p>
+      <a class="card-link" href="#">View Details</a>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #e2ddd6 0%, #cdc5ba 100%);">
+        <span class="card-image-label">Collaboration</span>
+      </div>
+      <div class="card-eyebrow">Atelier</div>
+      <h3>職人の手と、世界のデザイナー</h3>
+      <p>国際的なデザイナーやメゾンとの協働を通じて、西陣織の技術と現代デザインの美学を融合させるコラボレーションの記録。</p>
+      <a class="card-link" href="#">View Details</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-wide" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <p style="font-family:var(--font-mincho); font-size:14px; color:var(--dark-charcoal); opacity:0.7; margin-bottom:var(--space-l); line-height:1.8;">
+    実サイトにフォームは確認されていません。ブランドのトーンに合わせた推奨仕様です。角丸なし、明朝体、枠線は <code style="font-family:var(--font-mono); font-size:12px;">#2b2b2e</code> の細線。
+  </p>
+
+  <div class="form-group">
+    <label class="form-label" for="name-default">お名前</label>
+    <input id="name-default" class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-state-label">Default — border: 1px solid #2b2b2e / radius: 0px / height: 48px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="email-focus">メールアドレス</label>
+    <input id="email-focus" class="form-input form-input--focus" type="email" value="info@hosoo.co.jp">
+    <div class="form-state-label">Focus — border: 2px solid #2b2b2e</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="email-error">メールアドレス</label>
+    <input id="email-error" class="form-input form-input--error" type="email" value="invalid@">
+    <div class="form-state-label error">Error — border: 1px solid #8b3a3a（抑制されたエラー色）</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-wide" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">box-shadow: none</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 1px 3px rgba(43,43,46,0.06)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 16px rgba(43,43,46,0.08)</div>
+    </div>
+  </div>
+  <p class="elevation-note">
+    実測値はすべて <code style="font-family:var(--font-mono); font-size:12px;">box-shadow: none</code>。影は一切使わないのが原則。織物の質感はフラットな画像で伝え、UIの層構造は余白と透明度で表現する。Level 1 / 2 は推奨値。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section-wide" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシングとレイアウト</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:8px;"></div>
+      <div class="spacing-token">XS</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:16px;"></div>
+      <div class="spacing-token">S</div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:24px;"></div>
+      <div class="spacing-token">M</div>
+      <div class="spacing-value">24px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:40px;"></div>
+      <div class="spacing-token">L</div>
+      <div class="spacing-value">40px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:80px;"></div>
+      <div class="spacing-token">XL</div>
+      <div class="spacing-value">80px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:120px;"></div>
+      <div class="spacing-token">XXL</div>
+      <div class="spacing-value">120px</div>
+    </div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Container Widths</div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Full Screen <span class="width-bar-value">100vw (images)</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Content Max <span class="width-bar-value">800px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:66.7%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Article <span class="width-bar-value">640px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:53.3%"></div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Breakpoints</div>
+  <p style="font-family:var(--font-mincho); font-size:14px; color:var(--dark-charcoal); line-height:1.8;">
+    <strong style="font-weight:700;">Mobile</strong>: &le; 767px&emsp;<strong style="font-weight:700;">Tablet</strong>: 768 &ndash; 1024px&emsp;<strong style="font-weight:700;">Desktop</strong>: > 1024px<br>
+    <span style="opacity:0.6;">タッチターゲット 44px &times; 44px 以上（WCAG基準）。ページネーションドットは視覚的に小さいが、タップ領域は確保する。</span>
+  </p>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Design Philosophy</div>
+  <div style="padding:var(--space-m); background:rgba(43,43,46,0.03); border-left: 2px solid var(--dark-charcoal);">
+    <p style="font-family:var(--font-mincho); font-size:14px; color:var(--dark-charcoal); line-height:1.9; opacity:0.8;">
+      HOSOOのデザインは「引き算」の思想に基づいています。色を減らし、装飾を削ぎ、テキストを最小限にとどめることで、織物そのものの質感と、三百年の時間の厚みを際立たせます。UIは沈黙し、素材が語る——それがこのデザインシステムの根底にある哲学です。
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">HOSOO</div>
+    <p class="footer-text">
+      Generated from <a href="https://hosoo.co.jp/">hosoo.co.jp</a> DESIGN.md &mdash; awesome-design-md-jp<br>
+      Computed style measurements (2026-05-09)
+    </p>
+    <p class="footer-text" style="margin-top:8px;">
+      Fonts: Shippori Mincho + Cormorant Garamond (Google Fonts) / Originals: FOT-筑紫Aオールド明朝 Pr6 + Heldane Display (commercial license required)
+    </p>
+    <div class="copyright">&copy; 2026 HOSOO Co., Ltd. &mdash; Design System Preview</div>
+  </div>
+</footer>
+
+</body>
+</html>

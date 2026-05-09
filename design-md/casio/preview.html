@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: CASIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+  Web フォント方針（DESIGN.md §3.2 注記参照）:
+  - DIN 2014 は Adobe Fonts 専用。preview.html では Inter（幾何学的サンセリフ）で代替
+  - Noto Sans JP: 和文の主力。Google Fonts から配信
+  - 環境固有のヒラギノ / Meiryo はフォールバックチェーンで活かす
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;700&family=Noto+Sans+JP:wght@200;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: DESIGN.md §2 実測値ベース === */
+    --casio-blue: #0a3282;
+    --casio-red: #bb3c39;
+    --corporate-purple: #494c8c;
+    --investor-green: #2e7c65;
+    --alert-red: #e54747;
+
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-inverse: #ffffff;
+    --border: #bebebe;
+    --border-strong: #000000;
+    --bg-primary: #f4f5f8;       /* ブルーグレー（純白ではない） */
+    --bg-surface: #ffffff;
+    --footer-bg: #030303;
+
+    /* === Typography === */
+    --font-base: "Inter", "Noto Sans JP", "ヒラギノ角ゴ ProN",
+                 "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Layout / Spacing === */
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 40px;
+    --space-xl: 64px;
+    --space-xxl: 80px;
+    --container-max: 1200px;
+    --content-max: 940px;
+
+    /* === Borders / Radius === */
+    --radius: 0px;               /* 角丸は使わない（CASIO方針） */
+
+    /* === Shadows（基本は使用しない。推奨値のみ） === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.10);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;            /* 22.5px / 15px */
+    letter-spacing: normal;
+    font-feature-settings: normal; /* palt は使わない */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-m);
+    height: 64px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 700;
+    color: var(--casio-blue);
+    letter-spacing: 0.12em;
+  }
+  .nav-links { display: flex; gap: var(--space-m); }
+  .nav-links a {
+    font-size: 13px; font-weight: 400;
+    color: var(--text-primary);
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--casio-blue); }
+  .nav-cta {
+    display: inline-block;
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    padding: 10px 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-size: 13px; font-weight: 400;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* === HERO === */
+  .hero {
+    padding: var(--space-xxl) var(--space-m) var(--space-l);
+    text-align: center;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 30px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+  .hero .purpose {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.8;
+    color: var(--casio-blue);
+    max-width: 640px;
+    margin: 0 auto var(--space-m);
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin: 0 auto var(--space-m);
+  }
+  .hero-buttons {
+    display: flex; gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    padding: var(--space-xl) var(--space-m);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.12em;
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: var(--space-l);
+  }
+  .section-surface {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-surface-inner {
+    padding: var(--space-xl) var(--space-m);
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+
+  /* === COLORS === */
+  .color-group-label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    margin: var(--space-m) 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-s);
+    margin-bottom: var(--space-m);
+  }
+  .color-swatch {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .color-swatch-block {
+    height: 80px;
+    width: 100%;
+  }
+  .color-swatch-info {
+    padding: 12px 14px;
+  }
+  .color-swatch-name {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .color-swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    opacity: 0.8;
+  }
+  .color-swatch-role {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample {
+    margin-bottom: var(--space-m);
+    padding-bottom: var(--space-m);
+    border-bottom: 1px solid var(--border);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-family: var(--font-base);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    margin-left: 8px;
+    border: 1px solid var(--border);
+  }
+
+  /* === ARTICLE / PRODUCT === */
+  .article-preview {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .article-preview .eyebrow {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 700;
+    color: var(--casio-blue);
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 30px; font-weight: 700;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+  .article-preview .meta {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-s);
+    border-bottom: 1px solid var(--border);
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin: var(--space-l) 0 var(--space-s);
+  }
+  .article-preview p {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 2.0;              /* 記事本文 line-height: 2.0（DESIGN.md 実測値） */
+    color: var(--text-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  /* Category labels */
+  .category-label {
+    display: inline-block;
+    padding: 3px 10px;
+    font-family: var(--font-base);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-inverse);
+    border-radius: var(--radius);
+    letter-spacing: 0.04em;
+  }
+  .category-products { background: var(--casio-red); }
+  .category-corporate { background: var(--casio-blue); }
+  .category-corporate-alt { background: var(--corporate-purple); }
+  .category-investor { background: var(--investor-green); }
+
+  /* Product cards */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-m);
+    margin-top: var(--space-l);
+  }
+  .product-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 0 var(--space-s) 0;
+    box-shadow: var(--elevation-0);
+  }
+  .product-card-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .product-card-image.tone-1 { background: linear-gradient(135deg, #e8edf5 0%, #c8d0e0 100%); }
+  .product-card-image.tone-2 { background: linear-gradient(135deg, #eae8e5 0%, #d0c8c0 100%); }
+  .product-card-image.tone-3 { background: linear-gradient(135deg, #e5eae8 0%, #c0d0c8 100%); }
+  .product-card-body {
+    padding: var(--space-s);
+  }
+  .product-category {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .product-jp {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    color: var(--text-primary);
+  }
+  .product-price small {
+    font-size: 12px; font-weight: 400;
+    color: var(--text-secondary);
+  }
+
+  /* News block */
+  .news-block {
+    border-top: 2px solid var(--casio-blue);
+    padding: var(--space-m) 0;
+    margin-bottom: var(--space-l);
+  }
+  .news-title {
+    font-family: var(--font-base);
+    font-size: 30px; font-weight: 700;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .news-list { list-style: none; }
+  .news-list li {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    padding: 14px 0 14px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .news-list li:first-child { border-top: none; }
+  .news-date {
+    font-family: var(--font-base);
+    font-size: 13px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .news-list a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .news-list a:hover { color: var(--casio-blue); }
+
+  /* === BUTTONS === */
+  .button-row {
+    display: flex; gap: var(--space-m);
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .button-item { text-align: center; }
+  .button-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+
+  .btn {
+    display: inline-block;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--font-base);
+    text-decoration: none;
+    transition: opacity 0.15s, background 0.15s, color 0.15s;
+    box-shadow: var(--elevation-0);
+  }
+  .btn:hover { opacity: 0.8; }
+
+  .btn-primary {
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border: 1px solid var(--border-strong);
+    font-size: 14px; font-weight: 400;
+  }
+  .btn-secondary {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 12px 28px;
+    border: 1px solid var(--border);
+    font-size: 14px; font-weight: 400;
+  }
+  .btn-brand {
+    background: var(--casio-blue);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border: 1px solid var(--casio-blue);
+    font-size: 14px; font-weight: 700;
+  }
+  .btn-danger {
+    background: var(--alert-red);
+    color: var(--text-inverse);
+    padding: 12px 28px;
+    border: none;
+    font-size: 14px; font-weight: 700;
+  }
+  .btn-utility {
+    background: transparent;
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    font-size: 12px; font-weight: 200;
+  }
+
+  /* === CARDS === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-m);
+  }
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    box-shadow: var(--elevation-0);
+  }
+  .card .card-eyebrow {
+    margin-bottom: 10px;
+  }
+  .card h3 {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .card p {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-primary);
+  }
+  .card-link {
+    display: inline-block;
+    margin-top: var(--space-s);
+    font-family: var(--font-base);
+    font-size: 14px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 2px;
+  }
+  .card-link:hover { color: var(--casio-blue); border-color: var(--casio-blue); }
+
+  /* === FORMS === */
+  .form-group {
+    margin-bottom: var(--space-m);
+    max-width: 420px;
+  }
+  .form-label {
+    display: block;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    font-family: var(--font-base);
+    font-size: 15px;
+    line-height: 1.5;
+    height: 44px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-primary); opacity: 0.4; }
+  .form-input:focus,
+  .form-input--focus {
+    border-color: var(--casio-blue);
+    border-width: 2px;
+    padding: 9px 11px;           /* 2px border 分を補正 */
+  }
+  .form-input--error {
+    border-color: var(--alert-red);
+    border-width: 2px;
+    padding: 9px 11px;
+  }
+  .form-state-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  .form-state-label.error { color: var(--alert-red); }
+
+  /* === ELEVATION === */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-m);
+  }
+  .elevation-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    text-align: center;
+  }
+  .elevation-label {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .elevation-desc {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    word-break: break-all;
+  }
+  .elevation-note {
+    font-family: var(--font-base);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: var(--space-s);
+    line-height: 1.6;
+  }
+
+  /* === LAYOUT (Spacing & Container) === */
+  .spacing-row {
+    display: flex; align-items: flex-end;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-m);
+  }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--casio-blue);
+    border-radius: var(--radius);
+    margin-bottom: 6px;
+    width: 28px;
+  }
+  .spacing-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .spacing-token {
+    font-family: var(--font-base);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .width-bar {
+    height: 32px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .width-bar-inner {
+    height: 100%;
+    background: var(--casio-blue);
+    opacity: 0.15;
+  }
+  .width-bar-label {
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .width-bar-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-left: 8px;
+    font-weight: 400;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    background: var(--footer-bg);
+    color: var(--text-inverse);
+    padding: var(--space-l) var(--space-xxl);
+    text-align: left;
+    font-family: var(--font-base);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .footer a {
+    color: var(--text-inverse);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .footer .footer-brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: var(--space-s);
+    color: var(--text-inverse);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: var(--space-l) var(--space-s) var(--space-m); }
+    .hero h1 { font-size: 22px; }
+    .section { padding: var(--space-l) var(--space-s); }
+    .section-surface-inner { padding: var(--space-l) var(--space-s); }
+    .section-title { font-size: 18px; }
+    .article-preview h1 { font-size: 22px; }
+    .article-preview h2 { font-size: 16px; }
+    .article-preview p { font-size: 14px; line-height: 2.0; }
+    .footer { padding: var(--space-l) var(--space-s); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">CASIO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">企業情報</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview<br>CASIO</h1>
+  <div class="purpose">驚きを身近にする力で、ひとりひとりに今日を超える歓びを。</div>
+  <p>casio.co.jp のデザイントークンをカタログ化。DIN 2014 の幾何学的精密さ、シャープな角、CASIO Blue の深い紺。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn btn-primary" href="#">DESIGN.md を読む</a>
+    <a class="btn btn-secondary" href="#">コーポレートサイトを見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#0a3282"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">CASIO Blue</div>
+        <div class="color-swatch-hex">#0a3282</div>
+        <div class="color-swatch-role">ブランド紺。ロゴ・パーパス・CI</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#bb3c39"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">CASIO Red</div>
+        <div class="color-swatch-hex">#bb3c39</div>
+        <div class="color-swatch-role">製品カテゴリ・プロダクトアクセント</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Category</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#494c8c"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Corporate Purple</div>
+        <div class="color-swatch-hex">#494c8c</div>
+        <div class="color-swatch-role">「企業」カテゴリラベル</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#2e7c65"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Investor Green</div>
+        <div class="color-swatch-hex">#2e7c65</div>
+        <div class="color-swatch-role">「投資家」カテゴリラベル</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#f4f5f8"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Background</div>
+        <div class="color-swatch-hex">#f4f5f8</div>
+        <div class="color-swatch-role">ページ背景（ブルーグレー）</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #bebebe"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">カード・モーダル・入力欄の面</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#000000"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Primary</div>
+        <div class="color-swatch-hex">#000000</div>
+        <div class="color-swatch-role">本文・見出し（純黒）</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#bebebe"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Border</div>
+        <div class="color-swatch-hex">#bebebe</div>
+        <div class="color-swatch-role">仕切り線・ボタン枠</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#030303"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Footer</div>
+        <div class="color-swatch-hex">#030303</div>
+        <div class="color-swatch-role">フッター背景（ほぼ純黒）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#e54747"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Alert / Danger</div>
+        <div class="color-swatch-hex">#e54747</div>
+        <div class="color-swatch-role">エラーテキスト・警告</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:repeating-linear-gradient(45deg, #eee, #eee 6px, #fff 6px, #fff 12px)"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Warning</div>
+        <div class="color-swatch-hex">未定義</div>
+        <div class="color-swatch-role">実測値なし</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:repeating-linear-gradient(45deg, #eee, #eee 6px, #fff 6px, #fff 12px)"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Success</div>
+        <div class="color-swatch-hex">未定義</div>
+        <div class="color-swatch-role">実測値なし</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:30px; font-weight:700; line-height:1.6; color:var(--text-primary);">TOPICS — 技術で驚きを</div>
+    <div class="type-meta">30px / 700 / line-height: 1.6 (48/30) / DIN 2014 + Noto Sans JP<span class="type-context">h2 TOPICS</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:30px; font-weight:700; line-height:1.4; color:var(--text-primary);">カシオの挑戦 — Heading 1</div>
+    <div class="type-meta">30px / 700 / line-height: 1.4<span class="type-context">h1</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:700; line-height:1.4; color:var(--text-primary);">サブセクション見出し — Heading 2</div>
+    <div class="type-meta">20px / 700 / line-height: 1.4<span class="type-context">h2 sub</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:15px; font-weight:400; line-height:1.5; color:var(--text-primary);">本文テキスト — Body。CASIOのサイトは本文 15px / line-height 1.5 で構成されています。DIN 2014 の幾何学的な欧文と Noto Sans JP の和文を組み合わせた精密な組版です。letter-spacing は normal、palt も使用しません。</div>
+    <div class="type-meta">15px / 400 / line-height: 1.5 (22.5/15) / letter-spacing: normal / palt: なし<span class="type-context">body / p</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:2.0; color:var(--text-primary);">記事本文 — Article Body。記事や長文コンテンツでは line-height 2.0 を使用。14px とやや小さくなるが、行間を十分に取ることで可読性を確保しています。コーポレートサイトの情報密度と読みやすさのバランスを両立。</div>
+    <div class="type-meta">14px / 400 / line-height: 2.0 (28/14)<span class="type-context">article body</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:700; line-height:1.4; color:var(--text-primary);">ナビゲーション主要項目 — 会長メッセージ</div>
+    <div class="type-meta">14px / 700<span class="type-context">nav primary</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:13px; font-weight:400; line-height:1.4; color:var(--text-secondary);">サブナビゲーション — Purpose / IR情報</div>
+    <div class="type-meta">13px / 400<span class="type-context">nav sub</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.5; color:var(--text-secondary);">企業TOP — ヘッダーユーティリティ</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5 (18/12)<span class="type-context">nav utility</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:200; line-height:1.4; color:var(--text-secondary);">キャプション — Caption / Alert（weight 200 の極細）</div>
+    <div class="type-meta">12px / 200 / 極細ウェイト。ユーティリティテキストに多用<span class="type-context">caption / alert</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:200; line-height:1.4; color:var(--text-secondary);">ヘッダーユーティリティ — 最小テキスト</div>
+    <div class="type-meta">11px / 200–400 / ヘッダー上部のユーティリティ<span class="type-context">header utility</span></div>
+  </div>
+
+  <p style="font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); margin-top:var(--space-m); line-height:1.7;">
+    Web フォント方針: <code>DIN 2014</code>（Adobe Fonts / ライセンス制限あり）は preview では <code>Inter</code>（Google Fonts）で代替。<code>Noto Sans JP</code>（Google Fonts）を和文に使用。<br>
+    実装時は Adobe Fonts プロジェクトキットで <code>din-2014</code> を読み込むこと。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT -->
+<section class="section-surface" id="article">
+<div class="section-surface-inner">
+  <div class="section-label">03 / Article & Product</div>
+  <h2 class="section-title">記事と製品の組版サンプル</h2>
+
+  <!-- News block -->
+  <div class="article-preview">
+    <div class="news-block">
+      <div class="news-title">Topics</div>
+      <ul class="news-list">
+        <li>
+          <span class="news-date">2026.05.09</span>
+          <span class="category-label category-products" style="font-size:10px; margin-right:8px;">製品</span>
+          <a href="#">G-SHOCK 新作コレクション発表 — タフソーラーとBluetooth連携</a>
+        </li>
+        <li>
+          <span class="news-date">2026.05.07</span>
+          <span class="category-label category-corporate" style="font-size:10px; margin-right:8px;">企業</span>
+          <a href="#">CASIOのパーパス経営 — 2026年度の重点施策について</a>
+        </li>
+        <li>
+          <span class="news-date">2026.04.28</span>
+          <span class="category-label category-investor" style="font-size:10px; margin-right:8px;">投資家</span>
+          <a href="#">2026年3月期 決算短信を公開しました</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="eyebrow">TECHNOLOGY STORY</div>
+    <h1>精密から生まれる驚き。</h1>
+    <div class="meta">2026.05.09 ／ Corporate Editorial ／ Reading time: 5 min</div>
+
+    <p>1957年、世界初の小型純電気式計算機「14-A」を開発したカシオ計算機。以来、時計、電子辞書、電子楽器、関数電卓—— あらゆる製品に共通するのは、精密な技術で「驚き」を身近にするという哲学です。</p>
+
+    <h2>G-SHOCK が証明した耐久性の哲学</h2>
+    <p>「落としても壊れない時計をつくりたい」。1981年に始まったプロジェクトチーム「タフ」は、200を超える試作品を経て1983年に初代 G-SHOCK DW-5000C を完成させました。耐衝撃構造は、中空構造で IC モジュールを浮かせるという逆転の発想から生まれています。</p>
+
+    <h2>カシオの計算力</h2>
+    <p>関数電卓は世界中の教育現場で使われています。直感的なキー配列と高速演算処理は、数十年にわたるユーザーリサーチの蓄積です。デジタル時代にあっても、手のひらの計算機が果たす役割は変わりません。</p>
+
+    <!-- Product cards -->
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-card-image tone-1">WATCH</div>
+        <div class="product-card-body">
+          <div class="product-category" style="color:var(--casio-red);">G-SHOCK</div>
+          <div class="product-name">DW-5000U-1JF</div>
+          <div class="product-jp">スクエアフェイス 復刻モデル</div>
+          <div class="product-price">&yen;16,500 <small>（税込）</small></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-2">CALCULATOR</div>
+        <div class="product-card-body">
+          <div class="product-category" style="color:var(--casio-blue);">CALCULATOR</div>
+          <div class="product-name">fx-JP900CW</div>
+          <div class="product-jp">関数電卓 ClassWiz</div>
+          <div class="product-price">&yen;5,280 <small>（税込）</small></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-image tone-3">KEYBOARD</div>
+        <div class="product-card-body">
+          <div class="product-category" style="color:var(--investor-green);">CASIOTONE</div>
+          <div class="product-name">CT-S1</div>
+          <div class="product-jp">カシオトーン</div>
+          <div class="product-price">&yen;38,500 <small>（税込）</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-l); text-align:center;">
+      <a class="btn btn-secondary" href="#">製品一覧を見る</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <p style="font-size:14px; color:var(--text-primary); margin-bottom:var(--space-l); line-height:1.7;">
+    CASIOのボタンは <code style="font-family:var(--font-mono); font-size:13px;">border-radius: 0px</code> を徹底。黒塗りの Primary と白地の Secondary のコントラストで階層を表現。ウェイト 200 の極細ボタンラベルも特徴的。
+  </p>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn btn-primary" href="#">ログイン</a>
+      <div class="button-label">Primary（黒塗り）<br>14px / 400</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-secondary" href="#">もっと見る</a>
+      <div class="button-label">Secondary（白地・グレー枠）<br>14px / 400</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-brand" href="#">パーパス</a>
+      <div class="button-label">Brand（CASIO Blue）<br>14px / 700</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-utility" href="#">マイページ</a>
+      <div class="button-label">Utility（極細）<br>12px / 200</div>
+    </div>
+    <div class="button-item">
+      <a class="btn btn-danger" href="#">削除する</a>
+      <div class="button-label">Danger（参考実装）<br>14px / 700</div>
+    </div>
+  </div>
+
+  <div style="margin-top:var(--space-l);">
+    <div class="color-group-label">Category Labels</div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px;">
+      <span class="category-label category-products">製品</span>
+      <span class="category-label category-corporate">企業</span>
+      <span class="category-label category-corporate-alt">企業（紫）</span>
+      <span class="category-label category-investor">投資家</span>
+    </div>
+    <div class="button-label" style="margin-top:8px;">カテゴリラベル — 各色 / 11px / 700 / radius: 0px</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-eyebrow"><span class="category-label category-products">製品</span></div>
+      <h3>G-SHOCK 40周年記念モデル</h3>
+      <p>1983年の誕生から40年。初代 DW-5000C のスクエアデザインを継承しながら、最新のタフソーラーとマルチバンド6を搭載した記念モデルです。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><span class="category-label category-corporate">企業</span></div>
+      <h3>カシオのパーパス経営</h3>
+      <p>「驚きを身近にする力で、ひとりひとりに今日を超える歓びを。」このパーパスのもと、教育・音楽・時計の3領域で社会課題の解決に取り組んでいます。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><span class="category-label category-investor">投資家</span></div>
+      <h3>IR情報・決算資料</h3>
+      <p>決算短信、有価証券報告書、株主通信など、投資家の皆さまに向けた情報を掲載しています。ESG・サステナビリティレポートもこちらからご覧いただけます。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素（3 状態）</h2>
+  <p style="font-size:14px; color:var(--text-primary); margin-bottom:var(--space-l); line-height:1.7;">
+    入力欄も角丸を使わず、44px のタッチターゲット高さを基準に。フォーカス時は border を <code style="font-family:var(--font-mono);">#0a3282</code>（CASIO Blue）に切り替え、エラーは Alert Red <code style="font-family:var(--font-mono);">#e54747</code> を使用。
+  </p>
+
+  <div class="form-group">
+    <label class="form-label" for="email-default">メールアドレス</label>
+    <input id="email-default" class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: 1px solid #bebebe / radius: 0px / height: 44px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="pw-focus">パスワード</label>
+    <input id="pw-focus" class="form-input form-input--focus" type="password" value="password1234">
+    <div class="form-state-label">フォーカス — border: 2px solid #0a3282（CASIO Blue）</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="email-error">メールアドレス</label>
+    <input id="email-error" class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-state-label error">エラー — border: 2px solid #e54747（Alert Red）</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">box-shadow: none</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1（推奨）</div>
+      <div class="elevation-desc">0 1px 3px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2（推奨）</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.10)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);">
+      <div class="elevation-label">Level 3（推奨）</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div>
+    </div>
+  </div>
+  <p class="elevation-note">
+    実測値はすべて <code style="font-family:var(--font-mono);">box-shadow: none</code>。CASIOはフラットデザインを徹底しており、ボーダーと背景色の差分で階層を表現します。Level 1〜3 は「どうしても必要な場合の推奨値」です。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシングとコンテナ幅</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:8px;"></div>
+      <div class="spacing-token">XS</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:16px;"></div>
+      <div class="spacing-token">S</div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:24px;"></div>
+      <div class="spacing-token">M</div>
+      <div class="spacing-value">24px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:40px;"></div>
+      <div class="spacing-token">L</div>
+      <div class="spacing-value">40px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:64px;"></div>
+      <div class="spacing-token">XL</div>
+      <div class="spacing-value">64px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="height:80px;"></div>
+      <div class="spacing-token">XXL</div>
+      <div class="spacing-value">80px</div>
+    </div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Container & Content Widths</div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Container Max <span class="width-bar-value">1200px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Main Content <span class="width-bar-value">940px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:78.3%"></div></div>
+  </div>
+  <div style="margin-bottom:var(--space-s);">
+    <div class="width-bar-label">Article（読み物） <span class="width-bar-value">680px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:56.7%"></div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:var(--space-l);">Breakpoints</div>
+  <p style="font-family:var(--font-base); font-size:14px; color:var(--text-primary); line-height:1.7;">
+    <strong style="font-weight:700;">Mobile</strong>: ≤ 767px ／ <strong style="font-weight:700;">Tablet</strong>: 768 – 1024px ／ <strong style="font-weight:700;">Desktop</strong>: > 1024px<br>
+    タッチターゲットは 44px &times; 44px 以上（WCAG 基準）。
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">CASIO</div>
+  Generated from <a href="https://www.casio.co.jp/">casio.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-09）<br>
+  <span style="opacity:0.7;">Web fonts: Inter（DIN 2014 の代替）+ Noto Sans JP（Google Fonts） / 実装時は Adobe Fonts で din-2014 を読み込むこと</span>
+</footer>
+
+</body>
+</html>

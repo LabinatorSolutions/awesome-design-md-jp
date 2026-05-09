@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (170 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (173 sites)</a>
 </p>
 
 <table>
@@ -263,6 +263,9 @@
 <td align="center"><strong>KAPITAL</strong><br><img src="design-md/kapital/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ANREALAGE</strong><br><img src="design-md/anrealage/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KURKKU FIELDS</strong><br><img src="design-md/kurkkufields/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KOSÉ</strong><br><img src="design-md/kose/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CASIO</strong><br><img src="design-md/casio/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HOSOO</strong><br><img src="design-md/hosoo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -494,11 +497,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [KAPITAL (キャピタル)](https://www.kapital.jp/) | Fashion / Denim / Heritage | [DESIGN.md](design-md/kapital/DESIGN.md) | [preview.html](design-md/kapital/preview.html) |
 | [ANREALAGE (アンリアレイジ)](https://www.anrealage.com/) | Fashion / Avant-Garde | [DESIGN.md](design-md/anrealage/DESIGN.md) | [preview.html](design-md/anrealage/preview.html) |
 | [KURKKU FIELDS (クルックフィールズ)](https://kurkkufields.jp/) | Sustainable Farm / Art / Food | [DESIGN.md](design-md/kurkkufields/DESIGN.md) | [preview.html](design-md/kurkkufields/preview.html) |
+| [KOSÉ (コーセー)](https://www.kose.co.jp/) | Cosmetics / Beauty EC | [DESIGN.md](design-md/kose/DESIGN.md) | [preview.html](design-md/kose/preview.html) |
+| [CASIO (カシオ)](https://www.casio.co.jp/) | Electronics / Corporate | [DESIGN.md](design-md/casio/DESIGN.md) | [preview.html](design-md/casio/preview.html) |
+| [HOSOO (細尾)](https://hosoo.co.jp/) | Textile / Heritage Craft | [DESIGN.md](design-md/hosoo/DESIGN.md) | [preview.html](design-md/hosoo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (170 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (173 sites)</a>
 </p>
 
 <table>
@@ -727,6 +733,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>KAPITAL</strong><br><img src="design-md/kapital/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ANREALAGE</strong><br><img src="design-md/anrealage/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KURKKU FIELDS</strong><br><img src="design-md/kurkkufields/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KOSÉ</strong><br><img src="design-md/kose/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CASIO</strong><br><img src="design-md/casio/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HOSOO</strong><br><img src="design-md/hosoo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
