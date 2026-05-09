@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (149 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (152 sites)</a>
 </p>
 
 <table>
@@ -236,6 +236,9 @@
 </tr>
 <tr>
 <td align="center"><strong>SHARP</strong><br><img src="design-md/sharp/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Panasonic</strong><br><img src="design-md/panasonic/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MIKIMOTO</strong><br><img src="design-md/mikimoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SAPPORO</strong><br><img src="design-md/sapporo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -446,11 +449,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Mizuno (ミズノ)](https://www.mizuno.jp/) | Sports / EC | [DESIGN.md](design-md/mizuno/DESIGN.md) | [preview.html](design-md/mizuno/preview.html) |
 | [PILOT (パイロット)](https://www.pilot.co.jp/) | Writing Instruments / Stationery | [DESIGN.md](design-md/pilot/DESIGN.md) | [preview.html](design-md/pilot/preview.html) |
 | [SHARP (シャープ)](https://jp.sharp/) | Electronics / Home Appliance | [DESIGN.md](design-md/sharp/DESIGN.md) | [preview.html](design-md/sharp/preview.html) |
+| [Panasonic (パナソニック)](https://www.panasonic.com/jp/) | Electronics / Consumer Tech | [DESIGN.md](design-md/panasonic/DESIGN.md) | [preview.html](design-md/panasonic/preview.html) |
+| [MIKIMOTO (ミキモト)](https://www.mikimoto.com/jp-ja/) | Luxury Jewelry / Heritage | [DESIGN.md](design-md/mikimoto/DESIGN.md) | [preview.html](design-md/mikimoto/preview.html) |
+| [SAPPORO (サッポロビール)](https://www.sapporobeer.jp/) | Beverage / Corporate | [DESIGN.md](design-md/sapporo/DESIGN.md) | [preview.html](design-md/sapporo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (149 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (152 sites)</a>
 </p>
 
 <table>
@@ -652,6 +658,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>SHARP</strong><br><img src="design-md/sharp/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Panasonic</strong><br><img src="design-md/panasonic/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MIKIMOTO</strong><br><img src="design-md/mikimoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SAPPORO</strong><br><img src="design-md/sapporo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
