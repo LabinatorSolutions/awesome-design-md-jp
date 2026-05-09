@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MIZUNO（ミズノ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --text-primary: #303030;
+    --text-dark: #111111;
+    --white: #ffffff;
+    --surface-light: #f5f5f5;
+    --surface-gray: #ededed;
+    --mizuno-blue: #001489;
+    --pink-accent: #ffb7c5;
+    --yellow: #ffff00;
+    --light-blue: #89b8ee;
+    --bg: #ffffff;
+    --border: #e0e0e0;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+    /* === Fonts === */
+    /* 実サイトは Roboto（欧文優先）+ Noto Sans JP（和文フォールバック） */
+    --font-base: Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+
+    /* === Radius === */
+    --radius-sm: 3px;
+    --radius-pill: 30px;
+    --radius-badge: 5px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.67;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 700;
+    color: var(--text-dark); text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--mizuno-blue); }
+
+  /* SECTIONS */
+  .section { padding: 64px 96px; }
+  .section-title {
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: #888888;
+    margin-bottom: 32px;
+  }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .color-card { border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+  .color-swatch { height: 80px; }
+  .color-info { padding: 10px 12px; background: var(--surface-light); }
+  .color-name { font-size: 12px; font-weight: 500; color: var(--text-dark); margin-bottom: 2px; }
+  .color-hex { font-size: 11px; color: #888888; }
+
+  /* TYPOGRAPHY */
+  .type-row { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 11px; color: #888888; margin-bottom: 8px; letter-spacing: 0.05em; }
+  .type-sample-h2 { font-size: 32px; font-weight: 400; line-height: 1.2; color: var(--text-dark); }
+  .type-sample-h3 { font-size: 25px; font-weight: 700; line-height: 1.2; color: var(--text-dark); }
+  .type-sample-h4 { font-size: 18px; font-weight: 700; line-height: 1.5; color: #333333; }
+  .type-sample-body { font-size: 14px; font-weight: 400; line-height: 1.67; color: var(--text-primary); }
+  .type-sample-promo { font-size: 12px; font-weight: 400; line-height: 2.5; color: var(--surface-light); background: var(--text-dark); padding: 0 16px; display: inline-block; }
+  .type-sample-nav { font-size: 22px; font-weight: 400; line-height: 65px; color: var(--text-primary); }
+
+  /* PRODUCT */
+  .product-preview { max-width: 720px; }
+  .product-preview h2 { font-size: 32px; font-weight: 400; line-height: 1.2; color: var(--text-dark); margin-bottom: 16px; }
+  .product-preview h3 { font-size: 18px; font-weight: 700; line-height: 1.5; color: #333333; margin-bottom: 12px; margin-top: 32px; }
+  .product-preview p { font-size: 14px; font-weight: 400; line-height: 1.67; color: var(--text-primary); margin-bottom: 16px; }
+  .product-preview a { color: var(--mizuno-blue); text-decoration: none; }
+  .product-preview a:hover { text-decoration: underline; }
+  .product-tag {
+    display: inline-block;
+    background: var(--surface-light); color: var(--text-dark);
+    padding: 4px 12px; border-radius: var(--radius-pill);
+    font-size: 12px; font-weight: 400;
+    margin-right: 8px; margin-bottom: 8px;
+  }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--text-dark); color: var(--white);
+    padding: 12px 24px; border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 400; font-family: var(--font-base);
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--text-dark);
+    padding: 12px 24px; border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 400; font-family: var(--font-base);
+    border: 1px solid var(--text-dark);
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--surface-light); }
+  .btn-tag {
+    display: inline-flex; align-items: center;
+    background: var(--surface-light); color: var(--text-dark);
+    padding: 6px 14px; border-radius: var(--radius-pill);
+    font-size: 12px; font-weight: 400; font-family: var(--font-base);
+    border: none; text-decoration: none; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-tag:hover { background: var(--surface-gray); }
+  .btn-service {
+    display: inline-flex; align-items: center;
+    background: var(--pink-accent); color: var(--white);
+    padding: 6px 12px; border-radius: var(--radius-badge);
+    font-size: 12px; font-weight: 700; font-family: var(--font-base);
+    border: none; text-decoration: none; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-service:hover { opacity: 0.85; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--surface-gray);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .card-image {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #888888;
+  }
+  .card:nth-child(1) .card-image { background: linear-gradient(135deg, #e8ecf5, #c8d4ee); }
+  .card:nth-child(2) .card-image { background: linear-gradient(135deg, #f0f0f0, #dcdcdc); }
+  .card:nth-child(3) .card-image { background: linear-gradient(135deg, #e5eef7, #b8d4f0); }
+  .card-body { padding: 16px; }
+  .card-category { font-size: 11px; color: #888888; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--text-dark); line-height: 1.4; margin-bottom: 8px; }
+  .card-price { font-size: 14px; font-weight: 400; color: var(--text-primary); }
+  .card-price-sale { font-size: 14px; font-weight: 700; color: #cc0000; margin-left: 8px; }
+
+  /* FORMS */
+  .form-section { max-width: 480px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 12px; font-weight: 500; color: #555555; margin-bottom: 8px; letter-spacing: 0.05em; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary); font-family: var(--font-base);
+    font-size: 14px;
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--mizuno-blue); }
+  .form-input::placeholder { color: #aaaaaa; }
+  .form-input.error { border-color: #dc3545; }
+  .form-error { font-size: 12px; color: #dc3545; margin-top: 6px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+  .elevation-box {
+    width: 160px; height: 100px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #888888;
+    background: var(--white);
+  }
+  .elev-0 { border: 1px solid var(--border); box-shadow: var(--elevation-0); }
+  .elev-1 { box-shadow: var(--elevation-1); }
+  .elev-2 { box-shadow: var(--elevation-2); }
+
+  /* LAYOUT */
+  .layout-demo { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .layout-header { height: 60px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; font-size: 14px; color: #888888; font-weight: 700; }
+  .layout-hero { height: 200px; background: var(--text-dark); display: flex; align-items: center; justify-content: center; }
+  .layout-hero-text { font-size: 28px; font-weight: 400; letter-spacing: 0.05em; color: var(--white); }
+  .layout-content { padding: 24px; background: var(--surface-light); display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .layout-card { height: 80px; background: var(--white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; color: #888888; }
+  .layout-footer { height: 48px; background: var(--text-dark); border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; padding: 0 24px; font-size: 11px; color: rgba(255, 255, 255, 0.5); }
+
+  /* DIVIDER */
+  .section + .section { border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a class="nav-brand" href="#">MIZUNO</a>
+  <ul class="nav-links">
+    <li><a href="#">ランニング</a></li>
+    <li><a href="#">ベースボール</a></li>
+    <li><a href="#">フットボール</a></li>
+    <li><a href="#">ゴルフ</a></li>
+    <li><a href="#">ストア</a></li>
+  </ul>
+</nav>
+
+<!-- 1. Colors -->
+<section class="section">
+  <div class="section-title">1 — Colors</div>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: #111111;"></div>
+      <div class="color-info"><div class="color-name">Text Dark</div><div class="color-hex">#111111</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #303030;"></div>
+      <div class="color-info"><div class="color-name">Text Primary</div><div class="color-hex">#303030</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #001489;"></div>
+      <div class="color-info"><div class="color-name">Mizuno Blue</div><div class="color-hex">#001489</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #89b8ee;"></div>
+      <div class="color-info"><div class="color-name">Light Blue</div><div class="color-hex">#89b8ee</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ffb7c5;"></div>
+      <div class="color-info"><div class="color-name">Pink Accent</div><div class="color-hex">#ffb7c5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ffff00; border: 1px solid #e0e0e0;"></div>
+      <div class="color-info"><div class="color-name">Yellow (Sale)</div><div class="color-hex">#ffff00</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f5f5f5; border: 1px solid #e0e0e0;"></div>
+      <div class="color-info"><div class="color-name">Surface Light</div><div class="color-hex">#f5f5f5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ededed; border: 1px solid #e0e0e0;"></div>
+      <div class="color-info"><div class="color-name">Surface Gray</div><div class="color-hex">#ededed</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ffffff; border: 1px solid #e0e0e0;"></div>
+      <div class="color-info"><div class="color-name">White</div><div class="color-hex">#ffffff</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Typography -->
+<section class="section">
+  <div class="section-title">2 — Typography</div>
+
+  <div class="type-row">
+    <div class="type-meta">Section H2 — 32px / Weight 400 / Line Height 1.2 / #111111</div>
+    <div class="type-sample-h2">新しい走りの形。ミズノが贈るランニングシューズ</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Subsection H3 — 25px / Weight 700 / Line Height 1.2 / #111111</div>
+    <div class="type-sample-h3">WAVE RIDER 27 — 次世代クッショニング搭載</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Category H4 — 18px / Weight 700 / Line Height 1.5 / #333333</div>
+    <div class="type-sample-h4">ランニングシューズ</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Body — 14px / Weight 400 / Line Height 1.67 / #303030</div>
+    <div class="type-sample-body">ミズノの独自クッション技術 MIZUNO WAVE がランナーの足を守り、快適な走りを実現します。長距離レースからトレーニングまで、あらゆるシーンで最高のパフォーマンスをサポートします。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Promo Bar — 12px / Weight 400 / Line Height 2.5 / #f5f5f5 on dark</div>
+    <div class="type-sample-promo">SUMMER SALE 開催中 — 対象商品 最大30%OFF</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Nav Mega — 22px / Weight 400 / Line Height 65px / #303030</div>
+    <div class="type-sample-nav">ランニング</div>
+  </div>
+</section>
+
+<!-- 3. Product -->
+<section class="section">
+  <div class="section-title">3 — Product</div>
+  <div class="product-preview">
+    <h2>WAVE RIDER 27</h2>
+    <span class="product-tag">ランニング</span>
+    <span class="product-tag">ロードレース</span>
+    <span class="product-tag">ニュートラル</span>
+    <h3>MIZUNO WAVE テクノロジー</h3>
+    <p>ミズノ独自の WAVE プレートがクッションと安定性を両立。着地の衝撃を分散させながら、力強い蹴り出しをサポートします。ロードランナーが求める快適性と耐久性を追求した、ミズノのフラッグシップモデルです。</p>
+    <p>アッパーには通気性に優れた新素材を採用し、長距離走行時の蒸れを軽減。日本人の足型に合わせたラストで、フィット感にも徹底的にこだわりました。詳しくは<a href="#">製品ページ</a>をご覧ください。</p>
+  </div>
+</section>
+
+<!-- 4. Buttons -->
+<section class="section">
+  <div class="section-title">4 — Buttons</div>
+  <div class="btn-grid">
+    <button class="btn-primary">カートに追加する</button>
+    <button class="btn-secondary">お気に入りに追加</button>
+    <button class="btn-tag">ランニング</button>
+    <button class="btn-tag">ゴルフ</button>
+    <button class="btn-service">MIZUNO SHOP</button>
+  </div>
+</section>
+
+<!-- 5. Cards -->
+<section class="section">
+  <div class="section-title">5 — Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">[ 商品画像 ]</div>
+      <div class="card-body">
+        <div class="card-category">Running</div>
+        <div class="card-title">WAVE RIDER 27</div>
+        <div class="card-price">¥16,500</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">[ 商品画像 ]</div>
+      <div class="card-body">
+        <div class="card-category">Baseball</div>
+        <div class="card-title">プロメサ スパイク</div>
+        <div class="card-price" style="text-decoration: line-through; color: #888888;">¥12,000</div>
+        <div class="card-price">¥8,400<span class="card-price-sale">SALE</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">[ 商品画像 ]</div>
+      <div class="card-body">
+        <div class="card-category">Golf</div>
+        <div class="card-title">JPX923 ホットメタルアイアン</div>
+        <div class="card-price">¥154,000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Forms -->
+<section class="section">
+  <div class="section-title">6 — Forms</div>
+  <div class="form-section">
+    <div class="form-group">
+      <label class="form-label">Default</label>
+      <input class="form-input" type="text" placeholder="キーワードで商品を検索">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Focus</label>
+      <input class="form-input" type="text" value="WAVE RIDER" style="border-color: #001489;">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Error</label>
+      <input class="form-input error" type="text" value="">
+      <div class="form-error">このフィールドは必須です</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Elevation -->
+<section class="section">
+  <div class="section-title">7 — Elevation</div>
+  <div class="elevation-grid">
+    <div class="elevation-box elev-0">Level 0 — Flat</div>
+    <div class="elevation-box elev-1">Level 1 — 0 2px 4px</div>
+    <div class="elevation-box elev-2">Level 2 — 0 4px 12px</div>
+  </div>
+</section>
+
+<!-- 8. Layout -->
+<section class="section">
+  <div class="section-title">8 — Layout</div>
+  <div class="layout-demo">
+    <div class="layout-header">MIZUNO — Header 60px</div>
+    <div class="layout-hero"><span class="layout-hero-text">Hero — Full Width</span></div>
+    <div class="layout-content">
+      <div class="layout-card">Product 1</div>
+      <div class="layout-card">Product 2</div>
+      <div class="layout-card">Product 3</div>
+    </div>
+    <div class="layout-footer">Footer — © Mizuno Corporation</div>
+  </div>
+</section>
+
+</body>
+</html>

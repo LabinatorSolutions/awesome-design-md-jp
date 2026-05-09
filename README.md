@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (146 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (149 sites)</a>
 </p>
 
 <table>
@@ -231,6 +231,11 @@
 <td align="center"><strong>FUJIFILM</strong><br><img src="design-md/fujifilm/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>UNITED ARROWS</strong><br><img src="design-md/united-arrows/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KIRIN</strong><br><img src="design-md/kirin/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Mizuno</strong><br><img src="design-md/mizuno/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PILOT</strong><br><img src="design-md/pilot/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>SHARP</strong><br><img src="design-md/sharp/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -438,11 +443,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [FUJIFILM (富士フイルム)](https://www.fujifilm.com/jp/ja) | Imaging / Healthcare / Corporate | [DESIGN.md](design-md/fujifilm/DESIGN.md) | [preview.html](design-md/fujifilm/preview.html) |
 | [UNITED ARROWS (ユナイテッドアローズ)](https://www.united-arrows.co.jp/) | Fashion / Select Shop Corporate | [DESIGN.md](design-md/united-arrows/DESIGN.md) | [preview.html](design-md/united-arrows/preview.html) |
 | [KIRIN (キリン)](https://www.kirin.co.jp/) | Beverage / Corporate | [DESIGN.md](design-md/kirin/DESIGN.md) | [preview.html](design-md/kirin/preview.html) |
+| [Mizuno (ミズノ)](https://www.mizuno.jp/) | Sports / EC | [DESIGN.md](design-md/mizuno/DESIGN.md) | [preview.html](design-md/mizuno/preview.html) |
+| [PILOT (パイロット)](https://www.pilot.co.jp/) | Writing Instruments / Stationery | [DESIGN.md](design-md/pilot/DESIGN.md) | [preview.html](design-md/pilot/preview.html) |
+| [SHARP (シャープ)](https://jp.sharp/) | Electronics / Home Appliance | [DESIGN.md](design-md/sharp/DESIGN.md) | [preview.html](design-md/sharp/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (146 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (149 sites)</a>
 </p>
 
 <table>
@@ -639,6 +647,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>FUJIFILM</strong><br><img src="design-md/fujifilm/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>UNITED ARROWS</strong><br><img src="design-md/united-arrows/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KIRIN</strong><br><img src="design-md/kirin/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Mizuno</strong><br><img src="design-md/mizuno/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PILOT</strong><br><img src="design-md/pilot/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>SHARP</strong><br><img src="design-md/sharp/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

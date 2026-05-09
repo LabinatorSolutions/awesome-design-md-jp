@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SHARP（シャープ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --sharp-red: #e6000d;
+    --aquos-blue: #4d7cfa;
+    --text-primary: #000000;
+    --white: #ffffff;
+    --surface-light: #f5f5f5;
+    --surface-border: #e6e6e6;
+    --overlay-dark: rgba(0, 0, 0, 0.6);
+    --overlay-light: rgba(0, 0, 0, 0.1);
+    --bg: #ffffff;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", sans-serif;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 5px;
+    --radius-lg: 10px;
+    --radius-xl: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--surface-border);
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-brand span {
+    color: var(--sharp-red);
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 15px; font-weight: 300;
+    color: var(--text-primary); text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+
+  /* SECTIONS */
+  .section { padding: 64px 96px; }
+  .section-title {
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: #888888;
+    margin-bottom: 32px;
+  }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .color-card { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--surface-border); }
+  .color-swatch { height: 80px; }
+  .color-info { padding: 10px 12px; background: var(--surface-light); }
+  .color-name { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+  .color-hex { font-size: 11px; color: #888888; }
+
+  /* TYPOGRAPHY */
+  .type-row { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--surface-border); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 11px; color: #888888; margin-bottom: 10px; letter-spacing: 0.05em; }
+  .type-sample-hero { font-size: 40px; font-weight: 700; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-h2-lg { font-size: 36px; font-weight: 700; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-h2-md { font-size: 28px; font-weight: 700; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-h2-sec { font-size: 24px; font-weight: 500; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-body { font-size: 16px; font-weight: 300; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-caption { font-size: 14px; font-weight: 300; line-height: 1.5; color: #444444; }
+  .type-sample-link { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--text-primary); text-decoration: none; }
+  .type-sample-nav { font-size: 15px; font-weight: 300; line-height: 1.5; color: var(--text-primary); }
+  .type-sample-nav-sm { font-size: 12px; font-weight: 400; line-height: 1.5; color: #444444; }
+  .badge-new {
+    display: inline-block;
+    background: var(--sharp-red); color: var(--white);
+    font-size: 12px; font-weight: 700; line-height: 1;
+    padding: 2px 8px; border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+  }
+
+  /* PRODUCT (Article) */
+  .product-preview { max-width: 760px; margin: 0 auto; }
+  .product-hero {
+    position: relative; height: 320px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex; align-items: flex-end;
+    padding: 40px;
+    margin-bottom: 32px;
+  }
+  .product-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--overlay-dark);
+  }
+  .product-hero-content { position: relative; z-index: 1; color: var(--white); }
+  .product-hero-badge {
+    display: inline-block;
+    background: var(--aquos-blue); color: var(--white);
+    font-size: 12px; font-weight: 700;
+    padding: 4px 12px; border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  .product-hero-title { font-size: 28px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+  .product-hero-desc { font-size: 14px; font-weight: 300; line-height: 1.5; opacity: 0.85; }
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .product-card {
+    background: var(--white);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--elevation-1);
+  }
+  .product-card-img {
+    height: 160px;
+    background: var(--surface-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #888888;
+  }
+  .product-card-img.aquos { background: linear-gradient(135deg, #e8eeff, #c5d3ff); }
+  .product-card-img.air { background: linear-gradient(135deg, #e8f5e9, #c5e1c5); }
+  .product-card-img.cocoro { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
+  .product-card-body { padding: 16px; }
+  .product-card-badge { margin-bottom: 6px; }
+  .product-card-title { font-size: 15px; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
+  .product-card-desc { font-size: 13px; font-weight: 300; line-height: 1.5; color: #444444; margin-bottom: 12px; }
+  .product-card-link {
+    font-size: 14px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+  }
+  .product-card-link::after { content: ' ›'; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-category {
+    display: inline-flex; align-items: center;
+    background: var(--surface-light); color: var(--text-primary);
+    padding: 12px 24px; border-radius: var(--radius-lg);
+    font-size: 16px; font-weight: 400;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: var(--font-base);
+    transition: background 0.15s;
+  }
+  .btn-category:hover { background: var(--surface-border); }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--text-primary); color: var(--white);
+    padding: 12px 28px; border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: var(--font-base);
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-product-card {
+    display: inline-flex; align-items: center;
+    background: var(--surface-light); color: var(--text-primary);
+    padding: 16px 32px; border-radius: var(--radius-xl);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: var(--font-base);
+    transition: background 0.15s;
+  }
+  .btn-product-card:hover { background: var(--surface-border); }
+  .btn-new {
+    display: inline-flex; align-items: center;
+    background: var(--sharp-red); color: var(--white);
+    padding: 2px 8px; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 700;
+    text-decoration: none; border: none; cursor: default;
+    font-family: var(--font-base);
+    letter-spacing: 0.05em;
+  }
+  .btn-red {
+    display: inline-flex; align-items: center;
+    background: var(--sharp-red); color: var(--white);
+    padding: 12px 28px; border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: var(--font-base);
+    transition: opacity 0.15s;
+  }
+  .btn-red:hover { opacity: 0.85; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--elevation-1);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-img {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: #888888;
+    font-weight: 300;
+  }
+  .card-img.tv { background: linear-gradient(135deg, #e8eeff, #c5d3ff); }
+  .card-img.refrigerator { background: linear-gradient(135deg, #e8f5f9, #c5dfe5); }
+  .card-img.washer { background: linear-gradient(135deg, #f0f4ff, #d5deff); }
+  .card-body { padding: 20px; }
+  .card-eyebrow { font-size: 12px; font-weight: 400; color: #888888; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .card-title { font-size: 16px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+  .card-desc { font-size: 14px; font-weight: 300; line-height: 1.5; color: #444444; }
+
+  /* FORMS */
+  .form-section { max-width: 480px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary); font-family: var(--font-base);
+    font-size: 16px; font-weight: 300;
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--aquos-blue); }
+  .form-input::placeholder { color: #aaaaaa; font-weight: 300; }
+  .form-input.error { border-color: var(--sharp-red); }
+  .form-error { font-size: 12px; color: var(--sharp-red); margin-top: 6px; font-weight: 400; }
+
+  /* ELEVATION */
+  .elevation-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+  .elevation-box {
+    width: 180px; height: 100px;
+    border-radius: var(--radius-lg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 400; color: #888888;
+    background: var(--white);
+  }
+  .elev-0 { border: 1px solid var(--surface-border); }
+  .elev-1 { box-shadow: var(--elevation-1); }
+  .elev-2 { box-shadow: var(--elevation-2); }
+
+  /* LAYOUT */
+  .layout-demo { border: 1px solid var(--surface-border); border-radius: var(--radius-lg); overflow: hidden; }
+  .layout-header {
+    height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--surface-border);
+    display: flex; align-items: center;
+    padding: 0 24px; justify-content: space-between;
+  }
+  .layout-header-brand { font-size: 16px; font-weight: 700; letter-spacing: 0.08em; }
+  .layout-header-brand span { color: var(--sharp-red); }
+  .layout-header-links { display: flex; gap: 20px; font-size: 12px; font-weight: 300; color: #555555; }
+  .layout-hero {
+    height: 200px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    position: relative;
+    display: flex; align-items: center;
+    padding: 0 32px;
+  }
+  .layout-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--overlay-dark);
+  }
+  .layout-hero-content { position: relative; z-index: 1; color: var(--white); }
+  .layout-hero-title { font-size: 22px; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
+  .layout-hero-sub { font-size: 13px; font-weight: 300; opacity: 0.85; }
+  .layout-content { padding: 20px; background: var(--surface-light); display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .layout-card {
+    height: 80px; background: var(--white);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 300; color: #888888;
+    box-shadow: var(--elevation-1);
+  }
+  .layout-footer {
+    height: 48px; background: var(--white);
+    border-top: 1px solid var(--surface-border);
+    display: flex; align-items: center;
+    padding: 0 24px; font-size: 11px; font-weight: 300; color: #888888;
+  }
+
+  /* DIVIDER */
+  .section + .section { border-top: 1px solid var(--surface-border); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>SHARP</span></a>
+  <ul class="nav-links">
+    <li><a href="#">個人のお客様</a></li>
+    <li><a href="#">法人のお客様</a></li>
+    <li><a href="#">サポート</a></li>
+    <li><a href="#">ストア</a></li>
+  </ul>
+</nav>
+
+<!-- 1. Colors -->
+<section class="section">
+  <div class="section-title">1 — Colors</div>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: #e6000d;"></div>
+      <div class="color-info"><div class="color-name">SHARP Red</div><div class="color-hex">#e6000d</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #4d7cfa;"></div>
+      <div class="color-info"><div class="color-name">AQUOS Blue</div><div class="color-hex">#4d7cfa</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #000000;"></div>
+      <div class="color-info"><div class="color-name">Text Primary</div><div class="color-hex">#000000</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ffffff; border: 1px solid #e6e6e6;"></div>
+      <div class="color-info"><div class="color-name">White</div><div class="color-hex">#ffffff</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f5f5f5;"></div>
+      <div class="color-info"><div class="color-name">Surface Light</div><div class="color-hex">#f5f5f5</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #e6e6e6;"></div>
+      <div class="color-info"><div class="color-name">Surface Border</div><div class="color-hex">#e6e6e6</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: rgba(0,0,0,0.6);"></div>
+      <div class="color-info"><div class="color-name">Overlay Dark</div><div class="color-hex">rgba(0,0,0,0.6)</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: rgba(0,0,0,0.1);"></div>
+      <div class="color-info"><div class="color-name">Overlay Light</div><div class="color-hex">rgba(0,0,0,0.1)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Typography -->
+<section class="section">
+  <div class="section-title">2 — Typography</div>
+
+  <div class="type-row">
+    <div class="type-meta">Hero — 40px / Weight 700 / Line Height 1.5</div>
+    <div class="type-sample-hero">未来をひらく、シャープのテクノロジー。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">H2 Large — 36px / Weight 700 / Line Height 1.5</div>
+    <div class="type-sample-h2-lg">AQUOS XLED — 次世代の映像体験</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">H2 Medium — 28px / Weight 700 / Line Height 1.5</div>
+    <div class="type-sample-h2-md">ネイチャーテクノロジーで、くらしをもっと豊かに。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">H2 Section — 24px / Weight 500 / Line Height 1.5</div>
+    <div class="type-sample-h2-sec">COCOROホーム — つながる家電のエコシステム</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Body — 16px / Weight 300 / Line Height 1.5　※ライト体が特徴</div>
+    <div class="type-sample-body">シャープは「自然に学ぶ」ネイチャーテクノロジーを軸に、テレビ・冷蔵庫・洗濯機・空気清浄機など幅広い生活家電を提供しています。AIoT技術を活用したCOCOROサービスにより、家電同士がつながり、お客様のくらしをスマートにサポートします。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Caption — 14px / Weight 300 / Line Height 1.5</div>
+    <div class="type-sample-caption">※掲載の仕様・デザインは改良のため予告なく変更することがあります。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Link "詳しく見る" — 14px / Weight 400 / Line Height 1.5</div>
+    <div><a class="type-sample-link" href="#">詳しく見る ›</a></div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Nav — 15px / Weight 300 / Line Height 1.5</div>
+    <div class="type-sample-nav">個人のお客様 &nbsp;|&nbsp; 法人のお客様 &nbsp;|&nbsp; サポート &nbsp;|&nbsp; ストア</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Nav Secondary — 12px / Weight 400 / Line Height 1.5</div>
+    <div class="type-sample-nav-sm">テレビ &nbsp;|&nbsp; 冷蔵庫 &nbsp;|&nbsp; 洗濯機 &nbsp;|&nbsp; エアコン &nbsp;|&nbsp; 空気清浄機</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">NEW Badge — 12px / Weight 700 / #ffffff on SHARP Red</div>
+    <div><span class="badge-new">NEW</span></div>
+  </div>
+</section>
+
+<!-- 3. Product -->
+<section class="section">
+  <div class="section-title">3 — Product</div>
+  <div class="product-preview">
+    <div class="product-hero">
+      <div class="product-hero-content">
+        <div class="product-hero-badge">AQUOS XLED</div>
+        <div class="product-hero-title">4K有機ELテレビ — 圧倒的な黒の深み</div>
+        <div class="product-hero-desc">次世代のディスプレイ技術で、映像表現の限界を超える。AIが映像を最適化し、コンテンツ本来の色と明暗を忠実に再現します。</div>
+      </div>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-card-img aquos">AQUOS XLED</div>
+        <div class="product-card-body">
+          <div class="product-card-badge"><span class="badge-new">NEW</span></div>
+          <div class="product-card-title">AQUOS XLED 4K</div>
+          <div class="product-card-desc">AIが映像・音声を最適化。高輝度・広色域で臨場感あふれる映像体験を。</div>
+          <a class="product-card-link" href="#">詳しく見る</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img air">プラズマクラスター</div>
+        <div class="product-card-body">
+          <div class="product-card-badge">&nbsp;</div>
+          <div class="product-card-title">空気清浄機 KI-VX100</div>
+          <div class="product-card-desc">プラズマクラスターNEXTで、花粉・PM2.5・ウイルスを強力に除去します。</div>
+          <a class="product-card-link" href="#">詳しく見る</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img cocoro">COCORO HOME</div>
+        <div class="product-card-body">
+          <div class="product-card-badge">&nbsp;</div>
+          <div class="product-card-title">COCORO AIoTサービス</div>
+          <div class="product-card-desc">スマートフォンと家電をつなぎ、外出先からでも操作・確認できます。</div>
+          <a class="product-card-link" href="#">詳しく見る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Buttons -->
+<section class="section">
+  <div class="section-title">4 — Buttons</div>
+  <div class="btn-grid">
+    <button class="btn-category">テレビ</button>
+    <button class="btn-category">冷蔵庫</button>
+    <button class="btn-category">洗濯機</button>
+    <button class="btn-primary">製品一覧を見る</button>
+    <button class="btn-product-card">詳しく見る</button>
+    <span class="btn-new">NEW</span>
+    <button class="btn-red">今すぐ購入</button>
+  </div>
+</section>
+
+<!-- 5. Cards -->
+<section class="section">
+  <div class="section-title">5 — Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img tv">テレビ / AQUOS</div>
+      <div class="card-body">
+        <div class="card-eyebrow">TELEVISION</div>
+        <div class="card-title">AQUOSシリーズ</div>
+        <div class="card-desc">4K・8Kから有機ELまで。AIが最適な映像・音響を実現するシャープのフラッグシップTV。</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img refrigerator">冷蔵庫</div>
+      <div class="card-body">
+        <div class="card-eyebrow">REFRIGERATOR</div>
+        <div class="card-title">プラズマクラスター冷蔵庫</div>
+        <div class="card-desc">イオンが庫内を清潔に保ち、食材の鮮度を長持ちさせます。COCORO対応で遠隔管理も。</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img washer">洗濯機</div>
+      <div class="card-body">
+        <div class="card-eyebrow">WASHER</div>
+        <div class="card-title">ES-W11Bシリーズ</div>
+        <div class="card-desc">AIが衣類の量・汚れを自動検知。省エネ・節水を実現する次世代ドラム式洗濯機。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Forms -->
+<section class="section">
+  <div class="section-title">6 — Forms</div>
+  <div class="form-section">
+    <div class="form-group">
+      <label class="form-label">Default</label>
+      <input class="form-input" type="text" placeholder="キーワードを入力してください">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Focus</label>
+      <input class="form-input" type="text" value="AQUOS XLED 55インチ" style="border-color: #4d7cfa;">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Error</label>
+      <input class="form-input error" type="text" value="">
+      <div class="form-error">このフィールドは必須です</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Elevation -->
+<section class="section">
+  <div class="section-title">7 — Elevation</div>
+  <div class="elevation-grid">
+    <div class="elevation-box elev-0">Level 0 — Flat</div>
+    <div class="elevation-box elev-1">Level 1 — 0 2px 8px / 6%</div>
+    <div class="elevation-box elev-2">Level 2 — 0 4px 16px / 10%</div>
+  </div>
+</section>
+
+<!-- 8. Layout -->
+<section class="section">
+  <div class="section-title">8 — Layout</div>
+  <div class="layout-demo">
+    <div class="layout-header">
+      <div class="layout-header-brand"><span>SHARP</span></div>
+      <div class="layout-header-links">
+        <span>個人のお客様</span>
+        <span>法人のお客様</span>
+        <span>サポート</span>
+        <span>ストア</span>
+      </div>
+    </div>
+    <div class="layout-hero">
+      <div class="layout-hero-content">
+        <div class="layout-hero-title">ネイチャーテクノロジーで、未来のくらしへ。</div>
+        <div class="layout-hero-sub">自然の仕組みを活かしたシャープのイノベーション</div>
+      </div>
+    </div>
+    <div class="layout-content">
+      <div class="layout-card">テレビ / AQUOS</div>
+      <div class="layout-card">白物家電</div>
+      <div class="layout-card">COCORO AIoT</div>
+    </div>
+    <div class="layout-footer">© SHARP CORPORATION. All rights reserved.</div>
+  </div>
+</section>
+
+</body>
+</html>

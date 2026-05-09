@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: PILOT（パイロット）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --pilot-blue: #002f9e;
+    --pilot-blue-dark: #001e5a;
+    --text-primary: #000000;
+    --text-gray: #333333;
+    --white: #ffffff;
+    --surface-blue: #e9edf1;
+    --surface-light: #f6f7f9;
+    --catalog-blue: #d7e8f2;
+    --secondary-gray: #858585;
+    --category-bg: #f2f2f2;
+    --border: #d7d7d7;
+    --disabled: #999999;
+    --bg: #ffffff;
+    --error: #dc3545;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+    /* === Fonts === */
+    /* 実サイトは Noto Sans JP を使用 */
+    --font-base: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", sans-serif;
+
+    /* === Radius === */
+    /* PILOT はすべてのコンポーネントで radius: 0px（シャープな角） */
+    --radius: 0px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 500;
+    color: var(--pilot-blue); text-decoration: none;
+    letter-spacing: 0.2em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--pilot-blue); }
+  .nav-lang {
+    background: var(--secondary-gray); color: var(--white);
+    padding: 5px 14px; font-size: 12px; font-weight: 400;
+    letter-spacing: 0.05em; text-decoration: none; cursor: pointer;
+    border: none; border-radius: var(--radius);
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 96px; }
+  .section-alt { background: var(--surface-blue); }
+  .section-title {
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--secondary-gray);
+    margin-bottom: 40px;
+  }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .color-card { overflow: hidden; border: 1px solid var(--border); }
+  .color-swatch { height: 80px; }
+  .color-info { padding: 10px 12px; background: var(--white); }
+  .color-name { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; letter-spacing: 0.03em; }
+  .color-hex { font-size: 11px; color: var(--secondary-gray); }
+
+  /* TYPOGRAPHY */
+  .type-row { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 11px; color: var(--secondary-gray); margin-bottom: 10px; letter-spacing: 0.05em; }
+  .type-sample-h2 {
+    font-size: 24px; font-weight: 500; line-height: 1.0;
+    letter-spacing: 0.175em; color: var(--pilot-blue);
+    font-family: var(--font-base);
+  }
+  .type-sample-h3 {
+    font-size: 19px; font-weight: 500; line-height: 1.0;
+    letter-spacing: 0.15em; color: var(--pilot-blue);
+    font-family: var(--font-base);
+  }
+  .type-sample-body-md {
+    font-size: 17px; font-weight: 500; line-height: 1.33;
+    letter-spacing: 0.075em; color: var(--text-primary);
+    font-family: var(--font-base);
+  }
+  .type-sample-body {
+    font-size: 15px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 0.075em; color: var(--text-primary);
+    font-family: var(--font-base);
+  }
+  .type-sample-desc {
+    font-size: 13px; font-weight: 400; line-height: 1.57;
+    color: var(--text-primary);
+    font-family: var(--font-base);
+  }
+  .type-sample-catalog {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    font-family: var(--font-base);
+  }
+
+  /* PRODUCT (writing instruments) */
+  .product-section { max-width: 760px; }
+  .product-lead {
+    font-size: 24px; font-weight: 500; line-height: 1.0;
+    letter-spacing: 0.175em; color: var(--pilot-blue);
+    margin-bottom: 32px;
+  }
+  .product-body {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+  .product-body a { color: var(--pilot-blue); text-decoration: none; }
+  .product-body a:hover { text-decoration: underline; }
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  .product-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    border-radius: var(--radius);
+  }
+  .product-item-label {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.15em; color: var(--secondary-gray);
+    margin-bottom: 10px; text-transform: uppercase;
+  }
+  .product-item-name {
+    font-size: 17px; font-weight: 500;
+    letter-spacing: 0.075em; color: var(--pilot-blue);
+    margin-bottom: 8px;
+  }
+  .product-item-desc {
+    font-size: 13px; font-weight: 400; line-height: 1.57;
+    color: var(--text-gray);
+  }
+  .catalog-band {
+    background: var(--catalog-blue);
+    padding: 32px 0; margin-top: 40px;
+    border-radius: var(--radius);
+  }
+  .catalog-band-inner { padding: 0 24px; }
+  .catalog-band-title {
+    font-size: 19px; font-weight: 500;
+    letter-spacing: 0.15em; color: var(--pilot-blue);
+    margin-bottom: 16px;
+  }
+  .catalog-band-desc {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary);
+  }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--pilot-blue); color: var(--white);
+    padding: 12px 32px;
+    border-radius: var(--radius);
+    font-size: 15px; font-weight: 500; letter-spacing: 0.075em;
+    font-family: var(--font-base);
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--pilot-blue);
+    padding: 11px 30px;
+    border-radius: var(--radius);
+    font-size: 15px; font-weight: 500; letter-spacing: 0.075em;
+    font-family: var(--font-base);
+    border: 1px solid var(--pilot-blue);
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-outline:hover { background: var(--pilot-blue); color: var(--white); }
+  .btn-lang {
+    display: inline-flex; align-items: center;
+    background: var(--secondary-gray); color: var(--white);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: 13px; font-weight: 400; letter-spacing: 0.05em;
+    font-family: var(--font-base);
+    border: none; cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-lang:hover { opacity: 0.85; }
+  .btn-category {
+    display: inline-flex; align-items: center;
+    background: var(--category-bg); color: var(--text-primary);
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 13px; font-weight: 400; letter-spacing: 0.05em;
+    font-family: var(--font-base);
+    border: none; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-category:hover { background: var(--border); }
+  .btn-disabled {
+    display: inline-flex; align-items: center;
+    background: var(--disabled); color: var(--white);
+    padding: 12px 32px;
+    border-radius: var(--radius);
+    font-size: 15px; font-weight: 500; letter-spacing: 0.075em;
+    font-family: var(--font-base);
+    border: none; cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--elevation-1);
+  }
+  .card-img {
+    height: 160px;
+    background: var(--surface-blue);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-img-label {
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.15em; color: var(--pilot-blue);
+  }
+  .card-body { padding: 20px; }
+  .card-category {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.15em; color: var(--secondary-gray);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 17px; font-weight: 500;
+    letter-spacing: 0.075em; color: var(--pilot-blue);
+    margin-bottom: 8px; line-height: 1.33;
+  }
+  .card-desc {
+    font-size: 13px; font-weight: 400; line-height: 1.57;
+    color: var(--text-gray);
+  }
+
+  /* FORMS */
+  .form-section { max-width: 480px; }
+  .form-group { margin-bottom: 24px; }
+  .form-label {
+    display: block; font-size: 12px; font-weight: 500;
+    color: var(--secondary-gray); margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+  .form-input {
+    width: 100%; padding: 12px 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary); font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    letter-spacing: 0.05em;
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--pilot-blue); }
+  .form-input::placeholder { color: var(--disabled); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-size: 12px; color: var(--error); margin-top: 6px; letter-spacing: 0.05em; }
+  .form-select {
+    width: 100%; padding: 12px 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary); font-family: var(--font-base);
+    font-size: 15px; font-weight: 400;
+    letter-spacing: 0.05em;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: flex; gap: 32px; flex-wrap: wrap; }
+  .elevation-box {
+    width: 180px; height: 100px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--secondary-gray);
+    letter-spacing: 0.05em;
+  }
+  .elev-0 { box-shadow: var(--elevation-0); }
+  .elev-1 { box-shadow: var(--elevation-1); border-color: transparent; }
+  .elev-2 { box-shadow: var(--elevation-2); border-color: transparent; }
+
+  /* LAYOUT */
+  .layout-demo { border: 1px solid var(--border); overflow: hidden; border-radius: var(--radius); }
+  .layout-header {
+    height: 64px; background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .layout-header-brand { font-size: 16px; font-weight: 500; letter-spacing: 0.2em; color: var(--pilot-blue); }
+  .layout-header-nav { font-size: 12px; color: var(--secondary-gray); letter-spacing: 0.05em; }
+  .layout-hero {
+    height: 200px; background: var(--surface-blue);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+  }
+  .layout-hero-text { font-size: 22px; font-weight: 500; letter-spacing: 0.175em; color: var(--pilot-blue); }
+  .layout-hero-sub { font-size: 13px; font-weight: 400; letter-spacing: 0.1em; color: var(--secondary-gray); }
+  .layout-content { padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; background: var(--surface-light); }
+  .layout-card {
+    height: 80px; background: var(--white); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--secondary-gray); letter-spacing: 0.1em;
+  }
+  .layout-footer {
+    height: 52px; background: var(--pilot-blue);
+    border-top: none;
+    display: flex; align-items: center; padding: 0 24px;
+    font-size: 11px; color: rgba(255, 255, 255, 0.7); letter-spacing: 0.1em;
+  }
+
+  /* DIVIDER */
+  .section + .section { border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a class="nav-brand" href="#">PILOT</a>
+  <ul class="nav-links">
+    <li><a href="#">製品情報</a></li>
+    <li><a href="#">企業情報</a></li>
+    <li><a href="#">採用情報</a></li>
+    <li><a href="#">サポート</a></li>
+  </ul>
+  <button class="nav-lang">English</button>
+</nav>
+
+<!-- 1. Colors -->
+<section class="section">
+  <div class="section-title">1 — Colors</div>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: #002f9e;"></div>
+      <div class="color-info"><div class="color-name">PILOT Blue</div><div class="color-hex">#002f9e</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #001e5a;"></div>
+      <div class="color-info"><div class="color-name">PILOT Blue Dark</div><div class="color-hex">#001e5a</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #ffffff; border: 1px solid #d7d7d7;"></div>
+      <div class="color-info"><div class="color-name">White</div><div class="color-hex">#ffffff</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #e9edf1;"></div>
+      <div class="color-info"><div class="color-name">Surface Blue</div><div class="color-hex">#e9edf1</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #d7e8f2;"></div>
+      <div class="color-info"><div class="color-name">Catalog Blue</div><div class="color-hex">#d7e8f2</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f6f7f9;"></div>
+      <div class="color-info"><div class="color-name">Surface Light</div><div class="color-hex">#f6f7f9</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f2f2f2;"></div>
+      <div class="color-info"><div class="color-name">Category BG</div><div class="color-hex">#f2f2f2</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #858585;"></div>
+      <div class="color-info"><div class="color-name">Secondary Gray</div><div class="color-hex">#858585</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #333333;"></div>
+      <div class="color-info"><div class="color-name">Text Gray</div><div class="color-hex">#333333</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #000000;"></div>
+      <div class="color-info"><div class="color-name">Text Primary</div><div class="color-hex">#000000</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #d7d7d7;"></div>
+      <div class="color-info"><div class="color-name">Border</div><div class="color-hex">#d7d7d7</div></div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #dc3545;"></div>
+      <div class="color-info"><div class="color-name">Error</div><div class="color-hex">#dc3545</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Typography -->
+<section class="section section-alt">
+  <div class="section-title">2 — Typography</div>
+
+  <div class="type-row">
+    <div class="type-meta">Section H2 — 24px / Weight 500 / Line Height 1.0 / Letter Spacing 0.175em / PILOT Blue</div>
+    <div class="type-sample-h2">書くことへの情熱、万年筆の技術を世界へ</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Nav H3 — 19px / Weight 500 / Line Height 1.0 / Letter Spacing 0.15em / PILOT Blue</div>
+    <div class="type-sample-h3">製品情報 — 万年筆・ボールペン・シャープペン</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Body Medium — 17px / Weight 500 / Line Height 1.33 / Letter Spacing 0.075em</div>
+    <div class="type-sample-body-md">PILOTは1918年の創業以来、書く喜びを提供し続けてきた日本を代表する筆記具メーカーです。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Body Regular — 15px / Weight 400 / Line Height 1.0 / Letter Spacing 0.075em</div>
+    <div class="type-sample-body">万年筆・ボールペン・シャープペンシル・水性ペン・油性ペン</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Description — 13px / Weight 400 / Line Height 1.57</div>
+    <div class="type-sample-desc">パイロットコーポレーションは、世界100カ国以上に筆記具を供給するグローバルメーカーです。独自の技術と職人の匠の技が融合した製品は、書き心地にこだわるすべての方に愛されています。</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta">Catalog Body — 16px / Weight 400 / Line Height 1.5</div>
+    <div class="type-sample-catalog">キャップレス・デシモ、カスタム74、カスタムヘリテイジ912など、パイロットの万年筆は多彩なラインアップを誇ります。</div>
+  </div>
+</section>
+
+<!-- 3. Product (Writing Instruments) -->
+<section class="section">
+  <div class="section-title">3 — Product</div>
+  <div class="product-section">
+    <div class="product-lead">万年筆の世界へようこそ</div>
+    <p class="product-body">パイロットの万年筆は、書く喜びを日常に届けるために生まれました。精密に調整されたペン先、滑らかなインクフロー、そして手にしっくりと馴染む重さとバランス。<a href="#">カスタム74</a>をはじめとする定番シリーズから、限定コレクションまで、あなたの書き方に合った1本が見つかります。</p>
+    <p class="product-body">ボールペンやシャープペンシル、水性ペンも同じ哲学のもとに設計されています。書くことへの情熱が、すべてのPILOT製品に宿っています。</p>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-item">
+      <div class="product-item-label">Fountain Pen</div>
+      <div class="product-item-name">カスタム74</div>
+      <div class="product-item-desc">1974年登場のロングセラー。14金ペン先と豊富なカラーバリエーションで、万年筆入門から上級者まで対応する定番モデル。</div>
+    </div>
+    <div class="product-item">
+      <div class="product-item-label">Fountain Pen</div>
+      <div class="product-item-name">キャップレス デシモ</div>
+      <div class="product-item-desc">ノック式万年筆の革命。ペン先の出し入れがワンタッチで行える独自機構を採用した、スリムで上品なビジネスモデル。</div>
+    </div>
+    <div class="product-item">
+      <div class="product-item-label">Ball Point</div>
+      <div class="product-item-name">アクロ1000</div>
+      <div class="product-item-desc">油性ボールペン史上最高峰の書き心地。アクロインキの採用により、なめらかさと発色を高次元で両立したフラッグシップモデル。</div>
+    </div>
+  </div>
+
+  <div class="catalog-band">
+    <div class="catalog-band-inner">
+      <div class="catalog-band-title">製品カタログ</div>
+      <div class="catalog-band-desc">万年筆・ボールペン・シャープペンシル・水性ペン・油性ペン・筆ペン — すべての製品ラインアップはオンラインカタログでご覧いただけます。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Buttons -->
+<section class="section section-alt">
+  <div class="section-title">4 — Buttons</div>
+  <div class="btn-grid">
+    <button class="btn-primary">製品を探す</button>
+    <button class="btn-outline">カタログを見る</button>
+    <button class="btn-lang">English</button>
+    <button class="btn-category">万年筆</button>
+    <button class="btn-category">ボールペン</button>
+    <button class="btn-category">シャープペン</button>
+    <button class="btn-disabled" disabled>在庫なし</button>
+  </div>
+</section>
+
+<!-- 5. Cards -->
+<section class="section">
+  <div class="section-title">5 — Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">
+        <span class="card-img-label">Fountain Pen</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">万年筆</div>
+        <div class="card-title">カスタム ヘリテイジ 912</div>
+        <div class="card-desc">パイロット最高峰の技術が結集したコレクターズアイテム。特殊ペン先ユニットで多彩な書き味を楽しめる。</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <span class="card-img-label">Ball Point</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">ボールペン</div>
+        <div class="card-title">アクロ 500</div>
+        <div class="card-desc">書き心地の革命。アクロインキが実現するなめらかな筆跡と鮮やかな発色が特長のスタンダードモデル。</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <span class="card-img-label">Sharp Pencil</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">シャープペン</div>
+        <div class="card-title">S20</div>
+        <div class="card-desc">天然木を使用したグリップが手に優しくなじむ。長時間の筆記でも疲れにくい、こだわり派のための一本。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Forms -->
+<section class="section section-alt">
+  <div class="section-title">6 — Forms</div>
+  <div class="form-section">
+    <div class="form-group">
+      <label class="form-label">Default — 製品検索</label>
+      <input class="form-input" type="text" placeholder="製品名・型番を入力">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Focus — 入力中</label>
+      <input class="form-input" type="text" value="カスタム74" style="border-color: #002f9e;">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Error — 入力エラー</label>
+      <input class="form-input error" type="text" value="">
+      <div class="form-error">このフィールドは必須です</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Select — カテゴリ選択</label>
+      <select class="form-select">
+        <option>カテゴリを選択</option>
+        <option>万年筆</option>
+        <option>ボールペン</option>
+        <option>シャープペンシル</option>
+        <option>水性ペン・筆ペン</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Elevation -->
+<section class="section">
+  <div class="section-title">7 — Elevation</div>
+  <div class="elevation-grid">
+    <div class="elevation-box elev-0">Level 0 — Flat</div>
+    <div class="elevation-box elev-1">Level 1 — 0 2px 8px / 8%</div>
+    <div class="elevation-box elev-2">Level 2 — 0 4px 16px / 12%</div>
+  </div>
+</section>
+
+<!-- 8. Layout -->
+<section class="section section-alt">
+  <div class="section-title">8 — Layout</div>
+  <div class="layout-demo">
+    <div class="layout-header">
+      <span class="layout-header-brand">PILOT</span>
+      <span class="layout-header-nav">製品情報 / 企業情報 / サポート</span>
+    </div>
+    <div class="layout-hero">
+      <span class="layout-hero-text">書くことへの情熱</span>
+      <span class="layout-hero-sub">Passion for Writing</span>
+    </div>
+    <div class="layout-content">
+      <div class="layout-card">万年筆</div>
+      <div class="layout-card">ボールペン</div>
+      <div class="layout-card">シャープペン</div>
+    </div>
+    <div class="layout-footer">© Pilot Corporation. All Rights Reserved.</div>
+  </div>
+</section>
+
+</body>
+</html>
