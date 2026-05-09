@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Cygames（サイゲームス）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --black: #000000;
+    --white: #ffffff;
+    --navy-blue: #27455c;
+    --forest-green: #468254;
+    --dark-charcoal: #3f3e3e;
+    --medium-gray: #cccccc;
+    --light-gray: #f5f5f5;
+
+    /* === Semantic（推奨補完値） === */
+    --danger: #dc2626;
+    --success: #468254;
+    --warning: #d97706;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.15);
+
+    /* === Fonts === */
+    --font-jp: "Noto Sans JP", 游ゴシック体, YuGothic, 游ゴシック, "Yu Gothic", メイリオ, sans-serif;
+    --font-en: "Inter", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 5px;
+    --radius-lg: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--black);
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 18px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+
+  /* HERO */
+  .hero {
+    padding: 100px 32px 80px;
+    background: var(--black);
+    text-align: center;
+  }
+  .hero-inner {
+    max-width: 960px; margin: 0 auto;
+  }
+  .hero-label {
+    font-family: var(--font-en);
+    font-size: 14px; font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--font-jp);
+    font-size: 60px; font-weight: 900;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 20px;
+    font-feature-settings: "palt";
+  }
+  .hero-tagline {
+    font-family: var(--font-jp);
+    font-size: 20px; font-weight: 700;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 40px;
+  }
+  .hero p {
+    font-size: 15px; font-weight: 400;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--white); color: var(--black);
+    padding: 14px 32px; border-radius: var(--radius-md);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary-dark {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--black); color: var(--white);
+    padding: 14px 32px; border-radius: var(--radius-md);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.2s;
+  }
+  .btn-primary-dark:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; color: var(--white);
+    padding: 13px 31px; border-radius: var(--radius-md);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--white);
+    transition: background 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+  .btn-cookie {
+    display: inline-flex; align-items: center;
+    background: var(--black); color: var(--white);
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.2s;
+  }
+  .btn-cookie:hover { opacity: 0.85; }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en);
+    font-size: 13px; font-weight: 700; color: var(--dark-charcoal);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.08em;
+  }
+  .section-title-en {
+    font-family: var(--font-en);
+    font-size: 26px; font-weight: 700; line-height: 1.15;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-jp);
+    font-size: 30px; font-weight: 700; line-height: 1.33;
+    color: var(--black);
+    margin-bottom: 48px;
+    font-feature-settings: "palt";
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--medium-gray);
+    margin: 0;
+  }
+  .section-dark {
+    background: var(--navy-blue);
+    padding: 80px 32px;
+  }
+  .section-dark .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-dark .section-label { color: rgba(255, 255, 255, 0.5); }
+  .section-dark .section-title-en { color: var(--white); }
+  .section-dark .section-title { color: var(--white); }
+  .section-gray { background: var(--light-gray); padding: 80px 32px; }
+  .section-gray .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-lg); overflow: hidden; background: var(--white); border: 1px solid var(--medium-gray); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--black); }
+  .color-swatch-hex { font-size: 12px; color: var(--dark-charcoal); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--dark-charcoal); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--black); margin: 24px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--light-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--dark-charcoal); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--light-gray); color: var(--dark-charcoal); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-jp); }
+  .type-palt-tag { display: inline-block; background: var(--black); color: var(--white); font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 8px; font-family: var(--font-mono); font-weight: 500; }
+
+  /* CONTENT / NEWS */
+  .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .news-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--elevation-1);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .news-card:hover { box-shadow: var(--elevation-2); transform: translateY(-2px); }
+  .news-card-img {
+    width: 100%; height: 200px;
+    object-fit: cover; display: block;
+  }
+  .news-card-img-placeholder {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .news-card-body { padding: 20px; }
+  .news-card-category {
+    display: inline-block;
+    background: var(--forest-green); color: var(--white);
+    font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 3px; margin-bottom: 10px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .news-card-date {
+    font-size: 12px; color: var(--dark-charcoal);
+    margin-bottom: 8px; font-family: var(--font-mono);
+  }
+  .news-card-title {
+    font-size: 20px; font-weight: 700; line-height: 1.4;
+    color: var(--black);
+    font-feature-settings: "palt";
+  }
+
+  /* ARTICLE SAMPLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 30px; font-weight: 700; line-height: 1.33;
+    margin-bottom: 24px;
+    font-feature-settings: "palt";
+  }
+  .article-preview h2 {
+    font-size: 20px; font-weight: 700; line-height: 1.4;
+    margin: 32px 0 12px;
+    font-feature-settings: "palt";
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.75;
+    margin-bottom: 20px; color: var(--black);
+  }
+  .article-preview p.helper {
+    color: var(--dark-charcoal); font-size: 14px; line-height: 1.75;
+  }
+  .article-callout {
+    background: var(--light-gray);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.75;
+    border-left: 4px solid var(--black);
+  }
+
+  /* BUTTONS SECTION */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--dark-charcoal); margin-top: 8px; font-family: var(--font-mono); }
+  .button-dark-bg {
+    background: var(--black);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 32px;
+  }
+  .button-dark-bg .button-label { color: rgba(255, 255, 255, 0.5); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--medium-gray);
+    padding: 12px 16px; border-radius: var(--radius-md);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: 44px;
+  }
+  .form-input::placeholder { color: var(--medium-gray); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--black);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+  }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; font-weight: 500; }
+  .form-state-label { font-size: 12px; color: var(--dark-charcoal); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-lg);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--light-gray);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--dark-charcoal); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--black); border-radius: 2px; margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--dark-charcoal); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--black); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--black);
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--dark-charcoal);
+    font-size: 12px; color: rgba(255, 255, 255, 0.6);
+    line-height: 1.75;
+  }
+  .footer a { color: var(--white); text-decoration: underline; }
+  .footer-brand {
+    font-family: var(--font-en);
+    font-size: 16px; font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .footer-links {
+    display: flex; gap: 24px; justify-content: center;
+    list-style: none; margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 13px; color: var(--white); text-decoration: none;
+    font-weight: 400;
+    transition: opacity 0.2s;
+  }
+  .footer-links a:hover { opacity: 0.6; }
+
+  /* Infographic Numbers (Navy Section) */
+  .infographic-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px; text-align: center;
+  }
+  .infographic-number {
+    font-family: var(--font-en);
+    font-size: 56px; font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .infographic-unit {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @media (max-width: 769px) {
+    .hero { padding: 72px 20px 56px; }
+    .hero h1 { font-size: 34px; line-height: 1.2; }
+    .hero-tagline { font-size: 16px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .section-gray { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+    .section-title-en { font-size: 20px; }
+    .news-grid { grid-template-columns: 1fr; }
+    .infographic-grid { grid-template-columns: repeat(2, 1fr); }
+    .infographic-number { font-size: 40px; }
+    .article-preview h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Cygames</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#content">Content</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Design System Preview</div>
+    <h1>最高のコンテンツを<br>作る会社</h1>
+    <div class="hero-tagline">「楽しさ」と「ワクワク」を、世界中の人々に届ける</div>
+    <p>Cygames のデザインシステムをカタログ化したプレビューです。コーポレートサイトの computed style 実測値（2026-05-09 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">View All Titles</a>
+      <a class="btn-ghost" href="#">Company Info</a>
+    </div>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title-en">Color Palette</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand — Monochrome Core</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">CTA 背景・本文テキスト・ヘッダー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・ダーク面上のテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27455c"></div><div class="color-swatch-info"><div class="color-swatch-name">Navy Blue</div><div class="color-swatch-hex">#27455c</div><div class="color-swatch-role">セクション背景色・インフォグラフィック</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Forest Green</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">カテゴリバッジ・アクセント色</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3f3e3e"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Charcoal</div><div class="color-swatch-hex">#3f3e3e</div><div class="color-swatch-role">フッター背景・セカンダリテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Medium Gray</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ボーダー・区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">セクション背景（ライト面）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic（推奨補完値）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc2626"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#dc2626</div><div class="color-swatch-role">エラー・削除（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">成功・完了（ブランドグリーン転用）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d97706"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d97706</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title-en">Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:60px; font-weight:900; line-height:1.15; color:var(--black); font-feature-settings:'palt';">「楽しさ」と「ワクワク」を<br>世界中の人々に届ける</div>
+    <div class="type-meta">60px / 900 / line-height 1.15 / Noto Sans JP<span class="type-palt-tag">palt</span><span class="type-context">Hero Display</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:30px; font-weight:700; line-height:1.0; color:var(--black);">最高のコンテンツを作る会社 — Hero Slider</div>
+    <div class="type-meta">30px / 700 / line-height 1.0 / Noto Sans JP<span class="type-context">Slider</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:26px; font-weight:700; line-height:1.15; color:var(--black);">News — Section H2 (EN)</div>
+    <div class="type-meta">26.7px / 700 / line-height 1.15 / Inter (Cygames Sans )<span class="type-context">EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:30px; font-weight:700; line-height:1.33; color:var(--black);">Cygamesの特徴を数字で紹介 — Section H2 (JP)</div>
+    <div class="type-meta">30.9px / 700 / line-height 1.33 / Noto Sans JP<span class="type-context">JP H2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:15px; font-weight:700; line-height:1.2; color:var(--black); text-transform:uppercase; letter-spacing:0.06em;">Game Titles — Section Label</div>
+    <div class="type-meta">15px / 700 / Inter (Cygames Sans )<span class="type-context">Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:20px; font-weight:700; line-height:1.4; color:var(--black); font-feature-settings:'palt';">グランブルーファンタジー リリンク — H3 Item Title</div>
+    <div class="type-meta">20.6px / 700 / Noto Sans JP<span class="type-palt-tag">palt</span><span class="type-context">H3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:16px; font-weight:700; line-height:1.3; color:var(--black);">最新情報をお届けします — H3 Sub</div>
+    <div class="type-meta">16px / 700 / line-height 1.3 / Noto Sans JP<span class="type-context">Sub</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:16px; font-weight:400; line-height:1.75; color:var(--black);">本文テキスト — Cygamesは「最高のコンテンツを作る会社」として、ゲーム・アニメ・漫画などのエンターテインメントコンテンツを提供しています。約物の前後には YakuHanJPs による半角化が適用され、「」や（）の字間が引き締まります。</div>
+    <div class="type-meta">16px / 400 / line-height 1.75 / Noto Sans JP<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:14px; font-weight:700; line-height:1.4; color:var(--black);">採用情報 — Nav / Link</div>
+    <div class="type-meta">14px / 700 / Noto Sans JP<span class="type-context">Nav</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:12px; font-weight:400; line-height:1.5; color:var(--dark-charcoal);">Copyright &copy; Cygames, Inc. All Rights Reserved. — Small / Caption</div>
+    <div class="type-meta">12px / 400 / line-height 1.5 / color #3f3e3e</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTENT / NEWS -->
+<section class="section-gray" id="content">
+<div class="section-inner">
+  <div class="section-label">03 / Content</div>
+  <div class="section-title-en">News</div>
+  <h2 class="section-title">ニュース・ゲームタイトル</h2>
+
+  <div class="article-preview" style="margin-bottom:56px;">
+    <h1>Cygamesが挑戦する、次世代のゲーム体験</h1>
+    <p>技術とクリエイティビティの融合により、これまでにないゲーム体験を創り出す。Cygamesは設立以来、コンテンツの質にこだわり続けてきました。</p>
+
+    <h2>コンテンツファーストの哲学</h2>
+    <p>UIは黒子に徹し、ゲームアートそのものが主役。モノクロームの重厚なコーポレートデザインは、タイトルのビジュアルを最大限に引き立てます。エンターテインメントの本質は「楽しさ」にあるという信念のもと、すべてのデザイン判断が行われています。</p>
+
+    <div class="article-callout">
+      <strong>YakuHanJPs + palt:</strong> 見出しの「」や（）は半角幅に詰められ、さらに大きな見出しでは font-feature-settings: "palt" によるプロポーショナル字詰めが加わります。密度の高い文字組みがゲーム会社らしい力強さを生みます。
+    </div>
+
+    <p class="helper">※ 本プレビューでは Cygames Sans（ブランド専用書体）の代替として Inter を使用しています。</p>
+  </div>
+
+  <div class="news-grid">
+    <div class="news-card">
+      <div class="news-card-img-placeholder" style="background:linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);">Game Title Visual</div>
+      <div class="news-card-body">
+        <div class="news-card-category">Console</div>
+        <div class="news-card-date">2026.05.09</div>
+        <div class="news-card-title">グランブルーファンタジー リリンク 大型アップデート配信決定</div>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-card-img-placeholder" style="background:linear-gradient(135deg, #2d1b69, #11998e, #38ef7d);">Game Title Visual</div>
+      <div class="news-card-body">
+        <div class="news-card-category">Mobile</div>
+        <div class="news-card-date">2026.04.28</div>
+        <div class="news-card-title">ウマ娘 プリティーダービー 新シナリオ「天翔ける星」公開</div>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-card-img-placeholder" style="background:linear-gradient(135deg, #0c0c0c, #3f3e3e, #666666);">Game Title Visual</div>
+      <div class="news-card-body">
+        <div class="news-card-category">Info</div>
+        <div class="news-card-date">2026.04.15</div>
+        <div class="news-card-title">Cygames 新卒・中途採用エントリー受付中</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- INFOGRAPHIC (NAVY) -->
+<section class="section-dark">
+<div class="section-inner">
+  <div class="section-label">Cygames in Numbers</div>
+  <div class="section-title-en" style="margin-bottom:48px;">数字で見る Cygames</div>
+
+  <div class="infographic-grid">
+    <div>
+      <div class="infographic-number">4,000+</div>
+      <div class="infographic-unit">従業員数</div>
+    </div>
+    <div>
+      <div class="infographic-number">30+</div>
+      <div class="infographic-unit">リリースタイトル数</div>
+    </div>
+    <div>
+      <div class="infographic-number">2011</div>
+      <div class="infographic-unit">設立年</div>
+    </div>
+    <div>
+      <div class="infographic-number">6</div>
+      <div class="infographic-unit">拠点数</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title-en">Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="color-group-label">On Dark Background</div>
+  <div class="button-dark-bg">
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary" href="#">View All Titles</a><div class="button-label">Primary CTA — White / radius 5px</div></div>
+      <div class="button-item"><a class="btn-ghost" href="#">Company Info</a><div class="button-label">Ghost — transparent + white border</div></div>
+    </div>
+  </div>
+
+  <div class="color-group-label">On Light Background</div>
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary-dark" href="#">ニュース一覧</a><div class="button-label">Primary CTA — Black #000 / radius 5px</div></div>
+    <div class="button-item"><a class="btn-primary-dark" href="#">エントリーする</a><div class="button-label">Primary CTA — Black #000 / radius 5px</div></div>
+  </div>
+
+  <div class="color-group-label">Utility</div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-cookie" href="#">すべてのCookieを許可する</a><div class="button-label">Cookie Accept — #000 / radius 4px</div></div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Category Badges</div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+      <span class="news-card-category">Console</span>
+      <span class="news-card-category">Mobile</span>
+      <span class="news-card-category">Info</span>
+      <span style="display:inline-block; background:var(--black); color:var(--white); font-size:11px; font-weight:700; padding:3px 10px; border-radius:3px; text-transform:uppercase; letter-spacing:0.04em;">New</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title-en">Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="news-grid">
+    <div class="news-card">
+      <div class="news-card-img-placeholder" style="background:linear-gradient(135deg, #0d1b2a, #1b2838, #27455c);">News Image</div>
+      <div class="news-card-body">
+        <div class="news-card-category">Console</div>
+        <div class="news-card-date">2026.05.01</div>
+        <div class="news-card-title">新規コンソールタイトル開発中 ティザービジュアル公開</div>
+      </div>
+    </div>
+    <div class="news-card" style="box-shadow: var(--elevation-2); transform: translateY(-2px);">
+      <div class="news-card-img-placeholder" style="background:linear-gradient(135deg, #1a1a2e, #e94560, #0f3460);">News Image</div>
+      <div class="news-card-body">
+        <div class="news-card-category">Mobile</div>
+        <div class="news-card-date">2026.04.20</div>
+        <div class="news-card-title" style="font-size:20px;">Hover 状態: elevation-2 + translateY(-2px)</div>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-card-img-placeholder" style="background:linear-gradient(135deg, #141e30, #243b55);">News Image</div>
+      <div class="news-card-body">
+        <div style="display:inline-block; background:var(--black); color:var(--white); font-size:11px; font-weight:700; padding:3px 10px; border-radius:3px; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.04em;">New</div>
+        <div class="news-card-date">2026.04.10</div>
+        <div class="news-card-title">CygamesPictures オリジナルアニメ制作発表</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="button-label">Card: bg #ffffff / radius 10px / shadow 0 2px 8px rgba(0,0,0,0.08) / category badge #468254</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title-en">Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">氏名</label>
+      <input class="form-input" type="text" placeholder="例：田中 太郎">
+      <div class="form-state-label">Default — border #cccccc / radius 5px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="recruit@cygames.co.jp">
+      <div class="form-state-label">Focus — border #000000 / shadow 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">正しい電話番号を入力してください</div>
+      <div class="form-state-label">Error — border #dc2626 / shadow 3px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title-en">Depth & Elevation</div>
+  <h2 class="section-title">影の階層</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし — 基本（フラットデザイン基調）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 16px 40px rgba(0,0,0,0.15)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title-en">Spacing & Radius</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale (8px grid)</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px — Cookie CTA</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:5px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">5px — CTA / Input</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:10px"></div>
+      <div class="spacing-name">Large</div>
+      <div class="spacing-value">10px — Card</div>
+    </div>
+  </div>
+  <div style="margin-top:24px;">
+    <div class="button-label" style="color:var(--dark-charcoal);">Pill (9999px) not used — Cygames uses subtle 5px rounding</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Cygames</div>
+  <ul class="footer-links">
+    <li><a href="#">News</a></li>
+    <li><a href="#">Service</a></li>
+    <li><a href="#">Company</a></li>
+    <li><a href="#">Recruit</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  Generated from <a href="https://www.cygames.co.jp/">cygames.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-09）<br>
+  ※ Cygames Sans（ブランド専用書体）は外部利用不可のため、本プレビューでは <strong>Inter</strong>（Google Fonts）を代替使用しています。<br>
+  ※ YakuHanJPs（約物半角化）はローカルフォントのため、本プレビューでは通常の Noto Sans JP のグリフで表示されます。
+</footer>
+
+</body>
+</html>

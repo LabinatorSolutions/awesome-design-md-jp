@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Hakuhodo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: Brand === */
+    --brand-red: #ff1a1a;
+    --neon-yellow: #e7ff33;
+    --light-pink: #ff8080;
+
+    /* === Colors: Neutral (Blue-Tinted Dark Scale) === */
+    --dark-navy: #1a1a23;
+    --dark-gray: #222222;
+    --medium-gray: #99999d;
+    --light-border: #e5e5e6;
+    --warm-beige: #f4eee8;
+    --light-surface: #f5f5f5;
+    --near-white: #fafafa;
+    --white: #ffffff;
+
+    /* === Colors: Semantic === */
+    --danger: #dc2626;
+    --success: #16a34a;
+    --warning: #d97706;
+
+    /* === Colors: Footer / Dark === */
+    --footer-bg: #1a1a23;
+    --text-on-dark: #ffffff;
+    --link-on-dark: #ff1a1a;
+
+    /* === Colors: Header === */
+    --header-bg: rgba(255, 255, 255, 0.85);
+
+    /* === Fonts === */
+    /* sofia-pro-variable (Adobe Fonts) -> Inter (Google Fonts) as substitute */
+    --font-en: "Inter", sans-serif;
+    --font-jp: "Zen Kaku Gothic New", sans-serif;
+    --font-mono: "SF Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(26, 26, 35, 0.06);
+    --elevation-2: 0 4px 16px rgba(26, 26, 35, 0.08);
+    --elevation-3: 0 8px 32px rgba(26, 26, 35, 0.12);
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--dark-navy);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.15;
+    font-feature-settings: "pwid";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--light-border);
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 18px; font-weight: 700;
+    color: var(--dark-navy); text-decoration: none;
+    letter-spacing: 0.06em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en);
+    font-size: 14px; font-weight: 400;
+    color: var(--dark-navy); text-decoration: none;
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    transition: background 0.15s, opacity 0.15s;
+  }
+  .nav-links a:hover { background: var(--light-surface); }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--brand-red);
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    border: 1px solid var(--brand-red);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-cta:hover { background: var(--brand-red); color: var(--white); }
+
+  /* === HERO === */
+  .hero {
+    padding: 120px 32px 96px;
+    background: var(--white);
+    max-width: 1200px; margin: 0 auto;
+  }
+  .hero-en {
+    font-family: var(--font-en);
+    font-size: 80px; font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--dark-navy);
+    margin-bottom: 24px;
+  }
+  .hero-jp {
+    font-family: var(--font-jp);
+    font-size: 22px; font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    color: var(--dark-navy);
+    margin-bottom: 16px;
+    max-width: 640px;
+  }
+  .hero-desc {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    color: var(--medium-gray);
+    max-width: 560px; margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--brand-red);
+    padding: 12px 28px; border-radius: var(--radius-sm);
+    border: 1px solid var(--brand-red);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .hero-cta:hover { background: var(--brand-red); color: var(--white); }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 500; color: var(--medium-gray);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+  }
+  .section-title-en {
+    font-family: var(--font-en);
+    font-size: 42px; font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--dark-navy);
+    margin-bottom: 8px;
+  }
+  .section-title-jp {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400;
+    color: var(--medium-gray);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--light-border);
+    margin: 0;
+  }
+  .section-beige { background: var(--warm-beige); padding: 80px 32px; }
+  .section-beige .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-light { background: var(--light-surface); padding: 80px 32px; }
+  .section-light .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); border: 1px solid var(--light-border); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--dark-navy); }
+  .color-swatch-hex { font-size: 12px; color: var(--medium-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--medium-gray); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 500; color: var(--dark-navy); margin: 24px 0 12px; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--light-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--medium-gray); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--light-surface); color: var(--medium-gray); font-size: 10px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-jp); }
+
+  /* === ARTICLE === */
+  .article-preview { max-width: 800px; }
+  .article-preview .article-en-title {
+    font-family: var(--font-en);
+    font-size: 42px; font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .article-preview .article-jp-title {
+    font-family: var(--font-jp);
+    font-size: 19px; font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .article-preview .article-meta {
+    font-size: 13px; font-weight: 400; color: var(--medium-gray);
+    margin-bottom: 32px; line-height: 1.5;
+  }
+  .article-preview .article-lead {
+    font-family: var(--font-jp);
+    font-size: 22px; font-weight: 500;
+    line-height: 1.6; letter-spacing: 0.03em;
+    margin-bottom: 24px;
+  }
+  .article-preview p {
+    font-size: 15px; font-weight: 400;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-en);
+    font-size: 32px; font-weight: 500;
+    letter-spacing: -0.04em;
+    margin: 40px 0 12px;
+    line-height: 1.2;
+  }
+  .article-preview h3 {
+    font-family: var(--font-jp);
+    font-size: 19px; font-weight: 500;
+    line-height: 1.4;
+    margin: 32px 0 12px;
+  }
+  .article-callout {
+    background: var(--light-surface);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.7;
+    border-left: 3px solid var(--brand-red);
+  }
+
+  /* === BUTTONS === */
+  .button-row { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--medium-gray); margin-top: 10px; }
+  .btn-outline {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--brand-red);
+    padding: 10px 20px; border-radius: var(--radius-sm);
+    border: 1px solid var(--brand-red);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-outline:hover { background: var(--brand-red); color: var(--white); }
+  .btn-outline-lg {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--brand-red);
+    padding: 14px 28px; border-radius: var(--radius-sm);
+    border: 1px solid var(--brand-red);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-outline-lg:hover { background: var(--brand-red); color: var(--white); }
+  .btn-text-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--brand-red);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 500;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-text-link:hover { text-decoration: underline; }
+  .btn-nav-link {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--dark-navy);
+    padding: 8px 16px; border-radius: var(--radius-md);
+    font-family: var(--font-en);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: background 0.15s;
+  }
+  .btn-nav-link:hover { background: var(--light-surface); }
+
+  /* === BADGES === */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge-yellow { background: var(--neon-yellow); color: var(--dark-navy); }
+  .badge-pink { background: var(--light-pink); color: var(--white); }
+  .badge-outline { background: transparent; color: var(--brand-red); border: 1px solid var(--brand-red); }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); transform: translateY(-2px); }
+  .card-img {
+    width: 100%; height: 180px;
+    background: var(--warm-beige);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en);
+    font-size: 24px; font-weight: 700;
+    color: var(--medium-gray);
+    letter-spacing: -0.03em;
+  }
+  .card-body { padding: 24px; }
+  .card-body .badge { margin-bottom: 12px; }
+  .card-body h3 {
+    font-size: 19px; font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .card-body p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7; color: var(--dark-gray);
+    margin-bottom: 12px;
+  }
+  .card-body .card-date {
+    font-size: 13px; font-weight: 400;
+    color: var(--medium-gray); line-height: 1.5;
+  }
+  .card-body .card-link {
+    font-size: 14px; font-weight: 500;
+    color: var(--brand-red); text-decoration: none;
+  }
+  .card-body .card-link:hover { text-decoration: underline; }
+
+  /* === FORMS === */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 880px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--dark-navy); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--dark-navy);
+    border: 1px solid var(--light-border);
+    padding: 12px 16px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400;
+    font-feature-settings: "pwid";
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    height: 44px;
+  }
+  .form-input::placeholder { color: var(--medium-gray); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--dark-navy);
+    box-shadow: 0 0 0 3px rgba(26, 26, 35, 0.1);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+  }
+  .form-state-label { font-size: 11px; color: var(--medium-gray); margin-top: 6px; font-family: var(--font-mono); }
+  .form-error-text { font-size: 13px; color: var(--danger); margin-top: 6px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-md);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--light-border);
+  }
+  .elevation-label { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--medium-gray); word-break: break-all; line-height: 1.5; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-red); border-radius: var(--radius-sm); margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--medium-gray); }
+  .spacing-name { font-size: 12px; font-weight: 500; color: var(--dark-navy); }
+
+  /* === RADIUS === */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--brand-red);
+    margin-bottom: 8px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 64px 32px 48px;
+    background: var(--footer-bg);
+    color: var(--text-on-dark);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+  }
+  .footer-brand {
+    font-family: var(--font-en);
+    font-size: 20px; font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+  .footer-desc {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .footer-heading {
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 16px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--link-on-dark); }
+  .footer-bottom {
+    max-width: 1200px; margin: 48px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: rgba(255, 255, 255, 0.4);
+  }
+  .footer-bottom a { color: var(--link-on-dark); text-decoration: none; }
+  .footer-bottom a:hover { text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero { padding: 80px 20px 64px; }
+    .hero-en { font-size: 42px; }
+    .hero-jp { font-size: 18px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-beige { padding: 56px 20px; }
+    .section-light { padding: 56px 20px; }
+    .section-title-en { font-size: 28px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+    .article-preview .article-en-title { font-size: 28px; }
+    .article-preview h2 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">HAKUHODO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-en">Who We Are</h1>
+  <p class="hero-jp">生活者発想で、未来をつくる。</p>
+  <p class="hero-desc">博報堂のデザインシステムをカタログ化したプレビューです。コーポレートサイトの computed style 実測値（2026-05-09 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+  <a class="hero-cta" href="#">See More &rarr;</a>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title-en">Color Palette</h2>
+  <div class="section-title-jp">実測値に基づくカラーパレット</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff1a1a"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#ff1a1a</div><div class="color-swatch-role">CTA border / text links / badges (NOT as background)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e7ff33"></div><div class="color-swatch-info"><div class="color-swatch-name">Neon Yellow</div><div class="color-swatch-hex">#e7ff33</div><div class="color-swatch-role">Category badge bg</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff8080"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Pink</div><div class="color-swatch-hex">#ff8080</div><div class="color-swatch-role">Category badge bg</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral &mdash; Blue-Tinted Dark Scale</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a23"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">#1a1a23</div><div class="color-swatch-role">Text / footer bg (B>R=G)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Gray</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">Secondary text</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#99999d"></div><div class="color-swatch-info"><div class="color-swatch-name">Medium Gray</div><div class="color-swatch-hex">#99999d</div><div class="color-swatch-role">Caption / date</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5e5e6; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Border</div><div class="color-swatch-hex">#e5e5e6</div><div class="color-swatch-role">Dividers / card border</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4eee8; border-bottom:1px solid #e5e5e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Beige</div><div class="color-swatch-hex">#f4eee8</div><div class="color-swatch-role">Section bg (R>G>B)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #e5e5e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Surface</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">Card bg / section</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa; border-bottom:1px solid #e5e5e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Near White</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">Subtle bg</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e5e5e6"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">Page bg / card surface</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc2626"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#dc2626</div><div class="color-swatch-role">Error / delete</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#16a34a"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#16a34a</div><div class="color-swatch-role">Completion</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d97706"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d97706</div><div class="color-swatch-role">Caution</div></div></div>
+  </div>
+
+  <div class="color-group-label">Footer / Dark Section</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a23"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy BG</div><div class="color-swatch-hex">#1a1a23</div><div class="color-swatch-role">Footer / dark section bg</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a23"><span style="color:#ffffff;font-size:14px;display:flex;height:100%;align-items:center;justify-content:center;">Aa</span></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">White text on dark navy</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a23"><span style="color:#ff1a1a;font-size:14px;display:flex;height:100%;align-items:center;justify-content:center;">Link</span></div><div class="color-swatch-info"><div class="color-swatch-name">Link on Dark</div><div class="color-swatch-hex">#ff1a1a</div><div class="color-swatch-role">Brand Red links on dark bg</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title-en">Type Hierarchy</h2>
+  <div class="section-title-jp">Inter (EN) + Zen Kaku Gothic New (JP) / font-feature-settings: "pwid"</div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:80px; font-weight:700; line-height:1.05; letter-spacing:-0.04em;">Who We Are</div>
+    <div class="type-meta">Inter 80px / 700 / lh 1.05 / ls -0.04em<span class="type-context">Hero EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:42px; font-weight:700; line-height:1.15; letter-spacing:-0.03em;">What We Believe</div>
+    <div class="type-meta">Inter 42px / 700 / lh 1.15 / ls -0.03em<span class="type-context">Section Head EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:42px; font-weight:500; line-height:1.4;">私たちが信じること</div>
+    <div class="type-meta">Zen Kaku Gothic New 42px / 500 / lh 1.4<span class="type-context">Section Head JP</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:32px; font-weight:500; line-height:1.2; letter-spacing:-0.04em;">Creative Solutions</div>
+    <div class="type-meta">Inter 32px / 500 / lh 1.2 / ls -0.04em<span class="type-context">Subsection EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:22px; font-weight:500; line-height:1.6; letter-spacing:0.03em;">生活者を深く理解し、その発想をもとに新しい価値を生み出す。</div>
+    <div class="type-meta">Zen Kaku Gothic New 22px / 500 / lh 1.6 / ls 0.03em<span class="type-context">Lead Text</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:19px; font-weight:500; line-height:1.4;">博報堂、新たなクリエイティブ拠点を開設</div>
+    <div class="type-meta">Zen Kaku Gothic New 19px / 500 / lh 1.4<span class="type-context">Article Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:16px; font-weight:400; line-height:1.15;">本文テキスト。博報堂の本文 line-height は 1.15 と非常にタイト。エディトリアルデザインの密度感を意図した組版。</div>
+    <div class="type-meta">Zen Kaku Gothic New 16px / 400 / lh 1.15<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:15px; font-weight:400; line-height:1.7;">説明文テキスト。段落テキストでは line-height を 1.5 から 1.8 に広げ、読みやすさを確保する。ブランドの持つエディトリアルな緊張感と、情報伝達の実用性を両立する配慮がなされている。</div>
+    <div class="type-meta">Zen Kaku Gothic New 15px / 400 / lh 1.7<span class="type-context">Body (Wide)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:14px; font-weight:700; line-height:1.4;">カテゴリラベル / 強調小テキスト</div>
+    <div class="type-meta">Zen Kaku Gothic New 14px / 700 / lh 1.4<span class="type-context">Small Bold</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:14px; font-weight:400; line-height:1.4;">Navigation &middot; About Us &middot; Services &middot; News</div>
+    <div class="type-meta">Inter 14px / 400 / lh 1.4<span class="type-context">Nav EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:13px; font-weight:400; line-height:1.5; color:var(--medium-gray);">2026.05.09 &mdash; 補助テキスト・日付表示</div>
+    <div class="type-meta">Zen Kaku Gothic New 13px / 400 / lh 1.5 / color #99999d<span class="type-context">Caption</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-beige" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title-en">Editorial Sample</h2>
+  <div class="section-title-jp">広告代理店のケーススタディ風の組版サンプル</div>
+  <div class="article-preview">
+    <div class="article-en-title">The Power of Sei-katsu-sha Insight</div>
+    <div class="article-jp-title">生活者インサイトが、ブランドを変える</div>
+    <div class="article-meta">2026.05.09 &mdash; Case Study &middot; Brand Strategy</div>
+
+    <div class="article-lead">消費者ではなく「生活者」として人を捉える。その視点の転換が、これからのブランドコミュニケーションの起点になる。</div>
+
+    <p>ある大手飲料メーカーのリブランディングプロジェクトでは、従来のマーケティングデータだけでは見えなかった生活者の行動変容を、フィールドワークとデータ分析の融合によって可視化した。</p>
+
+    <h2>Methodology</h2>
+    <h3>定量と定性の融合</h3>
+    <p>購買データの分析に加え、生活者の日常に密着したエスノグラフィー調査を実施。数字だけでは捉えきれない「なぜその選択をするのか」という動機の構造を明らかにした。</p>
+
+    <div class="article-callout">
+      <strong>Insight:</strong> 調査から浮かび上がったのは「健康のために飲む」という従来の購買動機ではなく、「気分の切り替えとして手に取る」という新たな文脈だった。
+    </div>
+
+    <h2>Outcome</h2>
+    <p>この発見をもとにコミュニケーション戦略を再構築。パッケージデザインからメディアプランニングまで一貫したクリエイティブを展開し、発売後3ヶ月で前年比120%の売上を達成した。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title-en">Button Variations</h2>
+  <div class="section-title-jp">Outline CTA / Text Link / Nav Link / Category Badge</div>
+
+  <div class="button-row" style="margin-bottom:48px;">
+    <div class="button-item">
+      <a class="btn-outline-lg" href="#">See More &rarr;</a>
+      <div class="button-label">Outline CTA (lg) &mdash; 4px radius / #ff1a1a border</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-outline" href="#">See More</a>
+      <div class="button-label">Outline CTA &mdash; 4px radius / #ff1a1a border</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text-link" href="#">The H Magazine &rarr;</a>
+      <div class="button-label">Text Link &mdash; #ff1a1a / no border</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-nav-link" href="#">About Us</a>
+      <div class="button-label">Nav Link &mdash; 8px radius / transparent</div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Category Badges</div>
+  <div class="badge-row" style="margin-bottom:8px;">
+    <span class="badge badge-yellow">Service</span>
+    <span class="badge badge-pink">Report</span>
+    <span class="badge badge-outline">News</span>
+  </div>
+  <div class="button-label" style="margin-top:0; margin-bottom:24px;">badge-yellow #e7ff33 / badge-pink #ff8080 / badge-outline #ff1a1a border &mdash; all 4px radius</div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Hover State (Outline CTA)</div>
+    <div class="button-row">
+      <div class="button-item">
+        <a href="#" style="display:inline-flex;align-items:center;background:transparent;color:#ff1a1a;padding:10px 20px;border-radius:4px;border:1px solid #ff1a1a;font-family:var(--font-jp);font-size:14px;font-weight:700;text-decoration:none;">Default</a>
+        <div class="button-label">Default state</div>
+      </div>
+      <div class="button-item">
+        <a href="#" style="display:inline-flex;align-items:center;background:#ff1a1a;color:#ffffff;padding:10px 20px;border-radius:4px;border:1px solid #ff1a1a;font-family:var(--font-jp);font-size:14px;font-weight:700;text-decoration:none;">Hover</a>
+        <div class="button-label">Hover state (bg inverts to #ff1a1a)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title-en">Card Components</h2>
+  <div class="section-title-jp">White surface / 8px radius / flat design</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">Case Study 01</div>
+      <div class="card-body">
+        <span class="badge badge-yellow">Service</span>
+        <h3>生活者データを活用した新ブランド戦略の構築</h3>
+        <p>博報堂DYグループのデータドリブンマーケティングによる、消費財メーカーのブランド再構築事例。</p>
+        <div class="card-date">2026.04.15</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">Report</div>
+      <div class="card-body">
+        <span class="badge badge-pink">Report</span>
+        <h3>2026年 生活者トレンドレポート</h3>
+        <p>博報堂生活総合研究所による年次調査レポート。生活者の価値観変化と消費行動の最新動向を分析。</p>
+        <div class="card-date">2026.03.01</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">News</div>
+      <div class="card-body">
+        <span class="badge badge-outline">News</span>
+        <h3>博報堂、クリエイティブテクノロジー新拠点を開設</h3>
+        <p>AI とクリエイティビティの融合を推進する新拠点を東京・渋谷に開設。</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+          <span class="card-date">2026.05.01</span>
+          <a class="card-link" href="#">Read More &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title-en">Form Elements</h2>
+  <div class="section-title-jp">Default / Focus / Error &mdash; 4px radius / focus: #1a1a23 border</div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">Company</label>
+      <input class="form-input" type="text" placeholder="e.g., Hakuhodo Inc.">
+      <div class="form-state-label">Default &mdash; border #e5e5e6 / radius 4px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input form-input--focus" type="email" value="contact@hakuhodo.co.jp">
+      <div class="form-state-label">Focus &mdash; border #1a1a23 / shadow 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">Please enter a valid phone number.</div>
+      <div class="form-state-label">Error &mdash; border #dc2626 / shadow 3px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title-en">Depth & Elevation</h2>
+  <div class="section-title-jp">Mostly flat. Depth via surface colors (#1a1a23, #f4eee8, #f5f5f5)</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">none (default)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(26,26,35,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 16px rgba(26,26,35,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 8px 32px rgba(26,26,35,0.12)</div></div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Surface Contrast (primary depth mechanism)</div>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; max-width:600px;">
+      <div style="background:#1a1a23; color:#ffffff; padding:24px 16px; border-radius:8px; text-align:center; font-size:13px;">Dark Navy<br><span style="font-family:var(--font-mono);font-size:11px;opacity:0.6;">#1a1a23</span></div>
+      <div style="background:#f4eee8; color:#1a1a23; padding:24px 16px; border-radius:8px; text-align:center; font-size:13px;">Warm Beige<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--medium-gray);">#f4eee8</span></div>
+      <div style="background:#f5f5f5; color:#1a1a23; padding:24px 16px; border-radius:8px; text-align:center; font-size:13px; border:1px solid #e5e5e6;">Light Surface<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--medium-gray);">#f5f5f5</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title-en">Spacing & Radius</h2>
+  <div class="section-title-jp">8px grid / container max-width 1200px</div>
+
+  <div class="color-group-label">Spacing Scale (8px base)</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:16px"></div>
+      <div class="spacing-name">Large</div>
+      <div class="spacing-value">16px</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">HAKUHODO</div>
+      <p class="footer-desc">Generated from <a href="https://www.hakuhodo.co.jp/" style="color:var(--link-on-dark);">hakuhodo.co.jp</a> DESIGN.md &mdash; awesome-design-md-jp / computed style (2026-05-09)</p>
+      <p class="footer-desc" style="margin-top:8px;">sofia-pro-variable (Adobe Fonts) is substituted with <strong>Inter</strong> (Google Fonts) in this preview.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">Who We Are</a></li>
+        <li><a href="#">What We Believe</a></li>
+        <li><a href="#">News</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Marketing</a></li>
+        <li><a href="#">Creative</a></li>
+        <li><a href="#">Data Science</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Connect</div>
+      <ul class="footer-links">
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#" style="color:var(--link-on-dark);">The H Magazine</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>font-feature-settings: "pwid" (NOT "palt") / CTA: outline style only</span>
+    <a href="https://github.com/kzhrknt/awesome-design-md-jp">awesome-design-md-jp</a>
+  </div>
+</footer>
+
+</body>
+</html>

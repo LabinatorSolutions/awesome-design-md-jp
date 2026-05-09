@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (155 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (158 sites)</a>
 </p>
 
 <table>
@@ -242,6 +242,11 @@
 <td align="center"><strong>LOFT</strong><br><img src="design-md/loft/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Canon</strong><br><img src="design-md/canon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SUBARU</strong><br><img src="design-md/subaru/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>博報堂</strong><br><img src="design-md/hakuhodo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Cygames</strong><br><img src="design-md/cygames/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>OWNDAYS</strong><br><img src="design-md/owndays/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -458,11 +463,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [LOFT (ロフト)](https://www.loft.co.jp/) | Retail / Lifestyle | [DESIGN.md](design-md/loft/DESIGN.md) | [preview.html](design-md/loft/preview.html) |
 | [Canon (キヤノン)](https://canon.jp/) | Imaging / Electronics | [DESIGN.md](design-md/canon/DESIGN.md) | [preview.html](design-md/canon/preview.html) |
 | [SUBARU (スバル)](https://www.subaru.jp/) | Automotive | [DESIGN.md](design-md/subaru/DESIGN.md) | [preview.html](design-md/subaru/preview.html) |
+| [Hakuhodo (博報堂)](https://www.hakuhodo.co.jp/) | Advertising / Agency | [DESIGN.md](design-md/hakuhodo/DESIGN.md) | [preview.html](design-md/hakuhodo/preview.html) |
+| [Cygames (サイゲームス)](https://www.cygames.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/cygames/DESIGN.md) | [preview.html](design-md/cygames/preview.html) |
+| [OWNDAYS (オンデーズ)](https://www.owndays.com/jp/ja) | Eyewear / Retail | [DESIGN.md](design-md/owndays/DESIGN.md) | [preview.html](design-md/owndays/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (155 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (158 sites)</a>
 </p>
 
 <table>
@@ -670,6 +678,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>LOFT</strong><br><img src="design-md/loft/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Canon</strong><br><img src="design-md/canon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SUBARU</strong><br><img src="design-md/subaru/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Hakuhodo</strong><br><img src="design-md/hakuhodo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Cygames</strong><br><img src="design-md/cygames/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>OWNDAYS</strong><br><img src="design-md/owndays/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
