@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: D-BROS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === D-BROS Color Tokens === */
+    --brand-black: #1a1a1a;
+    --accent-magenta: #fc00d5;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-muted: #333333;
+    --text-on-dark: #ffffff;
+    --surface-white: #ffffff;
+    --surface-dark: #333333;
+    --surface-light: #e5e5e5;
+    --border: #e5e5e5;
+    --error: #c0392b;
+
+    /* === Font ===
+       D-BROS は Inter + Yu Gothic の単一フォントスタック。
+       preview では Google Fonts の Inter + Noto Sans JP で代替。 */
+    --font-base: "Inter", "Noto Sans JP", YuGothic, "Yu Gothic Medium", "Yu Gothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 300; line-height: 1.75;
+    letter-spacing: 0.025em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 64px;
+    background: var(--surface-white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-base); font-size: 18px; font-weight: 400; line-height: 1.2;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em; line-height: 1.75;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-icon {
+    display: inline-block; font-family: var(--font-base); font-size: 14px;
+    color: var(--text-primary); letter-spacing: 0.05em; font-weight: 300;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 64px 100px;
+    background: var(--surface-white);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 300; line-height: 1.5;
+    letter-spacing: 0.025em; margin-bottom: 24px;
+    color: var(--text-primary);
+  }
+  .hero-section-title {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 300; line-height: 1.625;
+    letter-spacing: 0.025em; color: var(--text-primary); margin-bottom: 32px;
+    opacity: 0.6;
+  }
+  .hero-lead {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 300; line-height: 1.75;
+    letter-spacing: 0.025em;
+    color: var(--text-primary); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--surface-dark); color: var(--text-on-dark);
+    padding: 8px 16px; border: 1px solid transparent; border-radius: 5px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    letter-spacing: 0.025em; text-decoration: none; cursor: pointer;
+  }
+  .btn-ghost {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 8px 16px; border: none; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    letter-spacing: 0.025em; text-decoration: none; cursor: pointer;
+  }
+  .btn-ghost:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .btn-more {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--accent-magenta); border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 300;
+    letter-spacing: 0.025em; text-decoration: none; cursor: pointer;
+  }
+  .btn-more::after { content: "\2192"; }
+
+  /* SECTIONS */
+  .section { padding: 80px 64px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-base); font-size: 12px; font-weight: 300;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.025em;
+    opacity: 0.6;
+  }
+  .section-title {
+    font-family: var(--font-base); font-size: 22px; font-weight: 300;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: 0.025em;
+  }
+  .section-subtitle {
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    line-height: 1.625; color: var(--text-secondary); letter-spacing: 0.025em;
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .section-light { background: #fafafa; padding: 80px 64px; }
+  .section-light-inner { max-width: 1280px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-white); border: 1px solid var(--border); overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-base); font-size: 12px; font-weight: 300; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.025em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-base); font-size: 11px; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.025em; }
+  .color-group-label { font-family: var(--font-base); font-size: 12px; font-weight: 300; color: var(--text-secondary); margin: 24px 0 12px; letter-spacing: 0.025em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: #fafafa; color: var(--text-secondary); font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-base); font-size: 11px; font-weight: 300; color: var(--text-secondary); margin-top: 12px; letter-spacing: 0.025em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card { background: var(--surface-white); position: relative; }
+  .card-image { background: #f5f5f5; height: 340px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-base); font-size: 14px; font-weight: 300; color: var(--text-secondary);
+    letter-spacing: 0.025em;
+  }
+  .card-body { padding: 16px 0; }
+  .card-category {
+    font-family: var(--font-base); font-size: 12px; font-weight: 300;
+    color: var(--text-primary); margin-bottom: 6px; letter-spacing: 0.025em;
+    opacity: 0.6;
+  }
+  .card h3 {
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    line-height: 1.625; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.025em;
+  }
+  .card-price {
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    color: var(--text-primary); letter-spacing: 0.025em;
+  }
+  .card-date {
+    font-family: var(--font-base); font-size: 12px; font-weight: 300;
+    color: var(--text-primary); letter-spacing: 0.025em;
+    opacity: 0.4;
+  }
+  .card-more {
+    display: inline-flex; align-items: center; gap: 4px;
+    color: var(--accent-magenta); font-size: 14px; font-weight: 300;
+    text-decoration: none; letter-spacing: 0.025em; margin-top: 8px;
+  }
+  .card-more::after { content: "\2192"; }
+
+  /* PRODUCT */
+  .product-section { background: var(--surface-white); padding: 80px 64px; }
+  .product-inner { max-width: 1280px; margin: 0 auto; }
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview h2 {
+    font-family: var(--font-base); font-size: 22px; font-weight: 300;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 16px;
+    letter-spacing: 0.025em;
+  }
+  .product-preview .product-category {
+    font-family: var(--font-base); font-size: 12px; font-weight: 300;
+    line-height: 1.625; letter-spacing: 0.025em; color: var(--text-primary); margin-bottom: 24px;
+    opacity: 0.6;
+  }
+  .product-preview p {
+    font-family: var(--font-base); font-size: 16px; font-weight: 300;
+    line-height: 1.75; letter-spacing: 0.025em;
+    color: var(--text-primary); margin-bottom: 20px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-base); font-size: 22px; font-weight: 300;
+    line-height: 1.5; letter-spacing: 0.025em; color: var(--text-primary); margin: 40px 0 16px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-base); font-size: 12px; font-weight: 300;
+    line-height: 1.625; letter-spacing: 0.025em; color: var(--text-primary); margin-bottom: 12px;
+    opacity: 0.6;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.025em;
+  }
+  .form-input {
+    width: 100%; background: transparent; color: var(--text-primary);
+    border: 1px solid var(--border); padding: 8px 16px; border-radius: 5px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 300;
+    letter-spacing: 0.025em; outline: none;
+  }
+  .form-input:focus { border-color: var(--text-primary); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-base); font-size: 12px; font-weight: 300; color: var(--error); margin-top: 4px; letter-spacing: 0.025em; }
+  .form-input::placeholder { color: var(--text-secondary); font-weight: 300; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-base); font-size: 14px; font-weight: 300; margin-bottom: 8px; letter-spacing: 0.025em; }
+  .elevation-desc { font-family: var(--font-base); font-size: 12px; font-weight: 300; color: var(--text-secondary); letter-spacing: 0.025em; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--text-primary); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base); font-size: 12px; font-weight: 300; letter-spacing: 0.025em;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 64px 32px;
+    background: var(--surface-white); color: var(--text-primary);
+    font-size: 14px; line-height: 1.75; font-weight: 300;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    margin-bottom: 16px; letter-spacing: 0.025em; color: var(--text-primary);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-base); color: var(--text-primary);
+    text-decoration: none; opacity: 0.6; margin-bottom: 8px; font-size: 12px;
+    font-weight: 300; letter-spacing: 0.025em;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-base); font-size: 11px; font-weight: 300; opacity: 0.4;
+    letter-spacing: 0.025em;
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .hero { padding: 80px 16px 64px; }
+    .nav { padding: 16px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 16px; }
+    .section-light { padding: 56px 16px; }
+    .product-section { padding: 56px 16px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+    .footer { padding: 56px 16px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">D-BROS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-icon">Cart</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-section-title">PRODUCT DESIGN BY DRAFT</div>
+    <h1>D-BROS DESIGN SYSTEM</h1>
+    <p class="hero-lead" style="font-family: var(--font-base);">D-BROS（d-bros.jp）から抽出したデザイントークンのカタログ。Inter + Noto Sans JP（Yu Gothic 代替）の単一フォントスタック、全テキスト weight 300、letter-spacing 0.025em グローバル適用、ビビッドマゼンタ #fc00d5 のアクセント、完全フラットデザイン。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">ONLINE STORE</a>
+      <a class="btn-ghost" href="#">MAGAZINE</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <div class="section-title">Color Palette</div>
+  <div class="section-subtitle">Monochrome + single accent magenta</div>
+
+  <div class="color-group-label">Primary</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a1a"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Black</div><div class="color-swatch-hex">#1a1a1a</div><div class="color-swatch-role">本文テキスト・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fc00d5"></div><div class="color-swatch-info"><div class="color-swatch-name">Vivid Magenta</div><div class="color-swatch-hex">#fc00d5</div><div class="color-swatch-role">MORE リンク・矢印アイコン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1a1a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#1a1a1a</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ナビゲーション（モバイル）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">フッター補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ボタン上・ダークセクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">標準背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">CTA ボタン・カートボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5e5e5"></div><div class="color-swatch-info"><div class="color-swatch-name">Border / Divider</div><div class="color-swatch-hex">#e5e5e5</div><div class="color-swatch-role">区切り線・ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Hierarchy (Opacity)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(26,26,26,0.6)"></div><div class="color-swatch-info"><div class="color-swatch-name">opacity-60</div><div class="color-swatch-hex">rgba(26,26,26,0.6)</div><div class="color-swatch-role">セクションラベル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(26,26,26,0.4)"></div><div class="color-swatch-info"><div class="color-swatch-name">opacity-40</div><div class="color-swatch-hex">rgba(26,26,26,0.4)</div><div class="color-swatch-role">日付・タイムスタンプ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY</div>
+  <div class="section-title">Typography</div>
+  <div class="section-subtitle">Inter + Noto Sans JP / weight 300 / letter-spacing 0.025em global</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:28px; font-weight:300; line-height:1.5; letter-spacing:0.025em; color:var(--text-primary);">MAGAZINE</div>
+    <div class="type-meta">Inter + Noto Sans JP / 28px / 300 / line-height: 1.5 / letter-spacing: 0.025em<span class="type-context">Heading 1 (hero)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:22px; font-weight:300; line-height:1.5; letter-spacing:0.025em; color:var(--text-primary);">FLOWER VASE</div>
+    <div class="type-meta">Inter + Noto Sans JP / 22px / 300 / line-height: 1.5 / letter-spacing: 0.025em<span class="type-context">Heading 2 (section)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:300; line-height:1.625; letter-spacing:0.025em; color:var(--text-primary);">フラワーベース「HOPE FOREVER BLOSSOMING」</div>
+    <div class="type-meta">Inter + Noto Sans JP / 14px / 300 / line-height: 1.625 / letter-spacing: 0.025em<span class="type-context">Heading 3 (card)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:300; line-height:1.75; letter-spacing:0.025em; color:var(--text-primary);">D-BROS は DRAFT のプロダクトブランドとして、グラフィックデザインの力をプロダクトに落とし込む活動を続けています。花瓶、ステーショナリー、テーブルウェアなど、日常に寄り添うデザインプロダクトを展開。</div>
+    <div class="type-meta">Inter + Noto Sans JP / 16px / 300 / line-height: 1.75 / letter-spacing: 0.025em<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:300; line-height:1.625; letter-spacing:0.025em; color:var(--text-primary); opacity:0.6;">NEWS</div>
+    <div class="type-meta">Inter + Noto Sans JP / 12px / 300 / line-height: 1.625 / letter-spacing: 0.025em / opacity: 0.6<span class="type-context">Section Label</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:300; line-height:1.625; letter-spacing:0.025em; color:var(--text-primary); opacity:0.4;">2026.05.01</div>
+    <div class="type-meta">Inter + Noto Sans JP / 12px / 300 / line-height: 1.625 / letter-spacing: 0.025em / opacity: 0.4<span class="type-context">Date / Caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:400; line-height:1.75; letter-spacing:0.05em; color:var(--text-primary);">ONLINE STORE</div>
+    <div class="type-meta">Inter + Noto Sans JP / 16px / 400 / line-height: 1.75 / letter-spacing: 0.05em<span class="type-context">Nav</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:300; line-height:1.75; letter-spacing:0.025em; color:var(--accent-magenta);">MORE <span style="font-size:16px;">&rarr;</span></div>
+    <div class="type-meta">Inter + Noto Sans JP / 16px / 300 / letter-spacing: 0.025em / color: #fc00d5<span class="type-context">MORE Link (accent)</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="product-section" id="product">
+<div class="product-inner">
+  <div class="section-label">03 / PRODUCT</div>
+  <div class="section-title">Product</div>
+  <div class="section-subtitle">Product Page Sample</div>
+  <div class="product-preview">
+    <div class="product-category">FLOWER VASE</div>
+    <h2>HOPE FOREVER BLOSSOMING</h2>
+    <p>ビニール素材の花瓶「HOPE FOREVER BLOSSOMING」。水を入れると自立し、一輪の花を美しく際立たせるフラワーベース。グラフィックデザイナーならではの平面から立体への発想転換が、D-BROSの代名詞ともいえるプロダクトを生み出しました。</p>
+    <div class="product-heading">デザインについて</div>
+    <div class="product-sub">CONCEPT</div>
+    <p>花を生けるという行為をもっと身近に、もっと自由に。割れない花瓶、場所を取らない花瓶、贈り物にできる花瓶。従来の花瓶の概念を覆すアプローチで、日常に花のある暮らしを提案します。軽量で持ち運びやすく、使わないときはフラットに収納できます。</p>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+      <a class="btn-primary" href="#" style="font-family: var(--font-base);">CART に入れる</a>
+      <a class="btn-more" href="#" style="font-family: var(--font-base);">MORE</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <div class="section-title">Buttons</div>
+  <div class="section-subtitle">Primary #333333 / radius 5px / weight 300 / MORE links in magenta #fc00d5</div>
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#" style="font-family: var(--font-base);">CART に入れる</a><div class="button-label">Primary / #333333 / radius 5px / 300</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#" style="font-family: var(--font-base);">詳細を見る</a><div class="button-label">Ghost / transparent / underline hover / 300</div></div>
+    <div class="button-item"><a class="btn-more" href="#" style="font-family: var(--font-base);">MORE</a><div class="button-label">MORE Link / #fc00d5 / 300</div></div>
+  </div>
+
+  <div style="margin-top:24px; padding:24px; border:1px solid var(--border); border-radius:5px;">
+    <div style="font-family:var(--font-base); font-size:12px; color:var(--text-secondary); margin-bottom:16px; letter-spacing:0.025em; font-weight:300;">Button States</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary" href="#" style="font-family: var(--font-base);">Default</a><div class="button-label">通常</div></div>
+      <div class="button-item"><a class="btn-primary" href="#" style="font-family: var(--font-base); opacity:0.7;">Hover</a><div class="button-label">ホバー（opacity 0.7）</div></div>
+      <div class="button-item"><a class="btn-primary" href="#" style="font-family: var(--font-base); opacity:0.5;">Disabled</a><div class="button-label">非活性（opacity 0.5）</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-light-inner">
+  <div class="section-label">05 / CARDS</div>
+  <div class="section-title">Cards</div>
+  <div class="section-subtitle">Completely flat / no shadow / no border-radius / image + text</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">FLOWER VASE</div>
+        <h3>HOPE FOREVER BLOSSOMING</h3>
+        <div class="card-price">&yen;1,100</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">STATIONERY</div>
+        <h3>ダイアリー 2026</h3>
+        <div class="card-price">&yen;2,200</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">TABLEWARE</div>
+        <h3>プレート セット</h3>
+        <div class="card-price">&yen;3,300</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">MAGAZINE</div>
+        <div class="card-date">2026.04.15</div>
+        <h3>デザインの力で日常を変える</h3>
+        <a class="card-more" href="#">MORE</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <div class="section-title">Forms</div>
+  <div class="section-subtitle">Border #e5e5e5 / focus: border #1a1a1a / radius 5px</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-base); font-size:12px; font-weight:300; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.025em;">Default</div>
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" type="text" placeholder="山田 太郎" style="font-family: var(--font-base);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="name@example.com" style="font-family: var(--font-base);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone (Error)</label>
+        <input class="form-input error" type="tel" value="abc" style="font-family: var(--font-base);">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-base); font-size:12px; font-weight:300; color:var(--text-secondary); margin-bottom:20px; letter-spacing:0.025em;">Focus</div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <input class="form-input" type="text" placeholder="東京都渋谷区..." style="border-color:var(--text-primary); font-family: var(--font-base);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-input" rows="4" placeholder="お問い合わせ内容をご記入ください" style="resize:vertical; font-family: var(--font-base);"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / ELEVATION</div>
+  <div class="section-title">Depth & Elevation</div>
+  <div class="section-subtitle">Completely flat -- no shadows, no gradients</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid var(--border);">
+      <div class="elevation-label">Level 0 -- Flat</div>
+      <div class="elevation-desc">全要素共通。影なし</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-white); border:1px solid var(--border);">
+      <div class="elevation-label">Surface White</div>
+      <div class="elevation-desc">#ffffff / 標準背景</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-dark); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Surface Dark</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">#333333 / ボタン背景</div>
+    </div>
+    <div class="elevation-card" style="background:var(--border);">
+      <div class="elevation-label">Border</div>
+      <div class="elevation-desc">#e5e5e5 / 区切り線のみ</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / LAYOUT</div>
+  <div class="section-title">Layout</div>
+  <div class="section-subtitle">Tailwind spacing scale / max-width 1280px</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px; height:32px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px; height:32px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px; height:32px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px; height:32px;"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--surface-white); color:var(--text-primary); border:1px solid var(--border);">WHITE #fff</div>
+    <div class="layout-box" style="background:#fafafa; color:var(--text-primary); border:1px solid var(--border);">LIGHT #fafafa</div>
+    <div class="layout-box" style="background:var(--surface-dark); color:var(--text-on-dark);">DARK #333</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>PRODUCTS</h4>
+      <a href="#">Flower Vase</a>
+      <a href="#">Stationery</a>
+      <a href="#">Tableware</a>
+      <a href="#">Gift</a>
+    </div>
+    <div class="footer-col">
+      <h4>MAGAZINE</h4>
+      <a href="#">Interview</a>
+      <a href="#">Design Story</a>
+      <a href="#">New Arrivals</a>
+    </div>
+    <div class="footer-col">
+      <h4>ABOUT</h4>
+      <a href="#">D-BROS について</a>
+      <a href="#">DRAFT Inc.</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+    <div class="footer-col">
+      <h4>ONLINE STORE</h4>
+      <a href="#">ご利用ガイド</a>
+      <a href="#">送料・配送</a>
+      <a href="#">特定商取引法</a>
+      <a href="#">プライバシーポリシー</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from d-bros.jp DESIGN.md -- awesome-design-md-jp / computed style (2026-05-09)<br>
+    Inter + Noto Sans JP (Google Fonts) / weight 300 / letter-spacing 0.025em / accent #fc00d5 / flat design
+  </div>
+</footer>
+
+</body>
+</html>

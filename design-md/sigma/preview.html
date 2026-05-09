@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SIGMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === SIGMA Color Tokens === */
+    --brand-dark: #333333;
+    --text-primary: #333333;
+    --text-on-dark: #ffffff;
+    --border-light: #cccccc;
+    --surface-warm-white: #fefefd;
+    --surface-dark: #333333;
+    --surface-overlay: rgba(0, 0, 0, 0.6);
+    --surface-frosted: rgba(253, 253, 252, 0.9);
+    --error: #c0392b;
+
+    /* === Font ===
+       SIGMA は Sigma Serif / Sigma Sans のカスタムフォントを使用。
+       preview.html では Noto Serif JP / Noto Sans JP で代替。
+       セリフファーストのアプローチ（テック企業としては希少）。 */
+    --font-serif: "Noto Serif JP", serif;
+    --font-sans: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--surface-warm-white);
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-size: 15px; font-weight: 500; line-height: 1.7;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--surface-frosted);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-serif); font-size: 20px; font-weight: 500; line-height: 1.25;
+    color: var(--text-primary); text-decoration: none; letter-spacing: -0.015em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-sans); font-size: 13px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.02em; line-height: 1.25;
+  }
+  .nav-right {
+    font-family: var(--font-sans); font-size: 13px; font-weight: 400;
+    color: var(--text-primary); letter-spacing: 0.02em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 100px;
+    background: var(--surface-warm-white);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 13.5px; font-weight: 400; line-height: 1.25;
+    letter-spacing: 0.02em; color: var(--text-primary); margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: 88px; font-weight: 500; line-height: 1.5;
+    letter-spacing: -0.015em; margin-bottom: 32px;
+    color: var(--text-primary);
+  }
+  .hero-lead {
+    font-family: var(--font-serif);
+    font-size: 15px; font-weight: 500; line-height: 1.7;
+    letter-spacing: 0.005em;
+    color: var(--text-primary); max-width: 720px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--brand-dark); color: var(--text-on-dark);
+    padding: 12px 16px; border: none; border-radius: 0;
+    font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.02em; text-decoration: none; cursor: pointer;
+  }
+  .btn-secondary {
+    display: inline-block; background: var(--surface-warm-white); color: var(--text-primary);
+    padding: 12px 16px; border: 1px solid var(--text-primary); border-radius: 0;
+    font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.02em; text-decoration: none; cursor: pointer;
+  }
+  .btn-text {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 12px 0; border: none; border-radius: 0;
+    font-family: var(--font-serif); font-size: 15px; font-weight: 500;
+    letter-spacing: 0.005em; text-decoration: underline; cursor: pointer;
+  }
+  .btn-text-on-dark {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 12px 0; border: none; border-radius: 0;
+    font-family: var(--font-serif); font-size: 15px; font-weight: 500;
+    letter-spacing: 0.005em; text-decoration: underline; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.02em;
+  }
+  .section-title {
+    font-family: var(--font-serif); font-size: 48px; font-weight: 500;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 8px;
+    letter-spacing: -0.015em;
+  }
+  .section-subtitle {
+    font-family: var(--font-serif); font-size: 15px; font-weight: 500;
+    line-height: 1.7; color: var(--text-primary); letter-spacing: 0.005em;
+    margin-bottom: 40px; opacity: 0.6;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  .section-dark { background: var(--surface-dark); padding: 80px 40px; color: var(--text-on-dark); }
+  .section-dark-inner { max-width: 1280px; margin: 0 auto; }
+  .section-dark .section-title { color: var(--text-on-dark); }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.6); }
+  .section-dark .section-label { color: rgba(255,255,255,0.5); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--surface-warm-white); border: 1px solid var(--border-light); overflow: hidden; }
+  .color-swatch-block { height: 96px; width: 100%; }
+  .color-swatch-info { padding: 14px 16px; }
+  .color-swatch-name { font-family: var(--font-sans); font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.02em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-primary); opacity: 0.6; font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-serif); font-size: 12px; color: var(--text-primary); opacity: 0.6; margin-top: 4px; letter-spacing: 0.005em; }
+  .color-group-label { font-family: var(--font-sans); font-size: 13px; font-weight: 500; color: var(--text-primary); opacity: 0.6; margin: 24px 0 12px; letter-spacing: 0.02em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-primary); opacity: 0.5; margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: #f5f5f3; color: var(--text-primary); opacity: 0.7; font-size: 10px; padding: 2px 10px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* BUTTONS LAYOUT */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-sans); font-size: 11px; font-weight: 400; color: var(--text-primary); opacity: 0.5; margin-top: 12px; letter-spacing: 0.02em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card { background: var(--surface-warm-white); position: relative; }
+  .card-image { background: #f0efed; height: 320px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-sans); font-size: 13px; color: var(--text-primary); opacity: 0.4;
+    letter-spacing: 0.02em;
+  }
+  .card-body { padding: 16px 0; }
+  .card-category {
+    font-family: var(--font-serif); font-size: 15px; font-weight: 500;
+    color: var(--text-primary); opacity: 0.6; margin-bottom: 4px; letter-spacing: 0.005em;
+  }
+  .card h3 {
+    font-family: var(--font-serif); font-size: 28px; font-weight: 400;
+    line-height: 1.5; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.005em;
+  }
+  .card-spec {
+    font-family: var(--font-sans); font-size: 13px; font-weight: 400;
+    color: var(--text-primary); opacity: 0.6; letter-spacing: 0.02em;
+  }
+
+  /* PRODUCT */
+  .product-preview { max-width: 800px; margin: 0 auto; }
+  .product-preview h1 {
+    font-family: var(--font-serif); font-size: 48px; font-weight: 500;
+    line-height: 1.5; color: var(--text-on-dark); margin-bottom: 16px;
+    letter-spacing: -0.015em;
+  }
+  .product-preview .product-category {
+    font-family: var(--font-serif); font-size: 15px; font-weight: 500;
+    line-height: 1.7; letter-spacing: 0.005em; color: rgba(255,255,255,0.6); margin-bottom: 24px;
+  }
+  .product-preview p {
+    font-family: var(--font-serif); font-size: 15px; font-weight: 500;
+    line-height: 1.7; letter-spacing: 0.005em;
+    color: rgba(255,255,255,0.85); margin-bottom: 20px;
+  }
+  .product-preview .product-heading {
+    font-family: var(--font-serif); font-size: 28px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.005em; color: var(--text-on-dark); margin: 40px 0 16px;
+  }
+  .product-preview .product-sub {
+    font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    line-height: 1.25; letter-spacing: 0.02em; color: rgba(255,255,255,0.5); margin-bottom: 12px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.02em;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-warm-white); color: var(--text-primary);
+    border: 1px solid var(--border-light); padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-sans); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.02em; outline: none;
+  }
+  .form-input:focus { border-color: var(--text-primary); }
+  .form-input.error { border-color: var(--error); }
+  .form-error { font-family: var(--font-sans); font-size: 11px; color: var(--error); margin-top: 4px; letter-spacing: 0.02em; }
+  .form-input::placeholder { color: var(--text-primary); opacity: 0.4; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-sans); font-size: 13px; font-weight: 500; margin-bottom: 8px; letter-spacing: 0.02em; }
+  .elevation-desc { font-family: var(--font-serif); font-size: 12px; color: var(--text-primary); opacity: 0.6; letter-spacing: 0.005em; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--brand-dark); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-primary); opacity: 0.5; margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-sans); font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 56px 40px 32px;
+    background: var(--surface-dark); color: var(--text-on-dark);
+    font-size: 13px; line-height: 1.54;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    margin-bottom: 16px; letter-spacing: 0.02em; color: var(--text-on-dark);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-sans); color: var(--text-on-dark);
+    text-decoration: none; opacity: 0.6; margin-bottom: 8px; font-size: 13px;
+    letter-spacing: 0.01em; font-weight: 400;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-meta {
+    text-align: center; margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-sans); font-size: 11px; opacity: 0.4;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 48px; }
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-dark { padding: 56px 20px; }
+    .section-title { font-size: 32px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">SIGMA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <span class="nav-right">Made in Aizu</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Made in Aizu, Japan</div>
+    <h1>the bf camera</h1>
+    <p class="hero-lead">SIGMA（sigma-global.com/jp）から抽出したデザイントークンのカタログ。カスタムセリフ書体「Sigma Serif」によるセリフファーストのアプローチ。ディスプレイ見出しにはネガティブ letter-spacing -0.015em を適用し、密度と迫力を出す。ウォームホワイト #fefefd 背景、#333333 テキスト、border-radius 0px のフラットデザイン。preview.html では Noto Serif JP / Noto Sans JP で代替。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">製品を見る</a>
+      <a class="btn-secondary" href="#">会津の工場</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / COLORS</div>
+  <div class="section-title">カラーパレット</div>
+  <div class="section-subtitle">Color Palette -- 極めて抑制的なモノクロームパレット。アクセントカラーなし</div>
+
+  <div class="color-group-label">ブランド / テキスト</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Dark / Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">CTA・見出し・本文・フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダークセクション上のテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">サーフェス</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fefefd; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Warm White</div><div class="color-swatch-hex">#fefefd</div><div class="color-swatch-role">標準背景（純白ではない）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ダークセクション・フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(253,253,252,0.9); border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Frosted</div><div class="color-swatch-hex">rgba(253,253,252,0.9)</div><div class="color-swatch-role">ヘッダー（スクロール時）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.6)"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Overlay</div><div class="color-swatch-hex">rgba(0,0,0,0.6)</div><div class="color-swatch-role">モーダル・オーバーレイ</div></div></div>
+  </div>
+
+  <div class="color-group-label">ボーダー</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Light</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">セパレータ・カード区切り</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / TYPOGRAPHY</div>
+  <div class="section-title">タイポグラフィ</div>
+  <div class="section-subtitle">Typography -- セリフファースト / ネガティブ letter-spacing (display) / weight 500 基準</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-serif); font-size:88px; font-weight:500; line-height:1.5; letter-spacing:-0.015em; color:var(--text-primary);">the bf camera</div>
+    <div class="type-meta">Noto Serif JP (Sigma Serif head) / 88px / 500 / line-height: 1.5 / letter-spacing: -0.015em<span class="type-context">Display (hero)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-serif); font-size:48px; font-weight:500; line-height:1.5; letter-spacing:-0.015em; color:var(--text-primary);">本質に宿る美しさ</div>
+    <div class="type-meta">Noto Serif JP (Sigma Serif head) / 48px / 500 / line-height: 1.5 / letter-spacing: -0.015em<span class="type-context">Heading 1 (section)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-serif); font-size:28px; font-weight:400; line-height:1.5; letter-spacing:0.005em; color:var(--text-primary);">SIGMA fp L</div>
+    <div class="type-meta">Noto Serif JP (Sigma Serif) / 28px / 400 / line-height: 1.5 / letter-spacing: 0.005em<span class="type-context">Heading 2 (card / product name)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-serif); font-size:15px; font-weight:500; line-height:1.7; letter-spacing:0.005em; color:var(--text-primary);">NEW PRODUCT</div>
+    <div class="type-meta">Noto Serif JP (Sigma Serif) / 15.2px / 500 / line-height: 1.5 / letter-spacing: 0.005em<span class="type-context">Heading 3 (label)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-serif); font-size:15px; font-weight:500; line-height:1.7; letter-spacing:0.005em; color:var(--text-primary);">会津の地で、すべてのレンズを一貫生産する。金属の切削から光学ガラスの研磨、組み立て、検査まで。SIGMAは「Made in Aizu」の誇りとともに、妥協のないものづくりを続けています。精密工学と職人の技が融合する、世界でも稀な生産体制です。</div>
+    <div class="type-meta">Noto Serif JP (Sigma Serif) / 15.2px / 500 / line-height: 1.7 / letter-spacing: 0.005em<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-sans); font-size:13px; font-weight:400; line-height:1.25; letter-spacing:0.02em; color:var(--text-primary);">カメラ　レンズ　シネマ　アクセサリー</div>
+    <div class="type-meta">Noto Sans JP (Sigma Sans) / 13px / 400 / line-height: 1.25 / letter-spacing: 0.02em<span class="type-context">Nav</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-sans); font-size:13.5px; font-weight:400; line-height:1.25; letter-spacing:0.02em; color:var(--text-primary);">Made in Aizu, Japan</div>
+    <div class="type-meta">Noto Sans JP (Sigma Sans) / 13.5px / 400 / line-height: 1.25 / letter-spacing: 0.02em<span class="type-context">Nav EN</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-sans); font-size:13px; font-weight:500; line-height:1.54; letter-spacing:0.01em; color:var(--text-primary);">お問い合わせ　会社概要　サポート</div>
+    <div class="type-meta">Noto Sans JP / 13px / 500 / line-height: 1.54 / letter-spacing: 0.01em<span class="type-context">UI Small (footer)</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT -->
+<section class="section-dark" id="product">
+<div class="section-dark-inner">
+  <div class="section-label">03 / PRODUCT</div>
+  <div class="section-title">プロダクト</div>
+  <div class="section-subtitle">Product Page Sample -- カメラ・レンズ</div>
+  <div class="product-preview">
+    <div class="product-category">Cameras</div>
+    <h1>SIGMA fp L</h1>
+    <p>世界最小・最軽量のフルフレームミラーレスカメラ。6,100万画素のセンサーが、光の機微までをも捉える。コンパクトなボディに、写真家の創造力を最大限に引き出す性能を凝縮しました。</p>
+    <div class="product-heading">Made in Aizu</div>
+    <div class="product-sub">CRAFTSMANSHIP</div>
+    <p>会津工場での一貫生産体制により、金属パーツの切削加工から光学レンズの研磨、精密な組み立て、厳密な品質検査まで、すべての工程を自社で管理。世界中の写真家が信頼するクオリティの源泉は、ここ会津の地にあります。</p>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a class="btn-primary" href="#" style="background:var(--text-on-dark); color:var(--brand-dark);">製品詳細を見る</a>
+      <a class="btn-text-on-dark" href="#">仕様を確認する</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / BUTTONS</div>
+  <div class="section-title">ボタン</div>
+  <div class="section-subtitle">Buttons -- radius 0px / weight 500 / Sigma Sans</div>
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#">製品を見る</a><div class="button-label">Primary / #333333 / radius 0 / 500</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">比較する</a><div class="button-label">Secondary / outline / radius 0 / 500</div></div>
+    <div class="button-item"><a class="btn-text" href="#">詳しく見る</a><div class="button-label">Text Link / underline / Serif</div></div>
+  </div>
+
+  <div style="background:var(--brand-dark); padding:32px; margin-top:16px;">
+    <div style="font-family:var(--font-sans); font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:16px; letter-spacing:0.02em;">ダーク背景</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary" href="#" style="background:var(--text-on-dark); color:var(--brand-dark);">製品詳細を見る</a><div class="button-label" style="color:rgba(255,255,255,0.5)">反転 / 白背景 + #333333 テキスト</div></div>
+      <div class="button-item"><a class="btn-text-on-dark" href="#">仕様を確認する</a><div class="button-label" style="color:rgba(255,255,255,0.5)">Text Link / white / underline</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / CARDS</div>
+  <div class="section-title">製品カード</div>
+  <div class="section-subtitle">Product Cards -- shadow なし / radius 0 / ウォームホワイト背景</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Cameras</div>
+        <h3>SIGMA fp L</h3>
+        <div class="card-spec">61.0MP / L-Mount / 427g</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Art</div>
+        <h3>35mm F1.4 DG DN</h3>
+        <div class="card-spec">Art Line / L-Mount / Sony E-mount</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Contemporary</div>
+        <h3>28-70mm F2.8 DG DN</h3>
+        <div class="card-spec">Contemporary Line / 470g</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Product Image</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Cine</div>
+        <h3>18-35mm T2 FF</h3>
+        <div class="card-spec">Cine Lens / PL Mount / Fully Luminous</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / FORMS</div>
+  <div class="section-title">フォーム</div>
+  <div class="section-subtitle">Forms -- radius 0px / focus: border #333333 / Sigma Sans</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-sans); font-size:13px; color:var(--text-primary); opacity:0.5; margin-bottom:20px; letter-spacing:0.02em;">デフォルト</div>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号（エラー状態）</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">正しい電話番号を入力してください</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-sans); font-size:13px; color:var(--text-primary); opacity:0.5; margin-bottom:20px; letter-spacing:0.02em;">フォーカス状態</div>
+      <div class="form-group">
+        <label class="form-label">製品名</label>
+        <input class="form-input" type="text" placeholder="SIGMA fp L" style="border-color:var(--text-primary);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">お問い合わせ内容</label>
+        <textarea class="form-input" rows="4" placeholder="製品に関するご質問をご記入ください" style="resize:vertical;"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / ELEVATION</div>
+  <div class="section-title">奥行き</div>
+  <div class="section-subtitle">Depth & Elevation -- フラットデザイン。影ではなくタイポグラフィと色面で階層を表現</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--surface-warm-white); border:1px solid var(--border-light);">
+      <div class="elevation-label">Level 0 -- Flat</div>
+      <div class="elevation-desc">すべての通常要素。影なし</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-frosted); border:1px solid var(--border-light); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);">
+      <div class="elevation-label">Header -- Frosted</div>
+      <div class="elevation-desc">ヘッダー。backdrop-filter + 半透明</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-dark); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Dark Section</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">ダークセクション。#333333</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-overlay);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Overlay</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">モーダルオーバーレイ</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / LAYOUT</div>
+  <div class="section-title">レイアウト</div>
+  <div class="section-subtitle">Layout -- spacing scale & grid / max-width 1280px</div>
+
+  <div class="spacing-row" style="margin-bottom:40px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px; height:32px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px; height:32px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px; height:32px;"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px; height:32px;"></div><div class="spacing-value">120px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--surface-dark); color:var(--text-on-dark);">DARK #333333</div>
+    <div class="layout-box" style="background:var(--surface-warm-white); color:var(--text-primary); border:1px solid var(--border-light);">WARM WHITE #fefefd</div>
+    <div class="layout-box" style="background:var(--surface-frosted); color:var(--text-primary); border:1px solid var(--border-light); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);">FROSTED</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>カメラ</h4>
+      <a href="#">SIGMA fp</a>
+      <a href="#">SIGMA fp L</a>
+      <a href="#">SIGMA sd Quattro H</a>
+    </div>
+    <div class="footer-col">
+      <h4>レンズ</h4>
+      <a href="#">Art ライン</a>
+      <a href="#">Contemporary ライン</a>
+      <a href="#">Sports ライン</a>
+      <a href="#">マウントコンバーター</a>
+    </div>
+    <div class="footer-col">
+      <h4>シネマ</h4>
+      <a href="#">Cine レンズ</a>
+      <a href="#">Classic Art Prime</a>
+      <a href="#">High Speed Zoom</a>
+    </div>
+    <div class="footer-col">
+      <h4>ブランド</h4>
+      <a href="#">SIGMAについて</a>
+      <a href="#">会津工場</a>
+      <a href="#">サポート</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from sigma-global.com/jp DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-09)<br>
+    Noto Serif JP + Noto Sans JP（Google Fonts）-- Sigma Serif / Sigma Sans 代替 / セリフファースト / letter-spacing -0.015em (display)
+  </div>
+</footer>
+
+</body>
+</html>

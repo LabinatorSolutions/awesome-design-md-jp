@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (161 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (164 sites)</a>
 </p>
 
 <table>
@@ -250,6 +250,11 @@
 <td align="center"><strong>LEMNOS</strong><br><img src="design-md/lemnos/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>GU</strong><br><img src="design-md/gu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CITIZEN</strong><br><img src="design-md/citizen/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CFCL</strong><br><img src="design-md/cfcl/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>D-BROS</strong><br><img src="design-md/d-bros/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SIGMA</strong><br><img src="design-md/sigma/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -472,11 +477,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Lemnos (タカタレムノス)](https://www.lemnos.jp/) | Design Clock / Product Design | [DESIGN.md](design-md/lemnos/DESIGN.md) | [preview.html](design-md/lemnos/preview.html) |
 | [GU (ジーユー)](https://www.gu-global.com/jp/ja/) | Fashion / Apparel EC | [DESIGN.md](design-md/gu/DESIGN.md) | [preview.html](design-md/gu/preview.html) |
 | [CITIZEN (シチズン)](https://citizen.jp/) | Watch / EC | [DESIGN.md](design-md/citizen/DESIGN.md) | [preview.html](design-md/citizen/preview.html) |
+| [CFCL](https://www.cfcl.jp/) | Fashion / 3D Knit | [DESIGN.md](design-md/cfcl/DESIGN.md) | [preview.html](design-md/cfcl/preview.html) |
+| [D-BROS (ディーブロス)](https://www.d-bros.jp/) | Design Products / Lifestyle | [DESIGN.md](design-md/d-bros/DESIGN.md) | [preview.html](design-md/d-bros/preview.html) |
+| [SIGMA (シグマ)](https://www.sigma-global.com/jp/) | Camera / Optical Equipment | [DESIGN.md](design-md/sigma/DESIGN.md) | [preview.html](design-md/sigma/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (161 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (164 sites)</a>
 </p>
 
 <table>
@@ -692,6 +700,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>LEMNOS</strong><br><img src="design-md/lemnos/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>GU</strong><br><img src="design-md/gu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CITIZEN</strong><br><img src="design-md/citizen/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CFCL</strong><br><img src="design-md/cfcl/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>D-BROS</strong><br><img src="design-md/d-bros/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SIGMA</strong><br><img src="design-md/sigma/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
