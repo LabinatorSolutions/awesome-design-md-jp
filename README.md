@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (182 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (183 sites)</a>
 </p>
 
 <table>
@@ -279,6 +279,7 @@
 <td align="center"><strong>shu uemura</strong><br><img src="design-md/shuuemura/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>YOKU MOKU</strong><br><img src="design-md/yokumoku/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HUMAN MADE</strong><br><img src="design-md/humanmade/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Notion Dev</strong><br><img src="design-md/notion-dev/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -361,6 +362,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [connpass](https://connpass.com/) | Tech Events | [DESIGN.md](design-md/connpass/DESIGN.md) | [preview.html](design-md/connpass/preview.html) |
 | [Sansan](https://jp.sansan.com/) | Business Card SaaS | [DESIGN.md](design-md/sansan/DESIGN.md) | [preview.html](design-md/sansan/preview.html) |
 | [Notion](https://www.notion.so/ja) | Productivity | [DESIGN.md](design-md/notion/DESIGN.md) | [preview.html](design-md/notion/preview.html) |
+| [Notion Dev](https://www.notion.com/ja/product/dev) | Developer Platform | [DESIGN.md](design-md/notion-dev/DESIGN.md) | [preview.html](design-md/notion-dev/preview.html) |
 | [ABEMA](https://abema.tv/) | Video Streaming | [DESIGN.md](design-md/abema/DESIGN.md) | [preview.html](design-md/abema/preview.html) |
 | [Droga5](https://droga5.jp/) | Creative Agency | [DESIGN.md](design-md/droga5/DESIGN.md) | [preview.html](design-md/droga5/preview.html) |
 | [WIRED.jp](https://wired.jp/) | Tech Media | [DESIGN.md](design-md/wired/DESIGN.md) | [preview.html](design-md/wired/preview.html) |
@@ -526,7 +528,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (182 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (183 sites)</a>
 </p>
 
 <table>
@@ -771,6 +773,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>shu uemura</strong><br><img src="design-md/shuuemura/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>YOKU MOKU</strong><br><img src="design-md/yokumoku/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HUMAN MADE</strong><br><img src="design-md/humanmade/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Notion Dev</strong><br><img src="design-md/notion-dev/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Notion Dev / Developer Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Brand: NotionDev specific (CSS 変数名そのまま) === */
+    --color-campaigns-dev-platform-dos-blue: #1313ba;
+    --color-campaigns-dev-platform-dos-alpha-blue: #1313baa8;
+
+    --brand: #1313ba;
+    --brand-alpha-66: rgba(19, 19, 186, 0.66);
+    --brand-alpha-44: rgba(19, 19, 186, 0.44);
+
+    /* === Surfaces === */
+    --bg-page: #111111;
+    --bg-section-alt: #1A1A1A;
+    --surface-light: #F6F6FC;
+    --surface-translucent: rgba(246, 246, 252, 0.44);
+    --surface-lavender: #CBCBEF;
+    --surface-lavender-44: rgba(203, 203, 239, 0.44);
+
+    /* === Text === */
+    --text-on-dark: #FFFFFF;
+    --text-on-dark-muted: rgba(255, 255, 255, 0.75);
+    --text-on-dark-faint: rgba(255, 255, 255, 0.4);
+    --text-on-light: #1313ba;
+    --text-on-light-body: rgba(19, 19, 186, 0.66);
+
+    /* === Borders === */
+    --border-on-dark: rgba(255, 255, 255, 0.13);
+    --border-on-light: rgba(19, 19, 186, 0.15);
+    --border-strong: #FFFFFF;
+    --border-focus: #1313ba;
+
+    /* === Semantic (Notion design tokens 流用) === */
+    --semantic-danger: #f64932;
+    --semantic-warning: #ff6d00;
+    --semantic-info: #097fe8;
+    --semantic-success: #00875a;
+
+    /* === Gray scale (--color-gray-*) === */
+    --gray-100: #f9f9f8;
+    --gray-200: #f6f5f4;
+    --gray-300: #dfdcd9;
+    --gray-500: #78736f;
+    --gray-700: #494744;
+    --gray-900: #191918;
+
+    /* === Elevation === */
+    --shadow-100: 0px 0.7px 1.5px rgba(0,0,0,0.015), 0px 3px 9px rgba(0,0,0,0.03);
+    --shadow-200: 0px 0.8px 2.9px rgba(0,0,0,0.05), 0px 4px 18px rgba(0,0,0,0.04);
+    --shadow-300: 0px 13.9px 28.3px rgba(0,0,0,0.024), 0px 36px 89px rgba(0,0,0,0.04);
+
+    /* === Fonts === */
+    --font-base: NotionInter, Inter, -apple-system, "system-ui", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-mono: "iA Writer Mono", "JetBrains Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    /* === Spacing === */
+    --spacing-l: 120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-on-dark);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 24px;
+    letter-spacing: normal;
+    font-feature-settings: "lnum", "locl" 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--border-on-dark);
+  }
+  .nav-brand {
+    font-family: var(--font-mono);
+    font-size: 16px; font-weight: 500; color: var(--text-on-dark);
+    text-decoration: none; display: flex; align-items: center; gap: 4px;
+  }
+  .nav-brand .slash { color: var(--text-on-dark-muted); }
+  .nav-links { display: flex; gap: 4px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400; color: var(--text-on-dark-muted);
+    text-decoration: none; transition: color 0.15s;
+    padding: 4px 8px;
+    letter-spacing: -0.125px;
+  }
+  .nav-links a:hover { color: var(--text-on-dark); }
+  .nav-links .kbd {
+    display: inline-block; font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-on-dark-faint); margin-right: 4px;
+  }
+  .nav-cta {
+    display: inline-block; background: var(--text-on-dark); color: var(--brand);
+    padding: 4px 14px; border-radius: 0;
+    font-size: 16px; font-weight: 500; line-height: 24px;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+  .nav-ghost {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 4px 14px; border-radius: 0;
+    border: 1px solid var(--text-on-dark);
+    font-size: 16px; font-weight: 400; line-height: 24px;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .nav-ghost:hover { background: rgba(255,255,255,0.08); }
+
+  /* HERO */
+  .hero { padding: 96px 32px 80px; text-align: center; background: var(--bg-page); }
+  .hero .pre-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 14px; font-weight: 400;
+    color: var(--text-on-dark-muted);
+    background: var(--surface-translucent);
+    padding: 4px 12px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--font-mono);
+    font-size: 64px; font-weight: 700; line-height: 64px;
+    letter-spacing: -2.125px;
+    color: var(--text-on-dark); margin-bottom: 24px;
+    max-width: 900px; margin-left: auto; margin-right: auto;
+  }
+  .hero p {
+    font-size: 20px; font-weight: 400; line-height: 28px;
+    letter-spacing: -0.125px;
+    color: var(--text-on-dark); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--text-on-dark); color: var(--brand);
+    padding: 4px 14px; border-radius: 0;
+    border: 1px solid rgba(255,255,255,0);
+    font-family: var(--font-base); font-size: 16px; font-weight: 500; line-height: 24px;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-tertiary {
+    display: inline-block; background: var(--brand); color: var(--text-on-dark);
+    padding: 4px 14px; border-radius: 0;
+    border: 1px solid var(--text-on-dark);
+    font-family: var(--font-base); font-size: 16px; font-weight: 500; line-height: 24px;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .btn-tertiary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 4px 14px; border-radius: 0;
+    border: 1px solid var(--text-on-dark);
+    font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 24px;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.08); }
+  .btn-small {
+    display: inline-block; background: transparent; color: var(--brand);
+    padding: 3px 11px; border-radius: 0;
+    border: 1px solid var(--surface-lavender);
+    font-family: var(--font-base); font-size: 14px; font-weight: 500; line-height: 20px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .btn-menu {
+    display: inline-block; background: var(--surface-light); color: var(--brand);
+    padding: 8px 16px; border-radius: 0;
+    border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 500; line-height: 20px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .btn-menu.is-selected { background: var(--brand); color: var(--text-on-dark); }
+  .btn-link {
+    display: inline-block; background: transparent; color: var(--brand);
+    padding: 0; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400; line-height: 24px;
+    text-decoration: none; cursor: pointer;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500; color: var(--text-on-dark-muted);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 700; line-height: 38.4px;
+    margin-bottom: 32px; color: var(--text-on-dark);
+    letter-spacing: -0.5px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-on-dark); margin: 0; }
+
+  .section-alt { background: var(--bg-section-alt); padding: 64px 32px; }
+  .section-alt .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-light { background: var(--surface-light); padding: 64px 32px; }
+  .section-light .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-light .section-label { color: var(--text-on-light-body); }
+  .section-light .section-title { color: var(--brand); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch {
+    border-radius: 0;
+    overflow: hidden;
+    background: var(--surface-translucent);
+    border: 1px solid var(--border-on-dark);
+  }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; color: var(--text-on-dark); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-on-dark-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-on-dark-muted); margin-top: 3px; }
+  .color-group-label {
+    font-family: var(--font-mono);
+    font-size: 14px; font-weight: 500; color: var(--text-on-dark-muted);
+    margin: 24px 0 10px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-on-dark); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-on-dark-muted); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-translucent); color: var(--text-on-dark); font-size: 11px; padding: 2px 8px; border-radius: 0; margin-left: 8px; }
+
+  /* BUTTONS DISPLAY */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-on-dark-muted); margin-top: 8px; }
+
+  /* TERMINAL / CODE BLOCK */
+  .terminal {
+    background: var(--surface-translucent);
+    border: 1px solid var(--border-on-dark);
+    border-radius: 0;
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 14px; line-height: 20px;
+    color: var(--text-on-dark);
+  }
+  .terminal-row { display: flex; gap: 8px; }
+  .terminal-prompt { color: var(--text-on-dark-muted); user-select: none; }
+  .terminal-command { color: var(--text-on-dark); }
+  .terminal-comment { color: var(--surface-lavender); }
+  .terminal-output { color: var(--text-on-dark-muted); padding-left: 16px; }
+  .terminal-success { color: #6FCF97; }
+  .terminal-error { color: var(--semantic-danger); }
+
+  /* SYNC PANEL */
+  .sync-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 24px; }
+  .sync-card {
+    background: var(--surface-translucent);
+    border: 1px solid var(--border-on-dark);
+    padding: 16px 20px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sync-card .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    padding: 2px 6px;
+    background: var(--surface-lavender);
+    color: var(--brand);
+    border-radius: 0;
+    letter-spacing: 0.04em;
+  }
+  .sync-card .label { font-size: 14px; color: var(--text-on-dark); font-weight: 500; }
+  .sync-card .desc { font-size: 12px; color: var(--text-on-dark-muted); font-family: var(--font-mono); margin-left: auto; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface-light);
+    border: 1px solid var(--border-on-light);
+    border-radius: 0;
+    padding: 24px;
+    color: var(--brand);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-200); }
+  .card h3 { font-size: 18px; font-weight: 700; line-height: 28px; margin-bottom: 8px; letter-spacing: -0.125px; color: var(--brand); }
+  .card p { font-size: 14px; color: var(--text-on-light-body); line-height: 20px; }
+  .card-link { font-family: var(--font-base); font-size: 14px; color: var(--brand); text-decoration: none; margin-top: 12px; display: inline-block; }
+  .card-link:hover { text-decoration: underline; }
+
+  /* ARTICLE PREVIEW (light surface) */
+  .article-preview { max-width: 780px; margin: 0 auto; color: var(--text-on-light-body); }
+  .article-preview h1 { font-size: 54px; font-weight: 700; line-height: 56px; letter-spacing: -1.875px; color: var(--brand); margin-bottom: 24px; }
+  .article-preview h2 { font-size: 32px; font-weight: 700; line-height: 38.4px; color: var(--brand); margin: 40px 0 12px; letter-spacing: -0.5px; }
+  .article-preview h3 { font-size: 18px; font-weight: 700; line-height: 28px; color: var(--brand); margin: 24px 0 8px; letter-spacing: -0.125px; }
+  .article-preview p { font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: normal; margin-bottom: 16px; color: var(--text-on-light-body); }
+  .article-preview .inline-code {
+    background: var(--surface-lavender-44);
+    padding: 2px 6px;
+    border-radius: 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--brand);
+  }
+  .article-preview a { color: var(--brand); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--text-on-dark); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--surface-translucent); color: var(--text-on-dark);
+    border: 1px solid var(--border-on-dark); padding: 6px 10px; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; line-height: 20px; outline: none;
+    transition: border-color 0.15s;
+    font-feature-settings: "lnum", "locl" 0;
+  }
+  .form-input::placeholder { color: var(--text-on-dark-faint); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(19,19,186,0.35);
+  }
+  .form-input--error {
+    border-color: var(--semantic-danger);
+    box-shadow: 0 0 0 3px rgba(246,73,50,0.25);
+  }
+  .form-state-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-on-dark-muted); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--surface-light);
+    color: var(--brand);
+    border-radius: 0;
+    padding: 24px;
+    text-align: center;
+    border: 1px solid var(--border-on-light);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-on-light-body); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand); border-radius: 0; margin-bottom: 6px; height: 28px; opacity: 0.8; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-on-dark-muted); }
+
+  /* WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-section-alt); border: 1px solid var(--border-on-dark); border-radius: 0; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand); border-radius: 0; opacity: 0.7; }
+  .width-bar-label { font-size: 13px; font-weight: 600; color: var(--text-on-dark); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-on-dark-muted); margin-left: 8px; }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--bg-section-alt); font-size: 12px; color: var(--text-on-dark-muted); border-top: 1px solid var(--border-on-dark); font-family: var(--font-mono); }
+  .footer a { color: var(--text-on-dark); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 40px; line-height: 44px; letter-spacing: -1px; }
+    .hero p { font-size: 16px; line-height: 24px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-alt { padding: 48px 20px; }
+    .section-light { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 36px; line-height: 40px; letter-spacing: -0.5px; }
+    .article-preview h2 { font-size: 24px; line-height: 28px; letter-spacing: -0.25px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="slash">/</span>dev<span class="slash">/</span>notion
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors"><span class="kbd">[C]</span>Colors</a></li>
+    <li><a href="#typography"><span class="kbd">[T]</span>Typography</a></li>
+    <li><a href="#article"><span class="kbd">[A]</span>Article</a></li>
+    <li><a href="#buttons"><span class="kbd">[B]</span>Buttons</a></li>
+    <li><a href="#cards"><span class="kbd">[K]</span>Cards</a></li>
+    <li><a href="#forms"><span class="kbd">[F]</span>Forms</a></li>
+  </ul>
+  <div style="display:flex; gap:8px;">
+    <a class="nav-ghost" href="#">ログイン</a>
+    <a class="nav-cta" href="#">Notionを無料で始める</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="pre-label">/dev/notion — Notion Developer Platform</div>
+  <h1>/dev/notion</h1>
+  <p>SaaS向けの、よくあるCRUD APIとは一線を画します。Notion CLI でデータを同期し、エージェントツールを構築し、Webhook で世界とつなぐ。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">Notionを無料で始める</a>
+    <a class="btn-outline" href="#">ドキュメントを読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">// Brand / Dev Blue</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1313ba"></div><div class="color-swatch-info"><div class="color-swatch-name">Dev Blue</div><div class="color-swatch-hex">#1313ba</div><div class="color-swatch-role">--color-campaigns-dev-platform-dos-blue</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1313baa8"></div><div class="color-swatch-info"><div class="color-swatch-name">Dev Blue α66</div><div class="color-swatch-hex">#1313baa8</div><div class="color-swatch-role">ライト面の本文・補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#CBCBEF"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Lavender</div><div class="color-swatch-hex">#CBCBEF</div><div class="color-swatch-role">バッジ・ラベルの面色</div></div></div>
+  </div>
+
+  <div class="color-group-label">// Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#111111"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#111111</div><div class="color-swatch-role">ヒーロー・フッターの最背面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1A1A1A"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Alt</div><div class="color-swatch-hex">#1A1A1A</div><div class="color-swatch-role">セクション交互背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#F6F6FC"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#F6F6FC</div><div class="color-swatch-role">カード・コード面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(246, 246, 252, 0.44)"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Translucent</div><div class="color-swatch-hex">rgba(246,246,252,.44)</div><div class="color-swatch-role">ダーク上の半透明オーバーレイ（最多）</div></div></div>
+  </div>
+
+  <div class="color-group-label">// Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#FFFFFF"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#FFFFFF</div><div class="color-swatch-role">ダーク面の本文・H1</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(255,255,255,0.75)"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark Muted</div><div class="color-swatch-hex">rgba(255,255,255,.75)</div><div class="color-swatch-role">ダーク面の補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1313ba"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Light</div><div class="color-swatch-hex">#1313ba</div><div class="color-swatch-role">ライト面の見出し（黒ではなくブランド色）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(19,19,186,0.66)"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Light Body</div><div class="color-swatch-hex">rgba(19,19,186,.66)</div><div class="color-swatch-role">ライト面の本文（NotionDev 固有）</div></div></div>
+  </div>
+
+  <div class="color-group-label">// Semantic (Notion design tokens 流用)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f64932"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#f64932</div><div class="color-swatch-role">--color-red-500</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff6d00"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ff6d00</div><div class="color-swatch-role">--color-orange-500</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#097fe8"></div><div class="color-swatch-info"><div class="color-swatch-name">Info Blue</div><div class="color-swatch-hex">#097fe8</div><div class="color-swatch-role">--color-blue-500（Dev Blue とは別）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-mono); font-size:64px; font-weight:700; line-height:64px; letter-spacing:-2.125px;">/dev/notion</div>
+    <div class="type-meta">iA Writer Mono / 64px / 700 / line-height: 64px (1.0) / letter-spacing: -2.125px<span class="type-context">Display (H1)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:54px; font-weight:700; line-height:56px; letter-spacing:-1.875px; color: var(--text-on-dark);">あらゆるデータソースをNotionに同期。</div>
+    <div class="type-meta">NotionInter / 54px / 700 / line-height: 56px (1.04) / letter-spacing: -1.875px<span class="type-context">Heading 1 (H2)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:32px; font-weight:700; line-height:38.4px;">Support Tickets</div>
+    <div class="type-meta">NotionInter / 32px / 700 / line-height: 38.4px (1.2)<span class="type-context">Heading 2 (H3 lg)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:400; line-height:28px; letter-spacing:-0.125px;">SaaS向けの、よくあるCRUD APIとは一線を画します。Notion CLI、宣言型スキーマ、ワーカー、Webhook を備えた開発者プラットフォーム。</div>
+    <div class="type-meta">NotionInter / 20px / 400 / line-height: 28px (1.4) / letter-spacing: -0.125px<span class="type-context">Lead Paragraph</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:700; line-height:28px; letter-spacing:-0.125px;">メンション</div>
+    <div class="type-meta">NotionInter / 18px / 700 / line-height: 28px (1.56) / letter-spacing: -0.125px<span class="type-context">Heading 3 (H3 sm)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:24px;">本文テキスト — ワーカーに加え、宣言型スキーマと永続的カーソルを組み合わせることで、外部データをNotionデータベースへ自然に流し込めます。Webhook と Agent Tools により、AI ワークフローに組み込むこともできます。</div>
+    <div class="type-meta">NotionInter / 16px / 400 / line-height: 24px (1.5) / letter-spacing: normal<span class="type-context">Body (Dark)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:20px; color: var(--text-on-dark-muted);">補足テキスト — Caption (14px)</div>
+    <div class="type-meta">NotionInter / 14px / 400 / line-height: 20px (1.43)<span class="type-context">Caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-mono); font-size:14px; font-weight:400; line-height:20px;">curl -X POST https://api.notion.com/v1/databases/{id}/query</div>
+    <div class="type-meta">iA Writer Mono / 14px / 400 / line-height: 20px<span class="type-context">Code Inline</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:700; line-height:1.2; font-feature-settings:'lnum','locl' 0;">1,234,567</div>
+    <div class="type-meta">font-feature-settings: "lnum", "locl" 0 — 数字を Lining Figures に揃える</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TERMINAL -->
+<section class="section">
+  <div class="section-label">03 / Terminal — Notion CLI</div>
+  <h2 class="section-title">Notion CLI とワーカー</h2>
+  <div class="terminal">
+    <div class="terminal-row"><span class="terminal-prompt">$</span><span class="terminal-command">notion workers run sync:tickets</span></div>
+    <div class="terminal-output">Workers &gt; sync:tickets</div>
+    <div class="terminal-output">Syncing 12,481 records from Zendesk...</div>
+    <div class="terminal-output"><span class="terminal-success">Done. Synced in 4.2s.</span></div>
+    <div class="terminal-row" style="margin-top:12px"><span class="terminal-prompt">$</span><span class="terminal-command">notion agent run data-scout</span></div>
+    <div class="terminal-output">Data Scout &gt; tool:Query</div>
+    <div class="terminal-output">Found 4 matching pages.</div>
+    <div class="terminal-row" style="margin-top:12px"><span class="terminal-prompt">$</span><span class="terminal-command">claude code --task "review schema migration"</span></div>
+    <div class="terminal-output">Claude Code <span class="terminal-comment"># Running tests...</span></div>
+    <div class="terminal-output"><span class="terminal-success">42 passed</span>, <span class="terminal-error">0 failed</span></div>
+  </div>
+
+  <div class="sync-grid">
+    <div class="sync-card"><span class="badge">[S]</span><span class="label">Syncs</span><span class="desc">sync:zendesk</span></div>
+    <div class="sync-card"><span class="badge">[A]</span><span class="label">Agent Tools</span><span class="desc">tool:Query</span></div>
+    <div class="sync-card"><span class="badge">[H]</span><span class="label">Webhooks</span><span class="desc">on:created</span></div>
+    <div class="sync-card"><span class="badge">[W]</span><span class="label">Workers</span><span class="desc">notion run</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-light" id="article">
+<div class="section-inner">
+  <div class="section-label">04 / Article — ドキュメント組版</div>
+  <h2 class="section-title">API ドキュメントの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>あらゆるデータソースをNotionに同期。</h1>
+    <p>NotionDev はドキュメント、データベース、AIエージェントを <span class="inline-code">notion</span> CLI とワーカーで結びつける開発者プラットフォームです。SaaS向けの、よくあるCRUD APIとは一線を画します。</p>
+    <h2>宣言型スキーマと永続的カーソル</h2>
+    <p>外部データソースに対する SDK を、<span class="inline-code">schema.yml</span> 一枚で記述できます。ワーカーがバックグラウンドで動き、変更点を Notion データベースへ自然に流し込みます。<a href="#">APIドキュメントを読む→</a></p>
+    <h3>メンション・Webhook・Agent Tools</h3>
+    <p>Webhook で他システムからのイベントを購読し、Agent Tools 経由で AI に作業させます。font-family は <span class="inline-code">NotionInter</span> をベースに、コード断片は <span class="inline-code">iA Writer Mono</span> で組まれています。</p>
+    <p>日本語本文は <span class="inline-code">rgba(19, 19, 186, 0.66)</span> — 黒ではなくブランド色の透過で、ページ全体に統一感を持たせます。ABC abc 123</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">Notionを無料で始める</a><div class="button-label">Primary (Nav)</div></div>
+    <div class="button-item"><a class="btn-tertiary" href="#">日本語</a><div class="button-label">Tertiary (Footer)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">ログイン</a><div class="button-label">Ghost</div></div>
+    <div class="button-item"><a class="btn-small" href="#">例を見る</a><div class="button-label">Small</div></div>
+    <div class="button-item"><a class="btn-link" href="#">APIドキュメントを読む→</a><div class="button-label">Inline Link</div></div>
+  </div>
+  <div style="margin-top:32px;">
+    <div class="color-group-label">// Menu Buttons (LLM picker)</div>
+    <div class="button-row">
+      <a class="btn-menu is-selected" href="#">Claude</a>
+      <a class="btn-menu" href="#">GPT-5</a>
+      <a class="btn-menu" href="#">Gemini</a>
+      <a class="btn-menu" href="#">Llama</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+<div class="section-inner">
+  <div class="section-label">06 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Notion CLI</h3>
+      <p>ローカル環境から Notion ワークスペースを操作。スキーマ、ワーカー、シンクをコードで管理できます。</p>
+      <a class="card-link" href="#">ドキュメント →</a>
+    </div>
+    <div class="card" style="box-shadow: var(--shadow-200);">
+      <h3>Agent Tools</h3>
+      <p>AI エージェントに Notion 上の操作を委ねる。検索、作成、更新を関数として公開できます。</p>
+      <a class="card-link" href="#">ドキュメント →</a>
+    </div>
+    <div class="card">
+      <h3>Webhooks</h3>
+      <p>ページの作成・更新・削除に応じて任意のエンドポイントに通知。リアルタイム連携を可能にします。</p>
+      <a class="card-link" href="#">ドキュメント →</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">APIキー</label><input class="form-input" type="text" placeholder="secret_..."><div class="form-state-label">// デフォルト — border: rgba(255,255,255,.13), radius: 0</div></div>
+  <div class="form-group"><label class="form-label">ワークスペースID</label><input class="form-input form-input--focus" type="text" value="ws_a1b2c3d4"><div class="form-state-label">// フォーカス — border: #1313ba (Dev Blue)</div></div>
+  <div class="form-group"><label class="form-label">Webhookエンドポイント</label><input class="form-input form-input--error" type="text" value="not-a-url"><div class="form-state-label">// エラー — border: #f64932 (Danger)</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-light" id="elevation">
+<div class="section-inner">
+  <div class="section-label">08 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-100);"><div class="elevation-label">Level 1</div><div class="elevation-desc">--shadow-100</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-200);"><div class="elevation-label">Level 2</div><div class="elevation-desc">--shadow-200</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-300);"><div class="elevation-label">Level 3</div><div class="elevation-desc">--shadow-300</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--border-focus);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#1313ba</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">09 / Spacing</div>
+  <h2 class="section-title">スペーシングスケール</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px;"></div><div class="spacing-value">96</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px;"></div><div class="spacing-value">120</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTENT WIDTHS -->
+<section class="section" id="widths">
+  <div class="section-label">10 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:91.7%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Body <span class="width-bar-value">780px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:65%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.notion.com/ja/product/dev">notion.com/ja/product/dev</a> — DESIGN.md / awesome-design-md-jp / computed style 実測値（2026-05-14）
+</footer>
+
+</body>
+</html>
