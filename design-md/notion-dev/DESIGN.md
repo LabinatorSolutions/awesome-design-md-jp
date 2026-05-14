@@ -5,39 +5,40 @@
 > 抽出元: https://www.notion.com/ja/product/dev
 > 取得日: 2026-05-14
 
-> Notion 本体（白基調・8px 角丸・モノクロブランド）とは別の意匠で、開発者向けプラットフォーム専用のキャンペーンページ。CSS 変数も `--color-campaigns-dev-platform-dos-blue` のように "dos"（DOS／ターミナル）と命名されている。
+> Notion 本体（白基調・8px 角丸・モノクロブランド）とは別の意匠で、開発者向けプラットフォーム専用のキャンペーンページ。CSS 変数も `--color-campaigns-dev-platform-dos-blue` のように "dos"（DOS／BSOD ブルー）と命名されている。
 
 ---
 
 ## 1. Visual Theme & Atmosphere
 
-- **デザイン方針**: 真っ黒に近いダーク背景にコバルトブルー `#1313ba` を効かせた、ターミナル／開発者ツール風のキャンペーン意匠
+- **デザイン方針**: **ページ全体がコバルトブルー `#1313ba` の "ベタ塗り" 背景**。BSOD・メインフレーム端末を想起させるレトロブルー基調。Notion 本体（白基調）とは正反対
 - **コーナー**: ボタン・CTA は `border-radius: 0`（角ばった四角）。`InlineTextLink` 等は 5px。Notion 本体の 8px とは異なる
-- **密度**: ヒーローは余白広め、データ同期パネルは密度高め
-- **キーワード**: dev、terminal、DOS、cobalt blue、sharp corner、mono-accent
+- **密度**: ヒーローは余白広め、データ同期パネル・コードブロックは密度高め
+- **キーワード**: dev、BSOD blue、DOS、cobalt、sharp corner、dot-matrix、mono accent
 
 ---
 
 ## 2. Color Palette & Roles
 
-### Primary（ブランドカラー）
+### Primary（ブランドカラー＝ページ背景）
 
-- **Dev Blue** (`#1313ba`): NotionDev のブランド色。CSS 変数名は `--color-campaigns-dev-platform-dos-blue`。CTA テキスト・H2/H3 見出し・キーボードショートカット枠で使用
-- **Dev Blue α** (`#1313baa8`): 同色の 66% 透過。本文テキストやセカンダリ要素に使う
+- **Dev Blue** (`#1313ba`): NotionDev のブランド色であり、**同時にページ全体の背景色**。CSS 変数名は `--color-campaigns-dev-platform-dos-blue`。"ブランド" と "面" が同一であることが NotionDev の最大の特徴
+- **Dev Blue α** (`#1313baa8`): 同色の 66% 透過。ライト面上の本文・補助テキストで使用
 
 ### Surface（面の色）
 
-- **Page Background** (`#111111`): ページ最背面（ヒーロー、フッター）。出現は少ないがダーク基調を担う
-- **Surface Light** (`#F6F6FC`): カード、コードブロックの面色（ライト lavender）
-- **Surface Translucent** (`rgba(246, 246, 252, 0.44)`): ダーク背景上のパネル／ターミナル枠（最も出現頻度が高い）
-- **Surface Lavender** (`#CBCBEF`): バッジ・ラベルの面色（"Enterprise"、"Account access" 等）
+- **Page Background / Brand** (`#1313ba`): **ページ全体の主背景**。ヒーロー、ナビ、フッター含む大半の面
+- **Surface Light** (`#F6F6FC`): セクション切り替え時のライト面、コードブロック・カードの面色（ライト lavender）
+- **Surface Translucent** (`rgba(246, 246, 252, 0.44)`): ブルー面上に重ねる半透明パネル／ターミナル枠（**98 回出現で最頻**）。Workers / Agent Tools の浮遊パネルなど
+- **Surface Lavender** (`#CBCBEF`): バッジ・ラベルの面色（"Untriaged"、"Triaged" 等のステータス）
+- **Embedded Product UI** (`#111111`): **ページ内に埋め込まれた Notion 製品 UI モックアップの背景色**（Notion ダークモードの再現）。ページ本来の背景ではない点に注意
 
 ### Text Colors
 
-- **Text on Dark** (`#FFFFFF`): ダーク面の本文・H1
-- **Text on Dark (Muted)** (`rgba(255, 255, 255, 0.75)`): ダーク面の補足テキスト
+- **Text on Brand** (`#FFFFFF`): ブルー面の本文・H1・ナビゲーション（NotionDev の大半のテキスト）
+- **Text on Brand (Muted)** (`rgba(255, 255, 255, 0.75)`): ブルー面の補助テキスト
 - **Text on Light** (`#1313ba`): ライト面の H2/H3、CTA テキスト（ブランド色＝テキスト色）
-- **Text on Light (Body)** (`rgba(19, 19, 186, 0.66)`): ライト面の本文・ナビゲーション。**黒ではなくブランド色を 66% 透過で使う点が NotionDev 固有**
+- **Text on Light (Body)** (`rgba(19, 19, 186, 0.66)`): ライト面の本文。**黒ではなくブランド色を 66% 透過で使う点が NotionDev 固有**
 
 ### Semantic（参考：Notion のデザイントークンより）
 
@@ -86,17 +87,17 @@ font-family: "iA Writer Mono", SFMono-Regular, Menlo, Consolas,
 
 | Role | Font | Size | Weight | Line Height | Letter Spacing | Color | 備考 |
 |------|------|------|--------|-------------|----------------|-------|------|
-| Display (H1) | NotionInter | 64px | 700 | 64px (1.0) | -2.125px (-0.033em) | `#FFFFFF` | ヒーロー大見出し（ダーク面） |
+| Display (H1) | NotionInter | 64px | 700 | 64px (1.0) | -2.125px (-0.033em) | `#FFFFFF` | ヒーロー大見出し（ブルー面） |
 | Heading 1 (H2) | NotionInter | 54px | 700 | 56px (≈1.04) | -1.875px (-0.035em) | `#1313ba` | セクション見出し（ライト面） |
 | Heading 2 (H3 lg) | NotionInter | 32px | 700 | 38.4px (1.2) | normal | `#1313ba` | サブセクション見出し |
 | Heading 3 (H3 sm) | NotionInter | 18px | 700 | 28px (≈1.56) | -0.125px (-0.007em) | `#1313ba` | カード内見出し |
-| Lead Paragraph | NotionInter | 20px | 400 | 28px (1.4) | -0.125px (-0.006em) | `#FFFFFF` | ヒーローの導入文 |
-| Body | NotionInter | 16px | 400 | 24px (1.5) | normal | `rgba(19,19,186,0.66)` | ライト面の本文 |
-| Body (Dark) | NotionInter | 16px | 400 | 24px (1.5) | normal | `#FFFFFF` | ダーク面の本文 |
-| Caption | NotionInter | 14px | 400 | 20px (≈1.43) | normal | `rgba(19,19,186,0.66)` | 補足、ラベル |
+| Lead Paragraph | NotionInter | 20px | 400 | 28px (1.4) | -0.125px (-0.006em) | `#FFFFFF` | ヒーローの導入文（ブルー面） |
+| Body (on Brand) | NotionInter | 16px | 400 | 24px (1.5) | normal | `#FFFFFF` | ブルー面の本文（NotionDev の大半） |
+| Body (on Light) | NotionInter | 16px | 400 | 24px (1.5) | normal | `rgba(19,19,186,0.66)` | ライト面の本文 |
+| Caption | NotionInter | 14px | 400 | 20px (≈1.43) | normal | `rgba(255,255,255,0.75)` | ブルー面の補助テキスト |
 | Caption (Tight) | NotionInter | 14px | 400 | 20px | -0.125px | `rgba(255,255,255,0.75)` | ナビゲーション内ラベル |
 | Small | NotionInter | 12px | 400 | 16px (≈1.33) | normal | — | 最小テキスト |
-| Code Inline | iA Writer Mono | 14px | 400 | 20px | normal | `#1313ba` | コード断片 |
+| Code / Terminal | iA Writer Mono | 14px | 400 | 20px | normal | `#1313ba`（ライト面）／`#FFFFFF`（ブルー面） | curl コマンドピル、ターミナル |
 
 ### 3.5 行間・字間
 
@@ -279,7 +280,8 @@ NotionDev は**基本フラット**。シャドウは抑制し、面色・ボー
 
 ### Do（推奨）
 
-- ブランド色は `#1313ba`（CSS 変数 `--color-campaigns-dev-platform-dos-blue`）を使う。Notion 本体の青 `#0075de` と混同しない
+- **ページ背景には必ず `#1313ba`（Dev Blue）を使う**。これが NotionDev の最大のアイデンティティ。CSS 変数 `--color-campaigns-dev-platform-dos-blue`
+- ブルー面の本文・見出しは白 `#FFFFFF` で打つ
 - ライト面の本文には黒ではなく `rgba(19, 19, 186, 0.66)` を使う。NotionDev の "全部が青っぽい" 統一感はここから生まれる
 - CTA・パネル・コードブロックの角は `border-radius: 0` で揃える
 - 大見出し（48px 以上）には `letter-spacing: -0.033em` 前後の負の字間を入れる
@@ -288,11 +290,12 @@ NotionDev は**基本フラット**。シャドウは抑制し、面色・ボー
 
 ### Don't（禁止）
 
+- **ページ背景を黒 `#111111` や `#191918` にしない**。`#111111` は埋め込み Notion 製品 UI モックアップ専用
 - Notion 本体の角丸 `8px` を使わない（NotionDev は角ばっている）
 - 本文に純黒 `#000000` や `rgba(0,0,0,0.95)` を使わない（青のトーンを崩す）
-- ダーク面に Notion 本体の `#191918` ではなく `#111111` を使う
+- Notion 本体の青 `#0075de`（`--color-blue-500`）と Dev Blue `#1313ba` を混同しない
 - `letter-spacing` をプラス側に広げない（Inter は字間が広く感じやすい）
-- ライト面・ダーク面で安易にシャドウを盛らない（NotionDev はフラット基調）
+- 安易にシャドウを盛らない（NotionDev はフラット基調、点線で領域を区切るのが特徴）
 
 ---
 
@@ -323,13 +326,13 @@ NotionDev は**基本フラット**。シャドウは抑制し、面色・ボー
 ### クイックリファレンス
 
 ```
-Brand Color: #1313ba（dev-platform "dos" blue）
-Background (Dark): #111111
+Page Background / Brand: #1313ba（dev-platform "dos" blue — ページ背景そのもの）
 Surface (Light): #F6F6FC
-Surface (Translucent on Dark): rgba(246, 246, 252, 0.44)
+Surface (Translucent on Brand): rgba(246, 246, 252, 0.44)
 Lavender Accent: #CBCBEF
-Body Color (Light): rgba(19, 19, 186, 0.66)
-Text on Dark: #FFFFFF
+Text on Brand: #FFFFFF（ブルー面の本文・H1）
+Text on Light: #1313ba（見出し）／ rgba(19, 19, 186, 0.66)（本文）
+Embedded Product UI Only: #111111
 Font: NotionInter, Inter, -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif
 Code Font: "iA Writer Mono", SFMono-Regular, Menlo, monospace
 Body Size: 16px / line-height: 1.5
@@ -342,13 +345,17 @@ Button Radius: 0（角ばった四角）
 
 ```
 Notion Developer Platform (NotionDev) のデザインシステムに従って、API ドキュメントのトップページを作成してください。
-- 背景: #111111（ダーク基調）／カードは rgba(246, 246, 252, 0.44)
+- ページ背景: #1313ba（コバルトブルーのベタ塗り — ブランド＝面色）
 - フォント: NotionInter, Inter, -apple-system, sans-serif
 - コード: "iA Writer Mono", SFMono-Regular, monospace
-- 本文（ライト面）: 16px / line-height: 1.5 / color: rgba(19, 19, 186, 0.66)
-- H1: 54px / 700 / line-height: 56px / color: #1313ba / letter-spacing: -0.035em
+- ブルー面の本文: 16px / line-height: 1.5 / color: #FFFFFF
+- ヒーロー H1: 64px / 700 / line-height: 64px / color: #FFFFFF / letter-spacing: -2.125px
+- ライト面（部分セクション #F6F6FC）の H1: 54px / 700 / color: #1313ba / letter-spacing: -1.875px
+- ライト面の本文: 16px / 400 / color: rgba(19, 19, 186, 0.66)
 - font-feature-settings: "lnum", "locl" 0
 - Primary CTA: 白背景 #FFFFFF、テキスト #1313ba、padding 4px 14px、border-radius: 0
+- Ghost CTA: 透明背景、白テキスト、白ボーダー、padding 4px 14px、border-radius: 0
+- 浮遊パネル: rgba(246, 246, 252, 0.44) 半透明、点線で領域を区切る
 - Badge: 背景 #CBCBEF、テキスト #1313ba、border-radius: 0
 ```
 
