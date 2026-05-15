@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: CyberAgent</title>
+<style>
+  :root {
+    --brand-green: #82be28;
+    --cta-green: #2d8c3c;
+    --accent-blue: #3860be;
+    --dark-navy: #27455c;
+    --text-primary: #000000;
+    --text-gray: #878787;
+    --surface: #f2f1f1;
+    --bg: #f0f0ee;
+    --bg-light: #f4f4f4;
+    --border-gray: #d0d0d0;
+    --white: #ffffff;
+    --font-base: YuGothic, "ヒラギノ角ゴ ProN W3", "Lucida Grande", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, Verdana, "ＭＳ Ｐゴシック", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--brand-green); text-decoration: none; transition: opacity 0.15s; }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-menu { font-size: 14px; font-weight: 400; color: var(--text-primary); text-decoration: none; }
+
+  .hero {
+    background: #000; color: #fff;
+    padding: 120px 32px 80px; text-align: center;
+  }
+  .hero h1 { font-size: 40px; font-weight: 700; line-height: 1.3; margin-bottom: 16px; }
+  .hero p { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-pill-white {
+    display: inline-block; background: var(--white); color: var(--brand-green);
+    padding: 10px 32px; border-radius: 50px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-pill-green {
+    display: inline-block; background: var(--cta-green); color: var(--white);
+    padding: 10px 32px; border-radius: 50px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-pill-black {
+    display: inline-block; background: #000; color: #fff;
+    padding: 8px 24px; border-radius: 30px; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-filter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-filter.active { background: var(--brand-green); color: var(--brand-green); }
+  .btn-filter.inactive { background: var(--white); color: var(--white); }
+
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-gray); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-size: 18px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.06); margin: 0; }
+
+  .section-white { background: var(--white); padding: 64px 32px; }
+  .section-white .section-inner { max-width: 940px; margin: 0 auto; }
+  .section-dark { background: var(--dark-navy); color: #fff; padding: 64px 32px; }
+  .section-dark .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-gray); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-gray); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-gray); margin-top: 8px; }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-size: 32px; font-weight: 700; line-height: 1.5; margin-bottom: 24px; }
+  .article-preview h2 { font-size: 18px; font-weight: 700; margin: 24px 0 12px; }
+  .article-preview p { font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-gray); margin-top: 8px; font-family: var(--font-mono); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--white); border-radius: 0; padding: 24px; }
+  .card h3 { font-size: 16px; font-weight: 700; line-height: 1.7; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-gray); line-height: 1.7; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-gray); padding: 10px 12px;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+  }
+  .form-input:focus { border-color: var(--brand-green); }
+  .form-input--error { border-color: #dc2626; }
+  .form-state-label { font-size: 11px; color: var(--text-gray); margin-top: 4px; }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-green); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-gray); }
+
+  .footer { padding: 32px; text-align: center; background: var(--dark-navy); color: rgba(255,255,255,0.6); font-size: 12px; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">CyberAgent</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <span class="nav-menu">Menu</span>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>CyberAgent</h1>
+  <p>サイバーエージェントのコーポレートサイトから実測したデザイントークンのショーケース</p>
+  <div class="hero-buttons">
+    <a class="btn-pill-white" href="#">ニュース一覧</a>
+    <a class="btn-pill-green" href="#">CyberAgent Way</a>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01</div>
+  <div class="section-title">Colors</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#82be28"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Green</div><div class="color-swatch-hex">#82be28</div><div class="color-swatch-role">リンク・フィルターactive</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2d8c3c"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Green</div><div class="color-swatch-hex">#2d8c3c</div><div class="color-swatch-role">CTAボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3860be"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent Blue</div><div class="color-swatch-hex">#3860be</div><div class="color-swatch-role">フィルターアイコン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">テキスト・ヒーロー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27455c"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">#27455c</div><div class="color-swatch-role">フッター・暗色面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#878787"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray</div><div class="color-swatch-hex">#878787</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d0d0d0"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Gray</div><div class="color-swatch-hex">#d0d0d0</div><div class="color-swatch-role">区切り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f1f1"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f2f1f1</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0ee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#f0f0ee</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード面</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-white" id="typography">
+  <div class="section-inner">
+    <div class="section-label">02</div>
+    <div class="section-title">Typography</div>
+
+    <div class="type-sample">
+      <div style="font-size: 27px; font-weight: 400; line-height: 1.0;">Menu</div>
+      <div class="type-meta">CA Sans / 27px / 400 / line-height 1.0</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 18px; font-weight: 700;">トピックス</div>
+      <div class="type-meta">YuGothic / 18px / 700</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 16px; font-weight: 400; line-height: 1.8;">サイバーエージェントは「21世紀を代表する会社を創る」をビジョンに掲げ、インターネット広告事業、メディア事業、ゲーム事業を展開しています。</div>
+      <div class="type-meta">YuGothic / 16px / 400 / line-height 1.8</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 16px; font-weight: 400; line-height: 1.6;">メニュー</div>
+      <div class="type-meta">YuGothic / 16px / 400 / line-height 1.6</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-label">03</div>
+  <div class="section-title">Article</div>
+  <div class="article-preview">
+    <h1>21世紀を代表する会社を創る</h1>
+    <h2>メッセージ</h2>
+    <p>サイバーエージェントは1998年の創業以来、インターネット産業の変化に対応しながら事業を拡大してきました。インターネット広告事業で培った技術力とメディア運営のノウハウを活かし、「ABEMA」をはじめとするメディア事業、国内トップクラスのゲーム事業を展開しています。</p>
+    <p>変化の激しいインターネット産業において、常に新しい挑戦を続け、技術革新とクリエイティビティの力で社会に貢献していきます。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section-white" id="buttons">
+  <div class="section-inner">
+    <div class="section-label">04</div>
+    <div class="section-title">Buttons</div>
+    <div class="button-row" style="margin-bottom: 32px;">
+      <div class="button-item">
+        <a class="btn-pill-white" href="#" style="background: var(--white); color: var(--brand-green); border: none;">ニュース一覧</a>
+        <div class="button-label">Primary</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-pill-green" href="#">CyberAgent Way</a>
+        <div class="button-label">CTA Green</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-pill-black" href="#">English</a>
+        <div class="button-label">Language</div>
+      </div>
+    </div>
+    <div style="margin-bottom: 24px;">
+      <div class="color-group-label">Filter Tabs</div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span style="display: inline-block; padding: 6px 16px; border-radius: 50px; background: var(--brand-green); color: #fff; font-size: 14px; font-weight: 700;">ALL</span>
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: var(--white); font-size: 14px; font-weight: 700; color: var(--text-primary);">1</span>
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: var(--brand-green); font-size: 14px; font-weight: 700; color: #fff;">2</span>
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: var(--white); font-size: 14px; font-weight: 700; color: var(--text-primary);">3</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05</div>
+  <div class="section-title">Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <h3>ABEMA、W杯アジア最終予選の全試合を無料生中継</h3>
+      <p>サッカー日本代表の戦いをリアルタイムで応援できます。</p>
+    </div>
+    <div class="card">
+      <h3>AI事業本部、生成AI活用による広告クリエイティブ制作支援を強化</h3>
+      <p>最新のAI技術で広告制作の効率化と品質向上を実現。</p>
+    </div>
+    <div class="card">
+      <h3>Cygames、新作タイトルの制作を発表</h3>
+      <p>コンソール向け大型RPGの開発プロジェクトが始動。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-white" id="forms">
+  <div class="section-inner">
+    <div class="section-label">06</div>
+    <div class="section-title">Forms</div>
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" value="田中花子" readonly>
+      <div class="form-state-label">Default</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input" type="email" style="border-color: var(--brand-green);" value="hanako@example.com" readonly>
+      <div class="form-state-label">Focus</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="abc" readonly>
+      <div class="form-state-label" style="color: #dc2626;">Error</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">07</div>
+  <div class="section-title">Layout</div>
+  <div style="margin-bottom: 32px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="color-group-label">3-Layer Structure</div>
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <div style="flex: 1; background: #000; color: #fff; padding: 16px; text-align: center; font-size: 12px;">Hero (Dark)</div>
+      <div style="flex: 2; background: var(--bg); padding: 16px; text-align: center; font-size: 12px;">Content (Warm Gray)</div>
+      <div style="flex: 1; background: var(--dark-navy); color: #fff; padding: 16px; text-align: center; font-size: 12px;">Footer (Navy)</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Design tokens extracted from cyberagent.co.jp — computed style (2026-05-15)</p>
+  <p style="margin-top: 4px;">Font: YuGothic (system) + CA Sans (custom, not available locally)</p>
+</footer>
+
+</body>
+</html>

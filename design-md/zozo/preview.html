@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ZOZO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=DM+Sans:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-red: #c7161d;
+    --brand-navy: #0f367a;
+    --text-primary: #1e1e1e;
+    --text-black: #000000;
+    --text-gray: #808080;
+    --surface-warm: #efece5;
+    --surface-light: #f0f0f0;
+    --surface-neutral: #f8f6f5;
+    --bg: #ffffff;
+    --font-light: "Zen Kaku Gothic New", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, Verdana, sans-serif;
+    --font-medium: "Zen Kaku Gothic New", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, Verdana, sans-serif;
+    --font-demibold: "Zen Kaku Gothic New", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, Verdana, sans-serif;
+    --font-en: "DM Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-light);
+    font-size: 20px; font-weight: 300; line-height: 1.25;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-brand { font-family: var(--font-en); font-size: 20px; font-weight: 700; color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-family: var(--font-medium); font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none; transition: opacity 0.15s; }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-lang {
+    display: inline-block; padding: 6px 20px; border-radius: 15px; border: 1px solid rgba(0,0,0,0.15);
+    font-family: var(--font-medium); font-size: 11px; font-weight: 500; letter-spacing: 0.05em;
+    text-decoration: none; color: var(--text-primary);
+  }
+
+  .hero {
+    padding: 120px 32px 80px; text-align: center; background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .hero h1 { font-family: var(--font-en); font-size: 50px; font-weight: 700; line-height: 1.0; color: var(--text-primary); margin-bottom: 16px; }
+  .hero p { font-family: var(--font-medium); font-size: 16px; font-weight: 500; line-height: 1.7; color: var(--text-gray); max-width: 600px; margin: 0 auto 32px; letter-spacing: 0.05em; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-pill-navy {
+    display: inline-block; background: var(--brand-navy); color: var(--surface-warm);
+    padding: 10px 40px; border-radius: 20px; border: none;
+    font-family: var(--font-demibold); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.075em;
+  }
+  .btn-pill-ghost {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 8px 32px; border-radius: 50px; border: 1px solid rgba(0,0,0,0.2);
+    font-family: var(--font-en); font-size: 13px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-pill-ghost-white {
+    display: inline-block; background: transparent; color: #ffffff;
+    padding: 8px 32px; border-radius: 50px; border: 1px solid #ffffff;
+    font-family: var(--font-en); font-size: 13px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 11px; font-weight: 700;
+    color: var(--text-gray); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--font-en); font-size: 50px; font-weight: 700; line-height: 1.0;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.06); margin: 0; }
+
+  .section-warm { background: var(--surface-warm); padding: 64px 32px; }
+  .section-warm .section-inner { max-width: 940px; margin: 0 auto; }
+  .section-light { background: var(--surface-light); padding: 64px 32px; }
+  .section-light .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-medium); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-gray); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-medium); font-size: 14px; font-weight: 500; color: var(--text-gray); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-gray); margin-top: 8px; }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-family: var(--font-en); font-size: 50px; font-weight: 700; line-height: 1.0; margin-bottom: 24px; }
+  .article-preview h2 { font-family: var(--font-medium); font-size: 25px; font-weight: 500; line-height: 1.3; margin: 32px 0 16px; }
+  .article-preview p { font-family: var(--font-light); font-size: 20px; font-weight: 300; line-height: 1.8; letter-spacing: 0.02em; margin-bottom: 16px; }
+  .article-preview .date { font-family: var(--font-demibold); font-size: 12px; font-weight: 700; color: var(--text-gray); }
+  .article-preview .badge { display: inline-block; background: var(--brand-red); color: #fff; font-family: var(--font-demibold); font-size: 12px; font-weight: 700; padding: 2px 8px; margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-gray); margin-top: 8px; font-family: var(--font-mono); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 0; padding: 24px; }
+  .card h3 { font-family: var(--font-medium); font-size: 14px; font-weight: 500; line-height: 1.7; margin-bottom: 8px; }
+  .card p { font-size: 12px; color: var(--text-gray); line-height: 1.5; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-family: var(--font-medium); font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid rgba(0,0,0,0.15); padding: 10px 12px;
+    font-family: var(--font-light); font-size: 16px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--brand-navy); }
+  .form-input--error { border-color: var(--brand-red); }
+  .form-state-label { font-size: 11px; color: var(--text-gray); margin-top: 4px; }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-navy); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-gray); }
+
+  .footer { padding: 32px; text-align: center; background: var(--surface-light); font-size: 12px; color: var(--text-gray); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-title { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">ZOZO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-lang" href="#">JP</a>
+</nav>
+
+<section class="hero">
+  <h1>DESIGN SYSTEM<br>PREVIEW</h1>
+  <p>株式会社ZOZOのコーポレートサイトから実測したデザイントークンのショーケース</p>
+  <div class="hero-buttons">
+    <a class="btn-pill-navy" href="#">社会貢献活動</a>
+    <a class="btn-pill-ghost" href="#">MOVIE</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01</div>
+  <div class="section-title">COLORS</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c7161d"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#c7161d</div><div class="color-swatch-role">プレスリリースバッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0f367a"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Navy</div><div class="color-swatch-hex">#0f367a</div><div class="color-swatch-role">社会貢献セクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1e1e1e"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#1e1e1e</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#808080"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray</div><div class="color-swatch-hex">#808080</div><div class="color-swatch-role">日付テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efece5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Warm</div><div class="color-swatch-hex">#efece5</div><div class="color-swatch-role">ウォームベージュ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f6f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Neutral</div><div class="color-swatch-hex">#f8f6f5</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02</div>
+  <div class="section-title">TYPOGRAPHY</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size: 50px; font-weight: 700; line-height: 1.0;">NEWS</div>
+    <div class="type-meta">zozogothic bold (DM Sans) / 50px / 700 / line-height 1.0</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-medium); font-size: 35px; font-weight: 500; letter-spacing: 0.02em;">株式会社ZOZO</div>
+    <div class="type-meta">Gothic MB101 Medium (Zen Kaku Gothic New) / 35px / 500 / ls 0.02em</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-medium); font-size: 25px; font-weight: 500;">企業理念</div>
+    <div class="type-meta">Gothic MB101 Medium / 25px / 500</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-light); font-size: 20px; font-weight: 300; line-height: 1.8; letter-spacing: 0.02em;">ファッションEC「ZOZOTOWN」、ファッションコーディネートアプリ「WEAR」を中心に、ファッション領域において事業を展開しています。</div>
+    <div class="type-meta">Gothic MB101 Light / 20px / 400 / line-height 1.8 / ls 0.02em</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-medium); font-size: 14px; font-weight: 500; line-height: 1.7;">吉岡里帆・板垣李光人出演のZOZOTOWN新TVCM、"初夏のお出かけ"をテーマにした「待ち合わせ」篇</div>
+    <div class="type-meta">Gothic MB101 Medium / 14px / 500 / line-height 1.7</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; color: var(--text-gray);">2026年05月14日 <span style="color: var(--brand-red); margin-left: 8px;">NEW</span></div>
+    <div class="type-meta">Gothic MB101 DemiBold / 12px / 600 / gray + red</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-warm" id="article">
+  <div class="section-inner">
+    <div class="section-label">03</div>
+    <div class="section-title" style="color: var(--text-primary);">ARTICLE</div>
+    <div class="article-preview">
+      <h1>ZOZO MEASUREMENT<br>TECHNOLOGY</h1>
+      <div class="date" style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; color: var(--text-gray); margin-bottom: 24px;">2026年05月15日 <span class="badge" style="display:inline-block; background:var(--brand-red); color:#fff; padding:2px 8px; font-size:12px;">プレスリリース</span></div>
+      <h2>世界中をカッコよく、世界中に笑顔を。</h2>
+      <p>ZOZOは、テクノロジーの力でファッション産業の課題を解決し、誰もが自分らしいスタイルを楽しめる世界を目指しています。身体計測技術「ZOZOSUIT」やAIを活用したサイズ推薦など、独自の技術でお客様のファッション体験を革新しています。</p>
+      <p>ファッションは人々に喜びと自信を与える力を持っています。私たちはその可能性を最大限に引き出すために、テクノロジーと創造性の融合に挑戦し続けます。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04</div>
+  <div class="section-title">BUTTONS</div>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item">
+      <a class="btn-pill-navy" href="#">社会貢献活動</a>
+      <div class="button-label">Pill Navy</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-pill-ghost" href="#">MOVIE</a>
+      <div class="button-label">Pill Ghost</div>
+    </div>
+    <div class="button-item">
+      <a class="nav-lang" href="#">JP</a>
+      <div class="button-label">Language</div>
+    </div>
+  </div>
+  <div style="background: var(--brand-navy); padding: 32px; border-radius: 8px; display: inline-flex; gap: 16px;">
+    <a class="btn-pill-ghost-white" href="#">MOVIE</a>
+  </div>
+  <div class="button-label">Pill Ghost White (on dark bg)</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-light" id="cards">
+  <div class="section-inner" style="max-width: 940px; margin: 0 auto;">
+    <div class="section-label">05</div>
+    <div class="section-title">CARDS</div>
+    <div class="card-grid">
+      <div class="card">
+        <div style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; color: var(--text-gray); margin-bottom: 8px;">2026年05月14日 <span style="color: var(--brand-red);">NEW</span></div>
+        <h3>吉岡里帆・板垣李光人出演のZOZOTOWN新TVCM、"初夏のお出かけ"をテーマにした「待ち合わせ」篇が本日5月14日放映開始</h3>
+        <p style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; display: inline-block; background: var(--brand-red); color: #fff; padding: 2px 8px;">プレスリリース</p>
+      </div>
+      <div class="card">
+        <div style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; color: var(--text-gray); margin-bottom: 8px;">2026年05月12日</div>
+        <h3>ZOZO、環境省主催「循環経済パートナーシップ」に参画。ファッション業界のサステナビリティ推進に貢献</h3>
+        <p style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; display: inline-block; background: var(--brand-red); color: #fff; padding: 2px 8px;">プレスリリース</p>
+      </div>
+      <div class="card">
+        <div style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; color: var(--text-gray); margin-bottom: 8px;">2026年05月09日</div>
+        <h3>2026年3月期 第4四半期決算説明会資料を掲載しました</h3>
+        <p style="font-family: var(--font-demibold); font-size: 12px; font-weight: 700; display: inline-block; background: var(--brand-red); color: #fff; padding: 2px 8px;">IR</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06</div>
+  <div class="section-title">FORMS</div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" value="山田太郎" readonly>
+    <div class="form-state-label">Default</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" style="border-color: var(--brand-navy);" value="taro@example.com" readonly>
+    <div class="form-state-label">Focus</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="abc" readonly>
+    <div class="form-state-label" style="color: var(--brand-red);">Error</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">07</div>
+  <div class="section-title">LAYOUT</div>
+
+  <div style="margin-bottom: 32px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:5px;"></div><div class="spacing-value">5</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:10px;"></div><div class="spacing-value">10</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:15px;"></div><div class="spacing-value">15</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:25px;"></div><div class="spacing-value">25</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:62px;"></div><div class="spacing-value">62</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="color-group-label">Elevation</div>
+    <p style="font-size: 14px; color: var(--text-gray); line-height: 1.6;">ZOZOコーポレートサイトはシャドウを使用しない完全フラットデザイン。セクション間の区切りは背景色の切り替え（白 → ウォームベージュ → ライトグレー）で表現する。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Design tokens extracted from corp.zozo.com — computed style (2026-05-15)</p>
+  <p style="margin-top: 4px;">Font: Gothic MB101 (Adobe Fonts) / substitute: Zen Kaku Gothic New (Google Fonts)</p>
+</footer>
+
+</body>
+</html>

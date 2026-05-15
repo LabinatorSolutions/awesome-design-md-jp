@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: LIFULL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-orange: #ed6103;
+    --light-orange: #fef3eb;
+    --text-primary: #1f1f1f;
+    --text-black: #000000;
+    --border-gray: #d9d9d9;
+    --surface: #f4f4f4;
+    --bg: #ffffff;
+    --white: #ffffff;
+    --font-base: "Noto Sans JP", 游ゴシック, YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 500; line-height: 2.0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-brand { font-size: 20px; font-weight: 700; color: var(--text-primary); text-decoration: none; letter-spacing: 0.04em; }
+  .nav-brand span { color: var(--brand-orange); }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--brand-orange); }
+  .nav-cta {
+    display: inline-block; background: var(--white); color: var(--brand-orange);
+    padding: 6px 20px; border-radius: 34px; border: 1px solid var(--brand-orange);
+    font-size: 14px; font-weight: 700; text-decoration: none;
+  }
+
+  .hero {
+    background: #000; color: #fff;
+    padding: 120px 32px 80px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(237,97,3,0.15), rgba(0,0,0,0.8));
+  }
+  .hero h1 { font-size: 40px; font-weight: 700; line-height: 1.4; margin-bottom: 16px; position: relative; letter-spacing: 0.04em; }
+  .hero p { font-size: 16px; line-height: 2.0; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 32px; position: relative; font-weight: 500; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  .btn-pill-orange {
+    display: inline-block; background: var(--white); color: var(--brand-orange);
+    padding: 10px 32px; border-radius: 34px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-pill-outline {
+    display: inline-block; background: transparent; color: var(--brand-orange);
+    padding: 10px 32px; border-radius: 9999px; border: 1px solid var(--brand-orange);
+    font-family: var(--font-base); font-size: 16px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-pill-text {
+    display: inline-block; background: var(--white); color: var(--text-primary);
+    padding: 8px 24px; border-radius: 9999px; border: 1px solid var(--border-gray);
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+  }
+
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700;
+    color: var(--brand-orange); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 32px; letter-spacing: 0.04em;
+  }
+  .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.06); margin: 0; }
+
+  .section-gray { background: var(--surface); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+  .section-orange { background: var(--light-orange); padding: 64px 32px; }
+  .section-orange .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 8px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: #878787; font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: #878787; margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: #878787; margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: #878787; margin-top: 8px; }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-size: 32px; font-weight: 700; line-height: 1.5; margin-bottom: 24px; letter-spacing: 0.04em; }
+  .article-preview h2 { font-size: 24px; font-weight: 700; margin: 24px 0 12px; }
+  .article-preview p { font-size: 16px; font-weight: 500; line-height: 2.0; margin-bottom: 16px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: #878787; margin-top: 8px; font-family: var(--font-mono); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--white); border-radius: 8px; padding: 24px; border: 1px solid rgba(0,0,0,0.06); }
+  .card h3 { font-size: 18px; font-weight: 700; line-height: 1.7; margin-bottom: 8px; }
+  .card p { font-size: 14px; font-weight: 500; color: #878787; line-height: 1.7; }
+  .card-link { display: inline-block; margin-top: 12px; color: var(--brand-orange); font-size: 14px; font-weight: 700; text-decoration: none; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-gray); padding: 10px 12px; border-radius: 4px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 500; outline: none;
+  }
+  .form-input:focus { border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(237,97,3,0.15); }
+  .form-input--error { border-color: #cf2e2e; box-shadow: 0 0 0 3px rgba(207,46,46,0.15); }
+  .form-state-label { font-size: 11px; color: #878787; margin-top: 4px; }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-orange); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: #878787; }
+
+  .footer { padding: 32px; text-align: center; background: var(--surface); font-size: 12px; color: #878787; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>L</span>IFULL</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">企業理念</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>LIFULL</h1>
+  <p>株式会社LIFULLのコーポレートサイトから実測したデザイントークンのショーケース</p>
+  <div class="hero-buttons">
+    <a class="btn-pill-orange" href="#">企業理念</a>
+    <a class="btn-pill-outline" href="#" style="color: #fff; border-color: #fff;">サービス一覧</a>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01</div>
+  <div class="section-title">Colors</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ed6103"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Orange</div><div class="color-swatch-hex">#ed6103</div><div class="color-swatch-role">CTA・リンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fef3eb"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Orange</div><div class="color-swatch-hex">#fef3eb</div><div class="color-swatch-role">アクセント面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1f1f1f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#1f1f1f</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヒーロー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Gray</div><div class="color-swatch-hex">#d9d9d9</div><div class="color-swatch-role">区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-gray" id="typography">
+  <div class="section-inner">
+    <div class="section-label">02</div>
+    <div class="section-title">Typography</div>
+
+    <div class="type-sample">
+      <div style="font-size: 40px; font-weight: 700; letter-spacing: 0.04em; line-height: 1.4;">サービス</div>
+      <div class="type-meta">LIFULL (Noto Sans JP) / 40px / 700 / ls 0.04em</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 32px; font-weight: 700; line-height: 1.6;">概要</div>
+      <div class="type-meta">LIFULL / 32px / 700 / line-height 1.6</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 24px; font-weight: 700;">国内</div>
+      <div class="type-meta">LIFULL / 24px / 700</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 21px; font-weight: 500; line-height: 2.0; letter-spacing: 0.04em;">世界中のあらゆる「LIFE」を、安心と喜びで「FULL」にするために、事業を通じて社会課題の解決に取り組んでいます。</div>
+      <div class="type-meta">LIFULL / 21px / 500 / line-height 2.0 / ls 0.04em</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 16px; font-weight: 500; line-height: 2.0;">日本最大級の不動産・住宅情報サイト「LIFULL HOME'S」、地方創生を支援する「LIFULL 地方創生」、介護施設情報サイト「LIFULL 介護」などのサービスを展開しています。</div>
+      <div class="type-meta">LIFULL / 16px / 500 / line-height 2.0</div>
+    </div>
+    <div class="type-sample">
+      <div style="font-size: 16px; font-weight: 500; line-height: 2.0; letter-spacing: 0.04em;">「LIFULL HOME'S」「LIFULL 地方創生」「LIFULL 介護」をはじめとする各種サービスを展開。</div>
+      <div class="type-meta">LIFULL / 16px / 500 / line-height 1.75 / ls 0.04em</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-label">03</div>
+  <div class="section-title">Article</div>
+  <div class="article-preview">
+    <h1>あらゆるLIFEを、FULLに。</h1>
+    <h2>コーポレートメッセージ</h2>
+    <p>LIFULLは、世界中のあらゆる「LIFE」を「FULL」にしていくために生まれました。住まい探しから暮らしの中の様々な課題まで、テクノロジーと人の力で解決していきます。</p>
+    <p>住宅弱者一人ひとりが抱える住まいの課題を解決するための取り組みを続け、すべての人が安心して自分らしい暮らしを送れる社会の実現を目指しています。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section-orange" id="buttons">
+  <div class="section-inner">
+    <div class="section-label">04</div>
+    <div class="section-title">Buttons</div>
+    <div class="button-row" style="margin-bottom: 24px;">
+      <div class="button-item">
+        <a class="btn-pill-orange" href="#">企業理念</a>
+        <div class="button-label">Primary Ghost</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-pill-outline" href="#">ニュース一覧</a>
+        <div class="button-label">Outline Pill</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-pill-text" href="#">支店・営業所 を見る</a>
+        <div class="button-label">Tertiary Text</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05</div>
+  <div class="section-title">Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <h3>注文住宅の施工事例画像からイメージにあう住宅メーカーを探せる新しい検索体験</h3>
+      <p>AIが施工事例の写真を分析し、あなたの好みにあった住宅メーカーを提案します。</p>
+      <a class="card-link" href="#">詳しく見る &rarr;</a>
+    </div>
+    <div class="card">
+      <h3>住宅弱者一人ひとりが抱える住まいの課題の解決</h3>
+      <p>高齢者・外国籍の方・障がいのある方など、住まい探しに困難を抱える方々を支援。</p>
+      <a class="card-link" href="#">詳しく見る &rarr;</a>
+    </div>
+    <div class="card">
+      <h3>未来の暮らしのVR体験アプリ</h3>
+      <p>テクノロジーを活用した新しい住まい体験を提供するイノベーションプロジェクト。</p>
+      <a class="card-link" href="#">詳しく見る &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-gray" id="forms">
+  <div class="section-inner">
+    <div class="section-label">06</div>
+    <div class="section-title">Forms</div>
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" value="鈴木一郎" readonly>
+      <div class="form-state-label">Default</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input" type="email" style="border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(237,97,3,0.15);" value="ichiro@example.com" readonly>
+      <div class="form-state-label">Focus</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="abc" readonly>
+      <div class="form-state-label" style="color: #cf2e2e;">Error</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">07</div>
+  <div class="section-title">Layout</div>
+  <div style="margin-bottom: 32px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:96px;"></div><div class="spacing-value">96</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="color-group-label">Section Pattern</div>
+    <div style="display: flex; gap: 4px; margin-bottom: 16px;">
+      <div style="flex: 1; background: #000; color: #fff; padding: 16px; text-align: center; font-size: 12px;">Hero (Dark)</div>
+      <div style="flex: 1; background: var(--bg); padding: 16px; text-align: center; font-size: 12px; border: 1px solid #eee;">White</div>
+      <div style="flex: 1; background: var(--surface); padding: 16px; text-align: center; font-size: 12px;">Surface #f4f4f4</div>
+      <div style="flex: 1; background: var(--light-orange); padding: 16px; text-align: center; font-size: 12px;">Orange #fef3eb</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Design tokens extracted from lifull.com — computed style (2026-05-15)</p>
+  <p style="margin-top: 4px;">Font: LIFULL (custom corporate) / substitute: Noto Sans JP (Google Fonts)</p>
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (183 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (186 sites)</a>
 </p>
 
 <table>
@@ -280,6 +280,9 @@
 <td align="center"><strong>YOKU MOKU</strong><br><img src="design-md/yokumoku/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HUMAN MADE</strong><br><img src="design-md/humanmade/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Notion Dev</strong><br><img src="design-md/notion-dev/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ZOZO</strong><br><img src="design-md/zozo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CyberAgent</strong><br><img src="design-md/cyberagent/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LIFULL</strong><br><img src="design-md/lifull/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -524,11 +527,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [shu uemura (シュウ ウエムラ)](https://www.shuuemura.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/shuuemura/DESIGN.md) | [preview.html](design-md/shuuemura/preview.html) |
 | [YOKU MOKU (ヨックモック)](https://www.yokumoku.co.jp/) | Confectionery / Premium Gift | [DESIGN.md](design-md/yokumoku/DESIGN.md) | [preview.html](design-md/yokumoku/preview.html) |
 | [HUMAN MADE (ヒューマンメイド)](https://humanmade.jp/) | Fashion / Streetwear | [DESIGN.md](design-md/humanmade/DESIGN.md) | [preview.html](design-md/humanmade/preview.html) |
+| [ZOZO (ゾゾ)](https://corp.zozo.com/) | Fashion Tech / Corporate | [DESIGN.md](design-md/zozo/DESIGN.md) | [preview.html](design-md/zozo/preview.html) |
+| [CyberAgent (サイバーエージェント)](https://www.cyberagent.co.jp/) | Internet / Media / Corporate | [DESIGN.md](design-md/cyberagent/DESIGN.md) | [preview.html](design-md/cyberagent/preview.html) |
+| [LIFULL (ライフル)](https://lifull.com/) | Real Estate Tech / Corporate | [DESIGN.md](design-md/lifull/DESIGN.md) | [preview.html](design-md/lifull/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (183 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (186 sites)</a>
 </p>
 
 <table>
@@ -774,6 +780,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>YOKU MOKU</strong><br><img src="design-md/yokumoku/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HUMAN MADE</strong><br><img src="design-md/humanmade/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Notion Dev</strong><br><img src="design-md/notion-dev/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ZOZO</strong><br><img src="design-md/zozo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CyberAgent</strong><br><img src="design-md/cyberagent/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LIFULL</strong><br><img src="design-md/lifull/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
