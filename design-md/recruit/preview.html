@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Recruit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties (DESIGN.md) === */
+    --COLOR_BRAND_PRIMARY: #0065bd;
+    --COLOR_BRAND_SECONDARY: #0e8bd1;
+    --COLOR_BRAND_SECONDARY_2: #37b1de;
+    --COLOR_BASE_DARK: #2d3133;
+    --COLOR_BASE_LIGHT: #ffffff;
+    --COLOR_OUTLINE: #d8d8db;
+    --COLOR_ROLE_DANGER_DARK: #e02412;
+    --sub-gray: #838484;
+    --surface-blue-gray: #f3f5fa;
+    --white-semi: rgba(255,255,255,0.8);
+    --footer-dark: #2d3133;
+    /* === Fonts === */
+    --font-jp: "Zen Kaku Gothic New", "Tazugane Gothic", sans-serif;
+    --font-en-display: "Inter", "Graphik Web", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--COLOR_BASE_LIGHT);
+    color: var(--COLOR_BASE_DARK);
+    font-family: var(--font-jp);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--COLOR_BASE_LIGHT);
+    border-bottom: 1px solid var(--COLOR_OUTLINE);
+  }
+  .nav-brand {
+    font-family: var(--font-en-display);
+    font-size: 18px; font-weight: 700;
+    color: var(--COLOR_BRAND_PRIMARY);
+    text-decoration: none; letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 400; line-height: 24px;
+    color: var(--COLOR_BASE_DARK); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--COLOR_BRAND_PRIMARY); }
+
+  /* === HERO === */
+  .hero {
+    position: relative; min-height: 480px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-blue-gray);
+    overflow: hidden;
+  }
+  .hero-photo {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--COLOR_BRAND_SECONDARY_2) 0%, var(--COLOR_BRAND_SECONDARY) 40%, var(--COLOR_BRAND_PRIMARY) 100%);
+    opacity: 0.15;
+  }
+  .hero-overlay {
+    position: relative; z-index: 1;
+    background: var(--white-semi);
+    padding: 56px 64px;
+    max-width: 640px;
+    text-align: center;
+  }
+  .hero-overlay h1 {
+    font-family: var(--font-jp);
+    font-size: 30px; font-weight: 400; line-height: 1.5;
+    color: var(--COLOR_BASE_DARK); margin-bottom: 16px;
+  }
+  .hero-overlay p {
+    font-size: 15px; font-weight: 400; line-height: 1.55;
+    color: var(--COLOR_BASE_DARK);
+  }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 40px; max-width: 960px; margin: 0 auto; }
+  .section-en-title {
+    font-family: var(--font-en-display);
+    font-size: 36px; font-weight: 700; line-height: 1.5;
+    color: var(--COLOR_BRAND_PRIMARY);
+    margin-bottom: 8px;
+  }
+  .section-jp-title {
+    font-family: var(--font-jp);
+    font-size: 15px; font-weight: 400; line-height: 1.5;
+    color: var(--sub-gray);
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--COLOR_OUTLINE); margin: 0; }
+
+  .section-gray { background: var(--surface-blue-gray); padding: 80px 40px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--COLOR_OUTLINE); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--COLOR_BASE_DARK); }
+  .color-swatch-hex { font-size: 12px; color: var(--sub-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--sub-gray); margin-top: 3px; }
+  .color-group-label {
+    font-family: var(--font-en-display);
+    font-size: 14px; font-weight: 700; color: var(--COLOR_BRAND_PRIMARY);
+    margin: 32px 0 12px;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--COLOR_OUTLINE); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--sub-gray); margin-top: 8px; }
+  .type-context {
+    display: inline-block; background: var(--surface-blue-gray); color: var(--sub-gray);
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px;
+  }
+
+  /* === ARTICLE / NEWS === */
+  .news-list { list-style: none; }
+  .news-item {
+    display: flex; gap: 24px; align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--COLOR_OUTLINE);
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-thumb {
+    width: 200px; height: 120px; flex-shrink: 0;
+    background: var(--surface-blue-gray); border-radius: 4px;
+    position: relative; overflow: hidden;
+  }
+  .news-thumb::after {
+    content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--COLOR_BRAND_PRIMARY);
+  }
+  .news-date { font-size: 12px; color: var(--sub-gray); margin-bottom: 4px; }
+  .news-title {
+    font-size: 15px; font-weight: 400; line-height: 1.5;
+    color: var(--COLOR_BASE_DARK);
+  }
+  .news-category {
+    font-size: 12px; color: var(--COLOR_BRAND_PRIMARY);
+    text-decoration: none; margin-top: 8px; display: inline-block;
+  }
+
+  /* === BUTTONS (minimal / text link style) === */
+  .button-row { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--sub-gray); margin-top: 8px; }
+  .link-text {
+    font-size: 15px; font-weight: 400; color: var(--COLOR_BRAND_PRIMARY);
+    text-decoration: none; border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .link-text:hover { border-bottom-color: var(--COLOR_BRAND_PRIMARY); }
+  .link-card {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--COLOR_BASE_LIGHT); border: 1px solid var(--COLOR_OUTLINE);
+    padding: 12px 24px; border-radius: 4px;
+    font-size: 15px; font-weight: 400; color: var(--COLOR_BASE_DARK);
+    text-decoration: none; position: relative;
+    transition: border-color 0.2s;
+  }
+  .link-card::after {
+    content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--COLOR_BRAND_PRIMARY);
+    border-radius: 0 0 4px 4px;
+  }
+  .link-card:hover { border-color: var(--COLOR_BRAND_PRIMARY); }
+  .link-card-arrow { color: var(--COLOR_BRAND_PRIMARY); font-size: 14px; }
+  .btn-outline-recruit {
+    display: inline-block; background: transparent;
+    color: var(--COLOR_BRAND_PRIMARY);
+    padding: 10px 24px; border-radius: 4px;
+    border: 1px solid var(--COLOR_BRAND_PRIMARY);
+    font-family: var(--font-jp); font-size: 15px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-recruit:hover { background: var(--COLOR_BRAND_PRIMARY); color: #fff; }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: #fff; border: 1px solid var(--COLOR_OUTLINE);
+    border-radius: 4px; overflow: hidden;
+    position: relative; transition: border-color 0.2s;
+  }
+  .card::after {
+    content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--COLOR_BRAND_PRIMARY);
+  }
+  .card:hover { border-color: var(--COLOR_BRAND_PRIMARY); }
+  .card-image {
+    width: 100%; height: 160px;
+    background: var(--surface-blue-gray);
+    overflow: hidden; position: relative;
+  }
+  .card-image-gradient {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(0,101,189,0.08) 0%, rgba(55,177,222,0.12) 100%);
+  }
+  .card-body { padding: 20px 24px 28px; }
+  .card-body h3 {
+    font-size: 15px; font-weight: 400; line-height: 1.5;
+    color: var(--COLOR_BASE_DARK); margin-bottom: 8px;
+  }
+  .card-body p { font-size: 13px; color: var(--sub-gray); line-height: 1.5; }
+  .card-date { font-size: 12px; color: var(--sub-gray); margin-bottom: 8px; }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 400px; }
+  .form-label {
+    display: block; font-size: 13px; font-weight: 700;
+    color: var(--COLOR_BASE_DARK); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: #fff; color: var(--COLOR_BASE_DARK);
+    border: 1px solid var(--COLOR_OUTLINE); padding: 10px 12px; border-radius: 4px;
+    font-family: var(--font-jp); font-size: 15px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--sub-gray); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--COLOR_BRAND_PRIMARY);
+    box-shadow: 0 0 0 3px rgba(0,101,189,0.15);
+  }
+  .form-input--error {
+    border-color: var(--COLOR_ROLE_DANGER_DARK);
+    box-shadow: 0 0 0 3px rgba(224,36,18,0.15);
+  }
+  .form-error-text { font-size: 12px; color: var(--COLOR_ROLE_DANGER_DARK); margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--sub-gray); margin-top: 4px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: #fff; border-radius: 4px; padding: 32px 24px;
+    text-align: center; border: 1px solid var(--COLOR_OUTLINE);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--COLOR_BASE_DARK); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--sub-gray); word-break: break-all; }
+
+  /* === LAYOUT === */
+  .width-bar { height: 32px; background: var(--surface-blue-gray); border: 1px solid var(--COLOR_OUTLINE); border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--COLOR_BRAND_PRIMARY); border-radius: 3px; opacity: 0.15; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--COLOR_BASE_DARK); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--sub-gray); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 48px 40px; text-align: center;
+    background: var(--footer-dark);
+    font-size: 12px; color: rgba(255,255,255,0.6);
+  }
+  .footer a { color: rgba(255,255,255,0.8); text-decoration: underline; }
+  .footer-brand {
+    font-family: var(--font-en-display);
+    font-size: 16px; font-weight: 700; color: #fff;
+    margin-bottom: 12px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 769px) {
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { min-height: 360px; }
+    .hero-overlay { padding: 32px; margin: 0 20px; }
+    .hero-overlay h1 { font-size: 24px; }
+    .section { padding: 56px 20px; }
+    .section-gray { padding: 56px 20px; }
+    .section-en-title { font-size: 28px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .news-item { flex-direction: column; gap: 12px; }
+    .news-thumb { width: 100%; height: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#">RECRUIT</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-overlay">
+    <h1>まだ、ここにない、出会い。</h1>
+    <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、レイアウトの全値を可視化。computed style 実測値に基づく。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-en-title">Colors</div>
+  <div class="section-jp-title">カラーパレット</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0065bd"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Primary</div><div class="color-swatch-hex">#0065bd</div><div class="color-swatch-role">リクルートブルー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0e8bd1"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Secondary</div><div class="color-swatch-hex">#0e8bd1</div><div class="color-swatch-role">セカンダリアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#37b1de"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Secondary 2</div><div class="color-swatch-hex">#37b1de</div><div class="color-swatch-role">グラデーション・ホバー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2d3133"></div><div class="color-swatch-info"><div class="color-swatch-name">Base Dark</div><div class="color-swatch-hex">#2d3133</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#838484"></div><div class="color-swatch-info"><div class="color-swatch-name">Sub Gray</div><div class="color-swatch-hex">#838484</div><div class="color-swatch-role">補助テキスト・日付</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d8d8db"></div><div class="color-swatch-info"><div class="color-swatch-name">Outline</div><div class="color-swatch-hex">#d8d8db</div><div class="color-swatch-role">ボーダー・区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #d8d8db"></div><div class="color-swatch-info"><div class="color-swatch-name">Base Light</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f5fa"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Blue Gray</div><div class="color-swatch-hex">#f3f5fa</div><div class="color-swatch-role">セクション背景面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Overlay & Footer</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background: linear-gradient(135deg, #37b1de 0%, #0065bd 100%); position:relative;"><div style="position:absolute;inset:0;background:rgba(255,255,255,0.8);"></div></div><div class="color-swatch-info"><div class="color-swatch-name">White Semi</div><div class="color-swatch-hex">rgba(255,255,255,0.8)</div><div class="color-swatch-role">FV コピー背景オーバーレイ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2d3133"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Dark</div><div class="color-swatch-hex">#2d3133</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e02412"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#e02412</div><div class="color-swatch-role">エラー・危険操作</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-gray" id="typography">
+<div class="section-inner">
+  <div class="section-en-title">Typography</div>
+  <div class="section-jp-title">タイポグラフィ階層 -- 実測値</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-en-display); font-size: 36px; font-weight: 700; line-height: 1.5; color: var(--COLOR_BRAND_PRIMARY);">News &mdash; EN Section Title</div>
+    <div class="type-meta">Inter (Graphik Web) / 36px / 700 / line-height: 1.5 / color: #0065bd<span class="type-context">セクションタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size: 30px; font-weight: 400; line-height: 1.5; color: var(--COLOR_BASE_DARK);">外食はもっと便利に楽しく</div>
+    <div class="type-meta">Zen Kaku Gothic New (Tazugane Gothic) / 30px / 400 / line-height: 1.5<span class="type-context">セクション H2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size: 28px; font-weight: 400; line-height: 1.55; color: var(--COLOR_BASE_DARK);">企業情報</div>
+    <div class="type-meta">Zen Kaku Gothic New / 28px / 400 / line-height: 1.55<span class="type-context">セクションリード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size: 15px; font-weight: 400; line-height: 1.55; color: #000000;">本文テキスト — 読みやすさを基本にした組版。line-height: 1.55 の統一的な行間で、コーポレートサイトにふさわしい落ち着いた読書体験を提供します。letter-spacing と palt は適用していません。ABCabc 123</div>
+    <div class="type-meta">Zen Kaku Gothic New / 15px / 400 / line-height: 1.55 / color: #000000<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size: 12px; font-weight: 400; line-height: 2.0; color: var(--COLOR_BASE_DARK);">ヘッダーナビゲーション — Nav Animated (12px)</div>
+    <div class="type-meta">Zen Kaku Gothic New / 12px / 400 / line-height: 2.0<span class="type-context">ヘッダーナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size: 10px; font-weight: 400; line-height: 1.5; color: var(--COLOR_BASE_DARK);">ラベル・キャプション — Small (10px)</div>
+    <div class="type-meta">Zen Kaku Gothic New / 10px / 400 / line-height: 1.5<span class="type-context">ラベル</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / NEWS -->
+<section class="section" id="article">
+  <div class="section-en-title">News</div>
+  <div class="section-jp-title">ニュースカード -- エディトリアル組版</div>
+
+  <ul class="news-list">
+    <li class="news-item">
+      <div class="news-thumb"><div style="width:100%;height:100%;background:linear-gradient(135deg, rgba(0,101,189,0.06) 0%, rgba(55,177,222,0.1) 100%);"></div></div>
+      <div class="news-content">
+        <div class="news-date">2026.05.18</div>
+        <div class="news-title">リクルート、生成AIを活用した新しいマッチングプラットフォームの開発を発表</div>
+        <a class="news-category" href="#">テクノロジー</a>
+      </div>
+    </li>
+    <li class="news-item">
+      <div class="news-thumb"><div style="width:100%;height:100%;background:linear-gradient(135deg, rgba(14,139,209,0.06) 0%, rgba(0,101,189,0.1) 100%);"></div></div>
+      <div class="news-content">
+        <div class="news-date">2026.05.15</div>
+        <div class="news-title">サステナビリティレポート2026を公開しました</div>
+        <a class="news-category" href="#">サステナビリティ</a>
+      </div>
+    </li>
+    <li class="news-item">
+      <div class="news-thumb"><div style="width:100%;height:100%;background:linear-gradient(135deg, rgba(55,177,222,0.06) 0%, rgba(14,139,209,0.1) 100%);"></div></div>
+      <div class="news-content">
+        <div class="news-date">2026.05.10</div>
+        <div class="news-title">「まだ、ここにない、出会い。」新たなブランドコミュニケーション展開について</div>
+        <a class="news-category" href="#">ブランド</a>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section-gray" id="buttons">
+<div class="section-inner">
+  <div class="section-en-title">Buttons</div>
+  <div class="section-jp-title">テキストリンク・リンクカード -- 最小限の CTA</div>
+
+  <div class="button-row">
+    <div class="button-item">
+      <a class="link-text" href="#">詳しく見る &rarr;</a>
+      <div class="button-label">Text Link (Primary)</div>
+    </div>
+    <div class="button-item">
+      <a class="link-text" href="#" style="color: var(--COLOR_BASE_DARK);">一覧を見る &rarr;</a>
+      <div class="button-label">Text Link (Dark)</div>
+    </div>
+    <div class="button-item">
+      <a class="link-card" href="#">企業情報を見る <span class="link-card-arrow">&rarr;</span></a>
+      <div class="button-label">Link Card</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-outline-recruit" href="#">お問い合わせ</a>
+      <div class="button-label">Outline Button</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-en-title">Cards</div>
+  <div class="section-jp-title">リンクカード -- ブランドブルー下線アクセント</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"><div class="card-image-gradient"></div></div>
+      <div class="card-body">
+        <div class="card-date">2026.05.18</div>
+        <h3>テクノロジーで「出会い」を創造する</h3>
+        <p>AIとデータを活用し、一人ひとりに最適な出会いの機会を提供します。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-gradient" style="background:linear-gradient(135deg, rgba(14,139,209,0.1) 0%, rgba(55,177,222,0.15) 100%);"></div></div>
+      <div class="card-body">
+        <div class="card-date">2026.05.15</div>
+        <h3>多様な働き方を支えるプラットフォーム</h3>
+        <p>人材領域で培った知見を活かし、働く人々の可能性を広げます。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-gradient" style="background:linear-gradient(135deg, rgba(0,101,189,0.05) 0%, rgba(14,139,209,0.12) 100%);"></div></div>
+      <div class="card-body">
+        <div class="card-date">2026.05.10</div>
+        <h3>サステナブルな社会の実現に向けて</h3>
+        <p>事業活動を通じた社会課題の解決と持続可能な価値創造に取り組みます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-gray" id="forms">
+<div class="section-inner">
+  <div class="section-en-title">Forms</div>
+  <div class="section-jp-title">フォーム要素</div>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">Default -- border: #d8d8db, radius: 4px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="recruit.co.jp">
+    <div class="form-state-label">Focus -- border: #0065bd (Brand Primary)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">Error -- border: #e02412 (Danger)</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-en-title">Elevation</div>
+  <div class="section-jp-title">Depth -- フラット + 色面ベース</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Flat (Default)</div>
+      <div class="elevation-desc">影なし、border: #d8d8db のみ。カードの基本状態</div>
+    </div>
+    <div class="elevation-card" style="background: var(--surface-blue-gray); border-color: transparent;">
+      <div class="elevation-label">Surface Blue Gray</div>
+      <div class="elevation-desc">#f3f5fa 色面で階層を表現</div>
+    </div>
+    <div class="elevation-card" style="border-bottom: 3px solid var(--COLOR_BRAND_PRIMARY);">
+      <div class="elevation-label">Brand Accent Line</div>
+      <div class="elevation-desc">下線 #0065bd でカードを区切る</div>
+    </div>
+    <div class="elevation-card" style="background: rgba(255,255,255,0.8); border-color: transparent; backdrop-filter: blur(4px);">
+      <div class="elevation-label">FV Overlay</div>
+      <div class="elevation-desc">rgba(255,255,255,0.8) 半透明面</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section-gray" id="layout">
+<div class="section-inner">
+  <div class="section-en-title">Layout</div>
+  <div class="section-jp-title">レイアウトグリッド</div>
+
+  <div style="margin-bottom: 24px;">
+    <div class="width-bar-label">Section Max Width <span class="width-bar-value">960px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width: 100%"></div></div>
+  </div>
+  <div style="margin-bottom: 24px;">
+    <div class="width-bar-label">Section Padding <span class="width-bar-value">80px top/bottom, 40px left/right</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width: 60%"></div></div>
+  </div>
+  <div style="margin-bottom: 24px;">
+    <div class="width-bar-label">Card Grid Gap <span class="width-bar-value">24px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width: 20%"></div></div>
+  </div>
+  <div style="margin-bottom: 24px;">
+    <div class="width-bar-label">Nav Height <span class="width-bar-value">64px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width: 15%"></div></div>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <div class="color-group-label">Background Alternation</div>
+    <div style="display: flex; gap: 12px; margin-top: 12px;">
+      <div style="flex: 1; height: 48px; background: var(--COLOR_BASE_LIGHT); border: 1px solid var(--COLOR_OUTLINE); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--sub-gray);">#ffffff</div>
+      <div style="flex: 1; height: 48px; background: var(--surface-blue-gray); border: 1px solid var(--COLOR_OUTLINE); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--sub-gray);">#f3f5fa</div>
+      <div style="flex: 1; height: 48px; background: var(--COLOR_BASE_LIGHT); border: 1px solid var(--COLOR_OUTLINE); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--sub-gray);">#ffffff</div>
+      <div style="flex: 1; height: 48px; background: var(--surface-blue-gray); border: 1px solid var(--COLOR_OUTLINE); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--sub-gray);">#f3f5fa</div>
+    </div>
+    <div style="font-size: 12px; color: var(--sub-gray); margin-top: 8px;">白と #f3f5fa を交互に配置してセクション階層を表現</div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">RECRUIT</div>
+  Generated from <a href="https://www.recruit.co.jp/">recruit.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-18)
+</footer>
+
+</body>
+</html>

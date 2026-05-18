@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (186 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (189 sites)</a>
 </p>
 
 <table>
@@ -283,6 +283,11 @@
 <td align="center"><strong>ZOZO</strong><br><img src="design-md/zozo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CyberAgent</strong><br><img src="design-md/cyberagent/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LIFULL</strong><br><img src="design-md/lifull/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BASE</strong><br><img src="design-md/base/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DAIKIN</strong><br><img src="design-md/daikin/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Recruit</strong><br><img src="design-md/recruit/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -530,11 +535,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [ZOZO (ゾゾ)](https://corp.zozo.com/) | Fashion Tech / Corporate | [DESIGN.md](design-md/zozo/DESIGN.md) | [preview.html](design-md/zozo/preview.html) |
 | [CyberAgent (サイバーエージェント)](https://www.cyberagent.co.jp/) | Internet / Media / Corporate | [DESIGN.md](design-md/cyberagent/DESIGN.md) | [preview.html](design-md/cyberagent/preview.html) |
 | [LIFULL (ライフル)](https://lifull.com/) | Real Estate Tech / Corporate | [DESIGN.md](design-md/lifull/DESIGN.md) | [preview.html](design-md/lifull/preview.html) |
+| [BASE (ベイス)](https://thebase.com/) | EC Platform / SaaS | [DESIGN.md](design-md/base/DESIGN.md) | [preview.html](design-md/base/preview.html) |
+| [DAIKIN (ダイキン工業)](https://www.daikin.co.jp/) | HVAC / Manufacturing / Corporate | [DESIGN.md](design-md/daikin/DESIGN.md) | [preview.html](design-md/daikin/preview.html) |
+| [Recruit (リクルート)](https://www.recruit.co.jp/) | Tech / HR / Corporate | [DESIGN.md](design-md/recruit/DESIGN.md) | [preview.html](design-md/recruit/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (186 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (189 sites)</a>
 </p>
 
 <table>
@@ -783,6 +791,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>ZOZO</strong><br><img src="design-md/zozo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CyberAgent</strong><br><img src="design-md/cyberagent/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LIFULL</strong><br><img src="design-md/lifull/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BASE</strong><br><img src="design-md/base/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DAIKIN</strong><br><img src="design-md/daikin/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Recruit</strong><br><img src="design-md/recruit/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
