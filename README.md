@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (189 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (192 sites)</a>
 </p>
 
 <table>
@@ -288,6 +288,9 @@
 <tr>
 <td align="center"><strong>DAIKIN</strong><br><img src="design-md/daikin/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Recruit</strong><br><img src="design-md/recruit/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ATON</strong><br><img src="design-md/aton/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Mame Kurogouchi</strong><br><img src="design-md/mamekurogouchi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PRESS BUTTER SAND</strong><br><img src="design-md/buttersand/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -538,11 +541,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [BASE (ベイス)](https://thebase.com/) | EC Platform / SaaS | [DESIGN.md](design-md/base/DESIGN.md) | [preview.html](design-md/base/preview.html) |
 | [DAIKIN (ダイキン工業)](https://www.daikin.co.jp/) | HVAC / Manufacturing / Corporate | [DESIGN.md](design-md/daikin/DESIGN.md) | [preview.html](design-md/daikin/preview.html) |
 | [Recruit (リクルート)](https://www.recruit.co.jp/) | Tech / HR / Corporate | [DESIGN.md](design-md/recruit/DESIGN.md) | [preview.html](design-md/recruit/preview.html) |
+| [ATON (エイトン)](https://aton-tokyo.com/) | Fashion / Luxury | [DESIGN.md](design-md/aton/DESIGN.md) | [preview.html](design-md/aton/preview.html) |
+| [Mame Kurogouchi (マメクロゴウチ)](https://www.mamekurogouchi.com/) | Fashion / Haute Couture | [DESIGN.md](design-md/mamekurogouchi/DESIGN.md) | [preview.html](design-md/mamekurogouchi/preview.html) |
+| [PRESS BUTTER SAND (プレスバターサンド)](https://buttersand.com/) | Confectionery / Food | [DESIGN.md](design-md/buttersand/DESIGN.md) | [preview.html](design-md/buttersand/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (189 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (192 sites)</a>
 </p>
 
 <table>
@@ -796,6 +802,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>DAIKIN</strong><br><img src="design-md/daikin/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Recruit</strong><br><img src="design-md/recruit/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ATON</strong><br><img src="design-md/aton/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Mame Kurogouchi</strong><br><img src="design-md/mamekurogouchi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PRESS BUTTER SAND</strong><br><img src="design-md/buttersand/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

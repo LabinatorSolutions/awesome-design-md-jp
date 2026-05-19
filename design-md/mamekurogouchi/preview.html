@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Mame Kurogouchi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Mame Kurogouchi Color Tokens === */
+    --color-font: #666666;
+    --color-link: #999999;
+    --color-red: #cc0000;
+    --color-line: #e4e4e4;
+    --color-bg: #ffffff;
+    --color-input-text: #000000;
+    --color-toggle-menu: #999999;
+
+    /* === Font ===
+       Adobe Garamond Pro はドメインライセンスのため、
+       Google Fonts の EB Garamond で代替。
+       和文は游明朝 → ヒラギノ明朝 ProN → さわらび明朝 の順。
+       ゴシック体は一切使わない完全セリフ体系。 */
+    --font-family: "EB Garamond", "Yu Mincho", 游明朝, YuMincho, 游明朝体, "Hiragino Mincho ProN", "Sawarabi Mincho", serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-font);
+    font-family: var(--font-family);
+    font-size: 11px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.5px;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 40px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .nav-brand {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-font); text-decoration: none; letter-spacing: 0.5px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-link); text-decoration: none; letter-spacing: 0.5px;
+    line-height: 1.18;
+  }
+  .nav-search {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .nav-search-input {
+    font-family: var(--font-family); font-size: 11.9px; font-weight: 400;
+    color: var(--color-input-text); background: transparent;
+    border: none; border-bottom: 1px solid var(--color-line);
+    padding: 8px; outline: none; width: 120px;
+    letter-spacing: 0.5px;
+  }
+  .nav-search-btn {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-font); background: transparent;
+    border: none; padding: 1px 6px; cursor: pointer;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 100px;
+    background: var(--color-bg);
+    text-align: center;
+  }
+  .hero-inner { max-width: 680px; margin: 0 auto; }
+  .hero-season {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-link); letter-spacing: 0.5px; margin-bottom: 40px;
+  }
+  .hero h1 {
+    font-family: var(--font-family);
+    font-size: 11px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.5px; margin-bottom: 32px;
+    color: var(--color-font);
+  }
+  .hero-lead {
+    font-family: var(--font-family);
+    font-size: 11px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.5px;
+    color: var(--color-font); max-width: 560px; margin: 0 auto 48px;
+  }
+  .hero-link {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-link); text-decoration: none; letter-spacing: 0.5px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-link); margin-bottom: 8px; letter-spacing: 0.5px;
+  }
+  .section-title {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    line-height: 1.5; color: var(--color-font); margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .section-subtitle {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    line-height: 1.5; color: var(--color-link); letter-spacing: 0.5px;
+    margin-bottom: 48px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-line); margin: 0; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { background: var(--color-bg); border: 1px solid var(--color-line); overflow: hidden; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-family: var(--font-family); font-size: 11px; font-weight: 400; margin-bottom: 4px; color: var(--color-font); letter-spacing: 0.5px; }
+  .color-swatch-hex { font-size: 11px; color: var(--color-link); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-family: var(--font-family); font-size: 11px; color: var(--color-link); margin-top: 4px; letter-spacing: 0.5px; }
+  .color-group-label { font-family: var(--font-family); font-size: 11px; font-weight: 400; color: var(--color-link); margin: 32px 0 12px; letter-spacing: 0.5px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--color-line); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--color-link); margin-top: 12px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: #f8f8f8; color: var(--color-link); font-size: 10px; padding: 2px 8px; margin-left: 8px; font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 560px; margin: 0 auto; }
+  .article-preview p {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.5px;
+    color: var(--color-font); margin-bottom: 20px;
+  }
+  .article-preview .article-heading {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.5px;
+    color: var(--color-font); margin: 40px 0 16px;
+  }
+  .article-preview .article-caption {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.5px;
+    color: var(--color-link); margin-bottom: 12px;
+  }
+  .article-image {
+    background: #f5f5f5; height: 320px; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .article-image-placeholder {
+    font-family: var(--font-family); font-size: 11px; color: var(--color-link);
+    letter-spacing: 0.5px;
+  }
+
+  /* BUTTONS (text links only) */
+  .link-row { display: flex; gap: 48px; flex-wrap: wrap; align-items: baseline; }
+  .link-item { text-align: left; }
+  .link-label { font-family: var(--font-family); font-size: 11px; font-weight: 400; color: var(--color-link); margin-top: 12px; letter-spacing: 0.5px; }
+  .text-link {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-link); text-decoration: none; letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+  .text-link-primary {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-font); text-decoration: none; letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+  .search-btn {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-font); background: transparent;
+    border: none; padding: 1px 6px; cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+  .card { background: transparent; position: relative; }
+  .card-image { background: #f5f5f5; height: 320px; display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-family); font-size: 11px; color: var(--color-link);
+    letter-spacing: 0.5px;
+  }
+  .card-body { padding: 16px 0; }
+  .card h3 {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    line-height: 1.5; color: var(--color-font); margin-bottom: 4px; letter-spacing: 0.5px;
+  }
+  .card-detail {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-link); letter-spacing: 0.5px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 400px; }
+  .form-label {
+    display: block; font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    color: var(--color-font); margin-bottom: 8px; letter-spacing: 0.5px;
+  }
+  .form-input {
+    width: 100%; background: var(--color-bg); color: var(--color-input-text);
+    border: 1px solid var(--color-line); padding: 8px; border-radius: 0;
+    font-family: var(--font-family); font-size: 11.9px; font-weight: 400;
+    letter-spacing: 0.5px; outline: none;
+    font-feature-settings: normal;
+  }
+  .form-input:focus { border-color: var(--color-font); }
+  .form-input.error { border-color: var(--color-red); }
+  .form-error { font-family: var(--font-family); font-size: 11px; color: var(--color-red); margin-top: 4px; letter-spacing: 0.5px; }
+  .form-input::placeholder { color: var(--color-link); }
+  .form-input-search {
+    width: 100%; background: transparent; color: var(--color-input-text);
+    border: none; border-bottom: 1px solid var(--color-line); padding: 8px;
+    border-radius: 0;
+    font-family: var(--font-family); font-size: 11.9px; font-weight: 400;
+    letter-spacing: 0.5px; outline: none;
+    font-feature-settings: normal;
+  }
+  .form-input-search::placeholder { color: var(--color-link); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card { padding: 32px 24px; text-align: center; }
+  .elevation-label { font-family: var(--font-family); font-size: 11px; font-weight: 400; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .elevation-desc { font-family: var(--font-family); font-size: 11px; color: var(--color-link); letter-spacing: 0.5px; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-block { background: var(--color-line); }
+  .spacing-item { text-align: center; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--color-link); margin-top: 8px; letter-spacing: 0; }
+
+  /* LAYOUT DEMO */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .layout-box {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-family); font-size: 11px; font-weight: 400; letter-spacing: 0.5px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 64px 40px 32px;
+    background: var(--color-bg); color: var(--color-font);
+    border-top: 1px solid var(--color-line);
+  }
+  .footer-inner {
+    max-width: 960px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 32px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-family); font-size: 11px; font-weight: 400;
+    margin-bottom: 16px; letter-spacing: 0.5px; color: var(--color-font);
+  }
+  .footer-col a {
+    display: block; font-family: var(--font-family); color: var(--color-link);
+    text-decoration: none; margin-bottom: 8px; font-size: 11px;
+    letter-spacing: 0.5px; line-height: 1.5;
+  }
+  .footer-meta {
+    text-align: center; margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid var(--color-line);
+    font-family: var(--font-family); font-size: 11px; color: var(--color-link);
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 769px) {
+    .hero { padding: 80px 20px 64px; }
+    .nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .layout-demo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Mame Kurogouchi</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <div class="nav-search">
+    <input class="nav-search-input" type="text" placeholder="Search">
+    <button class="nav-search-btn">Search</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-season">Autumn Winter 2026</div>
+    <h1>Mame Kurogouchi</h1>
+    <p class="hero-lead">mamekurogouchi.com から抽出したデザイントークンのカタログ。Adobe Garamond Pro + 游明朝の完全セリフ体系、全テキスト 11px / weight 400 統一、モノクロームグレー（#666666 / #999999）の二色パレット、CTA ボタンなし、font-feature-settings: normal（palt 不使用）、letter-spacing 0.5px 均一適用。ギャラリー・ホワイトキューブの展示型デザイン。computed style 実測値に基づく。</p>
+    <a class="hero-link" href="#">View Collection</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title">カラーパレット</div>
+  <div class="section-subtitle">Color Palette — モノクロームグレーの極限抑制。色はテキスト階層の区別のみに存在する</div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Gray</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">--color-font / 本文・見出し・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Gray</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">--color-link / ナビ・リンク・セカンダリ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Input Text</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">検索入力フィールドのみ純黒を許容</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Alert Red</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">--color-red / エラー・重要な通知（控えめ）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface &amp; Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ホワイトキューブ。純白の展示空間</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4e4e4"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e4e4e4</div><div class="color-swatch-role">--color-line / 区切り線・セクション境界</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Toggle Menu</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">モバイルメニュートグル背景色</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">タイポグラフィ</div>
+  <div class="section-subtitle">Typography — 全テキスト 11px 統一 / Adobe Garamond Pro + 游明朝 / weight 400 only / palt なし</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11px; font-weight:400; line-height:1.5; letter-spacing:0.5px; color:var(--color-font);">Mame Kurogouchi</div>
+    <div class="type-meta">EB Garamond (Adobe Garamond Pro alt) + Yu Mincho / 11px / 400 / letter-spacing: 0.5px<span class="type-context">Heading 1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11px; font-weight:400; line-height:1.5; letter-spacing:0.5px; color:var(--color-font);">Autumn Winter 2026 Collection</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11px / 400 / letter-spacing: 0.5px<span class="type-context">Heading 3 (footer section)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11px; font-weight:400; line-height:1.5; letter-spacing:0.5px; color:var(--color-font);">ファブリックの開発から手掛ける職人的なものづくりと、日本の伝統工芸からの着想を現代のファッションに昇華する姿勢が特徴。テキスタイルの質感と構造が、静謐な空間の中で作品として佇む。</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11px / 400 / line-height: 1.5 / letter-spacing: 0.5px / color: #666666<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11px; font-weight:400; line-height:1.18; letter-spacing:0.5px; color:var(--color-link);">Collection &nbsp;&nbsp; About &nbsp;&nbsp; Stores &nbsp;&nbsp; Journal</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11px / 400 / line-height: 1.18 / letter-spacing: 0.5px / color: #999999<span class="type-context">Nav Link</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11px; font-weight:400; letter-spacing:0.5px; color:var(--color-link);">View Collection</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11px / 400 / letter-spacing: 0.5px / color: #999999<span class="type-context">Link</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11px; font-weight:400; letter-spacing:0.5px; color:var(--color-font);">2026.05.19</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11px / 400 / letter-spacing: 0.5px / color: #666666<span class="type-context">Span (inline)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="display:inline-block; font-family: var(--font-family); font-size:11px; font-weight:400; color:var(--color-font); background:transparent; border:none; padding:1px 6px; cursor:pointer;">Search</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11px / 400 / padding: 1px 6px / color: #666666<span class="type-context">Button (search)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-family); font-size:11.9px; font-weight:400; color:var(--color-input-text); padding:8px; border-bottom: 1px solid var(--color-line); display:inline-block; min-width:200px;">Search...</div>
+    <div class="type-meta">EB Garamond + Yu Mincho / 11.9px / 400 / padding: 8px / color: #000000<span class="type-context">Input (search)</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-label">03 / Article</div>
+  <div class="section-title">テキスタイルの記憶</div>
+  <div class="section-subtitle">Article Sample — オートクチュールの世界観を反映した組版サンプル</div>
+
+  <div class="article-preview">
+    <div class="article-caption">Autumn Winter 2026</div>
+    <div class="article-image">
+      <div class="article-image-placeholder">Lookbook Image</div>
+    </div>
+    <p>黒河内真衣子が手掛ける Mame Kurogouchi は、ファブリックの開発から手掛ける職人的なものづくりと、日本の伝統工芸からの着想を現代のファッションに昇華する姿勢が特徴のデザイナーズブランドである。</p>
+    <p>Each collection begins with textile research. Kurogouchi's design process is inseparable from the act of weaving, dyeing, and finishing fabrics by hand. The garments emerge not from sketches alone, but from an intimate dialogue with the material itself.</p>
+    <div class="article-heading">テキスタイルへの眼差し</div>
+    <p>伝統的な絞り染めや刺繍の技法を現代の衣服に翻訳する際、装飾としてではなく構造として取り込むことを意識している。布の表面に生まれる陰影、手仕事の不均一さが、工業製品にはない静かな存在感を纏わせる。</p>
+    <div class="article-image" style="height:240px;">
+      <div class="article-image-placeholder">Detail Image</div>
+    </div>
+    <div class="article-caption">Textile detail, hand-woven silk organza</div>
+    <div class="article-heading">The Silence of Haute Couture</div>
+    <p>The quietude of Mame Kurogouchi's collections speaks to a philosophy of restraint. Where other brands announce, this one whispers. The web presence mirrors this ethos: every element set in 11px serif, every color a shade of gray, every interaction a simple text link. The garments, like the website, ask the viewer to look more closely.</p>
+    <p style="margin-top:32px;"><a class="text-link" href="#">Read More</a></p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title">インタラクション</div>
+  <div class="section-subtitle">Buttons — CTA ボタンは存在しない。すべてテキストリンクで構成</div>
+
+  <div class="link-row" style="margin-bottom:40px;">
+    <div class="link-item">
+      <a class="text-link" href="#">View Collection</a>
+      <div class="link-label">Link / #999999 / 11px / 400</div>
+    </div>
+    <div class="link-item">
+      <a class="text-link-primary" href="#">Mame Kurogouchi</a>
+      <div class="link-label">Link (primary) / #666666 / 11px / 400</div>
+    </div>
+    <div class="link-item">
+      <button class="search-btn">Search</button>
+      <div class="link-label">Search button / #666666 / padding 1px 6px</div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--color-line); padding-top:32px; margin-top:16px;">
+    <div style="font-family:var(--font-family); font-size:11px; color:var(--color-link); margin-bottom:20px; letter-spacing:0.5px;">ボタンの不在について</div>
+    <p style="font-family:var(--font-family); font-size:11px; color:var(--color-font); line-height:1.5; letter-spacing:0.5px; max-width:560px;">
+      Mame Kurogouchi には視覚的に目立つ CTA ボタンが存在しない。これはブランドの最も特徴的なデザイン判断の一つ。塗りつぶし・枠線・角丸を持つボタンコンポーネントを作らず、すべてのインタラクションをテキストリンクで処理する。「売る」ための UI を前面に出さず、ギャラリーとしての体験を優先するファッションブランド特有の美学。
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title">コレクション</div>
+  <div class="section-subtitle">Cards — ボーダーなし / シャドウなし / 写真 + テキストリンクの最小構成</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Lookbook</div>
+      </div>
+      <div class="card-body">
+        <h3>Autumn Winter 2026</h3>
+        <div class="card-detail"><a class="text-link" href="#">View</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Lookbook</div>
+      </div>
+      <div class="card-body">
+        <h3>Spring Summer 2026</h3>
+        <div class="card-detail"><a class="text-link" href="#">View</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Lookbook</div>
+      </div>
+      <div class="card-body">
+        <h3>Autumn Winter 2025</h3>
+        <div class="card-detail"><a class="text-link" href="#">View</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        <div class="card-image-placeholder">Lookbook</div>
+      </div>
+      <div class="card-body">
+        <h3>Spring Summer 2025</h3>
+        <div class="card-detail"><a class="text-link" href="#">View</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title">フォーム</div>
+  <div class="section-subtitle">Forms — radius 0px / 11.9px / palt なし / focus: border #666666</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:48px; max-width:960px;">
+    <div>
+      <div style="font-family:var(--font-family); font-size:11px; color:var(--color-link); margin-bottom:20px; letter-spacing:0.5px;">Default</div>
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" type="text" placeholder="Maiko Kurogouchi">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="name@example.com">
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-family); font-size:11px; color:var(--color-link); margin-bottom:20px; letter-spacing:0.5px;">Focus</div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <input class="form-input" type="text" placeholder="Tokyo, Japan" style="border-color:var(--color-font);">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Search</label>
+        <input class="form-input-search" type="text" placeholder="Search...">
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--font-family); font-size:11px; color:var(--color-link); margin-bottom:20px; letter-spacing:0.5px;">Error</div>
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input class="form-input error" type="tel" value="abc">
+        <div class="form-error">Please enter a valid number</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input error" type="email" value="invalid">
+        <div class="form-error">Please enter a valid email</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title">奥行き</div>
+  <div class="section-subtitle">Depth &amp; Elevation — シャドウ一切不使用。完全にフラットなホワイトキューブ空間</div>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:var(--color-bg); border:1px solid var(--color-line);">
+      <div class="elevation-label">Level 0 — Surface</div>
+      <div class="elevation-desc">すべての要素。shadow: none</div>
+    </div>
+    <div class="elevation-card" style="background:var(--color-bg); border-bottom:1px solid var(--color-line);">
+      <div class="elevation-label">Border Line</div>
+      <div class="elevation-desc">#e4e4e4 の 1px ライン。唯一の区切り</div>
+    </div>
+    <div class="elevation-card" style="background:#f5f5f5; border:1px solid var(--color-line);">
+      <div class="elevation-label">Photo Placeholder</div>
+      <div class="elevation-desc">写真の被写界深度だけが奥行きを構成</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title">レイアウト</div>
+  <div class="section-subtitle">Layout — spacing scale &amp; grid</div>
+
+  <div class="spacing-row" style="margin-bottom:48px;">
+    <div class="spacing-item"><div class="spacing-block" style="width:1px; height:32px;"></div><div class="spacing-value">1px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:6px; height:32px;"></div><div class="spacing-value">6px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px; height:32px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px; height:32px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px; height:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px; height:32px;"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <div class="layout-demo">
+    <div class="layout-box" style="background:var(--color-bg); color:var(--color-font); border:1px solid var(--color-line);">White #ffffff</div>
+    <div class="layout-box" style="background:#f5f5f5; color:var(--color-link);">Photo Area #f5f5f5</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Collection</h4>
+      <a href="#">Autumn Winter 2026</a>
+      <a href="#">Spring Summer 2026</a>
+      <a href="#">Autumn Winter 2025</a>
+      <a href="#">Archive</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <a href="#">Maiko Kurogouchi</a>
+      <a href="#">Philosophy</a>
+      <a href="#">Textile</a>
+    </div>
+    <div class="footer-col">
+      <h4>Information</h4>
+      <a href="#">Stores</a>
+      <a href="#">Stockists</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <a href="#">Instagram</a>
+      <a href="#">Newsletter</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    Generated from mamekurogouchi.com DESIGN.md — awesome-design-md-jp / computed style (2026-05-19)<br>
+    EB Garamond (Adobe Garamond Pro alt) + Yu Mincho / 11px uniform / palt: off / letter-spacing: 0.5px
+  </div>
+</footer>
+
+</body>
+</html>
