@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: amadana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --brand-red: #E60012;
+    --text-primary: #3F3F3F;
+    --text-on-dark: #ffffff;
+    --bg-page: #ffffff;
+    --bg-dark-section: #131313;
+    --bg-product-card: #272727;
+    --header-overlay: rgba(63, 63, 63, 0.4);
+    --muted-accent: #B5B5B0;
+    --border-light: rgba(63, 63, 63, 0.2);
+    --border-dark: rgba(255, 255, 255, 0.12);
+    /* === Fonts: CSS Custom Properties 実測値 === */
+    --font-body: "Noto Sans JP", sans-serif;
+    --font-heading: "Noto Sans JP", sans-serif;
+    /* === Layout === */
+    --header-height: 68px;
+    --section-spacing: 256px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: var(--header-height);
+    background: var(--bg-dark-section);
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 400; color: var(--text-on-dark);
+    text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13.2px; font-weight: 400; color: var(--muted-accent);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-on-dark); }
+  .nav-cta {
+    display: inline-block; background: var(--brand-red); color: var(--text-on-dark);
+    padding: 6px 20px; border-radius: 0; font-size: 13.2px; font-weight: 400;
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* === HERO === */
+  .hero {
+    position: relative; padding: 120px 32px 100px; text-align: center;
+    background: var(--bg-dark-section);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: var(--header-overlay);
+    z-index: 1;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 43.2px; font-weight: 400; line-height: 1.0;
+    color: var(--text-on-dark); margin-bottom: 20px;
+    letter-spacing: 0.08em;
+  }
+  .hero p {
+    font-size: 15px; font-weight: 400; line-height: 1.7;
+    color: var(--muted-accent); max-width: 560px; margin: 0 auto 36px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--brand-red); color: var(--text-on-dark);
+    padding: 9.6px 33.6px; border-radius: 0; border: none;
+    font-family: var(--font-body); font-size: 13.2px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text-on-dark);
+    padding: 9.6px 33.6px; border-radius: 0;
+    border: 1px solid var(--muted-accent);
+    font-family: var(--font-body); font-size: 13.2px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .btn-outline:hover { border-color: var(--text-on-dark); }
+  .btn-outline-dark {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 9.6px 33.6px; border-radius: 0;
+    border: 1px solid var(--text-primary);
+    font-family: var(--font-body); font-size: 13.2px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .btn-outline-dark:hover { background: rgba(63,63,63,0.06); }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 13.2px; font-weight: 400; color: var(--muted-accent);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-size: 30.8px; font-weight: 400; line-height: 1.0;
+    margin-bottom: 40px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  .section-dark { background: var(--bg-dark-section); padding: 80px 32px; }
+  .section-dark .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--muted-accent); }
+  .section-dark .section-title { color: var(--text-on-dark); }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: #fff; border: 1px solid var(--border-light); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--muted-accent); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--muted-accent); margin-top: 3px; }
+  .color-group-label { font-size: 13.2px; font-weight: 400; color: var(--muted-accent); margin: 28px 0 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--muted-accent); margin-top: 10px; }
+  .type-context { display: inline-block; background: rgba(63,63,63,0.08); color: var(--text-primary); font-size: 11px; padding: 2px 8px; margin-left: 8px; }
+
+  /* === PRODUCT SHOWCASE (dark) === */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .product-card {
+    background: var(--bg-product-card); padding: 0; text-decoration: none;
+    display: block; transition: opacity 0.2s; overflow: hidden;
+  }
+  .product-card:hover { opacity: 0.88; }
+  .product-card-image {
+    width: 100%; height: 200px; background: #1e1e1e;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; color: rgba(255,255,255,0.15);
+  }
+  .product-card-body { padding: 20px; }
+  .product-card-name {
+    font-size: 17.6px; font-weight: 400; line-height: 1.0;
+    color: var(--text-on-dark); margin-bottom: 8px;
+  }
+  .product-card-desc {
+    font-size: 13.2px; font-weight: 400; line-height: 1.7;
+    color: var(--muted-accent); margin-bottom: 12px;
+  }
+  .product-card-price {
+    font-size: 15px; font-weight: 400; color: var(--text-on-dark);
+  }
+
+  /* === BUTTONS === */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--muted-accent); margin-top: 10px; }
+
+  /* === CARDS (light) === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--border-light);
+    padding: 28px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--text-primary); }
+  .card h3 { font-size: 17.6px; font-weight: 400; line-height: 1.0; margin-bottom: 12px; }
+  .card p { font-size: 13.2px; color: var(--muted-accent); line-height: 1.7; }
+  .card-link {
+    font-size: 13.2px; color: var(--brand-red); text-decoration: none;
+    margin-top: 16px; display: inline-block; text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .card-link:hover { text-decoration: underline; }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 400px; }
+  .form-label { display: block; font-size: 13.2px; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-light); padding: 9.6px 12px; border-radius: 0;
+    font-family: var(--font-body); font-size: 15px; font-weight: 400; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--muted-accent); }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-input--error { border-color: var(--brand-red); }
+  .form-state-label { font-size: 11px; color: var(--muted-accent); margin-top: 6px; }
+  .form-error-text { font-size: 11px; color: var(--brand-red); margin-top: 6px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { padding: 28px; text-align: center; }
+  .elevation-label { font-size: 15px; font-weight: 400; margin-bottom: 6px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--muted-accent); word-break: break-all; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-red); margin-bottom: 8px; height: 28px; opacity: 0.8; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 400; color: var(--muted-accent); }
+
+  /* === LAYOUT BARS === */
+  .width-bar { height: 36px; background: #f5f5f5; border: 1px solid var(--border-light); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--bg-dark-section); opacity: 0.15; }
+  .width-bar-label { font-size: 13px; font-weight: 400; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: monospace; font-size: 12px; color: var(--muted-accent); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 40px 32px; text-align: center;
+    background: var(--bg-dark-section);
+    font-size: 12px; color: var(--muted-accent);
+  }
+  .footer a { color: var(--brand-red); text-decoration: underline; }
+
+  @media (max-width: 749px) {
+    .hero h1 { font-size: 30.8px; }
+    .hero { padding: 80px 20px 60px; }
+    .nav-links { display: none; }
+    .section { padding: 60px 20px; }
+    .section-dark { padding: 60px 20px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">amadana</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Online Store</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Design System Preview<br>amadana.com</h1>
+    <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">Online Store</a>
+      <a class="btn-outline" href="#">DESIGN.md を読む</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" style="border-color: rgba(255,255,255,0.08);">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#E60012"></div><div class="color-swatch-info"><div class="color-swatch-name">amadana Red</div><div class="color-swatch-hex">#E60012</div><div class="color-swatch-role">CTA・ブランドアクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3F3F3F"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#3F3F3F</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク面上テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#B5B5B0"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted Accent</div><div class="color-swatch-hex">#B5B5B0</div><div class="color-swatch-role">補足テキスト・ラベル</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#131313"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Section</div><div class="color-swatch-hex">#131313</div><div class="color-swatch-role">製品セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#272727"></div><div class="color-swatch-info"><div class="color-swatch-name">Product Card</div><div class="color-swatch-hex">#272727</div><div class="color-swatch-role">製品カード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(63,63,63,0.4)"></div><div class="color-swatch-info"><div class="color-swatch-name">Header Overlay</div><div class="color-swatch-hex">rgba(63,63,63,0.4)</div><div class="color-swatch-role">ヒーローオーバーレイ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:43.2px; font-weight:400; line-height:1.0;">セクション見出し — H2</div>
+    <div class="type-meta">43.2px / 400 / line-height: 1.0 / letter-spacing: normal<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:30.8px; font-weight:400; line-height:1.0;">プロモ見出し — H3 Promo</div>
+    <div class="type-meta">30.8px / 400 / line-height: 1.0 / letter-spacing: normal<span class="type-context">プロモブロック</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:17.6px; font-weight:400; line-height:1.0;">製品カード見出し — H3 Product</div>
+    <div class="type-meta">17.6px / 400 / line-height: 1.0 / letter-spacing: normal<span class="type-context">製品カード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.7;">本文テキスト — 美しい道具を暮らしの中に。amadana が追求するのは、機能性と審美性の調和です。日常の何気ない道具にデザインの力を注ぐことで、暮らしの質を静かに変えていく。</div>
+    <div class="type-meta">15px / 400 / line-height: 1.7 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:13.2px; font-weight:400; line-height:1.7; color:var(--text-primary);">製品説明テキスト — Description (13.2px)。製品の仕様や詳細情報を記載するサイズ。</div>
+    <div class="type-meta">13.2px / 400 / line-height: 1.7 / color: #3F3F3F<span class="type-context">説明・リンク・価格</span></div>
+  </div>
+
+  <div style="margin-top:32px; padding:20px; background:rgba(230,0,18,0.06); border-left:3px solid var(--brand-red);">
+    <div style="font-size:13.2px; color:var(--text-primary); line-height:1.7;">
+      <strong style="font-weight:400; color:var(--brand-red);">Note:</strong> amadana はフォントウェイトをすべて 400（Regular）で統一。Bold / Semibold は使用せず、サイズの差だけで視覚階層をつくるストイックな設計。palt・letter-spacing も未使用。
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT SHOWCASE (dark section) -->
+<section class="section-dark" id="products">
+<div class="section-inner">
+  <div class="section-label">03 / Product Showcase</div>
+  <h2 class="section-title">製品カタログ</h2>
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">&#9649;</div>
+      <div class="product-card-body">
+        <div class="product-card-name">Boxy Speaker</div>
+        <div class="product-card-desc">インテリアに溶け込むキューブ型ワイヤレススピーカー。</div>
+        <div class="product-card-price">&yen;16,500</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">&#9651;</div>
+      <div class="product-card-body">
+        <div class="product-card-name">Smart Toaster</div>
+        <div class="product-card-desc">温度センサー搭載、食パンの水分量に応じた最適な焼き加減。</div>
+        <div class="product-card-price">&yen;24,200</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">&#9711;</div>
+      <div class="product-card-body">
+        <div class="product-card-name">Kettle</div>
+        <div class="product-card-desc">温度調節機能付き電気ケトル。注ぎ口の設計にこだわった一台。</div>
+        <div class="product-card-price">&yen;13,200</div>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center; margin-top:40px;">
+    <a class="btn-primary" href="#">すべての製品を見る</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider" style="border-color:rgba(255,255,255,0.08);">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom:32px;">
+    <div class="button-item"><a class="btn-primary" href="#">Online Store</a><div class="button-label">Primary CTA</div></div>
+    <div class="button-item"><a class="btn-outline-dark" href="#">詳しく見る</a><div class="button-label">Outline (Light BG)</div></div>
+  </div>
+
+  <div style="background:var(--bg-dark-section); padding:32px; margin:0 -32px;">
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary" href="#">Log in</a><div class="button-label" style="color:var(--muted-accent);">Primary on Dark</div></div>
+      <div class="button-item"><a class="btn-outline" href="#">詳しく見る</a><div class="button-label" style="color:var(--muted-accent);">Outline on Dark</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px; padding:16px; background:rgba(63,63,63,0.05);">
+    <div style="font-size:13.2px; color:var(--muted-accent); line-height:1.7;">
+      border-radius: 0px / padding: 9.6px 33.6px / font-size: 13.2px / font-weight: 400 / text-transform: uppercase
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>デザイン家電の本質</h3>
+      <p>機能を追求するだけでなく、暮らしの景色を変える道具であること。amadana のプロダクトは、使われる場所の空気を変えるためにデザインされている。</p>
+      <a class="card-link" href="#">Read more</a>
+    </div>
+    <div class="card" style="border-color:var(--text-primary);">
+      <h3>素材と仕上げ</h3>
+      <p>アルミニウム、ステンレス、ガラス。工業素材の美しさを最大限に引き出す表面処理と、手に取ったときの重量バランスへのこだわり。</p>
+      <a class="card-link" href="#">Read more</a>
+    </div>
+    <div class="card">
+      <h3>ブランドの歩み</h3>
+      <p>2003年の創業以来、「美しい道具」というコンセプトのもと、電話機、電卓、キッチン家電と領域を広げてきた amadana のデザイン哲学。</p>
+      <a class="card-link" href="#">Read more</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="your@email.com">
+    <div class="form-state-label">デフォルト — border-radius: 0, border: rgba(63,63,63,0.2)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="山田 太郎">
+    <div class="form-state-label">フォーカス — border-color: #3F3F3F</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー — border-color: #E60012</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="background:#fff; border:1px solid var(--border-light);">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。ほぼ全要素に適用</div>
+    </div>
+    <div class="elevation-card" style="background:var(--bg-dark-section); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Dark Surface</div>
+      <div class="elevation-desc" style="color:var(--muted-accent);">#131313 — 面色の階調で奥行き</div>
+    </div>
+    <div class="elevation-card" style="background:var(--bg-product-card); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Card Surface</div>
+      <div class="elevation-desc" style="color:var(--muted-accent);">#272727 — 一段明るいダークグレー</div>
+    </div>
+    <div class="elevation-card" style="background:var(--header-overlay); color:var(--text-on-dark);">
+      <div class="elevation-label" style="color:var(--text-on-dark);">Overlay</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.6);">rgba(63,63,63,0.4) — 半透明</div>
+    </div>
+  </div>
+  <div style="margin-top:24px; padding:16px; background:rgba(63,63,63,0.05);">
+    <div style="font-size:13.2px; color:var(--muted-accent); line-height:1.7;">
+      amadana はシャドウを使わず、面色の階調（#ffffff → #272727 → #131313）で空間の奥行きを表現する。
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト</h2>
+
+  <div style="margin-bottom:24px;">
+    <div class="width-bar-label">Header Height <span class="width-bar-value">68px</span></div>
+    <div class="width-bar" style="max-width:68px;"><div class="width-bar-inner" style="width:100%;"></div></div>
+  </div>
+  <div style="margin-bottom:24px;">
+    <div class="width-bar-label">Section Spacing <span class="width-bar-value">256px (16rem)</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:100%;"></div></div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:120px;"></div><div class="spacing-value">256px</div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://amadana.com/">amadana.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

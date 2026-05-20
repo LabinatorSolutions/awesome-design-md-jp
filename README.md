@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (192 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (195 sites)</a>
 </p>
 
 <table>
@@ -291,6 +291,9 @@
 <td align="center"><strong>ATON</strong><br><img src="design-md/aton/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Mame Kurogouchi</strong><br><img src="design-md/mamekurogouchi/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>PRESS BUTTER SAND</strong><br><img src="design-md/buttersand/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>RMK</strong><br><img src="design-md/rmk/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>amadana</strong><br><img src="design-md/amadana/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Oisix</strong><br><img src="design-md/oisix/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -544,11 +547,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [ATON (エイトン)](https://aton-tokyo.com/) | Fashion / Luxury | [DESIGN.md](design-md/aton/DESIGN.md) | [preview.html](design-md/aton/preview.html) |
 | [Mame Kurogouchi (マメクロゴウチ)](https://www.mamekurogouchi.com/) | Fashion / Haute Couture | [DESIGN.md](design-md/mamekurogouchi/DESIGN.md) | [preview.html](design-md/mamekurogouchi/preview.html) |
 | [PRESS BUTTER SAND (プレスバターサンド)](https://buttersand.com/) | Confectionery / Food | [DESIGN.md](design-md/buttersand/DESIGN.md) | [preview.html](design-md/buttersand/preview.html) |
+| [RMK](https://www.rmkrmk.com/ja) | Cosmetics / Beauty | [DESIGN.md](design-md/rmk/DESIGN.md) | [preview.html](design-md/rmk/preview.html) |
+| [amadana](https://amadana.com/) | Electronics / Lifestyle | [DESIGN.md](design-md/amadana/DESIGN.md) | [preview.html](design-md/amadana/preview.html) |
+| [Oisix ra daichi](https://www.oisixradaichi.co.jp/) | Food / Agriculture | [DESIGN.md](design-md/oisix/DESIGN.md) | [preview.html](design-md/oisix/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (192 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (195 sites)</a>
 </p>
 
 <table>
@@ -805,6 +811,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>ATON</strong><br><img src="design-md/aton/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Mame Kurogouchi</strong><br><img src="design-md/mamekurogouchi/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>PRESS BUTTER SAND</strong><br><img src="design-md/buttersand/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>RMK</strong><br><img src="design-md/rmk/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>amadana</strong><br><img src="design-md/amadana/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Oisix</strong><br><img src="design-md/oisix/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
