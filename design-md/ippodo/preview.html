@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 一保堂茶舗 (IPPODO)</title>
+<!--
+  Font Substitution:
+  - source-han-sans-japanese (Adobe Fonts) → Noto Sans JP (Google Fonts)
+    同じ源ノ角ゴシック系譜で字形がほぼ同一
+  - yu-mincho-pr6 (Adobe Fonts) → Shippori Mincho (Google Fonts)
+    游明朝に近い端正な明朝体
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --brand-accent: #93806f;
+    --text-primary: #3a3a3a;
+    --text-body: #4e4e4e;
+    --text-caption: #93806f;
+    --text-footer: rgba(58, 58, 58, 0.75);
+    --bg-primary: #ffffff;
+    --bg-alt: #f5f6f7;
+    --bg-alt-2: #f3f3f3;
+    --bg-tag: #f4efef;
+    --bg-yellow: #f9f971;
+    --bg-pink-beige: #fcf7f7;
+    --border-default: #cdcfd4;
+    --border-accent: #93806f;
+    /* === Fonts === */
+    --font-body: "Noto Sans JP", sans-serif;
+    --font-heading: "Shippori Mincho", serif;
+    --font-latin: Helvetica, Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 2.0;
+    letter-spacing: 0.1em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 72px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--bg-alt);
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.18em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--brand-accent); }
+  .nav-search {
+    display: inline-flex; align-items: center;
+    border: 1px solid var(--border-accent);
+    border-radius: 16px; padding: 4px 12px 4px 12px;
+    font-size: 10px; color: var(--text-caption);
+    letter-spacing: 0.1em;
+    gap: 6px;
+  }
+  .nav-search svg { width: 14px; height: 14px; stroke: var(--brand-accent); fill: none; stroke-width: 2; }
+
+  /* HERO */
+  .hero {
+    padding: 100px 40px 80px;
+    text-align: center;
+    background: var(--bg-primary);
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 30px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.5em;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 300;
+    line-height: 2.0; letter-spacing: 0.1em;
+    color: var(--text-body);
+    max-width: 680px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* PILL CTA */
+  .btn-pill {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-body);
+    padding: 0 32px;
+    line-height: 58px;
+    border: 1px solid var(--text-body);
+    border-radius: 60px;
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 400;
+    letter-spacing: 0.08em;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-pill:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+  }
+
+  /* NEWSLETTER BUTTON */
+  .btn-newsletter {
+    display: inline-block;
+    background: transparent;
+    color: var(--brand-accent);
+    padding: 0 16px;
+    line-height: 44px;
+    border: 1px solid var(--brand-accent);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.1em;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-newsletter:hover {
+    background: var(--brand-accent);
+    color: var(--bg-primary);
+  }
+
+  /* ICON BUTTON */
+  .btn-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--brand-accent);
+    color: var(--bg-primary);
+    width: 44px; height: 44px;
+    border: none; border-radius: 0px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-icon:hover { opacity: 0.8; }
+  .btn-icon svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* TAG PILL */
+  .tag-pill {
+    display: inline-block;
+    background: var(--bg-tag);
+    color: var(--text-body);
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .tag-pill:hover { background: #ebe3e3; }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 500;
+    color: var(--text-caption);
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.08em;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--bg-alt); margin: 0; }
+
+  .section-gray { background: var(--bg-alt); padding: 80px 40px; }
+  .section-gray .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  .section-yellow { background: var(--bg-yellow); padding: 80px 40px; }
+  .section-yellow .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  .section-pink { background: var(--bg-pink-beige); padding: 80px 40px; }
+  .section-pink .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: #fff; border: 1px solid var(--bg-alt); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: var(--text-primary); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-caption); font-family: var(--font-mono); letter-spacing: 0.02em; }
+  .color-swatch-role { font-size: 11px; color: var(--text-caption); margin-top: 4px; letter-spacing: 0.05em; }
+  .color-group-label {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-caption);
+    letter-spacing: 0.15em;
+    margin: 32px 0 12px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 36px; padding-bottom: 32px; border-bottom: 1px solid var(--bg-alt); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 400;
+    color: var(--text-caption);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--bg-tag);
+    color: var(--text-caption);
+    font-size: 10px; font-weight: 500;
+    padding: 2px 8px; border-radius: 4px;
+    margin-left: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 680px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-heading);
+    font-size: 30px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.5em;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.08em;
+    color: var(--text-primary);
+    margin: 40px 0 16px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 300;
+    line-height: 2.0; letter-spacing: 0.1em;
+    color: var(--text-body);
+    margin-bottom: 20px;
+  }
+  .article-preview .caption {
+    font-size: 11px; font-weight: 300;
+    color: var(--text-caption);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .article-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+
+  /* BUTTONS SHOWCASE */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label {
+    font-size: 11px; font-weight: 500;
+    color: var(--text-caption);
+    letter-spacing: 0.1em;
+    margin-top: 12px;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-primary);
+    border: none;
+    padding: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover { opacity: 0.8; }
+  .card-image {
+    width: 100%; aspect-ratio: 4/3;
+    background: var(--bg-alt);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 14px; color: var(--text-caption);
+    letter-spacing: 0.1em;
+  }
+  .card-body { padding: 16px 0; }
+  .card h3 {
+    font-family: var(--font-heading);
+    font-size: 16px; font-weight: 400;
+    line-height: 2.0; letter-spacing: 0.08em;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .card .card-price {
+    font-size: 14px; font-weight: 300;
+    color: var(--text-body);
+    letter-spacing: 0.08em;
+  }
+  .card .card-caption {
+    font-size: 11px; font-weight: 300;
+    color: var(--text-caption);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: var(--bg-primary);
+    color: var(--text-body);
+    border: 1px solid var(--border-default);
+    padding: 0 16px; line-height: 50px; height: 50px;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 300;
+    letter-spacing: 0.1em;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-accent); }
+  .form-input--error { border-color: #c53d3d; }
+  .form-input--search {
+    border: 1px solid var(--border-accent);
+    border-radius: 16px;
+    font-size: 10px;
+    padding: 0 12px 0 32px;
+    height: 36px; line-height: 36px;
+  }
+  .form-state-label {
+    font-size: 11px; font-weight: 300;
+    color: var(--text-caption);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .form-newsletter-row {
+    display: flex; gap: 0; max-width: 480px;
+  }
+  .form-newsletter-row .form-input {
+    border-radius: 4px 0 0 4px;
+    flex: 1;
+  }
+  .form-newsletter-row .btn-icon {
+    border-radius: 0 4px 4px 0;
+    height: 50px; width: 50px;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--bg-primary);
+    padding: 32px;
+    text-align: center;
+    border: 1px solid var(--bg-alt);
+  }
+  .elevation-label {
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .elevation-desc {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-caption);
+    word-break: break-all;
+    letter-spacing: 0.02em;
+  }
+
+  /* LAYOUT / SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--brand-accent);
+    margin-bottom: 8px;
+    height: 28px;
+    opacity: 0.6;
+  }
+  .spacing-value {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 400;
+    color: var(--text-caption);
+    letter-spacing: 0.02em;
+  }
+
+  .width-bar { height: 28px; background: var(--bg-alt); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand-accent); opacity: 0.25; }
+  .width-bar-label {
+    font-size: 13px; font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .width-bar-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-caption);
+    letter-spacing: 0.02em;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 40px;
+    text-align: center;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--bg-alt);
+    font-size: 11px;
+    color: var(--text-footer);
+    letter-spacing: 0.1em;
+  }
+  .footer a { color: var(--brand-accent); text-decoration: underline; }
+
+  @media (max-width: 749px) {
+    .hero { padding: 64px 20px 48px; }
+    .hero h1 { font-size: 22px; letter-spacing: 0.08em; }
+    .hero p { font-size: 14px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray, .section-yellow, .section-pink { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .article-preview h1 { font-size: 22px; letter-spacing: 0.08em; }
+    .article-preview p { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">一保堂茶舗</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+    検索
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>一 保 堂 茶 舗</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。享保二年創業の京都の老舗茶舗が持つ、静謐で品格ある佇まいを、游明朝の見出しと源ノ角ゴシック Light の広い字間で表現する。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-pill" href="#">さらに見る</a>
+    <a class="btn-pill" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#93806f"></div><div class="color-swatch-info"><div class="color-swatch-name">Brown Accent</div><div class="color-swatch-hex">#93806f</div><div class="color-swatch-role">ブランドアクセント・枠線</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3a3a3a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#3a3a3a</div><div class="color-swatch-role">見出し・ナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4e4e4e"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#4e4e4e</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#93806f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Caption</div><div class="color-swatch-hex">#93806f</div><div class="color-swatch-role">キャプション・日付</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(58,58,58,0.75)"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Text</div><div class="color-swatch-hex">rgba(58,58,58,0.75)</div><div class="color-swatch-role">フッター補足</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f6f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Alt</div><div class="color-swatch-hex">#f5f6f7</div><div class="color-swatch-role">セクション交互背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Alt 2</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">CSS変数 background-2</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4efef"></div><div class="color-swatch-info"><div class="color-swatch-name">Tag Surface</div><div class="color-swatch-hex">#f4efef</div><div class="color-swatch-role">タグピル背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9f971"></div><div class="color-swatch-info"><div class="color-swatch-name">Yellow Section</div><div class="color-swatch-hex">#f9f971</div><div class="color-swatch-role">特集セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fcf7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Pink-beige</div><div class="color-swatch-hex">#fcf7f7</div><div class="color-swatch-role">食卓ノート背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cdcfd4"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#cdcfd4</div><div class="color-swatch-role">入力欄の標準枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#93806f"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Accent</div><div class="color-swatch-hex">#93806f</div><div class="color-swatch-role">検索窓・登録ボタン枠</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:30px; font-weight:400; line-height:2.0; letter-spacing:0.5em; color:var(--text-primary);">お茶のある暮らし</div>
+    <div class="type-meta">Display H2 — Shippori Mincho (= yu-mincho-pr6) / 30px / 400 / line-height: 2.0 / letter-spacing: 0.5em<span class="type-context">看板見出し</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:24px; font-weight:400; line-height:2.0; letter-spacing:0.08em; color:var(--text-primary);">季節のおすすめ — Section Heading</div>
+    <div class="type-meta">Section H2 — Shippori Mincho / 24px / 400 / line-height: 2.0 / letter-spacing: 0.08em<span class="type-context">セクション見出し</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-latin); font-size:22px; font-weight:500; line-height:2.0; letter-spacing:0.17em; color:var(--text-primary);">IPPODO TEA — Latin Heading</div>
+    <div class="type-meta">Latin H2 — Helvetica, Arial / 22px / 500 / line-height: 2.0 / letter-spacing: 0.17em<span class="type-context">欧文見出し</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:16px; font-weight:300; line-height:2.0; letter-spacing:0.1em; color:var(--text-body);">本文テキスト — 一保堂の組版は line-height 2.0 と letter-spacing 0.1em の組み合わせが核心です。weight 300（Light）の繊細な字面と合わせて、お茶の透明感と京都の老舗が持つ静けさを表現しています。ABCabc 123</div>
+    <div class="type-meta">Body — Noto Sans JP (= source-han-sans-japanese) / 16px / <strong>300</strong> / line-height: <strong>2.0</strong> / letter-spacing: <strong>0.1em</strong><span class="type-context">本文</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:500; line-height:1.8; letter-spacing:0.18em; color:var(--text-primary);">ナビゲーション項目 — Nav Caption</div>
+    <div class="type-meta">Nav Caption — Noto Sans JP / 14px / 500 / letter-spacing: 0.18em<span class="type-context">ナビ</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:16px; font-weight:400; line-height:58px; letter-spacing:0.08em; color:var(--text-body); display:inline-block; padding:0 32px; border:1px solid var(--text-body); border-radius:60px;">さらに見る</div>
+    <div class="type-meta">Pill CTA — Shippori Mincho / 16px / 400 / line-height: 58px / letter-spacing: 0.08em / border 1px solid #4e4e4e / radius 60px<span class="type-context">CTA</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="display:inline-flex; gap:8px; flex-wrap:wrap;">
+      <span class="tag-pill">#_冷たいお茶</span>
+      <span class="tag-pill">#_水出し</span>
+      <span class="tag-pill">#_抹茶</span>
+    </div>
+    <div class="type-meta">Tag — Noto Sans JP / 12px / 500 / letter-spacing: 0.1em / bg #f4efef / radius 16px<span class="type-context">タグピル</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:11px; font-weight:300; line-height:1.8; letter-spacing:0.1em; color:var(--text-caption);">2026年5月21日 — 極小キャプション・日付</div>
+    <div class="type-meta">Small Caption — Noto Sans JP / 10-11px / 300-700 / color: #93806f<span class="type-context">キャプション</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">お茶にまつわる記事サンプル</h2>
+  <div class="article-preview">
+    <div class="caption">2026年5月21日 / お茶の暮らし</div>
+    <h1>夏の一服、水出しの愉しみ</h1>
+    <p>暑い日が続くと、冷たいお茶が恋しくなります。一保堂の水出しは、茶葉をたっぷりの水に浸して冷蔵庫でひと晩。翌朝にはまろやかで甘みのある冷茶ができあがります。急いで淹れる必要はありません。時間が、味を整えてくれます。</p>
+    <h2>水出しに向くお茶</h2>
+    <p>玉露や上級煎茶は、低温でじっくり抽出することで旨みが引き出されます。渋みが抑えられ、夏場でもすっきりとした味わいに。番茶やほうじ茶は、水出しにすると香ばしさはそのままに、より軽やかな飲み口になります。</p>
+    <p>お気に入りの茶葉で、ご自分だけの夏の一杯を見つけてください。</p>
+    <div class="article-tags">
+      <a class="tag-pill" href="#">#_水出し</a>
+      <a class="tag-pill" href="#">#_冷たいお茶</a>
+      <a class="tag-pill" href="#">#_玉露</a>
+      <a class="tag-pill" href="#">#_煎茶</a>
+      <a class="tag-pill" href="#">#_暮らし</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Yellow accent section sample -->
+<section class="section-yellow">
+<div class="section-inner">
+  <div class="section-label">Accent Section Sample</div>
+  <h2 class="section-title">お茶の暮らしイロイロ</h2>
+  <p style="max-width:680px; margin:0 auto; text-align:center;">特集やコラムに使われるイエロー背景セクション（<code style="font-family:var(--font-mono); font-size:12px; background:rgba(255,255,255,0.6); padding:2px 6px;">#f9f971</code>）。鮮やかな色面で目を引き、白基調のページにリズムを加えます。</p>
+</div>
+</section>
+
+<!-- Pink-beige section sample -->
+<section class="section-pink">
+<div class="section-inner">
+  <div class="section-label">Accent Section Sample</div>
+  <h2 class="section-title">食卓ノート</h2>
+  <p style="max-width:680px; margin:0 auto; text-align:center;">レシピや食卓にまつわるコンテンツに使われるピンクベージュ背景（<code style="font-family:var(--font-mono); font-size:12px; background:rgba(255,255,255,0.6); padding:2px 6px;">#fcf7f7</code>）。桜色のような優しい面色です。</p>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item">
+      <a class="btn-pill" href="#">さらに見る</a>
+      <div class="button-label">Pill CTA（明朝体）</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-pill" href="#" style="border-color:var(--brand-accent); color:var(--brand-accent);">お買い物ガイド</a>
+      <div class="button-label">Pill CTA（茶色枠）</div>
+    </div>
+  </div>
+
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item">
+      <a class="btn-newsletter" href="#">登録</a>
+      <div class="button-label">Newsletter Submit</div>
+    </div>
+    <div class="button-item">
+      <button class="btn-icon">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="button-label">Icon Button</div>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <div class="button-item">
+      <span class="tag-pill">#_冷たいお茶</span>
+      <div class="button-label">Tag Pill</div>
+    </div>
+    <div class="button-item">
+      <span class="tag-pill">#_水出し</span>
+      <div class="button-label">Tag Pill</div>
+    </div>
+    <div class="button-item">
+      <span class="tag-pill">#_抹茶</span>
+      <div class="button-label">Tag Pill</div>
+    </div>
+    <div class="button-item">
+      <span class="tag-pill">#_玉露</span>
+      <div class="button-label">Tag Pill</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">写真</div>
+      <div class="card-body">
+        <h3>嘉木 かぼく</h3>
+        <div class="card-price">1,620円（税込）</div>
+        <div class="card-caption">煎茶 / 200g袋</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">写真</div>
+      <div class="card-body">
+        <h3>極上ほうじ茶</h3>
+        <div class="card-price">1,080円（税込）</div>
+        <div class="card-caption">ほうじ茶 / 100g袋</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">写真</div>
+      <div class="card-body">
+        <h3>関の白 せきのしろ</h3>
+        <div class="card-price">3,240円（税込）</div>
+        <div class="card-caption">抹茶 / 40g缶</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:48px;">
+    <a class="btn-pill" href="#">すべての商品を見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div class="form-group">
+    <label class="form-label">検索</label>
+    <input class="form-input form-input--search" type="text" placeholder="お茶の名前で検索">
+    <div class="form-state-label">検索窓 — border: #93806f / radius: 16px / font-size: 10px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="email" placeholder="example@ippodo-tea.co.jp">
+    <div class="form-state-label">デフォルト — border: #cdcfd4 / radius: 4px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス（フォーカス）</label>
+    <input class="form-input form-input--focus" type="email" value="user@example.com">
+    <div class="form-state-label">フォーカス — border: #93806f（ブランド茶色）</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス（エラー）</label>
+    <input class="form-input form-input--error" type="email" value="invalid@">
+    <div class="form-state-label">エラー — border: #c53d3d（推奨値）</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">ニュースレター登録</label>
+    <div class="form-newsletter-row">
+      <input class="form-input" type="email" placeholder="メールアドレスを入力">
+      <button class="btn-icon" style="border-radius:0;">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="form-state-label">ニュースレター — 入力欄 + アイコン送信ボタン（bg: #93806f）</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。一保堂の基本</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+      <div class="elevation-label">Level 1: Subtle</div>
+      <div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06) — ホバー（推奨）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: 0 8px 24px rgba(0,0,0,0.08);">
+      <div class="elevation-label">Level 2: Elevated</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.08) — ドロップダウン（推奨）</div>
+    </div>
+    <div class="elevation-card" style="border: 1px solid var(--brand-accent);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">#93806f（ブランド茶色）</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="section-label" style="margin-bottom:16px;">面色による階層表現</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:16px;">
+      <div style="background:var(--bg-primary); padding:24px; text-align:center; border:1px solid var(--bg-alt);">
+        <div style="font-size:12px; font-weight:500; color:var(--text-primary); letter-spacing:0.08em;">白</div>
+        <div style="font-size:10px; color:var(--text-caption); font-family:var(--font-mono);">#ffffff</div>
+      </div>
+      <div style="background:var(--bg-alt); padding:24px; text-align:center;">
+        <div style="font-size:12px; font-weight:500; color:var(--text-primary); letter-spacing:0.08em;">Alt</div>
+        <div style="font-size:10px; color:var(--text-caption); font-family:var(--font-mono);">#f5f6f7</div>
+      </div>
+      <div style="background:var(--bg-tag); padding:24px; text-align:center;">
+        <div style="font-size:12px; font-weight:500; color:var(--text-primary); letter-spacing:0.08em;">Tag</div>
+        <div style="font-size:10px; color:var(--text-caption); font-family:var(--font-mono);">#f4efef</div>
+      </div>
+      <div style="background:var(--bg-yellow); padding:24px; text-align:center;">
+        <div style="font-size:12px; font-weight:500; color:var(--text-primary); letter-spacing:0.08em;">Yellow</div>
+        <div style="font-size:10px; color:var(--text-caption); font-family:var(--font-mono);">#f9f971</div>
+      </div>
+      <div style="background:var(--bg-pink-beige); padding:24px; text-align:center;">
+        <div style="font-size:12px; font-weight:500; color:var(--text-primary); letter-spacing:0.08em;">Pink</div>
+        <div style="font-size:10px; color:var(--text-caption); font-family:var(--font-mono);">#fcf7f7</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト & スペーシング</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px;"></div><div class="spacing-value">120px</div></div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">1200px (--page-width: 120rem)</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">1000px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:83%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article / Text Block <span class="width-bar-value">680px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:57%"></div></div></div>
+
+  <div class="color-group-label">Border Radius Scale</div>
+  <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-end; margin-top:12px;">
+    <div style="text-align:center;">
+      <div style="width:60px; height:60px; border:2px solid var(--brand-accent); border-radius:0;"></div>
+      <div class="spacing-value" style="margin-top:8px;">0px</div>
+      <div style="font-size:10px; color:var(--text-caption); letter-spacing:0.05em;">カード</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:60px; height:60px; border:2px solid var(--brand-accent); border-radius:4px;"></div>
+      <div class="spacing-value" style="margin-top:8px;">4px</div>
+      <div style="font-size:10px; color:var(--text-caption); letter-spacing:0.05em;">入力欄</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:60px; height:60px; border:2px solid var(--brand-accent); border-radius:16px;"></div>
+      <div class="spacing-value" style="margin-top:8px;">16px</div>
+      <div style="font-size:10px; color:var(--text-caption); letter-spacing:0.05em;">検索・タグ</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:120px; height:60px; border:2px solid var(--brand-accent); border-radius:60px;"></div>
+      <div class="spacing-value" style="margin-top:8px;">60px</div>
+      <div style="font-size:10px; color:var(--text-caption); letter-spacing:0.05em;">Pill CTA</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.ippodo-tea.co.jp/">ippodo-tea.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (202 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (204 sites)</a>
 </p>
 
 <table>
@@ -300,6 +300,8 @@
 <td align="center"><strong>タイミー</strong><br><img src="design-md/timee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kyash</strong><br><img src="design-md/kyash/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Honda</strong><br><img src="design-md/honda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ANA</strong><br><img src="design-md/ana/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>一保堂茶舗</strong><br><img src="design-md/ippodo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -563,11 +565,13 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [BASE FOOD (ベースフード)](https://basefood.co.jp/) | D2C Food / Complete Nutrition | [DESIGN.md](design-md/basefood/DESIGN.md) | [preview.html](design-md/basefood/preview.html) |
 | [Kracie (クラシエ)](https://www.kracie.co.jp/) | Consumer Goods / Healthcare | [DESIGN.md](design-md/kracie/DESIGN.md) | [preview.html](design-md/kracie/preview.html) |
 | [Honda (本田技研工業)](https://www.honda.co.jp/) | Automotive / Mobility | [DESIGN.md](design-md/honda/DESIGN.md) | [preview.html](design-md/honda/preview.html) |
+| [ANA (全日本空輸)](https://www.ana.co.jp/) | Aviation / Consumer | [DESIGN.md](design-md/ana/DESIGN.md) | [preview.html](design-md/ana/preview.html) |
+| [一保堂茶舗 (IPPODO)](https://www.ippodo-tea.co.jp/) | Tea / Traditional Retail | [DESIGN.md](design-md/ippodo/DESIGN.md) | [preview.html](design-md/ippodo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (202 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (204 sites)</a>
 </p>
 
 <table>
@@ -833,6 +837,8 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Timee</strong><br><img src="design-md/timee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kyash</strong><br><img src="design-md/kyash/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Honda</strong><br><img src="design-md/honda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ANA</strong><br><img src="design-md/ana/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>IPPODO</strong><br><img src="design-md/ippodo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
