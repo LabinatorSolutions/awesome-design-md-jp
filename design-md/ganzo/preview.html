@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: GANZO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Rokkitt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style === */
+    --text-primary: #5b5454;
+    --text-description: #746e6e;
+    --text-muted: #a19d9d;
+    --text-dark: #433b3b;
+    --text-button: #7b6f6f;
+    --button-dark: #282323;
+    --bg-primary: #ffffff;
+    --surface-utility: #f6f5f5;
+    --surface-button: #ecebeb;
+    --surface-divider: #e7e6e6;
+    --border-input: #dcdada;
+    --border-checkbox: #959191;
+    --placeholder: #d0cece;
+    --surface-mid: #b8b5b5;
+    --copyright-rose: #cdbec7;
+
+    /* === Elevation (warm-toned) === */
+    --elevation-1: 0 1px 4px rgba(91,84,84,0.08);
+    --elevation-2: 0 4px 12px rgba(91,84,84,0.10);
+    --elevation-3: 0 8px 24px rgba(91,84,84,0.12);
+
+    /* === Fonts === */
+    --font-base: Rokkitt, "Noto Sans JP", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+    --font-jp: "Noto Sans JP", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.04em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 56px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--surface-divider);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 400; letter-spacing: 0.15em;
+    color: var(--text-primary); text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
+    color: var(--text-primary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-description); }
+  .nav-cta {
+    display: inline-block; background: var(--button-dark); color: #fff;
+    padding: 8px 20px; border-radius: 0; font-family: var(--font-base);
+    font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
+    text-decoration: none; border: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 96px 40px 80px; text-align: center;
+    background: var(--surface-utility);
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.15em;
+    color: var(--text-primary); margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero p {
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 400; line-height: 2.17;
+    color: var(--text-description); max-width: 560px; margin: 0 auto 36px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--surface-button); color: var(--text-button);
+    padding: 12px 32px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; text-decoration: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--surface-divider); }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 12px 32px; border-radius: 0;
+    border: 1px solid var(--surface-divider);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; text-decoration: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-outline:hover { background: var(--surface-utility); }
+  .btn-dark {
+    display: inline-block; background: var(--button-dark); color: #fff;
+    padding: 12px 32px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-dark:hover { opacity: 0.8; }
+
+  /* SECTIONS */
+  .section { padding: 64px 40px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-base);
+    font-size: 10px; font-weight: 400; color: var(--text-muted);
+    text-transform: uppercase; margin-bottom: 8px;
+    letter-spacing: 0.12em;
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 0.1em;
+    margin-bottom: 36px;
+    text-transform: uppercase;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--surface-divider); margin: 0; }
+
+  .section-warm { background: var(--surface-utility); padding: 64px 40px; }
+  .section-warm .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: #fff; border: 1px solid var(--surface-divider); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-base); font-size: 11px; font-weight: 400; margin-bottom: 2px; color: var(--text-primary); letter-spacing: 0.04em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0.02em; }
+  .color-swatch-role { font-family: var(--font-jp); font-size: 10px; color: var(--text-description); margin-top: 3px; }
+  .color-group-label {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400; color: var(--text-description);
+    margin: 28px 0 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--surface-divider); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--text-muted); margin-top: 8px; letter-spacing: 0.02em; }
+  .type-context { display: inline-block; background: var(--surface-utility); color: var(--text-description); font-size: 10px; padding: 2px 8px; border-radius: 0; margin-left: 8px; font-family: var(--font-jp); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-jp); font-size: 10px; font-weight: 400; color: var(--text-muted); margin-top: 10px; letter-spacing: 0.04em; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: #fff; border: 1px solid var(--surface-divider);
+    border-radius: 0; padding: 0; overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-img {
+    width: 100%; height: 200px; object-fit: cover;
+    background: var(--surface-utility);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-base); font-size: 14px; color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+  .card-body { padding: 20px; }
+  .card h3 {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.06em;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .card p {
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 400; line-height: 2.0;
+    color: var(--text-description);
+  }
+  .card-price {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400; color: var(--text-primary);
+    letter-spacing: 0.1em; margin-top: 12px;
+  }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 560px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 400; line-height: 1.8;
+    letter-spacing: 0.1em; margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.08em; margin: 28px 0 12px;
+    text-transform: uppercase;
+  }
+  .article-preview p {
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 400; line-height: 2.17;
+    letter-spacing: normal;
+    margin-bottom: 16px; color: var(--text-description);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-jp);
+    font-size: 10px; font-weight: 400; color: var(--text-dark);
+    margin-bottom: 6px; letter-spacing: 0.12em;
+  }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-input); padding: 10px;
+    border-radius: 0;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.04em; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--placeholder); }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-input--error { border-color: #b22323; }
+  .form-state-label { font-family: var(--font-jp); font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  .form-search {
+    width: 100%; background: transparent; color: var(--text-primary);
+    border: none; border-bottom: 1px solid var(--surface-divider);
+    padding: 10px 0;
+    font-family: var(--font-base); font-size: 20px; font-weight: 400;
+    letter-spacing: 0.1em; line-height: 2.5; outline: none;
+  }
+  .form-search::placeholder { color: var(--placeholder); }
+  .form-checkbox {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-jp); font-size: 10px; color: var(--text-dark);
+    letter-spacing: 0.12em;
+  }
+  .form-checkbox input[type="checkbox"] {
+    width: 14px; height: 14px; border: 1px solid var(--border-checkbox);
+    border-radius: 0; appearance: none; -webkit-appearance: none;
+    background: #fff; cursor: pointer;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: #fff; border-radius: 0; padding: 24px;
+    text-align: center; border: 1px solid var(--surface-divider);
+  }
+  .elevation-label {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400; margin-bottom: 4px;
+    letter-spacing: 0.06em;
+  }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--surface-mid); border-radius: 0; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--text-muted); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--surface-utility); border: 1px solid var(--surface-divider); border-radius: 0; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--surface-mid); opacity: 0.3; }
+  .width-bar-label {
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400; color: var(--text-primary);
+    margin-bottom: 4px; letter-spacing: 0.06em;
+  }
+  .width-bar-value { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); }
+
+  /* LETTER-SPACING SHOWCASE */
+  .ls-showcase { margin-bottom: 24px; }
+  .ls-item { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--surface-divider); }
+  .ls-item:last-child { border-bottom: none; }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px; text-align: center;
+    background: var(--surface-utility);
+    font-family: var(--font-base);
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+  .footer .copyright-year { color: var(--copyright-rose); letter-spacing: 0.2em; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .hero p { font-size: 12px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-warm { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .form-search { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Ganzo</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Search</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Ganzo --- Craft Luxury</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。Rokkitt スラブセリフ、ウォームブラウングレーパレット、広い letter-spacing による静かなラグジュアリー。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">Collection</a>
+    <a class="btn-outline" href="#">DESIGN.md</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand / Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5b5454"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#5b5454</div><div class="color-swatch-role">本文・ナビ。ウォームブラウングレー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#746e6e"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Description</div><div class="color-swatch-hex">#746e6e</div><div class="color-swatch-role">商品説明・ボディコピー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#433b3b"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Chocolate</div><div class="color-swatch-hex">#433b3b</div><div class="color-swatch-role">フォームラベル・チェックボックス</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#282323"></div><div class="color-swatch-info"><div class="color-swatch-name">Button Dark</div><div class="color-swatch-hex">#282323</div><div class="color-swatch-role">検索ボタン。最も暗いトーン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a19d9d"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#a19d9d</div><div class="color-swatch-role">フッターキャプション・注釈</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7b6f6f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Button</div><div class="color-swatch-hex">#7b6f6f</div><div class="color-swatch-role">メルマガ送信ボタン文字色</div></div></div>
+  </div>
+
+  <div class="color-group-label">Signature</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cdbec7"></div><div class="color-swatch-info"><div class="color-swatch-name">Copyright Rose</div><div class="color-swatch-hex">#cdbec7</div><div class="color-swatch-role">コピーライト年号。パティナの色</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface / Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #e7e6e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Utility</div><div class="color-swatch-hex">#f6f5f5</div><div class="color-swatch-role">ユーティリティバー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ecebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Button</div><div class="color-swatch-hex">#ecebeb</div><div class="color-swatch-role">メルマガ送信ボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e7e6e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Divider</div><div class="color-swatch-hex">#e7e6e6</div><div class="color-swatch-role">ボーダー・区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dcdada"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Input</div><div class="color-swatch-hex">#dcdada</div><div class="color-swatch-role">入力欄ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d0cece"></div><div class="color-swatch-info"><div class="color-swatch-name">Placeholder</div><div class="color-swatch-hex">#d0cece</div><div class="color-swatch-role">プレースホルダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b8b5b5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Mid</div><div class="color-swatch-hex">#b8b5b5</div><div class="color-swatch-role">スクロールインジケーター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#959191"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Checkbox</div><div class="color-swatch-hex">#959191</div><div class="color-swatch-role">チェックボックスボーダー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Type Hierarchy</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:400; line-height:2.5; letter-spacing:0.1em;">Search Input --- 20px Rokkitt</div>
+    <div class="type-meta">Rokkitt / 20px / 400 / line-height: 2.5 / letter-spacing: 0.1em<span class="type-context">Search</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.0; letter-spacing:0.1em; text-transform:uppercase;">Mail Magazine --- Section Title</div>
+    <div class="type-meta">Rokkitt / 16px / 400 / line-height: 1.0 / letter-spacing: 0.1em<span class="type-context">Section</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:12px; font-weight:400; line-height:2.17; letter-spacing:normal;">日本が世界に誇る最高級のコードバンをはじめ、ブライドルレザー、シェルコードバン、ミネルバボックスなど厳選された素材を、熟練の職人が一つひとつ丁寧に仕立てます。革という素材の持つ美しさと、使い込むほどに深まる味わいを大切にしています。</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 2.17 / letter-spacing: normal<span class="type-context">Description</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:400; line-height:1.45; letter-spacing:0.04em;">Navigation Item --- Cordovan / Bridle Leather / Shell Cordovan</div>
+    <div class="type-meta">Rokkitt / 11px / 400 / line-height: 1.45 / letter-spacing: 0.04em<span class="type-context">Nav</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.0; letter-spacing:0.1em; color:var(--text-button);">Submit Button Text</div>
+    <div class="type-meta">Rokkitt / 12px / 400 / line-height: 1.0 / letter-spacing: 0.1em<span class="type-context">Button</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:10px; font-weight:400; line-height:1.75; letter-spacing:0.12em;">Footer Caption --- Crafted with Pride in Japan</div>
+    <div class="type-meta">Rokkitt / 10px / 400 / line-height: 1.75 / letter-spacing: 0.12em<span class="type-context">Footer</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:10px; font-weight:400; letter-spacing:0.2em; color:var(--copyright-rose);">Copyright 2024 GANZO</div>
+    <div class="type-meta">Rokkitt / 10px / 400 / letter-spacing: 0.2em / color: #cdbec7<span class="type-context">Copyright</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LETTER-SPACING SHOWCASE -->
+<section class="section-warm">
+<div class="section-inner">
+  <div class="section-label">02.5 / Letter Spacing</div>
+  <h2 class="section-title">Spacing Scale --- Brand Signature</h2>
+  <p style="font-family:var(--font-jp); font-size:12px; line-height:2.17; color:var(--text-description); margin-bottom:32px;">広い letter-spacing は GANZO のデザインの核心。段階的に字間を拡げ、静かなラグジュアリー感を演出する。</p>
+
+  <div class="ls-showcase">
+    <div class="ls-item">
+      <div style="font-family:var(--font-base); font-size:14px; letter-spacing:0.04em; margin-bottom:4px;">Navigation --- 0.04em</div>
+      <div class="type-meta">ナビゲーション。控えめだが確実に拡げている</div>
+    </div>
+    <div class="ls-item">
+      <div style="font-family:var(--font-base); font-size:14px; letter-spacing:0.1em; margin-bottom:4px; text-transform:uppercase;">Section Title --- 0.1em</div>
+      <div class="type-meta">セクションタイトル。欧文に広い字間でラグジュアリー感</div>
+    </div>
+    <div class="ls-item">
+      <div style="font-family:var(--font-base); font-size:14px; letter-spacing:0.12em; margin-bottom:4px;">Footer Caption --- 0.12em</div>
+      <div class="type-meta">フッター。小さなテキストに広い字間で開放感</div>
+    </div>
+    <div class="ls-item">
+      <div style="font-family:var(--font-base); font-size:14px; letter-spacing:0.2em; margin-bottom:4px; color:var(--copyright-rose);">Copyright --- 0.2em</div>
+      <div class="type-meta">コピーライト。最も広い字間。印章のような格式</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT PREVIEW -->
+<section class="section" id="product">
+  <div class="section-label">03 / Product</div>
+  <h2 class="section-title">Product Page --- Cordovan</h2>
+  <div class="article-preview">
+    <h1>Shell Cordovan<br>Round Zip Long Wallet</h1>
+    <p>世界でも限られたタンナーのみが生産できるシェルコードバン。馬の臀部から採れるこの希少な革は、透明感のある艶と滑らかな手触りが特徴です。使い込むほどに深みを増す色の変化は、持つ人だけが知る悦びです。</p>
+    <h2>Craftsmanship</h2>
+    <p>一つの財布を仕上げるのに、ベテランの職人でも数日を要します。コバの処理、ステッチの均一さ、革の漉き加減。すべての工程に妥協はありません。手にした瞬間に伝わる確かな品質は、日本のものづくりの矜持です。</p>
+    <p>経年変化を見越した設計も GANZO の特徴です。新品の美しさだけでなく、5年後、10年後の姿まで考え抜かれた素材選びと仕立てが、長く寄り添える道具としての価値を生みます。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Button Variations</h2>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-primary" href="#">Submit</a>
+      <div class="button-label">Mail Submit</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-dark" href="#">Search</a>
+      <div class="button-label">Search Submit</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-outline" href="#">View Details</a>
+      <div class="button-label">Outline</div>
+    </div>
+    <div class="button-item">
+      <a href="#" style="display:inline-block; background:transparent; color:var(--text-primary); padding:12px 32px; border:1px solid var(--text-primary); border-radius:0; font-family:var(--font-base); font-size:12px; font-weight:400; letter-spacing:0.1em; text-decoration:none;">Secondary</a>
+      <div class="button-label">Secondary</div>
+    </div>
+  </div>
+  <p style="font-family:var(--font-jp); font-size:10px; color:var(--text-muted); margin-top:24px; line-height:1.8; letter-spacing:0.04em;">
+    GANZO のボタンにブライトカラーは存在しない。すべて border-radius: 0px。製品が主役であり、UI は脇役に徹する。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-warm" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Product Cards</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img" style="background:linear-gradient(135deg, #433b3b 0%, #5b5454 100%); color:#a19d9d;">Cordovan</div>
+      <div class="card-body">
+        <h3>Cordovan Round Zip Long Wallet</h3>
+        <p>最高級のコードバンを贅沢に使用した長財布。職人の手仕事による美しいコバ処理。</p>
+        <div class="card-price">&yen;110,000 (tax incl.)</div>
+      </div>
+    </div>
+    <div class="card" style="box-shadow:var(--elevation-2);">
+      <div class="card-img" style="background:linear-gradient(135deg, #5b5454 0%, #746e6e 100%); color:#a19d9d;">Bridle Leather</div>
+      <div class="card-body">
+        <h3>Bridle Leather Bi-fold Wallet</h3>
+        <p>英国伝統のブライドルレザーを使用。使い込むほどに味わいが増す二つ折り財布。</p>
+        <div class="card-price">&yen;44,000 (tax incl.)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:linear-gradient(135deg, #746e6e 0%, #a19d9d 100%); color:#e7e6e6;">Minerva Box</div>
+      <div class="card-body">
+        <h3>Minerva Box Compact Wallet</h3>
+        <p>イタリアの植物タンニン鞣し革。柔らかな手触りとエイジングの美しさが魅力。</p>
+        <div class="card-price">&yen;33,000 (tax incl.)</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">Form Elements</h2>
+
+  <div class="form-group">
+    <div style="font-family:var(--font-base); font-size:16px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:16px; color:var(--text-primary);">Search</div>
+    <input class="form-search" type="text" placeholder="Search...">
+    <div class="form-state-label">20px / letter-spacing: 0.1em / border-bottom only</div>
+  </div>
+
+  <div style="margin-top:32px;"></div>
+
+  <div class="form-group">
+    <div style="font-family:var(--font-base); font-size:16px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:16px; color:var(--text-primary);">Mail Magazine</div>
+    <label class="form-label">E-mail</label>
+    <input class="form-input" type="email" placeholder="your@email.com">
+    <div class="form-state-label">Default --- border: 1px solid #dcdada, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">E-mail</label>
+    <input class="form-input form-input--focus" type="email" value="ganzo@example.com">
+    <div class="form-state-label">Focus --- border-color: #5b5454</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">E-mail</label>
+    <input class="form-input form-input--error" type="email" value="invalid@">
+    <div class="form-state-label">Error --- border-color: #b22323</div>
+  </div>
+  <div class="form-group">
+    <label class="form-checkbox">
+      <input type="checkbox">
+      <span>Newsletter agreement --- border: 1px solid #959191</span>
+    </label>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし。GANZO のデフォルト</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 1px 4px rgba(91,84,84,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 12px rgba(91,84,84,0.10)</div></div>
+    <div class="elevation-card" style="box-shadow:var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 8px 24px rgba(91,84,84,0.12)</div></div>
+  </div>
+  <p style="font-family:var(--font-jp); font-size:10px; color:var(--text-muted); margin-top:20px; line-height:1.8;">
+    影の rgba は #5b5454 ベースのウォームトーン。純黒 rgba(0,0,0,...) は使用しない。角丸は一切なし。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Spacing Scale</h2>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px;"></div><div class="spacing-value">96px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.ganzo.ne.jp/" style="color:var(--text-description); text-decoration:underline;">ganzo.ne.jp</a> DESIGN.md --- awesome-design-md-jp / computed style<br>
+  <span class="copyright-year">2026</span> <span style="letter-spacing:0.2em;">GANZO Design Token Catalog</span>
+</footer>
+
+</body>
+</html>

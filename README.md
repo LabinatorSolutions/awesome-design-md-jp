@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (222 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (225 sites)</a>
 </p>
 
 <table>
@@ -326,6 +326,9 @@
 <td align="center"><strong>NISSAN</strong><br><img src="design-md/nissan/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Meiji</strong><br><img src="design-md/meiji/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Roland</strong><br><img src="design-md/roland/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BAPE</strong><br><img src="design-md/bape/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SHIPS</strong><br><img src="design-md/ships/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>GANZO</strong><br><img src="design-md/ganzo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -609,11 +612,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [NISSAN (日産自動車)](https://www.nissan.co.jp/) | Automotive / Manufacturing | [DESIGN.md](design-md/nissan/DESIGN.md) | [preview.html](design-md/nissan/preview.html) |
 | [Meiji (明治)](https://www.meiji.co.jp/) | Food / Confectionery | [DESIGN.md](design-md/meiji/DESIGN.md) | [preview.html](design-md/meiji/preview.html) |
 | [Roland (ローランド)](https://www.roland.com/jp/) | Musical Instruments / Manufacturing | [DESIGN.md](design-md/roland/DESIGN.md) | [preview.html](design-md/roland/preview.html) |
+| [BAPE (ア ベイシング エイプ)](https://bape.com/) | Streetwear / Fashion EC | [DESIGN.md](design-md/bape/DESIGN.md) | [preview.html](design-md/bape/preview.html) |
+| [SHIPS (シップス)](https://www.shipsltd.co.jp/) | Select Shop / Fashion EC | [DESIGN.md](design-md/ships/DESIGN.md) | [preview.html](design-md/ships/preview.html) |
+| [GANZO (ガンゾ)](https://www.ganzo.ne.jp/) | Leather Goods / Craft Luxury | [DESIGN.md](design-md/ganzo/DESIGN.md) | [preview.html](design-md/ganzo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (222 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (225 sites)</a>
 </p>
 
 <table>
@@ -905,6 +911,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>NISSAN</strong><br><img src="design-md/nissan/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Meiji</strong><br><img src="design-md/meiji/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Roland</strong><br><img src="design-md/roland/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BAPE</strong><br><img src="design-md/bape/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SHIPS</strong><br><img src="design-md/ships/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>GANZO</strong><br><img src="design-md/ganzo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
