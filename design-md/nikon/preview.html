@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Nikon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #222222;
+    --primary-accent: #000000;
+    --text-primary: #222222;
+    --text-white: #ffffff;
+    --text-secondary: #555555;
+    --text-disabled: #949494;
+    --bg-page: #f3f3f3;
+    --bg-surface: #ffffff;
+    --bg-footer: #111111;
+    --bg-nav: rgba(0,0,0,0.7);
+    --border: #949494;
+    --border-light: #cccccc;
+    --font-base: "Noto Sans JP", YuGothic, "Customized Yu Gothic", "Hiragino Kaku Gothic Pro", sans-serif;
+    --elevation-1: rgba(0,0,0,0.92) 0 0 10px 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(8px);
+  }
+  .nav-brand { font-size: 18px; font-weight: 500; color: var(--text-white); text-decoration: none; letter-spacing: 0.06em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.8); text-decoration: none; }
+  .nav-links a:hover { color: var(--text-white); }
+
+  .hero {
+    padding: 120px 32px 80px; text-align: center;
+    background: var(--primary); color: var(--text-white);
+  }
+  .hero h1 {
+    font-size: 40px; font-weight: 500; line-height: 1.5;
+    letter-spacing: 0.06em; margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 18px; font-weight: 400; line-height: 1.9;
+    max-width: 700px; margin: 0 auto 32px; opacity: 0.85;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-hero {
+    display: inline-block; background: transparent; color: var(--text-white);
+    padding: 8px 44px; border: 1px solid rgba(255,255,255,0.6);
+    font-family: var(--font-base); font-size: 18px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-hero:hover { background: rgba(255,255,255,0.1); }
+  .btn-hero-fill {
+    display: inline-block; background: var(--text-white); color: var(--primary);
+    padding: 8px 44px; border: 1px solid var(--text-white);
+    font-family: var(--font-base); font-size: 18px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-hero-fill:hover { opacity: 0.85; }
+
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em; }
+  .section-title { font-size: 30px; font-weight: 500; line-height: 1.5; margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+
+  .section-gray { background: var(--bg-surface); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: var(--bg-surface); border: 1px solid var(--border-light); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-page); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
+  .btn-cookie-dark { display: inline-block; background: #000; color: #e0e0e0; padding: 12px 24px; border-radius: 2px; border: none; font-family: var(--font-base); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-cookie-light { display: inline-block; background: #fff; color: #222; padding: 12px 24px; border-radius: 2px; border: 1px solid #fff; font-family: var(--font-base); font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 4px; overflow: hidden; transition: opacity 0.2s; }
+  .card:hover { opacity: 0.85; }
+  .card-img { height: 160px; background: var(--primary); }
+  .card-body { padding: 20px; }
+  .card h3 { font-size: 18px; font-weight: 500; line-height: 1.5; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+  .article-preview { max-width: 700px; margin: 0 auto; }
+  .article-preview h1 { font-size: 30px; font-weight: 500; line-height: 1.5; margin-bottom: 16px; }
+  .article-preview p { font-size: 18px; font-weight: 400; line-height: 1.9; margin-bottom: 16px; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--bg-surface); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 8px 23px; border-radius: 22px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+  }
+  .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(34,34,34,0.15); }
+  .form-input--error { border-color: #c62828; }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--bg-surface); border-radius: 4px; padding: 24px; text-align: center; border: 1px solid var(--border-light); }
+  .elevation-label { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  .width-bar { height: 32px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 4px; margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--primary); border-radius: 3px; opacity: 0.15; }
+  .width-bar-label { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .width-bar-value { font-family: monospace; font-size: 12px; color: var(--text-secondary); }
+
+  .footer { padding: 48px 32px; text-align: center; background: var(--bg-footer); color: rgba(255,255,255,0.6); font-size: 12px; }
+  .footer a { color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 16px; line-height: 1.7; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Nikon</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Nikon — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-hero-fill" href="#">法人のお客様</a>
+    <a class="btn-hero" href="#">個人のお客様</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Primary</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">コーポレートカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヒーロー背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#555555"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#555555</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#949494"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Disabled</div><div class="color-swatch-hex">#949494</div><div class="color-swatch-role">無効テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク背景上</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Page BG</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・入力欄</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#111111"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#111111</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.7)"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav BG</div><div class="color-swatch-hex">rgba(0,0,0,0.7)</div><div class="color-swatch-role">ナビ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#949494"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#949494</div><div class="color-swatch-role">入力欄ボーダー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:40px; font-weight:500; line-height:1.5; letter-spacing:0.06em;">BUSINESS — ヒーロータイトル</div>
+    <div class="type-meta">40px / 500 / line-height: 1.5 / letter-spacing: 0.06em<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:30px; font-weight:500; line-height:1.5;">セクション見出し — Heading 1</div>
+    <div class="type-meta">30px / 500 / line-height: 1.5<span class="type-context">メインコンテンツ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:500; line-height:1.5;">サブ見出し — Heading 2</div>
+    <div class="type-meta">18px / 500 / line-height: 1.5<span class="type-context">メインコンテンツ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:400; line-height:1.9;">本文テキスト — 記事コンテンツ用の広い行間。line-height: 1.9 のゆったりとした行間で、ニコンの技術や製品について長文を読みやすく提供します。</div>
+    <div class="type-meta">18px / 400 / line-height: 1.9<span class="type-context">記事ページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:400; line-height:1.5;">本文テキスト — 標準の行間。リンクブロックやニュースリスト等に使用。</div>
+    <div class="type-meta">18px / 400 / line-height: 1.5<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.5; color:var(--text-secondary);">ナビゲーション — Nav Link (14px)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.5; color:var(--text-secondary);">コピーライト — Caption (12px)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5<span class="type-context">フッター</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>光の力で、不可能を超えていく</h1>
+    <p>ニコンは「光利用技術」と「精密技術」をコアコンピタンスとし、映像事業、精機事業、ヘルスケア事業、コンポーネント事業など幅広い領域で革新的な製品を生み出しています。</p>
+    <p>カメラやレンズの映像事業に加え、半導体露光装置やFPD露光装置の精機事業、網膜画像診断装置などのヘルスケア事業を展開。光の可能性を追求し続けています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="background:#222; padding:32px; border-radius:4px; margin-bottom:20px;">
+    <div class="button-item"><a class="btn-hero-fill" href="#">法人のお客様</a><div class="button-label" style="color:rgba(255,255,255,0.6)">Hero Fill</div></div>
+    <div class="button-item"><a class="btn-hero" href="#">個人のお客様</a><div class="button-label" style="color:rgba(255,255,255,0.6)">Hero Outline</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><button class="btn-cookie-dark">クッキー設定</button><div class="button-label">Cookie Dark</div></div>
+    <div class="button-item"><button class="btn-cookie-light" style="border-color:#ccc;">クッキーを拒否する</button><div class="button-label">Cookie Light</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img" style="background:linear-gradient(135deg, #333, #111);"></div>
+      <div class="card-body">
+        <h3>Z fc — 美しさへの挑戦</h3>
+        <p>ヘリテージデザインとミラーレス技術の融合。ニコンの伝統を継承しながら、最新の映像体験を提供します。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:linear-gradient(135deg, #222, #000);"></div>
+      <div class="card-body">
+        <h3>Z 8 — プロフェッショナル</h3>
+        <p>4571万画素の高画質と高速連写性能。プロの現場で求められる信頼性と機動力を両立。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:linear-gradient(135deg, #444, #222);"></div>
+      <div class="card-body">
+        <h3>NIKKOR Z レンズ群</h3>
+        <p>大口径Zマウントが実現する圧倒的な光学性能。広角から超望遠まで、あらゆる表現をサポート。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">検索</label><input class="form-input" type="text" placeholder="キーワードで検索"><div class="form-state-label">デフォルト — pill 型 radius: 22px, border: #949494</div></div>
+  <div class="form-group"><label class="form-label">検索（フォーカス）</label><input class="form-input" type="text" value="Z fc" style="border-color:#222222; box-shadow:0 0 0 2px rgba(34,34,34,0.15);"><div class="form-state-label">フォーカス — border: #222222</div></div>
+  <div class="form-group"><label class="form-label">検索（エラー）</label><input class="form-input form-input--error" type="text" value=""><div class="form-state-label">エラー — border: #c62828</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし（基本レイアウト）</div></div>
+    <div class="elevation-card" style="box-shadow: rgba(0,0,0,0.92) 0 0 10px 0;"><div class="elevation-label">Page Top Button</div><div class="elevation-desc">rgba(0,0,0,0.92) 0 0 10px 0</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Container <span class="width-bar-value">1280px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Content <span class="width-bar-value">700px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:54.7%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.nikon.co.jp/">nikon.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）
+</footer>
+
+</body>
+</html>

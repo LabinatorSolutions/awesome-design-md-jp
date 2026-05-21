@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KEYENCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --KEYENCE_COLOR_RED: #ea0437;
+    --KEYENCE_COLOR_FOREGROUND_RED: #de0435;
+    --KEYENCE_COLOR_FOREGROUND_BLACK: #222;
+    --KEYENCE_COLOR_FOREGROUND_GRAY: #6f6f6f;
+    --KEYENCE_COLOR_BACKGROUND_LIGHTRED: #fef3f5;
+    --KEYENCE_COLOR_BACKGROUND_LIGHTGRAY: #f3f3f3;
+    --KEYENCE_COLOR_BACKGROUND_EX_LIGHTGRAY: #fafafa;
+    --KEYENCE_COLOR_OUTLINE_LIGHTGRAY: #ddd;
+    --BUTTON_SHADOW: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+    --BORDER_RADIUS_SMALL: 4px;
+    --LINE_HEIGHT: 1.75;
+    --TRANSITION: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --FONT_FAMILY: "Noto Sans JP", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --FONT_FAMILY_ENG: Helvetica, Arial, sans-serif;
+    --text-white: #ffffff;
+    --bg-footer: #222222;
+    --input-border: #e1e1e1;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--KEYENCE_COLOR_BACKGROUND_EX_LIGHTGRAY);
+    color: var(--KEYENCE_COLOR_FOREGROUND_BLACK);
+    font-family: var(--FONT_FAMILY);
+    font-size: 16px; font-weight: 400; line-height: var(--LINE_HEIGHT);
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 70px;
+    background: var(--text-white);
+    border-bottom: 1px solid var(--KEYENCE_COLOR_OUTLINE_LIGHTGRAY);
+  }
+  .nav-brand { font-size: 20px; font-weight: 700; color: var(--KEYENCE_COLOR_FOREGROUND_BLACK); text-decoration: none; }
+  .nav-brand span { color: var(--KEYENCE_COLOR_RED); }
+  .nav-links { display: flex; gap: 20px; list-style: none; }
+  .nav-links a { font-size: 16px; font-weight: 700; color: var(--KEYENCE_COLOR_FOREGROUND_BLACK); text-decoration: none; padding: 0 17px 0 0; }
+  .nav-links a:hover { color: var(--KEYENCE_COLOR_RED); }
+  .nav-phone { font-family: var(--FONT_FAMILY_ENG); font-size: 26px; font-weight: 700; color: var(--KEYENCE_COLOR_FOREGROUND_BLACK); }
+
+  .hero {
+    padding: 80px 32px 64px; text-align: center;
+    background: var(--text-white);
+  }
+  .hero h1 {
+    font-size: 40px; font-weight: 700; line-height: var(--LINE_HEIGHT);
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: var(--LINE_HEIGHT);
+    max-width: 700px; margin: 0 auto 32px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY);
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--text-white); color: var(--KEYENCE_COLOR_FOREGROUND_BLACK);
+    padding: 18px 56px 18px 24px; border-radius: var(--BORDER_RADIUS_SMALL);
+    border: none; box-shadow: var(--BUTTON_SHADOW);
+    font-family: var(--FONT_FAMILY); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: var(--TRANSITION);
+  }
+  .btn-primary:hover { box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.2); }
+  .btn-pill {
+    display: inline-block; background: var(--text-white); color: var(--KEYENCE_COLOR_FOREGROUND_BLACK);
+    padding: 14px 32px; border-radius: 1440px;
+    border: 2px solid var(--KEYENCE_COLOR_RED);
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.15);
+    font-family: var(--FONT_FAMILY); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: var(--TRANSITION);
+  }
+  .btn-pill:hover { background: var(--KEYENCE_COLOR_BACKGROUND_LIGHTRED); }
+
+  .section { padding: 64px 32px; max-width: 1000px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 700; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em; }
+  .section-title { font-size: 28px; font-weight: 700; line-height: 1.5; margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid var(--KEYENCE_COLOR_OUTLINE_LIGHTGRAY); margin: 0; }
+
+  .section-light { background: var(--KEYENCE_COLOR_BACKGROUND_LIGHTGRAY); padding: 64px 32px; }
+  .section-light .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--BORDER_RADIUS_SMALL); overflow: hidden; background: var(--text-white); box-shadow: var(--BUTTON_SHADOW); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--KEYENCE_COLOR_OUTLINE_LIGHTGRAY); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--KEYENCE_COLOR_BACKGROUND_LIGHTGRAY); color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); font-size: 11px; padding: 2px 8px; border-radius: var(--BORDER_RADIUS_SMALL); margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); margin-top: 8px; }
+  .btn-arrow-circle { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--KEYENCE_COLOR_RED); color: var(--text-white); border-radius: 50%; border: 1px solid var(--KEYENCE_COLOR_RED); font-size: 20px; cursor: pointer; }
+  .badge-new { display: inline-block; background: var(--KEYENCE_COLOR_RED); color: var(--text-white); padding: 4px 12px; border-radius: var(--BORDER_RADIUS_SMALL); font-size: 12px; font-weight: 700; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card { background: var(--text-white); border-radius: var(--BORDER_RADIUS_SMALL); overflow: hidden; box-shadow: var(--BUTTON_SHADOW); transition: var(--TRANSITION); }
+  .card:hover { box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.2); }
+  .card-img { height: 160px; background: var(--KEYENCE_COLOR_BACKGROUND_LIGHTGRAY); display: flex; align-items: center; justify-content: center; }
+  .card-img-placeholder { color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); font-size: 14px; }
+  .card-body { padding: 16px; }
+  .card h3 { font-size: 14px; font-weight: 700; line-height: var(--LINE_HEIGHT); margin-bottom: 4px; }
+  .card .card-series { font-size: 12px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); }
+
+  .article-preview { max-width: 700px; margin: 0 auto; }
+  .article-preview h1 { font-size: 28px; font-weight: 700; line-height: 1.5; margin-bottom: 16px; }
+  .article-preview p { font-size: 16px; font-weight: 400; line-height: var(--LINE_HEIGHT); margin-bottom: 16px; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 16px; font-weight: 400; margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--text-white); color: var(--KEYENCE_COLOR_FOREGROUND_BLACK);
+    border: 1px solid var(--input-border); padding: 8px 48px 8px 16px; border-radius: var(--BORDER_RADIUS_SMALL);
+    font-family: var(--FONT_FAMILY); font-size: 16px; outline: none;
+    transition: var(--TRANSITION);
+  }
+  .form-input:focus { border-color: var(--KEYENCE_COLOR_RED); box-shadow: 0 0 0 2px rgba(234,4,55,0.15); }
+  .form-input--error { border-color: #c62828; box-shadow: 0 0 0 2px rgba(198,40,40,0.15); }
+  .form-state-label { font-size: 11px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); margin-top: 4px; }
+  .form-select {
+    width: 100%; background: var(--text-white); color: var(--KEYENCE_COLOR_FOREGROUND_BLACK);
+    border: 1px solid var(--input-border); padding: 8px 42px 8px 16px; border-radius: var(--BORDER_RADIUS_SMALL);
+    font-family: var(--FONT_FAMILY); font-size: 16px; font-weight: 700;
+    appearance: none; cursor: pointer;
+  }
+
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--text-white); border-radius: var(--BORDER_RADIUS_SMALL); padding: 24px; text-align: center; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); word-break: break-all; }
+
+  .width-bar { height: 32px; background: var(--text-white); border: 1px solid var(--KEYENCE_COLOR_OUTLINE_LIGHTGRAY); border-radius: var(--BORDER_RADIUS_SMALL); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--KEYENCE_COLOR_RED); border-radius: 3px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .width-bar-value { font-family: monospace; font-size: 12px; color: var(--KEYENCE_COLOR_FOREGROUND_GRAY); }
+
+  .footer { padding: 48px 32px; background: var(--bg-footer); }
+  .footer-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+  .footer-phone { font-family: var(--FONT_FAMILY_ENG); font-size: 42px; font-weight: 700; color: var(--text-white); margin-bottom: 8px; }
+  .footer-time { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.4); }
+  .footer a { color: rgba(255,255,255,0.6); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .nav-links { display: none; }
+    .nav-phone { display: none; }
+    .section { padding: 48px 20px; }
+    .section-light { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>K</span>EYENCE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <div class="nav-phone">0120-100-470</div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>KEYENCE — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。CSS Custom Properties を含む全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">新商品一覧 →</a>
+    <a class="btn-pill" href="#">商品を探す</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors — CSS Custom Properties</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ea0437"></div><div class="color-swatch-info"><div class="color-swatch-name">KEYENCE Red</div><div class="color-swatch-hex">#ea0437</div><div class="color-swatch-role">--KEYENCE_COLOR_RED</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#de0435"></div><div class="color-swatch-info"><div class="color-swatch-name">Foreground Red</div><div class="color-swatch-hex">#de0435</div><div class="color-swatch-role">--FOREGROUND_RED</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Foreground Black</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">--FOREGROUND_BLACK</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6f6f6f"></div><div class="color-swatch-info"><div class="color-swatch-name">Foreground Gray</div><div class="color-swatch-hex">#6f6f6f</div><div class="color-swatch-role">--FOREGROUND_GRAY</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">フッター上テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa"></div><div class="color-swatch-info"><div class="color-swatch-name">BG Extra Light</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">--BG_EX_LIGHTGRAY</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">BG Light Gray</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">--BG_LIGHTGRAY</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fef3f5"></div><div class="color-swatch-info"><div class="color-swatch-name">BG Light Red</div><div class="color-swatch-hex">#fef3f5</div><div class="color-swatch-role">--BG_LIGHTRED</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・入力欄</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Placeholder</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">画像プレースホルダ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Outline Light</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">--OUTLINE_LIGHTGRAY</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e1e1e1"></div><div class="color-swatch-info"><div class="color-swatch-name">Input Border</div><div class="color-swatch-hex">#e1e1e1</div><div class="color-swatch-role">フォーム入力欄</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY); font-size:40px; font-weight:700; line-height:1.75;">商品ラインナップ — Display</div>
+    <div class="type-meta">40px / 700 / line-height: 1.75 (--LINE_HEIGHT)<span class="type-context">トップページ h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY); font-size:28px; font-weight:700; line-height:1.5;">セクション見出し — Heading 2</div>
+    <div class="type-meta">28px / 700 / line-height: 1.5<span class="type-context">メインコンテンツ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY); font-size:16px; font-weight:700; line-height:1.75;">グローバルナビ — Nav Link</div>
+    <div class="type-meta">16px / 700 / line-height: 1.75<span class="type-context">グローバルナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY); font-size:16px; font-weight:400; line-height:1.75;">本文テキスト — 「商品について」「機能の実現性」「価格・お見積もり」など、お気軽にお問い合わせください。専門の技術スタッフが迅速にサポートいたします。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.75 (--LINE_HEIGHT)<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY); font-size:14px; font-weight:400; line-height:1.75; color:var(--KEYENCE_COLOR_FOREGROUND_BLACK);">サブナビゲーション — Sub Nav (14px)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.75<span class="type-context">サブナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY); font-size:12px; font-weight:400; line-height:1.75; color:var(--KEYENCE_COLOR_FOREGROUND_GRAY);">補足テキスト — Caption (12px)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.75<span class="type-context">ヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--FONT_FAMILY_ENG); font-size:26px; font-weight:700; line-height:1.5;">0120-100-470</div>
+    <div class="type-meta">Helvetica, Arial (--FONT_FAMILY_ENG) / 26px / 700<span class="type-context">電話番号</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-light" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 記事組版</div>
+  <h2 class="section-title">製品紹介の組版サンプル</h2>
+  <div class="article-preview">
+    <h1>センサ技術の革新</h1>
+    <p>キーエンスは、ファクトリー・オートメーション用センサをはじめ、測定器、画像処理機器、制御・計測機器など、幅広い製品を開発・製造しています。「世界初」「業界初」の製品を次々と生み出し、ものづくりの現場を革新し続けています。</p>
+    <p>営業利益率50%超を誇る高収益企業として知られ、その源泉は「付加価値の創造」にあります。顧客の潜在ニーズを掘り起こし、これまでにない製品を提供する——それがキーエンスのものづくりです。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom:24px;">
+    <div class="button-item"><a class="btn-primary" href="#">新商品一覧 →</a><div class="button-label">Primary CTA</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">商品を探す</a><div class="button-label">Floating Pill</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><button class="btn-arrow-circle">→</button><div class="button-label">Carousel Arrow</div></div>
+    <div class="button-item"><span class="badge-new">NEW</span><div class="button-label">NEW Badge</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">商品カード</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img"><div class="card-img-placeholder">Product Image</div></div>
+      <div class="card-body">
+        <span class="badge-new" style="margin-bottom:8px; display:inline-block;">NEW</span>
+        <h3>オールインワン蛍光顕微鏡用レーザー共焦点ユニット</h3>
+        <div class="card-series">BZ-XLC1</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img"><div class="card-img-placeholder">Product Image</div></div>
+      <div class="card-body">
+        <span class="badge-new" style="margin-bottom:8px; display:inline-block;">NEW</span>
+        <h3>AI×ビジョンストレージ搭載画像処理システム</h3>
+        <div class="card-series">VS-Gシリーズ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img"><div class="card-img-placeholder">Product Image</div></div>
+      <div class="card-body">
+        <h3>白色干渉計搭載 レーザ顕微鏡</h3>
+        <div class="card-series">VK-X4000シリーズ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">検索種別</label><select class="form-select"><option>すべて</option><option>商品</option><option>カタログ</option><option>技術資料</option></select><div class="form-state-label">Select — weight: 700, radius: 4px, border: #e1e1e1</div></div>
+  <div class="form-group"><label class="form-label">キーワード検索</label><input class="form-input" type="text" placeholder="型番・キーワードで検索"><div class="form-state-label">デフォルト — radius: 4px, border: #e1e1e1</div></div>
+  <div class="form-group"><label class="form-label">キーワード（フォーカス）</label><input class="form-input" type="text" value="レーザセンサ" style="border-color:#ea0437; box-shadow:0 0 0 2px rgba(234,4,55,0.15);"><div class="form-state-label">フォーカス — border: #ea0437 (KEYENCE_RED)</div></div>
+  <div class="form-group"><label class="form-label">メール（エラー）</label><input class="form-input form-input--error" type="text" value="invalid"><div class="form-state-label">エラー — border: #c62828</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — CSS Custom Properties</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--KEYENCE_COLOR_OUTLINE_LIGHTGRAY);"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ</div></div>
+    <div class="elevation-card" style="box-shadow: var(--BUTTON_SHADOW);"><div class="elevation-label">--BUTTON_SHADOW</div><div class="elevation-desc">カード・ボタン</div></div>
+    <div class="elevation-card" style="box-shadow: 0px 8px 15px rgba(0,0,0,0.15);"><div class="elevation-label">Floating</div><div class="elevation-desc">フローティングボタン</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--KEYENCE_COLOR_RED);"><div class="elevation-label">Red Border</div><div class="elevation-desc">#ea0437 (KEYENCE_RED)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Content <span class="width-bar-value">700px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:58.3%"></div></div></div>
+</section>
+
+<footer class="footer">
+<div class="footer-inner">
+  <div class="footer-phone">0120-100-470</div>
+  <div class="footer-time">受付時間 8:30～20:00（土日・祝日除く）</div>
+  <div class="footer-copy">Generated from <a href="https://www.keyence.co.jp/">keyence.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）</div>
+</div>
+</footer>
+
+</body>
+</html>

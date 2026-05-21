@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (228 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (231 sites)</a>
 </p>
 
 <table>
@@ -334,6 +334,9 @@
 <td align="center"><strong>Studio Ghibli</strong><br><img src="design-md/ghibli/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Seiko</strong><br><img src="design-md/seiko/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Asahi Beer</strong><br><img src="design-md/asahibeer/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Nikon</strong><br><img src="design-md/nikon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ROYCE'</strong><br><img src="design-md/royce/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KEYENCE</strong><br><img src="design-md/keyence/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -623,11 +626,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Studio Ghibli (スタジオジブリ)](https://www.ghibli.jp/) | Animation Studio / Entertainment | [DESIGN.md](design-md/ghibli/DESIGN.md) | [preview.html](design-md/ghibli/preview.html) |
 | [Seiko (セイコー)](https://www.seikowatches.com/jp-ja/) | Watch / Precision Manufacturing | [DESIGN.md](design-md/seiko/DESIGN.md) | [preview.html](design-md/seiko/preview.html) |
 | [Asahi Beer (アサヒビール)](https://www.asahibeer.co.jp/) | Beverage / Brewery | [DESIGN.md](design-md/asahibeer/DESIGN.md) | [preview.html](design-md/asahibeer/preview.html) |
+| [Nikon (ニコン)](https://www.nikon.co.jp/) | Camera / Optics Manufacturer | [DESIGN.md](design-md/nikon/DESIGN.md) | [preview.html](design-md/nikon/preview.html) |
+| [ROYCE' (ロイズ)](https://www.royce.com/) | Confectionery / Chocolate | [DESIGN.md](design-md/royce/DESIGN.md) | [preview.html](design-md/royce/preview.html) |
+| [KEYENCE (キーエンス)](https://www.keyence.co.jp/) | B2B Industrial Sensors / FA | [DESIGN.md](design-md/keyence/DESIGN.md) | [preview.html](design-md/keyence/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (228 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (231 sites)</a>
 </p>
 
 <table>
@@ -927,6 +933,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Studio Ghibli</strong><br><img src="design-md/ghibli/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Seiko</strong><br><img src="design-md/seiko/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Asahi Beer</strong><br><img src="design-md/asahibeer/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Nikon</strong><br><img src="design-md/nikon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ROYCE'</strong><br><img src="design-md/royce/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KEYENCE</strong><br><img src="design-md/keyence/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
