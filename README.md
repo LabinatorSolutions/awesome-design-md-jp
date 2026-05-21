@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (240 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (243 sites)</a>
 </p>
 
 <table>
@@ -350,6 +350,9 @@
 <td align="center"><strong>Nissin</strong><br><img src="design-md/nissin/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HYKE</strong><br><img src="design-md/hyke/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Komeda</strong><br><img src="design-md/komeda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Zoff</strong><br><img src="design-md/zoff/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LUPICIA</strong><br><img src="design-md/lupicia/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Tabio</strong><br><img src="design-md/tabio/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -651,11 +654,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Nissin (日清食品)](https://www.nissin.com/jp/) | Food / FMCG | [DESIGN.md](design-md/nissin/DESIGN.md) | [preview.html](design-md/nissin/preview.html) |
 | [HYKE](https://hyke.jp/) | Fashion / Apparel | [DESIGN.md](design-md/hyke/DESIGN.md) | [preview.html](design-md/hyke/preview.html) |
 | [Komeda (コメダ珈琲店)](https://www.komeda.co.jp/) | Food & Beverage / Café | [DESIGN.md](design-md/komeda/DESIGN.md) | [preview.html](design-md/komeda/preview.html) |
+| [Zoff (ゾフ)](https://www.zoff.co.jp/) | Eyewear / Retail | [DESIGN.md](design-md/zoff/DESIGN.md) | [preview.html](design-md/zoff/preview.html) |
+| [LUPICIA (ルピシア)](https://www.lupicia.com/) | Tea / Specialty Retail | [DESIGN.md](design-md/lupicia/DESIGN.md) | [preview.html](design-md/lupicia/preview.html) |
+| [Tabio (タビオ / 靴下屋)](https://tabio.com/jp/) | Hosiery / Apparel | [DESIGN.md](design-md/tabio/DESIGN.md) | [preview.html](design-md/tabio/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (240 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (243 sites)</a>
 </p>
 
 <table>
@@ -971,6 +977,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Nissin</strong><br><img src="design-md/nissin/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HYKE</strong><br><img src="design-md/hyke/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Komeda</strong><br><img src="design-md/komeda/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Zoff</strong><br><img src="design-md/zoff/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LUPICIA</strong><br><img src="design-md/lupicia/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Tabio</strong><br><img src="design-md/tabio/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

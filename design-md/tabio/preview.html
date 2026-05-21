@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: TABIO（タビオ / 靴下屋）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --text-primary: #222222;
+    --text-black: #000000;
+    --text-dark: #404040;
+    --text-secondary: #737373;
+    --bg-page: #f7f7f7;
+    --bg-content: #ffffff;
+    --surface-footer: #f2f2f2;
+    --border-default: #d9d9d9;
+    --border-focus: #222222;
+    --button-primary-bg: #a6a6a6;
+    --button-primary-text: #f2f2f2;
+    --button-secondary-bg: #f2f2f2;
+    --button-secondary-text: #d9d9d9;
+    --button-cancel-bg: #f2f2f2;
+    --button-cancel-text: #222222;
+    --link-blue: #5d9cec;
+    --badge-bg: #4d5057;
+    --danger: #cc3333;
+    --success: #468254;
+    --warning: #d9a825;
+    /* === Elevation 実測値 === */
+    --elevation-button: 0 0 8px rgba(0, 0, 0, 0.15);
+    --elevation-hover: 0 4px 16px rgba(0, 0, 0, 0.10);
+    --elevation-modal: 0 8px 24px rgba(0, 0, 0, 0.12);
+    /* === Fonts === */
+    --font-light: "Zen Kaku Gothic New", 游ゴシック, "Yu Gothic", YuGothic, "Hiragino Sans", ヒラギノ角ゴシック, "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-bold: "Zen Kaku Gothic New", 游ゴシック, "Yu Gothic", YuGothic, "Hiragino Sans", ヒラギノ角ゴシック, "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+    /* === Spacing === */
+    --ls-signature: 0.08em;
+    --ls-narrow: 0.04em;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-black);
+    font-family: var(--font-light);
+    font-size: 14px; font-weight: 300; line-height: 1.23;
+    letter-spacing: var(--ls-signature);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 56px;
+    background: var(--bg-content);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-family: var(--font-bold); font-size: 16px; font-weight: 700;
+    color: var(--text-dark); text-decoration: none;
+    letter-spacing: 0.12em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-light); font-size: 12px; font-weight: 300;
+    color: var(--text-secondary); text-decoration: none;
+    letter-spacing: var(--ls-signature);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    display: inline-block;
+    background: var(--button-primary-bg); color: var(--button-primary-text);
+    padding: 6px 18px; border-radius: 2px;
+    font-family: var(--font-bold); font-size: 12px; font-weight: 700;
+    letter-spacing: var(--ls-signature);
+    text-decoration: none; transition: opacity 0.2s;
+    box-shadow: var(--elevation-button);
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 24px 64px; text-align: center;
+    background: var(--bg-content);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .hero h1 {
+    font-family: var(--font-bold); font-size: 26px; font-weight: 700;
+    line-height: 1.31; letter-spacing: var(--ls-signature);
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    line-height: 1.6; letter-spacing: var(--ls-signature);
+    color: var(--text-secondary); max-width: 560px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--button-primary-bg); color: var(--button-primary-text);
+    padding: 7px 21px; border-radius: 2px; border: none;
+    font-family: var(--font-bold); font-size: 14px; font-weight: 700;
+    letter-spacing: var(--ls-signature);
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+    box-shadow: var(--elevation-button);
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-block;
+    background: var(--button-secondary-bg); color: var(--text-primary);
+    padding: 7px 21px; border-radius: 2px; border: none;
+    font-family: var(--font-bold); font-size: 14px; font-weight: 700;
+    letter-spacing: var(--ls-signature);
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-secondary:hover { opacity: 0.8; }
+  .btn-cancel {
+    display: inline-block;
+    background: var(--button-cancel-bg); color: var(--button-cancel-text);
+    padding: 7px 21px; border-radius: 2px; border: none;
+    font-family: var(--font-bold); font-size: 14px; font-weight: 700;
+    letter-spacing: var(--ls-signature);
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+    box-shadow: var(--elevation-button);
+  }
+  .btn-cancel:hover { opacity: 0.8; }
+
+  /* SECTIONS */
+  .section { padding: 64px 24px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-light); font-size: 11px; font-weight: 300;
+    color: var(--text-secondary); text-transform: uppercase;
+    margin-bottom: 8px; letter-spacing: 0.12em;
+  }
+  .section-title {
+    font-family: var(--font-bold); font-size: 18px; font-weight: 700;
+    line-height: 1.23; letter-spacing: var(--ls-signature);
+    color: var(--text-primary); margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--surface-footer); padding: 64px 24px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 2px; overflow: hidden; background: var(--bg-content); border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-bold); font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); letter-spacing: var(--ls-signature); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: normal; }
+  .color-swatch-role { font-family: var(--font-light); font-size: 11px; font-weight: 300; color: var(--text-secondary); margin-top: 3px; letter-spacing: var(--ls-narrow); }
+  .color-group-label { font-family: var(--font-bold); font-size: 13px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; letter-spacing: var(--ls-signature); }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; letter-spacing: normal; }
+  .type-context { display: inline-block; background: var(--surface-footer); color: var(--text-secondary); font-size: 10px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; font-family: var(--font-light); letter-spacing: var(--ls-narrow); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-family: var(--font-light); font-size: 11px; font-weight: 300; color: var(--text-secondary); margin-top: 8px; letter-spacing: var(--ls-signature); }
+  .btn-link {
+    display: inline-block; background: transparent; color: var(--link-blue);
+    padding: 7px 21px; border-radius: 2px; border: none;
+    font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    letter-spacing: var(--ls-signature);
+    text-decoration: underline; cursor: pointer;
+  }
+  .badge {
+    display: inline-block; background: var(--badge-bg); color: #ffffff;
+    padding: 3px 10px; border-radius: 2px;
+    font-family: var(--font-bold); font-size: 11px; font-weight: 700;
+    letter-spacing: var(--ls-signature);
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--bg-content); border: 1px solid var(--border-default);
+    border-radius: 2px; overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-hover); }
+  .card-image {
+    width: 100%; height: 200px; background: var(--bg-page);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary); font-size: 12px;
+    letter-spacing: var(--ls-signature);
+    font-family: var(--font-light); font-weight: 300;
+  }
+  .card-body { padding: 16px; }
+  .card h3 {
+    font-family: var(--font-bold); font-size: 14px; font-weight: 700;
+    line-height: 1.4; letter-spacing: var(--ls-signature);
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .card-price {
+    font-family: var(--font-bold); font-size: 14px; font-weight: 700;
+    color: var(--text-black); margin-bottom: 4px;
+    letter-spacing: var(--ls-narrow);
+  }
+  .card-caption {
+    font-family: var(--font-light); font-size: 11px; font-weight: 300;
+    color: var(--text-secondary); letter-spacing: var(--ls-signature);
+  }
+
+  /* PRODUCT PREVIEW */
+  .product-preview { max-width: 620px; margin: 0 auto; }
+  .product-preview h1 {
+    font-family: var(--font-bold); font-size: 26px; font-weight: 700;
+    line-height: 1.31; letter-spacing: var(--ls-signature);
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .product-preview h2 {
+    font-family: var(--font-bold); font-size: 18px; font-weight: 700;
+    line-height: 1.23; letter-spacing: var(--ls-signature);
+    color: var(--text-primary); margin: 24px 0 12px;
+  }
+  .product-preview p {
+    font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    line-height: 1.6; letter-spacing: var(--ls-signature);
+    margin-bottom: 16px; color: var(--text-black);
+  }
+  .product-meta {
+    font-family: var(--font-light); font-size: 11px; font-weight: 300;
+    color: var(--text-secondary); letter-spacing: var(--ls-signature);
+    margin-bottom: 8px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block;
+    font-family: var(--font-bold); font-size: 12px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 6px;
+    letter-spacing: var(--ls-signature);
+  }
+  .form-input {
+    width: 100%; background: var(--bg-content); color: var(--text-black);
+    border: 1px solid var(--border-default); padding: 8px 21px; border-radius: 2px;
+    font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    letter-spacing: var(--ls-signature); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--border-focus); }
+  .form-input--error { border-color: var(--danger); }
+  .form-state-label { font-family: var(--font-light); font-size: 10px; font-weight: 300; color: var(--text-secondary); margin-top: 4px; letter-spacing: var(--ls-narrow); }
+  .form-error-text { font-family: var(--font-light); font-size: 11px; font-weight: 300; color: var(--danger); margin-top: 4px; letter-spacing: var(--ls-narrow); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--bg-content); border-radius: 2px; padding: 24px; text-align: center; border: 1px solid var(--border-default); }
+  .elevation-label { font-family: var(--font-bold); font-size: 13px; font-weight: 700; margin-bottom: 4px; letter-spacing: var(--ls-signature); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--text-secondary); word-break: break-all; letter-spacing: normal; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--button-primary-bg); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--bg-content); border: 1px solid var(--border-default); border-radius: 2px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--button-primary-bg); border-radius: 1px; opacity: 0.3; }
+  .width-bar-label { font-family: var(--font-bold); font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: var(--ls-signature); }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); letter-spacing: normal; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 24px; text-align: center; background: var(--surface-footer);
+    font-family: var(--font-light); font-size: 11px; font-weight: 300;
+    color: var(--text-secondary); letter-spacing: var(--ls-signature);
+    border-top: 1px solid var(--border-default);
+  }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 20px; }
+    .hero p { font-size: 13px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 16px; }
+    .section-gray { padding: 48px 16px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-preview p { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">TABIO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ONLINE STORE</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>TABIO — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。Koburina Gothic（小振仮名ゴシック）のワイドトラッキングとミューテッドグレーパレットで構成されるクラフト系 EC の仕様。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">商品を見る</a>
+    <a class="btn-secondary" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Neutral — グレースケール</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">body テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">見出し・ラベル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#404040"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark</div><div class="color-swatch-hex">#404040</div><div class="color-swatch-role">ロゴ SVG fill</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#737373"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#737373</div><div class="color-swatch-role">補足・キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a6a6a6"></div><div class="color-swatch-info"><div class="color-swatch-name">Button Primary</div><div class="color-swatch-hex">#a6a6a6</div><div class="color-swatch-role">主要ボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#d9d9d9</div><div class="color-swatch-role">枠線・区切り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2; border-bottom:1px solid #d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Footer</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">フッター・セカンダリ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7; border-bottom:1px solid #d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Page</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Content</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・コンテンツ面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent（控えめ）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5d9cec"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Blue</div><div class="color-swatch-hex">#5d9cec</div><div class="color-swatch-role">テキストリンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4d5057"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge Dark</div><div class="color-swatch-hex">#4d5057</div><div class="color-swatch-role">レビューバッジ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic（推奨）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc3333"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc3333</div><div class="color-swatch-role">エラー・削除</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9a825"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d9a825</div><div class="color-swatch-role">警告・注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:26px; font-weight:700; line-height:1.31; letter-spacing:0.08em; color:var(--text-primary);">ヒーロー見出し — H2 Hero (26px)</div>
+    <div class="type-meta">26px / Koburina W6 / line-height: 1.31 / letter-spacing: 0.08em<span class="type-context">ヒーローバナー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:18px; font-weight:700; line-height:1.23; letter-spacing:0.08em; color:var(--text-primary);">特集セクション見出し — H2 Feature (18px)</div>
+    <div class="type-meta">18px / Koburina W6 / line-height: 1.23 / letter-spacing: 0.08em<span class="type-context">特集セクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:17px; font-weight:700; line-height:1.23; letter-spacing:0.08em; color:var(--text-primary);">セクションタイトル — H2 Section (17px)</div>
+    <div class="type-meta">17px / Koburina W6 / line-height: 1.23 / letter-spacing: 0.08em<span class="type-context">カテゴリ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:14px; font-weight:700; line-height:1.5; letter-spacing:0.08em; color:var(--text-primary);">ナビゲーション区分 — H3 Nav (14px)</div>
+    <div class="type-meta">14px / Koburina W6 / line-height: 1.0-1.5 / letter-spacing: 0.08em<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:16px; font-weight:700; line-height:1.23; letter-spacing:0.08em; color:var(--text-primary);">LADIES &nbsp; MEN &nbsp; KIDS</div>
+    <div class="type-meta">16px / Koburina W3 (weight 700) / EN ラベル<span class="type-context">カテゴリラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:14px; font-weight:300; line-height:1.6; letter-spacing:0.08em; color:var(--text-black);">本文テキスト — 素材にこだわり、日本の職人の手で一足ずつ丁寧に編み上げる。履き心地と美しさを両立する靴下づくり。letter-spacing: 0.08em のワイドトラッキングが、ゆったりとした上品さを生む。</div>
+    <div class="type-meta">14px / Koburina W3 (weight 300) / line-height: 1.23-1.6 / letter-spacing: 0.08em<span class="type-context">商品説明</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:14px; font-weight:300; line-height:1.0; letter-spacing:0.04em; color:var(--text-primary);">ナビゲーションリンク — Nav Label (14px / 0.04em)</div>
+    <div class="type-meta">14px / Koburina W3 / line-height: 1.0 / letter-spacing: 0.04em<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:12px; font-weight:300; line-height:1.23; letter-spacing:0.08em; color:var(--text-secondary);">フッターリンク・補足テキスト — Small (12px)</div>
+    <div class="type-meta">12px / Koburina W3 / line-height: 1.23 / letter-spacing: 0.08em<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:11px; font-weight:300; line-height:1.23; letter-spacing:0.08em; color:var(--text-secondary);">キャプション・ブランド名 — Caption (11px)</div>
+    <div class="type-meta">11px / Koburina W3 / line-height: 1.23 / letter-spacing: 0.08em<span class="type-context">商品カード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:14.6px; font-weight:700; line-height:1.2; letter-spacing:0.08em; color:var(--text-black);">商品名（太字） — Item Name (14.6px / 游ゴシック)</div>
+    <div class="type-meta">14.6px / Yu Gothic / weight 700 / letter-spacing: 0.08em<span class="type-context">商品詳細</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT PREVIEW -->
+<section class="section-gray" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product — 商品ページ組版</div>
+  <h2 class="section-title">商品ページの組版サンプル</h2>
+  <div class="product-preview">
+    <div class="product-meta">TABIO PREMIUM &nbsp;|&nbsp; LADIES</div>
+    <h1>プレミアムコンフォート リブショートソックス</h1>
+    <p>上質なコットンを使用し、日本の職人が一足ずつ丁寧に仕上げたショートソックス。リブ編みが足首にやさしくフィットし、長時間の着用でも快適な履き心地を保ちます。</p>
+    <h2>素材とこだわり</h2>
+    <p>厳選されたスーピマコットンを使用。通常のコットンに比べて繊維が長く、なめらかな肌触りと光沢感が特徴です。つま先は手縫いで仕上げ、縫い目のゴロつきを抑えました。</p>
+    <p style="color:var(--text-secondary); font-size:11px; letter-spacing:0.08em; line-height:1.5;">素材: 綿 78%、ナイロン 20%、ポリウレタン 2% &nbsp;|&nbsp; サイズ: 22.0-24.0cm &nbsp;|&nbsp; 日本製</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom:24px;">
+    <div class="button-item"><a class="btn-primary" href="#">カートに入れる</a><div class="button-label">Primary</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">お気に入りに追加</a><div class="button-label">Secondary</div></div>
+    <div class="button-item"><a class="btn-cancel" href="#">キャンセル</a><div class="button-label">Cancel</div></div>
+    <div class="button-item"><a class="btn-link" href="#">商品詳細を見る</a><div class="button-label">Link</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><span class="badge">REVIEW</span><div class="button-label">Badge</div></div>
+    <div class="button-item"><span class="badge" style="background:var(--danger);">SOLD OUT</span><div class="button-label">Badge (Danger)</div></div>
+    <div class="button-item"><span class="badge" style="background:var(--success);">NEW</span><div class="button-label">Badge (Success)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards — 商品カード</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">260 x 260</div>
+      <div class="card-body">
+        <div class="card-caption">TABIO PREMIUM</div>
+        <h3>プレミアムコンフォート リブショートソックス</h3>
+        <div class="card-price">&yen;1,320</div>
+        <div class="card-caption">全6色</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">260 x 260</div>
+      <div class="card-body">
+        <div class="card-caption">靴下屋</div>
+        <h3>スーピマコットン 無地カバーソックス</h3>
+        <div class="card-price">&yen;880</div>
+        <div class="card-caption">全12色</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">260 x 260</div>
+      <div class="card-body">
+        <div class="card-caption">Tabio MEN</div>
+        <h3>ビジネス ベーシック リブソックス</h3>
+        <div class="card-price">&yen;990</div>
+        <div class="card-caption">全4色</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">260 x 260</div>
+      <div class="card-body">
+        <div class="card-caption">TABIO SPORTS</div>
+        <h3>レーシングラン 五本指ソックス</h3>
+        <div class="card-price">&yen;2,200</div>
+        <div class="card-caption">全3色</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #d9d9d9, radius: 2px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="田中 花子">
+    <div class="form-state-label">フォーカス — border: #222222</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー — border: #cc3333</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — 実測値</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし（基本）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-button);">
+      <div class="elevation-label">Level 1: Button</div>
+      <div class="elevation-desc">0 0 8px rgba(0,0,0,0.15)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-hover);">
+      <div class="elevation-label">Level 2: Hover</div>
+      <div class="elevation-desc">0 4px 16px rgba(0,0,0,0.10)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-modal);">
+      <div class="elevation-label">Level 3: Modal</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING & LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout — Spacing &amp; Content Width</div>
+  <h2 class="section-title">スペーシングとレイアウト</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label">Content Width</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Product Content <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78.3%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article / Detail <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:51.7%"></div></div></div>
+
+  <div class="color-group-label" style="margin-top:32px;">Border Radius</div>
+  <div style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="width:60px; height:40px; background:var(--button-primary-bg); border-radius:2px; margin:0 auto 6px;"></div>
+      <div class="spacing-value">2px</div>
+      <div style="font-size:10px; color:var(--text-secondary); letter-spacing:0.04em;">全コンポーネント</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://tabio.com/jp/" style="color:var(--link-blue); text-decoration:underline;">tabio.com/jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-22）
+</footer>
+
+</body>
+</html>
