@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Onitsuka Tiger（オニツカタイガー）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- matter は Displaay 社のライセンスフォント。Google Fonts の DM Sans がジオメトリックサンセリフとして近似 -->
+<!-- Reckless は Displaay 社のコントラストセリフ。Playfair Display が近似 -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --ink: #212322;
+    --white: #ffffff;
+    --sale-red: #be0026;
+    --accent-pink: #ecc7cd;
+    --light-gray: #f5f5f5;
+    --border-gray: #e7e8ea;
+    --mid-gray: #babec2;
+    --gray: #d9d9d6;
+    --text-primary: #212322;
+    --text-black: #000000;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+    /* === Fonts === */
+    --font-primary: "DM Sans", matter, "Noto Sans JP", sans-serif;
+    --font-display: "Playfair Display", Reckless, "Noto Sans JP", serif;
+
+    /* === Radius === */
+    --radius-pill: 60px;
+    --radius-sm: 10px;
+    --radius-none: 0px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.03em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border-gray);
+  }
+  .nav-brand {
+    font-family: var(--font-primary);
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 8px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    padding: 13px 10px 12px;
+    border: 1px solid var(--mid-gray);
+  }
+  .nav-links a:hover { border-color: var(--text-primary); }
+  .nav-links a.active { background: var(--white); border-color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 40px;
+    background: var(--white);
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 56px; font-weight: 400;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .hero .lead {
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 500;
+    line-height: 1.79;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    max-width: 600px; margin: 0 auto;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 56px 40px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .section-gray { background: var(--light-gray); padding: 56px 0; }
+  .section-gray .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+  .section h2 {
+    font-family: var(--font-primary);
+    font-size: 16px; font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+  }
+  .section h3 {
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: 0.03em;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .swatch { background: var(--white); border: 1px solid var(--border-gray); }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px; color: #666; margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 18px 0; border-bottom: 1px solid var(--border-gray);
+  }
+  .type-label {
+    flex: 0 0 240px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 12px; color: #666; line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+  .type-display { font-family: var(--font-display); font-size: 40px; font-weight: 400; line-height: 1.2; letter-spacing: 0.03em; }
+  .type-h1 { font-family: var(--font-primary); font-size: 24px; font-weight: 600; line-height: 1.0; letter-spacing: 0.03em; }
+  .type-h2 { font-family: var(--font-primary); font-size: 16px; font-weight: 700; line-height: 1.1; letter-spacing: 0.026em; }
+  .type-body { font-family: var(--font-primary); font-size: 14px; font-weight: 500; line-height: 1.79; letter-spacing: 0.05em; }
+  .type-label-text { font-family: var(--font-primary); font-size: 14px; font-weight: 700; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; }
+  .type-caption { font-family: var(--font-primary); font-size: 12px; font-weight: 400; line-height: 1.5; letter-spacing: 0.03em; }
+
+  /* ARTICLE */
+  .article { max-width: 680px; }
+  .article h2 {
+    font-family: var(--font-display);
+    font-size: 32px; font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
+  .article p {
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 500;
+    line-height: 1.79; letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--ink);
+    color: var(--white);
+    padding: 18px 40px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none; border: none; cursor: pointer;
+  }
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent;
+    color: var(--ink);
+    padding: 18px 40px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--ink);
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-square {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--ink);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: var(--radius-none);
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; border: none; cursor: pointer;
+  }
+  .btn-tab {
+    display: inline-flex; align-items: center;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 13px 10px 12px;
+    border: 1px solid var(--mid-gray);
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+
+  .button-group { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .product-card { background: var(--white); }
+  .product-cover {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, var(--light-gray) 0%, var(--border-gray) 100%);
+    margin-bottom: 12px;
+  }
+  .product-brand {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .product-name {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.5; margin-bottom: 4px;
+  }
+  .product-price {
+    font-size: 14px; font-weight: 700; letter-spacing: 0.03em;
+  }
+  .product-price .sale { color: var(--sale-red); margin-right: 8px; }
+
+  /* CARDS */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+  }
+  .card-cover {
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, var(--light-gray) 0%, var(--border-gray) 100%);
+  }
+  .card-body { padding: 20px; }
+  .card-title { font-size: 16px; font-weight: 700; line-height: 1.1; margin-bottom: 8px; }
+  .card-text { font-size: 14px; font-weight: 400; line-height: 1.79; letter-spacing: 0.05em; }
+
+  /* FORMS */
+  .form { display: grid; gap: 20px; max-width: 480px; }
+  .form label {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--mid-gray);
+    border-radius: var(--radius-none);
+    padding: 12px 14px;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none; border-color: var(--text-primary);
+  }
+  .form .input-error { border-color: var(--sale-red); }
+  .form .error-text { font-size: 12px; color: var(--sale-red); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .elevation-card {
+    background: var(--white);
+    padding: 32px 24px;
+    text-align: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .elevation-0 { border: 1px solid var(--border-gray); }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+  .elevation-2 { box-shadow: var(--elevation-2); }
+
+  /* LAYOUT */
+  .layout-grid {
+    background: var(--light-gray);
+    padding: 24px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;
+  }
+  .layout-grid > div {
+    background: var(--ink); opacity: 0.15; height: 40px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--ink);
+    padding: 64px 40px 32px;
+    color: var(--white);
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer h4 {
+    font-family: var(--font-primary);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .footer p {
+    font-size: 12px; font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.7;
+  }
+  .footer a { color: var(--white); text-decoration: none; }
+  .footer-bottom {
+    margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    font-size: 11px; opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Onitsuka Tiger</a>
+  <ul class="nav-links">
+    <li><a href="#">Magazine</a></li>
+    <li><a href="#" class="active">Shopping</a></li>
+    <li><a href="#">Brand</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>TRASPIKE</h1>
+  <p class="lead">陸上スパイクシューズから着想を得て、現代的なファッションへと再構築したロープロファイルスニーカー。</p>
+</div>
+
+<!-- COLORS -->
+<div class="section">
+  <h2>Colors</h2>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background:#212322"></div><div class="swatch-meta"><div class="swatch-name">Ink</div><div class="swatch-hex">#212322</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#ffffff; border-bottom:1px solid #e7e8ea"></div><div class="swatch-meta"><div class="swatch-name">White</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#be0026"></div><div class="swatch-meta"><div class="swatch-name">Sale Red</div><div class="swatch-hex">#be0026</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#ecc7cd"></div><div class="swatch-meta"><div class="swatch-name">Accent Pink</div><div class="swatch-hex">#ecc7cd</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f5f5f5"></div><div class="swatch-meta"><div class="swatch-name">Light Gray</div><div class="swatch-hex">#f5f5f5</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#e7e8ea"></div><div class="swatch-meta"><div class="swatch-name">Border Gray</div><div class="swatch-hex">#e7e8ea</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#babec2"></div><div class="swatch-meta"><div class="swatch-name">Mid Gray</div><div class="swatch-hex">#babec2</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#d9d9d6"></div><div class="swatch-meta"><div class="swatch-name">Gray</div><div class="swatch-hex">#d9d9d6</div></div></div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="section-gray">
+  <div class="section-inner">
+    <h2>Typography</h2>
+    <div class="type-row">
+      <div class="type-label">Display<br>Playfair Display 40px / 400<br>line-height: 1.2 / ls: 0.03em</div>
+      <div class="type-sample type-display">陸上スパイクシューズから着想を得て</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">H1<br>DM Sans 24px / 600<br>line-height: 1.0 / ls: 0.03em</div>
+      <div class="type-sample type-h1">インフォメーション</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">H2<br>DM Sans 16px / 700<br>line-height: 1.1 / ls: 0.026em</div>
+      <div class="type-sample type-h2">アパレル</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Body<br>DM Sans 14px / 500<br>line-height: 1.79 / ls: 0.05em</div>
+      <div class="type-sample type-body">陸上スパイクシューズから着想を得て、現代的なファッションへと再構築したロープロファイルスニーカー。</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Label<br>DM Sans 14px / 700<br>line-height: 1.2 / ls: 0.1em</div>
+      <div class="type-sample type-label-text">DENIVITA™</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Caption<br>DM Sans 12px / 400<br>line-height: 1.5 / ls: 0.03em</div>
+      <div class="type-sample type-caption">税込 ¥27,500</div>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<div class="section">
+  <h2>Article</h2>
+  <div class="article">
+    <h2>Heritage Reimagined</h2>
+    <p>1949年に鬼塚喜八郎が創業したオニツカタイガーは、スポーツシューズメーカーとしての歴史を持ちながら、現在ではファッションブランドとして世界中で愛されています。</p>
+    <p>アスリートのためのパフォーマンスシューズづくりで培った技術と、ヨーロッパのファッション感覚を融合させた独自のスタイルは、ストリートからランウェイまで幅広いシーンで支持されています。</p>
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div class="section-gray">
+  <div class="section-inner">
+    <h2>Buttons</h2>
+    <div class="button-group" style="margin-bottom: 24px;">
+      <a href="#" class="btn-primary">もっと見る</a>
+      <a href="#" class="btn-secondary">会員登録</a>
+      <a href="#" class="btn-square">登録する</a>
+    </div>
+    <h3>Tab Navigation</h3>
+    <div class="button-group">
+      <a href="#" class="btn-tab" style="border-color: var(--text-primary);">Magazine</a>
+      <a href="#" class="btn-tab">Shopping</a>
+      <a href="#" class="btn-tab">Brand</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CARDS -->
+<div class="section">
+  <h2>Product Cards</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-cover"></div>
+      <div class="product-brand">ONITSUKA TIGER</div>
+      <div class="product-name">MEXICO 66 SD</div>
+      <div class="product-price">¥18,700</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover"></div>
+      <div class="product-brand">ONITSUKA TIGER</div>
+      <div class="product-name">TRASPIKE</div>
+      <div class="product-price"><span class="sale">¥22,000</span><span style="text-decoration:line-through; color:#babec2;">¥27,500</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover"></div>
+      <div class="product-brand">ONITSUKA TIGER</div>
+      <div class="product-name">DELECITY Low-Top Sneaker</div>
+      <div class="product-price">¥24,200</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover"></div>
+      <div class="product-brand">ONITSUKA TIGER</div>
+      <div class="product-name">TAI CHI REBIRTH Leather</div>
+      <div class="product-price">¥33,000</div>
+    </div>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="section-gray">
+  <div class="section-inner">
+    <h2>Cards</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-cover"></div>
+        <div class="card-body">
+          <div class="card-title">2025 S/S Collection</div>
+          <div class="card-text">スポーツのエレガンスとファッションの洗練を融合させた、2025年春夏コレクション。</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-cover"></div>
+        <div class="card-body">
+          <div class="card-title">Flagship Store 表参道</div>
+          <div class="card-text">ブランドの世界観を体験できるフラッグシップストア。限定アイテムも展開。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMS -->
+<div class="section">
+  <h2>Forms</h2>
+  <div class="form">
+    <div>
+      <label>メールアドレス</label>
+      <input type="email" placeholder="example@email.com">
+    </div>
+    <div>
+      <label>メールアドレス（フォーカス）</label>
+      <input type="email" value="user@example.com" style="border-color: #212322;">
+    </div>
+    <div>
+      <label>メールアドレス（エラー）</label>
+      <input type="email" class="input-error" value="invalid">
+      <div class="error-text">有効なメールアドレスを入力してください</div>
+    </div>
+  </div>
+</div>
+
+<!-- ELEVATION -->
+<div class="section-gray">
+  <div class="section-inner">
+    <h2>Elevation</h2>
+    <div class="elevation-row">
+      <div class="elevation-card elevation-0">Level 0<br><span style="font-weight:400;font-size:12px;color:#666;">flat</span></div>
+      <div class="elevation-card elevation-1">Level 1<br><span style="font-weight:400;font-size:12px;color:#666;">0 2px 8px rgba(0,0,0,0.06)</span></div>
+      <div class="elevation-card elevation-2">Level 2<br><span style="font-weight:400;font-size:12px;color:#666;">0 4px 16px rgba(0,0,0,0.1)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="section">
+  <h2>Layout</h2>
+  <p style="margin-bottom:16px; font-size:12px; color:#666;">12 columns / 16px gutter / max-width: 1440px</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <h4>Onitsuka Tiger</h4>
+    <p>1949年創業。スポーツシューズメーカーとしての伝統を持ちながら、現代ではラグジュアリーファッションブランドとして世界35か国以上に展開。</p>
+    <div class="footer-bottom">© Onitsuka Tiger — Design System Preview</div>
+  </div>
+</div>
+
+</body>
+</html>

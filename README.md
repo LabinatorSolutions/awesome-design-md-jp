@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (213 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (216 sites)</a>
 </p>
 
 <table>
@@ -315,6 +315,9 @@
 <tr>
 <td align="center"><strong>graniph</strong><br><img src="design-md/graniph/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Fujitsu</strong><br><img src="design-md/fujitsu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Onitsuka Tiger</strong><br><img src="design-md/onitsukatiger/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>URBAN RESEARCH</strong><br><img src="design-md/urbanresearch/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SNIDEL</strong><br><img src="design-md/snidel/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -589,11 +592,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [dentsu (電通)](https://www.dentsu.co.jp/) | Advertising / Agency | [DESIGN.md](design-md/dentsu/DESIGN.md) | [preview.html](design-md/dentsu/preview.html) |
 | [graniph (グラニフ)](https://www.graniph.com/) | D2C Fashion / Design T-shirts | [DESIGN.md](design-md/graniph/DESIGN.md) | [preview.html](design-md/graniph/preview.html) |
 | [Fujitsu (富士通)](https://www.fujitsu.com/jp/) | Enterprise Tech / Corporate | [DESIGN.md](design-md/fujitsu/DESIGN.md) | [preview.html](design-md/fujitsu/preview.html) |
+| [Onitsuka Tiger (オニツカタイガー)](https://www.onitsukatiger.com/jp/ja-jp/) | Fashion / Luxury Sneakers | [DESIGN.md](design-md/onitsukatiger/DESIGN.md) | [preview.html](design-md/onitsukatiger/preview.html) |
+| [URBAN RESEARCH (アーバンリサーチ)](https://www.urban-research.jp/) | Select Shop / Fashion EC | [DESIGN.md](design-md/urbanresearch/DESIGN.md) | [preview.html](design-md/urbanresearch/preview.html) |
+| [SNIDEL (スナイデル)](https://snidel.com/) | Women's Fashion / D2C | [DESIGN.md](design-md/snidel/DESIGN.md) | [preview.html](design-md/snidel/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (213 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (216 sites)</a>
 </p>
 
 <table>
@@ -874,6 +880,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>graniph</strong><br><img src="design-md/graniph/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Fujitsu</strong><br><img src="design-md/fujitsu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Onitsuka Tiger</strong><br><img src="design-md/onitsukatiger/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>URBAN RESEARCH</strong><br><img src="design-md/urbanresearch/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SNIDEL</strong><br><img src="design-md/snidel/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
