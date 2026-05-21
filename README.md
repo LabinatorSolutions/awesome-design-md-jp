@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (234 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (237 sites)</a>
 </p>
 
 <table>
@@ -342,6 +342,9 @@
 <td align="center"><strong>Yohji Yamamoto</strong><br><img src="design-md/yohjiyamamoto/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Wacom</strong><br><img src="design-md/wacom/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>白鳳堂</strong><br><img src="design-md/hakuhodo-brushes/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Shimano</strong><br><img src="design-md/shimano/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Bridgestone</strong><br><img src="design-md/bridgestone/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Yonex</strong><br><img src="design-md/yonex/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -637,11 +640,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Yohji Yamamoto (ヨウジヤマモト)](https://www.yohjiyamamoto.co.jp/) | Fashion / Avant-Garde | [DESIGN.md](design-md/yohjiyamamoto/DESIGN.md) | [preview.html](design-md/yohjiyamamoto/preview.html) |
 | [Wacom (ワコム)](https://www.wacom.com/ja-jp) | Creative Technology / Pen Tablets | [DESIGN.md](design-md/wacom/DESIGN.md) | [preview.html](design-md/wacom/preview.html) |
 | [Hakuhodo Brushes (白鳳堂)](https://www.hakuho-do.co.jp/) | Makeup Brushes / Heritage Craft | [DESIGN.md](design-md/hakuhodo-brushes/DESIGN.md) | [preview.html](design-md/hakuhodo-brushes/preview.html) |
+| [Shimano (シマノ)](https://www.shimano.com/jp/) | Precision Components / Manufacturing | [DESIGN.md](design-md/shimano/DESIGN.md) | [preview.html](design-md/shimano/preview.html) |
+| [Bridgestone (ブリヂストン)](https://www.bridgestone.co.jp/) | Tire / Manufacturing | [DESIGN.md](design-md/bridgestone/DESIGN.md) | [preview.html](design-md/bridgestone/preview.html) |
+| [Yonex (ヨネックス)](https://www.yonex.co.jp/) | Sports Equipment | [DESIGN.md](design-md/yonex/DESIGN.md) | [preview.html](design-md/yonex/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (234 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (237 sites)</a>
 </p>
 
 <table>
@@ -949,6 +955,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Yohji Yamamoto</strong><br><img src="design-md/yohjiyamamoto/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Wacom</strong><br><img src="design-md/wacom/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>白鳳堂</strong><br><img src="design-md/hakuhodo-brushes/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Shimano</strong><br><img src="design-md/shimano/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Bridgestone</strong><br><img src="design-md/bridgestone/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Yonex</strong><br><img src="design-md/yonex/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

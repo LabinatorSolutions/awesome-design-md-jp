@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Bridgestone (ブリヂストン)</title>
+<!--
+  BridgestoneTypeTP-Regular はドメインライセンスフォント（bridgestone.co.jp 専用）。
+  外部では表示されないため、BIZ UDPGothic（Google Fonts）で代替。
+  BIZ UDPGothic は UD（ユニバーサルデザイン）ゴシック系で、
+  BridgestoneTypeTP の「ウェイト 400 でも視覚的にしっかりした」印象に近い。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --color-bridgestone-red: #e4002b;
+    --color-text-primary: #333333;
+    --color-text-body: #000000;
+    --color-text-secondary: #3c3c3c;
+    --color-text-sub: #999999;
+    --color-text-white: #ffffff;
+    --color-bg: #ffffff;
+    --color-bg-hero: #ececec;
+    --color-bg-section: #f5f5f5;
+    --color-bg-nav-dropdown: #eeeeee;
+    --color-bg-footer: #222222;
+    --color-bg-overlay: rgba(255, 255, 255, 0.95);
+    --color-category: #757575;
+    --color-border: #d1d1d1;
+    --color-border-button: #808080;
+    --color-border-input: #707070;
+    --color-rss: #f08a34;
+    /* === Elevation === */
+    --elevation-flat: none;
+    /* === Fonts 実測値（BIZ UDPGothic で代替） === */
+    --font-primary: "BIZ UDPGothic", "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "Hiragino Sans", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.64;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV (Frosted Glass Header) === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--color-bg-overlay);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-brand {
+    font-family: var(--font-primary); font-size: 18px; font-weight: 400;
+    color: var(--color-text-body); text-decoration: none; letter-spacing: 0.12em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-primary); font-size: 14px; font-weight: 600;
+    color: var(--color-text-primary); text-decoration: none;
+    line-height: 1.3; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-bridgestone-red); }
+  .nav-cta {
+    display: inline-block; background: transparent; color: var(--color-text-body);
+    padding: 3px 15px; border: 1px solid var(--color-border-button);
+    border-radius: 0; font-family: var(--font-primary); font-size: 14px; font-weight: 400;
+    text-decoration: none; transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--color-text-body); color: var(--color-text-white); }
+
+  /* === HERO === */
+  .hero {
+    padding: 100px 40px 80px; text-align: center;
+    background: var(--color-bg-hero);
+  }
+  .hero h1 {
+    font-family: var(--font-primary); font-size: 42px; font-weight: 400;
+    line-height: 1.64; letter-spacing: normal;
+    color: var(--color-text-body); margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 1.64;
+    color: var(--color-text-primary); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* === BUTTONS === */
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--color-text-body);
+    padding: 3px 15px; border: 1px solid var(--color-border-button);
+    border-radius: 0; font-family: var(--font-primary); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--color-text-body); color: var(--color-text-white); }
+  .btn-outline-light {
+    display: inline-block; background: transparent; color: var(--color-text-white);
+    padding: 3px 15px; border: 1px solid var(--color-text-white);
+    border-radius: 0; font-family: var(--font-primary); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-light:hover { background: var(--color-text-white); color: var(--color-text-body); }
+  .btn-pill {
+    display: inline-block; background: transparent; color: var(--color-text-body);
+    padding: 6px 20px; border: 1px solid var(--color-border-button);
+    border-radius: 40px; font-family: var(--font-primary); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-pill:hover { background: var(--color-text-body); color: var(--color-text-white); }
+  .btn-pill-mega {
+    display: inline-block; background: transparent; color: var(--color-text-body);
+    padding: 8px 24px; border: 1px solid var(--color-border-button);
+    border-radius: 40px; font-family: var(--font-primary); font-size: 20px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-pill-mega:hover { background: var(--color-text-body); color: var(--color-text-white); }
+  .btn-accent {
+    display: inline-block; background: var(--color-bridgestone-red); color: var(--color-text-white);
+    padding: 8px 24px; border: 1px solid var(--color-bridgestone-red);
+    border-radius: 0; font-family: var(--font-primary); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-accent:hover { opacity: 0.85; }
+  .badge-category {
+    display: inline-block; background: var(--color-category); color: var(--color-text-white);
+    padding: 3px 5px; border-radius: 0; font-size: 12px; font-weight: 400;
+    line-height: 1; text-decoration: none;
+  }
+  .btn-dropdown {
+    display: inline-block; background: var(--color-bg); color: var(--color-text-primary);
+    padding: 8px 16px; border: 1px solid var(--color-border);
+    border-radius: 0; font-family: var(--font-primary); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-dropdown:hover { background: var(--color-bg-nav-dropdown); }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 40px; max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-primary); font-size: 12px; font-weight: 400;
+    color: var(--color-text-sub); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-primary); font-size: 30px; font-weight: 400;
+    line-height: 2.0; margin-bottom: 40px; color: var(--color-text-body);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-bg-section); margin: 0; }
+
+  .section-gray { background: var(--color-bg-section); padding: 80px 40px; }
+  .section-gray .section-inner { max-width: 1080px; margin: 0 auto; }
+
+  .section-dark { background: var(--color-bg-footer); padding: 80px 40px; color: var(--color-text-white); }
+  .section-dark .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--color-text-sub); }
+  .section-dark .section-title { color: var(--color-text-white); }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: var(--color-bg); border: 1px solid var(--color-bg-section); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--color-text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--color-text-sub); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--color-text-sub); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-primary); font-size: 14px; font-weight: 400; color: var(--color-text-secondary); margin: 32px 0 12px; letter-spacing: 0.05em; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--color-bg-section); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--color-text-sub); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--color-bg-section); color: var(--color-text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 0; margin-left: 8px; }
+
+  /* === ARTICLE === */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-primary); font-size: 30px; font-weight: 400;
+    line-height: 2.0; margin-bottom: 20px; color: var(--color-text-body);
+  }
+  .article-preview h2 {
+    font-family: var(--font-primary); font-size: 20px; font-weight: 400;
+    line-height: 1.64; margin: 32px 0 12px; color: var(--color-text-body);
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400; line-height: 1.64;
+    margin-bottom: 16px; color: var(--color-text-primary);
+  }
+  .article-preview .lead {
+    font-size: 16px; line-height: 1.64; color: var(--color-text-secondary);
+    border-left: 3px solid var(--color-bridgestone-red); padding-left: 20px;
+    margin-bottom: 24px;
+  }
+  .article-preview .article-meta {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+  }
+  .article-preview .article-date {
+    font-size: 10px; font-weight: 400; color: var(--color-text-secondary);
+  }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--color-bg); border-radius: 0; padding: 0;
+    overflow: hidden; transition: opacity 0.3s; cursor: pointer;
+    border: 1px solid var(--color-bg-section);
+  }
+  .card:hover { opacity: 0.85; }
+  .card-image { width: 100%; height: 200px; background: var(--color-bg-hero); display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-primary); font-size: 14px; font-weight: 400;
+    color: var(--color-text-sub); letter-spacing: 0.1em;
+  }
+  .card-body { padding: 20px 24px 28px; background: var(--color-bg); }
+  .card-body h3 {
+    font-family: var(--font-primary); font-size: 18px; font-weight: 600;
+    line-height: 1.5; letter-spacing: -0.6px; margin-bottom: 8px;
+    color: var(--color-text-body);
+  }
+  .card-body p { font-size: 14px; color: var(--color-text-primary); line-height: 1.64; }
+  .card-body .card-sub { font-size: 12px; color: var(--color-text-sub); margin-top: 4px; }
+  .card-link {
+    display: inline-block; margin-top: 12px; font-size: 14px;
+    color: var(--color-text-body); text-decoration: none;
+    border-bottom: 1px solid var(--color-border-button);
+    padding-bottom: 2px; transition: border-color 0.2s;
+  }
+  .card-link:hover { border-color: var(--color-bridgestone-red); color: var(--color-bridgestone-red); }
+
+  /* News list card */
+  .news-card {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--color-bg-section);
+  }
+  .news-card .news-date { font-size: 10px; color: var(--color-text-secondary); white-space: nowrap; }
+  .news-card .news-title { font-size: 14px; color: var(--color-text-primary); line-height: 1.64; }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 420px; }
+  .form-label {
+    display: block; font-size: 14px; font-weight: 400;
+    color: var(--color-text-primary); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: var(--color-bg); color: var(--color-text-primary);
+    border: 1px solid var(--color-border-input); padding: 10px 14px;
+    border-radius: 0; font-family: var(--font-primary); font-size: 14px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--color-text-sub); }
+  .form-input:focus, .form-input--focus { border-color: var(--color-text-body); }
+  .form-input--error { border-color: var(--color-bridgestone-red); }
+  .form-hint { font-size: 12px; color: var(--color-text-sub); margin-top: 6px; }
+  .form-error { font-size: 12px; color: var(--color-bridgestone-red); margin-top: 6px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--color-bg); border-radius: 0; padding: 28px;
+    text-align: center; border: 1px solid var(--color-bg-section);
+  }
+  .elevation-label { font-size: 14px; font-weight: 400; margin-bottom: 8px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--color-text-sub); word-break: break-all; }
+
+  /* === LAYOUT DEMO === */
+  .layout-demo { display: grid; gap: 2px; margin-bottom: 32px; }
+  .layout-demo-4col { grid-template-columns: repeat(4, 1fr); }
+  .layout-demo-3col { grid-template-columns: repeat(3, 1fr); }
+  .layout-demo-2col { grid-template-columns: repeat(2, 1fr); }
+  .layout-block {
+    background: var(--color-bg-hero); height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    color: var(--color-text-sub); letter-spacing: 0.05em;
+  }
+
+  /* === BUTTON ROW === */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--color-text-sub); margin-top: 10px; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-text-primary); margin-bottom: 8px; height: 28px; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 400; color: var(--color-text-sub); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 48px 40px; text-align: center;
+    background: var(--color-bg-footer);
+    font-family: var(--font-primary); font-size: 12px; font-weight: 400;
+    color: var(--color-text-sub); letter-spacing: 0.05em;
+  }
+  .footer a { color: rgba(255,255,255,0.7); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero { padding: 64px 20px 48px; }
+    .hero h1 { font-size: 28px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .layout-demo-4col { grid-template-columns: repeat(2, 1fr); }
+    .layout-demo-3col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">BRIDGESTONE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">TOPICS一覧を見る</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Bridgestone — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。ドメイン専用カスタムフォント BridgestoneTypeTP、heading weight 400、pill 型メガメニュー（radius 40px）、一貫した line-height 1.64 など、ブリヂストンの精密かつ堅実なデザイン言語を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-outline" href="#">TOPICS一覧を見る</a>
+    <a class="btn-pill" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4002b"></div><div class="color-swatch-info"><div class="color-swatch-name">Bridgestone Red</div><div class="color-swatch-hex">#e4002b</div><div class="color-swatch-role">--color-bridgestone-red（ロゴ・アクセント限定）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f08a34"></div><div class="color-swatch-info"><div class="color-swatch-name">RSS Orange</div><div class="color-swatch-hex">#f08a34</div><div class="color-swatch-role">--color-rss</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">--color-text-body</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">--color-text-primary（本文）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3c3c3c"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#3c3c3c</div><div class="color-swatch-role">--color-text-secondary（日付等）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Sub</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">--color-text-sub（補足）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ececec"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">--color-bg</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ececec"></div><div class="color-swatch-info"><div class="color-swatch-name">Hero BG</div><div class="color-swatch-hex">#ececec</div><div class="color-swatch-role">--color-bg-hero</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Section BG</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">--color-bg-section</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Dropdown</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">--color-bg-nav-dropdown</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">--color-bg-footer</div></div></div>
+  </div>
+
+  <div class="color-group-label">Frosted Glass & Overlay</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:linear-gradient(135deg, #ececec, #ffffff); position:relative;"><div style="position:absolute;inset:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-size:12px;color:#999999;">backdrop-filter: blur</div></div><div class="color-swatch-info"><div class="color-swatch-name">Frosted Nav</div><div class="color-swatch-hex">rgba(255,255,255,0.95)</div><div class="color-swatch-role">--color-bg-overlay</div></div></div>
+  </div>
+
+  <div class="color-group-label">Component</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#757575"></div><div class="color-swatch-info"><div class="color-swatch-name">Category Badge</div><div class="color-swatch-hex">#757575</div><div class="color-swatch-role">--color-category</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d1d1d1"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#d1d1d1</div><div class="color-swatch-role">--color-border（ドロップダウン）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#808080"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Button</div><div class="color-swatch-hex">#808080</div><div class="color-swatch-role">--color-border-button</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#707070"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Input</div><div class="color-swatch-hex">#707070</div><div class="color-swatch-role">--color-border-input</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:42px; font-weight:400; line-height:1.64;">TOPICS — セクション大見出し</div>
+    <div class="type-meta">42px / weight 400 / line-height: 1.64 / font-feature-settings: normal<span class="type-context">セクション h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:30px; font-weight:400; line-height:2.0;">ニュースリリース — サブ見出し</div>
+    <div class="type-meta">30px / weight 400 / line-height: 2.0<span class="type-context">サブ h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:20px; font-weight:600;">メガメニュー見出し — Mega Menu Heading</div>
+    <div class="type-meta">20px / weight 600 / radius: 40px（pill 型メガメニュー項目）<span class="type-context">メガメニュー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:18px; font-weight:600; line-height:1.5; letter-spacing:-0.6px; color:var(--color-text-body);">タイヤ製品タイトル — Product Title on Dark</div>
+    <div class="type-meta">18px / weight 600 / line-height: 27px / letter-spacing: -0.6px<span class="type-context">プロダクト名</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:600; line-height:1.3;">ナビゲーションリンク — Nav Primary (14px, 600)</div>
+    <div class="type-meta">14px / weight 600 / line-height: 1.3<span class="type-context">グローバルナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:13px; font-weight:600;">ナビ副項目 — Nav Secondary (13px, 600)</div>
+    <div class="type-meta">13px / weight 600<span class="type-context">ナビ副項目</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.64; color:var(--color-text-primary);">本文テキスト — ブリヂストンは世界最大のタイヤ・ゴムメーカーとして、モビリティの進化を支えています。一貫した line-height: 1.64 と palt なしのタイポグラフィは、企業としての堅実さと信頼性を伝えるデザイン判断です。ABCabc 123</div>
+    <div class="type-meta">14px / weight 400 / line-height: 1.64 / palt: 適用なし<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:12px; font-weight:400; color:var(--color-text-sub);">補足テキスト — Product Sub (12px, #999999)</div>
+    <div class="type-meta">12px / weight 400 / color: --color-text-sub<span class="type-context">プロダクト補足</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:10px; font-weight:400; color:var(--color-text-secondary);">2026.05.22 — 日付テキスト (10px, #3c3c3c)</div>
+    <div class="type-meta">10px / weight 400 / color: --color-text-secondary<span class="type-context">日付</span></div>
+  </div>
+  <div class="type-sample">
+    <div><span class="badge-category">ニュースリリース</span></div>
+    <div class="type-meta">12px / weight 400 / bg: #757575 / text: #ffffff / padding: 3px 5px / radius: 0<span class="type-context">カテゴリバッジ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — タイヤ・モビリティコンテンツ</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <div class="article-meta">
+      <span class="badge-category">テクノロジー</span>
+      <span class="article-date">2026.05.22</span>
+    </div>
+    <h1>ブリヂストンのタイヤテクノロジー</h1>
+    <p class="lead">世界最大のタイヤ・ゴムメーカーとして、ブリヂストンは「最高の品質で社会に貢献」の理念のもと、モビリティの安全と快適性を追求し続けています。</p>
+    <p>ブリヂストンのタイヤ設計は、コンピュータシミュレーションと実走試験の膨大なデータに裏打ちされています。トレッドパターンの溝一本一本、ゴム配合の微細な調整が、ウェット路面でのグリップ力、高速走行時の安定性、そして長寿命を両立させます。</p>
+    <h2>サステナブルなモビリティへ</h2>
+    <p>2050年サステナブルなソリューションカンパニーとしてのビジョンを掲げ、リサイクル素材の活用、転がり抵抗の低減による燃費改善、タイヤ空気圧モニタリングシステムなど、環境負荷を低減するイノベーションに取り組んでいます。EV（電気自動車）の普及に合わせた専用タイヤの開発も加速しています。</p>
+    <p>font-feature-settings: normal（palt 適用なし）で、カスタム書体 BridgestoneTypeTP の設計意図を尊重したタイポグラフィ。見出しの weight 400 は、書体自体が持つ視覚的な太さに依拠した設計判断です。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons — pill (40px) + outline (0px)</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="color-group-label">Mega Menu Pill (radius: 40px, weight: 600)</div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-pill-mega" href="#">タイヤ</a><div class="button-label">Mega Menu Pill (20px)</div></div>
+    <div class="button-item"><a class="btn-pill-mega" href="#">モビリティソリューション</a><div class="button-label">Mega Menu Pill</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">乗用車用タイヤ</a><div class="button-label">Sub Pill (14px)</div></div>
+  </div>
+
+  <div class="color-group-label">Outline Buttons (radius: 0px)</div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline" href="#">TOPICS一覧を見る</a><div class="button-label">Outline CTA</div></div>
+    <div class="button-item"><a class="btn-accent" href="#">お問い合わせ</a><div class="button-label">Accent Red（限定使用）</div></div>
+  </div>
+
+  <div class="color-group-label">Badges & Dropdown</div>
+  <div class="button-row">
+    <div class="button-item"><span class="badge-category">ニュースリリース</span><div class="button-label">Category Badge</div></div>
+    <div class="button-item"><span class="badge-category">お知らせ</span><div class="button-label">Category Badge</div></div>
+    <div class="button-item"><a class="btn-dropdown" href="#">全て ▾</a><div class="button-label">Dropdown</div></div>
+  </div>
+
+  <div style="background:var(--color-bg-footer); padding:32px; margin-top:32px;">
+    <div class="button-row">
+      <div class="button-item"><a class="btn-outline-light" href="#">English</a><div class="button-label" style="color:var(--color-text-sub);">Outline Light (on dark)</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="color-group-label">Product Cards</div>
+  <div class="card-grid" style="margin-bottom:40px;">
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">TIRE IMAGE</div></div>
+      <div class="card-body">
+        <h3>POTENZA RE-71RS</h3>
+        <p>サーキットからストリートまで。極限のグリップ性能を追求したスポーツタイヤ。</p>
+        <div class="card-sub">乗用車用タイヤ</div>
+        <a class="card-link" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">TIRE IMAGE</div></div>
+      <div class="card-body">
+        <h3>BLIZZAK VRX3</h3>
+        <p>氷上性能とロングライフを両立した、次世代スタッドレスタイヤ。</p>
+        <div class="card-sub">スタッドレスタイヤ</div>
+        <a class="card-link" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">TIRE IMAGE</div></div>
+      <div class="card-body">
+        <h3>ECOPIA EP150</h3>
+        <p>低燃費性能と安全性を高い次元で両立。環境配慮型タイヤの標準。</p>
+        <div class="card-sub">エコタイヤ</div>
+        <a class="card-link" href="#">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">News List Cards</div>
+  <div style="max-width:720px;">
+    <div class="news-card">
+      <span class="news-date">2026.05.22</span>
+      <span class="badge-category">ニュースリリース</span>
+      <span class="news-title">ブリヂストン、次世代ランフラットタイヤ技術を発表</span>
+    </div>
+    <div class="news-card">
+      <span class="news-date">2026.05.15</span>
+      <span class="badge-category">お知らせ</span>
+      <span class="news-title">2026年度 サステナビリティレポートを公開</span>
+    </div>
+    <div class="news-card">
+      <span class="news-date">2026.04.28</span>
+      <span class="badge-category">ニュースリリース</span>
+      <span class="news-title">モビリティソリューション事業の新拠点を東京に開設</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms — radius: 0px</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-hint">デフォルト — border: #707070, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="taro@example.com">
+    <div class="form-hint">フォーカス — border: #000000</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-1234">
+    <div class="form-error">正しい電話番号を入力してください</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。ブリヂストンのデフォルト。フラットな面でコーポレートな堅実さを表現</div>
+    </div>
+    <div class="elevation-card" style="border:none; background:var(--color-bg-hero);">
+      <div class="elevation-label">Surface: Hero BG</div>
+      <div class="elevation-desc">#ececec — 背景色の差で面を分ける。shadow ではなくグレー階調で奥行きを表現</div>
+    </div>
+    <div class="elevation-card" style="border:none; background:var(--color-bg-section);">
+      <div class="elevation-label">Surface: Section BG</div>
+      <div class="elevation-desc">#f5f5f5 — セクション間の区切りを背景色で実現</div>
+    </div>
+    <div class="elevation-card" style="background:var(--color-bg-overlay); backdrop-filter:blur(8px);">
+      <div class="elevation-label">Frosted Glass Nav</div>
+      <div class="elevation-desc">rgba(255,255,255,0.95) + backdrop-filter: blur()</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- DARK SECTION -->
+<section class="section-dark">
+<div class="section-inner">
+  <div class="section-label">Dark Section</div>
+  <h2 class="section-title">ダークセクション (#222222)</h2>
+  <p style="font-size:14px; line-height:1.64; margin-bottom:24px; color:var(--color-text-white);">ブリヂストンのフッターでは、背景色 #222222 に白テキストを使用。ブランドレッド #e4002b はロゴやアクセントに限定し、全体はモノクロのグレーパレットで構成されています。影（box-shadow）はほぼ使用せず、背景色のグレー階調で奥行きを表現するフラットなデザインアプローチです。</p>
+  <div style="display:flex; gap:12px; align-items:center; margin-bottom:16px;">
+    <span style="font-size:18px; font-weight:600; line-height:1.5; letter-spacing:-0.6px; color:var(--color-text-white);">POTENZA RE-71RS</span>
+    <span style="font-size:12px; color:var(--color-text-sub);">乗用車用タイヤ</span>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline-light" href="#">English</a></div>
+    <div class="button-item" style="margin-left:8px;"><span style="color:var(--color-text-sub); font-size:14px;">Language selector on dark bg</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウトグリッド</h2>
+
+  <div class="color-group-label">4-Column Grid (Product Gallery)</div>
+  <div class="layout-demo layout-demo-4col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+    <div class="layout-block">4</div>
+  </div>
+
+  <div class="color-group-label">3-Column Grid</div>
+  <div class="layout-demo layout-demo-3col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+  </div>
+
+  <div class="color-group-label">2-Column Grid</div>
+  <div class="layout-demo layout-demo-2col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:40px;">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.bridgestone.co.jp/">bridgestone.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-22）
+</footer>
+
+</body>
+</html>

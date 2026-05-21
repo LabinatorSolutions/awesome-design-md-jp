@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Yonex (ヨネックス)</title>
+<!--
+  "line-only" は Yonex のカスタムフォント（ドメインライセンス）。
+  yonex.co.jp 以外では表示されないため、BIZ UDGothic で代替。
+  英語見出しには Oswald（condensed sans-serif）を使用。
+  いずれも Google Fonts から読み込み。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --color-yonex-blue: #0061b1;
+    --color-yonex-blue-dark: #00215d;
+    --color-yonex-blue-light: #579fee;
+    --color-yonex-blue-pale: #f1f4f9;
+    --color-dark: #1f2427;
+    --color-black: #000000;
+    --color-text-white: #ffffff;
+    --color-text-inactive: #b5b5b5;
+    --color-bg: #000000;
+    --color-bg-white: #ffffff;
+    --color-bg-section: #f6f6f6;
+    --color-bg-charcoal: #444444;
+    --color-border: #e8e8e8;
+    --color-border-input: #b5b5b5;
+    --color-green: #036a03;
+    --color-green-light: #4ebe5e;
+    /* === Fonts === */
+    --font-ja: "BIZ UDGothic", sans-serif;
+    --font-en: "Oswald", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg-white);
+    color: var(--color-black);
+    font-family: var(--font-ja);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--color-bg-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-brand {
+    font-family: var(--font-en); font-size: 24px; font-weight: 700;
+    color: var(--color-black); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en); font-size: 16px; font-weight: 700;
+    color: var(--color-text-inactive); text-decoration: none;
+    letter-spacing: 0.05em; transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--color-dark); }
+  .nav-links a.nav-ja {
+    font-family: var(--font-ja); font-weight: 700; color: var(--color-dark);
+  }
+  .nav-search {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-search-input {
+    background: var(--color-bg-white); color: var(--color-black);
+    border: 1px solid var(--color-border-input); border-radius: 30px;
+    padding: 8px 20px; font-family: var(--font-ja); font-size: 16px; font-weight: 500;
+    outline: none; width: 200px; transition: border-color 0.2s;
+  }
+  .nav-search-input::placeholder { color: var(--color-text-inactive); }
+  .nav-search-input:focus { border-color: var(--color-yonex-blue); }
+  .nav-search-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-yonex-blue); color: var(--color-text-white);
+    border: none; border-radius: 30px; padding: 8px 16px;
+    font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .nav-search-btn:hover { opacity: 0.85; }
+
+  /* === HERO (BLACK background) === */
+  .hero {
+    padding: 100px 40px 80px; text-align: center;
+    background: var(--color-bg);
+    color: var(--color-text-white);
+  }
+  .hero h1 {
+    font-family: var(--font-en); font-size: 56px; font-weight: 400;
+    line-height: 1.3; letter-spacing: 0.1em;
+    color: var(--color-text-white); margin-bottom: 20px;
+  }
+  .hero h1 span {
+    font-family: var(--font-ja); font-size: 28px; font-weight: 400;
+    display: block; margin-top: 8px; letter-spacing: 0;
+  }
+  .hero p {
+    font-family: var(--font-ja); font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--color-text-inactive); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* === BUTTONS === */
+  /* Primary CTA: SQUARE (radius 0), 2px border */
+  .btn-primary {
+    display: inline-block; background: var(--color-dark); color: var(--color-text-white);
+    padding: 16px 32px; border: 2px solid var(--color-dark);
+    border-radius: 0; font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-primary:hover { background: transparent; color: var(--color-dark); }
+  .btn-primary-light {
+    display: inline-block; background: var(--color-text-white); color: var(--color-dark);
+    padding: 16px 32px; border: 2px solid var(--color-text-white);
+    border-radius: 0; font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-primary-light:hover { background: transparent; color: var(--color-text-white); }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--color-dark);
+    padding: 16px 32px; border: 2px solid var(--color-dark);
+    border-radius: 0; font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--color-dark); color: var(--color-text-white); }
+  .btn-outline-light {
+    display: inline-block; background: transparent; color: var(--color-text-white);
+    padding: 16px 32px; border: 2px solid var(--color-text-white);
+    border-radius: 0; font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-light:hover { background: var(--color-text-white); color: var(--color-dark); }
+  .btn-blue {
+    display: inline-block; background: var(--color-yonex-blue); color: var(--color-text-white);
+    padding: 16px 32px; border: 2px solid var(--color-yonex-blue);
+    border-radius: 0; font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+  .btn-blue:hover { opacity: 0.85; }
+  /* Search pill: PILL (radius 30px) */
+  .btn-search-pill {
+    display: inline-block; background: var(--color-yonex-blue); color: var(--color-text-white);
+    padding: 10px 24px; border: none; border-radius: 30px;
+    font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+  .btn-search-pill:hover { opacity: 0.85; }
+  /* Tag badge */
+  .tag-badge {
+    display: inline-block; background: var(--color-bg-white); color: var(--color-black);
+    padding: 0 8px; border: 1px solid var(--color-border);
+    border-radius: 0; font-family: var(--font-ja); font-size: 12px; font-weight: 400;
+    text-decoration: none; line-height: 24px;
+  }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 40px; max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 12px; font-weight: 500;
+    color: var(--color-text-inactive); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-en); font-size: 56px; font-weight: 400;
+    line-height: 1.5; letter-spacing: 0.1em; color: var(--color-dark);
+    margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+
+  .section-gray { background: var(--color-bg-section); padding: 80px 40px; }
+  .section-gray .section-inner { max-width: 1080px; margin: 0 auto; }
+
+  .section-dark { background: var(--color-bg); padding: 80px 40px; color: var(--color-text-white); }
+  .section-dark .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--color-text-inactive); }
+  .section-dark .section-title { color: var(--color-text-white); }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: var(--color-bg-white); border: 1px solid var(--color-border); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--color-black); }
+  .color-swatch-hex { font-size: 12px; color: var(--color-text-inactive); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--color-text-inactive); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-en); font-size: 14px; font-weight: 500; color: var(--color-text-inactive); margin: 32px 0 12px; letter-spacing: 0.05em; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--color-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--color-text-inactive); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--color-bg-section); color: var(--color-bg-charcoal); font-size: 11px; padding: 2px 8px; border-radius: 0; margin-left: 8px; }
+
+  /* === ARTICLE === */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-en); font-size: 36px; font-weight: 400;
+    line-height: 1.4; letter-spacing: 0.08em; margin-bottom: 20px;
+    color: var(--color-dark);
+  }
+  .article-preview h2 {
+    font-family: var(--font-ja); font-size: 22px; font-weight: 700;
+    line-height: 1.5; margin: 32px 0 12px; color: var(--color-dark);
+  }
+  .article-preview p {
+    font-family: var(--font-ja); font-size: 16px; font-weight: 400; line-height: 1.8;
+    margin-bottom: 16px; color: var(--color-black);
+  }
+  .article-preview .lead {
+    font-family: var(--font-ja); font-size: 18px; line-height: 1.8;
+    color: var(--color-bg-charcoal);
+    border-left: 3px solid var(--color-yonex-blue); padding-left: 20px;
+    margin-bottom: 24px;
+  }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--color-bg-white); border-radius: 0; padding: 0;
+    overflow: hidden; transition: opacity 0.3s; cursor: pointer;
+    border: 1px solid var(--color-border);
+  }
+  .card:hover { opacity: 0.85; }
+  .card-image { width: 100%; height: 200px; background: var(--color-bg-section); display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-en); font-size: 14px; font-weight: 500;
+    color: var(--color-text-inactive); letter-spacing: 0.1em;
+  }
+  .card-body { padding: 20px 24px 28px; background: var(--color-bg-white); }
+  .card-body h3 {
+    font-family: var(--font-ja); font-size: 18px; font-weight: 700;
+    line-height: 1.4; margin-bottom: 8px; color: var(--color-dark);
+  }
+  .card-body p { font-family: var(--font-ja); font-size: 14px; color: var(--color-bg-charcoal); line-height: 1.6; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .card-link {
+    display: inline-block; margin-top: 12px;
+    font-family: var(--font-en); font-size: 14px; font-weight: 700;
+    color: var(--color-dark); text-decoration: none;
+    border-bottom: 2px solid var(--color-dark);
+    padding-bottom: 2px; letter-spacing: 0.05em;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .card-link:hover { color: var(--color-yonex-blue); border-color: var(--color-yonex-blue); }
+
+  /* Dark cards */
+  .card-dark {
+    background: var(--color-dark); border-radius: 0; padding: 0;
+    overflow: hidden; transition: opacity 0.3s; cursor: pointer;
+  }
+  .card-dark:hover { opacity: 0.85; }
+  .card-dark .card-image { background: var(--color-bg-charcoal); }
+  .card-dark .card-body { background: var(--color-dark); }
+  .card-dark .card-body h3 { color: var(--color-text-white); }
+  .card-dark .card-body p { color: var(--color-text-inactive); }
+  .card-dark .card-link { color: var(--color-text-white); border-color: var(--color-text-white); }
+  .card-dark .card-link:hover { color: var(--color-yonex-blue-light); border-color: var(--color-yonex-blue-light); }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 420px; }
+  .form-label {
+    display: block; font-family: var(--font-ja); font-size: 14px; font-weight: 700;
+    color: var(--color-dark); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: var(--color-bg-white); color: var(--color-black);
+    border: 1px solid var(--color-border-input); padding: 12px 16px;
+    border-radius: 0; font-family: var(--font-ja); font-size: 16px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--color-text-inactive); }
+  .form-input:focus, .form-input--focus { border-color: var(--color-yonex-blue); }
+  .form-input--error { border-color: #cc0000; }
+  .form-input--pill {
+    border-radius: 30px; padding: 10px 20px;
+    font-weight: 500;
+  }
+  .form-hint { font-family: var(--font-ja); font-size: 12px; color: var(--color-text-inactive); margin-top: 6px; }
+  .form-error { font-family: var(--font-ja); font-size: 12px; color: #cc0000; margin-top: 6px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--color-bg-white); border-radius: 0; padding: 28px;
+    text-align: center; border: 1px solid var(--color-border);
+  }
+  .elevation-label { font-family: var(--font-en); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--color-text-inactive); word-break: break-all; }
+
+  /* === LAYOUT DEMO === */
+  .layout-demo { display: grid; gap: 2px; margin-bottom: 32px; }
+  .layout-demo-4col { grid-template-columns: repeat(4, 1fr); }
+  .layout-demo-3col { grid-template-columns: repeat(3, 1fr); }
+  .layout-demo-2col { grid-template-columns: repeat(2, 1fr); }
+  .layout-block {
+    background: var(--color-bg-section); height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en); font-size: 13px; font-weight: 500;
+    color: var(--color-text-inactive); letter-spacing: 0.05em;
+  }
+
+  /* === BUTTON ROW === */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--color-text-inactive); margin-top: 10px; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-dark); margin-bottom: 8px; height: 28px; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 400; color: var(--color-text-inactive); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 48px 40px; text-align: center;
+    background: var(--color-bg);
+    font-family: var(--font-en); font-size: 18px; font-weight: 500;
+    color: var(--color-text-inactive); letter-spacing: 0.05em;
+  }
+  .footer a { color: var(--color-text-white); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero { padding: 64px 20px 48px; }
+    .hero h1 { font-size: 36px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .section { padding: 48px 20px; }
+    .section-title { font-size: 36px; }
+    .section-gray { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .layout-demo-4col { grid-template-columns: repeat(2, 1fr); }
+    .layout-demo-3col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">YONEX</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-search">
+    <input class="nav-search-input" type="text" placeholder="Search">
+    <button class="nav-search-btn">Search</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<span>Yonex --- Japanese Edition</span></h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。Oswald + BIZ UDGothic のバイリンガルフォントシステム、角形 CTA とピル型検索の意図的なコントラスト、ブラックヒーローなど、Yonex のスポーツブランド・デザイン言語を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary-light" href="#">All News</a>
+    <a class="btn-outline-light" href="#">Learn More</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Colors</h2>
+
+  <div class="color-group-label">Brand Blue (Yonex Blue)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0061b1"></div><div class="color-swatch-info"><div class="color-swatch-name">Yonex Blue</div><div class="color-swatch-hex">#0061b1</div><div class="color-swatch-role">--color-main</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00215d"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Dark</div><div class="color-swatch-hex">#00215d</div><div class="color-swatch-role">--color-main-70</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#579fee"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Light</div><div class="color-swatch-hex">#579fee</div><div class="color-swatch-role">--color-main-30</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f4f9; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Pale</div><div class="color-swatch-hex">#f1f4f9</div><div class="color-swatch-role">--color-main-10</div></div></div>
+  </div>
+
+  <div class="color-group-label">Secondary (Green)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#036a03"></div><div class="color-swatch-info"><div class="color-swatch-name">Green</div><div class="color-swatch-hex">#036a03</div><div class="color-swatch-role">--color-sub-50</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4ebe5e"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Light</div><div class="color-swatch-hex">#4ebe5e</div><div class="color-swatch-role">--color-sub-40</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Dark</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1f2427"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#1f2427</div><div class="color-swatch-role">CTA背景・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">サブテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b5b5b5"></div><div class="color-swatch-info"><div class="color-swatch-name">Inactive</div><div class="color-swatch-hex">#b5b5b5</div><div class="color-swatch-role">ナビ非アクティブ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text (on Dark)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"><div style="color:#ffffff;padding:20px 12px;font-size:13px;">White</div></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ヒーロー・ダーク面テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"><div style="color:#b5b5b5;padding:20px 12px;font-size:13px;">Inactive</div></div><div class="color-swatch-info"><div class="color-swatch-name">Inactive on Dark</div><div class="color-swatch-hex">#b5b5b5</div><div class="color-swatch-role">フッターアコーディオン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f6"></div><div class="color-swatch-info"><div class="color-swatch-name">Section Gray</div><div class="color-swatch-hex">#f6f6f6</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Hero Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヒーロー背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e8e8e8</div><div class="color-swatch-role">タグバッジ・カード</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b5b5b5"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Input</div><div class="color-swatch-hex">#b5b5b5</div><div class="color-swatch-role">検索・フォーム入力</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography --- Dual Font System</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:56px; font-weight:400; line-height:1.5; letter-spacing:0.1em; color:var(--color-dark);">Section Title --- Oswald</div>
+    <div class="type-meta">Oswald / 56px / weight: 400 / line-height: 1.5 / letter-spacing: 0.1em<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:28px; font-weight:400; line-height:1.4; letter-spacing:0.1em; color:var(--color-dark);">Sub Heading --- Oswald 28px</div>
+    <div class="type-meta">Oswald / 28px / weight: 400 / line-height: 1.4 / letter-spacing: 0.1em<span class="type-context">サブ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:16px; font-weight:700; line-height:1.4; letter-spacing:0.05em; color:var(--color-text-inactive);">NAV LINK --- OSWALD BOLD INACTIVE</div>
+    <div class="type-meta">Oswald / 16px / weight: 700 / color: #b5b5b5 (inactive)<span class="type-context">ナビリンク英語</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-ja); font-size:16px; font-weight:700; line-height:1.4; color:var(--color-dark);">ナビリンク日本語 --- BIZ UDGothic Bold</div>
+    <div class="type-meta">BIZ UDGothic / 16px / weight: 700 / color: #1f2427<span class="type-context">ナビリンク日本語</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-ja); font-size:16px; font-weight:400; line-height:1.6; color:var(--color-black);">本文テキスト --- スポーツの頂点を目指すアスリートのために。ヨネックスはバドミントン、テニス、ゴルフ、ソフトテニスの各競技で革新的な技術を開発し続けています。ABCabc 123</div>
+    <div class="type-meta">BIZ UDGothic / 16px / weight: 400 / line-height: 1.6 / font-feature-settings: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:18px; font-weight:500; line-height:1.4; color:var(--color-text-inactive);">Footer Accordion --- Oswald Medium</div>
+    <div class="type-meta">Oswald / 18px / weight: 500 / color: #b5b5b5<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:14px; font-weight:700; line-height:1.4; letter-spacing:0.05em; color:var(--color-dark);">CTA LABEL --- ALL NEWS / LEARN MORE</div>
+    <div class="type-meta">Oswald / 14px / weight: 700 / letter-spacing: 0.05em --- CTA テキストは英語<span class="type-context">CTA</span></div>
+  </div>
+  <div class="type-sample">
+    <div><span class="tag-badge">バドミントン</span> <span class="tag-badge">テニス</span> <span class="tag-badge">ゴルフ</span></div>
+    <div class="type-meta">BIZ UDGothic / 12px / weight: 400 / bg: #ffffff / border: 1px solid #e8e8e8 / padding: 0 8px<span class="type-context">タグバッジ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article --- Sports Equipment Content</div>
+  <h2 class="section-title">Article</h2>
+  <div class="article-preview">
+    <h1>Next Generation Racquet Technology</h1>
+    <p class="lead">極限のスピードと精密なコントロールを両立する。ヨネックスのラケットテクノロジーは、トップアスリートの限界を押し上げる。</p>
+    <p>ヨネックスは1946年の創業以来、バドミントン、テニス、ゴルフの各分野で最先端のスポーツ用品を開発してきました。特にバドミントンラケットでは、アイソメトリック形状（等長四角形フレーム）の発明により、スウィートスポットを従来比7%拡大。世界のトップ選手が信頼する性能を実現しています。</p>
+    <h2>ナノメトリック技術</h2>
+    <p>ヨネックスが独自に開発したナノメトリック技術は、カーボン繊維の接合部にナノレベルの素材を充填することで、フレームの剛性と反発力を飛躍的に向上させます。この技術により、シャトルへのパワー伝達効率が向上し、スマッシュの初速は時速400キロを超えるプロ選手のパフォーマンスを支えています。</p>
+    <p>また、ストリングパターンの最適化により、打球時のコントロール性能を高めながら、インパクト時の振動を抑制。長時間のプレーでも腕への負担を軽減する設計思想が貫かれています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons --- Square CTA vs Pill Search</div>
+  <h2 class="section-title">Buttons</h2>
+
+  <div class="color-group-label">Square CTA (radius: 0, border: 2px)</div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">All News</a><div class="button-label">Primary Dark</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">Learn More</a><div class="button-label">Outline Dark</div></div>
+    <div class="button-item"><a class="btn-blue" href="#">View Products</a><div class="button-label">Yonex Blue</div></div>
+  </div>
+
+  <div style="background:var(--color-bg); padding:32px; margin-top:16px; margin-bottom:32px;">
+    <div class="button-row" style="margin-bottom:0;">
+      <div class="button-item"><a class="btn-primary-light" href="#">All News</a><div class="button-label" style="color:var(--color-text-inactive);">Primary Light (on dark)</div></div>
+      <div class="button-item"><a class="btn-outline-light" href="#">Learn More</a><div class="button-label" style="color:var(--color-text-inactive);">Outline Light (on dark)</div></div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Pill Search (radius: 30px) --- CTA との意図的なコントラスト</div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-search-pill" href="#">Search</a><div class="button-label">Search Pill</div></div>
+    <div class="button-item">
+      <input class="nav-search-input" type="text" placeholder="Search" style="width:200px;">
+      <div class="button-label">Search Input (pill)</div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Tag Badge</div>
+  <div class="button-row">
+    <div class="button-item"><span class="tag-badge">バドミントン</span><div class="button-label">Tag Badge</div></div>
+    <div class="button-item"><span class="tag-badge">テニス</span><div class="button-label">Tag Badge</div></div>
+    <div class="button-item"><span class="tag-badge">ゴルフ</span><div class="button-label">Tag Badge</div></div>
+    <div class="button-item"><span class="tag-badge">ソフトテニス</span><div class="button-label">Tag Badge</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Cards</h2>
+
+  <div class="color-group-label">Product Cards (white bg)</div>
+  <div class="card-grid" style="margin-bottom:40px;">
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">RACQUET IMAGE</div></div>
+      <div class="card-body">
+        <h3>ASTROX 100 ZZ</h3>
+        <p>攻撃的なスマッシュと素早いレシーブを両立する、トップ選手向けバドミントンラケット。ナノメトリック技術搭載。</p>
+        <div class="card-tags"><span class="tag-badge">バドミントン</span><span class="tag-badge">上級者</span></div>
+        <a class="card-link" href="#">Learn More</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">RACQUET IMAGE</div></div>
+      <div class="card-body">
+        <h3>EZONE 98 テニスラケット</h3>
+        <p>アイソメトリック形状による広いスウィートスポットと、衝撃吸収素材がもたらす快適な打球感。</p>
+        <div class="card-tags"><span class="tag-badge">テニス</span><span class="tag-badge">コントロール</span></div>
+        <a class="card-link" href="#">Learn More</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">CLUB IMAGE</div></div>
+      <div class="card-body">
+        <h3>EZONE GT ドライバー</h3>
+        <p>高弾道と直進性を追求したカーボン複合ヘッド構造。スイング速度を最大化する革新設計。</p>
+        <div class="card-tags"><span class="tag-badge">ゴルフ</span><span class="tag-badge">飛距離</span></div>
+        <a class="card-link" href="#">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Dark Cards (hero style)</div>
+  <div class="card-grid">
+    <div class="card-dark">
+      <div class="card-image"><div class="card-image-placeholder" style="color:var(--color-text-inactive);">ATHLETE IMAGE</div></div>
+      <div class="card-body">
+        <h3>Team Yonex --- Badminton</h3>
+        <p>世界ランキング上位選手が信頼するヨネックスのバドミントンギア。</p>
+        <a class="card-link" href="#">All News</a>
+      </div>
+    </div>
+    <div class="card-dark">
+      <div class="card-image"><div class="card-image-placeholder" style="color:var(--color-text-inactive);">ATHLETE IMAGE</div></div>
+      <div class="card-body">
+        <h3>Team Yonex --- Tennis</h3>
+        <p>グランドスラムの舞台で勝利を刻むヨネックスのテニスギア。</p>
+        <a class="card-link" href="#">All News</a>
+      </div>
+    </div>
+    <div class="card-dark">
+      <div class="card-image"><div class="card-image-placeholder" style="color:var(--color-text-inactive);">ATHLETE IMAGE</div></div>
+      <div class="card-body">
+        <h3>Team Yonex --- Golf</h3>
+        <p>ツアープロが選ぶ、精密なクラブエンジニアリング。</p>
+        <a class="card-link" href="#">All News</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms --- Square Input + Pill Search</div>
+  <h2 class="section-title">Forms</h2>
+
+  <div class="color-group-label">Standard Input (radius: 0)</div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-hint">デフォルト --- border: #b5b5b5, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="taro@example.com">
+    <div class="form-hint">フォーカス --- border: #0061b1 (Yonex Blue)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-1234">
+    <div class="form-error">正しい電話番号を入力してください</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:40px;">Search Input (radius: 30px --- pill)</div>
+  <div class="form-group">
+    <label class="form-label">検索</label>
+    <input class="form-input form-input--pill" type="text" placeholder="Search products...">
+    <div class="form-hint">検索フィールド --- border: #b5b5b5, radius: 30px, weight: 500</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">検索（フォーカス）</label>
+    <input class="form-input form-input--pill form-input--focus" type="text" value="ASTROX">
+    <div class="form-hint">検索フォーカス --- border: #0061b1, radius: 30px</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。Yonex のデフォルト。フラットデザインで角形要素によるシャープな印象</div>
+    </div>
+    <div class="elevation-card" style="border:2px solid var(--color-dark);">
+      <div class="elevation-label">Border Emphasis</div>
+      <div class="elevation-desc">border: 2px solid #1f2427 --- CTA の存在感は影ではなく太ボーダーで表現</div>
+    </div>
+    <div class="elevation-card" style="background:var(--color-yonex-blue-pale);">
+      <div class="elevation-label">Surface Tint</div>
+      <div class="elevation-desc">#f1f4f9 --- Yonex Blue Pale をサーフェスティントとして使用</div>
+    </div>
+    <div class="elevation-card" style="background:var(--color-bg); color:var(--color-text-white); border-color:var(--color-bg);">
+      <div class="elevation-label" style="color:var(--color-text-white);">Dark Surface</div>
+      <div class="elevation-desc" style="color:var(--color-text-inactive);">#000000 --- ヒーローやダークカードで使用。影ではなく明暗差で階層を表現</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- DARK SECTION -->
+<section class="section-dark">
+<div class="section-inner">
+  <div class="section-label">Dark Section</div>
+  <h2 class="section-title">Dark Section (#000000)</h2>
+  <p style="font-family:var(--font-ja); font-size:16px; line-height:1.8; margin-bottom:24px; color:var(--color-text-inactive);">Yonex のヒーローセクションやダークカードでは、背景色 #000000 にテキスト色 #ffffff を使用します。Oswald の letter-spacing: 0.1em と組み合わせることで、スポーツブランドらしい力強さと開放感を両立。CTA テキストは英語表記（"All News", "Learn More"）で統一されています。</p>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary-light" href="#">All News</a></div>
+    <div class="button-item"><a class="btn-outline-light" href="#">Learn More</a></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Layout</h2>
+
+  <div class="color-group-label">4-Column Grid (Product Gallery)</div>
+  <div class="layout-demo layout-demo-4col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+    <div class="layout-block">4</div>
+  </div>
+
+  <div class="color-group-label">3-Column Grid</div>
+  <div class="layout-demo layout-demo-3col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+  </div>
+
+  <div class="color-group-label">2-Column Grid</div>
+  <div class="layout-demo layout-demo-2col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:40px;">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.yonex.co.jp/">yonex.co.jp</a> DESIGN.md --- awesome-design-md-jp / computed style 実測値（2026-05-22）
+</footer>
+
+</body>
+</html>

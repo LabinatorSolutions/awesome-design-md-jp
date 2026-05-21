@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Shimano (シマノ)</title>
+<!--
+  Shimano はシステムフォント中心の構成。メイリオ / ヒラギノ角ゴ / MS PGothic 等の
+  和文システムフォントに、英文アクセントとして PT Sans (Google Fonts) を組み合わせる。
+  palt は使用しない（font-feature-settings: normal）。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --color-shimano-blue: #00a1e9;
+    --color-shimano-blue-link: #0093d7;
+    --color-shimano-blue-light: #32bfea;
+    --color-shimano-blue-banner: #04a6e1;
+    --color-dark: #393e40;
+    --color-dark-navy: #274558;
+    --color-text-primary: #4f4f4f;
+    --color-text-nav: #727272;
+    --color-text-white: #f3f3f3;
+    --color-bg: #f3f4f5;
+    --color-bg-section: #e3e4e5;
+    --color-bg-white: #ffffff;
+    --color-bg-dark: #292929;
+    --color-border: #cdcdcd;
+    --color-category: #727272;
+    --color-green: #468254;
+    /* === Elevation === */
+    --elevation-1: 0 2px 6px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 16px rgba(0,0,0,0.12);
+    /* === Fonts 実測値（システムフォント） === */
+    --font-primary: "メイリオ", Meiryo, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", Roboto, Helvetica, Arial, sans-serif;
+    --font-en-accent: "PT Sans", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: var(--color-bg-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-brand {
+    font-family: var(--font-en-accent); font-size: 22px; font-weight: 700;
+    color: var(--color-dark); text-decoration: none; letter-spacing: 0.15em;
+  }
+  .nav-brand span { color: var(--color-shimano-blue); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    color: var(--color-text-nav); text-decoration: none;
+    letter-spacing: 0.05em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-shimano-blue); }
+  .nav-cta {
+    display: inline-block; background: var(--color-shimano-blue-light);
+    color: var(--color-text-white);
+    padding: 8px 20px; border: none;
+    border-radius: 4px; font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    text-decoration: none; letter-spacing: 2px; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* === HERO === */
+  .hero {
+    padding: 100px 40px 80px; text-align: center;
+    background: var(--color-bg-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hero h1 {
+    font-family: var(--font-primary); font-size: 22px; font-weight: 700;
+    line-height: 1.55; letter-spacing: 0.05em;
+    color: var(--color-dark); margin-bottom: 20px;
+  }
+  .hero .hero-en {
+    font-family: var(--font-en-accent); font-size: 36px; font-weight: 400;
+    letter-spacing: 0.3px; color: var(--color-shimano-blue);
+    display: block; margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.9;
+    color: var(--color-text-primary); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* === BUTTONS === */
+  .btn-search {
+    display: inline-block; background: var(--color-shimano-blue-light);
+    color: var(--color-text-white);
+    padding: 12px 32px; border: none;
+    border-radius: 4px; font-family: var(--font-primary); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 2px; transition: opacity 0.2s;
+  }
+  .btn-search:hover { opacity: 0.85; }
+  .btn-business {
+    display: inline-block; background: var(--color-dark);
+    color: var(--color-text-white);
+    padding: 12px 32px; border: none;
+    border-radius: 0; font-family: var(--font-primary); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em; transition: opacity 0.2s;
+  }
+  .btn-business:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent;
+    color: #009ee7;
+    padding: 12px 32px; border: 1px solid #009ee7;
+    border-radius: 2px; font-family: var(--font-primary); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: #009ee7; color: var(--color-bg-white); }
+  .btn-accept {
+    display: inline-block; background: var(--color-bg-white);
+    color: #009ee7;
+    padding: 12px 32px; border: 1px solid var(--color-border);
+    border-radius: 2px; font-family: var(--font-primary); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em; transition: border-color 0.2s;
+  }
+  .btn-accept:hover { border-color: #009ee7; }
+  .btn-small {
+    display: inline-block; background: transparent;
+    color: var(--color-shimano-blue-link);
+    padding: 6px 14px; border: 1px solid var(--color-border);
+    border-radius: 2px; font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.05em; transition: border-color 0.2s;
+  }
+  .btn-small:hover { border-color: var(--color-shimano-blue-link); }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 40px; max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en-accent); font-size: 12px; font-weight: 400;
+    color: var(--color-text-nav); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-primary); font-size: 22px; font-weight: 700;
+    line-height: 1.55; letter-spacing: 0.05em; margin-bottom: 40px;
+    color: var(--color-dark);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+
+  .section-white { background: var(--color-bg-white); padding: 80px 40px; }
+  .section-white .section-inner { max-width: 1080px; margin: 0 auto; }
+
+  .section-dark { background: var(--color-dark); padding: 80px 40px; color: var(--color-text-white); }
+  .section-dark .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-dark .section-label { color: rgba(243,243,243,0.6); }
+  .section-dark .section-title { color: var(--color-text-white); }
+
+  .section-navy { background: var(--color-dark-navy); padding: 80px 40px; color: var(--color-text-white); }
+  .section-navy .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-navy .section-label { color: rgba(243,243,243,0.6); }
+  .section-navy .section-title { color: var(--color-text-white); }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: var(--color-bg-white); border: 1px solid var(--color-border); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--color-text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--color-text-nav); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--color-text-nav); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-en-accent); font-size: 14px; font-weight: 400; color: var(--color-text-nav); margin: 32px 0 12px; letter-spacing: 0.05em; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--color-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--color-text-nav); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--color-bg-section); color: var(--color-text-nav); font-size: 11px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
+
+  /* === ARTICLE === */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-primary); font-size: 22px; font-weight: 700;
+    line-height: 1.55; letter-spacing: 0.05em; margin-bottom: 20px;
+    color: var(--color-dark);
+  }
+  .article-preview h2 {
+    font-family: var(--font-primary); font-size: 17px; font-weight: 700;
+    line-height: 1.55; letter-spacing: 0.05em; margin: 32px 0 12px;
+    color: var(--color-dark);
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400; line-height: 1.9;
+    margin-bottom: 16px; color: var(--color-text-primary);
+  }
+  .article-preview .lead {
+    font-size: 16px; line-height: 1.9; color: var(--color-text-primary);
+    border-left: 3px solid var(--color-shimano-blue); padding-left: 20px;
+    margin-bottom: 24px;
+  }
+  .article-preview .en-accent {
+    font-family: var(--font-en-accent); font-size: 18px; font-weight: 400;
+    letter-spacing: 0.3px; color: var(--color-shimano-blue);
+  }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--color-bg-white); border-radius: 4px; padding: 0;
+    overflow: hidden; transition: box-shadow 0.3s; cursor: pointer;
+    border: 1px solid var(--color-border);
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image { width: 100%; height: 200px; background: var(--color-bg-section); display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-en-accent); font-size: 14px; font-weight: 400;
+    color: var(--color-text-nav); letter-spacing: 0.1em;
+  }
+  .card-body { padding: 20px 24px 28px; background: var(--color-bg-white); }
+  .card-body .card-category {
+    display: inline-block; background: var(--color-category); color: var(--color-text-white);
+    font-size: 11px; padding: 2px 10px; border-radius: 2px; margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .card-body h3 {
+    font-family: var(--font-primary); font-size: 17px; font-weight: 700;
+    line-height: 1.55; letter-spacing: 0.05em; margin-bottom: 8px;
+    color: var(--color-dark);
+  }
+  .card-body p { font-size: 14px; color: var(--color-text-primary); line-height: 1.8; }
+  .card-link {
+    display: inline-block; margin-top: 12px; font-size: 14px;
+    color: var(--color-shimano-blue-link); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .card-link:hover { color: var(--color-shimano-blue); text-decoration: underline; }
+
+  /* Business style cards (dark bg, no radius) */
+  .card-business {
+    background: var(--color-dark); border-radius: 0; padding: 0;
+    overflow: hidden; transition: opacity 0.3s; cursor: pointer;
+  }
+  .card-business:hover { opacity: 0.85; }
+  .card-business-image { width: 100%; height: 200px; background: var(--color-bg-dark); display: flex; align-items: center; justify-content: center; }
+  .card-business-body { padding: 20px 24px 28px; }
+  .card-business-body h3 {
+    font-family: var(--font-primary); font-size: 17px; font-weight: 700;
+    line-height: 1.55; color: var(--color-text-white); margin-bottom: 8px;
+  }
+  .card-business-body p { font-size: 14px; color: rgba(243,243,243,0.7); line-height: 1.8; }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 420px; }
+  .form-label {
+    display: block; font-size: 14px; font-weight: 400;
+    color: var(--color-text-primary); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: var(--color-bg-white); color: var(--color-text-primary);
+    border: 1px solid var(--color-border); padding: 12px 16px;
+    border-radius: 4px; font-family: var(--font-primary); font-size: 16px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--color-text-nav); }
+  .form-input:focus, .form-input--focus { border-color: var(--color-shimano-blue); }
+  .form-input--error { border-color: #d32f2f; }
+  .form-hint { font-size: 12px; color: var(--color-text-nav); margin-top: 6px; }
+  .form-error { font-size: 12px; color: #d32f2f; margin-top: 6px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--color-bg-white); border-radius: 4px; padding: 28px;
+    text-align: center; border: 1px solid var(--color-border);
+  }
+  .elevation-label { font-size: 14px; font-weight: 400; margin-bottom: 8px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--color-text-nav); word-break: break-all; }
+
+  /* === LAYOUT DEMO === */
+  .layout-demo { display: grid; gap: 16px; margin-bottom: 32px; }
+  .layout-demo-4col { grid-template-columns: repeat(4, 1fr); }
+  .layout-demo-3col { grid-template-columns: repeat(3, 1fr); }
+  .layout-demo-2col { grid-template-columns: repeat(2, 1fr); }
+  .layout-block {
+    background: var(--color-bg-section); height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en-accent); font-size: 13px; font-weight: 400;
+    color: var(--color-text-nav); letter-spacing: 0.05em;
+    border-radius: 4px;
+  }
+
+  /* === BUTTON ROW === */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--color-text-nav); margin-top: 10px; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-shimano-blue); margin-bottom: 8px; height: 28px; border-radius: 2px; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 400; color: var(--color-text-nav); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 48px 40px; text-align: center;
+    background: var(--color-bg-dark);
+    font-family: var(--font-primary); font-size: 12px; font-weight: 400;
+    color: rgba(243,243,243,0.6); letter-spacing: 0.05em;
+  }
+  .footer a { color: var(--color-text-white); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero { padding: 64px 20px 48px; }
+    .hero h1 { font-size: 18px; }
+    .hero .hero-en { font-size: 28px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-white { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .section-navy { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .layout-demo-4col { grid-template-columns: repeat(2, 1fr); }
+    .layout-demo-3col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>S</span>HIMANO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">SEARCH</a>
+</nav>
+
+<section class="hero">
+  <h1><span class="hero-en">Design System Preview</span>Shimano — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。複数階調のシマノブルー、PT Sans の英文アクセント、メイリオベースの和文組版、line-height: 1.9 の寛大な行間など、精密機器メーカーのデザイン言語を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-search" href="#">製品を探す</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Shimano Blue (Brand)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00a1e9"></div><div class="color-swatch-info"><div class="color-swatch-name">Shimano Blue</div><div class="color-swatch-hex">#00a1e9</div><div class="color-swatch-role">--color-shimano-blue</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0093d7"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Link</div><div class="color-swatch-hex">#0093d7</div><div class="color-swatch-role">--color-shimano-blue-link</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#32bfea"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Light</div><div class="color-swatch-hex">#32bfea</div><div class="color-swatch-role">--color-shimano-blue-light</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#04a6e1"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Banner</div><div class="color-swatch-hex">#04a6e1</div><div class="color-swatch-role">--color-shimano-blue-banner</div></div></div>
+  </div>
+
+  <div class="color-group-label">Dark & Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#393e40"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#393e40</div><div class="color-swatch-role">--color-dark</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#274558"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">#274558</div><div class="color-swatch-role">--color-dark-navy</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Accent</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">--color-green</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4f4f4f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#4f4f4f</div><div class="color-swatch-role">--color-text-primary</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#727272"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Nav</div><div class="color-swatch-hex">#727272</div><div class="color-swatch-role">--color-text-nav</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#393e40"><div style="color:#f3f3f3;padding:20px 12px;font-size:13px;">Text White</div></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">--color-text-white</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f4f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Page BG</div><div class="color-swatch-hex">#f3f4f5</div><div class="color-swatch-role">--color-bg (ライトグレー)</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e3e4e5"></div><div class="color-swatch-info"><div class="color-swatch-name">Section BG</div><div class="color-swatch-hex">#e3e4e5</div><div class="color-swatch-role">--color-bg-section</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #cdcdcd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">--color-bg-white</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#292929"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark BG</div><div class="color-swatch-hex">#292929</div><div class="color-swatch-role">--color-bg-dark</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border & Category</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cdcdcd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cdcdcd</div><div class="color-swatch-role">--color-border</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#727272"></div><div class="color-swatch-info"><div class="color-swatch-name">Category Badge</div><div class="color-swatch-hex">#727272</div><div class="color-swatch-role">--color-category</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-white" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-en-accent); font-size:18px; font-weight:400; letter-spacing:0.3px; color:var(--color-shimano-blue);">PT Sans English Accent — Precision Engineering</div>
+    <div class="type-meta">PT Sans / 18px / Regular / letter-spacing: 0.3px / color: #00a1e9<span class="type-context">英文アクセント</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:24px; font-weight:400; line-height:1.9; color:var(--color-text-primary);">メガメニュー見出し — Nav Mega Menu Title</div>
+    <div class="type-meta">24px / Regular / line-height: 1.9 / letter-spacing: 0.05em<span class="type-context">メガメニュー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:22px; font-weight:700; line-height:1.55; letter-spacing:0.05em; color:var(--color-dark);">セクション見出し — Section Heading (h2)</div>
+    <div class="type-meta">22px / Bold / line-height: 1.55 / letter-spacing: 0.05em / color: #393e40<span class="type-context">セクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:17px; font-weight:700; line-height:1.55; letter-spacing:0.05em; color:var(--color-dark);">サブセクション見出し — Subsection (h3)</div>
+    <div class="type-meta">17px / Bold / line-height: 1.55 / letter-spacing: 0.05em<span class="type-context">サブセクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:16px; font-weight:400; line-height:1.9; letter-spacing:0.05em; color:var(--color-text-primary);">本文テキスト — シマノは精密冷間鍛造や高精度切削加工の技術を駆使し、世界最高水準のサイクリングコンポーネントを製造しています。line-height: 1.9 の寛大な行間が、技術文書の可読性を高めます。ABCabc 123</div>
+    <div class="type-meta">16px / Regular / line-height: 1.9 / letter-spacing: 0.05em / palt: なし<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.8; letter-spacing:0.05em; color:var(--color-text-primary);">企業情報本文テキスト — Company page body (14px)</div>
+    <div class="type-meta">14px / Regular / line-height: 1.8 / letter-spacing: 0.05em<span class="type-context">企業情報ページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:13px; font-weight:400; line-height:1.5; letter-spacing:0.05em; color:var(--color-text-nav);">ナビゲーション項目 — 13px / Nav item text</div>
+    <div class="type-meta">13px / Regular / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en-accent); font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-text-nav);">SECTION LABEL — 12PX PT SANS UPPERCASE</div>
+    <div class="type-meta">PT Sans / 12px / uppercase / letter-spacing: 0.1em<span class="type-context">セクションラベル</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section" id="article">
+  <div class="section-label">03 / Article — 精密工学コンテンツ</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>精密冷間鍛造が拓くサイクリングの未来</h1>
+    <p class="lead">ギアの噛み合わせを1/100mm単位で追い込む。シマノの精密加工技術は、プロフェッショナルの勝利を支えるだけでなく、すべてのサイクリストの走行体験を変えている。</p>
+    <p>シマノは1921年の創業以来、精密機器メーカーとしての技術を磨き続けてきました。サイクリングコンポーネント、フィッシングタックル、ローイング機器の3つの事業領域で、精密冷間鍛造と高精度切削加工の技術を展開しています。</p>
+    <p class="en-accent">Precision Cold Forging Technology</p>
+    <h2>DURA-ACE の設計思想</h2>
+    <p>フラッグシップコンポーネント DURA-ACE は、レース機材としての極限の性能と信頼性を両立させます。12速の電動変速システム Di2 は、過酷なレースコンディション下でも0.001秒の精度で変速を完了します。</p>
+    <p>チェーンリングの歯先形状は、空力抵抗の低減とチェーン保持力の最適化を同時に実現するために、数万パターンのシミュレーションを経て設計されています。この精密さこそが、シマノのエンジニアリング哲学の核心です。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section-white" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / Buttons — radius: 0-4px</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row">
+    <div class="button-item"><a class="btn-search" href="#">製品を探す</a><div class="button-label">Search (radius: 4px, #32bfea)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">詳細を見る</a><div class="button-label">Outline (#009ee7, radius: 2px)</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-accept" href="#">同意する</a><div class="button-label">Accept (white bg, radius: 2px)</div></div>
+    <div class="button-item"><a class="btn-small" href="#">ニュース一覧</a><div class="button-label">Small / Sub</div></div>
+  </div>
+
+  <div style="background:var(--color-dark); padding:32px; margin-top:32px; border-radius:0;">
+    <div class="button-row" style="margin-bottom:0;">
+      <div class="button-item"><a class="btn-business" href="#">事業紹介</a><div class="button-label" style="color:rgba(243,243,243,0.6);">Business (radius: 0, #393e40)</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="color-group-label">News Cards (white bg, category badge)</div>
+  <div class="card-grid" style="margin-bottom:40px;">
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">PRODUCT IMAGE</div></div>
+      <div class="card-body">
+        <span class="card-category">CYCLING</span>
+        <h3>DURA-ACE R9200 シリーズ</h3>
+        <p>12速ワイヤレス電動変速を搭載した、プロフェッショナル向けレーシングコンポーネント。</p>
+        <a class="card-link" href="#">詳しく見る &rarr;</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">PRODUCT IMAGE</div></div>
+      <div class="card-body">
+        <span class="card-category">FISHING</span>
+        <h3>STELLA 新モデル</h3>
+        <p>マイクロモジュールギアIIとインフィニティドライブが実現する、かつてない巻き心地。</p>
+        <a class="card-link" href="#">詳しく見る &rarr;</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">PRODUCT IMAGE</div></div>
+      <div class="card-body">
+        <span class="card-category">ROWING</span>
+        <h3>ローイングエルゴメーター</h3>
+        <p>トップアスリートのトレーニングを支える、精密な負荷制御技術。</p>
+        <a class="card-link" href="#">詳しく見る &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Business Cards (dark bg, radius: 0)</div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:2px;">
+    <div class="card-business">
+      <div class="card-business-image"><div class="card-image-placeholder" style="color:rgba(243,243,243,0.4);">BUSINESS IMAGE</div></div>
+      <div class="card-business-body">
+        <h3>自転車部品事業</h3>
+        <p>変速機、ブレーキ、ホイール。精密鍛造技術が支えるコンポーネント。</p>
+      </div>
+    </div>
+    <div class="card-business">
+      <div class="card-business-image"><div class="card-image-placeholder" style="color:rgba(243,243,243,0.4);">BUSINESS IMAGE</div></div>
+      <div class="card-business-body">
+        <h3>釣具事業</h3>
+        <p>リール、ロッド、ルアー。精密ギア技術が生む、滑らかな巻き心地。</p>
+      </div>
+    </div>
+    <div class="card-business">
+      <div class="card-business-image"><div class="card-image-placeholder" style="color:rgba(243,243,243,0.4);">BUSINESS IMAGE</div></div>
+      <div class="card-business-body">
+        <h3>ライフスタイルギア事業</h3>
+        <p>ローイング、アウトドア。精密工学で拡がる新領域。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-white" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms — radius: 4px</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-hint">デフォルト — border: #cdcdcd, radius: 4px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="taro@example.com">
+    <div class="form-hint">フォーカス — border: #00a1e9 (Shimano Blue)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-1234">
+    <div class="form-error">正しい電話番号を入力してください</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし + border: #cdcdcd。シマノのデフォルト。精密で控えめな佇まい</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1: Hover</div>
+      <div class="elevation-desc">0 2px 6px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2: Card Lift</div>
+      <div class="elevation-desc">0 4px 16px rgba(0,0,0,0.12)</div>
+    </div>
+    <div class="elevation-card" style="background:var(--color-shimano-blue); color:var(--color-text-white); border-color:var(--color-shimano-blue);">
+      <div class="elevation-label" style="color:var(--color-text-white);">Brand Surface</div>
+      <div class="elevation-desc" style="color:rgba(243,243,243,0.7);">Shimano Blue ベタ塗り面。バナー・CTA 領域で使用</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- DARK SECTION (Navy) -->
+<section class="section-navy">
+<div class="section-inner">
+  <div class="section-label">Dark Navy Section</div>
+  <h2 class="section-title">ダークネイビーセクション (#274558)</h2>
+  <p style="font-size:16px; line-height:1.9; margin-bottom:24px; color:var(--color-text-white);">シマノのダークセクションでは、ビジネスセクション用の #393e40 と、アクセントとしてのダークネイビー #274558 の2色を使い分けます。テキストは #f3f3f3 で、純白 #ffffff ではなくわずかにグレーがかった白を使用し、精密機器メーカーらしい落ち着いたトーンを維持しています。</p>
+  <div style="display:flex; gap:12px; flex-wrap:wrap;">
+    <span style="font-family:var(--font-en-accent); font-size:18px; letter-spacing:0.3px; color:var(--color-shimano-blue-light);">Precision</span>
+    <span style="font-family:var(--font-en-accent); font-size:18px; letter-spacing:0.3px; color:var(--color-shimano-blue-light);">Performance</span>
+    <span style="font-family:var(--font-en-accent); font-size:18px; letter-spacing:0.3px; color:var(--color-shimano-blue-light);">Reliability</span>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section-white" id="layout">
+<div class="section-inner">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウトグリッド</h2>
+
+  <div class="color-group-label">4-Column Grid (Product Gallery)</div>
+  <div class="layout-demo layout-demo-4col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+    <div class="layout-block">4</div>
+  </div>
+
+  <div class="color-group-label">3-Column Grid (News / Cards)</div>
+  <div class="layout-demo layout-demo-3col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+  </div>
+
+  <div class="color-group-label">2-Column Grid (Content + Sidebar)</div>
+  <div class="layout-demo layout-demo-2col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:40px;">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.shimano.com/">shimano.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-22）
+</footer>
+
+</body>
+</html>
