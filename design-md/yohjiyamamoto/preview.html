@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Yohji Yamamoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Yohji Yamamoto Color Tokens (実測値) === */
+    /* Surface */
+    --dark-bg: #101010;
+    --light-bg: #fafafa;
+    --pure-black: #000000;
+    --notice-bar: #272727;
+    --highlights-bg: #212121;
+    --divider: #ebebeb;
+    --menu-surface: #ffffff;
+
+    /* Text */
+    --text-on-dark: #ffffff;
+    --text-on-light: #000000;
+    --date-muted: #a3a3a3;
+
+    /* Overlay */
+    --modal-overlay: rgba(0, 0, 0, 0.4);
+    --photo-hover: rgba(0, 0, 0, 0.5);
+
+    /* === Fonts ===
+       Note: 実サイトは Optima（macOS プリインストール）+ 游ゴシック体 + Poppins を使用。
+       Optima は macOS では利用可能。Windows 環境では sans-serif にフォールバック。
+       本プレビューでは Optima をそのまま使用し、和文代替に Noto Sans JP を追加。 */
+    --font-heading: Optima, "Noto Sans JP", sans-serif;
+    --font-body: 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Noto Sans JP", メイリオ, Meiryo, sans-serif;
+    --font-date: "Poppins", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark-bg);
+    color: var(--text-on-dark);
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400; line-height: 1.25;
+    letter-spacing: 1.2px;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+    background: var(--dark-bg);
+    border-bottom: 1px solid var(--highlights-bg);
+  }
+  .nav-left {
+    font-family: var(--font-heading); font-size: 11px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none; letter-spacing: 0.88px;
+    opacity: 0.7;
+  }
+  .nav-brand {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none; letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .nav-right { display: flex; gap: 32px; }
+  .nav-right a {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none; letter-spacing: 1.2px;
+  }
+  .nav-right a:hover { opacity: 0.7; }
+
+  /* === NOTICE BAR === */
+  .notice-bar {
+    background: var(--notice-bar);
+    padding: 12px 40px;
+    text-align: center;
+  }
+  .notice-bar a {
+    font-family: var(--font-body); font-size: 10px; font-weight: 500;
+    color: var(--text-on-dark); text-decoration: none; letter-spacing: 1.2px;
+    line-height: 1.5;
+  }
+  .notice-bar a:hover { opacity: 0.7; }
+
+  /* === HERO === */
+  .hero {
+    padding: 120px 40px 100px;
+    text-align: center;
+    background: var(--dark-bg);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--date-muted); margin-bottom: 24px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 20px; font-weight: 400; line-height: 1.0;
+    color: var(--text-on-dark); margin-bottom: 32px;
+    letter-spacing: 1.2px;
+  }
+  .hero p {
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400; line-height: 1.25;
+    color: var(--date-muted); max-width: 640px; margin: 0 auto 48px;
+    letter-spacing: 1.2px;
+  }
+  .hero-links { display: flex; gap: 40px; justify-content: center; }
+  .hero-links a {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px;
+    transition: opacity 0.2s;
+  }
+  .hero-links a:hover { opacity: 0.7; }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-dark { background: var(--dark-bg); color: var(--text-on-dark); }
+  .section-light { background: var(--light-bg); color: var(--text-on-light); }
+  .section-highlights { background: var(--highlights-bg); color: var(--text-on-dark); }
+  .section-eyebrow {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--date-muted); letter-spacing: 1.5px; margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 20px; font-weight: 400;
+    margin-bottom: 48px; line-height: 1.0;
+    letter-spacing: 1.2px;
+  }
+  .section-divider { border: none; height: 1px; background: var(--highlights-bg); margin: 0; }
+  .section-divider-light { border: none; height: 1px; background: var(--divider); margin: 0; }
+  .full-width { max-width: 100%; }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 12px 0; }
+  .color-swatch-name {
+    font-family: var(--font-heading);
+    font-size: 11px; font-weight: 400; margin-bottom: 4px;
+    letter-spacing: 1.2px;
+  }
+  .color-swatch-hex { font-size: 10px; color: var(--date-muted); font-family: var(--font-mono); letter-spacing: normal; }
+  .color-swatch-role { font-size: 10px; color: var(--date-muted); margin-top: 4px; letter-spacing: 1.2px; }
+  .color-group-label {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--date-muted); margin: 32px 0 12px; letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--highlights-bg); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--date-muted); margin-top: 12px; letter-spacing: normal; }
+
+  /* === ARTICLE / NEWS CARDS === */
+  .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .news-card {
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+  }
+  .news-card-image {
+    aspect-ratio: 16/10; background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .news-card-image.warm { background: linear-gradient(135deg, #2d2218, #1a1510); }
+  .news-card-image.cool { background: linear-gradient(135deg, #1a1d24, #101318); }
+  .news-card-image.mono { background: linear-gradient(135deg, #222222, #0a0a0a); }
+  .news-card-image span {
+    font-family: var(--font-heading); font-size: 14px; font-weight: 400;
+    color: rgba(255,255,255,0.3); letter-spacing: 2px;
+  }
+  .news-card-body { padding: 16px 0 0; }
+  .news-card-date {
+    font-family: var(--font-date);
+    font-size: 12px; font-weight: 400; line-height: 1.0;
+    color: var(--date-muted); margin-bottom: 10px; letter-spacing: normal;
+  }
+  .news-card h3 {
+    font-family: var(--font-heading);
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal; margin-bottom: 0;
+  }
+
+  /* === COLLECTION GRID (Light mode) === */
+  .collection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .collection-item {
+    position: relative; overflow: hidden;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 24px;
+  }
+  .collection-item.tone-warm { background: linear-gradient(135deg, #2d2218, #0f0b07); }
+  .collection-item.tone-cool { background: linear-gradient(135deg, #1a1d24, #080a0f); }
+  .collection-item.tone-gray { background: linear-gradient(135deg, #252525, #111111); }
+  .collection-item-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .collection-item:hover .collection-item-overlay { opacity: 1; }
+  .collection-item-overlay span {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 400;
+    color: var(--text-on-dark); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .collection-item-label {
+    position: relative; z-index: 1;
+    text-align: center;
+  }
+  .collection-item-label h2 {
+    font-family: var(--font-heading); font-size: 16px; font-weight: 400;
+    color: var(--text-on-dark); letter-spacing: 1.2px; line-height: 1.5;
+  }
+
+  /* === BUTTONS (Text Links) === */
+  .button-showcase { display: flex; flex-direction: column; gap: 40px; }
+  .button-row { display: flex; gap: 40px; flex-wrap: wrap; align-items: center; }
+  .button-item { display: flex; flex-direction: column; gap: 12px; }
+  .button-label { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--date-muted); letter-spacing: normal; }
+
+  .link-primary {
+    font-family: var(--font-heading); font-size: 11px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    transition: opacity 0.2s; cursor: pointer;
+  }
+  .link-primary:hover { opacity: 0.7; }
+
+  .link-underline {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px;
+    transition: opacity 0.2s; cursor: pointer;
+  }
+  .link-underline:hover { opacity: 0.7; }
+
+  .link-nav {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none;
+    letter-spacing: 1.5px;
+    padding: 5px 5px 5px 20px;
+    transition: opacity 0.2s; cursor: pointer;
+  }
+  .link-nav:hover { opacity: 0.7; }
+
+  .link-notice {
+    display: inline-block;
+    background: var(--notice-bar);
+    padding: 10px 24px;
+    font-family: var(--font-body); font-size: 10px; font-weight: 500;
+    color: var(--text-on-dark); text-decoration: none;
+    letter-spacing: 1.2px;
+    transition: opacity 0.2s; cursor: pointer;
+  }
+  .link-notice:hover { opacity: 0.7; }
+
+  .link-light {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 400;
+    color: var(--text-on-light); text-decoration: none;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    transition: opacity 0.2s; cursor: pointer;
+  }
+  .link-light:hover { opacity: 0.7; }
+
+  /* === FORM === */
+  .form-group { margin-bottom: 32px; max-width: 480px; }
+  .form-label {
+    display: block; font-family: var(--font-heading);
+    font-size: 10px; font-weight: 400; color: var(--date-muted); margin-bottom: 12px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1px solid var(--highlights-bg);
+    padding: 10px 0; border-radius: 0px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    color: var(--text-on-dark); letter-spacing: 1.2px; outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-input--focus { border-bottom-color: var(--text-on-dark); }
+  .form-input::placeholder { color: var(--date-muted); }
+  .form-input--error { border-bottom-color: #8b0000; }
+  .form-state-label { font-size: 10px; color: var(--date-muted); margin-top: 8px; font-family: var(--font-mono); letter-spacing: normal; }
+  .form-error-text { font-size: 10px; color: #8b0000; margin-top: 8px; font-family: var(--font-mono); letter-spacing: normal; }
+
+  .form-input-light {
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1px solid var(--divider);
+    padding: 10px 0; border-radius: 0px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    color: var(--text-on-light); letter-spacing: 1.2px; outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input-light:focus, .form-input-light.form-input--focus { border-bottom-color: var(--text-on-light); }
+  .form-input-light::placeholder { color: var(--date-muted); }
+  .form-input-light.form-input--error { border-bottom-color: #8b0000; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-item {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 10px; color: var(--date-muted);
+    letter-spacing: normal;
+  }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--text-on-dark); opacity: 0.15; height: 32px; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; color: var(--date-muted); letter-spacing: normal; }
+  .spacing-label { font-family: var(--font-heading); font-size: 10px; color: var(--date-muted); letter-spacing: 1.2px; margin-top: 2px; }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 64px 40px 40px;
+    background: var(--pure-black);
+    text-align: center;
+  }
+  .footer-brands {
+    display: flex; flex-direction: column; gap: 12px; align-items: center;
+    margin-bottom: 48px;
+  }
+  .footer-brands a {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--text-on-dark); text-decoration: none; letter-spacing: 1.5px;
+    opacity: 0.6; transition: opacity 0.2s;
+  }
+  .footer-brands a:hover { opacity: 1; }
+  .footer-divider { width: 40px; height: 1px; background: var(--divider); margin: 0 auto 32px; opacity: 0.3; }
+  .footer-corp {
+    font-family: var(--font-heading); font-size: 10px; font-weight: 400;
+    color: var(--date-muted); letter-spacing: normal;
+    margin-bottom: 8px;
+  }
+  .footer-copy {
+    font-family: var(--font-mono); font-size: 9px;
+    color: var(--date-muted); letter-spacing: normal;
+    opacity: 0.5;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero { padding: 80px 20px 64px; }
+    .hero h1 { font-size: 16px; }
+    .section { padding: 56px 20px; }
+    .section-title { font-size: 16px; }
+    .nav-right { display: none; }
+    .nav { padding: 0 20px; }
+    .news-grid { grid-template-columns: 1fr; gap: 24px; }
+    .collection-grid { grid-template-columns: 1fr; }
+    .hero-links { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NOTICE BAR -->
+<div class="notice-bar">
+  <a href="#">THE SHOP YOHJI YAMAMOTOを装ったサイトへの誘導にご注意ください</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-left" href="#">NEWSLETTER</a>
+  <a class="nav-brand" href="#">Yohji Yamamoto</a>
+  <div class="nav-right">
+    <a href="#colors">MENU</a>
+    <a href="#collection">BRANDS / COLLECTION</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">design system preview</div>
+  <h1>BRANDS / COLLECTION</h1>
+  <p>Yohji Yamamoto（yohjiyamamoto.co.jp）から抽出したデザイントークンのカタログ。ダーク背景（#101010）+ Optima + 游ゴシック体 + Poppins の3フォント体制。letter-spacing 1.2px グローバル。テキストリンクのみの反商業的UI。角丸ゼロ、影ゼロ。computed style 実測値に基づく。</p>
+  <div class="hero-links">
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#collection">Collection</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section section-dark" id="colors">
+  <div class="section-eyebrow">01 / colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#101010"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Background</div><div class="color-swatch-hex">#101010</div><div class="color-swatch-role">トップページ body</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Background</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">コレクション body</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#272727"></div><div class="color-swatch-info"><div class="color-swatch-name">Notice Bar</div><div class="color-swatch-hex">#272727</div><div class="color-swatch-role">注意喚起バー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#212121"></div><div class="color-swatch-info"><div class="color-swatch-name">Highlights</div><div class="color-swatch-hex">#212121</div><div class="color-swatch-role">ハイライトセクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff"></div><div class="color-swatch-info"><div class="color-swatch-name">Menu Surface</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">メニュー・パネル</div></div></div>
+  </div>
+
+  <div class="color-group-label">text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク上テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Light</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ライト上テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a3a3a3"></div><div class="color-swatch-info"><div class="color-swatch-name">Date Muted</div><div class="color-swatch-hex">#a3a3a3</div><div class="color-swatch-role">日付・補足テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">border / divider</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#ebebeb</div><div class="color-swatch-role">区切り線（8回出現）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Divider</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ライトモード区切り</div></div></div>
+  </div>
+
+  <div class="color-group-label">overlay</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.4)"></div><div class="color-swatch-info"><div class="color-swatch-name">Modal Overlay</div><div class="color-swatch-hex">rgba(0,0,0,0.4)</div><div class="color-swatch-role">モーダルベール</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.5)"></div><div class="color-swatch-info"><div class="color-swatch-name">Photo Hover</div><div class="color-swatch-hex">rgba(0,0,0,0.5)</div><div class="color-swatch-role">写真ホバーオーバーレイ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-dark" id="typography">
+  <div class="section-eyebrow">02 / typography</div>
+  <h2 class="section-title">Typography Hierarchy</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:20px; font-weight:400; line-height:1.0; letter-spacing:1.2px;">BRANDS / COLLECTION</div>
+    <div class="type-meta">Optima 20px / weight 400 / line-height 1.0 / letter-spacing 1.2px &mdash; Section Heading</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:20px; font-weight:400; line-height:1.5; letter-spacing:normal;">WILDSIDE x BROSH Collaboration Collection vol.2</div>
+    <div class="type-meta">Optima 20px / weight 400 / line-height 1.5 / letter-spacing normal &mdash; Article Title</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:16px; font-weight:400; line-height:1.5; letter-spacing:1.2px;">Yohji Yamamoto</div>
+    <div class="type-meta">Optima 16px / weight 400 / line-height 1.5 / letter-spacing 1.2px &mdash; Collection Brand</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:1.2px;">S'YTE</div>
+    <div class="type-meta">Optima 14px / weight 400 / line-height 1.5 / letter-spacing 1.2px &mdash; Sub Brand</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.25; letter-spacing:1.2px;">山本耀司による前衛的なファッションの世界。黒を基調としたデザインは、西洋のファッション規範に対するアンチテーゼとして、パリコレクションで衝撃を与えた。素材の持つ力と、身体と衣服の間に生まれる空間への探求。</div>
+    <div class="type-meta">游ゴシック体 15px / weight 400 / line-height 1.25 / letter-spacing 1.2px &mdash; Body</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:12px; font-weight:400; line-height:1.0; letter-spacing:1.2px;">TOP</div>
+    <div class="type-meta">Optima 12px / weight 400 / line-height 1.0 / letter-spacing 1.2px &mdash; Nav Top Link</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:11px; font-weight:400; line-height:1.0; letter-spacing:0.88px;">NEWSLETTER</div>
+    <div class="type-meta">Optima 11px / weight 400 / line-height 1.0 / letter-spacing 0.88px &mdash; Newsletter Link</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:10px; font-weight:400; line-height:1.5; letter-spacing:1.5px;">Yohji Yamamoto &nbsp;&nbsp; Y's &nbsp;&nbsp; Y's for men &nbsp;&nbsp; discord &nbsp;&nbsp; S'YTE</div>
+    <div class="type-meta">Optima 10px / weight 400 / line-height 1.5 / letter-spacing 1.5px &mdash; Footer Nav</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-date); font-size:12px; font-weight:400; line-height:1.0; letter-spacing:normal; color:var(--date-muted);">May 21, 2026</div>
+    <div class="type-meta">Poppins 12px / weight 400 / line-height 1.0 / letter-spacing normal / color #a3a3a3 &mdash; Date Stamp</div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:10px; font-weight:500; line-height:1.5; letter-spacing:1.2px;">THE SHOP YOHJI YAMAMOTOを装ったサイトへの誘導にご注意ください</div>
+    <div class="type-meta">游ゴシック体 10px / weight 500 / line-height 1.5 / letter-spacing 1.2px &mdash; Notice Bar</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / NEWS -->
+<section class="section section-dark">
+  <div class="section-eyebrow">03 / article</div>
+  <h2 class="section-title">HIGHLIGHTS</h2>
+
+  <div class="news-grid">
+    <a class="news-card" href="#">
+      <div class="news-card-image mono"><span>IMAGE</span></div>
+      <div class="news-card-body">
+        <div class="news-card-date">May 21, 2026</div>
+        <h3>WILDSIDE x BROSH Collaboration Collection vol.2</h3>
+      </div>
+    </a>
+    <a class="news-card" href="#">
+      <div class="news-card-image warm"><span>IMAGE</span></div>
+      <div class="news-card-body">
+        <div class="news-card-date">May 19, 2026</div>
+        <h3>Y's for men x MASSES S/S 2026</h3>
+      </div>
+    </a>
+    <a class="news-card" href="#">
+      <div class="news-card-image cool"><span>IMAGE</span></div>
+      <div class="news-card-body">
+        <div class="news-card-date">May 15, 2026</div>
+        <h3>Ground Y x Evangelion Collaboration</h3>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLLECTION (Light Mode) -->
+<div style="background:var(--light-bg); color:var(--text-on-light);" id="collection">
+  <section class="section" style="color:var(--text-on-light);">
+    <div class="section-eyebrow" style="color:var(--date-muted);">04 / collection</div>
+    <h2 class="section-title" style="color:var(--text-on-light);">COLLECTION</h2>
+  </section>
+
+  <div class="collection-grid" style="max-width:1100px; margin:0 auto; padding:0 40px 80px;">
+    <div class="collection-item tone-gray">
+      <div class="collection-item-overlay"><span>View Collection</span></div>
+      <div class="collection-item-label"><h2>Yohji Yamamoto</h2></div>
+    </div>
+    <div class="collection-item tone-warm">
+      <div class="collection-item-overlay"><span>View Collection</span></div>
+      <div class="collection-item-label"><h2>Y's</h2></div>
+    </div>
+    <div class="collection-item tone-cool">
+      <div class="collection-item-overlay"><span>View Collection</span></div>
+      <div class="collection-item-label"><h2>discord</h2></div>
+    </div>
+    <div class="collection-item">
+      <div class="collection-item-overlay"><span>View Collection</span></div>
+      <div class="collection-item-label"><h2>S'YTE</h2></div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider-light">
+
+<!-- BUTTONS (Text Links) -->
+<section class="section section-dark" id="buttons">
+  <div class="section-eyebrow">05 / buttons (text links)</div>
+  <h2 class="section-title">Interactive Elements</h2>
+  <p style="font-size:12px; color:var(--date-muted); margin-bottom:48px; line-height:1.5;">Yohji Yamamoto のサイトにはCTAボタンが存在しない。すべてのインタラクションはテキストリンクで行われる。</p>
+
+  <div class="button-showcase">
+    <div class="button-row">
+      <div class="button-item">
+        <a class="link-primary" href="#">NEWSLETTER</a>
+        <div class="button-label">Primary Link (Optima 11px / ls: 1.2px)</div>
+      </div>
+      <div class="button-item">
+        <a class="link-underline" href="#">VIEW COLLECTION</a>
+        <div class="button-label">Underline Link (Optima 10px / ls: 1.5px)</div>
+      </div>
+      <div class="button-item">
+        <a class="link-primary" href="#" style="font-size:10px; letter-spacing:1.5px;">TOP</a>
+        <div class="button-label">Footer Link (Optima 10px / ls: 1.5px)</div>
+      </div>
+    </div>
+
+    <div class="button-row">
+      <div class="button-item">
+        <a class="link-nav" href="#">Yohji Yamamoto</a>
+        <div class="button-label">Nav Brand Link (Optima 10px / indent 20px)</div>
+      </div>
+      <div class="button-item">
+        <a class="link-notice" href="#">偽サイトへの誘導にご注意ください</a>
+        <div class="button-label">Notice Bar Link (游ゴシック 10px / weight 500)</div>
+      </div>
+    </div>
+
+    <div style="background:var(--light-bg); padding:32px; margin-top:16px;">
+      <div class="button-row">
+        <div class="button-item">
+          <a class="link-light" href="#">BRANDS</a>
+          <div class="button-label" style="color:var(--date-muted);">Light Mode Link (Optima 12px / #000)</div>
+        </div>
+        <div class="button-item">
+          <a class="link-light" href="#" style="font-size:10px; letter-spacing:1.5px;">YOHJI YAMAMOTO INC.</a>
+          <div class="button-label" style="color:var(--date-muted);">Corp Name (Optima 10px / ls: normal)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section section-dark">
+  <div class="section-eyebrow">06 / forms</div>
+  <h2 class="section-title">Form Elements</h2>
+  <p style="font-size:12px; color:var(--date-muted); margin-bottom:48px; line-height:1.5;">実サイトにフォーム要素は検出されなかった。ブランドトーンに基づく推奨スタイル。</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+    <!-- Dark Forms -->
+    <div>
+      <p style="font-family:var(--font-heading); font-size:10px; color:var(--date-muted); letter-spacing:1.5px; margin-bottom:24px; text-transform:uppercase;">Dark Mode</p>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input" type="text" placeholder="山本 太郎">
+        <div class="form-state-label">Default</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input form-input--focus" type="email" value="yohji@example.com">
+        <div class="form-state-label">Focus</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号</label>
+        <input class="form-input form-input--error" type="tel" value="">
+        <div class="form-error-text">必須項目です</div>
+      </div>
+    </div>
+
+    <!-- Light Forms -->
+    <div style="background:var(--light-bg); padding:32px;">
+      <p style="font-family:var(--font-heading); font-size:10px; color:var(--date-muted); letter-spacing:1.5px; margin-bottom:24px; text-transform:uppercase;">Light Mode</p>
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input class="form-input-light" type="text" placeholder="山本 太郎">
+        <div class="form-state-label">Default</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input class="form-input-light form-input--focus" type="email" value="yohji@example.com">
+        <div class="form-state-label">Focus</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">電話番号</label>
+        <input class="form-input-light form-input--error" type="tel" value="">
+        <div class="form-error-text">必須項目です</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section section-dark">
+  <div class="section-eyebrow">07 / elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <p style="font-size:12px; color:var(--date-muted); margin-bottom:48px; line-height:1.5;">Yohji Yamamoto は box-shadow を一切使わない。奥行きはオーバーレイの透過度のみで表現する。</p>
+
+  <div class="elevation-grid">
+    <div class="elevation-item" style="background:var(--dark-bg); border:1px solid var(--highlights-bg);">
+      Level 0<br>box-shadow: none<br>(全要素基本)
+    </div>
+    <div class="elevation-item" style="background:rgba(0,0,0,0.4);">
+      Overlay<br>rgba(0,0,0,0.4)<br>(モーダルベール)
+    </div>
+    <div class="elevation-item" style="background:rgba(0,0,0,0.5);">
+      Photo Hover<br>rgba(0,0,0,0.5)<br>(写真ホバー)
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT / SPACING -->
+<section class="section section-dark">
+  <div class="section-eyebrow">08 / layout</div>
+  <h2 class="section-title">Spacing Scale</h2>
+
+  <div class="spacing-row">
+    <div class="spacing-item">
+      <div class="spacing-block" style="width:5px;"></div>
+      <div class="spacing-value">5px</div>
+      <div class="spacing-label">XS</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width:10px;"></div>
+      <div class="spacing-value">10px</div>
+      <div class="spacing-label">S</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width:20px;"></div>
+      <div class="spacing-value">20px</div>
+      <div class="spacing-label">M</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width:40px;"></div>
+      <div class="spacing-value">40px</div>
+      <div class="spacing-label">L</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width:80px;"></div>
+      <div class="spacing-value">80px</div>
+      <div class="spacing-label">XL</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width:120px;"></div>
+      <div class="spacing-value">120px</div>
+      <div class="spacing-label">XXL</div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <p style="font-family:var(--font-heading); font-size:10px; color:var(--date-muted); letter-spacing:1.5px; margin-bottom:16px; text-transform:uppercase;">Container</p>
+    <div style="background:var(--highlights-bg); padding:16px; margin-bottom:8px;">
+      <div style="max-width:1440px; margin:0 auto; background:rgba(255,255,255,0.05); height:40px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:var(--font-mono); font-size:10px; color:var(--date-muted); letter-spacing:normal;">max-width: 1440px / padding: 40px</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <p style="font-family:var(--font-heading); font-size:10px; color:var(--date-muted); letter-spacing:1.5px; margin-bottom:16px; text-transform:uppercase;">Grid</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; max-width:600px;">
+      <div style="aspect-ratio:3/4; background:var(--highlights-bg); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:var(--font-mono); font-size:10px; color:var(--date-muted); letter-spacing:normal;">Col 1</span>
+      </div>
+      <div style="aspect-ratio:3/4; background:rgba(33,33,33,0.7); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:var(--font-mono); font-size:10px; color:var(--date-muted); letter-spacing:normal;">Col 2</span>
+      </div>
+    </div>
+    <div class="type-meta" style="margin-top:8px;">Collection grid: 2 columns / gap: 0px（写真密着）</div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <p style="font-family:var(--font-heading); font-size:10px; color:var(--date-muted); letter-spacing:1.5px; margin-bottom:16px; text-transform:uppercase;">Border Radius</p>
+    <div style="display:flex; gap:24px;">
+      <div style="width:80px; height:80px; background:var(--highlights-bg); border-radius:0; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:var(--font-mono); font-size:10px; color:var(--date-muted); letter-spacing:normal;">0px</span>
+      </div>
+    </div>
+    <div class="type-meta" style="margin-top:8px;">全要素 border-radius: 0px</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brands">
+    <a href="#">YOHJI YAMAMOTO</a>
+    <a href="#">Y'S</a>
+    <a href="#">Y'S FOR MEN</a>
+    <a href="#">DISCORD</a>
+    <a href="#">S'YTE</a>
+    <a href="#">WILDSIDE</a>
+    <a href="#">GROUND Y</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-corp">YOHJI YAMAMOTO Inc.</div>
+  <div class="footer-copy">Design tokens extracted from yohjiyamamoto.co.jp (2026-05-21)</div>
+</footer>
+
+</body>
+</html>

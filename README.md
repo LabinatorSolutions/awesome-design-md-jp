@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (231 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (234 sites)</a>
 </p>
 
 <table>
@@ -338,6 +338,11 @@
 <td align="center"><strong>ROYCE'</strong><br><img src="design-md/royce/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KEYENCE</strong><br><img src="design-md/keyence/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>Yohji Yamamoto</strong><br><img src="design-md/yohjiyamamoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Wacom</strong><br><img src="design-md/wacom/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>白鳳堂</strong><br><img src="design-md/hakuhodo-brushes/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -629,11 +634,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Nikon (ニコン)](https://www.nikon.co.jp/) | Camera / Optics Manufacturer | [DESIGN.md](design-md/nikon/DESIGN.md) | [preview.html](design-md/nikon/preview.html) |
 | [ROYCE' (ロイズ)](https://www.royce.com/) | Confectionery / Chocolate | [DESIGN.md](design-md/royce/DESIGN.md) | [preview.html](design-md/royce/preview.html) |
 | [KEYENCE (キーエンス)](https://www.keyence.co.jp/) | B2B Industrial Sensors / FA | [DESIGN.md](design-md/keyence/DESIGN.md) | [preview.html](design-md/keyence/preview.html) |
+| [Yohji Yamamoto (ヨウジヤマモト)](https://www.yohjiyamamoto.co.jp/) | Fashion / Avant-Garde | [DESIGN.md](design-md/yohjiyamamoto/DESIGN.md) | [preview.html](design-md/yohjiyamamoto/preview.html) |
+| [Wacom (ワコム)](https://www.wacom.com/ja-jp) | Creative Technology / Pen Tablets | [DESIGN.md](design-md/wacom/DESIGN.md) | [preview.html](design-md/wacom/preview.html) |
+| [Hakuhodo Brushes (白鳳堂)](https://www.hakuho-do.co.jp/) | Makeup Brushes / Heritage Craft | [DESIGN.md](design-md/hakuhodo-brushes/DESIGN.md) | [preview.html](design-md/hakuhodo-brushes/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (231 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (234 sites)</a>
 </p>
 
 <table>
@@ -936,6 +944,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Nikon</strong><br><img src="design-md/nikon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ROYCE'</strong><br><img src="design-md/royce/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KEYENCE</strong><br><img src="design-md/keyence/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Yohji Yamamoto</strong><br><img src="design-md/yohjiyamamoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Wacom</strong><br><img src="design-md/wacom/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>白鳳堂</strong><br><img src="design-md/hakuhodo-brushes/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
