@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KAO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --kao-teal: #00806d;
+    --kao-teal-dark: #005856;
+    --kao-green: #6cc04a;
+    --color-text: #3c3c3c;
+    --color-text-secondary: #4e4d4e;
+    --color-text-muted: #767676;
+    --color-text-white: #ffffff;
+    --color-search-surface: #ebf7f5;
+    --color-light-teal: #b5e2dd;
+    --color-bg: #ffffff;
+    --color-bg-warm: #f6f6f4;
+    --color-border: #d7d7cf;
+    --color-footer-bg: #00806d;
+    /* === Elevation === */
+    --elevation-1: 0px 1px 3px rgba(0,0,0,0.08);
+    --elevation-2: 0px 2px 8px rgba(0,0,0,0.12);
+    --elevation-3: 0px 4px 16px rgba(0,0,0,0.14);
+    /* === Fonts === */
+    --font-heading: "Noto Sans JP", sans-serif;
+    --font-body: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.75;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 700; color: var(--color-text);
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-heading);
+  }
+  .nav-brand-mark {
+    display: inline-block; width: 28px; height: 28px; background: var(--kao-teal);
+    border-radius: 50%; position: relative;
+  }
+  .nav-brand-mark::after {
+    content: "K"; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); color: #fff;
+    font-size: 14px; font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400; color: var(--color-text-secondary);
+    text-decoration: none; line-height: 1.5; transition: color 0.15s;
+    font-family: var(--font-body);
+  }
+  .nav-links a:hover { color: var(--kao-teal); }
+  .nav-pill {
+    display: inline-block; background: rgba(255,255,255,0.8); color: var(--color-text-secondary);
+    padding: 6px 16px; border-radius: 16px; border: 1px solid var(--color-border);
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .nav-pill:hover { background: var(--color-search-surface); color: var(--kao-teal); }
+
+  /* HERO */
+  .hero { padding: 80px 48px 64px; text-align: center; background: var(--color-bg-warm); }
+  .hero h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: var(--color-text); margin-bottom: 16px;
+    font-family: var(--font-heading);
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.75;
+    letter-spacing: 0.02em;
+    color: var(--color-text); max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--kao-teal); color: #fff;
+    padding: 12px 28px; border-radius: 10px; border: none;
+    font-family: var(--font-body); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--kao-teal-dark); }
+  .btn-secondary {
+    display: inline-block; background: #fff; color: var(--kao-teal);
+    padding: 12px 28px; border-radius: 10px; border: 1px solid var(--kao-teal);
+    font-family: var(--font-body); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-secondary:hover { background: var(--color-search-surface); }
+  .btn-search {
+    display: inline-block; background: var(--color-search-surface); color: var(--color-text);
+    padding: 10px 20px; border-radius: 0 8px 8px 0; border: 1px solid var(--color-border);
+    border-left: none;
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-search:hover { background: var(--color-light-teal); }
+  .btn-nav-pill {
+    display: inline-block; background: rgba(255,255,255,0.8); color: var(--color-text-secondary);
+    padding: 6px 16px; border-radius: 16px; border: 1px solid var(--color-border);
+    font-family: var(--font-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-nav-pill:hover { background: var(--color-search-surface); color: var(--kao-teal); }
+  .btn-circle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; background: var(--color-bg); color: var(--color-text-secondary);
+    border-radius: 50%; border: 1px solid var(--color-border); font-size: 20px; cursor: pointer;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .btn-circle:hover { background: var(--color-bg-warm); }
+
+  /* SECTIONS */
+  .section { padding: 64px 48px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--kao-teal);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 700; line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: var(--color-text); margin-bottom: 32px;
+    font-family: var(--font-heading);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+
+  .section-warm { background: var(--color-bg-warm); padding: 64px 48px; }
+  .section-warm .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 10px; overflow: hidden; background: #fff; box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--color-text); }
+  .color-swatch-hex { font-size: 12px; color: var(--color-text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; opacity: 0.7; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--color-text); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--color-text-secondary); opacity: 0.6; margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--color-bg-warm); color: var(--color-text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* ARTICLE */
+  .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .article-card {
+    background: #fff; padding: 0; text-align: left; border-radius: 10px;
+    overflow: hidden; box-shadow: var(--elevation-1); transition: box-shadow 0.3s;
+  }
+  .article-card:hover { box-shadow: var(--elevation-2); }
+  .article-image {
+    width: 100%; height: 140px;
+    background: var(--color-search-surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; color: var(--kao-teal); opacity: 0.4;
+  }
+  .article-card-body { padding: 16px; }
+  .article-brand-tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    color: var(--kao-teal); background: var(--color-search-surface);
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+  }
+  .article-name {
+    font-size: 16px; font-weight: 700; color: var(--color-text);
+    line-height: 1.5; margin-bottom: 4px;
+    font-family: var(--font-heading);
+  }
+  .article-desc {
+    font-size: 14px; color: var(--color-text-secondary); line-height: 1.75;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--color-border);
+    border-radius: 10px; padding: 24px; transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card h3 { font-size: 24px; font-weight: 700; line-height: 1.5; letter-spacing: 0.013em; margin-bottom: 8px; color: var(--color-text); font-family: var(--font-heading); }
+  .card p { font-size: 16px; color: var(--color-text); line-height: 1.75; letter-spacing: 0.02em; }
+  .card-link {
+    font-size: 14px; color: var(--kao-teal); text-decoration: none;
+    margin-top: 12px; display: inline-block; font-weight: 700;
+  }
+  .card-link:hover { text-decoration: underline; }
+  .card-tag {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    color: var(--kao-teal); margin-bottom: 8px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--color-text); margin-bottom: 6px; font-family: var(--font-heading); }
+  .form-input {
+    width: 100%; background: #fff; color: var(--color-text);
+    border: 1px solid var(--color-border); padding: 10px 14px; border-radius: 8px;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--kao-teal); box-shadow: 0 0 0 2px rgba(0,128,109,0.15); }
+  .form-input--error { border-color: #cc3333; box-shadow: 0 0 0 2px rgba(204,51,51,0.15); }
+  .form-select {
+    width: 100%; background: #fff; color: var(--color-text);
+    border: 1px solid var(--color-border); padding: 10px 14px; border-radius: 8px;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+    appearance: auto;
+  }
+  .form-state-label { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; }
+  .form-error-text { font-size: 12px; color: #cc3333; margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 10px; padding: 24px; text-align: center; border: 1px solid var(--color-border); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--color-text); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-secondary); opacity: 0.6; word-break: break-all; }
+
+  /* LAYOUT */
+  .width-bar { height: 32px; background: var(--color-bg-warm); border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--kao-teal); border-radius: 8px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--color-text); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-secondary); opacity: 0.6; }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--color-text-secondary); opacity: 0.6; margin-top: 8px; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px; text-align: center;
+    background: var(--color-footer-bg); color: var(--color-text-white);
+    font-size: 14px; line-height: 1.75;
+  }
+  .footer a { color: var(--color-text-white); text-decoration: underline; opacity: 0.8; }
+  .footer a:hover { opacity: 1; }
+  .footer-brand { font-size: 20px; font-weight: 700; margin-bottom: 12px; font-family: var(--font-heading); }
+  .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+  .footer-copy { font-size: 12px; opacity: 0.7; margin-top: 16px; }
+
+  @media (max-width: 769px) {
+    .nav { padding: 0 20px; }
+    .hero { padding: 48px 20px; }
+    .hero h1 { font-size: 24px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-warm { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="nav-brand-mark"></span> KAO
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-pill" href="#">検索</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>KAO</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">ブランド一覧</a>
+    <a class="btn-secondary" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00806d"></div><div class="color-swatch-info"><div class="color-swatch-name">Kao Teal</div><div class="color-swatch-hex">#00806d</div><div class="color-swatch-role">ブランドカラー・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#005856"></div><div class="color-swatch-info"><div class="color-swatch-name">Kao Teal Dark</div><div class="color-swatch-hex">#005856</div><div class="color-swatch-role">ホバー・ダークバリアント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6cc04a"></div><div class="color-swatch-info"><div class="color-swatch-name">Kao Green</div><div class="color-swatch-hex">#6cc04a</div><div class="color-swatch-role">アクセント・サステナビリティ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Teal Tints</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebf7f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Search Surface</div><div class="color-swatch-hex">#ebf7f5</div><div class="color-swatch-role">検索ボタン・タグ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b5e2dd"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Teal</div><div class="color-swatch-hex">#b5e2dd</div><div class="color-swatch-role">装飾・ハイライト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3c3c3c"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#3c3c3c</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4e4d4e"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#4e4d4e</div><div class="color-swatch-role">ナビ・補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#767676"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#767676</div><div class="color-swatch-role">パンくず・メタ情報</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">Teal 背景上の反転</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Warm</div><div class="color-swatch-hex">#f6f6f4</div><div class="color-swatch-role">セクション背景（ウォームグレー）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d7d7cf"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#d7d7cf</div><div class="color-swatch-role">ボーダー・区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00806d"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Background</div><div class="color-swatch-hex">#00806d</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:32px; font-weight:700; line-height:normal; letter-spacing:normal; color:var(--color-text);">ロゴ・サイトタイトル --- H1 (32px)</div>
+    <div class="type-meta">32px / 700 / line-height: normal / W3<span class="type-context">ロゴ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:32px; font-weight:700; line-height:1.25; letter-spacing:0.01em;">セクション見出し --- H2 Section (32px)</div>
+    <div class="type-meta">32px / 700 / line-height: 1.25 (40px) / letter-spacing: 0.01em / W6<span class="type-context">セクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:32px; font-weight:700; line-height:1.25; letter-spacing:0.01em; color:#ffffff; background:var(--kao-teal); padding:16px 24px; border-radius:10px;">白抜き見出し --- H2 on Teal (32px)</div>
+    <div class="type-meta">32px / 700 / line-height: 1.25 / color: #ffffff / on #00806d<span class="type-context">Teal 背景</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:24px; font-weight:700; line-height:1.5; letter-spacing:0.013em;">トピック見出し --- H2 Topic (24px)</div>
+    <div class="type-meta">24px / 700 / line-height: 1.5 (36px) / letter-spacing: 0.013em / W3<span class="type-context">トピック</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:24px; font-weight:400; line-height:1.5; letter-spacing:0.02em; color:var(--color-text-secondary);">カテゴリ見出し --- H2 Sub (24px / 400)</div>
+    <div class="type-meta">24px / 400 / line-height: 1.5 / letter-spacing: 0.02em / W6 font, weight 400<span class="type-context">カテゴリ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:20px; font-weight:700; line-height:1.1; color:var(--color-text-secondary);">フッター見出し --- H2 Footer (20px)</div>
+    <div class="type-meta">20px / 700 / line-height: 1.1 (22px) / W6<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:16px; font-weight:400; line-height:1.75; letter-spacing:0.02em; color:var(--color-text);">本文テキスト --- Body (16px)。FP-HiraginoUDSansStdN（UD フォント）を使用し、可読性を重視した組版。letter-spacing は 0.02em、palt は非適用。ABCabc 123</div>
+    <div class="type-meta">16px / 400 / line-height: 1.75 (28px) / letter-spacing: 0.02em / palt: なし / W3</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:400; line-height:1.5; color:var(--color-text-secondary);">ナビゲーション --- Nav (14px)。カテゴリ選択やサイト内遷移に使用。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 (21px) / color: #4e4d4e<span class="type-context">グローバルナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:400; line-height:1.5; color:var(--color-text-muted);">パンくず --- Breadcrumb (14px)。現在位置の表示に使用。</div>
+    <div class="type-meta">14px / 400 / color: #767676<span class="type-context">パンくず</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE (PRODUCT) -->
+<section class="section-warm" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">ブランド一覧サンプル</h2>
+  <div class="article-grid">
+    <div class="article-card">
+      <div class="article-image">B</div>
+      <div class="article-card-body">
+        <div class="article-brand-tag">スキンケア</div>
+        <div class="article-name">Biore</div>
+        <div class="article-desc">洗顔・日やけ止め・メイク落としの定番ブランド</div>
+      </div>
+    </div>
+    <div class="article-card">
+      <div class="article-image">A</div>
+      <div class="article-card-body">
+        <div class="article-brand-tag">ランドリー</div>
+        <div class="article-name">Attack</div>
+        <div class="article-desc">抗菌・消臭に優れた衣料用洗剤</div>
+      </div>
+    </div>
+    <div class="article-card">
+      <div class="article-image">M</div>
+      <div class="article-card-body">
+        <div class="article-brand-tag">ヘアケア</div>
+        <div class="article-name">Merit</div>
+        <div class="article-desc">地肌にやさしいシャンプーの定番</div>
+      </div>
+    </div>
+    <div class="article-card">
+      <div class="article-image">K</div>
+      <div class="article-card-body">
+        <div class="article-brand-tag">キッチン</div>
+        <div class="article-name">CuCute</div>
+        <div class="article-desc">泡切れが良い食器用洗剤</div>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top: 24px; font-size: 14px; color: var(--kao-teal); font-weight: 700;">花王グループ --- いっしょにeco</p>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item">
+      <a class="btn-primary" href="#">ブランド一覧</a>
+      <div class="button-label">Primary CTA<br><span style="font-family:var(--font-mono); font-size:10px;">radius: 10px</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">詳しく見る</a>
+      <div class="button-label">Secondary<br><span style="font-family:var(--font-mono); font-size:10px;">radius: 10px</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-nav-pill" href="#">カテゴリ</a>
+      <div class="button-label">Nav Pill<br><span style="font-family:var(--font-mono); font-size:10px;">radius: 16px</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-search" href="#">検索</a>
+      <div class="button-label">Search<br><span style="font-family:var(--font-mono); font-size:10px;">radius: 0 8 8 0</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-circle" href="#">&larr;</a>
+      <div class="button-label">Carousel<br><span style="font-family:var(--font-mono); font-size:10px;">radius: 50%</span></div>
+    </div>
+  </div>
+  <div style="background:var(--color-bg-warm); padding:20px 24px; border-radius:10px;">
+    <p style="font-size:14px; font-weight:700; margin-bottom:8px; color:var(--kao-teal);">Button Spec</p>
+    <p style="font-size:13px; line-height:1.75; color:var(--color-text);">
+      Primary: bg <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">#00806d</code> / text <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">#ffffff</code> / border-radius <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">10px</code> / padding <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">12px 28px</code><br>
+      Nav Pill: bg <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">rgba(255,255,255,0.8)</code> / text <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">#4e4d4e</code> / border-radius <code style="font-family:var(--font-mono); font-size:12px; background:#f5f5f5; padding:2px 6px; border-radius:4px;">16px</code>
+    </p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-warm" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag">ESG</div>
+      <h3>サステナビリティへの取り組み</h3>
+      <p>花王は「よきモノづくり」を通じて、豊かな共生世界の実現を目指しています。環境負荷低減と生活者の満足を両立するものづくり。</p>
+      <a class="card-link" href="#">詳しく見る &rarr;</a>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-2);">
+      <div class="card-tag">R&amp;D</div>
+      <h3>研究開発の力</h3>
+      <p>界面科学をコア技術に、スキンケア・ヘルスケア・ケミカルの3領域で革新的な素材・製品を開発しています。</p>
+      <a class="card-link" href="#">詳しく見る &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-tag">ブランド</div>
+      <h3>暮らしに寄り添うブランド</h3>
+      <p>Biore・Attack・Merit をはじめ、毎日の暮らしに欠かせないブランドを展開。世界中で愛されるロングセラー製品。</p>
+      <a class="card-link" href="#">詳しく見る &rarr;</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト --- border: 1px solid #d7d7cf, radius: 8px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="花王太郎">
+    <div class="form-state-label">フォーカス --- border: 1px solid #00806d (Kao Teal)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー --- border-color: #cc3333</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お問い合わせ種別</label>
+    <select class="form-select">
+      <option>製品について</option>
+      <option>安全性について</option>
+      <option>その他</option>
+    </select>
+    <div class="form-state-label">セレクト --- border: 1px solid #d7d7cf, radius: 8px</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし・ボーダーのみ</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Elevation 1</div>
+      <div class="elevation-desc">0px 1px 3px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Elevation 2</div>
+      <div class="elevation-desc">0px 2px 8px rgba(0,0,0,0.12)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);">
+      <div class="elevation-label">Elevation 3</div>
+      <div class="elevation-desc">0px 4px 16px rgba(0,0,0,0.14)</div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--kao-teal);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">2px solid #00806d</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト</h2>
+
+  <h3 style="font-size:18px; font-weight:700; margin-bottom:16px; color:var(--color-text); font-family:var(--font-heading);">Header Padding</h3>
+  <div style="margin-bottom:24px">
+    <div class="width-bar-label">Header Horizontal Padding <span class="width-bar-value">48px</span></div>
+    <div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div>
+  </div>
+
+  <h3 style="font-size:18px; font-weight:700; margin-bottom:16px; color:var(--color-text); font-family:var(--font-heading);">Section Backgrounds</h3>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:24px;">
+    <div style="background:#ffffff; border:1px solid var(--color-border); padding:24px; text-align:center; border-radius:10px;">
+      <div style="font-size:13px; font-weight:700;">#ffffff</div>
+      <div style="font-size:11px; opacity:0.6;">Default</div>
+    </div>
+    <div style="background:#f6f6f4; padding:24px; text-align:center; border-radius:10px;">
+      <div style="font-size:13px; font-weight:700;">#f6f6f4</div>
+      <div style="font-size:11px; opacity:0.6;">Warm Gray</div>
+    </div>
+    <div style="background:#00806d; color:#fff; padding:24px; text-align:center; border-radius:10px;">
+      <div style="font-size:13px; font-weight:700;">#00806d</div>
+      <div style="font-size:11px; opacity:0.7;">Footer</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:18px; font-weight:700; margin-bottom:16px; color:var(--color-text); font-family:var(--font-heading);">Border Radius</h3>
+  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:24px;">
+    <div style="text-align:center;">
+      <div style="width:80px; height:40px; background:var(--kao-teal); border-radius:10px; margin-bottom:8px;"></div>
+      <div style="font-size:11px; font-family:var(--font-mono);">10px (Card / CTA)</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:80px; height:40px; background:transparent; border:1px solid var(--color-border); border-radius:16px; margin-bottom:8px;"></div>
+      <div style="font-size:11px; font-family:var(--font-mono);">16px (Nav Pill)</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:80px; height:40px; background:var(--color-search-surface); border-radius:0 8px 8px 0; margin-bottom:8px;"></div>
+      <div style="font-size:11px; font-family:var(--font-mono);">0 8 8 0 (Search)</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:40px; height:40px; background:#fff; border:1px solid var(--color-border); border-radius:50%; margin-bottom:8px;"></div>
+      <div style="font-size:11px; font-family:var(--font-mono);">50% (Carousel)</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="width:80px; height:40px; background:#fff; border:1px solid var(--color-border); border-radius:8px; margin-bottom:8px;"></div>
+      <div style="font-size:11px; font-family:var(--font-mono);">8px (Input)</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">KAO</div>
+  <div class="footer-links">
+    <a href="#">ブランド</a>
+    <a href="#">サステナビリティ</a>
+    <a href="#">研究開発</a>
+    <a href="#">投資家情報</a>
+    <a href="#">お問い合わせ</a>
+  </div>
+  <div class="footer-copy">
+    Generated from <a href="https://www.kao.com/jp/">kao.com/jp</a> DESIGN.md --- awesome-design-md-jp / computed style 実測値
+  </div>
+</footer>
+
+</body>
+</html>

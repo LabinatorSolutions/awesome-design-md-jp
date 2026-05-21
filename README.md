@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (243 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (246 sites)</a>
 </p>
 
 <table>
@@ -354,6 +354,11 @@
 <td align="center"><strong>LUPICIA</strong><br><img src="design-md/lupicia/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Tabio</strong><br><img src="design-md/tabio/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>Glico</strong><br><img src="design-md/glico/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kao</strong><br><img src="design-md/kao/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Morinaga</strong><br><img src="design-md/morinaga/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -657,11 +662,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Zoff (ゾフ)](https://www.zoff.co.jp/) | Eyewear / Retail | [DESIGN.md](design-md/zoff/DESIGN.md) | [preview.html](design-md/zoff/preview.html) |
 | [LUPICIA (ルピシア)](https://www.lupicia.com/) | Tea / Specialty Retail | [DESIGN.md](design-md/lupicia/DESIGN.md) | [preview.html](design-md/lupicia/preview.html) |
 | [Tabio (タビオ / 靴下屋)](https://tabio.com/jp/) | Hosiery / Apparel | [DESIGN.md](design-md/tabio/DESIGN.md) | [preview.html](design-md/tabio/preview.html) |
+| [Glico (江崎グリコ)](https://www.glico.com/jp/) | Food & Beverage / Confectionery | [DESIGN.md](design-md/glico/DESIGN.md) | [preview.html](design-md/glico/preview.html) |
+| [Kao (花王)](https://www.kao.com/jp/) | Consumer Goods / FMCG | [DESIGN.md](design-md/kao/DESIGN.md) | [preview.html](design-md/kao/preview.html) |
+| [Morinaga (森永製菓)](https://www.morinaga.co.jp/) | Food & Beverage / Confectionery | [DESIGN.md](design-md/morinaga/DESIGN.md) | [preview.html](design-md/morinaga/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (243 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (246 sites)</a>
 </p>
 
 <table>
@@ -980,6 +988,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Zoff</strong><br><img src="design-md/zoff/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LUPICIA</strong><br><img src="design-md/lupicia/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Tabio</strong><br><img src="design-md/tabio/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Glico</strong><br><img src="design-md/glico/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kao</strong><br><img src="design-md/kao/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Morinaga</strong><br><img src="design-md/morinaga/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
