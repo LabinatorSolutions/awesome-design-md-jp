@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (219 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (222 sites)</a>
 </p>
 
 <table>
@@ -322,6 +322,11 @@
 <td align="center"><strong>ニトリ</strong><br><img src="design-md/nitori/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>JILL STUART Beauty</strong><br><img src="design-md/jillstuart-beauty/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>NISSAN</strong><br><img src="design-md/nissan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Meiji</strong><br><img src="design-md/meiji/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Roland</strong><br><img src="design-md/roland/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -601,11 +606,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [DAISO (ダイソー)](https://www.daiso-sangyo.co.jp/) | Retail / Variety Store | [DESIGN.md](design-md/daiso/DESIGN.md) | [preview.html](design-md/daiso/preview.html) |
 | [Nitori (ニトリ)](https://www.nitori-net.jp/) | Home Furnishing / EC | [DESIGN.md](design-md/nitori/DESIGN.md) | [preview.html](design-md/nitori/preview.html) |
 | [JILL STUART Beauty (ジル スチュアート ビューティ)](https://www.jillstuart-beauty.com/) | Luxury Cosmetics / Beauty | [DESIGN.md](design-md/jillstuart-beauty/DESIGN.md) | [preview.html](design-md/jillstuart-beauty/preview.html) |
+| [NISSAN (日産自動車)](https://www.nissan.co.jp/) | Automotive / Manufacturing | [DESIGN.md](design-md/nissan/DESIGN.md) | [preview.html](design-md/nissan/preview.html) |
+| [Meiji (明治)](https://www.meiji.co.jp/) | Food / Confectionery | [DESIGN.md](design-md/meiji/DESIGN.md) | [preview.html](design-md/meiji/preview.html) |
+| [Roland (ローランド)](https://www.roland.com/jp/) | Musical Instruments / Manufacturing | [DESIGN.md](design-md/roland/DESIGN.md) | [preview.html](design-md/roland/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (219 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (222 sites)</a>
 </p>
 
 <table>
@@ -892,6 +900,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>DAISO</strong><br><img src="design-md/daiso/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Nitori</strong><br><img src="design-md/nitori/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>JILL STUART Beauty</strong><br><img src="design-md/jillstuart-beauty/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NISSAN</strong><br><img src="design-md/nissan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Meiji</strong><br><img src="design-md/meiji/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Roland</strong><br><img src="design-md/roland/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
