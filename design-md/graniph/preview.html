@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: graniph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --bg-primary: #ffffff;
+    --text-primary: #282828;
+    --text-secondary: #505050;
+    --text-tertiary: #b4b4b4;
+    --surface: #f8f8f8;
+    --border: #e8e8e8;
+    --brand-red: #dc0816;
+    --dark-surface: #282828;
+    /* === Elevation === */
+    --elevation-1: 0px 1px 3px rgba(0,0,0,0.08);
+    --elevation-2: 0px 2px 8px rgba(0,0,0,0.10);
+    --elevation-3: 0px 4px 16px rgba(0,0,0,0.12);
+    /* === Fonts === */
+    --font-base: "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.15;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.08em; text-transform: lowercase;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-actions { display: flex; gap: 8px; align-items: center; }
+  .nav-login {
+    display: inline-block; background: var(--dark-surface); color: #fff;
+    padding: 6px 20px; border-radius: 18px; border: 1px solid var(--dark-surface);
+    font-family: var(--font-base); font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .nav-login:hover { opacity: 0.8; }
+  .nav-register {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 6px 20px; border-radius: 18px; border: 1px solid var(--dark-surface);
+    font-family: var(--font-base); font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .nav-register:hover { background: var(--surface); }
+
+  /* HERO */
+  .hero { padding: 72px 32px 56px; text-align: center; background: var(--bg-primary); }
+  .hero h1 {
+    font-size: 18px; font-weight: 600; line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--text-primary); margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    color: var(--text-secondary); max-width: 560px; margin: 0 auto 28px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS (shared) */
+  .btn-login {
+    display: inline-block; background: var(--dark-surface); color: #fff;
+    padding: 10px 32px; border-radius: 18px; border: 1px solid var(--dark-surface);
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-login:hover { opacity: 0.8; }
+  .btn-register {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 10px 32px; border-radius: 18px; border: 1px solid var(--dark-surface);
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-register:hover { background: var(--surface); }
+  .btn-promo {
+    display: inline-block; background: var(--brand-red); color: #fff;
+    padding: 12px 40px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.04em;
+    transition: opacity 0.15s;
+  }
+  .btn-promo:hover { opacity: 0.85; }
+  .btn-tab {
+    display: inline-block; background: transparent; color: var(--text-secondary);
+    padding: 6px 16px; border-radius: 4px; border: 1px solid var(--border);
+    font-family: var(--font-base); font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-tab:hover { background: var(--surface); }
+  .btn-tab--active {
+    background: var(--text-secondary); color: #fff; border-color: var(--text-secondary);
+  }
+  .btn-tab--active:hover { background: var(--text-secondary); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--text-tertiary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-size: 18px; font-weight: 600; line-height: 1.5;
+    letter-spacing: 0.01em;
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .section-gray { background: var(--surface); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--border); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; }
+  .color-group-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; letter-spacing: 0.04em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface); color: var(--text-secondary); font-size: 10px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* PRODUCT GRID */
+  .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .product-card { background: var(--bg-primary); text-decoration: none; color: inherit; }
+  .product-card:hover .product-image { opacity: 0.9; }
+  .product-image {
+    width: 100%; aspect-ratio: 1; background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; color: var(--text-tertiary); transition: opacity 0.2s;
+    overflow: hidden; position: relative;
+  }
+  .product-image svg { width: 60%; height: 60%; opacity: 0.15; }
+  .product-info { padding: 10px 0; }
+  .product-brand { font-size: 11px; font-weight: 700; color: var(--text-tertiary); letter-spacing: 0.06em; text-transform: uppercase; }
+  .product-name { font-size: 14px; font-weight: 400; color: var(--text-primary); line-height: 1.4; margin: 4px 0; }
+  .product-price { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .product-price-tax { font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-left: 2px; }
+  .product-tag {
+    display: inline-block; font-size: 10px; font-weight: 700; color: #fff;
+    background: var(--brand-red); padding: 2px 6px; margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  /* GENDER TABS */
+  .gender-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 8px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--bg-primary); border: 1px solid var(--border);
+    padding: 20px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--text-tertiary); }
+  .card h3 { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+  .card-link { font-size: 12px; font-weight: 700; color: var(--text-primary); text-decoration: none; margin-top: 12px; display: inline-block; letter-spacing: 0.04em; }
+  .card-link:hover { text-decoration: underline; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 10px 12px; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-tertiary); }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-input--error { border-color: var(--brand-red); }
+  .form-error-text { font-size: 11px; font-weight: 700; color: var(--brand-red); margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
+  .form-search {
+    width: 100%; max-width: 400px; background: var(--surface); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 10px 12px 10px 36px; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-search:focus { border-color: var(--text-primary); background: var(--bg-primary); }
+  .form-search-wrap { position: relative; max-width: 400px; margin-bottom: 20px; }
+  .form-search-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 14px; height: 14px; color: var(--text-tertiary);
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; padding: 24px; text-align: center; border: 1px solid var(--border); }
+  .elevation-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); word-break: break-all; }
+
+  /* LAYOUT */
+  .width-bar { height: 28px; background: var(--surface); border: 1px solid var(--border); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--dark-surface); opacity: 0.08; }
+  .width-bar-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); }
+
+  /* PROMO BANNER */
+  .promo-banner {
+    background: var(--brand-red); color: #fff; text-align: center;
+    padding: 12px 32px; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .promo-banner a { color: #fff; text-decoration: underline; margin-left: 12px; font-weight: 400; }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--dark-surface); font-size: 11px; color: rgba(255,255,255,0.5); }
+  .footer a { color: rgba(255,255,255,0.7); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 16px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  SUMMER SALE 最大50%OFF 開催中 <a href="#">SHOP NOW</a>
+</div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">graniph</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="nav-register" href="#">新規登録</a>
+    <a class="nav-login" href="#">ログイン</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>graniph — デザインTシャツストア</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、レイアウトの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-login" href="#">ログイン</a>
+    <a class="btn-register" href="#">新規会員登録</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc0816"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#dc0816</div><div class="color-swatch-role">セール・プロモ・CTA</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutrals</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#282828"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#282828</div><div class="color-swatch-role">本文テキスト・ボタン面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#505050"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#505050</div><div class="color-swatch-role">補足テキスト・アクティブタブ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b4b4b4"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Tertiary</div><div class="color-swatch-hex">#b4b4b4</div><div class="color-swatch-role">プレースホルダー・メタ情報</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">セクション背景・入力背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e8e8e8</div><div class="color-swatch-role">区切り線・カード境界</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#282828"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Surface</div><div class="color-swatch-hex">#282828</div><div class="color-swatch-role">フッター・CTA面</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — コンパクトEC組版</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:600; line-height:1.5; letter-spacing:0.01em;">セクション見出し — H2 (18px / 600)</div>
+    <div class="type-meta">18px / 600 / line-height: 1.5 / letter-spacing: 0.01em<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.15; letter-spacing:0.01em;">本文テキスト — ECサイトのコンパクトな行間。商品情報を効率よく表示するために、行間を詰めた設計になっています。Body (16px / 400)</div>
+    <div class="type-meta">16px / 400 / line-height: 1.15 / letter-spacing: 0.01em<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:15px; font-weight:700; line-height:1.15; letter-spacing:0.01em;">ナビゲーションラベル — Nav Label (15px / 700)</div>
+    <div class="type-meta">15px / 700 / line-height: 1.15 / letter-spacing: 0.01em<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.4; letter-spacing:0.01em; color:var(--text-secondary);">サブラベル — 商品説明やカード本文に使われる補足テキスト。Sub Label (14px / 400)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.4 / letter-spacing: 0.01em / color: Text Secondary<span class="type-context">補足</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:700; line-height:1.15; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-tertiary);">META LABEL — ブランド名・カテゴリ (12px / 700)</div>
+    <div class="type-meta">12px / 700 / line-height: 1.15 / letter-spacing: 0.04em / uppercase<span class="type-context">メタ情報</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11px; font-weight:700; line-height:1.15; letter-spacing:0.02em;">税込表示・タグ — Small (11px / 700)</div>
+    <div class="type-meta">11px / 700 / line-height: 1.15 / letter-spacing: 0.02em<span class="type-context">タグ・注釈</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:700; line-height:1.15;">¥3,300 <span style="font-size:11px; font-weight:400; color:var(--text-tertiary);">(税込)</span></div>
+    <div class="type-meta">価格表示: 14px / 700 + 税込 11px / 400<span class="type-context">商品価格</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT SAMPLE -->
+<section class="section-gray" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product — 商品一覧</div>
+  <h2 class="section-title">商品グリッドサンプル</h2>
+
+  <div class="gender-tabs">
+    <a class="btn-tab btn-tab--active" href="#">ALL</a>
+    <a class="btn-tab" href="#">MEN</a>
+    <a class="btn-tab" href="#">WOMEN</a>
+    <a class="btn-tab" href="#">KIDS</a>
+  </div>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#e8e8e8;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">ドラえもん コラボ Tシャツ</div>
+        <div class="product-price">¥3,300 <span class="product-price-tax">(税込)</span></div>
+        <div class="product-tag">NEW</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#f0f0f0;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">ビューティフルシャドー ボーダーTシャツ</div>
+        <div class="product-price">¥2,750 <span class="product-price-tax">(税込)</span></div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#e4e4e4;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">アートパターン ワンピース</div>
+        <div class="product-price">¥4,400 <span class="product-price-tax">(税込)</span></div>
+        <div class="product-tag">SALE</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#ececec;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">スウェットシャツ フリース</div>
+        <div class="product-price"><span style="color:var(--brand-red); font-weight:700;">¥2,200</span> <span style="font-size:12px; color:var(--text-tertiary); text-decoration:line-through;">¥3,300</span></div>
+        <div class="product-tag">SALE</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#e8e8e8;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">ムーミン 刺繍ポケット Tシャツ</div>
+        <div class="product-price">¥3,300 <span class="product-price-tax">(税込)</span></div>
+        <div class="product-tag">NEW</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#f0f0f0;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">キッズ アニマルプリント Tシャツ</div>
+        <div class="product-price">¥2,200 <span class="product-price-tax">(税込)</span></div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#e4e4e4;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">デニムジャケット クラシック</div>
+        <div class="product-price">¥6,600 <span class="product-price-tax">(税込)</span></div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-image" style="background:#ececec;">
+        <svg viewBox="0 0 100 100" fill="none"><path d="M50 20 C35 20 25 28 25 38 L25 42 C25 42 20 44 20 48 L20 80 L80 80 L80 48 C80 44 75 42 75 42 L75 38 C75 28 65 20 50 20Z" fill="currentColor"/></svg>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">graniph</div>
+        <div class="product-name">ロングスリーブ ポケットTシャツ</div>
+        <div class="product-price">¥3,850 <span class="product-price-tax">(税込)</span></div>
+      </div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-top:32px;">
+    <a class="btn-promo" href="#">もっと見る</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom:24px;">
+    <div class="button-item"><a class="btn-login" href="#">ログイン</a><div class="button-label">Login (pill / dark)</div></div>
+    <div class="button-item"><a class="btn-register" href="#">新規会員登録</a><div class="button-label">Register (pill / outline)</div></div>
+    <div class="button-item"><a class="btn-promo" href="#">SHOP NOW</a><div class="button-label">Promo CTA (square / red)</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-tab btn-tab--active" href="#">ALL</a><div class="button-label">Tab Active</div></div>
+    <div class="button-item"><a class="btn-tab" href="#">MEN</a><div class="button-label">Tab Default</div></div>
+    <div class="button-item">
+      <a href="#" style="display:inline-block; background:var(--dark-surface); color:#fff; padding:10px 32px; border-radius:0; border:none; font-family:var(--font-base); font-size:14px; font-weight:700; text-decoration:none; letter-spacing:0.04em;">カートに入れる</a>
+      <div class="button-label">Add to Cart (square / dark)</div>
+    </div>
+    <div class="button-item">
+      <a href="#" style="display:inline-flex; align-items:center; gap:4px; background:transparent; color:var(--text-secondary); padding:6px 16px; border-radius:0; border:1px solid var(--border); font-family:var(--font-base); font-size:13px; font-weight:400; text-decoration:none;">&#9825; お気に入り</a>
+      <div class="button-label">Wishlist (outline)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>コラボレーション</h3>
+      <p>アーティストやキャラクターとのコラボレーション商品。オリジナルのグラフィックデザインを日常着として楽しめます。</p>
+      <a class="card-link" href="#">VIEW MORE →</a>
+    </div>
+    <div class="card">
+      <h3>オリジナルデザイン</h3>
+      <p>グラニフのインハウスデザイナーが手がけるオリジナルグラフィック。ユーモアとアートを兼ね備えたデザインTシャツ。</p>
+      <a class="card-link" href="#">VIEW MORE →</a>
+    </div>
+    <div class="card">
+      <h3>キッズコレクション</h3>
+      <p>親子でお揃いが楽しめるキッズライン。大人と同じデザインを子ども向けサイズで展開しています。</p>
+      <a class="card-link" href="#">VIEW MORE →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div class="form-search-wrap">
+    <svg class="form-search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14"/></svg>
+    <input class="form-search" type="text" placeholder="キーワードで検索">
+    <div class="form-state-label">検索入力 — background: #f8f8f8, border-radius: 0</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="example@graniph.com">
+    <div class="form-state-label">デフォルト — border: #e8e8e8, radius: 0</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">パスワード</label>
+    <input class="form-input form-input--focus" type="password" value="mypassword123">
+    <div class="form-state-label">フォーカス — border: #282828</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー — border: #dc0816 (Brand Red)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — フラットデザイン基調</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし・ボーダーのみ（商品カード標準）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">微細シャドウ（ホバー時）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">ドロップダウン・ポップオーバー</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">モーダル・ダイアログ</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--text-primary);"><div class="elevation-label">Focus</div><div class="elevation-desc">border: 2px solid #282828</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout — コンテンツ幅</div>
+  <h2 class="section-title">レイアウト構造</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Width (商品グリッド) <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Width <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:80%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">4-Column Grid (商品一覧) <span class="width-bar-value">4 × 25%</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Grid Gap <span class="width-bar-value">16px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:1.3%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Nav Height <span class="width-bar-value">56px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:4.7%"></div></div></div>
+
+  <div style="margin-top:32px;">
+    <div class="section-label" style="margin-bottom:16px;">Grid Visual</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; max-width:100%;">
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-tertiary);">1/4</div>
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-tertiary);">2/4</div>
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-tertiary);">3/4</div>
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-tertiary);">4/4</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.graniph.com/">graniph.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (210 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (213 sites)</a>
 </p>
 
 <table>
@@ -310,6 +310,11 @@
 <td align="center"><strong>TASAKI</strong><br><img src="design-md/tasaki/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>COEDO</strong><br><img src="design-md/coedo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ITOYA</strong><br><img src="design-md/itoya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>dentsu</strong><br><img src="design-md/dentsu/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>graniph</strong><br><img src="design-md/graniph/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Fujitsu</strong><br><img src="design-md/fujitsu/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -581,11 +586,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [TASAKI (タサキ)](https://www.tasaki.co.jp/) | Luxury Jewelry / Heritage | [DESIGN.md](design-md/tasaki/DESIGN.md) | [preview.html](design-md/tasaki/preview.html) |
 | [COEDO Brewery (コエドブルワリー)](https://coedobrewery.com/) | Craft Beer / Beverage | [DESIGN.md](design-md/coedo/DESIGN.md) | [preview.html](design-md/coedo/preview.html) |
 | [ITOYA (銀座 伊東屋)](https://www.ito-ya.co.jp/) | Stationery / Heritage Retail | [DESIGN.md](design-md/itoya/DESIGN.md) | [preview.html](design-md/itoya/preview.html) |
+| [dentsu (電通)](https://www.dentsu.co.jp/) | Advertising / Agency | [DESIGN.md](design-md/dentsu/DESIGN.md) | [preview.html](design-md/dentsu/preview.html) |
+| [graniph (グラニフ)](https://www.graniph.com/) | D2C Fashion / Design T-shirts | [DESIGN.md](design-md/graniph/DESIGN.md) | [preview.html](design-md/graniph/preview.html) |
+| [Fujitsu (富士通)](https://www.fujitsu.com/jp/) | Enterprise Tech / Corporate | [DESIGN.md](design-md/fujitsu/DESIGN.md) | [preview.html](design-md/fujitsu/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (210 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (213 sites)</a>
 </p>
 
 <table>
@@ -861,6 +869,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>TASAKI</strong><br><img src="design-md/tasaki/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>COEDO</strong><br><img src="design-md/coedo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ITOYA</strong><br><img src="design-md/itoya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>dentsu</strong><br><img src="design-md/dentsu/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>graniph</strong><br><img src="design-md/graniph/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Fujitsu</strong><br><img src="design-md/fujitsu/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: dentsu（電通）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --bg-base: #f3f5f7;
+    --text-primary: #000000;
+    --text-white: #ffffff;
+    --surface-dark: #313131;
+    --footer-bg: #000000;
+    --accent-blue: #009be0;
+    --accent-red: #d83f30;
+    --accent-navy: #254590;
+    --accent-green: #189f3b;
+    --accent-orange: #e4a334;
+    --border-default: rgba(0, 0, 0, 0.12);
+    --border-strong: rgba(0, 0, 0, 0.24);
+    --text-secondary: #666666;
+    --text-placeholder: #999999;
+    --focus-ring: #000000;
+
+    /* === Elevation: ニューモーフィズム === */
+    --elevation-neumorphic: rgba(0,0,0,0.21) 9px 8px 10px 0px, rgb(255,255,255) 0px 0px 5px 0px, rgb(255,255,255) -4px 0px 5px 0px, rgb(255,255,255) -4px -6px 15px 0px;
+    --elevation-neumorphic-sm: rgba(0,0,0,0.12) 4px 4px 6px 0px, rgb(255,255,255) 0px 0px 3px 0px, rgb(255,255,255) -2px 0px 3px 0px, rgb(255,255,255) -2px -3px 8px 0px;
+    --elevation-neumorphic-lg: rgba(0,0,0,0.25) 12px 12px 16px 0px, rgb(255,255,255) 0px 0px 8px 0px, rgb(255,255,255) -6px 0px 8px 0px, rgb(255,255,255) -6px -8px 20px 0px;
+    --elevation-inset: inset 2px 2px 5px rgba(0,0,0,0.1), inset -2px -2px 5px rgba(255,255,255,0.7);
+
+    /* === Fonts === */
+    --font-heading: Roboto, "Noto Sans JP", "Helvetica Neue", arial, sans-serif;
+    --font-body: "Noto Sans JP", "Helvetica Neue", arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Radius === */
+    --radius-card: 30px;
+    --radius-pill: 60px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 72px;
+    background: var(--bg-base);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 22px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--text-primary); color: var(--text-white);
+    padding: 10px 28px; border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 40px 64px; text-align: center;
+    background: var(--bg-base);
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 45px; font-weight: 700; line-height: 1.3;
+    color: var(--text-primary); margin-bottom: 20px;
+  }
+  .hero p {
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400; line-height: 1.75;
+    color: var(--text-secondary); max-width: 620px; margin: 0 auto 36px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-outline-light {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-primary);
+    padding: 12px 36px; border-radius: var(--radius-pill);
+    border: 1px solid var(--text-primary);
+    font-family: var(--font-heading); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-light:hover { background: var(--text-primary); color: var(--text-white); }
+
+  .btn-outline-dark {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-white);
+    padding: 12px 36px; border-radius: var(--radius-pill);
+    border: 1px solid var(--text-white);
+    font-family: var(--font-heading); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-dark:hover { background: var(--text-white); color: var(--text-primary); }
+
+  .btn-neumorphic {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg-base); color: var(--text-primary);
+    padding: 14px 40px; border-radius: var(--radius-pill);
+    border: none;
+    box-shadow: var(--elevation-neumorphic-sm);
+    font-family: var(--font-heading); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .btn-neumorphic:hover { box-shadow: var(--elevation-neumorphic); }
+  .btn-neumorphic:active { box-shadow: var(--elevation-inset); }
+
+  .btn-gdpr {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--accent-blue); color: var(--text-white);
+    padding: 10px 28px; border-radius: var(--radius-pill);
+    border: none;
+    font-family: var(--font-heading); font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-gdpr:hover { opacity: 0.85; }
+
+  .btn-gdpr-outline {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-white);
+    padding: 10px 28px; border-radius: var(--radius-pill);
+    border: 1px solid rgba(255,255,255,0.5);
+    font-family: var(--font-heading); font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-gdpr-outline:hover { background: rgba(255,255,255,0.1); }
+
+  /* SECTIONS */
+  .section { padding: 64px 40px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-heading);
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 40px; font-weight: 700; line-height: 1.3;
+    margin-bottom: 36px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-dark { background: var(--surface-dark); color: var(--text-white); padding: 64px 40px; }
+  .section-dark .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-dark .section-label { color: rgba(255,255,255,0.5); }
+  .section-dark .section-title { color: var(--text-white); }
+
+  .section-footer { background: var(--footer-bg); color: var(--text-white); padding: 64px 40px; }
+  .section-footer .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: #fff; box-shadow: var(--elevation-neumorphic-sm); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin: 28px 0 12px; font-family: var(--font-heading); }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 10px; }
+  .type-context { display: inline-block; background: rgba(0,0,0,0.06); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 700px; }
+  .article-meta {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 400; color: var(--text-secondary);
+    margin-bottom: 12px; letter-spacing: 0.04em;
+  }
+  .article-preview h2 {
+    font-family: var(--font-heading);
+    font-size: 26px; font-weight: 700; line-height: 1.75;
+    margin-bottom: 20px;
+  }
+  .article-preview p {
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400; line-height: 1.75;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-tag {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 12px; font-weight: 500;
+    color: var(--accent-blue);
+    background: rgba(0,155,224,0.08);
+    padding: 4px 12px; border-radius: var(--radius-pill);
+    margin-right: 8px; margin-bottom: 8px;
+  }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; margin-bottom: 32px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 10px; }
+
+  /* GDPR BAR */
+  .gdpr-bar {
+    background: var(--surface-dark);
+    border-radius: var(--radius-card);
+    padding: 24px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+    box-shadow: var(--elevation-neumorphic);
+  }
+  .gdpr-bar p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6; max-width: 600px; }
+  .gdpr-bar-buttons { display: flex; gap: 12px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-base);
+    border-radius: var(--radius-card);
+    padding: 32px;
+    box-shadow: var(--elevation-neumorphic);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-neumorphic-lg); transform: translateY(-2px); }
+  .card-date {
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 400; color: var(--text-secondary);
+    margin-bottom: 12px; letter-spacing: 0.04em;
+  }
+  .card h3 {
+    font-family: var(--font-heading);
+    font-size: 20px; font-weight: 700; line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500; color: var(--text-primary);
+    text-decoration: none; margin-top: 16px;
+    transition: opacity 0.15s;
+  }
+  .card-link:hover { opacity: 0.6; }
+  .card-link::after { content: "→"; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 420px; }
+  .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--bg-base);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: 12px 16px; border-radius: var(--radius-sm);
+    font-family: var(--font-body); font-size: 15px; outline: none;
+    box-shadow: var(--elevation-inset);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-placeholder); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--focus-ring);
+    box-shadow: var(--elevation-inset), 0 0 0 2px rgba(0,0,0,0.15);
+  }
+  .form-input--error {
+    border-color: var(--accent-red);
+    box-shadow: var(--elevation-inset), 0 0 0 2px rgba(216,63,48,0.15);
+  }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 6px; }
+  .form-error-text { font-size: 12px; color: var(--accent-red); margin-top: 6px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--bg-base);
+    border-radius: var(--radius-card);
+    padding: 28px; text-align: center;
+  }
+  .elevation-label { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; line-height: 1.6; }
+
+  /* LAYOUT */
+  .layout-grid-demo {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .layout-block {
+    background: var(--bg-base);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--elevation-neumorphic-sm);
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-secondary);
+  }
+  .layout-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; font-family: var(--font-heading); }
+  .layout-desc { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); margin-bottom: 20px; }
+
+  /* WIDTH BARS */
+  .width-bar { height: 36px; background: rgba(0,0,0,0.04); border-radius: var(--radius-sm); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--accent-blue); border-radius: var(--radius-sm); opacity: 0.2; }
+  .width-bar-label { font-family: var(--font-heading); font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px; text-align: center;
+    background: var(--footer-bg);
+    font-size: 12px; color: rgba(255,255,255,0.5);
+  }
+  .footer a { color: var(--accent-blue); text-decoration: underline; }
+
+  /* ACCENT STRIPE */
+  .accent-stripe {
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-blue) 0%, var(--accent-navy) 25%, var(--accent-green) 50%, var(--accent-orange) 75%, var(--accent-red) 100%);
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .nav { padding: 0 20px; }
+    .section { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .section-title { font-size: 28px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .gdpr-bar { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="accent-stripe"></div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">dentsu</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">お問い合わせ</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>dentsu — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。ニューモーフィズム基調のコーポレートデザインシステム。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-neumorphic" href="#">詳しく見る</a>
+    <a class="btn-outline-light" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Base & Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f5f7; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#f3f5f7</div><div class="color-swatch-role">ページ背景（ニューモーフィズム基盤）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">テキスト（暗い面上）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#313131"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#313131</div><div class="color-swatch-role">ダークセクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black / Footer</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">テキスト・フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#009be0"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue</div><div class="color-swatch-hex">#009be0</div><div class="color-swatch-role">プライマリCTA・リンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d83f30"></div><div class="color-swatch-info"><div class="color-swatch-name">Red</div><div class="color-swatch-hex">#d83f30</div><div class="color-swatch-role">アラート・強調</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#254590"></div><div class="color-swatch-info"><div class="color-swatch-name">Navy</div><div class="color-swatch-hex">#254590</div><div class="color-swatch-role">セカンダリアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#189f3b"></div><div class="color-swatch-info"><div class="color-swatch-name">Green</div><div class="color-swatch-hex">#189f3b</div><div class="color-swatch-role">サステナビリティ・成功</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4a334"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange</div><div class="color-swatch-hex">#e4a334</div><div class="color-swatch-role">注目・警告</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & UI</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Placeholder</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">プレースホルダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.12); border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">rgba(0,0,0,0.12)</div><div class="color-swatch-role">標準ボーダー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:45px; font-weight:700; line-height:1.3;">電通の未来を創るイノベーション</div>
+    <div class="type-meta">Roboto + Noto Sans JP / 45px / 700 / line-height: 1.3<span class="type-context">H2 見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:40px; font-weight:700; line-height:1.3;">統合マーケティング戦略</div>
+    <div class="type-meta">Roboto + Noto Sans JP / 40px / 700 / line-height: 1.3<span class="type-context">H3 セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:26px; font-weight:700; line-height:1.75;">デジタルトランスフォーメーション — Digital Transformation</div>
+    <div class="type-meta">Roboto + Noto Sans JP / 26px / 700 / line-height: 1.75<span class="type-context">H4 小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.75;">電通グループは、社会における様々な課題をクリエイティビティとテクノロジーの力で解決し、人々のより良い未来の実現に貢献してまいります。多様な専門性を持つプロフェッショナルが連携し、クライアントのビジネス成長を支援します。</div>
+    <div class="type-meta">Noto Sans JP / 15px / 400 / line-height: 1.75 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:13px; font-weight:400; color:var(--text-secondary); letter-spacing:0.04em;">2026.05.21</div>
+    <div class="type-meta">Roboto / 13px / 400 / letter-spacing: 0.04em<span class="type-context">日付</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-dark" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 記事組版</div>
+  <h2 class="section-title">コーポレートニュースの組版サンプル</h2>
+  <div class="article-preview">
+    <div class="article-meta">2026.05.21 &nbsp;|&nbsp; ニュースリリース</div>
+    <h2 style="color:var(--text-white);">電通グループ、AIを活用した次世代マーケティングプラットフォームを発表</h2>
+    <p style="color:rgba(255,255,255,0.8);">電通グループは、生成AIとデータアナリティクスを融合した新しいマーケティングプラットフォームの提供を開始しました。本プラットフォームにより、クライアント企業のマーケティング活動における意思決定の精度と速度を飛躍的に向上させます。</p>
+    <p style="color:rgba(255,255,255,0.8);">統合的なデータ基盤の上に構築されたこのソリューションは、消費者インサイトの発見からクリエイティブ制作、メディアプランニングまでを一気通貫で最適化。従来のワークフローと比較して、キャンペーン立案から実施までのリードタイムを大幅に短縮します。</p>
+    <div>
+      <span class="article-tag" style="background:rgba(0,155,224,0.2); color:#7dcbf0;">AI</span>
+      <span class="article-tag" style="background:rgba(0,155,224,0.2); color:#7dcbf0;">マーケティング</span>
+      <span class="article-tag" style="background:rgba(0,155,224,0.2); color:#7dcbf0;">DX</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline-light" href="#">詳しく見る</a><div class="button-label">Outline Pill (Light)</div></div>
+    <div class="button-item"><a class="btn-neumorphic" href="#">お問い合わせ</a><div class="button-label">Neumorphic</div></div>
+  </div>
+
+  <div style="background:var(--surface-dark); border-radius:var(--radius-card); padding:32px; margin-bottom:32px;">
+    <div class="button-row" style="margin-bottom:0;">
+      <div class="button-item"><a class="btn-outline-dark" href="#">もっと見る</a><div class="button-label" style="color:rgba(255,255,255,0.5);">Outline Pill (Dark)</div></div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:32px;">GDPR / Cookie Consent Bar</div>
+  <div class="gdpr-bar">
+    <p>当ウェブサイトでは、お客様のブラウジング体験を向上させるためにCookieを使用しています。詳しくは<a href="#" style="color:var(--accent-blue); text-decoration:underline;">プライバシーポリシー</a>をご覧ください。</p>
+    <div class="gdpr-bar-buttons">
+      <a class="btn-gdpr" href="#">すべて同意</a>
+      <a class="btn-gdpr-outline" href="#">設定を管理</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards — ニューモーフィズム</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-date">2026.05.15</div>
+      <h3>サステナビリティ経営の推進</h3>
+      <p>電通グループは、環境・社会・ガバナンスの観点からサステナブルな事業運営を推進し、社会課題の解決に取り組んでいます。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+    <div class="card">
+      <div class="card-date">2026.05.08</div>
+      <h3>グローバルネットワークの強化</h3>
+      <p>世界145以上の国と地域で事業を展開する電通グループは、ローカルの知見とグローバルスケールを組み合わせた統合ソリューションを提供します。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+    <div class="card">
+      <div class="card-date">2026.04.28</div>
+      <h3>クリエイティブテクノロジーの革新</h3>
+      <p>最先端のテクノロジーとクリエイティビティを融合させ、ブランドと消費者の新しい接点を創造します。XR体験からAI生成コンテンツまで。</p>
+      <a class="card-link" href="#">続きを読む</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">会社名</label>
+    <input class="form-input" type="text" placeholder="株式会社○○○">
+    <div class="form-state-label">デフォルト — ニューモーフィズム inset shadow, radius: 8px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="contact@example.com">
+    <div class="form-state-label">フォーカス — border: #000000, focus ring 2px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="012-345">
+    <div class="form-error-text">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー — border: #d83f30 (accent-red)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — ニューモーフィズム</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--border-default);">
+      <div class="elevation-label">Flat</div>
+      <div class="elevation-desc">影なし、ボーダーのみ</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-neumorphic-sm);">
+      <div class="elevation-label">Neumorphic SM</div>
+      <div class="elevation-desc">ボタン・小要素</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-neumorphic);">
+      <div class="elevation-label">Neumorphic</div>
+      <div class="elevation-desc">カード・パネル（実測値）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-neumorphic-lg);">
+      <div class="elevation-label">Neumorphic LG</div>
+      <div class="elevation-desc">モーダル・フローティング</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-inset);">
+      <div class="elevation-label">Inset</div>
+      <div class="elevation-desc">入力フィールド・押下状態</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウトグリッド</h2>
+
+  <div class="layout-label">3-Column Grid</div>
+  <div class="layout-desc">gap: 24px / border-radius: 30px</div>
+  <div class="layout-grid-demo" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="layout-block">Column 1</div>
+    <div class="layout-block">Column 2</div>
+    <div class="layout-block">Column 3</div>
+  </div>
+
+  <div class="layout-label">2-Column Grid (2:1)</div>
+  <div class="layout-desc">メインコンテンツ + サイドバー</div>
+  <div class="layout-grid-demo" style="grid-template-columns: 2fr 1fr;">
+    <div class="layout-block" style="min-height:100px;">Main Content</div>
+    <div class="layout-block">Sidebar</div>
+  </div>
+
+  <div class="layout-label">Content Widths</div>
+  <div class="layout-desc">max-width 実測値</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Width <span class="width-bar-value">1400px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">1000px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:71.4%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">700px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:50%"></div></div></div>
+</section>
+
+<div class="accent-stripe"></div>
+
+<footer class="footer">
+  Generated from <a href="https://www.dentsu.co.jp/">dentsu.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）
+</footer>
+
+</body>
+</html>
