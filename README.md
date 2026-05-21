@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (207 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (210 sites)</a>
 </p>
 
 <table>
@@ -307,6 +307,9 @@
 <td align="center"><strong>DECORTÉ</strong><br><img src="design-md/decorte/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>tokyobike</strong><br><img src="design-md/tokyobike/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOONSTAR</strong><br><img src="design-md/moonstar/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TASAKI</strong><br><img src="design-md/tasaki/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>COEDO</strong><br><img src="design-md/coedo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ITOYA</strong><br><img src="design-md/itoya/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -575,11 +578,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [DECORTÉ (コスメデコルテ)](https://www.decorte.com/) | Luxury Cosmetics / Beauty | [DESIGN.md](design-md/decorte/DESIGN.md) | [preview.html](design-md/decorte/preview.html) |
 | [tokyobike (トーキョーバイク)](https://tokyobike.com/) | Bicycle / Lifestyle | [DESIGN.md](design-md/tokyobike/DESIGN.md) | [preview.html](design-md/tokyobike/preview.html) |
 | [MOONSTAR (ムーンスター)](https://www.moonstar.co.jp/) | Shoes / Heritage Manufacturing | [DESIGN.md](design-md/moonstar/DESIGN.md) | [preview.html](design-md/moonstar/preview.html) |
+| [TASAKI (タサキ)](https://www.tasaki.co.jp/) | Luxury Jewelry / Heritage | [DESIGN.md](design-md/tasaki/DESIGN.md) | [preview.html](design-md/tasaki/preview.html) |
+| [COEDO Brewery (コエドブルワリー)](https://coedobrewery.com/) | Craft Beer / Beverage | [DESIGN.md](design-md/coedo/DESIGN.md) | [preview.html](design-md/coedo/preview.html) |
+| [ITOYA (銀座 伊東屋)](https://www.ito-ya.co.jp/) | Stationery / Heritage Retail | [DESIGN.md](design-md/itoya/DESIGN.md) | [preview.html](design-md/itoya/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (207 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (210 sites)</a>
 </p>
 
 <table>
@@ -852,6 +858,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>DECORTÉ</strong><br><img src="design-md/decorte/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>tokyobike</strong><br><img src="design-md/tokyobike/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOONSTAR</strong><br><img src="design-md/moonstar/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TASAKI</strong><br><img src="design-md/tasaki/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>COEDO</strong><br><img src="design-md/coedo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ITOYA</strong><br><img src="design-md/itoya/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
