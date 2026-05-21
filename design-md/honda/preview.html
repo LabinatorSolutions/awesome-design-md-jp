@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Honda (本田技研工業)</title>
+<!--
+  HondaGlobalFontJP は TypeSquare（Morisawa）経由のドメインライセンスフォント。
+  honda.co.jp 以外では表示されないため、Noto Sans JP で代替。
+  Noto Sans JP は Morisawa 系ではないが、ウェイトバリエーションが豊富で
+  Regular (400) / Light (300) / Bold (700) の3ウェイト構成を再現しやすい。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --color-text-primary: #35363b;
+    --color-text-sub: #65666a;
+    --color-text-appendix: #8c8d91;
+    --color-text-strong: #000000;
+    --color-text-white-strong: #ffffff;
+    --color-text-white-basic: #d7d8da;
+    --color-text-white-sub: #c8c9cc;
+    --color-accent-red: #cc0000;
+    --color-bg-primary: #ffffff;
+    --color-bg-light-gray: #f4f5f5;
+    --color-bg-dark: #35363b;
+    --color-bg-gallery: #e4e5e6;
+    --color-border-default: #c6c6c6;
+    --color-border-dark: #35363b;
+    --color-nav-overlay: rgba(53, 54, 59, 0.95);
+    --color-frosted-header: rgba(255, 255, 255, 0.8);
+    /* Design page accents */
+    --color-design-red: #ff4a12;
+    --color-design-yellow: #ffc902;
+    --color-design-blue: #0a008a;
+    /* === Elevation === */
+    --elevation-1: 0 2px 4px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.12);
+    /* === Fonts 実測値（Noto Sans JP で代替） === */
+    --font-regular: "Noto Sans JP", "ヒラギノ角ゴ W3 JIS2004", "Hiragino Kaku Gothic ProN", "Hiragino Sans", 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", Meiryo, sans-serif;
+    --font-light: "Noto Sans JP", "ヒラギノ角ゴ W3 JIS2004", "Hiragino Kaku Gothic ProN", "Hiragino Sans", 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", Meiryo, sans-serif;
+    --font-bold: "Noto Sans JP", "ヒラギノ角ゴ W3 JIS2004", "Hiragino Kaku Gothic ProN", "Hiragino Sans", 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", Meiryo, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-regular);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV (Frosted Glass Header) === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 72px;
+    background: var(--color-frosted-header);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-brand {
+    font-family: var(--font-bold); font-size: 20px; font-weight: 700;
+    color: var(--color-text-primary); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-brand span { color: var(--color-accent-red); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    color: var(--color-text-primary); text-decoration: none;
+    letter-spacing: 0.05em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-accent-red); }
+  .nav-cta {
+    display: inline-block; background: transparent; color: var(--color-text-primary);
+    padding: 8px 20px; border: 1px solid var(--color-border-dark);
+    border-radius: 0; font-family: var(--font-regular); font-size: 14px; font-weight: 400;
+    text-decoration: none; letter-spacing: 0.05em; transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--color-text-primary); color: var(--color-text-white-strong); }
+
+  /* === HERO === */
+  .hero {
+    padding: 100px 40px 80px; text-align: center;
+    background: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-bg-gallery);
+  }
+  .hero h1 {
+    font-family: var(--font-bold); font-size: 36px; font-weight: 700;
+    line-height: 1.3; letter-spacing: 0.04em;
+    color: var(--color-text-primary); margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: var(--color-text-sub); max-width: 640px; margin: 0 auto 40px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* === BUTTONS (all radius: 0) === */
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--color-text-primary);
+    padding: 16px 32px; border: 1px solid var(--color-border-dark);
+    border-radius: 0; font-family: var(--font-regular); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--color-text-primary); color: var(--color-text-white-strong); }
+  .btn-outline-light {
+    display: inline-block; background: transparent; color: var(--color-text-white-strong);
+    padding: 16px 32px; border: 1px solid var(--color-text-white-strong);
+    border-radius: 0; font-family: var(--font-regular); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline-light:hover { background: var(--color-text-white-strong); color: var(--color-text-primary); }
+  .btn-solid {
+    display: inline-block; background: var(--color-text-primary); color: var(--color-text-white-strong);
+    padding: 16px 32px; border: 1px solid var(--color-text-primary);
+    border-radius: 0; font-family: var(--font-regular); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-solid:hover { opacity: 0.85; }
+  .btn-small {
+    display: inline-block; background: transparent; color: var(--color-text-primary);
+    padding: 5px 12px; border: 1px solid var(--color-border-default);
+    border-radius: 0; font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    text-decoration: none; cursor: pointer; transition: border-color 0.2s;
+  }
+  .btn-small:hover { border-color: var(--color-text-primary); }
+  .btn-accent {
+    display: inline-block; background: var(--color-accent-red); color: var(--color-text-white-strong);
+    padding: 16px 32px; border: 1px solid var(--color-accent-red);
+    border-radius: 0; font-family: var(--font-regular); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-accent:hover { opacity: 0.85; }
+
+  /* === SECTIONS === */
+  .section { padding: 80px 40px; max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-light); font-size: 12px; font-weight: 300;
+    color: var(--color-text-appendix); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-bold); font-size: 28px; font-weight: 700;
+    line-height: 1.3; letter-spacing: 0.04em; margin-bottom: 40px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-bg-gallery); margin: 0; }
+
+  .section-gray { background: var(--color-bg-light-gray); padding: 80px 40px; }
+  .section-gray .section-inner { max-width: 1080px; margin: 0 auto; }
+
+  .section-dark { background: var(--color-bg-dark); padding: 80px 40px; color: var(--color-text-white-basic); }
+  .section-dark .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--color-text-white-sub); }
+  .section-dark .section-title { color: var(--color-text-white-strong); }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: var(--color-bg-primary); border: 1px solid var(--color-bg-gallery); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--color-text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--color-text-appendix); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--color-text-appendix); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-light); font-size: 14px; font-weight: 300; color: var(--color-text-sub); margin: 32px 0 12px; letter-spacing: 0.05em; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--color-bg-gallery); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--color-text-appendix); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--color-bg-light-gray); color: var(--color-text-sub); font-size: 11px; padding: 2px 8px; border-radius: 0; margin-left: 8px; }
+
+  /* === ARTICLE === */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-bold); font-size: 32px; font-weight: 700;
+    line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 20px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-bold); font-size: 24px; font-weight: 700;
+    line-height: 1.4; letter-spacing: 0.04em; margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    margin-bottom: 16px; color: var(--color-text-primary);
+  }
+  .article-preview .lead {
+    font-size: 18px; line-height: 1.8; color: var(--color-text-sub);
+    border-left: 3px solid var(--color-text-primary); padding-left: 20px;
+    margin-bottom: 24px;
+  }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; }
+  .card {
+    background: var(--color-bg-gallery); border-radius: 0; padding: 0;
+    overflow: hidden; transition: opacity 0.3s; cursor: pointer;
+  }
+  .card:hover { opacity: 0.85; }
+  .card-image { width: 100%; height: 200px; background: var(--color-bg-gallery); display: flex; align-items: center; justify-content: center; }
+  .card-image-placeholder {
+    font-family: var(--font-light); font-size: 14px; font-weight: 300;
+    color: var(--color-text-appendix); letter-spacing: 0.1em;
+  }
+  .card-body { padding: 20px 24px 28px; background: var(--color-bg-primary); }
+  .card-body h3 {
+    font-family: var(--font-bold); font-size: 18px; font-weight: 700;
+    line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 8px;
+  }
+  .card-body p { font-size: 14px; color: var(--color-text-sub); line-height: 1.6; }
+  .card-link {
+    display: inline-block; margin-top: 12px; font-size: 14px;
+    color: var(--color-text-primary); text-decoration: none;
+    border-bottom: 1px solid var(--color-text-primary);
+    padding-bottom: 2px; transition: border-color 0.2s;
+  }
+  .card-link:hover { border-color: var(--color-accent-red); color: var(--color-accent-red); }
+
+  /* Gallery style cards (no white body) */
+  .card-gallery {
+    background: var(--color-bg-gallery); border-radius: 0; padding: 0;
+    overflow: hidden; transition: opacity 0.3s; cursor: pointer;
+  }
+  .card-gallery:hover { opacity: 0.85; }
+  .card-gallery-image { width: 100%; height: 240px; background: var(--color-bg-gallery); display: flex; align-items: center; justify-content: center; }
+  .card-gallery-caption {
+    padding: 16px 20px;
+    font-family: var(--font-light); font-size: 13px; font-weight: 300;
+    color: var(--color-text-sub); letter-spacing: 0.05em;
+  }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 420px; }
+  .form-label {
+    display: block; font-size: 14px; font-weight: 400;
+    color: var(--color-text-primary); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; background: var(--color-bg-primary); color: var(--color-text-primary);
+    border: 1px solid var(--color-border-default); padding: 12px 16px;
+    border-radius: 0; font-family: var(--font-regular); font-size: 16px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--color-text-appendix); }
+  .form-input:focus, .form-input--focus { border-color: var(--color-text-primary); }
+  .form-input--error { border-color: var(--color-accent-red); }
+  .form-hint { font-size: 12px; color: var(--color-text-appendix); margin-top: 6px; }
+  .form-error { font-size: 12px; color: var(--color-accent-red); margin-top: 6px; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--color-bg-primary); border-radius: 0; padding: 28px;
+    text-align: center; border: 1px solid var(--color-bg-gallery);
+  }
+  .elevation-label { font-size: 14px; font-weight: 400; margin-bottom: 8px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--color-text-appendix); word-break: break-all; }
+
+  /* === LAYOUT DEMO === */
+  .layout-demo { display: grid; gap: 2px; margin-bottom: 32px; }
+  .layout-demo-4col { grid-template-columns: repeat(4, 1fr); }
+  .layout-demo-3col { grid-template-columns: repeat(3, 1fr); }
+  .layout-demo-2col { grid-template-columns: repeat(2, 1fr); }
+  .layout-block {
+    background: var(--color-bg-gallery); height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-light); font-size: 13px; font-weight: 300;
+    color: var(--color-text-appendix); letter-spacing: 0.05em;
+  }
+
+  /* === BUTTON ROW === */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 300; color: var(--color-text-appendix); margin-top: 10px; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-text-primary); margin-bottom: 8px; height: 28px; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 400; color: var(--color-text-appendix); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 48px 40px; text-align: center;
+    background: var(--color-bg-dark);
+    font-family: var(--font-light); font-size: 12px; font-weight: 300;
+    color: var(--color-text-white-sub); letter-spacing: 0.05em;
+  }
+  .footer a { color: var(--color-text-white-basic); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero { padding: 64px 20px 48px; }
+    .hero h1 { font-size: 24px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-dark { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .layout-demo-4col { grid-template-columns: repeat(2, 1fr); }
+    .layout-demo-3col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>H</span>ONDA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">お問い合わせ</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Honda — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カスタム Web フォント HondaGlobalFontJP、グローバル palt、完全角形ボタンなど、Honda の精密なデザイン言語を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-outline" href="#">モビリティサービス一覧を見る</a>
+    <a class="btn-solid" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand & Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Honda Red</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">--Color_Accent-Red</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff4a12"></div><div class="color-swatch-info"><div class="color-swatch-name">Design Red</div><div class="color-swatch-hex">#ff4a12</div><div class="color-swatch-role">デザインサブサイト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc902"></div><div class="color-swatch-info"><div class="color-swatch-name">Design Yellow</div><div class="color-swatch-hex">#ffc902</div><div class="color-swatch-role">デザインサブサイト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0a008a"></div><div class="color-swatch-info"><div class="color-swatch-name">Design Blue</div><div class="color-swatch-hex">#0a008a</div><div class="color-swatch-role">デザインサブサイト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#35363b"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#35363b</div><div class="color-swatch-role">--Color_Text-Black_Basic</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#65666a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Sub</div><div class="color-swatch-hex">#65666a</div><div class="color-swatch-role">--Color_Text-Black_Sub</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#8c8d91"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Appendix</div><div class="color-swatch-hex">#8c8d91</div><div class="color-swatch-role">--Color_Text-Black_Appendix</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Strong</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">--Color_Text-Black_Strong</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text (on Dark)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#35363b"><div style="color:#ffffff;padding:20px 12px;font-size:13px;">White Strong</div></div><div class="color-swatch-info"><div class="color-swatch-name">White Strong</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">--Color_Text-White_Strong</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#35363b"><div style="color:#d7d8da;padding:20px 12px;font-size:13px;">White Basic</div></div><div class="color-swatch-info"><div class="color-swatch-name">White Basic</div><div class="color-swatch-hex">#d7d8da</div><div class="color-swatch-role">--Color_Text-White_Basic</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#35363b"><div style="color:#c8c9cc;padding:20px 12px;font-size:13px;">White Sub</div></div><div class="color-swatch-info"><div class="color-swatch-name">White Sub</div><div class="color-swatch-hex">#c8c9cc</div><div class="color-swatch-role">--Color_Text-White_Sub</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e4e5e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f4f5f5</div><div class="color-swatch-role">--Color_Basic-LIGHT-GRAY</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4e5e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Gallery Card BG</div><div class="color-swatch-hex">#e4e5e6</div><div class="color-swatch-role">デザインギャラリー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#35363b"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark BG</div><div class="color-swatch-hex">#35363b</div><div class="color-swatch-role">フッター・ダークセクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Frosted Glass</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:linear-gradient(135deg, #e4e5e6, #ffffff); position:relative;"><div style="position:absolute;inset:0;background:rgba(255,255,255,0.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-size:12px;color:#65666a;">backdrop-filter: blur</div></div><div class="color-swatch-info"><div class="color-swatch-name">Frosted Header</div><div class="color-swatch-hex">rgba(255,255,255,0.8)</div><div class="color-swatch-role">デザインサブサイトヘッダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(53,54,59,0.95)"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Overlay</div><div class="color-swatch-hex">rgba(53,54,59,0.95)</div><div class="color-swatch-role">ナビオーバーレイ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c6c6c6"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#c6c6c6</div><div class="color-swatch-role">標準ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#35363b"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Dark</div><div class="color-swatch-hex">#35363b</div><div class="color-swatch-role">CTA ボーダー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:32px; font-weight:700; line-height:1.3; letter-spacing:0.04em;">ヒーロー見出し — Display Title</div>
+    <div class="type-meta">32px / Bold (font-family) / line-height: 1.3 / letter-spacing: 0.04em / palt: グローバル<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-bold); font-size:20px; font-weight:700; line-height:1.4; letter-spacing:0.04em;">ナビゲーション見出し — Nav Heading</div>
+    <div class="type-meta">20px / Bold (font-family) / line-height: 1.4 / letter-spacing: 0.04em<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-regular); font-size:16px; font-weight:400; line-height:1.4; letter-spacing:normal;">本文テキスト — Honda のモノづくりの精密さをそのまま画面に落とし込んだ、無駄のないデザイン。line-height: 1.4 と palt のグローバル適用で、引き締まった印象のテキスト組版を実現。ABCabc 123</div>
+    <div class="type-meta">16px / Regular / line-height: 1.4 / letter-spacing: normal / palt: グローバル<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:16px; font-weight:300; line-height:1.4; letter-spacing:0.05em;">ナビゲーションリンク — Light ウェイトと広めの字間で、静かな存在感</div>
+    <div class="type-meta">16px / Light (font-family) / line-height: 1.4 / letter-spacing: 0.05em<span class="type-context">ナビリンク</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:14px; font-weight:300; line-height:1.5; letter-spacing:normal; color:var(--color-text-sub);">補足テキスト — Footer / Caption (14px Light)</div>
+    <div class="type-meta">14px / Light (font-family) / color: Text Sub<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-light); font-size:12px; font-weight:300; line-height:1.5; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-text-appendix);">SECTION LABEL — 12PX LIGHT UPPERCASE</div>
+    <div class="type-meta">12px / Light / uppercase / letter-spacing: 0.1em<span class="type-context">セクションラベル</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — モビリティコンテンツ</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>Honda のデザインフィロソフィ</h1>
+    <p class="lead">技術と美の融合。Honda は創業以来「人のために技術を磨く」という理念のもと、モビリティの未来を切り拓いてきました。</p>
+    <p>Honda のデザインは、精密さと人間性の両立を追求します。直線的で無駄のないフォルムは、エンジニアリングの精度を視覚的に伝えるものです。同時に、人が触れ、操作し、暮らしの中で使うものとしての温かみも失わない。</p>
+    <h2>カスタム書体の設計思想</h2>
+    <p>HondaGlobalFontJP は、TypeSquare を通じて配信される Honda 専用のカスタム Web フォントです。Regular・Light・Bold の3ウェイト構成で、サイト全体のトーンを統一しています。font-feature-settings: "palt" をグローバルに適用し、ABCabc 123 のような欧文・数字と和文の混植でも詰まりすぎない自然な字間を維持しています。</p>
+    <p>border-radius: 0px の完全角形ボタンは、Honda のインダストリアルな精密さを表現するデザイン判断です。角丸を一切排除することで、ブランドの技術的な自信と一貫性を伝えています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons — radius: 0px</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline" href="#">モビリティサービス一覧を見る</a><div class="button-label">Outline CTA (Primary)</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-solid" href="#">詳しく見る</a><div class="button-label">Solid Dark</div></div>
+    <div class="button-item"><a class="btn-accent" href="#">購入はこちら</a><div class="button-label">Accent Red</div></div>
+    <div class="button-item"><a class="btn-small" href="#">Honda Technology</a><div class="button-label">Small / Sub</div></div>
+  </div>
+
+  <div style="background:var(--color-bg-dark); padding:32px; margin-top:32px;">
+    <div class="button-row">
+      <div class="button-item"><a class="btn-outline-light" href="#">English</a><div class="button-label" style="color:var(--color-text-white-sub);">Outline Light (on dark)</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards — Gallery Style</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="color-group-label">Product Cards (white body)</div>
+  <div class="card-grid" style="margin-bottom:40px;">
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">VEHICLE IMAGE</div></div>
+      <div class="card-body">
+        <h3>Honda e: Architecture</h3>
+        <p>新しい EV プラットフォームが実現する、自由な移動体験。都市型モビリティの未来。</p>
+        <a class="card-link" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">VEHICLE IMAGE</div></div>
+      <div class="card-body">
+        <h3>ASIMO 次世代ロボティクス</h3>
+        <p>人と共存するロボットの実現に向けた、Honda のロボティクス技術の最前線。</p>
+        <a class="card-link" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><div class="card-image-placeholder">VEHICLE IMAGE</div></div>
+      <div class="card-body">
+        <h3>Honda Jet Elite II</h3>
+        <p>空の移動に革新をもたらす、Honda のビジネスジェット。精密工学の結晶。</p>
+        <a class="card-link" href="#">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Gallery Cards (design page style, #e4e5e6 bg)</div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:2px;">
+    <div class="card-gallery">
+      <div class="card-gallery-image"><div class="card-image-placeholder">DESIGN WORK</div></div>
+      <div class="card-gallery-caption">Honda Design — Exterior</div>
+    </div>
+    <div class="card-gallery">
+      <div class="card-gallery-image"><div class="card-image-placeholder">DESIGN WORK</div></div>
+      <div class="card-gallery-caption">Honda Design — Interior</div>
+    </div>
+    <div class="card-gallery">
+      <div class="card-gallery-image"><div class="card-image-placeholder">DESIGN WORK</div></div>
+      <div class="card-gallery-caption">Honda Design — Mobility</div>
+    </div>
+    <div class="card-gallery">
+      <div class="card-gallery-image"><div class="card-image-placeholder">DESIGN WORK</div></div>
+      <div class="card-gallery-caption">Honda Design — Product</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms — radius: 0px</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-hint">デフォルト — border: #c6c6c6, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="taro@example.com">
+    <div class="form-hint">フォーカス — border: #35363b</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-1234">
+    <div class="form-error">正しい電話番号を入力してください</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。Honda のデフォルト。フラットな面と角形でインダストリアルな印象</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1: Hover</div>
+      <div class="elevation-desc">0 2px 4px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2: Dropdown</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.12)</div>
+    </div>
+    <div class="elevation-card" style="background:var(--color-frosted-header); backdrop-filter:blur(8px);">
+      <div class="elevation-label">Frosted Glass</div>
+      <div class="elevation-desc">rgba(255,255,255,0.8) + backdrop-filter: blur()</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- DARK SECTION -->
+<section class="section-dark">
+<div class="section-inner">
+  <div class="section-label">Dark Section</div>
+  <h2 class="section-title">ダークセクション (#35363b)</h2>
+  <p style="font-size:16px; line-height:1.8; margin-bottom:24px; color:var(--color-text-white-basic);">Honda のフッターやダークセクションでは、背景色 #35363b にテキスト色 #d7d8da を使用します。純粋な白 #ffffff は見出しや強調テキストに限定し、本文は少しくすんだ #d7d8da で目への負担を軽減しています。</p>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-outline-light" href="#">English</a></div>
+    <div class="button-item" style="margin-left:8px;"><span style="color:var(--color-text-white-sub); font-size:14px;">Language selector on dark bg</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウトグリッド</h2>
+
+  <div class="color-group-label">4-Column Grid (Product Gallery)</div>
+  <div class="layout-demo layout-demo-4col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+    <div class="layout-block">4</div>
+  </div>
+
+  <div class="color-group-label">3-Column Grid</div>
+  <div class="layout-demo layout-demo-3col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+    <div class="layout-block">3</div>
+  </div>
+
+  <div class="color-group-label">2-Column Grid</div>
+  <div class="layout-demo layout-demo-2col">
+    <div class="layout-block">1</div>
+    <div class="layout-block">2</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:40px;">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.honda.co.jp/">honda.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）
+</footer>
+
+</body>
+</html>

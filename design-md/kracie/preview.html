@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Kracie（クラシエ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    /* Brand — 多彩なブランドカラー（食品・化粧品・ヘルスケアの多様なプロダクトラインを反映） */
+    --brand-yellow: #ffd500;
+    --brand-pink: #ffa8e2;
+    --brand-blue: #248cff;
+    --brand-lime: #b2ff53;
+    --brand-orange: #ffa646;
+    --brand-orange-dark: #ff8c00;
+    --brand-purple: #6c55f0;
+
+    /* Text */
+    --text-primary: #272727;
+    --text-secondary: #585858;
+    --text-dark: #2b2e38;
+
+    /* Backgrounds & Surfaces */
+    --page-bg: #fafaef;
+    --surface-light: #f8f8f8;
+    --surface-beige: #f0f0e2;
+    --white: #ffffff;
+    --footer-dark: #272727;
+    --header-white: #ffffff;
+
+    /* Semantic — 推奨補完値 */
+    --danger: #dc2626;
+    --success: #16a34a;
+    --warning: #d97706;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.10);
+
+    /* === Fonts === */
+    /* 実サイトは UDShinGoPr（UD新ゴPr / Morisawa）を最優先 */
+    /* UDShinGoPr はドメインライセンス制限のため、プレビューでは */
+    /* Noto Sans JP（Google Fonts）で代替 */
+    --font-base: "UDShinGoPr", "Noto Sans JP", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic Pro", "Meiryo UI", Meiryo, Arial, sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-pill: 50px;
+    --radius-circle: 50%;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--page-bg);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--header-white);
+    border-bottom: 1px solid var(--surface-beige);
+  }
+  .nav-left { display: flex; align-items: center; gap: 32px; }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.05em; line-height: 1.3;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-search {
+    display: flex; align-items: center;
+    background: var(--surface-light); border: none;
+    padding: 8px 16px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 13px; color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    width: 200px;
+  }
+  .nav-search::placeholder { color: var(--text-secondary); }
+  .nav-hamburger {
+    width: 44px; height: 44px;
+    background: var(--brand-yellow);
+    border: none; border-radius: var(--radius-circle);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .nav-hamburger:hover { opacity: 0.85; }
+  .nav-hamburger-lines {
+    display: flex; flex-direction: column; gap: 4px;
+    width: 18px;
+  }
+  .nav-hamburger-lines span {
+    display: block; height: 2px; width: 100%;
+    background: var(--text-primary); border-radius: 1px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 72px;
+    background: var(--page-bg);
+    text-align: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 24px;
+  }
+  .hero-badge-item {
+    display: inline-block;
+    padding: 6px 16px; border-radius: var(--radius-pill);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .hero h1 {
+    font-size: 35px; font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto; margin-right: auto;
+  }
+  .hero p {
+    font-size: 13px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--brand-yellow); color: var(--text-primary);
+    padding: 15px 20px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 700; letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--white); color: var(--text-primary);
+    padding: 14px 19px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--surface-beige);
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--surface-light); }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--text-primary);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 600; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 35px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--surface-beige);
+    margin: 0;
+  }
+  .section-warm { background: var(--surface-beige); padding: 80px 32px; }
+  .section-warm .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); border: 1px solid var(--surface-beige); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px; letter-spacing: 0.05em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--surface-beige); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-beige); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-base); }
+  .palt-note {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--brand-yellow); color: var(--text-primary);
+    padding: 4px 12px; border-radius: var(--radius-pill);
+    font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+
+  /* PRODUCT SAMPLE */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .product-card {
+    background: var(--white);
+    border: 1px solid var(--surface-beige);
+    border-radius: var(--radius-md);
+    padding: 0;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .product-card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .product-card-image {
+    height: 160px; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .product-card-body { padding: 20px 24px; }
+  .product-tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: var(--radius-pill);
+    margin-bottom: 12px; letter-spacing: 0.05em;
+  }
+  .product-card h3 {
+    font-size: 16px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em; margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .product-card p {
+    font-size: 13px; line-height: 1.8; letter-spacing: 0.05em;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .product-price {
+    font-size: 24px; font-weight: 700; color: var(--text-primary);
+    letter-spacing: 0.05em;
+  }
+  .product-price span { font-size: 13px; font-weight: 400; color: var(--text-secondary); }
+  .product-cta {
+    display: inline-flex; width: 100%; justify-content: center;
+    padding: 12px 20px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    text-decoration: none; cursor: pointer; border: none;
+    margin-top: 16px;
+    transition: opacity 0.15s;
+  }
+  .product-cta:hover { opacity: 0.85; }
+
+  /* ARTICLE SAMPLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 35px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+  .article-preview h2 {
+    font-size: 24px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em;
+    margin: 40px 0 16px;
+  }
+  .article-preview h3 {
+    font-size: 16px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em;
+    margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-size: 13px; font-weight: 400;
+    line-height: 1.8; letter-spacing: 0.05em;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .article-preview p.helper {
+    color: var(--text-secondary); font-size: 13px; line-height: 1.8;
+  }
+  .article-callout {
+    background: var(--surface-light);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin: 24px 0;
+    font-size: 13px; line-height: 1.8; letter-spacing: 0.05em;
+  }
+
+  /* PILLS / BADGES */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 12px; border-radius: var(--radius-pill);
+    font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .pill-yellow { background: var(--brand-yellow); color: var(--text-primary); }
+  .pill-pink { background: var(--brand-pink); color: var(--text-primary); }
+  .pill-blue { background: var(--brand-blue); color: var(--white); }
+  .pill-lime { background: var(--brand-lime); color: var(--text-primary); }
+  .pill-orange { background: var(--brand-orange); color: var(--text-primary); }
+  .pill-purple { background: var(--brand-purple); color: var(--white); }
+  .pill-light { background: var(--surface-light); color: var(--text-primary); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; font-family: var(--font-mono); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--surface-beige);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .card h3 {
+    font-size: 16px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em; margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .card p {
+    font-size: 13px; line-height: 1.8; letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+  .card-accent-top {
+    border-top: 3px solid var(--brand-yellow);
+  }
+  .card-accent-pink { border-top-color: var(--brand-pink); }
+  .card-accent-blue { border-top-color: var(--brand-blue); }
+  .card-accent-lime { border-top-color: var(--brand-lime); }
+  .card-accent-orange { border-top-color: var(--brand-orange); }
+  .card-accent-purple { border-top-color: var(--brand-purple); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-primary);
+    border: 1px solid var(--surface-beige);
+    padding: 12px 16px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 13px; letter-spacing: 0.05em;
+    font-feature-settings: "palt";
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-secondary); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--brand-yellow);
+    box-shadow: 0 0 0 3px rgba(255, 213, 0, 0.25);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+  }
+  .form-input--search {
+    background: var(--surface-light);
+    border-color: transparent;
+  }
+  .form-state-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-md);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--surface-beige);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-yellow); border-radius: var(--radius-sm); margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.05em; }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--brand-yellow);
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--footer-dark);
+    font-size: 13px; color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .footer a { color: rgba(255, 255, 255, 0.8); text-decoration: underline; }
+  .footer strong { color: var(--white); font-weight: 700; }
+
+  @media (max-width: 769px) {
+    .hero { padding: 56px 20px 48px; }
+    .hero h1 { font-size: 24px; }
+    .nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .section { padding: 56px 20px; }
+    .section-warm { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 24px; }
+    .article-preview h2 { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-brand" href="#">Kracie</a>
+    <ul class="nav-links">
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#product">Product</a></li>
+      <li><a href="#buttons">Buttons</a></li>
+      <li><a href="#forms">Forms</a></li>
+      <li><a href="#layout">Layout</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <input class="nav-search" type="text" placeholder="キーワードで検索">
+    <button class="nav-hamburger" aria-label="Menu">
+      <div class="nav-hamburger-lines">
+        <span></span><span></span><span></span>
+      </div>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-item" style="background:var(--brand-pink); color:var(--text-primary);">Beauty</span>
+    <span class="hero-badge-item" style="background:var(--brand-lime); color:var(--text-primary);">Healthcare</span>
+    <span class="hero-badge-item" style="background:var(--brand-orange); color:var(--text-primary);">Food</span>
+  </div>
+  <h1>夢中になれる明日</h1>
+  <p>クラシエのデザインシステムをカタログ化したプレビューです。コーポレートサイトの computed style 実測値に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。ヘルスケア・化粧品・食品の多彩なプロダクトラインを持つクラシエらしい、カラフルで親しみやすいビジュアルが特徴です。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">製品を探す</a>
+    <a class="btn-secondary" href="#">企業情報</a>
+    <a class="btn-link" href="#">ブランド一覧 &rarr;</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors — 実測値</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand — 多彩なプロダクトラインを反映するマルチカラー</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffd500"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Yellow</div><div class="color-swatch-hex">#ffd500</div><div class="color-swatch-role">主要 CTA・ハンバーガーボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffa8e2"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Pink</div><div class="color-swatch-hex">#ffa8e2</div><div class="color-swatch-role">キャンペーン・グラフィック要素（最頻出ユニーク背景色）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#248cff"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Blue</div><div class="color-swatch-hex">#248cff</div><div class="color-swatch-role">キャンペーン要素・リンク強調</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b2ff53"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Lime</div><div class="color-swatch-hex">#b2ff53</div><div class="color-swatch-role">キャンペーン・ヘルスケア系アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffa646"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Orange</div><div class="color-swatch-hex">#ffa646</div><div class="color-swatch-role">食品系アクセント・ポイント色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff8c00"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange Dark</div><div class="color-swatch-hex">#ff8c00</div><div class="color-swatch-role">オレンジ濃い目バリエーション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6c55f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Purple</div><div class="color-swatch-hex">#6c55f0</div><div class="color-swatch-role">キャンペーン・特別感のあるアクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text & Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#272727"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#272727</div><div class="color-swatch-role">主要テキスト・見出し・CTA テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#585858"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#585858</div><div class="color-swatch-role">補足テキスト・キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2b2e38"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark</div><div class="color-swatch-hex">#2b2e38</div><div class="color-swatch-role">濃いテキスト・ナビゲーション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Background & Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafaef; border-bottom:1px solid #f0f0e2"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#fafaef</div><div class="color-swatch-role">ページ背景（ウォームクリーム）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8; border-bottom:1px solid #f0f0e2"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">検索バー・入力背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0e2; border-bottom:1px solid #e0e0d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Beige</div><div class="color-swatch-hex">#f0f0e2</div><div class="color-swatch-role">セクション背景・ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #f0f0e2"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ヘッダー・カード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#272727"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Dark</div><div class="color-swatch-hex">#272727</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic — 推奨補完値</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc2626"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#dc2626</div><div class="color-swatch-role">エラー・削除（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#16a34a"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#16a34a</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d97706"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d97706</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="palt-note">font-feature-settings: "palt" — body 全体にグローバル適用</div>
+
+  <div class="type-sample">
+    <div style="font-size:35px; font-weight:700; line-height:1.3; letter-spacing:0.05em;">夢中になれる明日 — H2 title-lv1</div>
+    <div class="type-meta">35px / 700 / line-height 1.3 / letter-spacing 0.05em / palt:on<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.3; letter-spacing:0.05em;">製品情報・ブランド一覧 — H2 title-lv2</div>
+    <div class="type-meta">24px / 700 / line-height 1.3 / letter-spacing 0.05em / palt:on<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.3; letter-spacing:0.05em;">いち髪・肌美精・ナイーブ — H3 title-lv3</div>
+    <div class="type-meta">16px / 700 / line-height 1.3 / letter-spacing 0.05em / palt:on<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:400; line-height:1.8; letter-spacing:0.05em;">本文テキスト — クラシエは「夢中になれる明日」をコーポレートメッセージに掲げ、ヘルスケア、ビューティケア、フーズの3事業を展開しています。日本語本文は 13px / line-height 1.8 で、コンパクトでありながら十分な行間を確保。グローバルに適用された palt（プロポーショナルメトリクス）により、和文テキストの詰め組みが実現されています。</div>
+    <div class="type-meta">13px / 400 / line-height 1.8 / letter-spacing 0.05em / palt:on<span class="type-context">全体</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:700; line-height:1.3; letter-spacing:0.05em;">ナビゲーション — 製品情報 / 企業情報 / IR</div>
+    <div class="type-meta">13px / 700 / line-height 1.3 / letter-spacing 0.05em / palt:on<span class="type-context">ナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:500; line-height:1.8; letter-spacing:0.05em; color:rgba(255,255,255,0.8); background:var(--footer-dark); padding:12px 16px; border-radius:var(--radius-md);">フッターテキスト — Copyright, プライバシーポリシー, サイトマップ</div>
+    <div class="type-meta">13px / 500 / line-height 1.8 / letter-spacing 0.05em / palt:on<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:15px; font-weight:700; line-height:1.3; letter-spacing:0.05em; background:var(--brand-yellow); display:inline-block; padding:12px 20px; border-radius:var(--radius-pill); color:var(--text-primary);">CTA ボタンラベル</div>
+    <div class="type-meta">15px / 700 / line-height 1.3 / letter-spacing 0.05em / palt:on<span class="type-context">CTA</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT SAMPLE -->
+<section class="section-warm" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product — ヘルスケア・ビューティ・フード</div>
+  <h2 class="section-title">プロダクトサンプル</h2>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-image" style="background: linear-gradient(135deg, #ffa8e2 0%, #ffd500 100%);">
+        <span style="font-size:40px;">&#x1F338;</span>
+      </div>
+      <div class="product-card-body">
+        <div class="product-tag" style="background:var(--brand-pink); color:var(--text-primary);">Beauty</div>
+        <h3>いち髪</h3>
+        <p>日本の純・和草プレミアムエキス配合。ダメージ補修と予防の両立で、使うほどに芯から美しい髪へ。</p>
+        <a class="product-cta" style="background:var(--brand-yellow); color:var(--text-primary);" href="#">製品詳細を見る</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-image" style="background: linear-gradient(135deg, #b2ff53 0%, #248cff 100%);">
+        <span style="font-size:40px;">&#x1F48A;</span>
+      </div>
+      <div class="product-card-body">
+        <div class="product-tag" style="background:var(--brand-lime); color:var(--text-primary);">Healthcare</div>
+        <h3>葛根湯</h3>
+        <p>かぜのひきはじめに。クラシエの漢方薬シリーズは、伝統処方を現代の技術で飲みやすく仕上げています。</p>
+        <a class="product-cta" style="background:var(--brand-yellow); color:var(--text-primary);" href="#">製品詳細を見る</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-image" style="background: linear-gradient(135deg, #ffa646 0%, #ff8c00 100%);">
+        <span style="font-size:40px;">&#x1F366;</span>
+      </div>
+      <div class="product-card-body">
+        <div class="product-tag" style="background:var(--brand-orange); color:var(--text-primary);">Food</div>
+        <h3>ねるねるねるね</h3>
+        <p>知育菓子シリーズ。お子さまの好奇心を刺激し、作る楽しさを味わえるユニークなお菓子です。</p>
+        <a class="product-cta" style="background:var(--brand-yellow); color:var(--text-primary);" href="#">製品詳細を見る</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / SERVICE -->
+<section class="section" id="article">
+  <div class="section-label">04 / Article — 本文組版サンプル</div>
+  <h2 class="section-title">記事組版サンプル</h2>
+  <div class="article-preview">
+    <h1>夢中になれる明日</h1>
+    <p>クラシエグループは「夢中になれる明日」をコーポレートメッセージに掲げ、ヘルスケア、ビューティケア、フーズの3つの事業を通じて、お客さまの健やかで美しい毎日をサポートしています。</p>
+
+    <h2>多様な事業領域</h2>
+    <p>漢方薬やヘルスケア製品で健康を、ヘアケア・スキンケアで美しさを、お菓子やアイスクリームで楽しさを。ひとつの企業の中に、暮らしのさまざまなシーンに寄り添うブランドが揃っています。</p>
+
+    <h3>サステナビリティへの取り組み</h3>
+    <p>容器包装の環境配慮、原材料の持続可能な調達、製造工程での省エネルギーなど、事業活動のあらゆる側面で環境負荷の低減に取り組んでいます。</p>
+
+    <div class="article-callout">
+      <strong>お知らせ：</strong>製品に関するお問い合わせは、各ブランドサイトまたはお客様相談室までご連絡ください。受付時間は平日 9:00〜17:00 です。
+    </div>
+
+    <p class="helper">※ 本プレビューのテキストはデザインシステムのサンプルです。最新の製品情報は公式サイトをご確認ください。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons — Yellow Pill が基本</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">製品を探す</a><div class="button-label">Primary CTA — Pill / #ffd500 / radius 50px</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">企業情報</a><div class="button-label">Secondary — White Pill + Border</div></div>
+    <div class="button-item"><a class="btn-link" href="#">ブランド一覧 &rarr;</a><div class="button-label">Text Link — #272727</div></div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Hamburger Button</div>
+    <div class="button-row" style="align-items:center;">
+      <div class="button-item">
+        <button class="nav-hamburger" aria-label="Menu" style="width:52px; height:52px;">
+          <div class="nav-hamburger-lines" style="width:22px;">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+        <div class="button-label">Hamburger — Circle / #ffd500 / radius 50%</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Pills / Badges — ブランドカラーバリエーション</div>
+    <div class="badge-row">
+      <span class="pill pill-yellow">Beauty</span>
+      <span class="pill pill-pink">Campaign</span>
+      <span class="pill pill-blue">Healthcare</span>
+      <span class="pill pill-lime">Wellness</span>
+      <span class="pill pill-orange">Food</span>
+      <span class="pill pill-purple">Special</span>
+      <span class="pill pill-light">Default</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-warm" id="cards">
+<div class="section-inner">
+  <div class="section-label">06 / Cards — アクセントカラー天ボーダー</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card card-accent-top">
+      <h3>クラシエ薬品</h3>
+      <p>漢方薬・医薬品を通じて、人々の健康な暮らしに貢献します。葛根湯をはじめとする漢方薬シリーズが主力製品です。</p>
+    </div>
+    <div class="card card-accent-top card-accent-pink">
+      <h3>クラシエホームプロダクツ</h3>
+      <p>いち髪、肌美精、ナイーブなど、毎日の美容と暮らしを豊かにするブランドを展開しています。</p>
+    </div>
+    <div class="card card-accent-top card-accent-blue">
+      <h3>クラシエフーズ</h3>
+      <p>ねるねるねるね、甘栗むいちゃいました等、お菓子・アイスクリームで楽しさを届けます。</p>
+    </div>
+    <div class="card card-accent-top card-accent-lime">
+      <h3>研究開発</h3>
+      <p>漢方の知見と最新テクノロジーの融合。独自の研究開発体制で、新しい価値を創造し続けます。</p>
+    </div>
+    <div class="card card-accent-top card-accent-orange">
+      <h3>CSR・サステナビリティ</h3>
+      <p>環境配慮型パッケージの開発や、持続可能な原材料調達に取り組んでいます。</p>
+    </div>
+    <div class="card card-accent-top card-accent-purple">
+      <h3>採用情報</h3>
+      <p>多様な事業領域で、あなたの「夢中」が見つかる。新卒・中途採用の最新情報をお届けします。</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms — Pill Inputs</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" placeholder="例：山田 花子">
+      <div class="form-state-label">Default — border #f0f0e2 / radius 50px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="hanako@example.com">
+      <div class="form-state-label">Focus — border #ffd500 / shadow yellow 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-state-label">Error — border #dc2626 / shadow 3px</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="color-group-label">Search Input（ヘッダー検索バー）</div>
+    <div style="max-width:400px;">
+      <input class="form-input form-input--search" type="text" placeholder="キーワードで検索" style="border-radius:var(--radius-pill);">
+      <div class="form-state-label">Search — bg #f8f8f8 / radius 50px / border transparent</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">08 / Elevation — 推奨値</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし — 基本</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 16px 40px rgba(0,0,0,0.10)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">09 / Layout — Spacing & Radius</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:16px"></div>
+      <div class="spacing-name">Large</div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:50px"></div>
+      <div class="spacing-name">Pill</div>
+      <div class="spacing-value">50px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:50%; width:64px; height:64px;"></div>
+      <div class="spacing-name">Circle</div>
+      <div class="spacing-value">50%</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  Generated from <a href="https://www.kracie.co.jp/">kracie.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値<br>
+  UDShinGoPr（UD新ゴPr / Morisawa）はドメインライセンス制限のため、本プレビューでは <strong>Noto Sans JP</strong>（Google Fonts）で代替表示しています。<br>
+  font-feature-settings: "palt" は body 全体にグローバル適用（プロポーショナルメトリクス）。
+</footer>
+
+</body>
+</html>

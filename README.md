@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (198 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (202 sites)</a>
 </p>
 
 <table>
@@ -299,6 +299,7 @@
 <td align="center"><strong>JAL</strong><br><img src="design-md/jal/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>タイミー</strong><br><img src="design-md/timee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kyash</strong><br><img src="design-md/kyash/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Honda</strong><br><img src="design-md/honda/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -558,11 +559,15 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [JAL (日本航空)](https://www.jal.co.jp/) | Aviation / Consumer | [DESIGN.md](design-md/jal/DESIGN.md) | [preview.html](design-md/jal/preview.html) |
 | [Timee (タイミー)](https://timee.co.jp/) | Gig Work / Consumer | [DESIGN.md](design-md/timee/DESIGN.md) | [preview.html](design-md/timee/preview.html) |
 | [Kyash (キャッシュ)](https://www.kyash.co/) | Fintech / Consumer | [DESIGN.md](design-md/kyash/DESIGN.md) | [preview.html](design-md/kyash/preview.html) |
+| [Goodpatch (グッドパッチ)](https://goodpatch.com/) | Design Company | [DESIGN.md](design-md/goodpatch/DESIGN.md) | [preview.html](design-md/goodpatch/preview.html) |
+| [BASE FOOD (ベースフード)](https://basefood.co.jp/) | D2C Food / Complete Nutrition | [DESIGN.md](design-md/basefood/DESIGN.md) | [preview.html](design-md/basefood/preview.html) |
+| [Kracie (クラシエ)](https://www.kracie.co.jp/) | Consumer Goods / Healthcare | [DESIGN.md](design-md/kracie/DESIGN.md) | [preview.html](design-md/kracie/preview.html) |
+| [Honda (本田技研工業)](https://www.honda.co.jp/) | Automotive / Mobility | [DESIGN.md](design-md/honda/DESIGN.md) | [preview.html](design-md/honda/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (198 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (202 sites)</a>
 </p>
 
 <table>
@@ -827,6 +832,7 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>JAL</strong><br><img src="design-md/jal/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Timee</strong><br><img src="design-md/timee/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kyash</strong><br><img src="design-md/kyash/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Honda</strong><br><img src="design-md/honda/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
