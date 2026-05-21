@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (195 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (198 sites)</a>
 </p>
 
 <table>
@@ -295,6 +295,11 @@
 <td align="center"><strong>amadana</strong><br><img src="design-md/amadana/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Oisix</strong><br><img src="design-md/oisix/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>JAL</strong><br><img src="design-md/jal/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>タイミー</strong><br><img src="design-md/timee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kyash</strong><br><img src="design-md/kyash/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -550,11 +555,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [RMK](https://www.rmkrmk.com/ja) | Cosmetics / Beauty | [DESIGN.md](design-md/rmk/DESIGN.md) | [preview.html](design-md/rmk/preview.html) |
 | [amadana](https://amadana.com/) | Electronics / Lifestyle | [DESIGN.md](design-md/amadana/DESIGN.md) | [preview.html](design-md/amadana/preview.html) |
 | [Oisix ra daichi](https://www.oisixradaichi.co.jp/) | Food / Agriculture | [DESIGN.md](design-md/oisix/DESIGN.md) | [preview.html](design-md/oisix/preview.html) |
+| [JAL (日本航空)](https://www.jal.co.jp/) | Aviation / Consumer | [DESIGN.md](design-md/jal/DESIGN.md) | [preview.html](design-md/jal/preview.html) |
+| [Timee (タイミー)](https://timee.co.jp/) | Gig Work / Consumer | [DESIGN.md](design-md/timee/DESIGN.md) | [preview.html](design-md/timee/preview.html) |
+| [Kyash (キャッシュ)](https://www.kyash.co/) | Fintech / Consumer | [DESIGN.md](design-md/kyash/DESIGN.md) | [preview.html](design-md/kyash/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (195 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (198 sites)</a>
 </p>
 
 <table>
@@ -814,6 +822,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>RMK</strong><br><img src="design-md/rmk/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>amadana</strong><br><img src="design-md/amadana/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Oisix</strong><br><img src="design-md/oisix/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>JAL</strong><br><img src="design-md/jal/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Timee</strong><br><img src="design-md/timee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kyash</strong><br><img src="design-md/kyash/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

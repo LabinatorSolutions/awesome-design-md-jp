@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: タイミー (Timee)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Brand Colors === */
+    --yellow: #ffd700;
+    --creme: #fff4a3;
+    --marker: linear-gradient(transparent 65%, #ffea7b 65%);
+
+    /* === CTA / Buttons === */
+    --blue: #007aff;
+    --blue-shadow: #005edb;
+    --red: #ff3b30;
+
+    /* === Neutral === */
+    --black: #212121;
+    --gray: #b7b8bc;
+    --lightGray: #eaeaea;
+    --divider: #dcdcdc;
+    --annotation: #666666;
+
+    /* === Background / Surface === */
+    --bg: #ffffff;
+
+    /* === Elevation / Shadow === */
+    --shadow-blue: 0px 4px 0px #005edb;
+    --shadow-yellow: 0px 8px 0px #212121;
+
+    /* === Layout === */
+    --max-width: 1020px;
+    --padding: 20px;
+    --transition: 0.3s;
+
+    /* === Font === */
+    --font-base: "Noto Sans JP", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 700; color: var(--black);
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+  }
+  .nav-brand-badge {
+    display: inline-block; background: var(--yellow);
+    color: var(--black); font-size: 13px; font-weight: 700;
+    padding: 2px 8px; border-radius: 0px;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 700; color: var(--black);
+    text-decoration: none; transition: color var(--transition);
+  }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-cta {
+    display: inline-block; background: var(--blue); color: #fff;
+    padding: 10px 24px; border-radius: 9999px;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
+    text-decoration: none;
+    box-shadow: var(--shadow-blue);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .nav-cta:hover {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--yellow);
+    padding: 80px 32px 64px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 34px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; color: var(--black);
+    margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: var(--red); }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--black); max-width: 560px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS — shared base */
+  .btn-blue {
+    display: inline-block;
+    background: var(--blue); color: #ffffff;
+    padding: 16px 40px; border-radius: 9999px; border: none;
+    font-family: var(--font-base); font-size: 18px; font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+    box-shadow: var(--shadow-blue);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .btn-blue:hover {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+  .btn-yellow {
+    display: inline-block;
+    background: var(--yellow); color: var(--black);
+    padding: 16px 36px; border-radius: 9999px;
+    border: 2px solid var(--black);
+    font-family: var(--font-base); font-size: 20px; font-weight: 700;
+    letter-spacing: 1.6px;
+    text-decoration: none; cursor: pointer;
+    box-shadow: var(--shadow-yellow);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .btn-yellow:hover {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+  .btn-text-link {
+    display: inline-block;
+    color: var(--blue); font-weight: 700; font-size: 16px;
+    text-decoration: none;
+    border-bottom: 2px solid var(--blue);
+    background: none; border-top: none; border-left: none; border-right: none;
+    cursor: pointer; font-family: var(--font-base);
+  }
+  .btn-text-link:hover { opacity: 0.7; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: var(--max-width); margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--annotation);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal;
+    margin-bottom: 32px; color: var(--black);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--divider); margin: 0; }
+
+  .section-gray { background: var(--lightGray); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: var(--max-width); margin: 0 auto; }
+
+  .section-yellow { background: var(--yellow); padding: 64px 32px; }
+  .section-yellow .section-inner { max-width: var(--max-width); margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch {
+    border-radius: 8px; overflow: hidden; background: #fff;
+    border: 1px solid var(--divider);
+  }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--black); }
+  .color-swatch-hex { font-size: 12px; color: var(--annotation); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--annotation); margin-top: 3px; }
+  .color-group-label {
+    font-size: 14px; font-weight: 700; color: var(--annotation);
+    margin: 24px 0 10px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--divider); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--annotation); margin-top: 8px; }
+  .type-context {
+    display: inline-block; background: var(--lightGray); color: var(--annotation);
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px;
+    font-family: var(--font-base);
+  }
+
+  /* ARTICLE / JOB LISTING */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; margin: 24px 0 12px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal; margin-bottom: 16px; color: var(--black);
+  }
+  .article-preview .accent { color: var(--red); font-weight: 700; }
+  .article-preview .marker { background: var(--marker); }
+  .article-preview .quote-block {
+    background: var(--lightGray);
+    padding: 15px 20px; margin: 16px 0;
+    font-size: 15px; line-height: 1.33;
+  }
+  .article-preview .annotation {
+    font-size: 12px; color: var(--annotation); line-height: 1.4;
+  }
+
+  /* TAG BADGES */
+  .tag-badge {
+    display: inline-block;
+    background: var(--black); color: #ffffff;
+    padding: 4px 8px 6px;
+    border-radius: 0px;
+    font-size: 13px; font-weight: 400; line-height: 1.0;
+  }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+
+  /* CATEGORY PILLS */
+  .category-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .pill-active {
+    display: inline-block;
+    background: var(--black); color: #ffffff;
+    border: 1px solid var(--black);
+    padding: 10px 20px; border-radius: 999px;
+    font-size: 20px; font-weight: 700; letter-spacing: 1px;
+    cursor: pointer;
+  }
+  .pill-inactive {
+    display: inline-block;
+    background: var(--lightGray); color: var(--black);
+    border: 1px solid var(--black);
+    padding: 10px 20px; border-radius: 999px;
+    font-size: 20px; font-weight: 700; letter-spacing: 1px;
+    cursor: pointer;
+  }
+
+  /* BUTTON SECTION */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label {
+    font-size: 12px; font-weight: 400; color: var(--annotation); margin-top: 10px;
+    font-family: monospace;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .job-card {
+    background: var(--bg);
+    border-radius: 8px; padding: 16px;
+    border: 1px solid var(--divider);
+    transition: box-shadow var(--transition);
+  }
+  .job-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .job-card-title {
+    font-size: 16px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 6px; color: var(--black);
+  }
+  .job-card-company {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--annotation); margin-bottom: 8px;
+  }
+  .job-card-wage {
+    font-size: 18px; font-weight: 700; line-height: 1.5;
+    color: var(--black); margin-bottom: 4px;
+  }
+  .job-card-wage .wage-num { color: var(--red); }
+  .job-card-detail {
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    color: var(--annotation); margin-bottom: 12px;
+  }
+  .job-card-cta {
+    display: block; width: 100%;
+    background: var(--blue); color: #ffffff;
+    padding: 10px 0; border-radius: 9999px; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-align: center; text-decoration: none; cursor: pointer;
+    box-shadow: 0px 3px 0px var(--blue-shadow);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .job-card-cta:hover {
+    transform: translateY(3px);
+    box-shadow: none;
+  }
+
+  /* TESTIMONIAL CARD */
+  .testimonial-card {
+    background: var(--bg);
+    border-radius: 8px; padding: 20px;
+    border: 1px solid var(--divider);
+  }
+  .testimonial-name {
+    font-size: 17px; font-weight: 700; line-height: 1.3;
+    margin-bottom: 8px; color: var(--black);
+  }
+  .testimonial-body {
+    font-size: 15px; font-weight: 400; line-height: 1.33;
+    color: var(--black);
+  }
+  .testimonial-meta {
+    font-size: 12px; color: var(--annotation); margin-top: 8px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--bg); color: var(--black);
+    border: 1px solid var(--gray); padding: 12px 16px; border-radius: 8px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    transition: border-color var(--transition);
+  }
+  .form-input::placeholder { color: var(--gray); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0,122,255,0.2);
+  }
+  .form-input--error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(255,59,48,0.2);
+  }
+  .form-state-label { font-size: 11px; color: var(--annotation); margin-top: 4px; font-family: monospace; }
+  .form-error-msg { font-size: 13px; color: var(--red); margin-top: 4px; }
+
+  .search-row {
+    display: flex; gap: 8px; max-width: 560px;
+    margin-bottom: 24px;
+  }
+  .search-input {
+    flex: 1; background: var(--bg); color: var(--black);
+    border: 2px solid var(--black); padding: 12px 16px; border-radius: 9999px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    transition: border-color var(--transition);
+  }
+  .search-input:focus { border-color: var(--blue); }
+  .search-btn {
+    background: var(--blue); color: #fff;
+    padding: 12px 28px; border-radius: 9999px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    letter-spacing: 0.05em; cursor: pointer;
+    box-shadow: var(--shadow-blue);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .search-btn:hover { transform: translateY(4px); box-shadow: none; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--bg); border-radius: 8px; padding: 28px 20px;
+    text-align: center; border: 1px solid var(--divider);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--black); }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--annotation); word-break: break-all; line-height: 1.5; }
+  .elevation-sample-blue {
+    display: inline-block; margin-bottom: 16px;
+    background: var(--blue); color: #fff;
+    padding: 12px 28px; border-radius: 9999px;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+  .elevation-sample-yellow {
+    display: inline-block; margin-bottom: 16px;
+    background: var(--yellow); color: var(--black);
+    padding: 12px 28px; border-radius: 9999px;
+    border: 2px solid var(--black);
+    font-size: 14px; font-weight: 700; letter-spacing: 1.2px;
+    cursor: pointer;
+  }
+
+  /* LAYOUT */
+  .layout-bar-wrap { margin-bottom: 16px; }
+  .layout-bar-label {
+    font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 4px;
+  }
+  .layout-bar-value { font-family: monospace; font-size: 12px; color: var(--annotation); }
+  .layout-bar {
+    height: 32px; background: var(--lightGray);
+    border: 1px solid var(--divider); border-radius: 8px;
+    position: relative; overflow: hidden;
+  }
+  .layout-bar-inner { height: 100%; background: var(--yellow); border-radius: 7px; opacity: 0.6; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--blue); border-radius: 3px; margin-bottom: 6px; width: 28px; }
+  .spacing-value { font-family: monospace; font-size: 11px; color: var(--annotation); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--black); color: #ffffff;
+    font-size: 12px;
+  }
+  .footer a { color: var(--yellow); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-yellow { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .btn-yellow { font-size: 16px; letter-spacing: 0.08em; }
+    .pill-active, .pill-inactive { font-size: 16px; }
+    .section-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="nav-brand-badge">T</span>タイミー
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">お仕事を探す</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>スキマ時間に<span class="accent">すぐ</span>働ける<br>スキマバイトのタイミー</h1>
+  <p>履歴書不要。面接なし。最短当日に働いて即払い。<br>あなたのスキマ時間がお金になる。</p>
+  <div class="hero-buttons">
+    <a class="btn-blue" href="#">お近くのお仕事を探す</a>
+    <a class="btn-yellow" href="#">企業様向けページはこちら</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffd700"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Timee Yellow</div>
+        <div class="color-swatch-hex">--yellow: #ffd700</div>
+        <div class="color-swatch-role">ブランドカラー・ヒーロー背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#fff4a3; border-bottom:1px solid #dcdcdc"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Timee Creme</div>
+        <div class="color-swatch-hex">--creme: #fff4a3</div>
+        <div class="color-swatch-role">マーカー中間色</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">CTA / Interactive</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#007aff"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Accent Blue</div>
+        <div class="color-swatch-hex">--blue: #007aff</div>
+        <div class="color-swatch-role">Primary CTA・リンク</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#005edb"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Blue Shadow</div>
+        <div class="color-swatch-hex">--blue-shadow: #005edb</div>
+        <div class="color-swatch-role">プライマリCTAの影</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ff3b30"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Accent Red</div>
+        <div class="color-swatch-hex">--red: #ff3b30</div>
+        <div class="color-swatch-role">数値強調（金額・件数）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#212121"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Black</div>
+        <div class="color-swatch-hex">--black: #212121</div>
+        <div class="color-swatch-role">テキスト・タグバッジ背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#666666"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Secondary Gray</div>
+        <div class="color-swatch-hex">#666666</div>
+        <div class="color-swatch-role">注釈テキスト</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#b7b8bc"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Gray</div>
+        <div class="color-swatch-hex">--gray: #b7b8bc</div>
+        <div class="color-swatch-role">ページネーション非アクティブ</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#eaeaea; border-bottom:1px solid #dcdcdc"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Light Gray</div>
+        <div class="color-swatch-hex">--lightGray: #eaeaea</div>
+        <div class="color-swatch-role">引用面・pill inactive 背景</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#dcdcdc; border-bottom:1px solid #ccc"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Divider</div>
+        <div class="color-swatch-hex">--divider: #dcdcdc</div>
+        <div class="color-swatch-role">区切り線</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #dcdcdc"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">White</div>
+        <div class="color-swatch-hex">#ffffff</div>
+        <div class="color-swatch-role">ページ背景・ヘッダー</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:34px; font-weight:700; line-height:1.5; letter-spacing:normal;">ヒーロー見出し — Hero H2</div>
+    <div class="type-meta">34px / 700 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">ヒーローセクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:32px; font-weight:700; line-height:1.5; letter-spacing:normal;">セクション見出し — Section H2</div>
+    <div class="type-meta">32px / 700 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">求人一覧</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:32px; font-weight:700; line-height:1.5; letter-spacing:normal;">幅広い年代の <span style="color:#ff3b30;">18,000</span> 件以上</div>
+    <div class="type-meta">32px / 700 / line-height: 1.5 / 数値アクセント: #ff3b30<span class="type-context">統計強調</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.5; letter-spacing:0.05em; color:#ffffff; background:#007aff; display:inline-block; padding:16px 40px; border-radius:9999px;">お近くのお仕事を探す</div>
+    <div class="type-meta">24px / 700 / line-height: 1.5 / letter-spacing: 0.05em / color: #ffffff<span class="type-context">Primary CTA</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.5; letter-spacing:1.6px;">企業様向けページはこちら</div>
+    <div class="type-meta">20px / 700 / line-height: 1.5 / letter-spacing: 1.6px (0.08em)<span class="type-context">Secondary CTA</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.5; letter-spacing:1px;">20代 &nbsp; 30代 &nbsp; 40代</div>
+    <div class="type-meta">20px / 700 / line-height: 1.5 / letter-spacing: 1px<span class="type-context">カテゴリーピル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:700; line-height:1.5; letter-spacing:normal;">倉庫作業 / 飲食補助 / 軽作業</div>
+    <div class="type-meta">18px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">求人カテゴリH3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:17px; font-weight:700; line-height:1.3; letter-spacing:normal;">40代（男性）会社員<br><span style="font-size:15px; font-weight:400; line-height:1.33; color:#212121;">「スキマ時間を有効活用できて、毎月のお小遣いが増えました」</span></div>
+    <div class="type-meta">名前: 17px / 700 / 1.3 &nbsp;&nbsp; 引用文: 15px / 400 / 1.33<span class="type-context">ユーザーの声</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.5; letter-spacing:normal;">求人タイトル — Job Title (H3)</div>
+    <div class="type-meta">16px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">求人カード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.5; letter-spacing:normal;">本文テキスト — Body。スキマバイトとは、企業のスキマ時間と働き手のスキマ時間をマッチングするサービスです。履歴書不要・面接なし・最短当日に働けます。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:700; line-height:1.2; letter-spacing:normal;">ナビゲーションリンク</div>
+    <div class="type-meta">14px / 700 / line-height: 1.2<span class="type-context">ヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5; letter-spacing:normal; color:#666666;">補足テキスト・キャプション — Caption (14px)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / color: #666666<span class="type-context">補足情報</span></div>
+  </div>
+  <div class="type-sample">
+    <div>
+      <span style="display:inline-block; background:#212121; color:#ffffff; padding:4px 8px 6px; border-radius:0px; font-size:13px; font-weight:400; line-height:1.0; margin-right:4px;">スーパー</span>
+      <span style="display:inline-block; background:#212121; color:#ffffff; padding:4px 8px 6px; border-radius:0px; font-size:13px; font-weight:400; line-height:1.0; margin-right:4px;">倉庫</span>
+      <span style="display:inline-block; background:#212121; color:#ffffff; padding:4px 8px 6px; border-radius:0px; font-size:13px; font-weight:400; line-height:1.0;">飲食</span>
+    </div>
+    <div class="type-meta">13px / 400 / line-height: 1.0 / bg: #212121 / color: #ffffff / radius: 0px<span class="type-context">タグバッジ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.4; letter-spacing:normal; color:#666666;">※掲載の時給は目安です。実際の給与は募集企業によって異なる場合があります。</div>
+    <div class="type-meta">12px / 400 / line-height: 1.4 / color: #666666<span class="type-context">注釈</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / JOB LISTING CONTENT -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 求人ページ組版</div>
+  <h2 class="section-title" style="margin-bottom:24px;">求人詳細ページの組版サンプル</h2>
+  <div class="article-preview">
+    <div class="tag-row">
+      <span class="tag-badge">スーパー</span>
+      <span class="tag-badge">レジ・接客</span>
+      <span class="tag-badge">即払い対応</span>
+    </div>
+    <h1>食品スーパー レジ補助スタッフ（スキマバイト）</h1>
+    <p>経験不問。スキマ時間を活用して働けるお仕事です。シフトは<span class="accent">最短2時間〜</span>、当日の空き時間に気軽に応募できます。</p>
+    <h2>仕事内容</h2>
+    <p>食品スーパーでのレジ操作・袋詰めのサポートです。マニュアルあり、先輩スタッフがサポートするので安心してください。</p>
+    <div class="quote-block">
+      「レジは初めてでしたが、丁寧に教えてもらえてすぐに慣れました。時間の融通が利いて子育てとの両立に助かっています」<br>
+      <span style="font-size:12px; color:#666; display:block; margin-top:6px;">— 30代・主婦（パート）</span>
+    </div>
+    <h2>給与・待遇</h2>
+    <p>時給 <span class="accent">1,250</span> 円〜 / 即日払い対応 / 交通費支給<br>勤務終了後、アプリから即時振り込み申請が可能です。</p>
+    <p class="annotation">※掲載の時給は目安です。実際の給与は募集企業によって異なる場合があります。詳細は各求人ページにてご確認ください。</p>
+    <p>タイミーなら<span class="marker">履歴書・面接が不要</span>なので、思い立ったらすぐ応募。最短で当日のお仕事もOKです。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item">
+      <a class="btn-blue" href="#">お近くのお仕事を探す</a>
+      <div class="button-label">Primary (Blue Pill)<br>bg:#007aff / shadow:0px 4px 0px #005edb<br>radius:9999px / 18px / 700 / ls:0.05em<br>hover: translateY(4px) + shadow消失</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-yellow" href="#">企業様向けページはこちら</a>
+      <div class="button-label">Secondary (Yellow Pill)<br>bg:#ffd700 / border:2px solid #212121<br>shadow:0px 8px 0px #212121 / 20px / ls:1.6px<br>hover: translateY(4px) + shadow消失</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text-link" href="#">詳細を見る</a>
+      <div class="button-label">Text Link<br>color:#007aff / 700 / border-bottom</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:12px;">Category Pills（タブ切り替え）</div>
+  <div class="category-pills">
+    <span class="pill-active">20代</span>
+    <span class="pill-inactive">30代</span>
+    <span class="pill-inactive">40代</span>
+    <span class="pill-inactive">50代以上</span>
+  </div>
+  <div class="button-label">Active: bg:#212121 / White text / border:1px solid #212121<br>Inactive: bg:#eaeaea / #212121 text / border:1px solid #212121 / radius:999px / 20px / 700 / ls:1px</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div style="margin-bottom:32px;">
+    <div class="section-label" style="margin-bottom:12px;">Job Listing Cards（求人カード）</div>
+    <div class="card-grid">
+      <div class="job-card">
+        <div class="tag-row">
+          <span class="tag-badge">スーパー</span>
+          <span class="tag-badge">レジ</span>
+        </div>
+        <div class="job-card-title">食品スーパー レジ補助スタッフ</div>
+        <div class="job-card-company">株式会社マルエツ 品川店</div>
+        <div class="job-card-wage">時給 <span class="wage-num">1,250</span> 円〜</div>
+        <div class="job-card-detail">📍 品川区 &nbsp; 🕐 2〜4時間 &nbsp; 📅 即日OK</div>
+        <a class="job-card-cta" href="#">このお仕事に応募する</a>
+      </div>
+      <div class="job-card">
+        <div class="tag-row">
+          <span class="tag-badge">倉庫</span>
+          <span class="tag-badge">軽作業</span>
+        </div>
+        <div class="job-card-title">EC倉庫ピッキング・梱包スタッフ</div>
+        <div class="job-card-company">楽天ロジスティクス株式会社</div>
+        <div class="job-card-wage">時給 <span class="wage-num">1,350</span> 円〜</div>
+        <div class="job-card-detail">📍 江東区 &nbsp; 🕐 4〜8時間 &nbsp; 📅 土日OK</div>
+        <a class="job-card-cta" href="#">このお仕事に応募する</a>
+      </div>
+      <div class="job-card">
+        <div class="tag-row">
+          <span class="tag-badge">飲食</span>
+          <span class="tag-badge">ホール</span>
+        </div>
+        <div class="job-card-title">カフェ ホールスタッフ（ランチのみ）</div>
+        <div class="job-card-company">スターバックス コーヒー ジャパン</div>
+        <div class="job-card-wage">時給 <span class="wage-num">1,200</span> 円〜</div>
+        <div class="job-card-detail">📍 渋谷区 &nbsp; 🕐 3〜5時間 &nbsp; 📅 平日のみ</div>
+        <a class="job-card-cta" href="#">このお仕事に応募する</a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label" style="margin-bottom:12px;">Testimonial Cards（ユーザーの声）</div>
+    <div class="card-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-name">40代（男性）会社員</div>
+        <div class="testimonial-body">「副業として土日に使っています。面接なしで当日働けるのがとにかく便利。月に<span style="color:#ff3b30; font-weight:700;">3万円</span>ほど追加収入が得られています。」</div>
+        <div class="testimonial-meta">⭐⭐⭐⭐⭐ &nbsp; 2026年5月</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-name">20代（女性）大学生</div>
+        <div class="testimonial-body">「授業の合間にできるお仕事が見つかりました。アプリで申し込んでその日に働けるのがすごく助かります。」</div>
+        <div class="testimonial-meta">⭐⭐⭐⭐⭐ &nbsp; 2026年4月</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-name">30代（女性）主婦</div>
+        <div class="testimonial-body">「子供が幼稚園に行っている2〜3時間を活用しています。スキマ時間でこんなに稼げると思っていませんでした。」</div>
+        <div class="testimonial-meta">⭐⭐⭐⭐☆ &nbsp; 2026年3月</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div class="section-label" style="margin-bottom:12px;">お仕事検索フォーム</div>
+  <div class="search-row">
+    <input class="search-input" type="text" placeholder="エリア・職種で探す">
+    <button class="search-btn">検索する</button>
+  </div>
+
+  <div class="form-group" style="margin-top:32px;">
+    <label class="form-label">氏名</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-state-label">デフォルト — border: 1px solid #b7b8bc / radius: 8px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="yamada@example.com">
+    <div class="form-state-label">フォーカス — border: #007aff / box-shadow: 0 0 0 3px rgba(0,122,255,0.2)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-0000-000">
+    <div class="form-error-msg">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー — border: #ff3b30 / box-shadow: 0 0 0 3px rgba(255,59,48,0.2)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — ボタンの立体感（押し込み表現）</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <p style="color:var(--annotation); margin-bottom:32px; font-size:14px;">タイミーは shadow を UI の奥行きではなくボタンの立体感（押せる感）に使う。hover 時に translateY で shadow が消え、押し込んだように見える。</p>
+
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div style="margin-bottom:16px;">
+        <span class="elevation-sample-blue" style="box-shadow:none;">フラット</span>
+      </div>
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">box-shadow: none<br>通常のカード・ボーダーのみ</div>
+    </div>
+    <div class="elevation-card">
+      <div style="margin-bottom:16px;">
+        <span class="elevation-sample-blue" style="box-shadow:0px 4px 0px #005edb;">応募する</span>
+      </div>
+      <div class="elevation-label">CTA Blue Shadow</div>
+      <div class="elevation-desc">box-shadow: 0px 4px 0px #005edb<br>Primary CTA（通常状態）</div>
+    </div>
+    <div class="elevation-card">
+      <div style="margin-bottom:16px;">
+        <span class="elevation-sample-blue" style="box-shadow:none; transform:translateY(4px);">応募する</span>
+      </div>
+      <div class="elevation-label">CTA Blue — Hover</div>
+      <div class="elevation-desc">transform: translateY(4px)<br>box-shadow: none<br>ボタンが押し込まれた状態</div>
+    </div>
+    <div class="elevation-card">
+      <div style="margin-bottom:16px;">
+        <span class="elevation-sample-yellow" style="box-shadow:0px 8px 0px #212121;">企業向け</span>
+      </div>
+      <div class="elevation-label">CTA Yellow Shadow</div>
+      <div class="elevation-desc">box-shadow: 0px 8px 0px #212121<br>Secondary CTA（より深い押し込み）</div>
+    </div>
+    <div class="elevation-card">
+      <div style="margin-bottom:16px;">
+        <span class="elevation-sample-yellow" style="box-shadow:none; transform:translateY(4px);">企業向け</span>
+      </div>
+      <div class="elevation-label">CTA Yellow — Hover</div>
+      <div class="elevation-desc">transform: translateY(4px)<br>box-shadow: none<br>押し込み状態</div>
+    </div>
+    <div class="elevation-card">
+      <div style="margin-bottom:16px;">
+        <div style="padding:12px 16px; border-radius:8px; background:#fff; border:2px solid #007aff; font-size:14px; box-shadow:0 0 0 3px rgba(0,122,255,0.2);">入力フィールド</div>
+      </div>
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">border: #007aff<br>box-shadow: 0 0 0 3px rgba(0,122,255,0.2)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout — CSS Custom Properties 実測値</div>
+  <h2 class="section-title">レイアウト原則</h2>
+
+  <div class="section-label" style="margin-bottom:12px;">コンテンツ幅</div>
+  <div class="layout-bar-wrap">
+    <div class="layout-bar-label">Max Width <span class="layout-bar-value">--max-width: 1020px</span></div>
+    <div class="layout-bar"><div class="layout-bar-inner" style="width:100%"></div></div>
+  </div>
+  <div class="layout-bar-wrap">
+    <div class="layout-bar-label">Article Column <span class="layout-bar-value">640px (目安)</span></div>
+    <div class="layout-bar"><div class="layout-bar-inner" style="width:62.7%"></div></div>
+  </div>
+  <div class="layout-bar-wrap" style="margin-bottom:40px;">
+    <div class="layout-bar-label">Horizontal Padding <span class="layout-bar-value">--padding: 20px</span></div>
+    <div class="layout-bar"><div class="layout-bar-inner" style="width:2%"></div></div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:12px;">スペーシングスケール</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="height:4px;"></div><div class="spacing-value">4px / XS</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="height:8px;"></div><div class="spacing-value">8px / S</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="height:16px;"></div><div class="spacing-value">16px / M</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="height:20px;"></div><div class="spacing-value">20px / L</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="height:40px;"></div><div class="spacing-value">40px / XL</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="height:80px;"></div><div class="spacing-value">80px / XXL</div></div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:12px; margin-top:24px;">Transition</div>
+  <p style="font-size:14px; color:var(--annotation); font-family:monospace;">--transition: 0.3s &nbsp;&nbsp;（ボタン hover、カード shadow 等に適用）</p>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://timee.co.jp/">timee.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）
+</footer>
+
+</body>
+</html>

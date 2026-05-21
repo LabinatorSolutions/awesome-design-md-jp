@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: JAL（日本航空）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Brand === */
+    --jal-red: #cc0000;
+    --jal-red-alert-surface: #fcf1f1;
+
+    /* === Text === */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-nav: #cccccc;
+    --text-white: #ffffff;
+
+    /* === Backgrounds === */
+    --bg-page: #f4f5f6;
+    --bg-surface: #ffffff;
+    --bg-surface-warm: #f2f1ef;
+    --bg-surface-cool: #f1f1f1;
+    --bg-header: #000000;
+    --bg-footer: #666666;
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+
+    /* === Borders === */
+    --border-default: #bfbfbf;
+    --border-focus: #cc0000;
+
+    /* === Elevation (フラット基調、最小限） === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", メイリオ, sans-serif;
+
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 40px;
+    --space-xxl: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16.8px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-header);
+  }
+  .nav-brand {
+    font-size: 18px; font-weight: 700; color: var(--text-white);
+    text-decoration: none; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand-badge {
+    display: inline-block;
+    background: var(--jal-red);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 700; color: var(--text-nav);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-white); }
+  .nav-cta {
+    display: inline-block; background: var(--jal-red); color: var(--text-white);
+    padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 700;
+    border: 1px solid var(--jal-red); text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px; text-align: center;
+    background: var(--bg-header);
+    color: var(--text-white);
+  }
+  .hero h1 {
+    font-size: 30px; font-weight: 700; line-height: 1.5;
+    letter-spacing: 0.02em; font-feature-settings: normal;
+    color: var(--text-white); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16.8px; font-weight: 400; line-height: 1.5;
+    color: var(--text-nav); max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--jal-red); color: var(--text-white);
+    padding: 13px 40px; border-radius: 50px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text-white);
+    padding: 13px 40px; border-radius: 50px;
+    border: 1px solid var(--text-nav);
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: border-color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-outline:hover { border-color: var(--text-white); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    letter-spacing: 0.02em; font-feature-settings: normal;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--bg-page); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  .section-white { background: var(--bg-surface); padding: 64px 32px; }
+  .section-white .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 8px; overflow: hidden; background: var(--bg-surface); box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); background: var(--bg-surface); padding: 20px; border-radius: 0; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-page); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .btn-primary-sm {
+    display: inline-block; background: var(--jal-red); color: var(--text-white);
+    padding: 8px 16px; border-radius: 50px; border: 1px solid var(--jal-red);
+    font-family: var(--font-base); font-size: 12px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.02em;
+  }
+  .btn-secondary {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 15px 24px; border-radius: 0; border: none; border-bottom: 2px solid var(--jal-red);
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.02em;
+  }
+  .btn-text-link {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 0; border: none; font-family: var(--font-base);
+    font-size: 14px; font-weight: 700; text-decoration: underline;
+    cursor: pointer; letter-spacing: 0.02em;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--bg-surface); border: none;
+    border-radius: 0; padding: 15px;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card-route {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .card-airports { font-size: 20px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.02em; }
+  .card-arrow { font-size: 16px; color: var(--jal-red); margin: 0 8px; }
+  .card-price { font-size: 18px; font-weight: 700; color: var(--jal-red); }
+  .card-price-unit { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+  .card h3 { font-size: 14px; font-weight: 700; line-height: 1.5; margin-bottom: 4px; color: var(--text-primary); }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+  .card-tag {
+    display: inline-block; background: var(--bg-page);
+    color: var(--text-secondary); font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 3px; margin-right: 4px; margin-top: 8px;
+  }
+  .card-tag-red {
+    background: var(--jal-red-alert-surface); color: var(--jal-red);
+  }
+
+  /* ARTICLE PREVIEW (航空・旅行テーマ） */
+  .article-preview { max-width: 680px; margin: 0 auto; }
+  .article-preview h1 { font-size: 24px; font-weight: 700; line-height: 1.5; letter-spacing: 0.02em; font-feature-settings: normal; margin-bottom: 16px; color: var(--text-primary); }
+  .article-preview h2 { font-size: 20px; font-weight: 700; line-height: 1.2; letter-spacing: 0.02em; font-feature-settings: normal; margin: 24px 0 12px; color: var(--text-primary); }
+  .article-preview p { font-size: 16.8px; font-weight: 400; line-height: 1.5; letter-spacing: 0.02em; font-feature-settings: normal; margin-bottom: 16px; color: var(--text-primary); }
+  .article-alert {
+    background: var(--jal-red-alert-surface);
+    border-left: 4px solid var(--jal-red);
+    padding: 12px 16px; margin-bottom: 16px;
+    font-size: 14px; color: var(--text-primary);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--bg-surface); color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 12px;
+    border-radius: 6px;
+    font-family: var(--font-base); font-size: 16.8px;
+    letter-spacing: 0.02em; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15); }
+  .form-input--error { border-color: var(--jal-red); box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+  .form-error-msg { font-size: 12px; color: var(--jal-red); margin-top: 4px; font-weight: 700; }
+
+  .search-form {
+    background: var(--bg-surface); padding: 24px; margin-bottom: 32px;
+  }
+  .search-form-title {
+    font-size: 16px; font-weight: 700; color: var(--text-primary);
+    margin-bottom: 16px; letter-spacing: 0.02em;
+  }
+  .search-form-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--bg-surface); border-radius: 0; padding: 24px; text-align: center; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--text-secondary); word-break: break-all; margin-top: 4px; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--jal-red); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 700; color: var(--text-secondary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-page); border: 1px solid var(--border-default); border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--jal-red); border-radius: 3px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: monospace; font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--bg-footer); font-size: 12px; color: var(--text-nav); }
+  .footer a { color: var(--jal-red); text-decoration: underline; }
+
+  /* TAB ROW */
+  .tab-row { display: flex; gap: 0; border-bottom: 1px solid var(--border-default); margin-bottom: 24px; }
+  .tab-item {
+    padding: 12px 24px; font-size: 16px; font-weight: 700;
+    color: var(--text-primary); cursor: pointer; border-bottom: 3px solid transparent;
+    letter-spacing: 0.02em;
+  }
+  .tab-item.active { border-bottom-color: var(--jal-red); color: var(--jal-red); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-white { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .search-form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="nav-brand-badge">JAL</span>日本航空
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">空席照会</a>
+</nav>
+
+<section class="hero">
+  <h1>最高のサービスのために</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。JAL のカラー、フォント、コンポーネントの全値を可視化。computed style 実測値（2026-05-21）に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">国内線を予約する</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">JAL Red</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">ブランド・CTA・アラート</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fcf1f1; border-bottom:1px solid #e0cece"></div><div class="color-swatch-info"><div class="color-swatch-name">Alert Surface</div><div class="color-swatch-hex">#fcf1f1</div><div class="color-swatch-role">お知らせ・アラート面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Header / Footer</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Header BG</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヘッダー背景・h1</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">フッター背景・補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Link</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ヘッダー内リンク</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文・見出しテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補助・フッターテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bfbfbf; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border / Disabled</div><div class="color-swatch-hex">#bfbfbf</div><div class="color-swatch-role">ボーダー・無効状態</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f5f6; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#f4f5f6</div><div class="color-swatch-role">ページ全体の背景色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・フォーム・メイン面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f1ef"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Warm</div><div class="color-swatch-hex">#f2f1ef</div><div class="color-swatch-role">ウォーム面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f1f1; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Cool</div><div class="color-swatch-hex">#f1f1f1</div><div class="color-swatch-role">クール面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,0,0,0.7)"></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay</div><div class="color-swatch-hex">rgba(0,0,0,0.7)</div><div class="color-swatch-role">モーダル背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-white" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:30px; font-weight:700; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#ffffff; background:#000000; padding:16px;">最高のサービスのために — Hero H2</div>
+    <div class="type-meta">30px / 700 / line-height: 1.5 / letter-spacing: 0.02em / palt: なし<span class="type-context">ヒーローエリア・#ffffff on #000000</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#333333;">あなたへのおすすめ情報 — Section H2</div>
+    <div class="type-meta">24px / 700 / line-height: 1.5 / letter-spacing: 0.02em / palt: なし<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.2; letter-spacing:0.02em; font-feature-settings:normal; color:#333333;">予約管理 — Feature H2</div>
+    <div class="type-meta">20px / 700 / line-height: 1.2 / letter-spacing: 0.02em / palt: なし<span class="type-context">機能見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:19.9px; font-weight:700; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#333333;">カテゴリから探す — H3 Title</div>
+    <div class="type-meta">19.9px / 700 / line-height: 1.5 / letter-spacing: 0.02em / palt: なし<span class="type-context">カテゴリ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:700; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#333333;">JALオンライン — H3 Card</div>
+    <div class="type-meta">18px / 700 / line-height: 1.5 / letter-spacing: 0.02em / palt: なし<span class="type-context">カード見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16.8px; font-weight:400; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#333333;">本文テキスト — 国際線・国内線フライトの予約、JALマイレージバンクの管理、JALパックの申込みなど、お客様のご旅行をサポートするサービスをご提供しています。ABCabc 123</div>
+    <div class="type-meta">16.8px / 400 / line-height: 1.5 / letter-spacing: 0.02em / palt: なし<span class="type-context">body デフォルト</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#333333;">補足テキスト — 搭乗日の前日23時59分まで変更可能です。手数料が発生する場合があります。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / color: #333333<span class="type-context">Caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.02em; font-feature-settings:normal; color:#666666;">注記・フッターテキスト — ※ 運賃は諸税・サーチャージを含みます。</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5 / color: #666666<span class="type-context">Small / Footer</span></div>
+  </div>
+  <div class="type-sample" style="border-bottom:none">
+    <div style="font-size:12px; font-weight:700; line-height:1.0; letter-spacing:0.02em; font-feature-settings:normal; color:#cccccc; background:#000000; padding:12px;">国内線 ｜ 国際線 ｜ マイレージ — Nav Link (Header)</div>
+    <div class="type-meta">12px / 700 / line-height: 1.0 / color: #cccccc / bg: #000000<span class="type-context">ヘッダーナビ</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 航空・旅行テーマ組版</div>
+  <h2 class="section-title">フライト情報と旅のご案内</h2>
+  <div class="article-preview">
+    <div class="article-alert">
+      ⚠ 重要なお知らせ：台風接近に伴い、一部フライトのスケジュールに変更が生じる可能性があります。最新情報をご確認ください。
+    </div>
+    <h1>羽田 ー 那覇 国内線のご案内</h1>
+    <p>日本航空（JAL）は、羽田空港と那覇空港を結ぶ国内線を1日最大8便運航しています。早割21・特便割引などの割引運賃もご用意しています。</p>
+    <h2>ご搭乗のながれ</h2>
+    <p>空港には出発時刻の60分前までにお越しください。保安検査場の通過は出発時刻の20分前に締め切りとなります。JALアプリを使うと搭乗券のスキャンがスムーズです。</p>
+    <p>機内では座席のリクライニング、パーソナルモニターをお楽しみいただけます。WiFiサービス（有料）もご利用いただけます。</p>
+    <h2>手荷物について</h2>
+    <p>国内線の無料手荷物許容量は、クラス Jは50kg、普通席は20kgです。機内持ち込みは1個（10kg以内）が基本となります。サイズの制限（3辺の合計115cm以内）にご注意ください。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section-white" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-primary" href="#">空席照会・予約</a>
+      <div class="button-label">Primary Pill<br>#cc0000 / 13px 40px / r:50px / 700</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-primary-sm" href="#">ログイン</a>
+      <div class="button-label">Primary Small Pill<br>#cc0000 / 8px 16px / r:50px / 12px / 700</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">国内線</a>
+      <div class="button-label">Secondary (Tab)<br>transparent / border-bottom: red / 700</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text-link" href="#">詳細を見る →</a>
+      <div class="button-label">Text Link<br>#333333 / underline / 700</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="tab-row">
+      <div class="tab-item active">国内線</div>
+      <div class="tab-item">国際線</div>
+      <div class="tab-item">マイレージ</div>
+      <div class="tab-item">JALパック</div>
+    </div>
+    <div style="font-size:12px; color:var(--text-secondary);">タブ — font-size: 16px / weight: 700 / active: border-bottom 3px solid #cc0000</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">フライト情報カード</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-route">
+        <span class="card-airports">HND <span class="card-arrow">→</span> OKA</span>
+        <span class="card-price">¥12,000<span class="card-price-unit"> ~</span></span>
+      </div>
+      <h3>羽田 ー 那覇</h3>
+      <p>所要時間 約2時間30分 ／ 1日8便</p>
+      <span class="card-tag card-tag-red">特割</span>
+      <span class="card-tag">早割21</span>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-1);">
+      <div class="card-route">
+        <span class="card-airports">HND <span class="card-arrow">→</span> CTS</span>
+        <span class="card-price">¥8,900<span class="card-price-unit"> ~</span></span>
+      </div>
+      <h3>羽田 ー 新千歳</h3>
+      <p>所要時間 約1時間35分 ／ 1日10便</p>
+      <span class="card-tag card-tag-red">セール中</span>
+      <span class="card-tag">特便割引</span>
+    </div>
+    <div class="card">
+      <div class="card-route">
+        <span class="card-airports">HND <span class="card-arrow">→</span> NRT</span>
+        <span class="card-price" style="font-size:14px; color:var(--text-secondary);">国際線乗継</span>
+      </div>
+      <h3>成田 ー ホノルル</h3>
+      <p>所要時間 約7時間45分 ／ ビジネスクラス好評</p>
+      <span class="card-tag">JALビジネスクラス</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-white" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フライト検索フォーム</h2>
+
+  <div class="search-form">
+    <div class="search-form-title">国内線 空席照会・予約</div>
+    <div class="search-form-grid">
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">出発地</label>
+        <input class="form-input" type="text" placeholder="例：東京（羽田）">
+        <div class="form-state-label">デフォルト — border: #bfbfbf / radius: 6px</div>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">目的地</label>
+        <input class="form-input form-input--focus" type="text" value="大阪（伊丹）">
+        <div class="form-state-label">フォーカス — border: #cc0000（JALレッド）</div>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">搭乗日</label>
+        <input class="form-input form-input--error" type="text" value="2026/02/30">
+        <div class="form-error-msg">✕ 日付が正しくありません</div>
+        <div class="form-state-label">エラー — border: #cc0000 / shadow</div>
+      </div>
+      <div style="padding-bottom:4px;">
+        <a class="btn-primary" href="#" style="white-space:nowrap;">検索する</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:480px;">
+    <div class="form-group">
+      <label class="form-label">搭乗者人数</label>
+      <input class="form-input" type="text" placeholder="大人 1名">
+      <div class="form-state-label">デフォルト — font-size: 16.8px / padding: 12px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">座席クラス</label>
+      <input class="form-input" type="text" placeholder="普通席" value="クラスJ">
+      <div class="form-state-label">デフォルト</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — フラット基調</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--border-default);">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">shadow: none<br>カード・ボタン基本<br>（フラット基調）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 4px rgba(0,0,0,0.1)<br>ホバー・ドロップダウン</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 8px rgba(0,0,0,0.15)<br>モーダル・ダイアログ</div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--border-focus); box-shadow: 0 0 0 3px rgba(204,0,0,0.15);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">border: #cc0000<br>box-shadow: rgba(204,0,0,0.15)</div>
+    </div>
+    <div class="elevation-card" style="background: var(--jal-red-alert-surface); border-left: 4px solid var(--jal-red);">
+      <div class="elevation-label">Alert Surface</div>
+      <div class="elevation-desc">bg: #fcf1f1<br>border-left: 4px solid #cc0000<br>お知らせ・エラー面</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section-white" id="layout">
+<div class="section-inner">
+  <div class="section-label">08 / Layout — スペーシング・コンテンツ幅</div>
+  <h2 class="section-title">レイアウト原則</h2>
+
+  <div style="margin-bottom:32px;">
+    <div style="font-size:14px; font-weight:700; color:var(--text-secondary); margin-bottom:12px;">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">XS<br>4px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">S<br>8px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">M<br>16px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">L<br>24px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">XL<br>40px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">XXL<br>64px</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-size:14px; font-weight:700; color:var(--text-secondary); margin-bottom:12px;">Container Width</div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Max Width <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Article / Content <span class="width-bar-value">680px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:56.7%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Horizontal Padding <span class="width-bar-value">16px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:1.3%"></div></div></div>
+  </div>
+
+  <div style="margin-top:32px; font-size:14px; font-weight:700; color:var(--text-secondary); margin-bottom:12px;">Breakpoints</div>
+  <table style="border-collapse:collapse; width:100%; font-size:14px;">
+    <thead>
+      <tr style="border-bottom:2px solid var(--border-default);">
+        <th style="text-align:left; padding:8px 12px; font-weight:700; color:var(--text-secondary);">Name</th>
+        <th style="text-align:left; padding:8px 12px; font-weight:700; color:var(--text-secondary);">Width</th>
+        <th style="text-align:left; padding:8px 12px; font-weight:700; color:var(--text-secondary);">説明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border-default);">
+        <td style="padding:8px 12px; font-weight:700;">Mobile</td>
+        <td style="padding:8px 12px; font-family:monospace;">≤ 767px</td>
+        <td style="padding:8px 12px; color:var(--text-secondary);">モバイルレイアウト</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border-default);">
+        <td style="padding:8px 12px; font-weight:700;">Tablet</td>
+        <td style="padding:8px 12px; font-family:monospace;">≤ 1024px</td>
+        <td style="padding:8px 12px; color:var(--text-secondary);">タブレットレイアウト</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 12px; font-weight:700;">Desktop</td>
+        <td style="padding:8px 12px; font-family:monospace;">&gt; 1024px</td>
+        <td style="padding:8px 12px; color:var(--text-secondary);">デスクトップレイアウト</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.jal.co.jp/">jal.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-21）
+</footer>
+
+</body>
+</html>
