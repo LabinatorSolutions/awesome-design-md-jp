@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (216 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (219 sites)</a>
 </p>
 
 <table>
@@ -318,6 +318,9 @@
 <td align="center"><strong>Onitsuka Tiger</strong><br><img src="design-md/onitsukatiger/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>URBAN RESEARCH</strong><br><img src="design-md/urbanresearch/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SNIDEL</strong><br><img src="design-md/snidel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DAISO</strong><br><img src="design-md/daiso/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ニトリ</strong><br><img src="design-md/nitori/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>JILL STUART Beauty</strong><br><img src="design-md/jillstuart-beauty/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -595,11 +598,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Onitsuka Tiger (オニツカタイガー)](https://www.onitsukatiger.com/jp/ja-jp/) | Fashion / Luxury Sneakers | [DESIGN.md](design-md/onitsukatiger/DESIGN.md) | [preview.html](design-md/onitsukatiger/preview.html) |
 | [URBAN RESEARCH (アーバンリサーチ)](https://www.urban-research.jp/) | Select Shop / Fashion EC | [DESIGN.md](design-md/urbanresearch/DESIGN.md) | [preview.html](design-md/urbanresearch/preview.html) |
 | [SNIDEL (スナイデル)](https://snidel.com/) | Women's Fashion / D2C | [DESIGN.md](design-md/snidel/DESIGN.md) | [preview.html](design-md/snidel/preview.html) |
+| [DAISO (ダイソー)](https://www.daiso-sangyo.co.jp/) | Retail / Variety Store | [DESIGN.md](design-md/daiso/DESIGN.md) | [preview.html](design-md/daiso/preview.html) |
+| [Nitori (ニトリ)](https://www.nitori-net.jp/) | Home Furnishing / EC | [DESIGN.md](design-md/nitori/DESIGN.md) | [preview.html](design-md/nitori/preview.html) |
+| [JILL STUART Beauty (ジル スチュアート ビューティ)](https://www.jillstuart-beauty.com/) | Luxury Cosmetics / Beauty | [DESIGN.md](design-md/jillstuart-beauty/DESIGN.md) | [preview.html](design-md/jillstuart-beauty/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (216 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (219 sites)</a>
 </p>
 
 <table>
@@ -883,6 +889,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Onitsuka Tiger</strong><br><img src="design-md/onitsukatiger/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>URBAN RESEARCH</strong><br><img src="design-md/urbanresearch/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SNIDEL</strong><br><img src="design-md/snidel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DAISO</strong><br><img src="design-md/daiso/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Nitori</strong><br><img src="design-md/nitori/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>JILL STUART Beauty</strong><br><img src="design-md/jillstuart-beauty/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
