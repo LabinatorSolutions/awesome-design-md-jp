@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (237 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (240 sites)</a>
 </p>
 
 <table>
@@ -346,6 +346,11 @@
 <td align="center"><strong>Bridgestone</strong><br><img src="design-md/bridgestone/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Yonex</strong><br><img src="design-md/yonex/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>Nissin</strong><br><img src="design-md/nissin/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HYKE</strong><br><img src="design-md/hyke/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Komeda</strong><br><img src="design-md/komeda/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -643,11 +648,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Shimano (シマノ)](https://www.shimano.com/jp/) | Precision Components / Manufacturing | [DESIGN.md](design-md/shimano/DESIGN.md) | [preview.html](design-md/shimano/preview.html) |
 | [Bridgestone (ブリヂストン)](https://www.bridgestone.co.jp/) | Tire / Manufacturing | [DESIGN.md](design-md/bridgestone/DESIGN.md) | [preview.html](design-md/bridgestone/preview.html) |
 | [Yonex (ヨネックス)](https://www.yonex.co.jp/) | Sports Equipment | [DESIGN.md](design-md/yonex/DESIGN.md) | [preview.html](design-md/yonex/preview.html) |
+| [Nissin (日清食品)](https://www.nissin.com/jp/) | Food / FMCG | [DESIGN.md](design-md/nissin/DESIGN.md) | [preview.html](design-md/nissin/preview.html) |
+| [HYKE](https://hyke.jp/) | Fashion / Apparel | [DESIGN.md](design-md/hyke/DESIGN.md) | [preview.html](design-md/hyke/preview.html) |
+| [Komeda (コメダ珈琲店)](https://www.komeda.co.jp/) | Food & Beverage / Café | [DESIGN.md](design-md/komeda/DESIGN.md) | [preview.html](design-md/komeda/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (237 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (240 sites)</a>
 </p>
 
 <table>
@@ -958,6 +966,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Shimano</strong><br><img src="design-md/shimano/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Bridgestone</strong><br><img src="design-md/bridgestone/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Yonex</strong><br><img src="design-md/yonex/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Nissin</strong><br><img src="design-md/nissin/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HYKE</strong><br><img src="design-md/hyke/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Komeda</strong><br><img src="design-md/komeda/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
