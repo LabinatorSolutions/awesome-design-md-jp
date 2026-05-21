@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (225 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (228 sites)</a>
 </p>
 
 <table>
@@ -330,6 +330,11 @@
 <td align="center"><strong>SHIPS</strong><br><img src="design-md/ships/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>GANZO</strong><br><img src="design-md/ganzo/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>Studio Ghibli</strong><br><img src="design-md/ghibli/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Seiko</strong><br><img src="design-md/seiko/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Asahi Beer</strong><br><img src="design-md/asahibeer/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -615,11 +620,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [BAPE (ア ベイシング エイプ)](https://bape.com/) | Streetwear / Fashion EC | [DESIGN.md](design-md/bape/DESIGN.md) | [preview.html](design-md/bape/preview.html) |
 | [SHIPS (シップス)](https://www.shipsltd.co.jp/) | Select Shop / Fashion EC | [DESIGN.md](design-md/ships/DESIGN.md) | [preview.html](design-md/ships/preview.html) |
 | [GANZO (ガンゾ)](https://www.ganzo.ne.jp/) | Leather Goods / Craft Luxury | [DESIGN.md](design-md/ganzo/DESIGN.md) | [preview.html](design-md/ganzo/preview.html) |
+| [Studio Ghibli (スタジオジブリ)](https://www.ghibli.jp/) | Animation Studio / Entertainment | [DESIGN.md](design-md/ghibli/DESIGN.md) | [preview.html](design-md/ghibli/preview.html) |
+| [Seiko (セイコー)](https://www.seikowatches.com/jp-ja/) | Watch / Precision Manufacturing | [DESIGN.md](design-md/seiko/DESIGN.md) | [preview.html](design-md/seiko/preview.html) |
+| [Asahi Beer (アサヒビール)](https://www.asahibeer.co.jp/) | Beverage / Brewery | [DESIGN.md](design-md/asahibeer/DESIGN.md) | [preview.html](design-md/asahibeer/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (225 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (228 sites)</a>
 </p>
 
 <table>
@@ -914,6 +922,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>BAPE</strong><br><img src="design-md/bape/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SHIPS</strong><br><img src="design-md/ships/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>GANZO</strong><br><img src="design-md/ganzo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Studio Ghibli</strong><br><img src="design-md/ghibli/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Seiko</strong><br><img src="design-md/seiko/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Asahi Beer</strong><br><img src="design-md/asahibeer/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
