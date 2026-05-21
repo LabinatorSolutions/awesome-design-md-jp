@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MOONSTAR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --brand-blue: #003b90;
+    --cta-black: #262626;
+    --text-primary: #000000;
+    --text-secondary: #262626;
+    --text-muted: #565656;
+    --text-tertiary: #a2a2a2;
+    --bg-main: #f2f4f5;
+    --bg-footer: #f0f0f0;
+    --bg-white: #ffffff;
+    --surface-card: #eeeeee;
+    --pagination-dot: #d5d5d5;
+    --search-bg: #f2f2f2;
+    --carousel-arrow: rgba(255,255,255,0.6);
+    /* === Elevation === */
+    --elevation-0: none;
+    /* === Fonts 実測値 === */
+    --font-base: "Open Sans", "メイリオ", "ヒラギノ角ゴ Pro W3", "ＭＳ Ｐゴシック", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.15;
+    letter-spacing: normal;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-white);
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 18px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-brand svg { width: 28px; height: 28px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400; color: var(--text-secondary);
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-cta {
+    display: inline-block; background: transparent; color: var(--cta-black);
+    padding: 8px 20px; border: 1px solid var(--cta-black);
+    border-radius: 0; font-size: 12px; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-cta:hover { background: var(--cta-black); color: #fff; }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-white); }
+  .hero h1 {
+    font-size: 40px; font-weight: 700; line-height: 1.0;
+    color: var(--text-primary); margin-bottom: 16px;
+    letter-spacing: normal;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 2.0;
+    color: var(--text-muted); max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--cta-black);
+    padding: 12px 32px; border: 1px solid var(--cta-black);
+    border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.02em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--cta-black); color: #fff; }
+  .btn-filled {
+    display: inline-block; background: var(--cta-black); color: #fff;
+    padding: 12px 32px; border: 1px solid var(--cta-black);
+    border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+  .btn-filled:hover { opacity: 0.7; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 600; color: var(--text-tertiary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 18px; font-weight: 600; line-height: 1.0;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid #e0e0e0; margin: 0; }
+
+  .section-gray { background: var(--bg-main); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .section-white { background: var(--bg-white); padding: 64px 32px; }
+  .section-white .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: #fff; border: 1px solid #e0e0e0; }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 10px; color: var(--text-tertiary); margin-top: 3px; }
+  .color-group-label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin: 24px 0 10px; letter-spacing: 0.02em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #e0e0e0; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-card); color: var(--text-muted); font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 8px; }
+
+  .btn-search {
+    display: inline-block; background: var(--search-bg); color: var(--text-muted);
+    padding: 10px 24px; border: none; border-radius: 20px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    cursor: pointer;
+  }
+  .btn-pagination-active {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    background: var(--cta-black); color: #fff;
+    border: none; border-radius: 2px;
+    font-family: var(--font-base); font-size: 12px; font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-pagination {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    background: transparent; color: var(--text-muted);
+    border: 1px solid #e0e0e0; border-radius: 2px;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    cursor: pointer;
+  }
+  .btn-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px;
+    background: var(--carousel-arrow);
+    border: none; border-radius: 50%;
+    font-size: 16px; color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--bg-white);
+    overflow: hidden;
+    transition: opacity 0.3s;
+  }
+  .card:hover { opacity: 0.8; }
+  .card-image { height: 200px; background: var(--surface-card); display: flex; align-items: center; justify-content: center; }
+  .card-image span { font-size: 48px; color: var(--text-tertiary); }
+  .card-body { padding: 16px 0; }
+  .card h3 { font-size: 14px; font-weight: 600; line-height: 1.5; margin-bottom: 4px; color: var(--text-primary); }
+  .card p { font-size: 12px; color: var(--text-tertiary); line-height: 1.67; }
+  .card-brand { font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 4px; letter-spacing: 0.02em; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 40px; font-weight: 700; line-height: 1.0;
+    margin-bottom: 24px; color: var(--text-primary);
+  }
+  .article-preview h2 {
+    font-size: 18px; font-weight: 600; line-height: 1.0;
+    margin: 32px 0 16px; color: var(--text-primary);
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400; line-height: 2.0;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview .brand-subtitle {
+    font-size: 12px; color: var(--text-tertiary); line-height: 2.0;
+    margin-bottom: 24px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; letter-spacing: 0.02em; }
+  .form-input {
+    width: 100%; background: var(--bg-white); color: var(--text-primary);
+    border: 1px solid #d0d0d0; padding: 10px 12px;
+    border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--cta-black); box-shadow: 0 0 0 2px rgba(38,38,38,0.15); }
+  .form-input--error { border-color: #c0392b; box-shadow: 0 0 0 2px rgba(192,57,43,0.15); }
+  .form-input--search {
+    width: 100%; background: var(--search-bg); color: var(--text-primary);
+    border: none; padding: 10px 16px;
+    border-radius: 20px;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+  }
+  .form-state-label { font-size: 10px; color: var(--text-tertiary); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--bg-white); padding: 24px; text-align: center;
+    border: 1px solid #e0e0e0;
+  }
+  .elevation-label { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--cta-black); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--text-tertiary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--surface-card); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--cta-black); opacity: 0.15; }
+  .width-bar-label { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--bg-footer);
+    font-size: 9px; color: var(--text-tertiary);
+    letter-spacing: 0.02em; line-height: 1.5;
+  }
+  .footer a { color: var(--text-secondary); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 14px; line-height: 1.8; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-white { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#003b90" stroke-width="2"/><text x="14" y="18" text-anchor="middle" font-size="8" font-weight="700" fill="#003b90">M</text></svg>
+    MOONSTAR
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ONLINE STORE</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>MOONSTAR</h1>
+  <p>1873年創業、福岡県久留米市の老舗シューズブランド。DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-outline" href="#">BRANDS</a>
+    <a class="btn-filled" href="#">ONLINE STORE</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#003b90"></div><div class="color-swatch-info"><div class="color-swatch-name">MOONSTAR Blue</div><div class="color-swatch-hex">#003b90</div><div class="color-swatch-role">ロゴ専用</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#262626"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Black</div><div class="color-swatch-hex">#262626</div><div class="color-swatch-role">ボタン・アクティブ状態</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#262626"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#262626</div><div class="color-swatch-role">リンク・ナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#565656"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#565656</div><div class="color-swatch-role">ブランドナビ名</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a2a2a2"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Tertiary</div><div class="color-swatch-hex">#a2a2a2</div><div class="color-swatch-role">サブタイトル・補足</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ヘッダー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f4f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Main</div><div class="color-swatch-hex">#f2f4f5</div><div class="color-swatch-role">メインコンテンツ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Card</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">カード・サムネイル背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Footer</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Search BG</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">検索バー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d5d5d5"></div><div class="color-swatch-info"><div class="color-swatch-name">Pagination Dot</div><div class="color-swatch-hex">#d5d5d5</div><div class="color-swatch-role">スライダードット</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section-white" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Typography Hierarchy</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:40px; font-weight:700; line-height:1.0;">FINE VULCANIZED — 久留米の技</div>
+    <div class="type-meta">40px / 700 / line-height: 1.0 / letter-spacing: normal<span class="type-context">Display h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:34.56px; font-weight:400; line-height:1.67; color:var(--text-muted);">FINE VULCANIZED</div>
+    <div class="type-meta">34.56px / 400 / line-height: 1.67 / color: #565656<span class="type-context">Brand Nav Name</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:600; line-height:1.0;">BRANDS</div>
+    <div class="type-meta">18px / 600 / line-height: 1.0 / letter-spacing: normal<span class="type-context">Section Header h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:600; line-height:1.0; letter-spacing:0.02em;">MADE IN KURUME</div>
+    <div class="type-meta">16px / 600 / line-height: 1.0 / letter-spacing: 0.02em<span class="type-context">Nav Header h3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:0.05em; color:var(--text-secondary);">FINE VULCANIZED / RALY / 810s / OUTLET</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Nav Item h3/h4</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:2.0;">ムーンスターは1873年の創業以来、久留米の地でひたむきに靴をつくり続けてきました。ヴァルカナイズ製法という、手間と時間のかかる伝統的な製法にこだわり、一足一足を丁寧に仕上げています。ABCabc 123</div>
+    <div class="type-meta">14px / 400 / line-height: 2.0 / letter-spacing: normal<span class="type-context">Body p</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:600; line-height:1.0;">NEW ARRIVAL</div>
+    <div class="type-meta">14px / 600 / line-height: 1.0<span class="type-context">Category Header</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.67; color:var(--text-tertiary);">スニーカー / キャンバスシューズ / レインシューズ</div>
+    <div class="type-meta">12px / 400 / line-height: 1.67 / color: #a2a2a2<span class="type-context">Brand Label / Subtitle</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:400; line-height:1.82; color:var(--text-tertiary);">*一部店舗では取り扱いのない商品がございます</div>
+    <div class="type-meta">11px / 400 / line-height: 1.82<span class="type-context">Small / 注釈</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:9px; font-weight:400; line-height:1.5; letter-spacing:0.02em; color:var(--text-tertiary);">Copyright 2024 MOONSTAR CO., LTD. All Rights Reserved.</div>
+    <div class="type-meta">9px / 400 / line-height: 1.5 / letter-spacing: 0.02em<span class="type-context">Copyright</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">Article / Product</h2>
+  <div class="article-preview">
+    <h1>FINE VULCANIZED</h1>
+    <div class="brand-subtitle">Made in Kurume since 1873</div>
+    <p>ヴァルカナイズ製法は、ゴム底とアッパーを硫黄の力で一体化させる伝統的な製法です。窯の中で熱と圧力をかけることで、しなやかさと強度を両立。大量生産では得られない履き心地を生み出します。</p>
+    <h2>MADE IN KURUME</h2>
+    <p>福岡県久留米市。この地で150年にわたり靴づくりの技術が受け継がれてきました。ヴァルカナイズ製法の窯を持つ工場は、国内でもごくわずか。職人の手で一足ずつ丁寧につくられるスニーカーは、工業製品でありながら手仕事の温もりが宿ります。ABCabc 123</p>
+    <p>素材には上質なキャンバス地を使用。経年変化を楽しめるよう、あえて過度な加工は施しません。履き込むほどに足に馴染み、自分だけの一足へと育っていく。それがムーンスターのものづくりの哲学です。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Button Variations</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-outline" href="#">ONLINE STORE</a><div class="button-label">Outline CTA</div></div>
+    <div class="button-item"><a class="btn-filled" href="#">BUY NOW</a><div class="button-label">Filled CTA</div></div>
+    <div class="button-item"><span class="btn-search">Search...</span><div class="button-label">Search Pill (r: 20px)</div></div>
+    <div class="button-item"><button class="btn-arrow">&#8249;</button><div class="button-label">Carousel Arrow</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item" style="display:flex; gap:4px; align-items:center;">
+      <button class="btn-pagination-active">1</button>
+      <button class="btn-pagination">2</button>
+      <button class="btn-pagination">3</button>
+      <div style="display:flex; gap:6px; margin-left:8px;">
+        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--cta-black);"></span>
+        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--pagination-dot);"></span>
+        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--pagination-dot);"></span>
+      </div>
+      <div class="button-label" style="margin-left:8px;">Pagination</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Product Cards</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"><span>&#128095;</span></div>
+      <div class="card-body">
+        <h3>GYM CLASSIC</h3>
+        <p>ヴァルカナイズ製法で仕上げたキャンバススニーカー。</p>
+        <div class="card-brand">FINE VULCANIZED</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><span>&#128095;</span></div>
+      <div class="card-body">
+        <h3>ALWEATHER</h3>
+        <p>全天候型のレインスニーカー。雨の日も快適な一足。</p>
+        <div class="card-brand">FINE VULCANIZED</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"><span>&#128095;</span></div>
+      <div class="card-body">
+        <h3>STUDEN</h3>
+        <p>810s シリーズ。日常に寄り添うシンプルなデザイン。</p>
+        <div class="card-brand">810s</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">Form Elements</h2>
+  <div class="form-group">
+    <label class="form-label">SEARCH</label>
+    <input class="form-input--search" type="text" placeholder="商品名やキーワードで検索">
+    <div class="form-state-label">検索バー — bg: #f2f2f2, border-radius: 20px (pill)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">EMAIL</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #d0d0d0, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">PASSWORD</label>
+    <input class="form-input form-input--focus" type="password" value="mypassword123">
+    <div class="form-state-label">フォーカス — border: #262626</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">EMAIL</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-state-label">エラー — border: #c0392b</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-white" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし、ボーダーのみ。ほぼ全要素がこのレベル</div>
+    </div>
+    <div class="elevation-card" style="border:none; background:var(--bg-main);">
+      <div class="elevation-label">BG Depth: Surface Card</div>
+      <div class="elevation-desc">#eeeeee — 背景色の濃淡で奥行きを表現</div>
+    </div>
+    <div class="elevation-card" style="border:none; background:var(--carousel-arrow);">
+      <div class="elevation-label">Translucent</div>
+      <div class="elevation-desc">rgba(255,255,255,0.6) — スライダー矢印</div>
+    </div>
+    <div class="elevation-card" style="border:none;">
+      <div style="display:flex; gap:8px; justify-content:center; margin-bottom:8px;">
+        <span style="display:inline-block; width:48px; height:16px; background:#ffffff; border:1px solid #e0e0e0;"></span>
+        <span style="display:inline-block; width:48px; height:16px; background:#f2f4f5;"></span>
+        <span style="display:inline-block; width:48px; height:16px; background:#eeeeee;"></span>
+        <span style="display:inline-block; width:48px; height:16px; background:#f0f0f0;"></span>
+      </div>
+      <div class="elevation-label">Gray Scale Depth</div>
+      <div class="elevation-desc">#fff → #f2f4f5 → #eee → #f0f0f0</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Spacing & Layout</h2>
+
+  <div style="margin-bottom:40px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="color-group-label">Content Widths</div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Container <span class="width-bar-value">~1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Article Text <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:52%"></div></div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.moonstar.co.jp/">moonstar.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

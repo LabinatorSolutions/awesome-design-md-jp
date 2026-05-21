@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (204 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (207 sites)</a>
 </p>
 
 <table>
@@ -303,6 +303,11 @@
 <td align="center"><strong>ANA</strong><br><img src="design-md/ana/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>一保堂茶舗</strong><br><img src="design-md/ippodo/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>DECORTÉ</strong><br><img src="design-md/decorte/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>tokyobike</strong><br><img src="design-md/tokyobike/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MOONSTAR</strong><br><img src="design-md/moonstar/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -567,11 +572,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Honda (本田技研工業)](https://www.honda.co.jp/) | Automotive / Mobility | [DESIGN.md](design-md/honda/DESIGN.md) | [preview.html](design-md/honda/preview.html) |
 | [ANA (全日本空輸)](https://www.ana.co.jp/) | Aviation / Consumer | [DESIGN.md](design-md/ana/DESIGN.md) | [preview.html](design-md/ana/preview.html) |
 | [一保堂茶舗 (IPPODO)](https://www.ippodo-tea.co.jp/) | Tea / Traditional Retail | [DESIGN.md](design-md/ippodo/DESIGN.md) | [preview.html](design-md/ippodo/preview.html) |
+| [DECORTÉ (コスメデコルテ)](https://www.decorte.com/) | Luxury Cosmetics / Beauty | [DESIGN.md](design-md/decorte/DESIGN.md) | [preview.html](design-md/decorte/preview.html) |
+| [tokyobike (トーキョーバイク)](https://tokyobike.com/) | Bicycle / Lifestyle | [DESIGN.md](design-md/tokyobike/DESIGN.md) | [preview.html](design-md/tokyobike/preview.html) |
+| [MOONSTAR (ムーンスター)](https://www.moonstar.co.jp/) | Shoes / Heritage Manufacturing | [DESIGN.md](design-md/moonstar/DESIGN.md) | [preview.html](design-md/moonstar/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (204 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (207 sites)</a>
 </p>
 
 <table>
@@ -839,6 +847,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Honda</strong><br><img src="design-md/honda/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ANA</strong><br><img src="design-md/ana/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>IPPODO</strong><br><img src="design-md/ippodo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DECORTÉ</strong><br><img src="design-md/decorte/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>tokyobike</strong><br><img src="design-md/tokyobike/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MOONSTAR</strong><br><img src="design-md/moonstar/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
