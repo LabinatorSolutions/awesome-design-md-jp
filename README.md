@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (249 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (252 sites)</a>
 </p>
 
 <table>
@@ -364,6 +364,11 @@
 <td align="center"><strong>Ajinomoto</strong><br><img src="design-md/ajinomoto/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BANDAI NAMCO</strong><br><img src="design-md/bandainamco/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>LAWSON</strong><br><img src="design-md/lawson/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>青山フラワーマーケット</strong><br><img src="design-md/aoyamaflowermarket/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>猿田彦珈琲</strong><br><img src="design-md/sarutahiko/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -673,11 +678,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [LIXIL (リクシル)](https://www.lixil.co.jp/) | Housing / Building Materials | [DESIGN.md](design-md/lixil/DESIGN.md) | [preview.html](design-md/lixil/preview.html) |
 | [Ajinomoto (味の素)](https://www.ajinomoto.co.jp/) | Food & Beverage / Amino Science | [DESIGN.md](design-md/ajinomoto/DESIGN.md) | [preview.html](design-md/ajinomoto/preview.html) |
 | [BANDAI NAMCO Entertainment](https://www.bandainamcoent.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/bandainamco/DESIGN.md) | [preview.html](design-md/bandainamco/preview.html) |
+| [LAWSON (ローソン)](https://www.lawson.co.jp/) | Retail / Convenience Store | [DESIGN.md](design-md/lawson/DESIGN.md) | [preview.html](design-md/lawson/preview.html) |
+| [Aoyama Flower Market (青山フラワーマーケット)](https://www.aoyamaflowermarket.com/) | Retail / Flower Shop | [DESIGN.md](design-md/aoyamaflowermarket/DESIGN.md) | [preview.html](design-md/aoyamaflowermarket/preview.html) |
+| [Sarutahiko Coffee (猿田彦珈琲)](https://sarutahiko.co/) | Food & Beverage / Specialty Coffee | [DESIGN.md](design-md/sarutahiko/DESIGN.md) | [preview.html](design-md/sarutahiko/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (249 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (252 sites)</a>
 </p>
 
 <table>
@@ -1006,6 +1014,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>LIXIL</strong><br><img src="design-md/lixil/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Ajinomoto</strong><br><img src="design-md/ajinomoto/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BANDAI NAMCO</strong><br><img src="design-md/bandainamco/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>LAWSON</strong><br><img src="design-md/lawson/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Aoyama Flower Market</strong><br><img src="design-md/aoyamaflowermarket/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Sarutahiko Coffee</strong><br><img src="design-md/sarutahiko/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
