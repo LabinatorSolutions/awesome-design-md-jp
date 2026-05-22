@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (246 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (249 sites)</a>
 </p>
 
 <table>
@@ -359,6 +359,11 @@
 <td align="center"><strong>Kao</strong><br><img src="design-md/kao/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Morinaga</strong><br><img src="design-md/morinaga/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>LIXIL</strong><br><img src="design-md/lixil/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Ajinomoto</strong><br><img src="design-md/ajinomoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BANDAI NAMCO</strong><br><img src="design-md/bandainamco/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -665,11 +670,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Glico (江崎グリコ)](https://www.glico.com/jp/) | Food & Beverage / Confectionery | [DESIGN.md](design-md/glico/DESIGN.md) | [preview.html](design-md/glico/preview.html) |
 | [Kao (花王)](https://www.kao.com/jp/) | Consumer Goods / FMCG | [DESIGN.md](design-md/kao/DESIGN.md) | [preview.html](design-md/kao/preview.html) |
 | [Morinaga (森永製菓)](https://www.morinaga.co.jp/) | Food & Beverage / Confectionery | [DESIGN.md](design-md/morinaga/DESIGN.md) | [preview.html](design-md/morinaga/preview.html) |
+| [LIXIL (リクシル)](https://www.lixil.co.jp/) | Housing / Building Materials | [DESIGN.md](design-md/lixil/DESIGN.md) | [preview.html](design-md/lixil/preview.html) |
+| [Ajinomoto (味の素)](https://www.ajinomoto.co.jp/) | Food & Beverage / Amino Science | [DESIGN.md](design-md/ajinomoto/DESIGN.md) | [preview.html](design-md/ajinomoto/preview.html) |
+| [BANDAI NAMCO Entertainment](https://www.bandainamcoent.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/bandainamco/DESIGN.md) | [preview.html](design-md/bandainamco/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (246 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (249 sites)</a>
 </p>
 
 <table>
@@ -993,6 +1001,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Glico</strong><br><img src="design-md/glico/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kao</strong><br><img src="design-md/kao/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Morinaga</strong><br><img src="design-md/morinaga/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>LIXIL</strong><br><img src="design-md/lixil/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Ajinomoto</strong><br><img src="design-md/ajinomoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BANDAI NAMCO</strong><br><img src="design-md/bandainamco/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
