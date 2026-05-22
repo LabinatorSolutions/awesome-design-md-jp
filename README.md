@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (252 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (255 sites)</a>
 </p>
 
 <table>
@@ -369,6 +369,11 @@
 <td align="center"><strong>青山フラワーマーケット</strong><br><img src="design-md/aoyamaflowermarket/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>猿田彦珈琲</strong><br><img src="design-md/sarutahiko/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>NTT Group</strong><br><img src="design-md/ntt/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>伊藤忠商事</strong><br><img src="design-md/itochu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>住友林業</strong><br><img src="design-md/sumitomo-forestry/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -681,11 +686,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [LAWSON (ローソン)](https://www.lawson.co.jp/) | Retail / Convenience Store | [DESIGN.md](design-md/lawson/DESIGN.md) | [preview.html](design-md/lawson/preview.html) |
 | [Aoyama Flower Market (青山フラワーマーケット)](https://www.aoyamaflowermarket.com/) | Retail / Flower Shop | [DESIGN.md](design-md/aoyamaflowermarket/DESIGN.md) | [preview.html](design-md/aoyamaflowermarket/preview.html) |
 | [Sarutahiko Coffee (猿田彦珈琲)](https://sarutahiko.co/) | Food & Beverage / Specialty Coffee | [DESIGN.md](design-md/sarutahiko/DESIGN.md) | [preview.html](design-md/sarutahiko/preview.html) |
+| [NTT Group (NTTグループ)](https://group.ntt/jp/) | Telecom / ICT | [DESIGN.md](design-md/ntt/DESIGN.md) | [preview.html](design-md/ntt/preview.html) |
+| [ITOCHU Corporation (伊藤忠商事)](https://www.itochu.co.jp/) | Trading / Conglomerate | [DESIGN.md](design-md/itochu/DESIGN.md) | [preview.html](design-md/itochu/preview.html) |
+| [Sumitomo Forestry (住友林業)](https://sfc.jp/) | Housing / Forestry | [DESIGN.md](design-md/sumitomo-forestry/DESIGN.md) | [preview.html](design-md/sumitomo-forestry/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (252 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (255 sites)</a>
 </p>
 
 <table>
@@ -1019,6 +1027,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>LAWSON</strong><br><img src="design-md/lawson/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Aoyama Flower Market</strong><br><img src="design-md/aoyamaflowermarket/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Sarutahiko Coffee</strong><br><img src="design-md/sarutahiko/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NTT Group</strong><br><img src="design-md/ntt/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ITOCHU</strong><br><img src="design-md/itochu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Sumitomo Forestry</strong><br><img src="design-md/sumitomo-forestry/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
