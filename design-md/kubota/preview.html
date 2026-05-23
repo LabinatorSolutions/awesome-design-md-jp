@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KUBOTA (クボタ)</title>
+<style>
+  :root {
+    /* === Colors === */
+    --kubota-teal: #008486;
+    --kubota-teal-light: #339d9e;
+    --accent-blue: #cddcf2;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-on-teal: #ffffff;
+    --bg-primary: #ffffff;
+    --surface-light: #f1f1f1;
+    --surface-alt: #f5f5f5;
+    --surface-medium: #dedede;
+    --border-cookie: #d1d1d1;
+    --overlay-teal: rgba(0,132,134,0.86);
+    /* === Elevation === */
+    --elevation-nav: 0px 2px 4px rgba(0,0,0,0.08);
+    --elevation-subtle: 0px 1px 3px rgba(0,0,0,0.06);
+    /* === Fonts === */
+    --font-main: "Hiragino Sans", "Hiragino Kaku Gothic Pro", Meiryo, Arial, sans-serif;
+    --font-accent: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+    font-feature-settings: normal;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--surface-light);
+    box-shadow: var(--elevation-nav);
+  }
+  .nav-brand {
+    font-family: var(--font-accent);
+    font-size: 20px; font-weight: 700;
+    color: var(--kubota-teal);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--kubota-teal); }
+  .nav-menu {
+    font-family: var(--font-accent);
+    font-size: 14px; font-weight: 700;
+    color: var(--kubota-teal);
+    background: transparent;
+    border: none; cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 100px 32px 80px;
+    text-align: center;
+    background: linear-gradient(135deg, #004d4e 0%, #006e70 50%, #008486 100%);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--overlay-teal);
+    z-index: 1;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero h1 {
+    font-size: 34px; font-weight: 400; line-height: 1.4;
+    color: var(--text-on-teal);
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+    max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block;
+    background: var(--bg-primary);
+    color: var(--kubota-teal);
+    padding: 10px 28px;
+    border-radius: 2px;
+    border: 1px solid var(--bg-primary);
+    font-family: var(--font-main);
+    font-size: 14.4px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-teal {
+    display: inline-block;
+    background: var(--kubota-teal);
+    color: var(--text-on-teal);
+    padding: 10px 28px;
+    border-radius: 2px;
+    border: 1px solid var(--kubota-teal);
+    font-family: var(--font-main);
+    font-size: 14.4px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .btn-teal:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--kubota-teal);
+    padding: 10px 28px;
+    border-radius: 2px;
+    border: 1px solid var(--kubota-teal);
+    font-family: var(--font-main);
+    font-size: 14.4px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .btn-outline:hover { background: rgba(0,132,134,0.06); }
+  .btn-back {
+    display: inline-block;
+    background: var(--surface-medium);
+    color: var(--kubota-teal);
+    padding: 10px 28px;
+    border-radius: 0px;
+    border: none;
+    font-family: var(--font-main);
+    font-size: 14.4px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .btn-back:hover { opacity: 0.8; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-accent);
+    font-size: 12px; font-weight: 700;
+    color: var(--kubota-teal);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 400; line-height: 1.7;
+    letter-spacing: 0.03em;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--surface-light); margin: 0; }
+
+  .section-teal { background: var(--surface-alt); padding: 64px 32px; }
+  .section-teal .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--surface-light); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 400; color: var(--kubota-teal); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--surface-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-alt); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 20px; font-weight: 400; line-height: 1.7;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .article-preview h2 {
+    font-size: 18px; font-weight: 400; line-height: 1.4;
+    letter-spacing: 0.03em;
+    margin: 28px 0 12px;
+    color: var(--text-primary);
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400; line-height: 1.7;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .article-preview a { color: var(--kubota-teal); text-decoration: none; }
+  .article-preview a:hover { text-decoration: underline; }
+  .article-lead {
+    font-size: 16px; line-height: 1.7;
+    color: var(--text-secondary);
+    padding: 16px 0;
+    border-top: 1px solid var(--surface-light);
+    border-bottom: 1px solid var(--surface-light);
+    margin-bottom: 24px;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .card {
+    position: relative;
+    background: #2a6e5e;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px 24px;
+    overflow: hidden;
+    transition: opacity 0.3s;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--overlay-teal);
+    z-index: 1;
+  }
+  .card-content { position: relative; z-index: 2; }
+  .card h3 {
+    font-size: 18px; font-weight: 400; line-height: 1.4;
+    letter-spacing: 0.03em;
+    color: var(--text-on-teal);
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 14px; font-weight: 400; line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+  .card:hover { opacity: 0.92; }
+  .card--agri { background: linear-gradient(135deg, #3a8060, #2a6e50); }
+  .card--water { background: linear-gradient(135deg, #1a5a7a, #0e4a6a); }
+  .card--env { background: linear-gradient(135deg, #2a6070, #1a5060); }
+
+  /* BUTTONS section */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-cookie); padding: 8px 14px;
+    border-radius: 0px;
+    font-family: var(--font-main); font-size: 14px;
+    letter-spacing: 0.03em;
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--kubota-teal);
+    box-shadow: 0 0 0 2px rgba(0,132,134,0.15);
+  }
+  .form-input--error {
+    border-color: #cc3333;
+    box-shadow: 0 0 0 2px rgba(204,51,51,0.15);
+  }
+  .form-input--search {
+    font-size: 26px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--kubota-teal);
+    border-radius: 0;
+    padding: 8px 14px;
+  }
+  .form-input--search:focus {
+    border-color: var(--kubota-teal);
+    box-shadow: none;
+  }
+  .form-input--pill {
+    border-radius: 50px;
+    border: 1px solid var(--border-cookie);
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: #fff; border-radius: 4px;
+    padding: 24px; text-align: center;
+    border: 1px solid var(--surface-light);
+  }
+  .elevation-label { font-size: 14px; font-weight: 400; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* LAYOUT / SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--kubota-teal); border-radius: 2px; margin-bottom: 6px; height: 28px; opacity: 0.7; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-secondary); }
+
+  .width-bar { height: 32px; background: var(--surface-alt); border: 1px solid var(--surface-light); border-radius: 2px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--kubota-teal); border-radius: 1px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 400; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 32px;
+    text-align: center;
+    background: var(--kubota-teal);
+    color: var(--text-on-teal);
+    font-size: 12px;
+  }
+  .footer a { color: rgba(255,255,255,0.8); text-decoration: underline; }
+  .footer a:hover { color: var(--text-on-teal); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-teal { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview p { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">KUBOTA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <button class="nav-menu">MENU</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Design System Preview<br>KUBOTA (クボタ) </h1>
+    <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">事業を知る</a>
+      <a class="btn-outline" href="#" style="color:#fff; border-color:rgba(255,255,255,0.6);">DESIGN.md を読む</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Primary (ブランド)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#008486"></div><div class="color-swatch-info"><div class="color-swatch-name">Kubota Teal</div><div class="color-swatch-hex">#008486</div><div class="color-swatch-role">CTA・リンク・フッター・アイコン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#339d9e"></div><div class="color-swatch-info"><div class="color-swatch-name">Kubota Teal Light</div><div class="color-swatch-hex">#339d9e</div><div class="color-swatch-role">明るいバリエーション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cddcf2"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Blue</div><div class="color-swatch-hex">#cddcf2</div><div class="color-swatch-role">セクション背景・ハイライト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Overlay</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,132,134,0.86)"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal Overlay</div><div class="color-swatch-hex">rgba(0,132,134,0.86)</div><div class="color-swatch-role">ヒーロー画像上の半透明オーバーレイ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Teal</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ティール背景上のテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f1f1"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f1f1f1</div><div class="color-swatch-role">ナビサブパネル背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Alt</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">代替セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dedede"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Medium</div><div class="color-swatch-hex">#dedede</div><div class="color-swatch-role">戻るボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d1d1d1"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Cookie</div><div class="color-swatch-hex">#d1d1d1</div><div class="color-swatch-role">フィルターのボーダー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:34px; font-weight:400; line-height:1.4; letter-spacing:normal; color:var(--text-primary);">イノベーションで未来を支える</div>
+    <div class="type-meta">H2 Focus / 34px / 400 / line-height: 1.4 / letter-spacing: none<span class="type-context">ヒーロー上の大見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:20px; font-weight:400; line-height:1.7; letter-spacing:0.03em; color:var(--text-primary);">食料・水・環境の課題解決に挑む</div>
+    <div class="type-meta">H1 / 20px / 400 / line-height: 1.7 / letter-spacing: 0.03em<span class="type-context">ページ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:18px; font-weight:400; line-height:1.4; letter-spacing:0.03em; color:var(--text-primary);">農業ソリューション</div>
+    <div class="type-meta">H3 Card / 18px / 400 / line-height: 1.4 / letter-spacing: 0.03em<span class="type-context">事業カード見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:18px; font-weight:400; line-height:1.4; letter-spacing:0.03em; color:var(--kubota-teal);">製品・ソリューション</div>
+    <div class="type-meta">Nav Heading / 18px / 400 / line-height: 1.4 / color: #008486<span class="type-context">ナビ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:15px; font-weight:400; line-height:1.7; letter-spacing:0.03em; color:var(--text-primary);">Highlight Topics</div>
+    <div class="type-meta">H2 Section / 15px / 400 / line-height: 1.7 / letter-spacing: 0.03em<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:14px; font-weight:400; line-height:1.4; letter-spacing:0.03em; color:var(--text-primary);">サブナビゲーション項目</div>
+    <div class="type-meta">Nav Sub / 14px / 400 / line-height: 1.4 / letter-spacing: 0.03em<span class="type-context">ナビサブ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:14px; font-weight:700; line-height:1.4; letter-spacing:0.03em; color:var(--text-primary);">ナビゲーション内 Bold 見出し</div>
+    <div class="type-meta">Nav Bold / 14px / 700 / line-height: 1.4<span class="type-context">ナビ内 span</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-main); font-size:14px; font-weight:400; line-height:1.7; letter-spacing:0.03em; color:var(--text-secondary);">補足テキスト・ユーティリティ</div>
+    <div class="type-meta">Utility / 14px / 400 / color: #666666<span class="type-context">補足</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-accent); font-size:14px; font-weight:700; line-height:1.4; color:var(--kubota-teal);">MENU</div>
+    <div class="type-meta">Menu Button / Helvetica Neue / 14px / 700 / color: #008486<span class="type-context">ハンバーガーメニュー</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-teal" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">コンテンツ組版サンプル</h2>
+  <div class="article-preview">
+    <h1>食料・水・環境問題の解決に向けて</h1>
+    <div class="article-lead">クボタは、美しい地球環境を守りながら、人々の豊かな暮らしを支えていくことをめざしています。創業以来130年以上にわたり培ってきた技術と経験を活かし、食料・水・環境の分野でグローバルな社会課題の解決に取り組んでいます。</div>
+    <h2>スマート農業の推進</h2>
+    <p>日本の農業は担い手の高齢化や後継者不足という構造的な課題を抱えています。クボタは<a href="#">自動運転農機</a>やICT技術を活用したスマート農業ソリューションを提供し、農作業の省力化と生産性の向上を実現しています。GPSガイダンスシステムを搭載したトラクタやコンバインは、熟練者でなくても高精度な作業を可能にします。</p>
+    <h2>水インフラの未来</h2>
+    <p>安全な水の供給と適切な水処理は、持続可能な社会の基盤です。クボタは上下水道用の鉄管、ポンプ、水処理膜などの製品を通じて、水環境インフラの整備に貢献しています。世界各地で水不足や水質汚染が深刻化する中、クボタの技術は70カ国以上で活用されています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-teal" href="#">詳しく見る</a>
+      <div class="button-label">Primary CTA<br><span style="font-family:var(--font-mono); font-size:10px;">#008486 / radius: 2px / 700</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-outline" href="#">お問い合わせ</a>
+      <div class="button-label">Secondary (Outline)<br><span style="font-family:var(--font-mono); font-size:10px;">transparent / border: #008486</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-back" href="#">戻る</a>
+      <div class="button-label">Back Button<br><span style="font-family:var(--font-mono); font-size:10px;">#dedede / radius: 0px</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-primary" href="#" style="background:var(--kubota-teal); color:#fff; border-color:var(--kubota-teal);">Cookie を同意する</a>
+      <div class="button-label">Cookie CTA<br><span style="font-family:var(--font-mono); font-size:10px;">#008486 / 14.4px / 700</span></div>
+    </div>
+  </div>
+  <div style="margin-top:32px;">
+    <div class="color-group-label">Hero上のボタン（白背景・ティール文字）</div>
+    <div class="button-row" style="margin-top:12px;">
+      <div class="button-item" style="background:var(--kubota-teal); padding:20px 24px; border-radius:4px;">
+        <a class="btn-primary" href="#">事業を知る</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.7);">On Teal Background</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards" style="max-width:100%; padding:64px 0 0 0;">
+  <div style="max-width:940px; margin:0 auto; padding:0 32px;">
+    <div class="section-label">05 / Cards</div>
+    <h2 class="section-title">事業フィールドカード</h2>
+  </div>
+  <div class="card-grid" style="max-width:940px; margin:0 auto;">
+    <div class="card card--agri">
+      <div class="card-content">
+        <h3>農業ソリューション</h3>
+        <p>トラクタ・コンバイン・田植機から、スマート農業システムまで。食料生産の現場を支える技術と製品をお届けします。</p>
+      </div>
+    </div>
+    <div class="card card--water">
+      <div class="card-content">
+        <h3>水環境インフラ</h3>
+        <p>上下水道の整備から水処理ソリューションまで。安全な水を届けるためのインフラ技術で、世界70カ国以上に貢献しています。</p>
+      </div>
+    </div>
+    <div class="card card--env">
+      <div class="card-content">
+        <h3>環境ソリューション</h3>
+        <p>廃棄物処理・リサイクルシステムなど、循環型社会の実現に向けた環境関連製品とサービスを提供しています。</p>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:940px; margin:0 auto; padding:24px 32px 0;">
+    <div class="type-meta">事業カード: 画像背景 + rgba(0,132,134,0.86) ティールオーバーレイ / 見出し 18px 400 白文字 / line-height 1.4</div>
+  </div>
+  <div style="padding-bottom:64px;"></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div class="form-group">
+    <label class="form-label">サイト内検索</label>
+    <input class="form-input form-input--search" type="text" placeholder="キーワードを入力">
+    <div class="form-state-label">検索入力 -- font-size: 26px / border: none / border-bottom: 2px solid #008486</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-state-label">デフォルト -- border: 1px solid #d1d1d1 / radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="info@kubota.co.jp">
+    <div class="form-state-label">フォーカス -- border-color: #008486 / shadow: rgba(0,132,134,0.15)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="012-345">
+    <div class="form-state-label">エラー -- border-color: #cc3333 / shadow: rgba(204,51,51,0.15)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Cookie フィルター（ピル型）</label>
+    <input class="form-input form-input--pill" type="text" placeholder="カテゴリーを選択">
+    <div class="form-state-label">ピル型 -- border-radius: 50px / border: 1px solid #d1d1d1</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">基本はフラットデザイン。シャドウなし。</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-subtle);">
+      <div class="elevation-label">Nav Shadow</div>
+      <div class="elevation-desc">0px 2px 4px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="position:relative; overflow:hidden; border:none; padding:0;">
+      <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:var(--overlay-teal); z-index:1;"></div>
+      <div style="position:relative; z-index:2; padding:24px; color:#fff;">
+        <div class="elevation-label" style="color:#fff;">Teal Overlay</div>
+        <div class="elevation-desc" style="color:rgba(255,255,255,0.8);">rgba(0,132,134,0.86) -- ヒーロー画像上の半透明ティール</div>
+      </div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--kubota-teal);">
+      <div class="elevation-label">Focus / Active</div>
+      <div class="elevation-desc">#008486 (Kubota Teal)</div>
+    </div>
+  </div>
+  <div style="margin-top:24px;">
+    <div class="type-meta">クボタはドロップシャドウよりも色面のオーバーレイで奥行きを表現する。ティールオーバーレイ (opacity: 0.86) がデザイン上の最大の深度表現。</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト & スペーシング</h2>
+
+  <div class="color-group-label">ナビゲーションパディング</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:11px;"></div><div class="spacing-value">11px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:14px;"></div><div class="spacing-value">14px</div></div>
+    <div class="spacing-item" style="flex:1;"><div style="background:var(--surface-alt); border:1px solid var(--surface-light); border-radius:2px; padding:11px 14px; font-size:14px; text-align:left; color:var(--text-primary);">ナビアイテム padding: 11px 14px</div></div>
+  </div>
+
+  <div class="color-group-label">セクションスペーシング</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+  </div>
+
+  <div class="color-group-label">コンテンツ幅</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Width <span class="width-bar-value">100%</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Width <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:72%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Width <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:49%"></div></div></div>
+
+  <div class="color-group-label">グリッドレイアウト（事業カード）</div>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:8px;">
+    <div style="background:var(--kubota-teal); height:60px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px;">1/3</div>
+    <div style="background:var(--kubota-teal-light); height:60px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px;">1/3</div>
+    <div style="background:var(--kubota-teal); height:60px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px;">1/3</div>
+  </div>
+  <div class="type-meta" style="margin-top:8px;">事業カードは複数カラムのグリッドレイアウト。レスポンシブに応じてカラム数を調整。</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.kubota.co.jp/">kubota.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値 (2026-05-23)
+</footer>
+
+</body>
+</html>
