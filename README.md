@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (258 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (261 sites)</a>
 </p>
 
 <table>
@@ -379,6 +379,11 @@
 <td align="center"><strong>三井不動産</strong><br><img src="design-md/mitsui-fudosan/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>クボタ</strong><br><img src="design-md/kubota/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>一風堂</strong><br><img src="design-md/ippudo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ZENB</strong><br><img src="design-md/zenb/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>クラシル</strong><br><img src="design-md/kurashiru/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -697,11 +702,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [HITACHI (日立製作所)](https://www.hitachi.co.jp/) | Technology / Industrial | [DESIGN.md](design-md/hitachi/DESIGN.md) | [preview.html](design-md/hitachi/preview.html) |
 | [Mitsui Fudosan (三井不動産)](https://www.mitsuifudosan.co.jp/) | Real Estate / Developer | [DESIGN.md](design-md/mitsui-fudosan/DESIGN.md) | [preview.html](design-md/mitsui-fudosan/preview.html) |
 | [KUBOTA (クボタ)](https://www.kubota.co.jp/) | Machinery / Agriculture | [DESIGN.md](design-md/kubota/DESIGN.md) | [preview.html](design-md/kubota/preview.html) |
+| [IPPUDO (一風堂)](https://www.ippudo.com/) | Food / Restaurant | [DESIGN.md](design-md/ippudo/DESIGN.md) | [preview.html](design-md/ippudo/preview.html) |
+| [ZENB (ゼンブ)](https://zenb.jp/) | Food / D2C | [DESIGN.md](design-md/zenb/DESIGN.md) | [preview.html](design-md/zenb/preview.html) |
+| [kurashiru (クラシル)](https://www.kurashiru.com/) | Recipe / Media | [DESIGN.md](design-md/kurashiru/DESIGN.md) | [preview.html](design-md/kurashiru/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (258 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (261 sites)</a>
 </p>
 
 <table>
@@ -1045,6 +1053,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>HITACHI</strong><br><img src="design-md/hitachi/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Mitsui Fudosan</strong><br><img src="design-md/mitsui-fudosan/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KUBOTA</strong><br><img src="design-md/kubota/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>IPPUDO</strong><br><img src="design-md/ippudo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ZENB</strong><br><img src="design-md/zenb/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>kurashiru</strong><br><img src="design-md/kurashiru/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

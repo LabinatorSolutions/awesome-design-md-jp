@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: IPPUDO（一風堂）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Noto+Sans+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ippudo-red: #cf000d;
+    --text-primary: #333333;
+    --white: #ffffff;
+    --light-gray: #f3f3f3;
+    --gray: #eeeeee;
+    --muted-gray: #e8e7e3;
+    --beige: #f5f0e3;
+    --border-overlay: rgba(51, 51, 51, 0.1);
+    --font-jp: "Noto Sans JP", sans-serif;
+    --font-en: Montserrat, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--ippudo-red);
+  }
+  .nav-brand { font-family: var(--font-en); font-size: 18px; font-weight: 600; color: var(--white); text-decoration: none; letter-spacing: 0.1em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en); font-size: 11px; font-weight: 400; color: var(--white);
+    text-decoration: none; letter-spacing: 0.1em; opacity: 0.85; transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-links .jp { font-family: var(--font-jp); font-size: 10px; display: block; opacity: 0.7; letter-spacing: 0.1em; }
+
+  .hero { padding: 80px 32px; text-align: center; background: var(--white); }
+  .hero h1 {
+    font-family: var(--font-en); font-size: 36px; font-weight: 400;
+    letter-spacing: 0.2em; color: var(--text-primary); margin-bottom: 12px;
+  }
+  .hero p {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.8; color: var(--text-primary); max-width: 500px; margin: 0 auto;
+  }
+
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 24px; font-weight: 400;
+    letter-spacing: 0.2em; color: var(--text-primary); margin-bottom: 8px;
+  }
+  .section-sub {
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; color: var(--ippudo-red); margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-overlay); margin: 0 32px; }
+
+  /* Colors */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+  .color-swatch {
+    border-radius: 0; overflow: hidden;
+    border: 1px solid var(--border-overlay);
+  }
+  .color-swatch-fill { height: 80px; }
+  .color-swatch-label { padding: 8px; font-size: 11px; line-height: 1.4; }
+  .color-swatch-label strong { display: block; font-weight: 600; }
+
+  /* Typography */
+  .type-row { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-overlay); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 11px; color: #999; margin-bottom: 4px; font-family: var(--font-en); }
+
+  /* Article */
+  .article-sample { max-width: 680px; margin: 0 auto; }
+  .article-sample h2 {
+    font-family: var(--font-en); font-size: 24px; font-weight: 400;
+    letter-spacing: 0.2em; margin-bottom: 8px;
+  }
+  .article-sample .article-date {
+    font-family: var(--font-jp); font-size: 14px; color: #999; margin-bottom: 24px;
+  }
+  .article-sample p {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.8; margin-bottom: 16px;
+  }
+
+  /* Buttons */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-nav {
+    display: inline-block; background: var(--ippudo-red); color: var(--white);
+    padding: 10px 24px; border: none; border-radius: 0;
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; cursor: pointer; text-decoration: none;
+  }
+  .btn-category {
+    display: inline-block; background: var(--gray); color: var(--text-primary);
+    padding: 10px 24px; border: none; border-radius: 0;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    cursor: pointer; text-decoration: none;
+  }
+  .btn-circle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; background: var(--white); color: var(--text-primary);
+    border: 1px solid var(--border-overlay); border-radius: 50%;
+    font-size: 18px; cursor: pointer;
+  }
+  .btn-viewmore {
+    display: inline-block; background: transparent; color: var(--white);
+    padding: 10px 32px; border: 1px solid var(--white); border-radius: 0;
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.2em; cursor: pointer; text-decoration: none;
+  }
+
+  /* Cards */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    background: var(--white); border: 1px solid var(--border-overlay);
+    overflow: hidden;
+  }
+  .card-image { height: 160px; background: var(--light-gray); }
+  .card-body { padding: 16px; }
+  .card-body .date { font-family: var(--font-jp); font-size: 12px; color: #999; margin-bottom: 4px; }
+  .card-body .title { font-family: var(--font-jp); font-size: 14px; font-weight: 600; line-height: 1.8; }
+
+  /* Forms */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 680px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 10px 12px; border: 1px solid var(--border-overlay);
+    border-radius: 0; font-family: var(--font-jp); font-size: 14px;
+    background: var(--white); color: var(--text-primary);
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--ippudo-red);
+  }
+  .form-group.error input { border-color: #dc2626; }
+  .form-group .error-text { font-size: 11px; color: #dc2626; }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-full { grid-column: 1 / -1; }
+
+  /* Elevation */
+  .elevation-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .elevation-card {
+    padding: 24px; background: var(--white); border: 1px solid var(--border-overlay);
+    text-align: center;
+  }
+  .elevation-card.flat { border: 1px solid var(--border-overlay); }
+  .elevation-card.red-top { border-top: 3px solid var(--ippudo-red); }
+  .elevation-label { font-size: 11px; color: #999; font-family: var(--font-en); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .layout-box {
+    height: 80px; background: var(--light-gray);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #999; font-family: var(--font-en);
+  }
+
+  .bg-beige { background: var(--beige); }
+  .bg-red { background: var(--ippudo-red); }
+  .viewmore-section { background: var(--text-primary); padding: 40px; text-align: center; margin: 32px 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">IPPUDO</a>
+  <ul class="nav-links">
+    <li><a href="#">NEWS<span class="jp">お知らせ</span></a></li>
+    <li><a href="#">MENU<span class="jp">お品書き</span></a></li>
+    <li><a href="#">STORE<span class="jp">店舗一覧</span></a></li>
+    <li><a href="#">ABOUT<span class="jp">一風堂について</span></a></li>
+    <li><a href="#">RECRUIT<span class="jp">採用情報</span></a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>IPPUDO</h1>
+  <p>すべては一杯のために。1985年、博多に生まれた一風堂は、ラーメンを通じて人々に笑顔と感動を届け続けています。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section">
+  <p class="section-label">COLORS</p>
+  <p class="section-sub">カラーパレット</p>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #cf000d;"></div>
+      <div class="color-swatch-label"><strong>IPPUDO Red</strong>#cf000d</div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #333333;"></div>
+      <div class="color-swatch-label"><strong>Text Primary</strong>#333333</div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #f5f0e3;"></div>
+      <div class="color-swatch-label"><strong>Beige</strong>#f5f0e3</div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #f3f3f3;"></div>
+      <div class="color-swatch-label"><strong>Light Gray</strong>#f3f3f3</div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #eeeeee;"></div>
+      <div class="color-swatch-label"><strong>Gray</strong>#eeeeee</div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #e8e7e3;"></div>
+      <div class="color-swatch-label"><strong>Muted Gray</strong>#e8e7e3</div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #ffffff; border: 1px solid #ddd;"></div>
+      <div class="color-swatch-label"><strong>White</strong>#ffffff</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section">
+  <p class="section-label">TYPOGRAPHY</p>
+  <p class="section-sub">タイポグラフィ</p>
+
+  <div class="type-row">
+    <div class="type-meta">Section Label — Montserrat 24px / 400 / ls: 0.2em</div>
+    <p style="font-family: var(--font-en); font-size: 24px; font-weight: 400; letter-spacing: 0.2em;">NEWS</p>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Section Title — Montserrat 20px / 400 / ls: normal</div>
+    <p style="font-family: var(--font-en); font-size: 20px; font-weight: 400;">店舗検索</p>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Body JP — Noto Sans JP 14px / 600 / lh: 1.8</div>
+    <p style="font-family: var(--font-jp); font-size: 14px; font-weight: 600; line-height: 1.8;">【新店】5/28(木)「一風堂 沖縄国際通り店」オープン！</p>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Body JP — Noto Sans JP 14px / 400 / lh: 1.0</div>
+    <p style="font-family: var(--font-jp); font-size: 14px; font-weight: 400; line-height: 1.0;">2026.05.21</p>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">Nav Label — Noto Sans JP 12px / 400 / ls: 0.1em</div>
+    <p style="font-family: var(--font-jp); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; color: var(--ippudo-red);">お知らせ</p>
+  </div>
+  <div class="type-row">
+    <div class="type-meta">CTA Text — Montserrat 14px / 400 / ls: 0.2em</div>
+    <p style="font-family: var(--font-en); font-size: 14px; font-weight: 400; letter-spacing: 0.2em;">VIEW MORE</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section">
+  <p class="section-label">ARTICLE</p>
+  <p class="section-sub">記事サンプル</p>
+  <div class="article-sample">
+    <h2>NEWS</h2>
+    <p class="article-date">2026.05.21</p>
+    <p>一風堂は、1985年10月16日に福岡市中央区大名に第一号店を開業しました。創業者・河原成美が目指したのは、「ラーメンを日本の文化に」という夢。以来、変わらぬ信念のもと、こだわりの一杯を提供し続けています。</p>
+    <p>白丸元味と赤丸新味。博多とんこつラーメンの伝統を守りながらも、常に進化を求める姿勢が、一風堂のアイデンティティです。世界15カ国以上に展開する今も、一杯一杯に心を込めて。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section">
+  <p class="section-label">BUTTONS</p>
+  <p class="section-sub">ボタン</p>
+  <div class="btn-grid">
+    <a href="#" class="btn-nav">NEWS<br><span style="font-family: var(--font-jp); font-size: 10px; opacity: 0.7;">お知らせ</span></a>
+    <a href="#" class="btn-category">お品書き</a>
+    <a href="#" class="btn-category">店舗検索</a>
+    <button class="btn-circle">‹</button>
+    <button class="btn-circle">›</button>
+  </div>
+  <div class="viewmore-section" style="margin-top: 32px;">
+    <a href="#" class="btn-viewmore">VIEW MORE</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section">
+  <p class="section-label">CARDS</p>
+  <p class="section-sub">カード</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <p class="date">2026.05.21</p>
+        <p class="title">【新店】5/28(木)「一風堂 沖縄国際通り店」オープン！</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <p class="date">2026.05.15</p>
+        <p class="title">「一風堂×有田焼」コラボレーション丼が期間限定で登場</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <p class="date">2026.05.10</p>
+        <p class="title">一風堂オンラインストア、夏季限定メニューの予約受付を開始</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section">
+  <p class="section-label">FORMS</p>
+  <p class="section-sub">フォーム</p>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>お名前</label>
+      <input type="text" placeholder="山田 太郎">
+    </div>
+    <div class="form-group">
+      <label>メールアドレス</label>
+      <input type="email" placeholder="example@email.com">
+    </div>
+    <div class="form-group">
+      <label>店舗</label>
+      <select>
+        <option>選択してください</option>
+        <option>一風堂 大名本店</option>
+        <option>一風堂 恵比寿店</option>
+      </select>
+    </div>
+    <div class="form-group error">
+      <label>電話番号</label>
+      <input type="tel" value="abc" style="border-color: #dc2626;">
+      <span class="error-text">正しい電話番号を入力してください</span>
+    </div>
+    <div class="form-group form-full">
+      <label>お問い合わせ内容</label>
+      <textarea placeholder="ご質問やご意見をお書きください"></textarea>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section">
+  <p class="section-label">ELEVATION</p>
+  <p class="section-sub">深度</p>
+  <div class="elevation-grid">
+    <div class="elevation-card flat">
+      <p class="elevation-label">Level 0 — Flat (default)</p>
+    </div>
+    <div class="elevation-card red-top">
+      <p class="elevation-label">Red Top Border Accent</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section">
+  <p class="section-label">LAYOUT</p>
+  <p class="section-sub">レイアウト</p>
+  <div class="layout-demo">
+    <div class="layout-box">1 / 3</div>
+    <div class="layout-box">2 / 3</div>
+    <div class="layout-box">3 / 3</div>
+  </div>
+  <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div class="layout-box">1 / 2</div>
+    <div class="layout-box">2 / 2</div>
+  </div>
+  <div style="margin-top: 16px;">
+    <div class="layout-box" style="background: var(--beige);">Full Width — Beige</div>
+  </div>
+</section>
+
+</body>
+</html>
