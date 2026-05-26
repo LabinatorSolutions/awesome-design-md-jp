@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (261 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (264 sites)</a>
 </p>
 
 <table>
@@ -383,6 +383,9 @@
 <td align="center"><strong>一風堂</strong><br><img src="design-md/ippudo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ZENB</strong><br><img src="design-md/zenb/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>クラシル</strong><br><img src="design-md/kurashiru/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大和ハウス</strong><br><img src="design-md/daiwahouse/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOPPAN</strong><br><img src="design-md/toppan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AGC</strong><br><img src="design-md/agc/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -705,11 +708,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [IPPUDO (一風堂)](https://www.ippudo.com/) | Food / Restaurant | [DESIGN.md](design-md/ippudo/DESIGN.md) | [preview.html](design-md/ippudo/preview.html) |
 | [ZENB (ゼンブ)](https://zenb.jp/) | Food / D2C | [DESIGN.md](design-md/zenb/DESIGN.md) | [preview.html](design-md/zenb/preview.html) |
 | [kurashiru (クラシル)](https://www.kurashiru.com/) | Recipe / Media | [DESIGN.md](design-md/kurashiru/DESIGN.md) | [preview.html](design-md/kurashiru/preview.html) |
+| [DAIWA HOUSE (大和ハウス工業)](https://www.daiwahouse.co.jp/) | Housing / Construction / Corporate | [DESIGN.md](design-md/daiwahouse/DESIGN.md) | [preview.html](design-md/daiwahouse/preview.html) |
+| [TOPPAN (TOPPANホールディングス)](https://www.holdings.toppan.com/ja/) | Printing / Communications / Corporate | [DESIGN.md](design-md/toppan/DESIGN.md) | [preview.html](design-md/toppan/preview.html) |
+| [AGC (AGC株式会社)](https://www.agc.com/jp/ja/) | Materials / Glass / Corporate | [DESIGN.md](design-md/agc/DESIGN.md) | [preview.html](design-md/agc/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (261 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (264 sites)</a>
 </p>
 
 <table>
@@ -1058,6 +1064,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>IPPUDO</strong><br><img src="design-md/ippudo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ZENB</strong><br><img src="design-md/zenb/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>kurashiru</strong><br><img src="design-md/kurashiru/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DAIWA HOUSE</strong><br><img src="design-md/daiwahouse/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOPPAN</strong><br><img src="design-md/toppan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AGC</strong><br><img src="design-md/agc/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
