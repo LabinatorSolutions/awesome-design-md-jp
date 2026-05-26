@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SEKISUI HOUSE（積水ハウス）</title>
+<style>
+  :root {
+    /* === Colors === */
+    --dark-charcoal: #3b3b41;
+    --group-dark: #3c3b40;
+    --text-primary: #242424;
+    --text-secondary: #747480;
+    --surface-light: #f7f7f7;
+    --surface-card: #f4f4f4;
+    --separator: #ebedef;
+    --border: #dddddd;
+    --badge-light: #eeeeee;
+    --bg: #ffffff;
+    --white: #ffffff;
+    /* Semantic (推奨値) */
+    --danger: #c62828;
+    --success: #2e7d32;
+    --warning: #e65100;
+    /* === Elevation === */
+    --elevation-1: 0 2px 4px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.10);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.12);
+    /* === Fonts === */
+    --font-body: "游ゴシック体 Pr6N M", "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, "Helvetica Neue", Arial, sans-serif;
+    --font-heading: "游ゴシック体 Pr6N B", "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, "Helvetica Neue", Arial, sans-serif;
+    --font-label: "Helvetica Neue", Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-heading);
+    font-size: 15px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; line-height: 2.0; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-secondary); }
+  .nav-cta {
+    display: inline-block; background: var(--dark-charcoal); color: var(--white);
+    padding: 8px 32px 8px 16px; border-radius: 4px; border: 1px solid var(--dark-charcoal);
+    font-family: var(--font-body); font-size: 14px;
+    text-decoration: none; position: relative; transition: opacity 0.15s;
+  }
+  .nav-cta::after {
+    content: "\2192"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 14px;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--surface-light); }
+  .hero-label {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 700; line-height: 1.5;
+    letter-spacing: 2.1px; color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 42px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.05em;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 15px; font-weight: 400; line-height: 1.6;
+    color: var(--text-secondary); max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--dark-charcoal); color: var(--white);
+    padding: 15px 58px 15px 32px; border-radius: 4px; border: 1px solid var(--dark-charcoal);
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    position: relative;
+  }
+  .btn-primary::after {
+    content: "\2192"; position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    font-size: 16px;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 15px 32px; border-radius: 4px;
+    border: 1px solid var(--border);
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline:hover { background: var(--surface-light); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-heading);
+    font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 28px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-gray { background: var(--surface-light); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 6px; overflow: hidden; background: #fff; box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-heading); font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .btn-pill {
+    display: inline-block; background: transparent; color: var(--white);
+    padding: 3px 20px; border-radius: 50px; border: 1px solid var(--white);
+    font-family: var(--font-heading); font-size: 15px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-new-badge {
+    display: inline-block; background: var(--dark-charcoal); color: var(--white);
+    padding: 4px 18px; border: none; border-radius: 0;
+    font-family: var(--font-label); font-size: 12px; font-weight: 700;
+    text-decoration: none;
+  }
+  .btn-search {
+    display: inline-block; background: var(--white); color: var(--text-primary);
+    padding: 8px 15px; border: 1px solid var(--border); border-radius: 3px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 6px;
+    padding: 30px 32px; transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card h3 {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 700; line-height: 1.4;
+    margin-bottom: 8px; color: var(--text-primary);
+  }
+  .card p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+  .card-link {
+    display: inline-block; margin-top: 16px;
+    color: var(--text-primary); font-size: 14px; font-weight: 400;
+    text-decoration: none; position: relative; padding-right: 20px;
+  }
+  .card-link::after {
+    content: "\2192"; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    font-size: 14px; color: var(--dark-charcoal);
+  }
+  .card-surface {
+    background: var(--surface-card); border: none;
+  }
+
+  /* ARTICLE */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-heading);
+    font-size: 28px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.02em; margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview h2 {
+    font-family: var(--font-heading);
+    font-size: 22px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.02em; margin: 32px 0 12px; color: var(--text-primary);
+  }
+  .article-preview p {
+    font-size: 15px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal; margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview .accent {
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 700; letter-spacing: 2.1px;
+    color: var(--text-secondary); margin-bottom: 8px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block; font-family: var(--font-heading);
+    font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 8px; border-radius: 3px;
+    font-family: var(--font-body); font-size: 13px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--dark-charcoal); box-shadow: 0 0 0 2px rgba(59,59,65,0.2); }
+  .form-input--error { border-color: var(--danger); box-shadow: 0 0 0 2px rgba(198,40,40,0.2); }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 6px; padding: 24px; text-align: center; border: 1px solid var(--border); }
+  .elevation-label { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--dark-charcoal); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--surface-light); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--dark-charcoal); border-radius: 3px; opacity: 0.2; }
+  .width-bar-label { font-family: var(--font-heading); font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* DARK SECTION (footer-like) */
+  .section-dark {
+    background: var(--dark-charcoal); padding: 48px 32px; color: var(--white);
+  }
+  .section-dark .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-dark .section-label { color: rgba(255,255,255,0.5); }
+  .section-dark .section-title { color: var(--white); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--surface-light); font-size: 12px; color: var(--text-secondary); }
+  .footer a { color: var(--dark-charcoal); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .btn-primary { padding: 12px 48px 12px 24px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">SEKISUI HOUSE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">カタログ請求</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">DESIGN SYSTEM PREVIEW</div>
+  <h1>SEKISUI HOUSE<br>積水ハウス — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。TypeSquare 游ゴシック体 Pr6N はドメインライセンスのため、標準の游ゴシック / YuGothic で代替表示。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">注文住宅について知る</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand / Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3b3b41"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Charcoal</div><div class="color-swatch-hex">#3b3b41</div><div class="color-swatch-role">CTA・フッター・バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3c3b40"></div><div class="color-swatch-info"><div class="color-swatch-name">Group Dark</div><div class="color-swatch-hex">#3c3b40</div><div class="color-swatch-role">グループ企業セクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#242424"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#242424</div><div class="color-swatch-role">本文テキスト（ウォームブラック）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#747480"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#747480</div><div class="color-swatch-role">補助テキスト（クールグレー）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Card</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">カード背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebedef"></div><div class="color-swatch-info"><div class="color-swatch-name">Separator</div><div class="color-swatch-hex">#ebedef</div><div class="color-swatch-role">タブボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">ボーダー・入力欄枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge Light</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">English リンク背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic（推奨値）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c62828"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#c62828</div><div class="color-swatch-role">エラー・警告</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2e7d32"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2e7d32</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e65100"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#e65100</div><div class="color-swatch-role">注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:42px; font-weight:700; line-height:1.3; letter-spacing:0.05em;">住まいの未来を、ともに — Hero Display</div>
+    <div class="type-meta">42px / 700 / line-height: 1.3 / letter-spacing: 0.05em<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:28px; font-weight:700; line-height:1.3; letter-spacing:0.02em;">セクション見出し — Section H2</div>
+    <div class="type-meta">28px / 700 / line-height: 1.3 / letter-spacing: 0.02em<span class="type-context">セクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:22px; font-weight:700; line-height:1.3;">サブ見出し — Sub H2</div>
+    <div class="type-meta">22px / 700 / line-height: 1.3<span class="type-context">サブセクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:18px; font-weight:700; line-height:1.4;">小見出し — H3 Small</div>
+    <div class="type-meta">18px / 700 / line-height: 1.4<span class="type-context">記事・カード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:18px; font-weight:700; letter-spacing:2.1px; color:var(--text-secondary);">HEADING ACCENT — セクションラベル</div>
+    <div class="type-meta">18px / 700 / letter-spacing: 2.1px (0.05em) / color: #747480<span class="type-context">セクションラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:15px; font-weight:400; line-height:1.6;">本文テキスト — 積水ハウスは、人と自然と住まいが調和する社会をめざし、時代を超えて愛される住まいづくりに取り組んでいます。豊かな暮らしの実現に向けて、先進の技術とデザインで住まいの可能性を広げます。ABCabc 123</div>
+    <div class="type-meta">15px / 400 / line-height: 1.6 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:15px; font-weight:700; line-height:2.0;">ナビゲーションリンク — Nav (15px/700)</div>
+    <div class="type-meta">15px / 700 / line-height: 2.0<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:12px; font-weight:700; color:var(--text-secondary);">フッターリンク — Footer (12px/700)</div>
+    <div class="type-meta">12px / 700<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-label); font-size:12px; font-weight:700; color:var(--text-secondary);">NEW BADGE — Helvetica Neue</div>
+    <div class="type-meta">Helvetica Neue / 12px / 700 / 欧文ラベル専用<span class="type-context">バッジ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 住宅コンテンツ組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <div class="accent">CONCEPT</div>
+    <h1>住まいづくりの基本と設計の考え方</h1>
+    <p>住まいは、家族の暮らしを包み込む器です。光と風を取り込む開口部の計画、家事動線を考えた間取り、そして将来の家族構成の変化にも対応できる柔軟性が、長く愛される住まいの条件となります。</p>
+    <h2>構造と安全性について</h2>
+    <p>鉄骨造と木造、それぞれの構法には特徴があります。鉄骨造は大空間・大開口を実現しやすく、木造は温もりのある空間をつくることができます。いずれの構法でも、耐震性・耐久性・断熱性の3つの性能を高い水準で両立させることが重要です。</p>
+    <p>ZEH（ネット・ゼロ・エネルギー・ハウス）の普及に伴い、高断熱・高気密の住まいが標準となりつつあります。年間の一次エネルギー消費量を正味ゼロにすることで、環境にも家計にも優しい暮らしが実現します。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item">
+      <a class="btn-primary" href="#">注文住宅について知る</a>
+      <div class="button-label">Primary CTA（右矢印付き）</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-outline" href="#">詳しく見る</a>
+      <div class="button-label">Outline</div>
+    </div>
+    <div class="button-item">
+      <span class="btn-new-badge">NEW</span>
+      <div class="button-label">NEW Badge</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-search" href="#">平屋</a>
+      <div class="button-label">Search Suggest</div>
+    </div>
+  </div>
+
+  <div style="background:var(--dark-charcoal); padding:24px 32px; border-radius:6px; margin-top:16px;">
+    <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:12px;">ダーク面上のボタン</div>
+    <div class="button-row">
+      <div class="button-item">
+        <a class="btn-pill" href="#">土地活用</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.5);">Tag Pill</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-pill" href="#">まちづくり</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.5);">Tag Pill</div>
+      </div>
+      <div class="button-item">
+        <a class="btn-pill" href="#">賃貸住宅</a>
+        <div class="button-label" style="color:rgba(255,255,255,0.5);">Tag Pill</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>注文住宅</h3>
+      <p>理想の住まいを自由設計でかたちに。鉄骨造・木造の多彩な構法と、先進の技術で安心・快適な住まいを実現します。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+    <div class="card card-surface">
+      <h3>分譲住宅</h3>
+      <p>まちなみと調和する美しいデザインと、暮らしやすさを追求した間取り。すぐに入居できる完成済みの住まいです。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+    <div class="card">
+      <h3>リフォーム</h3>
+      <p>住み慣れた我が家をもっと快適に。耐震補強、断熱改修、間取り変更など、暮らしの変化に合わせた住まいのリニューアル。</p>
+      <a class="card-link" href="#">詳しく見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-state-label">デフォルト — border: #dddddd, radius: 3px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="taro@example.com">
+    <div class="form-state-label">フォーカス — border: #3b3b41 (Dark Charcoal)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-">
+    <div class="form-error-text">電話番号の形式が正しくありません</div>
+    <div class="form-state-label">エラー — border: #c62828 (Danger)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし、ボーダーのみ（基本状態）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 4px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.10)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);">
+      <div class="elevation-label">Level 3</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div>
+    </div>
+    <div class="elevation-card" style="background:var(--surface-light); border:none;">
+      <div class="elevation-label">Surface Difference</div>
+      <div class="elevation-desc">影ではなく面色の差で階層を表現（#f7f7f7 vs #fff）</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+
+  <h3 style="font-family:var(--font-heading); font-size:18px; font-weight:700; margin-bottom:16px;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <h3 style="font-family:var(--font-heading); font-size:18px; font-weight:700; margin:32px 0 16px;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:80%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:53%"></div></div></div>
+</section>
+
+<!-- DARK SECTION DEMO -->
+<section class="section-dark">
+<div class="section-inner">
+  <div class="section-label">DARK SURFACE DEMO</div>
+  <h2 class="section-title" style="font-family:var(--font-heading); font-size:31px; letter-spacing:0.62px;">グループ企業セクション</h2>
+  <p style="color:rgba(255,255,255,0.7); line-height:1.6; margin-bottom:24px;">フッターやグループ企業セクションで使用されるダーク面。ダークチャコール #3b3b41 の背景に白テキスト。Tag Pill（border: 1px solid white, radius: 50px）がカテゴリナビゲーションとして配置される。</p>
+  <div style="display:flex; gap:12px; flex-wrap:wrap;">
+    <a class="btn-pill" href="#" style="font-size:14px; padding:6px 20px;">注文住宅</a>
+    <a class="btn-pill" href="#" style="font-size:14px; padding:6px 20px;">賃貸住宅</a>
+    <a class="btn-pill" href="#" style="font-size:14px; padding:6px 20px;">土地活用</a>
+    <a class="btn-pill" href="#" style="font-size:14px; padding:6px 20px;">リフォーム</a>
+  </div>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.sekisuihouse.co.jp/">sekisuihouse.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-26）
+</footer>
+
+</body>
+</html>

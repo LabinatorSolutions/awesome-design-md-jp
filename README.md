@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (264 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (267 sites)</a>
 </p>
 
 <table>
@@ -711,11 +711,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [DAIWA HOUSE (大和ハウス工業)](https://www.daiwahouse.co.jp/) | Housing / Construction / Corporate | [DESIGN.md](design-md/daiwahouse/DESIGN.md) | [preview.html](design-md/daiwahouse/preview.html) |
 | [TOPPAN (TOPPANホールディングス)](https://www.holdings.toppan.com/ja/) | Printing / Communications / Corporate | [DESIGN.md](design-md/toppan/DESIGN.md) | [preview.html](design-md/toppan/preview.html) |
 | [AGC (AGC株式会社)](https://www.agc.com/jp/ja/) | Materials / Glass / Corporate | [DESIGN.md](design-md/agc/DESIGN.md) | [preview.html](design-md/agc/preview.html) |
+| [SEGA (セガ)](https://www.sega.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/sega/DESIGN.md) | [preview.html](design-md/sega/preview.html) |
+| [SEKISUI HOUSE (積水ハウス)](https://www.sekisuihouse.co.jp/) | Housing / Construction | [DESIGN.md](design-md/sekisuihouse/DESIGN.md) | [preview.html](design-md/sekisuihouse/preview.html) |
+| [Audio-Technica (オーディオテクニカ)](https://www.audio-technica.co.jp/) | Audio Equipment / Consumer Electronics | [DESIGN.md](design-md/audio-technica/DESIGN.md) | [preview.html](design-md/audio-technica/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (264 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (267 sites)</a>
 </p>
 
 <table>
@@ -1067,6 +1070,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>DAIWA HOUSE</strong><br><img src="design-md/daiwahouse/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOPPAN</strong><br><img src="design-md/toppan/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>AGC</strong><br><img src="design-md/agc/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>SEGA</strong><br><img src="design-md/sega/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>積水ハウス</strong><br><img src="design-md/sekisuihouse/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Audio-Technica</strong><br><img src="design-md/audio-technica/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
