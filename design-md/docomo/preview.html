@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: NTT docomo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --docomo-red: #cc0033;
+    --dark-blue: #093475;
+    --text-primary: #000000;
+    --text-content: #272727;
+    --text-card: #333333;
+    --text-muted: #b2b2b2;
+    --bg-page: #f3f3f3;
+    --bg-surface: #ffffff;
+    --bg-footer: #272727;
+    --bg-badge: #5c5c5c;
+    --bg-light-red: #fff2f2;
+    --border-faint: #d9d9d9;
+    --disabled: #757575;
+    --card-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    --font-jp: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --font-en: Roboto, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--docomo-red);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 700; color: #fff; text-decoration: none; opacity: 0.9; transition: opacity 0.15s; }
+  .nav-links a:hover { opacity: 1; }
+  .nav-menu { font-family: var(--font-en); font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 0.99px; cursor: pointer; background: none; border: none; }
+
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-surface); }
+  .hero h1 { font-size: 28px; font-weight: 700; line-height: 1.5; color: var(--text-content); margin-bottom: 16px; }
+  .hero p { font-size: 14px; line-height: 1.5; color: var(--text-content); max-width: 600px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-login { display: inline-block; background: var(--bg-surface); color: var(--text-primary); padding: 8px 24px; border-radius: 4px; border: 1px solid var(--docomo-red); font-family: var(--font-jp); font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; transition: background 0.15s; }
+  .btn-login:hover { background: var(--bg-light-red); }
+  .btn-card { display: inline-block; background: var(--bg-surface); color: var(--text-content); padding: 8px 24px; border-radius: 10px; border: none; font-family: var(--font-jp); font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; box-shadow: var(--card-shadow); transition: box-shadow 0.15s; }
+  .btn-card:hover { box-shadow: 4px 4px 12px rgba(0,0,0,0.25); }
+  .btn-pill { display: inline-block; background: var(--bg-surface); color: var(--text-primary); padding: 8px 24px; border-radius: 15px; border: none; font-family: var(--font-jp); font-size: 15px; font-weight: 700; text-decoration: none; cursor: pointer; box-shadow: var(--card-shadow); }
+  .btn-disabled { display: inline-block; background: var(--disabled); color: #fff; padding: 8px 24px; border-radius: 4px; border: none; font-size: 14px; font-weight: 700; cursor: not-allowed; }
+
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label { font-family: var(--font-en); font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em; }
+  .section-title { font-size: 24px; font-weight: 700; line-height: 1.5; color: var(--text-content); margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid var(--border-faint); margin: 0; }
+  .section-white { background: var(--bg-surface); padding: 64px 32px; }
+  .section-white .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 10px; overflow: hidden; background: #fff; box-shadow: var(--card-shadow); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-family: var(--font-en); font-size: 12px; color: var(--text-muted); }
+  .color-swatch-role { font-size: 11px; color: var(--text-card); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-card); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-faint); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-en); font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-page); color: var(--text-card); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-surface); border: none; border-radius: 10px; padding: 24px; box-shadow: var(--card-shadow); transition: box-shadow 0.3s; }
+  .card:hover { box-shadow: 4px 4px 12px rgba(0,0,0,0.25); }
+  .card h3 { font-size: 20px; font-weight: 700; line-height: 1.5; color: var(--text-content); margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-card); line-height: 1.5; }
+  .card-link { font-size: 14px; color: var(--docomo-red); text-decoration: none; margin-top: 12px; display: inline-block; font-weight: 700; }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-size: 24px; font-weight: 700; line-height: 1.5; color: var(--text-content); margin-bottom: 16px; }
+  .article-preview h2 { font-size: 20px; font-weight: 700; line-height: 1.5; color: var(--text-content); margin: 24px 0 12px; }
+  .article-preview p { font-size: 14px; line-height: 1.5; color: var(--text-primary); margin-bottom: 16px; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-content); margin-bottom: 6px; }
+  .form-input { width: 100%; background: #fff; color: var(--text-primary); border: 1px solid var(--border-faint); padding: 8px 12px; border-radius: 4px; font-family: var(--font-jp); font-size: 14px; outline: none; transition: border-color 0.15s; }
+  .form-input:focus, .form-input--focus { border-color: var(--docomo-red); box-shadow: 0 0 0 3px rgba(204,0,51,0.15); }
+  .form-input--error { border-color: #cc0000; box-shadow: 0 0 0 3px rgba(204,0,0,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 10px; padding: 24px; text-align: center; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-en); font-size: 11px; color: var(--text-muted); word-break: break-all; }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--docomo-red); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-en); font-size: 11px; font-weight: 700; color: var(--text-muted); }
+
+  .width-bar { height: 32px; background: var(--bg-page); border: 1px solid var(--border-faint); border-radius: 10px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--docomo-red); border-radius: 9px; opacity: 0.3; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-content); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-en); font-size: 12px; color: var(--text-muted); }
+
+  .footer { padding: 32px; text-align: center; background: var(--bg-footer); font-size: 12px; color: rgba(255,255,255,0.7); }
+  .footer a { color: var(--docomo-red); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-white { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">NTT docomo</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <button class="nav-menu">MENU</button>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>NTT docomo — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。ドコモレッド #cc0033 を軸とした信頼感あるコーポレートデザイン。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-login" href="#">ログインする</a>
+    <a class="btn-card" href="#">詳しく見る</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0033"></div><div class="color-swatch-info"><div class="color-swatch-name">docomo Red</div><div class="color-swatch-hex">#cc0033</div><div class="color-swatch-role">ヘッダー・アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#093475"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Blue</div><div class="color-swatch-hex">#093475</div><div class="color-swatch-role">信頼性コンテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#272727"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Content</div><div class="color-swatch-hex">#272727</div><div class="color-swatch-role">見出し・コンテンツ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Card</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">カードテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#b2b2b2"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#b2b2b2</div><div class="color-swatch-role">補助テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・ヘッダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff2f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Red</div><div class="color-swatch-hex">#fff2f2</div><div class="color-swatch-role">注意喚起エリア</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5c5c5c"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge</div><div class="color-swatch-hex">#5c5c5c</div><div class="color-swatch-role">報道発表バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#272727"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#272727</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9d9d9"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#d9d9d9</div><div class="color-swatch-role">区切り線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.5; color:var(--text-content);">セクション見出し — Heading 2 (24px)</div>
+    <div class="type-meta">24px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">ヒラギノ角ゴ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.5; color:var(--text-content);">サブ見出し — Heading 3 (20px)</div>
+    <div class="type-meta">20px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">ヒラギノ角ゴ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5;">本文テキスト — 日本最大の携帯キャリア NTT docomo のコーポレートサイト。ドコモレッドを軸とした信頼感あるデザインで、サービス情報やお知らせを提供します。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:700; line-height:1.5; color:var(--text-content);">カードリンクテキスト — Bold Body (14px)</div>
+    <div class="type-meta">14px / 700 / line-height: 1.5<span class="type-context">カード内</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:700; line-height:1.5; color:var(--text-content);">ナビゲーション — Nav Label (12px)</div>
+    <div class="type-meta">12px / 700 / line-height: 1.5<span class="type-context">ヘッダーナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:11px; font-weight:700; line-height:1.0; letter-spacing:0.99px; color:var(--docomo-red);">MENU</div>
+    <div class="type-meta">Roboto / 11px / 700 / letter-spacing: 0.99px<span class="type-context">欧文ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:10px; font-weight:700; line-height:1.0; color:var(--text-muted);">P</div>
+    <div class="type-meta">Roboto / 10px / 700 / ポイント単位<span class="type-context">ポイント表示</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-white" id="service">
+<div class="section-inner">
+  <div class="section-label">03 / Service — サービス情報</div>
+  <h2 class="section-title">サービスページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>よく利用されるサービス・情報</h1>
+    <p>NTT docomo は日本最大の移動体通信事業者として、携帯電話サービスを中心に多彩なサービスを提供しています。料金プラン、機種購入、各種手続きなどをオンラインで簡単に行えます。</p>
+    <h2>携帯料金プラン</h2>
+    <p>お客さまのライフスタイルに合わせた最適な料金プランをご案内します。データ使用量や通話スタイルに応じて、ぴったりのプランをお選びいただけます。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-login" href="#">ログインする</a><div class="button-label">Login (Red Border)</div></div>
+    <div class="button-item"><a class="btn-card" href="#">契約確認・お手続き</a><div class="button-label">Card Link (Shadow)</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">災害用伝言板 体験サービス</a><div class="button-label">Pill (15px radius)</div></div>
+    <div class="button-item"><button class="btn-disabled">送信する</button><div class="button-label">Disabled</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>契約確認・お手続き</h3>
+      <p>ご契約内容の確認や各種変更手続きをオンラインで行えます。料金プランの変更も簡単です。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>機種購入</h3>
+      <p>最新のスマートフォンやタブレットをオンラインショップでご購入いただけます。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>携帯料金プラン</h3>
+      <p>お客さまのライフスタイルに合わせた最適な料金プランをご案内します。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="example@docomo.ne.jp"><div class="form-state-label">デフォルト — border: #d9d9d9, radius: 4px</div></div>
+  <div class="form-group"><label class="form-label">パスワード</label><input class="form-input form-input--focus" type="password" value="mypassword123"><div class="form-state-label">フォーカス — border: #cc0033 (docomo Red)</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー — border: #cc0000</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--border-faint);"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし・ボーダーのみ</div></div>
+    <div class="elevation-card" style="box-shadow: var(--card-shadow);"><div class="elevation-label">Level 1: Card</div><div class="elevation-desc">2px 2px 8px rgba(0,0,0,0.2)</div></div>
+    <div class="elevation-card" style="box-shadow: 4px 4px 12px rgba(0,0,0,0.25);"><div class="elevation-label">Level 2: Hover</div><div class="elevation-desc">4px 4px 12px rgba(0,0,0,0.25)</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--docomo-red);"><div class="elevation-label">Brand Border</div><div class="elevation-desc">#cc0033 (docomo Red)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:64.6%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.docomo.ne.jp/">docomo.ne.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-27）
+</footer>
+
+</body>
+</html>

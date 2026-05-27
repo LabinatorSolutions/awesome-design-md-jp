@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (267 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (270 sites)</a>
 </p>
 
 <table>
@@ -387,6 +387,14 @@
 <td align="center"><strong>TOPPAN</strong><br><img src="design-md/toppan/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>AGC</strong><br><img src="design-md/agc/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>SEGA</strong><br><img src="design-md/sega/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>積水ハウス</strong><br><img src="design-md/sekisuihouse/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Audio-Technica</strong><br><img src="design-md/audio-technica/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NTTドコモ</strong><br><img src="design-md/docomo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SAKE HUNDRED</strong><br><img src="design-md/sakehundred/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FELISSIMO</strong><br><img src="design-md/felissimo/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -714,11 +722,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [SEGA (セガ)](https://www.sega.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/sega/DESIGN.md) | [preview.html](design-md/sega/preview.html) |
 | [SEKISUI HOUSE (積水ハウス)](https://www.sekisuihouse.co.jp/) | Housing / Construction | [DESIGN.md](design-md/sekisuihouse/DESIGN.md) | [preview.html](design-md/sekisuihouse/preview.html) |
 | [Audio-Technica (オーディオテクニカ)](https://www.audio-technica.co.jp/) | Audio Equipment / Consumer Electronics | [DESIGN.md](design-md/audio-technica/DESIGN.md) | [preview.html](design-md/audio-technica/preview.html) |
+| [NTT docomo (NTTドコモ)](https://www.docomo.ne.jp/) | Telecom / Corporate | [DESIGN.md](design-md/docomo/DESIGN.md) | [preview.html](design-md/docomo/preview.html) |
+| [SAKE HUNDRED (サケハンドレッド)](https://sake100.com/) | Luxury Sake / D2C | [DESIGN.md](design-md/sakehundred/DESIGN.md) | [preview.html](design-md/sakehundred/preview.html) |
+| [FELISSIMO (フェリシモ)](https://www.felissimo.co.jp/) | Lifestyle / Subscription EC | [DESIGN.md](design-md/felissimo/DESIGN.md) | [preview.html](design-md/felissimo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (267 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (270 sites)</a>
 </p>
 
 <table>
@@ -1075,6 +1086,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>SEGA</strong><br><img src="design-md/sega/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>積水ハウス</strong><br><img src="design-md/sekisuihouse/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Audio-Technica</strong><br><img src="design-md/audio-technica/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NTTドコモ</strong><br><img src="design-md/docomo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>SAKE HUNDRED</strong><br><img src="design-md/sakehundred/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FELISSIMO</strong><br><img src="design-md/felissimo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

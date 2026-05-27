@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: FELISSIMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan: #00a1e0;
+    --light-cyan: #7ed0ee;
+    --link-blue: #0070d2;
+    --success: #008827;
+    --danger: #cc0000;
+    --warning: #ffc107;
+    --text-primary: #202020;
+    --text-menu: #444444;
+    --text-dark: #222222;
+    --text-muted: #999999;
+    --text-light: #bbbbbb;
+    --bg-page: #ffffff;
+    --bg-section: #edece2;
+    --bg-light: #f9f9f9;
+    --border: #cccccc;
+    --search-btn: #777576;
+    --font-jp: 游ゴシック, "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro W3", "ヒラギノ角ゴ W3", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic", メイリオ, Meiryo, "Noto Sans", "Noto Sans CJK JP", "system-ui", sans-serif;
+    --font-header: 'Dosis', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 500; line-height: 1.5;
+    letter-spacing: normal;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand { font-family: var(--font-header); font-size: 22px; font-weight: 600; color: var(--text-primary); text-decoration: none; letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-menu); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta { display: inline-block; background: var(--cyan); color: #fff; padding: 8px 20px; border-radius: 4px; font-family: var(--font-jp); font-size: 14px; font-weight: 700; text-decoration: none; transition: opacity 0.15s; }
+  .nav-cta:hover { opacity: 0.8; }
+
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-section); }
+  .hero h1 { font-size: 24px; font-weight: 700; line-height: 1.2; color: var(--text-primary); margin-bottom: 16px; }
+  .hero p { font-size: 16px; font-weight: 500; line-height: 1.5; color: var(--text-menu); max-width: 600px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { display: inline-block; background: var(--cyan); color: #fff; padding: 10px 28px; border-radius: 4px; border: none; font-family: var(--font-jp); font-size: 16px; font-weight: 700; text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-outline { display: inline-block; background: transparent; color: var(--text-primary); padding: 10px 28px; border-radius: 4px; border: 1px solid var(--border); font-family: var(--font-jp); font-size: 16px; font-weight: 700; text-decoration: none; cursor: pointer; transition: background 0.15s; }
+  .btn-outline:hover { background: var(--bg-light); }
+  .btn-search { display: inline-block; background: var(--search-btn); color: #fff; padding: 6px 16px; border-radius: 0; border: none; font-family: var(--font-jp); font-size: 14px; font-weight: 400; cursor: pointer; }
+  .btn-danger { display: inline-block; background: var(--danger); color: #fff; padding: 10px 28px; border-radius: 4px; border: none; font-size: 16px; font-weight: 700; cursor: pointer; }
+
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label { font-family: var(--font-header); font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em; }
+  .section-title { font-size: 24px; font-weight: 700; line-height: 1.2; margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-greige { background: var(--bg-section); padding: 64px 32px; }
+  .section-greige .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--border); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); }
+  .color-swatch-role { font-size: 11px; color: var(--text-menu); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-header); font-size: 14px; font-weight: 600; color: var(--text-menu); margin: 24px 0 10px; letter-spacing: 0.05em; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-light); color: var(--text-menu); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-page); border: none; padding: 0; }
+  .card-img { width: 100%; height: 180px; background: var(--bg-light); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; border-radius: 4px; }
+  .card h3 { font-size: 16px; font-weight: 500; line-height: 1.5; margin-bottom: 4px; }
+  .card p { font-size: 15px; color: var(--text-muted); line-height: 1.2; }
+  .card-price { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-top: 8px; }
+  .card-brand { font-size: 12px; color: var(--text-light); margin-bottom: 4px; }
+
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .tag { display: inline-block; background: var(--bg-page); color: var(--text-primary); padding: 8px 10px; border-radius: 4px; border: 1px solid var(--border); font-size: 14px; font-weight: 500; text-decoration: none; transition: border-color 0.15s; }
+  .tag:hover { border-color: var(--cyan); }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-size: 24px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .article-preview h2 { font-size: 20px; font-weight: 700; line-height: 1.2; margin: 24px 0 12px; }
+  .article-preview p { font-size: 16px; font-weight: 500; line-height: 1.5; margin-bottom: 16px; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input { width: 100%; background: #fff; color: var(--text-primary); border: 1px solid var(--border); padding: 10px 12px; border-radius: 4px; font-family: var(--font-jp); font-size: 16px; font-weight: 500; outline: none; transition: border-color 0.15s; font-feature-settings: "palt"; }
+  .form-input:focus, .form-input--focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,161,224,0.15); }
+  .form-input--error { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(204,0,0,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 4px; padding: 24px; text-align: center; border: 1px solid var(--border); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-size: 11px; color: var(--text-muted); }
+
+  .width-bar { height: 32px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--cyan); border-radius: 3px; opacity: 0.25; }
+  .width-bar-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .width-bar-value { font-size: 12px; color: var(--text-muted); }
+
+  .footer { padding: 32px; text-align: center; background: var(--bg-light); font-size: 12px; color: var(--text-muted); }
+  .footer a { color: var(--cyan); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-greige { padding: 48px 20px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">FELISSIMO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">会員登録</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>FELISSIMO — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。シアンブルー #00a1e0 をアクセントとした親しみやすい EC デザイン。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">お買い物をはじめる</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00a1e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Felissimo Cyan</div><div class="color-swatch-hex">#00a1e0</div><div class="color-swatch-role">プライマリ・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7ed0ee"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Cyan</div><div class="color-swatch-hex">#7ed0ee</div><div class="color-swatch-role">サブアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0070d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Blue</div><div class="color-swatch-hex">#0070d2</div><div class="color-swatch-role">リンクテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#202020"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#202020</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Menu</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">メニューリンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#222222"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark</div><div class="color-swatch-hex">#222222</div><div class="color-swatch-role">強調テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bbbbbb"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Light</div><div class="color-swatch-hex">#bbbbbb</div><div class="color-swatch-role">タグライン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#edece2"></div><div class="color-swatch-info"><div class="color-swatch-name">Section (Greige)</div><div class="color-swatch-hex">#edece2</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9f9f9"></div><div class="color-swatch-info"><div class="color-swatch-name">Light</div><div class="color-swatch-hex">#f9f9f9</div><div class="color-swatch-role">明るいセクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#777576"></div><div class="color-swatch-info"><div class="color-swatch-name">Search Button</div><div class="color-swatch-hex">#777576</div><div class="color-swatch-role">検索ボタン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#008827"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#008827</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">エラー・削除</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc107"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ffc107</div><div class="color-swatch-role">警告</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.2;">セクション見出し — Section Title (h2, 24px)</div>
+    <div class="type-meta">游ゴシック / 24px / 700 / line-height: 1.2 / palt: あり<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:500; line-height:1.5;">本文テキスト — ファッション、雑貨、手づくりキットなど暮らしを楽しむフェリシモ。毎月届く定期便で、新しい発見と出会いをお届けします。お気に入りのアイテムがきっと見つかります。</div>
+    <div class="type-meta">游ゴシック / 16px / 500 / line-height: 1.5 / palt: あり<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:15px; font-weight:700; line-height:1.3;">フッターリンクグループ — Footer Heading (15px)</div>
+    <div class="type-meta">游ゴシック / 15px / 700 / line-height: 1.3<span class="type-context">フッター見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:700; line-height:1.2;">カテゴリ名 — Category Title (13px)</div>
+    <div class="type-meta">游ゴシック / 13px / 700 / line-height: 1.2<span class="type-context">カテゴリ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:500; line-height:1.2; color:var(--text-light);">タグライン — Tagline (12px)</div>
+    <div class="type-meta">游ゴシック / 12px / 500 / color: #bbbbbb<span class="type-context">タグライン</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-header); font-size:22px; font-weight:600; letter-spacing:0.08em;">FELISSIMO</div>
+    <div class="type-meta">Dosis / 22px / 600 / ヘッダーブランド<span class="type-context">ブランドロゴ</span></div>
+  </div>
+
+  <h3 style="font-size:16px; font-weight:700; margin: 32px 0 16px;">注目のキーワード</h3>
+  <div class="tag-row">
+    <a class="tag" href="#">手芸</a>
+    <a class="tag" href="#">ハンドメイド</a>
+    <a class="tag" href="#">ヨガブラ</a>
+    <a class="tag" href="#">財布</a>
+    <a class="tag" href="#">猫グッズ</a>
+    <a class="tag" href="#">DIY</a>
+    <a class="tag" href="#">コーディネート</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-greige" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product — 商品カタログ</div>
+  <h2 class="section-title">商品ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>暮らしを楽しむフェリシモ</h1>
+    <p>フェリシモは「ともにしあわせになるしあわせ」をコンセプトに、ファッション、雑貨、手づくりキットなど多彩なアイテムを定期便でお届けしています。</p>
+    <h2>定期便のしくみ</h2>
+    <p>毎月1回、デザイン違いのアイテムが届く「コレクション」方式。届くまでのワクワク感と、届いてからの発見が楽しみになる、フェリシモならではのお買い物スタイルです。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">お買い物をはじめる</a><div class="button-label">Primary (Cyan)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">詳しく見る</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><button class="btn-search">検索</button><div class="button-label">Search</div></div>
+    <div class="button-item"><a class="btn-danger" href="#" style="text-decoration:none;">削除する</a><div class="button-label">Danger</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">商品カード</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">Image</div>
+      <div class="card-brand">el:ment</div>
+      <h3>身軽で、快適で、安心。いい旅は、いい相棒と。</h3>
+      <p>¥3,850（税込）</p>
+    </div>
+    <div class="card">
+      <div class="card-img">Image</div>
+      <div class="card-brand">Couturier</div>
+      <h3>はじめてさんの手芸キット 刺繍入門</h3>
+      <p>¥1,980（税込）</p>
+    </div>
+    <div class="card">
+      <div class="card-img">Image</div>
+      <div class="card-brand">THREE FIFTY STANDARD</div>
+      <h3>大人の定番 きれいめカジュアル</h3>
+      <p>¥5,390（税込）</p>
+    </div>
+    <div class="card">
+      <div class="card-img">Image</div>
+      <div class="card-brand">YOU+MORE!</div>
+      <h3>猫が気持ちよさそうに寝ている おなかクッション</h3>
+      <p>¥3,300（税込）</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="name@example.com"><div class="form-state-label">デフォルト — border: #cccccc, radius: 4px</div></div>
+  <div class="form-group"><label class="form-label">パスワード</label><input class="form-input form-input--focus" type="password" value="mypassword123"><div class="form-state-label">フォーカス — border: #00a1e0 (Felissimo Cyan)</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー — border: #cc0000 (Danger)</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">基本フラット（シャドウなし）</div></div>
+    <div class="elevation-card" style="background: var(--bg-section); border-color: var(--bg-section);"><div class="elevation-label">Section (Greige)</div><div class="elevation-desc">#edece2 背景で区切り</div></div>
+    <div class="elevation-card" style="background: var(--bg-light); border-color: var(--bg-light);"><div class="elevation-label">Section (Light)</div><div class="elevation-desc">#f9f9f9 背景で区切り</div></div>
+    <div class="elevation-card" style="background: rgba(255,255,255,0.7);"><div class="elevation-label">Search Overlay</div><div class="elevation-desc">rgba(255,255,255,0.7)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78.3%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:51.7%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.felissimo.co.jp/">felissimo.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-27）
+</footer>
+
+</body>
+</html>
