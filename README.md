@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (270 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (273 sites)</a>
 </p>
 
 <table>
@@ -395,6 +395,11 @@
 <td align="center"><strong>SAKE HUNDRED</strong><br><img src="design-md/sakehundred/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>FELISSIMO</strong><br><img src="design-md/felissimo/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>MIXI</strong><br><img src="design-md/mixi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DeNA</strong><br><img src="design-md/dena/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カルピス</strong><br><img src="design-md/calpis/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -725,11 +730,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [NTT docomo (NTTドコモ)](https://www.docomo.ne.jp/) | Telecom / Corporate | [DESIGN.md](design-md/docomo/DESIGN.md) | [preview.html](design-md/docomo/preview.html) |
 | [SAKE HUNDRED (サケハンドレッド)](https://sake100.com/) | Luxury Sake / D2C | [DESIGN.md](design-md/sakehundred/DESIGN.md) | [preview.html](design-md/sakehundred/preview.html) |
 | [FELISSIMO (フェリシモ)](https://www.felissimo.co.jp/) | Lifestyle / Subscription EC | [DESIGN.md](design-md/felissimo/DESIGN.md) | [preview.html](design-md/felissimo/preview.html) |
+| [MIXI (ミクシィ)](https://mixi.co.jp/) | Tech / Gaming | [DESIGN.md](design-md/mixi/DESIGN.md) | [preview.html](design-md/mixi/preview.html) |
+| [DeNA (ディー・エヌ・エー)](https://dena.com/jp/) | Internet / Entertainment | [DESIGN.md](design-md/dena/DESIGN.md) | [preview.html](design-md/dena/preview.html) |
+| [Calpis (カルピス)](https://www.calpis.info/) | Beverage / Consumer Brand | [DESIGN.md](design-md/calpis/DESIGN.md) | [preview.html](design-md/calpis/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (270 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (273 sites)</a>
 </p>
 
 <table>
@@ -1089,6 +1097,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>NTTドコモ</strong><br><img src="design-md/docomo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SAKE HUNDRED</strong><br><img src="design-md/sakehundred/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>FELISSIMO</strong><br><img src="design-md/felissimo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>MIXI</strong><br><img src="design-md/mixi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DeNA</strong><br><img src="design-md/dena/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カルピス</strong><br><img src="design-md/calpis/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

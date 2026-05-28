@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MIXI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mixi-red: #e5004d;
+    --color-black: #111;
+    --color-text: #333;
+    --color-white: #fff;
+    --text-light: #666;
+    --text-lighter: #888;
+    --text-lightest: #919191;
+    --bg-page: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-gray: #f7f7f7;
+    --bg-footer: #000000;
+    --border: #ccc;
+    --border-light: #eee;
+    --form-focus: #85b7d9;
+    --font-jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", meiryo, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--color-black);
+    font-family: var(--font-jp);
+    font-size: 13px; font-weight: 400; line-height: 1.7;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-surface);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--color-black); text-decoration: none; letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 600; color: var(--color-text); text-decoration: none; line-height: 1.15; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--mixi-red); }
+  .nav-menu { font-family: var(--font-jp); font-size: 13px; font-weight: 600; color: var(--color-text); cursor: pointer; background: none; border: none; }
+
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-surface); }
+  .hero h1 { font-size: 28px; font-weight: 700; line-height: 1.57; color: var(--color-black); margin-bottom: 16px; }
+  .hero p { font-size: 15px; line-height: 1.86; letter-spacing: 0.02em; color: var(--color-text); max-width: 600px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary { display: inline-block; background: var(--color-black); color: var(--color-white); padding: 12px 32px; border-radius: 3px; border: none; font-family: var(--font-jp); font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-accent { display: inline-block; background: var(--mixi-red); color: var(--color-white); padding: 12px 32px; border-radius: 3px; border: none; font-family: var(--font-jp); font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-accent:hover { opacity: 0.85; }
+  .btn-outline { display: inline-block; background: transparent; color: var(--color-black); padding: 12px 32px; border-radius: 3px; border: 1px solid var(--color-black); font-family: var(--font-jp); font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; transition: background 0.15s; }
+  .btn-outline:hover { background: var(--bg-gray); }
+  .btn-lang { display: inline-block; background: var(--color-black); color: var(--color-white); padding: 8px 20px; border-radius: 3px; border: 1px solid var(--color-black); font-family: var(--font-jp); font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .btn-lang-inactive { display: inline-block; background: transparent; color: var(--color-black); padding: 8px 20px; border-radius: 3px; border: 1px solid var(--border); font-family: var(--font-jp); font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .btn-disabled { display: inline-block; background: var(--border); color: var(--text-lightest); padding: 12px 32px; border-radius: 3px; border: none; font-size: 13px; font-weight: 600; cursor: not-allowed; }
+
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 600; color: var(--text-lightest); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em; }
+  .section-title { font-size: 24px; font-weight: 700; line-height: 1.57; color: var(--color-black); margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid var(--border-light); margin: 0; }
+  .section-white { background: var(--bg-surface); padding: 64px 32px; }
+  .section-white .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-gray { background: var(--bg-gray); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--border-light); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-lighter); }
+  .color-swatch-role { font-size: 11px; color: var(--color-text); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--color-text); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-size: 12px; color: var(--text-lightest); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-gray); color: var(--color-text); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-lightest); margin-top: 8px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 24px; transition: border-color 0.3s; }
+  .card:hover { border-color: var(--border); }
+  .card h3 { font-size: 18px; font-weight: 700; line-height: 1.57; color: var(--color-black); margin-bottom: 8px; }
+  .card p { font-size: 13px; color: var(--color-text); line-height: 1.7; }
+  .card-link { font-size: 13px; color: var(--mixi-red); text-decoration: none; margin-top: 12px; display: inline-block; font-weight: 600; }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-size: 24px; font-weight: 700; line-height: 1.57; color: var(--color-black); margin-bottom: 16px; }
+  .article-preview h2 { font-size: 18px; font-weight: 700; line-height: 1.57; color: var(--color-black); margin: 24px 0 12px; }
+  .article-preview p { font-size: 15px; line-height: 1.86; letter-spacing: 0.02em; color: var(--color-text); margin-bottom: 16px; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-black); margin-bottom: 6px; }
+  .form-input { width: 100%; background: #fff; color: var(--color-black); border: 1px solid var(--border); padding: 8px 12px; border-radius: 3px; font-family: var(--font-jp); font-size: 13px; outline: none; transition: border-color 0.15s; }
+  .form-input:focus, .form-input--focus { border-color: var(--form-focus); box-shadow: 0 0 0 3px rgba(133,183,217,0.25); }
+  .form-input--error { border-color: #cc0000; box-shadow: 0 0 0 3px rgba(204,0,0,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-lightest); margin-top: 4px; }
+
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 4px; padding: 24px; text-align: center; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-size: 11px; color: var(--text-lightest); word-break: break-all; }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-black); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-size: 11px; font-weight: 600; color: var(--text-lightest); }
+
+  .width-bar { height: 32px; background: var(--bg-gray); border: 1px solid var(--border-light); border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--color-black); border-radius: 3px; opacity: 0.15; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--color-black); margin-bottom: 4px; }
+  .width-bar-value { font-size: 12px; color: var(--text-lightest); }
+
+  .footer { padding: 32px; text-align: center; background: var(--bg-footer); font-size: 12px; font-weight: 400; line-height: 1.15; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); }
+  .footer a { color: var(--mixi-red); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-white { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">MIXI</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <button class="nav-menu">MENU</button>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>株式会社MIXI — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。MIXI Red #e5004d をアクセントに据えた、白基調のクリーンなコーポレートデザイン。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">詳しく見る</a>
+    <a class="btn-accent" href="#">採用情報</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5004d"></div><div class="color-swatch-info"><div class="color-swatch-name">MIXI Red</div><div class="color-swatch-hex">#e5004d</div><div class="color-swatch-role">バナー・アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7b7b7b"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray Badge</div><div class="color-swatch-hex">#7b7b7b</div><div class="color-swatch-role">PDF バッジ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000</div><div class="color-swatch-role">見出しテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Content</div><div class="color-swatch-hex">#333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Light</div><div class="color-swatch-hex">#666</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#888888"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Lighter</div><div class="color-swatch-hex">#888</div><div class="color-swatch-role">日付・メタ情報</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#919191"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Lightest</div><div class="color-swatch-hex">#919191</div><div class="color-swatch-role">プレースホルダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#ccc</div><div class="color-swatch-role">フォームボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Light</div><div class="color-swatch-hex">#eee</div><div class="color-swatch-role">区切り線・カード枠</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:35px; font-weight:600; line-height:1.57; letter-spacing:0.02em; color:var(--color-black);">「熱い」仲間との体験が、君の「成長」を後押しする</div>
+    <div class="type-meta">Noto Sans JP / 35px / 600 / line-height: 1.57 / letter-spacing: 0.02em<span class="type-context">ヒーローステートメント</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:15px; font-weight:400; line-height:1.86; letter-spacing:0.02em; color:var(--color-text);">MIXIは「豊かなコミュニケーションを広げ、世界を幸せな驚きで包む」というミッションのもと、コミュニケーションサービスやスポーツ、ライフスタイル領域で多彩な事業を展開しています。</div>
+    <div class="type-meta">Noto Sans JP / 15px / 400 / line-height: 1.86 / letter-spacing: 0.02em<span class="type-context">本文ラージ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:13px; font-weight:400; line-height:1.7; letter-spacing:0.02em; color:var(--color-text);">2024.12.25 — 年末年始の営業についてのお知らせ</div>
+    <div class="type-meta">Noto Sans JP / 13px / 400 / line-height: 1.7 / letter-spacing: 0.02em<span class="type-context">ニュース本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:13px; font-weight:600; line-height:1.15; color:var(--color-text);">企業情報　　事業紹介　　採用情報　　IR</div>
+    <div class="type-meta">Noto Sans JP / 13px / 600 / line-height: 1.15<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:12px; font-weight:400; line-height:1.15; letter-spacing:0.05em; color:var(--text-lighter);">プライバシーポリシー　　利用規約　　お問い合わせ</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 1.15 / letter-spacing: 0.05em<span class="type-context">フッター</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-white" id="service">
+<div class="section-inner">
+  <div class="section-label">03 / Service — サービス情報</div>
+  <h2 class="section-title">サービスページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>MIXIの事業領域</h1>
+    <p>MIXIは「モンスターストライク」をはじめとするデジタルエンターテインメント事業を中心に、スポーツやライフスタイル領域でも多彩なサービスを展開しています。コミュニケーションを軸に、人と人をつなぐ体験を提供し続けています。</p>
+    <h2>スポーツ事業</h2>
+    <p>プロスポーツチームの運営やベッティングサービスを通じて、スポーツの新しい楽しみ方を提案しています。FC東京やチャリ・ロトなど、リアルとデジタルを融合した体験づくりに取り組んでいます。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">詳しく見る</a><div class="button-label">Primary (Black)</div></div>
+    <div class="button-item"><a class="btn-accent" href="#">採用情報</a><div class="button-label">Accent (MIXI Red)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">お問い合わせ</a><div class="button-label">Outline</div></div>
+    <div class="button-item">
+      <span style="display:inline-flex; gap:0;">
+        <a class="btn-lang" href="#" style="border-radius:3px 0 0 3px;">JP</a>
+        <a class="btn-lang-inactive" href="#" style="border-radius:0 3px 3px 0; border-left:none;">EN</a>
+      </span>
+      <div class="button-label">Language Switcher</div>
+    </div>
+    <div class="button-item"><button class="btn-disabled">送信する</button><div class="button-label">Disabled</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>デジタルエンターテインメント</h3>
+      <p>モンスターストライクをはじめ、世界中で楽しまれるゲームコンテンツを開発・運営しています。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>スポーツ</h3>
+      <p>FC東京の運営やTIPSTARなど、スポーツ×テクノロジーで新しい観戦体験を創出しています。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>ライフスタイル</h3>
+      <p>家族向けコミュニケーションアプリ「みてね」など、日常を豊かにするサービスを提供しています。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="example@mixi.co.jp"><div class="form-state-label">デフォルト — border: #ccc, radius: 3px</div></div>
+  <div class="form-group"><label class="form-label">パスワード</label><input class="form-input form-input--focus" type="password" value="mypassword123"><div class="form-state-label">フォーカス — border: #85b7d9 (Blue Glow)</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー — border: #cc0000</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--border-light);"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし・ボーダーのみ（カード・コンテンツ）</div></div>
+    <div class="elevation-card" style="box-shadow: 0 1px 4px rgba(0,0,0,0.08);"><div class="elevation-label">Level 1: Header</div><div class="elevation-desc">0 1px 4px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="border: 1px solid var(--border); background: var(--bg-gray);"><div class="elevation-label">Surface Gray</div><div class="elevation-desc">#f7f7f7 + border #ccc</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:64.6%"></div></div></div>
+</section>
+
+<footer class="footer">
+  &copy; MIXI &mdash; Generated from <a href="https://mixi.co.jp/">mixi.co.jp</a> DESIGN.md &mdash; awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

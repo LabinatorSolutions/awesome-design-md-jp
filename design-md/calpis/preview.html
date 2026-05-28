@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Calpis</title>
+<style>
+  :root {
+    --calpis-blue: #0033ff;
+    --dark-navy: #27455c;
+    --medium-blue: #0053c5;
+    --medium-navy: #3860be;
+    --light-blue: #cddcf2;
+    --blue-link: #003399;
+    --text-primary: #000000;
+    --text-dark: #3c3c3c;
+    --text-gray: #696969;
+    --bg-page: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-light-blue: #e8f0fa;
+    --bg-alt: #f8f8f8;
+    --bg-dark: #27455c;
+    --border-faint: #cccccc;
+    --disabled: #999999;
+    --font-jp: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-menu { position: absolute; right: 32px; font-family: var(--font-jp); font-size: 12px; font-weight: 700; color: #fff; background: var(--calpis-blue); border: none; padding: 6px 16px; border-radius: 2px; cursor: pointer; letter-spacing: 0.05em; }
+
+  .hero {
+    padding: 80px 32px 64px; text-align: center;
+    background: var(--bg-light-blue);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(circle, var(--light-blue) 8px, transparent 8px),
+      radial-gradient(circle, var(--light-blue) 8px, transparent 8px);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .hero h1 { font-size: 28px; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 16px; position: relative; z-index: 1; }
+  .hero p { font-size: 14px; line-height: 1.5; color: var(--text-dark); max-width: 600px; margin: 0 auto 32px; position: relative; z-index: 1; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+  .btn-primary { display: inline-block; background: var(--calpis-blue); color: #fff; padding: 10px 28px; border-radius: 2px; border: none; font-family: var(--font-jp); font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary { display: inline-block; background: var(--bg-surface); color: var(--calpis-blue); padding: 10px 28px; border-radius: 2px; border: 1px solid var(--calpis-blue); font-family: var(--font-jp); font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; transition: background 0.15s; }
+  .btn-secondary:hover { background: var(--bg-light-blue); }
+  .btn-pill { display: inline-block; background: var(--medium-navy); color: #fff; padding: 10px 28px; border-radius: 17px; border: none; font-family: var(--font-jp); font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  .btn-pill:hover { opacity: 0.85; }
+  .btn-disabled { display: inline-block; background: var(--disabled); color: #fff; padding: 10px 28px; border-radius: 2px; border: none; font-size: 14px; font-weight: 700; cursor: not-allowed; }
+
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em; }
+  .section-title { font-size: 24px; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid #e0e0e0; margin: 0; }
+  .section-white { background: var(--bg-surface); padding: 64px 32px; }
+  .section-white .section-inner { max-width: 960px; margin: 0 auto; }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid #e0e0e0; }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-gray); }
+  .color-swatch-role { font-size: 11px; color: var(--text-dark); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-dark); margin: 24px 0 10px; }
+
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #e0e0e0; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-size: 12px; color: var(--text-gray); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-alt); color: var(--text-dark); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: var(--text-gray); margin-top: 8px; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-surface); border: 1px solid #e0e0e0; border-radius: 4px; padding: 24px; transition: border-color 0.3s; }
+  .card:hover { border-color: var(--medium-blue); }
+  .card h3 { font-size: 22px; font-weight: 700; line-height: 1.2; color: var(--medium-blue); margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-dark); line-height: 1.5; }
+  .card-link { font-size: 14px; color: var(--blue-link); text-decoration: none; margin-top: 12px; display: inline-block; font-weight: 400; }
+  .card-link:hover { text-decoration: underline; }
+
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 { font-size: 22px; font-weight: 700; line-height: 1.2; color: var(--medium-blue); margin-bottom: 16px; }
+  .article-preview h2 { font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--text-primary); margin: 24px 0 12px; }
+  .article-preview p { font-size: 14px; line-height: 1.5; color: var(--text-primary); margin-bottom: 16px; }
+
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input { width: 100%; background: #fff; color: var(--text-primary); border: 1px solid var(--border-faint); padding: 8px 12px; border-radius: 2px; font-family: var(--font-jp); font-size: 14px; outline: none; transition: border-color 0.15s; }
+  .form-input:focus, .form-input--focus { border-color: var(--calpis-blue); box-shadow: 0 0 0 3px rgba(0,51,255,0.12); }
+  .form-input--error { border-color: #cc0000; box-shadow: 0 0 0 3px rgba(204,0,0,0.12); }
+  .form-state-label { font-size: 11px; color: var(--text-gray); margin-top: 4px; }
+
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 4px; padding: 24px; text-align: center; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-size: 11px; color: var(--text-gray); word-break: break-all; }
+
+  .width-bar { height: 32px; background: var(--bg-alt); border: 1px solid #e0e0e0; border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--calpis-blue); border-radius: 3px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-size: 12px; color: var(--text-gray); }
+
+  .footer { padding: 32px; text-align: center; background: var(--bg-surface); border-top: 1px solid #e0e0e0; font-size: 10px; color: var(--text-dark); line-height: 1.5; }
+  .footer a { color: var(--blue-link); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .section { padding: 48px 20px; }
+    .section-white { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">カルピス</a>
+  <button class="nav-menu">MENU</button>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>カルピス — 日本語版</h1>
+  <p>カラダにピース。「カルピス」のデザイン仕様書。1919年創業の国民的飲料ブランド。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">商品を見る</a>
+    <a class="btn-secondary" href="#">ブランドストーリー</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0033ff"></div><div class="color-swatch-info"><div class="color-swatch-name">Calpis Blue</div><div class="color-swatch-hex">#0033ff</div><div class="color-swatch-role">CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27455c"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">#27455c</div><div class="color-swatch-role">ダーク背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0053c5"></div><div class="color-swatch-info"><div class="color-swatch-name">Medium Blue</div><div class="color-swatch-hex">#0053c5</div><div class="color-swatch-role">リンク・タイトル</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3860be"></div><div class="color-swatch-info"><div class="color-swatch-name">Medium Navy</div><div class="color-swatch-hex">#3860be</div><div class="color-swatch-role">ピルボタン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cddcf2"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Blue</div><div class="color-swatch-hex">#cddcf2</div><div class="color-swatch-role">ライト背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#003399"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Link</div><div class="color-swatch-hex">#003399</div><div class="color-swatch-role">テキストリンク</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3c3c3c"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#3c3c3c</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#696969"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray</div><div class="color-swatch-hex">#696969</div><div class="color-swatch-role">メタ情報</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8f0fa"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Blue</div><div class="color-swatch-hex">#e8f0fa</div><div class="color-swatch-role">ヒーロー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Alt</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">交互セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:22px; font-weight:700; line-height:1.2; color:var(--medium-blue);">商品タイトル — Product Title (22px)</div>
+    <div class="type-meta">22px / 700 / line-height: 1.2 / color: #0053c5<span class="type-context">ヒラギノ角ゴ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5;">本文テキスト — 1919年に誕生した「カルピス」は、100年以上にわたり日本で愛され続けている乳酸菌飲料です。甘酸っぱいおいしさとさわやかな味わいが特徴で、世代を超えて親しまれています。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.5; color:var(--text-dark);">小テキスト — Small (12px) — 注釈や補足情報に使用される補助テキスト</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5 / color: #3c3c3c<span class="type-context">補助テキスト</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:10px; font-weight:400; line-height:1.5; color:var(--text-dark);">フッターテキスト — Footer (10px) — ©ASAHI SOFT DRINKS Co.,LTD.</div>
+    <div class="type-meta">10px / 400 / line-height: 1.5<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.5; color:var(--blue-link);">リンクテキスト — Link (14px)</div>
+    <div class="type-meta">14px / 400 / color: #003399<span class="type-context">テキストリンク</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-white" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事の組版サンプル</h2>
+  <div class="article-preview">
+    <h1>100年以上受け継がれてきたおいしさ</h1>
+    <p>100年以上受け継がれてきた甘ずっぱい、おいしさの体験と記憶。大切な人と飲みたくなる。「カルピス」は1919年の誕生以来、日本の食卓に欠かせない飲料として親しまれています。</p>
+    <h2>カルピスの歴史</h2>
+    <p>創業者・三島海雲がモンゴルを旅した際に出会った発酵乳が、「カルピス」誕生のきっかけとなりました。乳酸菌と酵母による独自の発酵技術が、あの甘酸っぱいおいしさを生み出しています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">商品を見る</a><div class="button-label">Primary CTA (radius: 2px)</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">ブランドストーリー</a><div class="button-label">Secondary (Blue Border)</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">キャンペーン情報</a><div class="button-label">Pill (radius: 17px)</div></div>
+    <div class="button-item"><button class="btn-disabled">送信する</button><div class="button-label">Disabled</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>カルピスウォーター</h3>
+      <p>いつでもどこでも楽しめる、すっきりとした味わいのストレートタイプ。さわやかなおいしさをそのまま。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>カルピスソーダ</h3>
+      <p>「カルピス」のおいしさに炭酸の爽快感をプラス。すっきり爽やかな味わいをお楽しみください。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>カルピス 原液</h3>
+      <p>お好みの濃さで楽しめる希釈タイプ。水や牛乳で割ったり、料理やお菓子づくりにも。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="example@calpis.co.jp"><div class="form-state-label">デフォルト — border: #ccc, radius: 2px</div></div>
+  <div class="form-group"><label class="form-label">お名前</label><input class="form-input form-input--focus" type="text" value="カルピス太郎"><div class="form-state-label">フォーカス — border: #0033ff (Calpis Blue)</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー — border: #cc0000</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid #e0e0e0;"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし・ボーダーのみ（基本パターン）</div></div>
+    <div class="elevation-card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.08);"><div class="elevation-label">Level 1: Subtle</div><div class="elevation-desc">0 1px 3px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="border: 1px solid var(--medium-blue);"><div class="elevation-label">Brand Border</div><div class="elevation-desc">#0053c5 (Medium Blue)</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--calpis-blue);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#0033ff (Calpis Blue)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅</h2>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:64.6%"></div></div></div>
+</section>
+
+<footer class="footer">
+  <div>&copy;ASAHI SOFT DRINKS Co.,LTD.</div>
+  <div style="margin-top:8px;">Generated from <a href="https://www.calpis.info/">calpis.info</a> DESIGN.md — awesome-design-md-jp / computed style 実測値</div>
+</footer>
+
+</body>
+</html>
