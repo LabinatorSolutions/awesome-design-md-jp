@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (273 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (276 sites)</a>
 </p>
 
 <table>
@@ -400,6 +400,11 @@
 <td align="center"><strong>DeNA</strong><br><img src="design-md/dena/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>カルピス</strong><br><img src="design-md/calpis/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>WHILL</strong><br><img src="design-md/whill/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>niko and...</strong><br><img src="design-md/nikoand/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DULTON</strong><br><img src="design-md/dulton/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -733,11 +738,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [MIXI (ミクシィ)](https://mixi.co.jp/) | Tech / Gaming | [DESIGN.md](design-md/mixi/DESIGN.md) | [preview.html](design-md/mixi/preview.html) |
 | [DeNA (ディー・エヌ・エー)](https://dena.com/jp/) | Internet / Entertainment | [DESIGN.md](design-md/dena/DESIGN.md) | [preview.html](design-md/dena/preview.html) |
 | [Calpis (カルピス)](https://www.calpis.info/) | Beverage / Consumer Brand | [DESIGN.md](design-md/calpis/DESIGN.md) | [preview.html](design-md/calpis/preview.html) |
+| [WHILL (ウィル)](https://whill.inc/) | Mobility / Healthcare | [DESIGN.md](design-md/whill/DESIGN.md) | [preview.html](design-md/whill/preview.html) |
+| [niko and... (ニコアンド)](https://www.nikoand.jp/) | Fashion / Lifestyle | [DESIGN.md](design-md/nikoand/DESIGN.md) | [preview.html](design-md/nikoand/preview.html) |
+| [DULTON (ダルトン)](https://www.dulton.jp/) | Home Goods / Interior | [DESIGN.md](design-md/dulton/DESIGN.md) | [preview.html](design-md/dulton/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (273 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (276 sites)</a>
 </p>
 
 <table>
@@ -1102,6 +1110,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>MIXI</strong><br><img src="design-md/mixi/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DeNA</strong><br><img src="design-md/dena/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>カルピス</strong><br><img src="design-md/calpis/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>WHILL</strong><br><img src="design-md/whill/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>niko and...</strong><br><img src="design-md/nikoand/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DULTON</strong><br><img src="design-md/dulton/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: DULTON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --dulton-navy: #001a60;
+    --dulton-red: #ce0000;
+    --text-primary: #333333;
+    --text-dark-gray: #444444;
+    --border-default: #cccccc;
+    --pagination-inactive: #d2d2d2;
+    --muted-navy: #9da7c2;
+    --surface-light: #f5f5f5;
+    --surface-light-blue: #eef5f9;
+    --white: #ffffff;
+    /* === Semantic (推奨値) === */
+    --danger: #ce0000;
+    --success: #2e8b57;
+    --warning: #d4a017;
+    /* === Elevation (推奨値) === */
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.15);
+    /* === Fonts 実測値 === */
+    --font-jp: "Noto Sans JP", メイリオ, Meiryo, "ヒラギノ角ゴ Pro W6", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    --font-en: "Arial Black", arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 12px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 56px;
+    background: var(--dulton-navy);
+  }
+  .nav-brand {
+    font-family: var(--font-en); font-size: 24px; font-weight: 900;
+    color: var(--white); text-decoration: none; letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 20px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    color: var(--white); text-decoration: none; opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-cta {
+    display: inline-block; background: var(--white); color: var(--dulton-navy);
+    padding: 6px 16px; border-radius: 0; font-family: var(--font-en);
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-decoration: none; text-transform: uppercase;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero { padding: 80px 24px 64px; text-align: center; background: var(--dulton-navy); color: var(--white); }
+  .hero h1 {
+    font-family: var(--font-en); font-size: 36px; font-weight: 900;
+    line-height: 1.3; letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.71; opacity: 0.8; margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--white); color: var(--dulton-navy);
+    padding: 10px 28px; border-radius: 0; border: none;
+    font-family: var(--font-en); font-size: 12px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--white);
+    padding: 10px 28px; border-radius: 0;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-family: var(--font-en); font-size: 12px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    text-decoration: none; cursor: pointer; transition: border-color 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--white); }
+
+  /* SECTIONS */
+  .section { padding: 64px 24px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-en); font-size: 12px; font-weight: 700;
+    color: var(--muted-navy); text-transform: uppercase;
+    margin-bottom: 4px; letter-spacing: 1px;
+  }
+  .section-title-en {
+    font-family: var(--font-en); font-size: 30px; font-weight: 400;
+    line-height: 1.4; color: var(--dulton-navy); margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .section-title-jp {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    line-height: 1.71; color: var(--text-primary); margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--surface-light); padding: 64px 24px; }
+  .section-blue { background: var(--surface-light-blue); padding: 64px 24px; }
+  .section-gray .section-inner,
+  .section-blue .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: var(--white); border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 64px; width: 100%; }
+  .color-swatch-info { padding: 8px 10px; }
+  .color-swatch-name { font-size: 11px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-dark-gray); font-family: monospace; }
+  .color-swatch-role { font-size: 10px; color: var(--text-dark-gray); margin-top: 2px; }
+  .color-group-label {
+    font-family: var(--font-en); font-size: 12px; font-weight: 700;
+    color: var(--dulton-navy); margin: 24px 0 10px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 11px; font-weight: 400; color: var(--text-dark-gray); margin-top: 8px; }
+  .type-context {
+    display: inline-block; background: var(--surface-light);
+    color: var(--text-dark-gray); font-size: 10px; padding: 2px 6px;
+    border-radius: 0; margin-left: 8px; border: 1px solid var(--border-default);
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 10px; font-weight: 400; color: var(--text-dark-gray); margin-top: 8px; }
+  .btn-navy {
+    display: inline-block; background: var(--dulton-navy); color: var(--white);
+    padding: 10px 24px; border-radius: 0; border: none;
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-darkgray {
+    display: inline-block; background: var(--text-dark-gray); color: var(--white);
+    padding: 10px 24px; border-radius: 0; border: none;
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-ghost {
+    display: inline-block; background: transparent; color: var(--text-dark-gray);
+    padding: 10px 24px; border-radius: 0;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-text-link {
+    display: inline-block; background: transparent; color: var(--text-dark-gray);
+    padding: 10px 0; border: none; border-bottom: 1px solid var(--text-dark-gray);
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .badge-dot {
+    display: inline-block; width: 8px; height: 8px;
+    background: var(--dulton-red); border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--white); border: 1px solid var(--border-default);
+    border-radius: 0; overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card-image {
+    width: 100%; aspect-ratio: 1 / 1;
+    background: var(--surface-light); display: flex;
+    align-items: center; justify-content: center;
+    color: var(--muted-navy); font-family: var(--font-en);
+    font-size: 14px; font-weight: 700; letter-spacing: 1px;
+  }
+  .card-body { padding: 12px; }
+  .card-body .card-name {
+    font-family: var(--font-jp); font-size: 12px; font-weight: 400;
+    line-height: 1.6; color: var(--text-primary); margin-bottom: 4px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-body .card-price {
+    font-family: var(--font-jp); font-size: 14px; font-weight: 700;
+    color: var(--text-primary);
+  }
+  .card-body .card-price-tax {
+    font-size: 10px; font-weight: 400; color: var(--text-dark-gray);
+  }
+
+  /* PRODUCT SECTION */
+  .product-section { max-width: 1000px; margin: 0 auto; }
+  .product-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+  .product-more {
+    font-size: 12px; color: var(--text-dark-gray);
+    text-decoration: underline; margin-left: auto;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block; font-size: 12px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 8px 12px; border-radius: 0;
+    font-family: var(--font-jp); font-size: 12px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--dulton-navy); border-width: 2px; }
+  .form-input--error { border-color: var(--danger); border-width: 2px; }
+  .form-state-label { font-size: 10px; color: var(--text-dark-gray); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--white); border-radius: 0; padding: 24px;
+    text-align: center; border: 1px solid var(--border-default);
+  }
+  .elevation-label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: monospace; font-size: 10px; color: var(--text-dark-gray); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--dulton-navy); border-radius: 0; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: monospace; font-size: 10px; font-weight: 500; color: var(--text-dark-gray); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--surface-light); border: 1px solid var(--border-default); border-radius: 0; margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--dulton-navy); opacity: 0.2; }
+  .width-bar-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: monospace; font-size: 11px; color: var(--text-dark-gray); }
+
+  /* PAGINATION */
+  .pagination { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 24px; }
+  .pagination-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--pagination-inactive);
+  }
+  .pagination-dot.active { background: var(--dulton-navy); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 24px 32px; text-align: center;
+    background: var(--dulton-navy); color: var(--white);
+    font-size: 11px;
+  }
+  .footer a { color: var(--white); opacity: 0.7; text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 24px; letter-spacing: 2px; }
+    .hero .subtitle { font-size: 12px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 16px; }
+    .section-gray, .section-blue { padding: 48px 16px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .section-title-en { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">DULTON</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Online Shop</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview</h1>
+  <div class="subtitle">DULTON (dulton.jp) - DESIGN.md computed style 実測値カタログ</div>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">View Products</a>
+    <a class="btn-outline" href="#">Read DESIGN.md</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="section-title-en">Color Palette</div>
+  <div class="section-title-jp">カラーパレット</div>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#001a60"></div><div class="color-swatch-info"><div class="color-swatch-name">DULTON Navy</div><div class="color-swatch-hex">#001a60</div><div class="color-swatch-role">ブランドカラー・ヘッダー・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ce0000"></div><div class="color-swatch-info"><div class="color-swatch-name">DULTON Red</div><div class="color-swatch-hex">#ce0000</div><div class="color-swatch-role">バッジ・通知ドット</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#444444"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Gray</div><div class="color-swatch-hex">#444444</div><div class="color-swatch-role">ボタン・補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9da7c2"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted Navy</div><div class="color-swatch-hex">#9da7c2</div><div class="color-swatch-role">装飾・スクロールトップ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Surface</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eef5f9"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Blue</div><div class="color-swatch-hex">#eef5f9</div><div class="color-swatch-role">プロモ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d2d2d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Pagination</div><div class="color-swatch-hex">#d2d2d2</div><div class="color-swatch-role">非アクティブドット</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ce0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#ce0000</div><div class="color-swatch-role">エラー・削除</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2e8b57"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2e8b57</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d4a017"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d4a017</div><div class="color-swatch-role">警告・注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title-en">Type Scale</div>
+  <div class="section-title-jp">タイポグラフィ階層 - 実測値</div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:30px; font-weight:400; line-height:1.4; color:var(--dulton-navy); text-transform:uppercase;">Section Title — English Heading</div>
+    <div class="type-meta">Arial Black / 30px / 400 / line-height: 1.4 / letter-spacing: normal<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:24px; font-weight:900; line-height:1.6; color:var(--dulton-navy);">DULTON — Brand Name</div>
+    <div class="type-meta">Arial Black / 24px / 900 / line-height: 1.6<span class="type-context">ブランドロゴ文字</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:20px; font-weight:400; line-height:1.5; color:var(--dulton-navy); text-transform:uppercase;">Menu</div>
+    <div class="type-meta">Arial Black / 20px / 400 / line-height: 1.5<span class="type-context">ナビ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-en); font-size:12px; font-weight:900; line-height:1.5; letter-spacing:1px; color:var(--dulton-navy); text-transform:uppercase;">New Arrival &nbsp;&bull;&nbsp; Ranking &nbsp;&bull;&nbsp; Pick Up</div>
+    <div class="type-meta">Arial Black / 12px / 900 / line-height: 1.5 / letter-spacing: 1px<span class="type-context">小英語ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:14px; font-weight:400; line-height:1.71; color:var(--text-primary);">新着アイテム ・ ランキング ・ ピックアップ</div>
+    <div class="type-meta">Noto Sans JP / 14px / 400 / line-height: 1.71<span class="type-context">日本語サブタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:12px; font-weight:400; line-height:1.6; color:var(--text-primary);">本文テキスト — アメリカンヴィンテージの雰囲気を持つインテリア雑貨。キッチン、リビング、ガーデン用品まで、暮らしを楽しくする道具を届けます。1988年の創業以来、機能性とデザイン性を兼ね備えた商品づくりを続けています。</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 1.6 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:14px; font-weight:700; line-height:2.8; color:var(--text-primary);">&#165;3,850 <span style="font-size:10px; font-weight:400; color:var(--text-dark-gray);">(税込)</span></div>
+    <div class="type-meta">Noto Sans JP / 14px / 700 / line-height: 2.8<span class="type-context">価格</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-jp); font-size:10px; font-weight:400; line-height:1.5; color:var(--text-dark-gray);">※ 商品の色は実際と異なる場合がございます。送料は地域により異なります。</div>
+    <div class="type-meta">Noto Sans JP / 10px / 400 / line-height: 1.5<span class="type-context">注釈・最小テキスト</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section-gray" id="products">
+<div class="section-inner">
+  <div class="section-label">03 / Products</div>
+  <div class="section-title-en">Product Listing</div>
+  <div class="section-title-jp">商品一覧サンプル</div>
+
+  <div class="product-section">
+    <div class="product-header">
+      <span style="font-family: var(--font-en); font-size:12px; font-weight:900; letter-spacing:1px; color:var(--dulton-navy); text-transform:uppercase;">New Arrival</span>
+      <span style="font-family: var(--font-jp); font-size:14px; font-weight:400; color:var(--text-primary);">新着アイテム</span>
+      <a href="#" class="product-more">もっと見る</a>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-image">DULTON</div>
+        <div class="card-body">
+          <div class="card-name">グラットン オーブントースター 4スライス マットブラック</div>
+          <div class="card-price">&#165;12,100 <span class="card-price-tax">(税込)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">DULTON</div>
+        <div class="card-body">
+          <div class="card-name">アメリカンキッチンスケール "ストリームライン" 2kg レッド</div>
+          <div class="card-price">&#165;5,500 <span class="card-price-tax">(税込)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">DULTON</div>
+        <div class="card-body">
+          <div class="card-name">ダブルフェイス ウォールクロック 170D ブラック</div>
+          <div class="card-price">&#165;8,800 <span class="card-price-tax">(税込)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-image">DULTON</div>
+        <div class="card-body">
+          <div class="card-name">メタルバケット ガルバナイズド 12L</div>
+          <div class="card-price">&#165;3,850 <span class="card-price-tax">(税込)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <div class="pagination-dot active"></div>
+      <div class="pagination-dot"></div>
+      <div class="pagination-dot"></div>
+      <div class="pagination-dot"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <div class="section-title-en">Buttons</div>
+  <div class="section-title-jp">ボタンバリエーション</div>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-navy" href="#">カートに入れる</a><div class="button-label">Primary (Navy)</div></div>
+    <div class="button-item"><a class="btn-darkgray" href="#">絞り込み</a><div class="button-label">Filter (Dark Gray)</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">一覧を見る</a><div class="button-label">Ghost (Outline)</div></div>
+    <div class="button-item"><a class="btn-text-link" href="#">もっと見る</a><div class="button-label">Text Link</div></div>
+  </div>
+  <div style="margin-bottom: 12px;">
+    <span style="font-family:var(--font-en); font-size:12px; font-weight:700; color:var(--dulton-navy); letter-spacing:1px;">NOTIFICATION BADGE</span>
+    <span style="margin-left: 8px; font-size: 12px; color: var(--text-dark-gray);">通知ドット:</span>
+    <span class="badge-dot" style="margin-left: 4px;"></span>
+  </div>
+  <div>
+    <span style="font-family:var(--font-en); font-size:12px; font-weight:700; color:var(--dulton-navy); letter-spacing:1px;">CAROUSEL DOTS</span>
+    <span style="margin-left: 8px; font-size: 12px; color: var(--text-dark-gray);">ページネーション:</span>
+    <span style="display:inline-flex; gap:6px; margin-left:8px; vertical-align:middle;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--dulton-navy); display:inline-block;"></span>
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--pagination-inactive); display:inline-block;"></span>
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--pagination-inactive); display:inline-block;"></span>
+    </span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-blue" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <div class="section-title-en">Card Components</div>
+  <div class="section-title-jp">カードコンポーネント</div>
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+    <div class="card" style="border: 1px solid var(--border-default);">
+      <div class="card-image" style="height: 180px; aspect-ratio: auto;">DULTON</div>
+      <div class="card-body" style="padding: 16px;">
+        <div style="font-family:var(--font-en); font-size:12px; font-weight:900; letter-spacing:1px; color:var(--dulton-navy); text-transform:uppercase; margin-bottom:4px;">Kitchen</div>
+        <div style="font-family:var(--font-jp); font-size:14px; font-weight:400; color:var(--text-primary); line-height:1.71; margin-bottom:8px;">キッチンツール・テーブルウェア</div>
+        <div style="font-family:var(--font-jp); font-size:12px; color:var(--text-dark-gray); line-height:1.6;">機能性とデザイン性を兼ね備えたアメリカンヴィンテージスタイルのキッチン用品。</div>
+      </div>
+    </div>
+    <div class="card" style="border: 1px solid var(--border-default);">
+      <div class="card-image" style="height: 180px; aspect-ratio: auto;">DULTON</div>
+      <div class="card-body" style="padding: 16px;">
+        <div style="font-family:var(--font-en); font-size:12px; font-weight:900; letter-spacing:1px; color:var(--dulton-navy); text-transform:uppercase; margin-bottom:4px;">Interior</div>
+        <div style="font-family:var(--font-jp); font-size:14px; font-weight:400; color:var(--text-primary); line-height:1.71; margin-bottom:8px;">インテリア・ファニチャー</div>
+        <div style="font-family:var(--font-jp); font-size:12px; color:var(--text-dark-gray); line-height:1.6;">インダストリアルな素材感を活かした家具・インテリアアクセサリー。</div>
+      </div>
+    </div>
+    <div class="card" style="border: 1px solid var(--border-default);">
+      <div class="card-image" style="height: 180px; aspect-ratio: auto;">DULTON</div>
+      <div class="card-body" style="padding: 16px;">
+        <div style="font-family:var(--font-en); font-size:12px; font-weight:900; letter-spacing:1px; color:var(--dulton-navy); text-transform:uppercase; margin-bottom:4px;">Garden</div>
+        <div style="font-family:var(--font-jp); font-size:14px; font-weight:400; color:var(--text-primary); line-height:1.71; margin-bottom:8px;">ガーデン・エクステリア</div>
+        <div style="font-family:var(--font-jp); font-size:12px; color:var(--text-dark-gray); line-height:1.6;">庭仕事を楽しくする道具と、屋外空間を彩るガーデンアイテム。</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <div class="section-title-en">Form Elements</div>
+  <div class="section-title-jp">フォーム要素</div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #cccccc, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">パスワード</label>
+    <input class="form-input form-input--focus" type="password" value="mypassword123">
+    <div class="form-state-label">フォーカス — border: #001a60 (DULTON Navy)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-state-label">エラー — border: #ce0000 (DULTON Red)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お届け先住所</label>
+    <textarea class="form-input" rows="3" placeholder="東京都渋谷区..." style="resize: vertical;"></textarea>
+    <div class="form-state-label">テキストエリア — 角形・同じボーダー仕様</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-gray" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation</div>
+  <div class="section-title-en">Depth & Elevation</div>
+  <div class="section-title-jp">エレベーション - 基本フラット</div>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし（デフォルト）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 2px 4px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 4px 12px rgba(0,0,0,0.12)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Level 3</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.15)</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <div class="section-title-en">Layout & Spacing</div>
+  <div class="section-title-jp">レイアウト原則</div>
+
+  <div style="margin-bottom: 32px;">
+    <div style="font-family:var(--font-en); font-size:12px; font-weight:700; letter-spacing:1px; color:var(--dulton-navy); margin-bottom:12px;">SPACING SCALE</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:12px;"></div><div class="spacing-value">12px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 32px;">
+    <div style="font-family:var(--font-en); font-size:12px; font-weight:700; letter-spacing:1px; color:var(--dulton-navy); margin-bottom:12px;">CONTENT WIDTHS</div>
+    <div style="margin-bottom:12px"><div class="width-bar-label">Container Max <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:12px"><div class="width-bar-label">Product Grid (4-col) <span class="width-bar-value">1000px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:83%"></div></div></div>
+    <div style="margin-bottom:12px"><div class="width-bar-label">Mobile (2-col) <span class="width-bar-value">100%</span></div><div class="width-bar"><div class="width-bar-inner" style="width:50%"></div></div></div>
+  </div>
+
+  <div>
+    <div style="font-family:var(--font-en); font-size:12px; font-weight:700; letter-spacing:1px; color:var(--dulton-navy); margin-bottom:12px;">BORDER RADIUS</div>
+    <div style="display:flex; gap:24px; flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="width:64px; height:64px; background:var(--dulton-navy); border-radius:0;"></div>
+        <div style="font-size:10px; color:var(--text-dark-gray); margin-top:6px;">0px (All)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:16px; height:16px; background:var(--dulton-navy); border-radius:50%; margin: 24px auto 0;"></div>
+        <div style="font-size:10px; color:var(--text-dark-gray); margin-top:6px;">50% (Dots)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div style="font-family:var(--font-en); font-size:18px; font-weight:900; letter-spacing:2px; margin-bottom:12px;">DULTON</div>
+  Generated from <a href="https://www.dulton.jp/">dulton.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-29）
+</footer>
+
+</body>
+</html>
