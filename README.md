@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (276 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (279 sites)</a>
 </p>
 
 <table>
@@ -405,6 +405,11 @@
 <td align="center"><strong>niko and...</strong><br><img src="design-md/nikoand/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DULTON</strong><br><img src="design-md/dulton/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>GREEN SPOON</strong><br><img src="design-md/greenspoon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HIGHTIDE</strong><br><img src="design-md/hightide/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LOWYA</strong><br><img src="design-md/lowya/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -741,11 +746,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [WHILL (ウィル)](https://whill.inc/) | Mobility / Healthcare | [DESIGN.md](design-md/whill/DESIGN.md) | [preview.html](design-md/whill/preview.html) |
 | [niko and... (ニコアンド)](https://www.nikoand.jp/) | Fashion / Lifestyle | [DESIGN.md](design-md/nikoand/DESIGN.md) | [preview.html](design-md/nikoand/preview.html) |
 | [DULTON (ダルトン)](https://www.dulton.jp/) | Home Goods / Interior | [DESIGN.md](design-md/dulton/DESIGN.md) | [preview.html](design-md/dulton/preview.html) |
+| [GREEN SPOON (グリーンスプーン)](https://green-spoon.jp/) | Food / Subscription | [DESIGN.md](design-md/greenspoon/DESIGN.md) | [preview.html](design-md/greenspoon/preview.html) |
+| [HIGHTIDE (ハイタイド)](https://www.hightide.co.jp/) | Stationery / Lifestyle | [DESIGN.md](design-md/hightide/DESIGN.md) | [preview.html](design-md/hightide/preview.html) |
+| [LOWYA (ロウヤ)](https://www.low-ya.com/) | Furniture / Interior | [DESIGN.md](design-md/lowya/DESIGN.md) | [preview.html](design-md/lowya/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (276 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (279 sites)</a>
 </p>
 
 <table>
@@ -1115,6 +1123,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>WHILL</strong><br><img src="design-md/whill/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>niko and...</strong><br><img src="design-md/nikoand/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DULTON</strong><br><img src="design-md/dulton/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>GREEN SPOON</strong><br><img src="design-md/greenspoon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>HIGHTIDE</strong><br><img src="design-md/hightide/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LOWYA</strong><br><img src="design-md/lowya/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
