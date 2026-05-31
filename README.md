@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (279 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (282 sites)</a>
 </p>
 
 <table>
@@ -409,6 +409,9 @@
 <td align="center"><strong>GREEN SPOON</strong><br><img src="design-md/greenspoon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HIGHTIDE</strong><br><img src="design-md/hightide/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LOWYA</strong><br><img src="design-md/lowya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Yakult</strong><br><img src="design-md/yakult/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Brother</strong><br><img src="design-md/brother/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ZOJIRUSHI</strong><br><img src="design-md/zojirushi/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -749,11 +752,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [GREEN SPOON (グリーンスプーン)](https://green-spoon.jp/) | Food / Subscription | [DESIGN.md](design-md/greenspoon/DESIGN.md) | [preview.html](design-md/greenspoon/preview.html) |
 | [HIGHTIDE (ハイタイド)](https://www.hightide.co.jp/) | Stationery / Lifestyle | [DESIGN.md](design-md/hightide/DESIGN.md) | [preview.html](design-md/hightide/preview.html) |
 | [LOWYA (ロウヤ)](https://www.low-ya.com/) | Furniture / Interior | [DESIGN.md](design-md/lowya/DESIGN.md) | [preview.html](design-md/lowya/preview.html) |
+| [Yakult (ヤクルト)](https://www.yakult.co.jp/) | Food / Beverage | [DESIGN.md](design-md/yakult/DESIGN.md) | [preview.html](design-md/yakult/preview.html) |
+| [Brother (ブラザー)](https://www.brother.co.jp/) | Technology / Manufacturing | [DESIGN.md](design-md/brother/DESIGN.md) | [preview.html](design-md/brother/preview.html) |
+| [ZOJIRUSHI (象印マホービン)](https://www.zojirushi.co.jp/) | Home Appliances | [DESIGN.md](design-md/zojirushi/DESIGN.md) | [preview.html](design-md/zojirushi/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (279 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (282 sites)</a>
 </p>
 
 <table>
@@ -1128,6 +1134,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>GREEN SPOON</strong><br><img src="design-md/greenspoon/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>HIGHTIDE</strong><br><img src="design-md/hightide/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LOWYA</strong><br><img src="design-md/lowya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Yakult</strong><br><img src="design-md/yakult/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Brother</strong><br><img src="design-md/brother/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ZOJIRUSHI</strong><br><img src="design-md/zojirushi/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

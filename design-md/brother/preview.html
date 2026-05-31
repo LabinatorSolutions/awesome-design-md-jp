@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Brother（ブラザー）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --brand-navy: #0d2ea1;
+    --action-blue: #1965e1;
+    --black: #000000;
+    --dark-gray: #333333;
+    --medium-gray: #666666;
+    --light-gray: #888888;
+    --border-gray: #dddddd;
+    --border-light: #d9d9d9;
+    --surface: #f2f2f2;
+    --white: #ffffff;
+    --footer-bg: #404040;
+
+    --text-primary: #333333;
+    --text-heading: #000000;
+    --text-secondary: #666666;
+    --text-caption: #888888;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f2f2f2;
+
+    /* === Semantic 推奨値 === */
+    --danger: #cc0000;
+    --success: #008000;
+    --warning: #e68a00;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.10);
+    --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    /* === Fonts === */
+    /* 実サイトは 游ゴシック（YuGothic）を最優先 */
+    /* 游ゴシックはシステムフォントのため、プレビューでは Noto Sans JP で代替 */
+    --font-base: "Noto Sans JP", 游ゴシック, YuGothic, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV — Brand Navy solid bar */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--brand-navy);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-brand span {
+    font-size: 11px; font-weight: 400;
+    opacity: 0.8; margin-left: 10px;
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    display: inline-flex; align-items: center;
+    font-size: 12px; font-weight: 400;
+    color: var(--white); text-decoration: none;
+    padding: 8px 16px;
+    transition: background 0.15s;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.15); }
+  .nav-links a.active {
+    background: rgba(255,255,255,0.2);
+    font-weight: 700;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px;
+    background: var(--bg-primary);
+    text-align: left;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero-tagline {
+    font-size: 14px; font-weight: 400;
+    color: var(--action-blue);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 700;
+    line-height: 1.22;
+    color: var(--text-heading);
+    margin-bottom: 20px;
+    max-width: 720px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-primary);
+    max-width: 640px; margin: 0 0 28px;
+  }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--action-blue); color: var(--white);
+    padding: 10px 24px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; color: var(--action-blue);
+    padding: 9px 23px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--action-blue);
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(25, 101, 225, 0.06); }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--action-blue);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--light-gray);
+    text-transform: uppercase; margin-bottom: 10px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 28px; font-weight: 700; line-height: 1.22;
+    color: var(--text-heading);
+    margin-bottom: 40px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--border-gray);
+    margin: 0;
+  }
+  .section-surface { background: var(--bg-secondary); padding: 64px 32px; }
+  .section-surface .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-sm); overflow: hidden; background: var(--white); border: 1px solid var(--border-gray); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 10px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 3px; color: var(--dark-gray); }
+  .color-swatch-hex { font-size: 12px; color: var(--light-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--medium-gray); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--dark-gray); margin: 20px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--light-gray); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface); color: var(--medium-gray); font-size: 10px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-base); }
+
+  /* PRODUCT CARDS */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .product-card {
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    padding: 0;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .product-card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .product-card-image {
+    height: 160px; width: 100%;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--light-gray); font-size: 12px;
+    border-bottom: 1px solid var(--border-gray);
+  }
+  .product-card-body { padding: 20px; }
+  .product-card-category {
+    font-size: 11px; font-weight: 700; color: var(--action-blue);
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .product-card h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.4;
+    color: var(--text-heading); margin-bottom: 8px;
+  }
+  .product-card p {
+    font-size: 14px; line-height: 1.7;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .product-card .btn-primary { font-size: 13px; padding: 8px 20px; }
+
+  /* ARTICLE SAMPLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 28px; font-weight: 700; line-height: 1.22;
+    margin-bottom: 24px; color: var(--text-heading);
+  }
+  .article-preview h2 {
+    font-size: 20px; font-weight: 700; line-height: 1.4;
+    color: var(--dark-gray);
+    margin: 32px 0 12px;
+  }
+  .article-preview h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.4;
+    color: var(--dark-gray);
+    margin: 24px 0 10px;
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400;
+    line-height: 1.7;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview p.helper {
+    color: var(--medium-gray); font-size: 12px; line-height: 1.7;
+  }
+  .article-callout {
+    background: var(--surface);
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--action-blue);
+    margin: 20px 0;
+    font-size: 14px; line-height: 1.7;
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--light-gray); margin-top: 8px; font-family: var(--font-mono); }
+
+  /* NAV TABS (replica) */
+  .nav-tabs-demo { display: flex; gap: 0; background: var(--brand-navy); padding: 8px 16px; border-radius: var(--radius-sm); margin-bottom: 24px; }
+  .nav-tab-item {
+    display: inline-flex; align-items: center;
+    font-size: 12px; font-weight: 400;
+    color: var(--white); text-decoration: none;
+    padding: 6px 14px;
+    border-radius: var(--radius-none);
+    cursor: pointer;
+  }
+  .nav-tab-item.active { background: rgba(255,255,255,0.2); font-weight: 700; }
+  .nav-tab-item:hover { background: rgba(255,255,255,0.1); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--dark-gray); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--dark-gray);
+    border: 1px solid var(--border-light);
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--light-gray); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--action-blue);
+    box-shadow: 0 0 0 3px rgba(25, 101, 225, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.12);
+  }
+  .form-state-label { font-size: 11px; color: var(--light-gray); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-sm);
+    padding: 28px 20px; text-align: center;
+    border: 1px solid var(--border-gray);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--light-gray); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--action-blue); border-radius: 2px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--light-gray); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--dark-gray); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 80px; height: 56px;
+    background: var(--brand-navy);
+    margin-bottom: 6px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px;
+    text-align: center;
+    background: var(--footer-bg);
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+  }
+  .footer a { color: var(--white); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero { padding: 56px 20px 48px; }
+    .hero h1 { font-size: 22px; line-height: 1.3; }
+    .nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-surface { padding: 48px 20px; }
+    .section-title { font-size: 22px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 22px; }
+    .article-preview h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Brother <span>at your side</span></a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product" class="active">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="btn-primary" href="#" style="font-size:12px; padding:6px 16px;">お問い合わせ</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-tagline">at your side</div>
+  <h1>プリンティングからものづくりまで。<br>ビジネスと暮らしを支えるソリューション</h1>
+  <p>Brother のデザインシステムをカタログ化したプレビューです。トップページの computed style 実測値（2026-05-31 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">製品を探す</a>
+    <a class="btn-secondary" href="#">カタログダウンロード</a>
+    <a class="btn-link" href="#">サポート情報 &rarr;</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0d2ea1"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Navy</div><div class="color-swatch-hex">#0d2ea1</div><div class="color-swatch-role">ヘッダーバー・アクティブナビタブ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1965e1"></div><div class="color-swatch-info"><div class="color-swatch-name">Action Blue</div><div class="color-swatch-hex">#1965e1</div><div class="color-swatch-role">CTA ボタン・テキストリンク</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">見出し・ナビテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Gray</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Medium Gray</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#888888"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#888888</div><div class="color-swatch-role">注釈・キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd; border-bottom:1px solid #cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Gray</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">区切り線・カードボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2; border-bottom:1px solid #dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">セクション背景面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Header / Footer</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0d2ea1"></div><div class="color-swatch-info"><div class="color-swatch-name">Header BG</div><div class="color-swatch-hex">#0d2ea1</div><div class="color-swatch-role">ブランドネイビーのベタ塗り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#404040"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#404040</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">エラー・削除（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#008000"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#008000</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e68a00"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#e68a00</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:700; line-height:1.22; color:var(--text-heading);">プリンター・複合機 — Section H2</div>
+    <div class="type-meta">28px / 700 / line-height 1.22 / color #000000<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.4; color:var(--dark-gray);">インクジェットプリンター — Sub H2 / H3</div>
+    <div class="type-meta">20px / 700 / line-height 1.4 / color #333333<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.7; color:var(--text-primary);">本文テキスト — ブラザーのプリンターは、コンパクトなボディに高い印刷品質と多彩な機能を搭載。ホームオフィスから大規模法人まで、さまざまなビジネスシーンでご利用いただけます。日本語の組版において line-height: 1.7 は14pxの小さな文字でも十分な可読性を確保するブラザーの基本リズムです。</div>
+    <div class="type-meta">14px / 400 / line-height 1.7 / letter-spacing normal / color #333333<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.7; color:var(--dark-gray);">ラベル / スパン — 製品カテゴリタグやナビゲーション補助テキストに使用される最小サイズ。</div>
+    <div class="type-meta">12px / 400 / line-height 1.7 / color #333333<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.0; color:var(--white); display:inline-flex; gap:0;">
+      <span style="background:var(--brand-navy); padding:6px 14px;">ナビ Active</span>
+      <span style="background:var(--white); color:var(--black); padding:6px 14px; border:1px solid var(--border-gray);">ナビ Default</span>
+    </div>
+    <div class="type-meta">12px / 400 / line-height 1.0 / radius 0px<span class="type-context">ナビ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT CARDS -->
+<section class="section-surface" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product</div>
+  <h2 class="section-title">製品カテゴリ</h2>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-image">Product Image</div>
+      <div class="product-card-body">
+        <div class="product-card-category">PRINTER</div>
+        <h3>プリンター・複合機</h3>
+        <p>インクジェット・レーザーを含む幅広いラインナップで、家庭からオフィスまで。コンパクトな本体に高品質な印刷機能を搭載。</p>
+        <a class="btn-primary" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image">Product Image</div>
+      <div class="product-card-body">
+        <div class="product-card-category">SEWING</div>
+        <h3>ミシン</h3>
+        <p>初心者からプロまで。刺しゅう機能付きモデルやロックミシンなど、用途に合わせた豊富なラインナップ。</p>
+        <a class="btn-primary" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image">Product Image</div>
+      <div class="product-card-body">
+        <div class="product-card-category">LABELER</div>
+        <h3>ラベルライター</h3>
+        <p>P-touch シリーズ。オフィスや倉庫のラベル管理に。スマートフォン対応モデルで手軽にラベル作成。</p>
+        <a class="btn-primary" href="#">詳しく見る</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image">Product Image</div>
+      <div class="product-card-body">
+        <div class="product-card-category">INDUSTRIAL</div>
+        <h3>工作機械</h3>
+        <p>CNC加工機やレーザーマーカーなど、製造現場のニーズに応える高精度な産業用機器。</p>
+        <a class="btn-primary" href="#">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-label">04 / Article</div>
+  <h2 class="section-title">本文組版サンプル</h2>
+  <div class="article-preview">
+    <h1>プリンティングからものづくりまで</h1>
+    <p>ブラザーグループは、プリンター・複合機を中心としたプリンティング事業を核に、ミシン、工作機械、産業用印刷機器など幅広い製品群を展開しています。</p>
+
+    <h2>ビジネスソリューション</h2>
+    <p>法人向けには、大量印刷に対応するレーザープリンターや、モバイルプリンターを中心としたフィールドワーク向けソリューションを提供。ランニングコストの低減と業務効率化を両立します。</p>
+
+    <h3>サポート体制</h3>
+    <p>"at your side" の精神で、製品導入から運用まで一貫したサポートを実施。全国のサービスセンターとオンラインサポートで、迅速な対応を行っています。</p>
+
+    <div class="article-callout">
+      <strong>製品サポートについて：</strong>保証期間内の修理・交換は無償で対応いたします。ドライバーのダウンロード、FAQ、お問い合わせフォームはサポートページからご利用いただけます。
+    </div>
+
+    <p class="helper">※ 製品の仕様・価格は予告なく変更する場合があります。最新情報は公式サイトでご確認ください。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section-surface" id="buttons">
+<div class="section-inner">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom:40px;">
+    <div class="button-item"><a class="btn-primary" href="#">詳しく見る</a><div class="button-label">Primary CTA — radius 4px / #1965e1</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">カタログダウンロード</a><div class="button-label">Secondary — Ghost + Blue Border</div></div>
+    <div class="button-item"><a class="btn-link" href="#">サポート情報 &rarr;</a><div class="button-label">Text Link — #1965e1</div></div>
+  </div>
+
+  <div class="color-group-label">Nav Tabs（ヘッダーナビゲーション）</div>
+  <div class="nav-tabs-demo">
+    <span class="nav-tab-item active">個人のお客様</span>
+    <span class="nav-tab-item">法人のお客様</span>
+    <span class="nav-tab-item">サポート</span>
+    <span class="nav-tab-item">企業情報</span>
+    <span class="nav-tab-item">採用情報</span>
+  </div>
+  <div class="button-label" style="margin-bottom:0;">Nav Tab — radius 0px / bg #0d2ea1 / 12px / weight 400</div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">製品名・型番</label>
+      <input class="form-input" type="text" placeholder="例：DCP-J926N">
+      <div class="form-state-label">Default — border #d9d9d9 / radius 4px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="user@example.com">
+      <div class="form-state-label">Focus — border #1965e1 / shadow 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-state-label">Error — border #cc0000 / shadow 3px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-surface" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし（基本）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 4px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 12px rgba(0,0,0,0.10)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:40px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:0px"></div>
+      <div class="spacing-name">None</div>
+      <div class="spacing-value">0px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">8px</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.brother.co.jp/">brother.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-05-31）<br>
+  ※ 游ゴシック（YuGothic）はシステムフォントのため、本プレビューでは <strong>Noto Sans JP</strong> で代替表示しています。
+</footer>
+
+</body>
+</html>

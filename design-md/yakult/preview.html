@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Yakult（ヤクルト）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --yakult-red: #e60039;
+    --blue-accent: #3f7ac3;
+    --black: #000000;
+    --text-primary: #323232;
+    --text-secondary: #6e6e6e;
+    --text-tertiary: #333333;
+    --neutral-surface: #f2f2f2;
+    --warm-cream: #fbf6ec;
+    --warm-pink: #fff2f5;
+    --white: #ffffff;
+    --border-default: #e0e0e0;
+    --border-light: #cccccc;
+    --overlay: rgba(0, 0, 0, 0.8);
+
+    /* === Semantic 推奨値 === */
+    --danger: #cc0033;
+    --success: #16a34a;
+    --warning: #d97706;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.10);
+
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", -apple-system, "system-ui", Roboto, "Segoe UI",
+      "Helvetica Neue", HelveticaNeue, YuGothic, "Yu Gothic Medium",
+      "Yu Gothic", Verdana, Meiryo, sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-cta-sm: 20px;
+    --radius-cta-md: 40px;
+    --radius-cta-lg: 50px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    color: var(--yakult-red); text-decoration: none;
+    letter-spacing: normal;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 700;
+    color: var(--text-secondary); text-decoration: none;
+    line-height: 30px;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--yakult-red); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--yakult-red); color: var(--white);
+    padding: 8px 20px; border-radius: var(--radius-cta-sm);
+    font-size: 15px; font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--white);
+    text-align: left;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 36px; font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--yakult-red);
+    margin-bottom: 24px;
+    max-width: 880px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-primary);
+    max-width: 640px; margin: 0 0 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--yakult-red); color: var(--white);
+    padding: 14px 32px; border-radius: var(--radius-cta-lg);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; color: var(--yakult-red);
+    padding: 12px 28px; border-radius: var(--radius-cta-md);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 2px solid var(--yakult-red);
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { background: var(--yakult-red); color: var(--white); }
+  .btn-primary-sm {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--yakult-red); color: var(--white);
+    padding: 8px 20px; border-radius: var(--radius-cta-sm);
+    font-family: var(--font-base);
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary-sm:hover { opacity: 0.85; }
+
+  /* TAG */
+  .tag {
+    display: inline-flex; align-items: center;
+    background: var(--neutral-surface); color: var(--text-tertiary);
+    padding: 6px 16px; border-radius: var(--radius-sm);
+    font-size: 16px; font-weight: 700;
+  }
+
+  /* LABEL BADGE */
+  .label-badge {
+    display: inline-flex; align-items: center;
+    background: var(--yakult-red); color: var(--white);
+    padding: 4px 12px; border-radius: 4px 4px 0 0;
+    font-size: 13px; font-weight: 600; line-height: 30px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 600; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 36px; font-weight: 700; line-height: 1.5;
+    color: var(--yakult-red);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--neutral-surface);
+    margin: 0;
+  }
+  .section-warm { padding: 80px 32px; }
+  .section-warm.cream { background: var(--warm-cream); }
+  .section-warm.pink { background: var(--warm-pink); }
+  .section-warm .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--neutral-surface); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--neutral-surface); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-base); }
+
+  /* PRODUCT CARDS */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--white);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .product-card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .product-card-image {
+    height: 180px; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .product-card-image.cream { background: var(--warm-cream); }
+  .product-card-image.pink { background: var(--warm-pink); }
+  .product-card-body { padding: 20px 24px; }
+  .product-card-category {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    background: var(--neutral-surface); color: var(--text-tertiary);
+    padding: 2px 8px; border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+  }
+  .product-card h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--black); margin-bottom: 8px;
+  }
+  .product-card p {
+    font-size: 14px; font-weight: 500; line-height: 1.5;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .product-card-link {
+    font-size: 14px; font-weight: 700;
+    color: var(--yakult-red); text-decoration: none;
+  }
+  .product-card-link:hover { text-decoration: underline; }
+
+  /* ARTICLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 36px; font-weight: 700; line-height: 1.5;
+    color: var(--yakult-red);
+    margin-bottom: 32px;
+  }
+  .article-preview h2 {
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    color: var(--black);
+    border-left: 4px solid var(--yakult-red);
+    padding-left: 12px;
+    margin: 40px 0 16px;
+  }
+  .article-preview h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--black);
+    margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .article-preview p.helper {
+    color: var(--text-secondary); font-size: 14px; line-height: 1.5;
+  }
+  .article-callout {
+    background: var(--warm-cream);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.5; font-weight: 500;
+    border-left: 4px solid var(--yakult-red);
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-top: 8px; font-family: var(--font-mono); }
+
+  /* BADGE ROW */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+
+  /* CARDS SECTION */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .category-card {
+    border-radius: var(--radius-md);
+    padding: 32px 28px;
+    transition: box-shadow 0.3s;
+  }
+  .category-card:hover { box-shadow: var(--elevation-1); }
+  .category-card.cream { background: var(--warm-cream); }
+  .category-card.pink { background: var(--warm-pink); }
+  .category-card.neutral { background: var(--neutral-surface); }
+  .category-card h3 {
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    color: var(--black); margin-bottom: 8px;
+  }
+  .category-card p {
+    font-size: 14px; font-weight: 500; line-height: 1.5;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .category-card-link {
+    font-size: 14px; font-weight: 700;
+    color: var(--yakult-red); text-decoration: none;
+  }
+  .category-card-link:hover { text-decoration: underline; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    padding: 12px 16px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 500;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-secondary); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--yakult-red);
+    box-shadow: 0 0 0 3px rgba(230, 0, 57, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(204, 0, 51, 0.12);
+  }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; font-weight: 500; }
+  .form-state-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-md);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--border-default);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--yakult-red); border-radius: var(--radius-sm); margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--yakult-red);
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 32px;
+    text-align: center;
+    background: var(--white);
+    font-size: 12px; color: var(--text-secondary);
+    border-top: 1px solid var(--border-default);
+    font-weight: 500;
+  }
+  .footer a { color: var(--yakult-red); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero { padding: 64px 20px 56px; }
+    .hero h1 { font-size: 24px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-warm { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 24px; }
+    .article-preview h2 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Yakult</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">企業情報</a>
+</nav>
+
+<section class="hero">
+  <div style="margin-bottom:16px;">
+    <span class="label-badge">ヤクルトの想い</span>
+  </div>
+  <h1>人も地球も健康に。<br>ヤクルトが届ける、乳酸菌の力。</h1>
+  <p>Yakult のデザインシステムをカタログ化したプレビューです。コーポレートサイト（yakult.co.jp）の computed style 実測値（2026-05-31 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">お問い合わせはこちら</a>
+    <a class="btn-ghost" href="#">ブランドサイトはこちら</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e60039"></div><div class="color-swatch-info"><div class="color-swatch-name">Yakult Red</div><div class="color-swatch-hex">#e60039</div><div class="color-swatch-role">主要 CTA・h2 見出し・ラベルバッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3f7ac3"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue Accent</div><div class="color-swatch-hex">#3f7ac3</div><div class="color-swatch-role">リンク・インフォメーション要素</div></div></div>
+  </div>
+
+  <div class="color-group-label">Category Surfaces</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fbf6ec"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Cream</div><div class="color-swatch-hex">#fbf6ec</div><div class="color-swatch-role">食品・飲料カテゴリ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff2f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Pink</div><div class="color-swatch-hex">#fff2f5</div><div class="color-swatch-role">化粧品カテゴリ面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">h3 サブタイトル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#323232"></div><div class="color-swatch-info"><div class="color-swatch-name">Primary Text</div><div class="color-swatch-hex">#323232</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6e6e6e"></div><div class="color-swatch-info"><div class="color-swatch-name">Secondary Text</div><div class="color-swatch-hex">#6e6e6e</div><div class="color-swatch-role">ナビ・補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Tertiary Text</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">日付・タグ文字</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Neutral Surface</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">タグ・フィルター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・カード背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0033"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0033</div><div class="color-swatch-role">エラー・削除（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#16a34a"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#16a34a</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d97706"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d97706</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:36px; font-weight:700; line-height:1.5; color:#e60039;">人も地球も健康に。 -- Section H2</div>
+    <div class="type-meta">36px / 700 / line-height 1.5 / color #e60039<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.5; color:#000; border-left:4px solid #e60039; padding-left:12px;">乳酸菌シロタ株のはたらき -- Sub H3</div>
+    <div class="type-meta">24px / 700 / line-height 1.5 / color #000 / border-left 4px solid #e60039<span class="type-context">サブセクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:19px; font-weight:700; line-height:1.58; letter-spacing:-0.067em; color:#6e6e6e;">食品・飲料カテゴリ -- Nav Mega</div>
+    <div class="type-meta">19px / 700 / line-height 1.58 / letter-spacing -0.067em / color #6e6e6e<span class="type-context">メガメニュー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:500; line-height:1.5; color:#323232;">本文テキスト -- ヤクルトは、人々の健康を願い、乳酸菌の研究を続けてきました。「代田イズム」の精神を受け継ぎ、科学に裏付けられた製品を世界中に届けています。腸内環境の研究から生まれた乳酸菌 シロタ株は、生きたまま腸に届く力を持っています。日本語の組版において weight 500（Medium）による可読性の高い本文を実現しています。</div>
+    <div class="type-meta">16px / 500 / line-height 1.5 / color #323232<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:700; line-height:2.14; color:#6e6e6e;">グローバルナビ -- Nav Link</div>
+    <div class="type-meta">14px / 700 / line-height 2.14 (30px) / color #6e6e6e<span class="type-context">ナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:500; line-height:1.5; color:#333;">2026.05.31 -- Date</div>
+    <div class="type-meta">14px / 500 / line-height 1.5 / color #333333<span class="type-context">日付</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="display:inline-block; font-size:13px; font-weight:600; line-height:30px; color:#fff; background:#e60039; padding:4px 12px; border-radius:4px 4px 0 0;">新着情報 -- Label Badge</div>
+    <div class="type-meta">13px / 600 / line-height 30px / color #fff / bg #e60039 / radius 4px 4px 0 0<span class="type-context">ラベル</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT / ARTICLE -->
+<section class="section-warm cream" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product</div>
+  <h2 class="section-title">本文組版サンプル</h2>
+  <div class="article-preview">
+    <h1>人も地球も健康に。</h1>
+    <p>ヤクルトは創始者 代田 稳のもと、予防医学の実現を目指して設立されました。乳酸菌の研究から生まれた独自の菌株を活用し、世界40の国と地域で事業を展開しています。</p>
+
+    <h2>乳酸菌シロタ株の特長</h2>
+    <p>乳酸菌 シロタ株（L. paracasei Shirota）は、胃液や胆汁にも負けず、生きたまま腸に届く強さを持っています。腸内の有用菌を増やし、有害菌を減らすことで、腸内フローラのバランスを整えます。</p>
+
+    <h3>研究開発へのこだわり</h3>
+    <p>ヤクルト中央研究所では、乳酸菌・ビフィズス菌をはじめとする微生物の研究を行い、エビデンスに基づいた製品開発を行っています。</p>
+
+    <div class="article-callout">
+      <strong>代田イズム：</strong>「予防医学」「健腸長寿」「誰もが手に入れられる価格で」。この三つの理念が、ヤクルトのすべての活動の原点です。
+    </div>
+
+    <p class="helper">※ 本ページはデザインシステムのプレビューです。実際の製品情報は yakult.co.jp をご確認ください。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT CARDS -->
+<section class="section">
+  <div class="section-label">04 / Product Cards</div>
+  <h2 class="section-title">商品カード</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-image cream" style="font-size:64px;">&#x1F95B;</div>
+      <div class="product-card-body">
+        <span class="product-card-category">乳製品</span>
+        <h3>Yakult 1000</h3>
+        <p>1本（100ml）に乳酸菌 シロタ株が1000億個。機能性表示食品として一時的な精神的ストレスを和らげる機能が報告されています。</p>
+        <a class="product-card-link" href="#">製品詳細 &rarr;</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image cream" style="font-size:64px;">&#x1F376;</div>
+      <div class="product-card-body">
+        <span class="product-card-category">飲料</span>
+        <h3>ジョア</h3>
+        <p>果汁とカルシウムを加えた飲むヨーグルト。毎日の栄養補給に手軽でおいしい乳酸菌飲料です。</p>
+        <a class="product-card-link" href="#">製品詳細 &rarr;</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image pink" style="font-size:64px;">&#x2728;</div>
+      <div class="product-card-body">
+        <span class="product-card-category">化粧品</span>
+        <h3>パラビオ</h3>
+        <p>ヤクルトが乳酸菌の研究で培った知見を化粧品に応用。S.E. ローションをはじめ、肌本来の力を引き出すスキンケアライン。</p>
+        <a class="product-card-link" href="#">製品詳細 &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">お問い合わせはこちら</a><div class="button-label">Primary CTA -- Pill / #e60039 / r50</div></div>
+    <div class="button-item"><a class="btn-primary-sm" href="#">企業情報</a><div class="button-label">Primary Small -- Pill / #e60039 / r20</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">ブランドサイトはこちら</a><div class="button-label">Ghost -- Outline Pill / r40</div></div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Tags / Badges</div>
+    <div class="badge-row">
+      <span class="label-badge">新着情報</span>
+      <span class="tag">乳製品</span>
+      <span class="tag">飲料</span>
+      <span class="tag">化粧品</span>
+      <span style="display:inline-flex; align-items:center; background:var(--yakult-red); color:#fff; padding:4px 12px; border-radius:4px; font-size:12px; font-weight:700;">NEW</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">06 / Cards -- Category Surfaces</div>
+  <h2 class="section-title">カテゴリカード</h2>
+  <div class="card-grid">
+    <div class="category-card cream">
+      <h3>食品・飲料</h3>
+      <p>乳酸菌飲料「ヤクルト」シリーズをはじめ、ジョアやソフール等、毎日の健康をサポートする食品・飲料ラインナップ。ウォームクリーム面で温かみを表現。</p>
+      <a class="category-card-link" href="#">カテゴリ一覧 &rarr;</a>
+    </div>
+    <div class="category-card pink">
+      <h3>化粧品</h3>
+      <p>乳酸菌の研究から生まれたスキンケアブランド。パラビオやリベシィ等、科学に基づいた美容製品。ウォームピンク面で華やかさを表現。</p>
+      <a class="category-card-link" href="#">カテゴリ一覧 &rarr;</a>
+    </div>
+    <div class="category-card neutral">
+      <h3>企業情報</h3>
+      <p>ヤクルトの企業理念、CSR活動、IR情報、採用情報等。ニュートラルサーフェスでコーポレートトーンを表現。</p>
+      <a class="category-card-link" href="#">企業情報 &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-warm cream" id="forms">
+<div class="section-inner">
+  <div class="section-label">07 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" placeholder="例：山田 太郎">
+      <div class="form-state-label">Default -- border #ccc / radius 4px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="info@yakult.example">
+      <div class="form-state-label">Focus -- border #e60039 / shadow 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">正しい電話番号を入力してください</div>
+      <div class="form-state-label">Error -- border #cc0033 / shadow 3px</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">08 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし -- 基本</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 16px 40px rgba(0,0,0,0.10)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">09 / Layout</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:20px"></div>
+      <div class="spacing-name">CTA Small</div>
+      <div class="spacing-value">20px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:40px"></div>
+      <div class="spacing-name">CTA Medium</div>
+      <div class="spacing-value">40px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:50px"></div>
+      <div class="spacing-name">CTA Large</div>
+      <div class="spacing-value">50px</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.yakult.co.jp/">yakult.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-05-31）<br>
+  ※ 実サイトはシステムフォントスタック。本プレビューでは表示の一貫性のため <strong>Noto Sans JP</strong> を代替フォントとして使用しています。
+</footer>
+
+</body>
+</html>
