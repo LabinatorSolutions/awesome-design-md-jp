@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: TAKEO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --text-primary: #161f20;
+    --text-sub: #2f2f2f;
+    --text-muted: #bebebe;
+    --text-white: #ffffff;
+
+    --bg-white: #ffffff;
+    --surface-light: #f6f6f6;
+    --surface-input: #fefefe;
+    --surface-grey: #707070;
+    --surface-dark: rgba(0, 0, 0, 0.7);
+    --border: #e3e3e3;
+
+    --font-base: Inter, "Zen Kaku Gothic New", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px; height: 72px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-size: 14px; font-weight: 300; letter-spacing: 0.1em;
+    color: var(--text-primary); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none; letter-spacing: 0.05em; }
+
+  .hero {
+    padding: 120px 60px 100px;
+    text-align: center;
+    background: var(--bg-white);
+  }
+  .hero h1 {
+    font-size: 26px; font-weight: 300; line-height: 1.85;
+    letter-spacing: 0.08em; margin-bottom: 32px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 300; line-height: 2.19;
+    letter-spacing: 0.09em; max-width: 640px; margin: 0 auto;
+    color: var(--text-primary);
+  }
+
+  .section { padding: 80px 60px; max-width: 1200px; margin: 0 auto; }
+  .section-surface { background: var(--surface-light); }
+  .section-title {
+    font-size: 26px; font-weight: 300; line-height: 1.0;
+    letter-spacing: 0.01em; margin-bottom: 8px;
+  }
+  .section-subtitle {
+    font-size: 14px; font-weight: 300; letter-spacing: 0.05em;
+    color: var(--text-sub); margin-bottom: 48px;
+  }
+
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; border: 1px solid var(--border); }
+  .color-swatch-block { height: 80px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 300; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+
+  .type-sample { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 12px; }
+
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+  .product-card { text-decoration: none; color: var(--text-primary); }
+  .product-card-image {
+    height: 200px; background: var(--surface-light);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 14px; margin-bottom: 16px;
+  }
+  .product-card h3 { font-size: 16px; font-weight: 300; line-height: 1.5; margin-bottom: 8px; letter-spacing: 0.05em; }
+  .product-card p { font-size: 14px; font-weight: 300; line-height: 2.0; letter-spacing: 0.06em; color: var(--text-sub); }
+
+  .button-row { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; color: var(--text-muted); margin-top: 12px; font-family: var(--font-mono); }
+  .btn-cookie {
+    display: inline-block; background: #000000; color: #ffffff;
+    padding: 6px 24px; border-radius: 5px; border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    cursor: pointer;
+  }
+  .btn-text {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 8px 0; border: none; border-bottom: 1px solid var(--text-primary);
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    letter-spacing: 0.05em; cursor: pointer; text-decoration: none;
+  }
+  .btn-text-arrow::after { content: " →"; }
+
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 300; margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--surface-input); color: var(--text-primary);
+    border: none; border-bottom: 1px solid var(--border);
+    padding: 12px 0 12px 46px; font-family: var(--font-base); font-size: 14px;
+    font-weight: 300; outline: none; letter-spacing: 0.05em;
+  }
+  .form-input:focus, .form-input--focus { border-bottom-color: var(--text-primary); }
+  .form-state { font-size: 11px; color: var(--text-muted); margin-top: 6px; font-family: var(--font-mono); }
+
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--text-primary); opacity: 0.2; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  .footer {
+    padding: 64px 60px 40px;
+    text-align: center; font-size: 11px; line-height: 1.4;
+    letter-spacing: 0.1em; color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .nav { padding: 0 20px; }
+    .hero { padding: 80px 20px 60px; }
+    .section { padding: 56px 20px; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">TAKEO</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>ともに創造する、よろこび。</h1>
+  <p>紙は、人にとってどんな存在になれるだろう。1899年の創業以来、竹尾はファインペーパーの開発と提供において豊富な知識と経験を培ってきました。</p>
+</section>
+
+<section class="section" id="colors">
+  <div class="section-title">COLORS</div>
+  <div class="section-subtitle">カラーパレット</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #161f20;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Primary</div>
+        <div class="color-swatch-hex">#161f20</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #2f2f2f;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Sub</div>
+        <div class="color-swatch-hex">#2f2f2f</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #bebebe;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Text Muted</div>
+        <div class="color-swatch-hex">#bebebe</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #ffffff; border: 1px solid #e3e3e3;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Background</div>
+        <div class="color-swatch-hex">#ffffff</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #f6f6f6;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface Light</div>
+        <div class="color-swatch-hex">#f6f6f6</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #707070;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Surface Grey</div>
+        <div class="color-swatch-hex">#707070</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #e3e3e3;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">Border</div>
+        <div class="color-swatch-hex">#e3e3e3</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-block" style="background: #000000;"></div>
+      <div class="color-swatch-info">
+        <div class="color-swatch-name">CTA (Cookie)</div>
+        <div class="color-swatch-hex">#000000</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-surface" id="typography">
+  <div class="section-title">TYPOGRAPHY</div>
+  <div class="section-subtitle">タイポグラフィ</div>
+
+  <div class="type-sample">
+    <p style="font-size: 26px; font-weight: 300; line-height: 1.85; letter-spacing: 0.08em;">ともに創造する、よろこび。</p>
+    <div class="type-meta">Section Title — 26px / weight 300 / line-height 1.85 / letter-spacing 0.08em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 26px; font-weight: 400; line-height: 1.0; letter-spacing: 0.01em;"><span style="font-weight: 400;">SERVICES</span><span style="font-weight: 300; letter-spacing: 0.01em;">事業紹介</span></p>
+    <div class="type-meta">English + Japanese Title — 26px / weight 400+300 / line-height 1.0 / letter-spacing 0.01em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 21px; font-weight: 300; line-height: 2.14; letter-spacing: 0.05em;">ファインペーパー</p>
+    <div class="type-meta">Sub Heading — 21px / weight 300 / line-height 2.14 / letter-spacing 0.05em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 16px; font-weight: 300; line-height: 2.19; letter-spacing: 0.09em;">紙は、人にとってどんな存在になれるだろう。デジタル化が進む時代にあっても、紙には紙でしか伝えられない価値があります。</p>
+    <div class="type-meta">Body Copy — 16px / weight 300 / line-height 2.19 / letter-spacing 0.09em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 16px; font-weight: 300; line-height: 1.4; letter-spacing: 0.05em;">1899年の創業以来、竹尾はファインペーパーの開発と提供において豊富な知識と経験を培ってきました。</p>
+    <div class="type-meta">Body Default — 16px / weight 300 / line-height 1.4 / letter-spacing 0.05em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 14px; font-weight: 500; line-height: 1.4; letter-spacing: 0.05em;">竹尾について</p>
+    <div class="type-meta">Nav — 14px / weight 500 / line-height 1.4 / letter-spacing 0.05em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 14px; font-weight: 300; line-height: 2.86; letter-spacing: 0.1em;">経営理念</p>
+    <div class="type-meta">Sub Nav — 14px / weight 300 / line-height 2.86 / letter-spacing 0.1em</div>
+  </div>
+
+  <div class="type-sample">
+    <p style="font-size: 11px; font-weight: 300; line-height: 1.4; letter-spacing: 0.1em;">株式会社 竹尾 ©︎ TAKEO CO., LTD</p>
+    <div class="type-meta">Footer — 11px / weight 300 / line-height 1.4 / letter-spacing 0.1em</div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="section-title">PRODUCTS</div>
+  <div class="section-subtitle">紙製品サンプル</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-card-image">Fine Paper</div>
+      <h3>NTラシャ</h3>
+      <p>豊富な色数と心地よい手触りで長年愛される定番ファインペーパー。表面に微妙な凹凸があり、印刷適性にも優れています。</p>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image">Fine Paper</div>
+      <h3>ヴァンヌーボ</h3>
+      <p>印刷再現性の高さと紙肌のバランスを追求した、コミュニケーションツールに最適なファインペーパー。</p>
+    </div>
+    <div class="product-card">
+      <div class="product-card-image">Fine Paper</div>
+      <h3>タント</h3>
+      <p>200色の豊富なカラーバリエーション。表裏同色で、折り加工やパッケージに適しています。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-surface" id="buttons">
+  <div class="section-title">BUTTONS</div>
+  <div class="section-subtitle">ボタン</div>
+  <div class="button-row">
+    <div class="button-item">
+      <button class="btn-cookie">同意します</button>
+      <div class="button-label">Cookie CTA (唯一の塗りボタン)</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text btn-text-arrow" href="#">詳しく見る</a>
+      <div class="button-label">Text Link (標準CTA)</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text" href="#">お知らせ一覧</a>
+      <div class="button-label">Text Link (下線)</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-title">FORMS</div>
+  <div class="section-subtitle">フォーム</div>
+  <div class="form-group">
+    <label class="form-label">検索</label>
+    <input class="form-input" type="text" placeholder="キーワードを入力">
+    <div class="form-state">Default</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">検索</label>
+    <input class="form-input form-input--focus" type="text" value="ファインペーパー">
+    <div class="form-state">Focus</div>
+  </div>
+</section>
+
+<section class="section section-surface" id="layout">
+  <div class="section-title">LAYOUT</div>
+  <div class="section-subtitle">スペーシング</div>
+  <div class="spacing-row">
+    <div class="spacing-item">
+      <div class="spacing-block" style="width: 6px; height: 6px;"></div>
+      <div class="spacing-value">6px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width: 16px; height: 16px;"></div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width: 32px; height: 32px;"></div>
+      <div class="spacing-value">32px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width: 60px; height: 32px;"></div>
+      <div class="spacing-value">60px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width: 100px; height: 32px;"></div>
+      <div class="spacing-value">100px</div>
+    </div>
+    <div class="spacing-item">
+      <div class="spacing-block" style="width: 160px; height: 32px;"></div>
+      <div class="spacing-value">160px</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>株式会社 竹尾 ©︎ TAKEO CO., LTD — Design System Preview</p>
+</footer>
+
+</body>
+</html>
