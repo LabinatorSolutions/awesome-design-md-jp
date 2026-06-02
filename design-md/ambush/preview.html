@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: AMBUSH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Replica (Lineto) はライセンスフォント。Google Fonts の Inter で代替 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === AMBUSH Color Tokens (実測値) === */
+    --black: #000000;
+    --white: #ffffff;
+    --off-white: #fafafa;            /* --color-white */
+    --ambush-red: #FF3A32;           /* --ambushRed */
+    --ambush-gray: #808080;          /* --ambushGray */
+    --ambush-light-gray: #f5f5f5;    /* --ambushLightGray */
+    --color-accent: #d4d4d4;
+    --color-lightest-grey: #f2f2f2;
+    --color-light-grey: #e2e2e2;
+    --color-medium-grey: #666666;
+    --color-grey: #cccccc;
+    --color-error: #990000;
+    --color-error-area: #ECCACB;
+    --border-default: #a5a5a5;
+    --black-1a: #1a1a1a;
+
+    /* === Spacing === */
+    --space-xxs: 4px;
+    --space-xs: 8px;
+    --space-small: 16px;
+    --space-medium: 24px;
+    --space-large: 32px;
+    --space-xl: 40px;
+    --space-xxl: 48px;
+    --space-xxxl: 56px;
+
+    /* === Typography === */
+    --font-base: "Inter", hiragino-kaku-gothic-pron, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+    --line-height-body: 1.3;
+    --line-height-rate: 0.8;
+    --letter-spacing: 0.02em;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-base);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 var(--space-large); height: 56px;
+    background: var(--white);
+    border-bottom: 1px solid var(--color-light-grey);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 27.5px; font-weight: 400;
+    color: var(--black); text-decoration: none;
+    letter-spacing: var(--letter-spacing);
+    line-height: var(--line-height-body);
+  }
+  .nav-links { display: flex; gap: var(--space-large); list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 400;
+    color: var(--black); text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+  }
+  .nav-links a:hover { opacity: 0.5; }
+
+  /* HERO */
+  .hero {
+    padding: 120px var(--space-large) 100px;
+    text-align: center;
+    background: var(--white);
+  }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 400;
+    color: var(--ambush-gray);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    margin-bottom: var(--space-xl);
+  }
+  .hero h1 {
+    font-size: 27.5px; font-weight: 400;
+    line-height: var(--line-height-body);
+    color: var(--black); margin-bottom: var(--space-xl);
+    letter-spacing: var(--letter-spacing);
+    text-transform: uppercase;
+  }
+  .hero p {
+    font-size: 12px; font-weight: 400;
+    line-height: var(--line-height-body);
+    color: var(--ambush-gray);
+    max-width: 480px; margin: 0 auto var(--space-xl);
+  }
+  .hero-buttons { display: flex; gap: var(--space-small); justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-block; background: var(--black); color: var(--white);
+    padding: 12px 24px; border-radius: 5px;
+    border: 1px solid var(--black);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-block; background: transparent; color: var(--black);
+    padding: 12px 24px; border-radius: 5px;
+    border: 1px solid var(--black);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-secondary:hover { opacity: 0.5; }
+  .btn-tertiary {
+    display: inline-block; background: var(--white); color: var(--black);
+    padding: 12px 24px; border-radius: 0;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-tertiary:hover { opacity: 0.5; }
+  .btn-newsletter {
+    display: inline-block; background: transparent; color: var(--black);
+    padding: 12px 24px; border-radius: 5px;
+    border: 1px solid var(--black);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px var(--space-large); max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 12px; font-weight: 400;
+    color: var(--ambush-gray);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    margin-bottom: var(--space-xs);
+  }
+  .section-title {
+    font-size: 12px; font-weight: 400;
+    color: var(--black);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    margin-bottom: var(--space-xxl);
+  }
+  .section-divider { border: none; height: 1px; background: var(--color-light-grey); margin: 0; }
+  .section-surface { background: var(--ambush-light-gray); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: var(--space-medium); }
+  .color-swatch { background: var(--white); overflow: hidden; border: 1px solid var(--color-light-grey); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 400; margin-bottom: 2px; color: var(--black); }
+  .color-swatch-hex { font-size: 11px; color: var(--ambush-gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--ambush-gray); margin-top: 3px; }
+  .color-group-label {
+    font-size: 12px; font-weight: 400;
+    color: var(--ambush-gray);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    margin: var(--space-medium) 0 10px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: var(--space-large); padding-bottom: var(--space-medium); border-bottom: 1px solid var(--color-light-grey); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--ambush-gray); margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--ambush-light-gray); color: var(--ambush-gray); font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-small); }
+  .product-card {
+    background: var(--white); padding: 0;
+    text-decoration: none; color: var(--black);
+  }
+  .product-card:hover { opacity: 0.8; }
+  .product-card-image {
+    aspect-ratio: 1 / 1;
+    background: var(--ambush-light-gray);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ambush-gray);
+    font-size: 12px; text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+  }
+  .product-card-body { padding: var(--space-small) 0; }
+  .product-card h3 {
+    font-size: 12px; font-weight: 400;
+    line-height: var(--line-height-body);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xxs);
+  }
+  .product-card .price {
+    font-size: 12px; font-weight: 400;
+    color: var(--ambush-gray);
+  }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: var(--space-medium); flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--ambush-gray); margin-top: 12px; font-family: var(--font-mono); }
+
+  /* ARTICLE */
+  .article-block { max-width: 600px; }
+  .article-block h2 {
+    font-size: 12px; font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: var(--space-medium);
+    letter-spacing: var(--letter-spacing);
+  }
+  .article-block p {
+    font-size: 12px; font-weight: 400;
+    line-height: var(--line-height-body);
+    color: var(--black);
+    margin-bottom: var(--space-small);
+  }
+  .article-block .meta {
+    font-size: 12px; color: var(--ambush-gray);
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label {
+    display: block; font-size: 12px; font-weight: 400;
+    color: var(--black); margin-bottom: var(--space-xs);
+    text-transform: uppercase;
+  }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--color-grey); padding: 12px 16px; border-radius: 0;
+    font-family: var(--font-base); font-size: 12px;
+    letter-spacing: var(--letter-spacing);
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--black); }
+  .form-input--error { border-color: var(--color-error); }
+  .form-state-label { font-size: 11px; color: var(--ambush-gray); margin-top: 6px; font-family: var(--font-mono); }
+  .form-error-text { font-size: 11px; color: var(--color-error); margin-top: 6px; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: var(--space-small); flex-wrap: wrap; margin-bottom: var(--space-medium); }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--black); height: 32px; margin-bottom: var(--space-xs); }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--ambush-gray); }
+
+  /* WIDTH */
+  .width-bar { height: 24px; background: var(--ambush-light-gray); border: 1px solid var(--color-light-grey); margin-bottom: var(--space-xs); }
+  .width-bar-inner { height: 100%; background: var(--black); opacity: 0.15; }
+  .width-bar-label { font-size: 12px; font-weight: 400; color: var(--black); margin-bottom: 4px; text-transform: uppercase; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--ambush-gray); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-medium); }
+  .elevation-card {
+    background: var(--white);
+    border: 1px solid var(--color-light-grey);
+    padding: var(--space-medium);
+    text-align: center;
+  }
+  .elevation-label { font-size: 12px; color: var(--black); text-transform: uppercase; margin-bottom: var(--space-xs); }
+  .elevation-desc { font-size: 11px; color: var(--ambush-gray); font-family: var(--font-mono); }
+
+  /* FOOTER */
+  .footer {
+    padding: var(--space-xxxl) var(--space-large) var(--space-xl);
+    background: var(--black);
+    color: var(--ambush-gray);
+    text-align: center;
+    font-size: 12px;
+    line-height: var(--line-height-body);
+  }
+  .footer a { color: var(--ambush-gray); text-decoration: underline; }
+  .footer a:hover { color: var(--white); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: 80px 20px 60px; }
+    .hero h1 { font-size: 20px; }
+    .section { padding: var(--space-xxxl) 20px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">AMBUSH</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">design system preview</div>
+  <h1>AMBUSH</h1>
+  <p>ambushdesign.com から抽出したデザイントークンのカタログ。Replica + ヒラギノ角ゴシック ProN、12px 統一の極小タイポグラフィ、モノクローム + レッドアクセント。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">Shop Now</a>
+    <a class="btn-secondary" href="#">DESIGN.md</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ブランド主軸色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#FF3A32"></div><div class="color-swatch-info"><div class="color-swatch-name">AMBUSH Red</div><div class="color-swatch-hex">#FF3A32</div><div class="color-swatch-role">--ambushRed</div></div></div>
+  </div>
+
+  <div class="color-group-label">text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#808080"></div><div class="color-swatch-info"><div class="color-swatch-name">AMBUSH Gray</div><div class="color-swatch-hex">#808080</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Medium Grey</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">メタ情報・価格</div></div></div>
+  </div>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Off-White</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">--color-white</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">--ambushLightGray</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Lightest Grey</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">入力フィールド</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e2e2e2; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Grey</div><div class="color-swatch-hex">#e2e2e2</div><div class="color-swatch-role">ディバイダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d4d4d4"></div><div class="color-swatch-info"><div class="color-swatch-name">Accent</div><div class="color-swatch-hex">#d4d4d4</div><div class="color-swatch-role">--color-accent</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Grey</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a5a5a5"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#a5a5a5</div><div class="color-swatch-role">VIEW ALL 枠線</div></div></div>
+  </div>
+
+  <div class="color-group-label">semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#990000"></div><div class="color-swatch-info"><div class="color-swatch-name">Error</div><div class="color-swatch-hex">#990000</div><div class="color-swatch-role">--color-error</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ECCACB"></div><div class="color-swatch-info"><div class="color-swatch-name">Error Area</div><div class="color-swatch-hex">#ECCACB</div><div class="color-swatch-role">エラー領域背景</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-surface" style="max-width:none;" id="typography">
+<div class="section-inner">
+  <div class="section-eyebrow">02 / typography</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:27.5px; font-weight:400; line-height:1.3; color:var(--black); letter-spacing:0.02em;">AMBUSH</div>
+    <div class="type-meta">Replica / 27.5px / 400 / line-height: 1.3 / letter-spacing: 0.02em<span class="type-context">Logo</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.3; color:var(--black); text-transform:uppercase; letter-spacing:0.02em;">New Arrivals</div>
+    <div class="type-meta">Replica / 12px / 400 / line-height: 1.3 / uppercase<span class="type-context">Section Title</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.3; color:var(--black); letter-spacing:0.02em; max-width:600px;">AMBUSH is a Tokyo-based label created by VERBAL and YOON. ジュエリー、アパレル、アクセサリーを展開するラグジュアリーブランド。アヴァンギャルドな精神と日本のクラフトマンシップを融合させたデザインが特徴。</div>
+    <div class="type-meta">Replica + hiragino-kaku-gothic-pron / 12px / 400 / line-height: 1.3<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:0.8; color:var(--black); text-transform:uppercase; letter-spacing:0.02em;">Customer Service</div>
+    <div class="type-meta">Replica / 12px / 400 / line-height: 0.8 (--lineHeightRate)<span class="type-context">Footer Heading</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.3; color:var(--ambush-gray); letter-spacing:0.02em;">配送・返品について</div>
+    <div class="type-meta">Replica + hiragino-kaku-gothic-pron / 12px / 400 / color: #808080<span class="type-context">Footer Link</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT -->
+<section class="section" id="article">
+  <div class="section-eyebrow">03 / article</div>
+  <h2 class="section-title">Article Sample</h2>
+
+  <div class="article-block">
+    <h2>Ambush Spring/Summer 2026 Collection</h2>
+    <p>VERBAL と YOON が手がける AMBUSH の 2026 年春夏コレクション。東京のストリートカルチャーとハイジュエリーの伝統を融合させた新しい表現を探求する。チェーンモチーフ、ボリュームのあるシルエット、モノクロームを基調としたパレットが特徴的なシーズン。</p>
+    <p>素材にはスターリングシルバー、18K ゴールド、レザーを採用。すべてのピースは東京のアトリエで職人の手により仕上げられている。</p>
+    <div class="meta">2026.06.01 - Collection</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section section-surface" style="max-width:none;" id="products">
+<div class="section-inner">
+  <div class="section-eyebrow">04 / products</div>
+  <h2 class="section-title">Product Cards</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">POW! Chain Necklace</div>
+      <div class="product-card-body">
+        <h3>POW! Chain Necklace</h3>
+        <div class="price">&yen;132,000</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">Candy Ring</div>
+      <div class="product-card-body">
+        <h3>Candy Ring</h3>
+        <div class="price">&yen;44,000</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">Padlock Earring</div>
+      <div class="product-card-body">
+        <h3>Padlock Earring</h3>
+        <div class="price">&yen;66,000</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">Logo T-Shirt</div>
+      <div class="product-card-body">
+        <h3>Logo T-Shirt</h3>
+        <div class="price">&yen;28,600</div>
+      </div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-top:var(--space-xl);">
+    <a class="btn-tertiary" href="#">View All</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">05 / buttons</div>
+  <h2 class="section-title">Buttons</h2>
+
+  <div class="button-row" style="margin-bottom:var(--space-xl);">
+    <div class="button-item"><a class="btn-primary" href="#">Add to Bag</a><div class="button-label">Primary (5px radius)</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">Continue Shopping</a><div class="button-label">Secondary (5px radius)</div></div>
+    <div class="button-item"><a class="btn-tertiary" href="#">View All</a><div class="button-label">Tertiary (0 radius)</div></div>
+    <div class="button-item"><a class="btn-newsletter" href="#">Sign Up</a><div class="button-label">Newsletter (5px radius)</div></div>
+  </div>
+
+  <div class="color-group-label">accent state</div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#" style="background:var(--ambush-red); border-color:var(--ambush-red);">Sale</a><div class="button-label">AMBUSH Red accent</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section section-surface" style="max-width:none;" id="cards">
+<div class="section-inner">
+  <div class="section-eyebrow">06 / cards</div>
+  <h2 class="section-title">Cards</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:var(--space-medium);">
+    <div style="background:var(--white); border:1px solid var(--color-light-grey); padding:0;">
+      <div style="height:200px; background:var(--ambush-light-gray); display:flex; align-items:center; justify-content:center; color:var(--ambush-gray); font-size:12px; text-transform:uppercase;">Editorial Image</div>
+      <div style="padding:var(--space-medium);">
+        <div style="font-size:12px; text-transform:uppercase; margin-bottom:var(--space-xs);">Spring/Summer 2026</div>
+        <div style="font-size:12px; color:var(--ambush-gray);">View Collection</div>
+      </div>
+    </div>
+    <div style="background:var(--white); border:1px solid var(--color-light-grey); padding:0;">
+      <div style="height:200px; background:var(--ambush-light-gray); display:flex; align-items:center; justify-content:center; color:var(--ambush-gray); font-size:12px; text-transform:uppercase;">Campaign Image</div>
+      <div style="padding:var(--space-medium);">
+        <div style="font-size:12px; text-transform:uppercase; margin-bottom:var(--space-xs);">Collaboration</div>
+        <div style="font-size:12px; color:var(--ambush-gray);">AMBUSH x Nike</div>
+      </div>
+    </div>
+    <div style="background:var(--white); border:1px solid var(--color-light-grey); padding:0;">
+      <div style="height:200px; background:var(--ambush-light-gray); display:flex; align-items:center; justify-content:center; color:var(--ambush-gray); font-size:12px; text-transform:uppercase;">Lookbook Image</div>
+      <div style="padding:var(--space-medium);">
+        <div style="font-size:12px; text-transform:uppercase; margin-bottom:var(--space-xs);">Lookbook</div>
+        <div style="font-size:12px; color:var(--ambush-gray);">Fall/Winter 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">07 / forms</div>
+  <h2 class="section-title">Forms</h2>
+
+  <div class="form-group">
+    <label class="form-label">Email</label>
+    <input class="form-input" type="text" placeholder="you@example.com">
+    <div class="form-state-label">Default -- border 1px solid #cccccc / radius 0</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email</label>
+    <input class="form-input form-input--focus" type="text" value="yoon@ambush.com">
+    <div class="form-state-label">Focus -- border 1px solid #000000</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email</label>
+    <input class="form-input form-input--error" type="text" value="invalid">
+    <div class="form-error-text">Please enter a valid email address</div>
+    <div class="form-state-label">Error -- border 1px solid #990000</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section section-surface" style="max-width:none;" id="elevation">
+<div class="section-inner">
+  <div class="section-eyebrow">08 / elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0</div>
+      <div class="elevation-desc">shadow: none</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--ambush-gray);">すべての要素。AMBUSH は完全フラット</div>
+    </div>
+    <div class="elevation-card" style="border:1px solid var(--black);">
+      <div class="elevation-label">Border Emphasis</div>
+      <div class="elevation-desc">border: 1px solid #000</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--ambush-gray);">シャドウの代わりにボーダーで強調</div>
+    </div>
+    <div class="elevation-card" style="border:none; background:var(--ambush-light-gray);">
+      <div class="elevation-label">Surface Shift</div>
+      <div class="elevation-desc">bg: #f5f5f5</div>
+      <div style="margin-top:12px; font-size:12px; color:var(--ambush-gray);">背景色の変化で奥行きを表現</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-eyebrow">09 / layout</div>
+  <h2 class="section-title">Spacing & Width</h2>
+
+  <div style="font-size:12px; text-transform:uppercase; margin-bottom:var(--space-small);">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px xxs</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px xs</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px sm</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px md</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px lg</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px xl</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">48px xxl</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:56px"></div><div class="spacing-value">56px xxxl</div></div>
+  </div>
+
+  <div style="font-size:12px; text-transform:uppercase; margin:var(--space-large) 0 var(--space-small);">Content Widths</div>
+  <div style="margin-bottom:var(--space-small)"><div class="width-bar-label">Full Bleed <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:var(--space-small)"><div class="width-bar-label">Content Max <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78%"></div></div></div>
+  <div style="margin-bottom:var(--space-small)"><div class="width-bar-label">Article Text <span class="width-bar-value">600px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:42%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://ambushdesign.com/">ambushdesign.com</a> DESIGN.md -- awesome-design-md-jp / computed style (2026-06-02)
+</footer>
+
+</body>
+</html>

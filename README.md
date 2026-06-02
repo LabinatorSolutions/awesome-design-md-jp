@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (285 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (288 sites)</a>
 </p>
 
 <table>
@@ -417,6 +417,9 @@
 <td align="center"><strong>TAKEO</strong><br><img src="design-md/takeo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Sghr</strong><br><img src="design-md/sghr/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TENERITA</strong><br><img src="design-md/tenerita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AMBUSH</strong><br><img src="design-md/ambush/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Clé de Peau</strong><br><img src="design-md/cledepeau/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FANCL</strong><br><img src="design-md/fancl/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -763,11 +766,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [TAKEO (竹尾)](https://www.takeo.co.jp/) | Fine Paper | [DESIGN.md](design-md/takeo/DESIGN.md) | [preview.html](design-md/takeo/preview.html) |
 | [Sghr (菅原工芸硝子)](https://www.sugahara.com/) | Handblown Glass | [DESIGN.md](design-md/sghr/DESIGN.md) | [preview.html](design-md/sghr/preview.html) |
 | [TENERITA (テネリータ)](https://www.tenerita.com/) | Organic Cotton | [DESIGN.md](design-md/tenerita/DESIGN.md) | [preview.html](design-md/tenerita/preview.html) |
+| [AMBUSH (アンブッシュ)](https://www.ambushdesign.com/) | Fashion / Jewelry | [DESIGN.md](design-md/ambush/DESIGN.md) | [preview.html](design-md/ambush/preview.html) |
+| [Clé de Peau Beauté (クレ・ド・ポー ボーテ)](https://www.cledepeau-beaute.com/ja-jp/) | Luxury Beauty | [DESIGN.md](design-md/cledepeau/DESIGN.md) | [preview.html](design-md/cledepeau/preview.html) |
+| [FANCL (ファンケル)](https://www.fancl.co.jp/) | Beauty / Health | [DESIGN.md](design-md/fancl/DESIGN.md) | [preview.html](design-md/fancl/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (285 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (288 sites)</a>
 </p>
 
 <table>
@@ -1150,6 +1156,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>TAKEO</strong><br><img src="design-md/takeo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Sghr</strong><br><img src="design-md/sghr/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TENERITA</strong><br><img src="design-md/tenerita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AMBUSH</strong><br><img src="design-md/ambush/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Clé de Peau</strong><br><img src="design-md/cledepeau/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>FANCL</strong><br><img src="design-md/fancl/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

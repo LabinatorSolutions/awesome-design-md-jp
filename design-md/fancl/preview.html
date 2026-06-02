@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: FANCL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === FANCL Color Tokens (実測値) === */
+    --brand-blue: #1e4d9e;
+    --dark-navy: #072b4d;
+    --cta-blue: #0070c0;
+    --link-blue: #0067cc;
+    --promo-orange: #f0ac00;
+
+    --text-primary: #000000;
+    --text-dark-navy: #00254d;
+    --text-gray: #5c6063;
+    --text-muted: #757575;
+    --text-white: #ffffff;
+
+    --bg-page: #f7fafd;
+    --surface-white: #ffffff;
+    --surface-light-blue: #f1f8ff;
+    --surface-gray: #eff0f4;
+    --inactive-tab: #f0f0f0;
+
+    --border-light: #e8e8e8;
+    --border-input: #cccccc;
+
+    /* === Fonts === */
+    --font-heading: "Zen Kaku Gothic New", sans-serif;
+    --font-base: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3",
+                 "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3",
+                 "Hiragino Maru Gothic ProN", "ヒラギノ丸ゴ ProN W4",
+                 メイリオ, Meiryo, "MS PGothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.4;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--surface-white);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-heading); font-size: 20px; font-weight: 700;
+    color: var(--brand-blue); text-decoration: none; letter-spacing: 0.15em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    color: var(--text-gray); text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--brand-blue); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 72px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--surface-light-blue) 0%, var(--bg-page) 100%);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-heading); font-size: 13px; font-weight: 400;
+    color: var(--text-gray); letter-spacing: 0.30em;
+    margin-bottom: 24px; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-heading); font-size: 28px; font-weight: 400;
+    line-height: 1.6; color: var(--brand-blue);
+    letter-spacing: 0.30em; margin-bottom: 24px;
+  }
+  .hero p {
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    line-height: 1.8; color: var(--text-gray);
+    max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-pill {
+    display: inline-block; background: var(--cta-blue); color: var(--text-white);
+    padding: 10px 28px; border-radius: 30px; border: 1px solid var(--cta-blue);
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-pill:hover { opacity: 0.85; }
+  .btn-pill-inactive {
+    display: inline-block; background: var(--inactive-tab); color: var(--text-gray);
+    padding: 10px 28px; border-radius: 30px; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-pill-inactive:hover { background: #e4e4e4; }
+  .btn-outline-blue {
+    display: inline-block; background: transparent; color: var(--cta-blue);
+    padding: 10px 28px; border-radius: 30px; border: 1px solid var(--cta-blue);
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-outline-blue:hover { background: var(--cta-blue); color: var(--text-white); }
+  .badge-promo {
+    display: inline-block; background: var(--promo-orange); color: var(--text-white);
+    padding: 6px 16px 6px 12px; border-radius: 0 30px 30px 0;
+    font-family: var(--font-base); font-size: 12px; font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* SECTIONS */
+  .section { padding: 72px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 400;
+    color: var(--text-muted); letter-spacing: 0.20em; margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-heading); font-size: 22px; font-weight: 400;
+    color: var(--text-primary); margin-bottom: 40px; line-height: 1.4;
+    letter-spacing: 0.30em;
+  }
+  .section-divider { border: none; height: 1px; background: var(--border-light); margin: 0; }
+  .section-surface-lb { background: var(--surface-light-blue); }
+  .section-surface-gray { background: var(--surface-gray); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .color-swatch { background: var(--surface-white); border-radius: 4px; overflow: hidden; border: 1px solid var(--border-light); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .color-group-label {
+    font-family: var(--font-heading); font-size: 13px; font-weight: 400;
+    color: var(--text-gray); margin: 24px 0 10px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 12px; }
+  .type-context { display: inline-block; background: var(--surface-light-blue); color: var(--brand-blue); font-size: 10px; padding: 2px 8px; margin-left: 8px; border-radius: 3px; }
+
+  /* PRODUCT CARDS */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .product-card {
+    background: var(--surface-white); border: 1px solid var(--border-light); padding: 0;
+    text-decoration: none; color: var(--text-primary); transition: box-shadow 0.2s;
+  }
+  .product-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .product-card-image {
+    height: 200px; background: linear-gradient(135deg, var(--surface-light-blue), var(--bg-page));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-family: var(--font-heading); font-size: 14px;
+    letter-spacing: 0.10em; position: relative;
+  }
+  .product-card-badge {
+    position: absolute; top: 12px; left: 0;
+  }
+  .product-card-body { padding: 16px; }
+  .product-card-category {
+    font-size: 11px; font-weight: 400; color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .product-card h3 {
+    font-family: var(--font-base); font-size: 15px; font-weight: 700;
+    line-height: 1.5; margin-bottom: 8px; color: var(--dark-navy);
+  }
+  .product-card-price {
+    font-size: 16px; font-weight: 700; color: var(--text-primary);
+  }
+  .product-card-price small {
+    font-size: 12px; font-weight: 400; color: var(--text-muted);
+  }
+  .product-card-rating {
+    margin-top: 6px; font-size: 12px; color: var(--promo-orange);
+  }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--dark-navy); margin-bottom: 6px; }
+  .form-required {
+    display: inline-block; background: var(--cta-blue); color: var(--text-white);
+    font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 2px;
+    margin-left: 6px; vertical-align: middle;
+  }
+  .form-input {
+    width: 100%; background: var(--surface-white); color: var(--text-primary);
+    border: 1px solid var(--border-input); padding: 10px 12px; border-radius: 5px;
+    font-family: var(--font-base); font-size: 16px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--cta-blue); box-shadow: 0 0 0 3px rgba(0,112,192,0.12); }
+  .form-input--error { border-color: #d32f2f; }
+  .form-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .form-error { font-size: 12px; color: #d32f2f; margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--surface-white); padding: 32px 24px;
+    text-align: center; border-radius: 0;
+  }
+  .elevation-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .elevation-value { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 8px; word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--cta-blue); height: 32px; margin-bottom: 8px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* WIDTH */
+  .width-bar { height: 28px; background: var(--surface-light-blue); border: 1px solid var(--border-light); margin-bottom: 8px; }
+  .width-bar-inner { height: 100%; background: var(--cta-blue); opacity: 0.25; }
+  .width-bar-label { font-size: 14px; font-weight: 700; color: var(--dark-navy); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 24px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 10px; }
+
+  /* FEATURE BANNER */
+  .feature-banner {
+    padding: 72px 32px;
+    background: var(--surface-light-blue);
+    text-align: center;
+  }
+  .feature-banner h2 {
+    font-family: var(--font-heading); font-size: 24px; font-weight: 400;
+    color: var(--brand-blue); letter-spacing: 0.30em; line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .feature-banner p {
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    color: var(--text-gray); line-height: 1.8; max-width: 560px; margin: 0 auto;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px 32px;
+    background: var(--dark-navy);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    font-size: 12px; line-height: 1.6;
+  }
+  .footer a { color: rgba(255,255,255,0.7); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 20px; letter-spacing: 0.15em; }
+    .section-title { font-size: 18px; letter-spacing: 0.15em; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .color-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">FANCL</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">design system preview</div>
+  <h1>正直品質。</h1>
+  <p>FANCL（fancl.co.jp）から抽出したデザイントークンのカタログ。Zen Kaku Gothic New + ヒラギノ角ゴ、広い letter-spacing、ブルー基調の清潔感。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-pill" href="#">スキンケアを見る</a>
+    <a class="btn-outline-blue" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">brand / action</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1e4d9e"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Blue</div><div class="color-swatch-hex">#1e4d9e</div><div class="color-swatch-role">Zen Kaku 見出し色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#072b4d"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">#072b4d</div><div class="color-swatch-role">システムフォント見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0070c0"></div><div class="color-swatch-info"><div class="color-swatch-name">CTA Blue</div><div class="color-swatch-hex">#0070c0</div><div class="color-swatch-role">pill ボタン、CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0067cc"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Blue</div><div class="color-swatch-hex">#0067cc</div><div class="color-swatch-role">テキストリンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0ac00"></div><div class="color-swatch-info"><div class="color-swatch-name">Promo Orange</div><div class="color-swatch-hex">#f0ac00</div><div class="color-swatch-role">プロモバッジ、特価ラベル</div></div></div>
+  </div>
+
+  <div class="color-group-label">text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00254d"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark Navy</div><div class="color-swatch-hex">#00254d</div><div class="color-swatch-role">強調テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5c6063"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Gray</div><div class="color-swatch-hex">#5c6063</div><div class="color-swatch-role">ナビ、非アクティブタブ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#757575"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#757575</div><div class="color-swatch-role">検索、補足テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7fafd; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#f7fafd</div><div class="color-swatch-role">ページ背景（ブルーホワイト）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード、モーダル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f8ff; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light Blue</div><div class="color-swatch-hex">#f1f8ff</div><div class="color-swatch-role">プロモセクション bg</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eff0f4; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#eff0f4</div><div class="color-swatch-role">カテゴリヘッダー bg</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Inactive Tab</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">非アクティブタブ bg</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section section-surface-lb" style="max-width:none;" id="typography">
+<div class="section-inner">
+  <div class="section-eyebrow">02 / typography</div>
+  <h2 class="section-title">Typography</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:16px; font-weight:700; line-height:1.4; letter-spacing:0.44em; color:#1e4d9e;">無添加スキンケア</div>
+    <div class="type-meta">Zen Kaku Gothic New / 16px / 700 / letter-spacing: 0.44em (7px) / color: #1e4d9e<span class="type-context">ヒーロー見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:24px; font-weight:400; line-height:1.4; letter-spacing:0.30em; color:#000000;">うるおい美肌へのこだわり</div>
+    <div class="type-meta">Zen Kaku Gothic New / 24px / 400 / letter-spacing: 0.30em (7px) / color: #000000<span class="type-context">セクションタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:22px; font-weight:400; line-height:1.4; letter-spacing:0.30em; color:#000000;">商品ラインナップ</div>
+    <div class="type-meta">Zen Kaku Gothic New / 22px / 400 / letter-spacing: 0.30em (6.6px) / color: #000000<span class="type-context">サブセクションタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:22px; font-weight:700; line-height:1.4; color:#072b4d;">スキンケア・基礎化粧品</div>
+    <div class="type-meta">System Stack / 22px / 700 / letter-spacing: normal / color: #072b4d<span class="type-context">エリア見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-heading); font-size:18px; font-weight:700; line-height:1.4; letter-spacing:0.11em; color:#1e4d9e; background:var(--surface-light-blue); padding:12px 16px; display:inline-block;">人気のセットをチェック</div>
+    <div class="type-meta">Zen Kaku Gothic New / 18px / 700 / letter-spacing: 0.11em (2px) / color: #1e4d9e / bg: #f1f8ff<span class="type-context">プロモ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:700; line-height:1.4; color:#072b4d; background:var(--surface-gray); padding:8px 12px; display:inline-block;">化粧液・美容液</div>
+    <div class="type-meta">System Stack / 16px / 700 / letter-spacing: normal / color: #072b4d / bg: #eff0f4<span class="type-context">カテゴリラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.4; color:#000000; max-width:640px;">ファンケルの「無添加」は、防腐剤・香料・合成色素・石油系界面活性剤・紫外線吸収剤を一切使っていません。肌本来の美しさを引き出すスキンケアをお届けします。</div>
+    <div class="type-meta">System Stack / 16px / 400 / line-height: 1.4 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.4; color:#5c6063;">スキンケア | サプリメント | ボディケア</div>
+    <div class="type-meta">System Stack / 16px / 400 / color: #5c6063<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12.32px; font-weight:400; line-height:1.4; color:#757575;">エイジングケア・美白</div>
+    <div class="type-meta">System Stack / 12.32px / 400 / color: #757575<span class="type-context">小カテゴリ</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FEATURE BANNER -->
+<section class="feature-banner">
+  <h2>肌にやさしい、正直品質。</h2>
+  <p>防腐剤・香料・合成色素・石油系界面活性剤・紫外線吸収剤を一切使わない「無添加」。ファンケルは、肌本来の美しさを引き出すスキンケアをお届けします。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-eyebrow">03 / products</div>
+  <h2 class="section-title">Product Cards</h2>
+
+  <div class="product-grid">
+    <a class="product-card" href="#">
+      <div class="product-card-image">
+        <span>Mild Cleansing Oil</span>
+        <div class="product-card-badge"><span class="badge-promo">BEST SELLER</span></div>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-category">スキンケア > クレンジング</div>
+        <h3>マイルドクレンジング オイル</h3>
+        <div class="product-card-price">1,870<small>円（税込）</small></div>
+        <div class="product-card-rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.7</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">
+        <span>Enrich Plus</span>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-category">スキンケア > 化粧液</div>
+        <h3>エンリッチプラス 化粧液 II しっとり</h3>
+        <div class="product-card-price">1,870<small>円（税込）</small></div>
+        <div class="product-card-rating">&#9733;&#9733;&#9733;&#9733;&#9734; 4.5</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">
+        <span>Deep Charge Collagen</span>
+        <div class="product-card-badge"><span class="badge-promo">限定セット</span></div>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-category">サプリメント > 美容</div>
+        <h3>ディープチャージ コラーゲン 30日分</h3>
+        <div class="product-card-price">1,717<small>円（税込）</small></div>
+        <div class="product-card-rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.8</div>
+      </div>
+    </a>
+    <a class="product-card" href="#">
+      <div class="product-card-image">
+        <span>Calorie Limit</span>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-category">サプリメント > ダイエット</div>
+        <h3>カロリミット 30回分</h3>
+        <div class="product-card-price">1,563<small>円（税込）</small></div>
+        <div class="product-card-rating">&#9733;&#9733;&#9733;&#9733;&#9734; 4.3</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section section-surface-lb" style="max-width:none;" id="buttons">
+<div class="section-inner">
+  <div class="section-eyebrow">04 / buttons</div>
+  <h2 class="section-title">Buttons</h2>
+
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-pill" href="#">カートに入れる</a>
+      <div class="button-label">Pill Active (30px)</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-pill-inactive" href="#">サプリメント</a>
+      <div class="button-label">Pill Inactive (30px)</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-outline-blue" href="#">商品一覧を見る</a>
+      <div class="button-label">Outline Pill (30px)</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="color-group-label">badges</div>
+    <div class="button-row">
+      <div class="button-item">
+        <span class="badge-promo">BEST SELLER</span>
+        <div class="button-label">Promo Badge (半pill / 右のみ丸い)</div>
+      </div>
+      <div class="button-item">
+        <span class="badge-promo">限定セット</span>
+        <div class="button-label">Promo Badge (日本語)</div>
+      </div>
+      <div class="button-item">
+        <span class="badge-promo">この商品も一緒にいかがですか</span>
+        <div class="button-label">Cross-sell Badge</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="color-group-label">tab group</div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <a class="btn-pill" href="#" style="font-size:13px; padding:8px 20px;">すべて</a>
+      <a class="btn-pill-inactive" href="#" style="font-size:13px; padding:8px 20px;">スキンケア</a>
+      <a class="btn-pill-inactive" href="#" style="font-size:13px; padding:8px 20px;">サプリメント</a>
+      <a class="btn-pill-inactive" href="#" style="font-size:13px; padding:8px 20px;">ボディケア</a>
+      <a class="btn-pill-inactive" href="#" style="font-size:13px; padding:8px 20px;">メイク</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-eyebrow">05 / cards</div>
+  <h2 class="section-title">Cards</h2>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+    <!-- Info Card -->
+    <div style="background:var(--surface-white); border:1px solid var(--border-light); padding:24px;">
+      <div style="font-family:var(--font-heading); font-size:18px; font-weight:700; color:var(--brand-blue); letter-spacing:0.11em; margin-bottom:12px;">無添加へのこだわり</div>
+      <div style="font-size:14px; line-height:1.7; color:var(--text-primary);">ファンケルの「無添加」は、防腐剤・香料・合成色素・石油系界面活性剤・紫外線吸収剤を使っていません。</div>
+      <div style="margin-top:16px;"><a href="#" style="color:var(--link-blue); font-size:14px; text-decoration:none;">詳しく見る &rarr;</a></div>
+    </div>
+    <!-- Promo Card -->
+    <div style="background:var(--surface-light-blue); border:1px solid rgba(30,77,158,0.12); padding:24px;">
+      <div style="font-family:var(--font-heading); font-size:18px; font-weight:700; color:var(--brand-blue); letter-spacing:0.11em; margin-bottom:12px;">初回限定 お試しセット</div>
+      <div style="font-size:14px; line-height:1.7; color:var(--text-primary);">はじめてのお客様限定。人気のスキンケア3点セットを特別価格でお届けします。</div>
+      <div style="margin-top:16px;"><a class="btn-pill" href="#" style="font-size:13px; padding:8px 24px;">お試しセットを見る</a></div>
+    </div>
+    <!-- Category Card -->
+    <div style="background:var(--surface-gray); padding:24px;">
+      <div style="font-family:var(--font-base); font-size:16px; font-weight:700; color:var(--dark-navy); margin-bottom:12px;">カテゴリから探す</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <a class="btn-pill-inactive" href="#" style="font-size:12px; padding:6px 16px;">クレンジング</a>
+        <a class="btn-pill-inactive" href="#" style="font-size:12px; padding:6px 16px;">洗顔</a>
+        <a class="btn-pill-inactive" href="#" style="font-size:12px; padding:6px 16px;">化粧液</a>
+        <a class="btn-pill-inactive" href="#" style="font-size:12px; padding:6px 16px;">乳液</a>
+        <a class="btn-pill-inactive" href="#" style="font-size:12px; padding:6px 16px;">美容液</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section section-surface-lb" style="max-width:none;" id="forms">
+<div class="section-inner">
+  <div class="section-eyebrow">06 / forms</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス<span class="form-required">必須</span></label>
+    <input class="form-input" type="text" placeholder="example@fancl.co.jp">
+    <div class="form-hint">半角英数字で入力してください</div>
+    <div class="form-state-label">デフォルト -- border 1px solid #cccccc / radius 5px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前<span class="form-required">必須</span></label>
+    <input class="form-input form-input--focus" type="text" value="山田 花子">
+    <div class="form-state-label">フォーカス -- border 1px solid #0070c0 / shadow 0 0 0 3px rgba(0,112,192,0.12)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="text" value="abc">
+    <div class="form-error">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー -- border 1px solid #d32f2f</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">07 / elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border:1px solid var(--border-light);">
+      <div class="elevation-label">Level 0</div>
+      <div style="font-size:14px; font-weight:700; color:var(--dark-navy);">Flat</div>
+      <div class="elevation-value">border: 1px solid #e8e8e8</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:0 2px 4px rgba(0,0,0,0.08);">
+      <div class="elevation-label">Level 1</div>
+      <div style="font-size:14px; font-weight:700; color:var(--dark-navy);">Hover</div>
+      <div class="elevation-value">0 2px 4px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:0 4px 12px rgba(0,0,0,0.10);">
+      <div class="elevation-label">Level 2</div>
+      <div style="font-size:14px; font-weight:700; color:var(--dark-navy);">Dropdown</div>
+      <div class="elevation-value">0 4px 12px rgba(0,0,0,0.10)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+      <div class="elevation-label">Level 3</div>
+      <div style="font-size:14px; font-weight:700; color:var(--dark-navy);">Modal</div>
+      <div class="elevation-value">0 8px 24px rgba(0,0,0,0.12)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section section-surface-lb" style="max-width:none;" id="layout">
+<div class="section-inner">
+  <div class="section-eyebrow">08 / layout</div>
+  <h2 class="section-title">Spacing & Width</h2>
+  <h3 style="font-family:var(--font-base); font-size:16px; font-weight:700; color:var(--dark-navy); margin:16px 0 12px;">Spacing Scale</h3>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <h3 style="font-family:var(--font-base); font-size:16px; font-weight:700; color:var(--dark-navy); margin:32px 0 12px;">Content Widths</h3>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Bleed <span class="width-bar-value">100vw</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:83%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content <span class="width-bar-value">1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:76%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Body Text <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:44%"></div></div></div>
+</div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.fancl.co.jp/">fancl.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-02）
+</footer>
+
+</body>
+</html>
