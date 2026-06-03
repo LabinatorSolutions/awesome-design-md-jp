@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SoftBank (ソフトバンク)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --sb-blue: #357eec;
+    --hero-blue: #3b87fb;
+    --alert-red: #dc371e;
+    --orange-accent: #ff6101;
+    --text-heading: #424242;
+    --text-body: #3f3f3f;
+    --text-nav: #333333;
+    --text-base: #000000;
+    --gray: #666666;
+    --border: #cccccc;
+    --surface-gray: #f0f0f0;
+    --surface-blue: #ecf0f4;
+    --surface-blue-alt: #eaf0f7;
+    --white: #ffffff;
+
+    /* === Semantic === */
+    --danger: #dc371e;
+    --success: #0fa044;
+    --warning: #ff6101;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.10);
+    --elevation-3: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+    /* === Fonts === */
+    /* 実サイトは Meiryo を最優先のシステムフォントスタック */
+    /* プレビューでは Noto Sans JP で代替 */
+    --font-base: "Noto Sans JP", Meiryo, "Hiragino Kaku Gothic ProN", "Hiragino Sans", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 10px;
+    --radius-pill: 50px;
+    --radius-full: 9999px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-body);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.43;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--hero-blue);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 18px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a {
+    display: inline-flex; align-items: center;
+    font-size: 14px; font-weight: 400;
+    color: var(--white); text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 52px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.15s;
+  }
+  .nav-links a:hover { background: rgba(255, 255, 255, 0.25); }
+  .nav-cta {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--sb-blue);
+    padding: 8px 20px; border-radius: var(--radius-pill);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 72px;
+    background: linear-gradient(135deg, var(--hero-blue) 0%, var(--sb-blue) 100%);
+    color: var(--white);
+    text-align: center;
+  }
+  .hero-inner {
+    max-width: 800px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 40px; font-weight: 700;
+    line-height: 1.25;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--sb-blue);
+    padding: 12px 40px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary-blue {
+    display: inline-flex; align-items: center;
+    background: var(--sb-blue); color: var(--white);
+    padding: 12px 40px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary-blue:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--white);
+    padding: 11px 39px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
+  .btn-secondary-dark {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--sb-blue);
+    padding: 11px 31px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--sb-blue);
+    transition: background 0.15s;
+  }
+  .btn-secondary-dark:hover { background: var(--surface-blue); }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--sb-blue);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .section { padding: 72px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--gray);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 40px; font-weight: 700; line-height: 1.25;
+    color: var(--text-heading);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--surface-gray);
+    margin: 0;
+  }
+  .section-blue { background: var(--surface-blue); padding: 72px 32px; }
+  .section-blue .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); border: 1px solid var(--surface-gray); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-heading); }
+  .color-swatch-hex { font-size: 12px; color: var(--gray); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--gray); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-heading); margin: 24px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--surface-gray); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--gray); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--surface-gray); color: var(--gray); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-base); }
+
+  /* SERVICE / PLAN CARDS */
+  .plan-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .plan-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 32px 24px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .plan-card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .plan-card.featured {
+    border: 2px solid var(--sb-blue);
+    position: relative;
+  }
+  .plan-card.featured::before {
+    content: "おすすめ";
+    position: absolute; top: -12px; left: 24px;
+    background: var(--sb-blue); color: var(--white);
+    padding: 4px 16px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 700;
+  }
+  .plan-tag {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    background: var(--surface-gray); color: var(--gray);
+    padding: 4px 12px; border-radius: var(--radius-full);
+    margin-bottom: 16px;
+  }
+  .plan-card h3 {
+    font-size: 26px; font-weight: 700; line-height: 1.43;
+    color: var(--text-heading); margin-bottom: 8px;
+  }
+  .plan-price {
+    font-size: 40px; font-weight: 700; line-height: 1.25;
+    color: var(--text-heading); margin-bottom: 4px;
+  }
+  .plan-price span { font-size: 14px; font-weight: 400; color: var(--gray); }
+  .plan-desc {
+    font-size: 14px; line-height: 1.43;
+    color: var(--gray); margin-bottom: 24px;
+  }
+  .plan-features { list-style: none; margin-bottom: 24px; }
+  .plan-features li {
+    font-size: 14px; line-height: 1.5;
+    padding: 6px 0; padding-left: 24px; position: relative;
+    color: var(--text-body);
+  }
+  .plan-features li::before {
+    content: "\2713"; position: absolute; left: 0; top: 6px;
+    color: var(--sb-blue); font-weight: 700;
+  }
+  .plan-cta {
+    display: inline-flex; width: 100%; justify-content: center;
+    padding: 12px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .plan-cta.primary { background: var(--sb-blue); color: var(--white); }
+  .plan-cta.secondary { background: var(--white); color: var(--sb-blue); border: 1px solid var(--sb-blue); }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .pill {
+    display: inline-flex; align-items: center;
+    padding: 6px 16px; border-radius: var(--radius-full);
+    font-size: 12px; font-weight: 700;
+  }
+  .pill-blue { background: var(--sb-blue); color: var(--white); }
+  .pill-gray { background: var(--surface-gray); color: var(--gray); }
+  .pill-red { background: var(--alert-red); color: var(--white); border-radius: var(--radius-md); }
+  .pill-orange { background: var(--orange-accent); color: var(--white); }
+  .pill-outline { background: transparent; color: var(--sb-blue); border: 1px solid var(--sb-blue); }
+
+  /* BUTTONS SECTION */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--gray); margin-top: 8px; font-family: var(--font-mono); }
+
+  /* ARTICLE SAMPLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 40px; font-weight: 700; line-height: 1.25;
+    color: var(--text-heading);
+    margin-bottom: 24px;
+  }
+  .article-preview h2 {
+    font-size: 26px; font-weight: 700; line-height: 1.43;
+    color: var(--text-heading);
+    margin: 40px 0 16px;
+  }
+  .article-preview h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.4;
+    color: var(--text-heading);
+    margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 20px; color: var(--text-body);
+  }
+  .article-preview p.helper {
+    color: var(--gray); font-size: 14px; line-height: 1.43;
+  }
+  .article-callout {
+    background: var(--surface-blue);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.5;
+    color: var(--text-body);
+  }
+  .article-alert {
+    background: #fef2f0;
+    border-left: 4px solid var(--alert-red);
+    padding: 16px 20px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.5;
+    color: var(--text-body);
+  }
+  .article-alert strong { color: var(--alert-red); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-heading); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-body);
+    border: 1px solid var(--border);
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--border); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--sb-blue);
+    box-shadow: 0 0 0 3px rgba(53, 126, 236, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(220, 55, 30, 0.12);
+  }
+  .form-state-label { font-size: 12px; color: var(--gray); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-md);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--surface-gray);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-heading); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--gray); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--sb-blue); border-radius: var(--radius-sm); margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--gray); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--text-heading); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--sb-blue);
+    margin-bottom: 8px;
+  }
+
+  /* NAV PILL DEMO */
+  .nav-pill-demo {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    background: var(--hero-blue);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+  }
+  .nav-pill-demo a {
+    display: inline-flex; align-items: center;
+    font-size: 14px; font-weight: 400;
+    color: var(--white); text-decoration: none;
+    padding: 7px 14px;
+    border-radius: 52px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.15s;
+  }
+  .nav-pill-demo a:hover { background: rgba(255, 255, 255, 0.25); }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 32px;
+    text-align: center;
+    background: var(--text-nav);
+    font-size: 12px; color: rgba(255, 255, 255, 0.7);
+  }
+  .footer a { color: var(--white); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero { padding: 56px 20px 48px; }
+    .hero h1 { font-size: 28px; }
+    .nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-blue { padding: 48px 20px; }
+    .section-title { font-size: 28px; }
+    .plan-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 28px; }
+    .article-preview h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">SoftBank</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">お申し込み</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>あなたの毎日に、<br>つながるチカラを。</h1>
+    <p>SoftBank のデザインシステムをカタログ化したプレビューです。トップページ・/mobile/ ページの computed style 実測値（2026-06-03 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">料金プランを見る</a>
+      <a class="btn-secondary" href="#">オンラインショップ</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#357eec"></div><div class="color-swatch-info"><div class="color-swatch-name">SoftBank Blue</div><div class="color-swatch-hex">#357eec</div><div class="color-swatch-role">主要 CTA・リンク・ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3b87fb"></div><div class="color-swatch-info"><div class="color-swatch-name">Hero Blue</div><div class="color-swatch-hex">#3b87fb</div><div class="color-swatch-role">ヒーロー・ヘッダー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc371e"></div><div class="color-swatch-info"><div class="color-swatch-name">Alert Red</div><div class="color-swatch-hex">#dc371e</div><div class="color-swatch-role">重要なお知らせ・アラートバッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff6101"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange Accent</div><div class="color-swatch-hex">#ff6101</div><div class="color-swatch-role">キャンペーン・ハイライト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#424242"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Heading</div><div class="color-swatch-hex">#424242</div><div class="color-swatch-role">見出し・大タイトル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3f3f3f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#3f3f3f</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Nav</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ナビ・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補助テキスト・タグ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc; border-bottom:1px solid #b0b0b0"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">区切り線・入力欄ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0; border-bottom:1px solid #cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">タグ背景・薄い面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ecf0f4; border-bottom:1px solid #cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Blue</div><div class="color-swatch-hex">#ecf0f4</div><div class="color-swatch-role">情報セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc371e"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#dc371e</div><div class="color-swatch-role">エラー・アラート</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0fa044"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#0fa044</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff6101"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ff6101</div><div class="color-swatch-role">警告・キャンペーン</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:40px; font-weight:700; line-height:1.25; color:#424242;">ソフトバンクの取り組み -- Section H2</div>
+    <div class="type-meta">40px / 700 / line-height 1.25 / letter-spacing normal<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:26px; font-weight:700; line-height:1.43; color:#424242;">料金プラン・割引 -- H3</div>
+    <div class="type-meta">26px / 700 / line-height 1.43 / letter-spacing normal<span class="type-context">トップ・モバイル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.4; color:#424242;">お得なキャンペーン -- H4</div>
+    <div class="type-meta">20px / 700 / line-height 1.4 / letter-spacing normal</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:17px; font-weight:700; line-height:1.5; color:#424242;">おすすめの機種 -- Hero Link</div>
+    <div class="type-meta">17px / 700 / line-height 1.5 / letter-spacing normal<span class="type-context">モバイルヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.5; color:#3f3f3f;">本文テキスト -- ソフトバンクは、5G ネットワークの拡充を進め、モバイル通信の新しい可能性を広げています。高速・大容量のデータ通信により、動画視聴やオンラインゲームをはじめとした様々なサービスを快適にご利用いただけます。日本語組版において line-height: 1.5 はコーポレートサイトの標準的なリズムです。</div>
+    <div class="type-meta">16px / 400 / line-height 1.5 / letter-spacing normal<span class="type-context">トップ・モバイル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.43; color:#3f3f3f;">ベーステキスト -- body のデフォルトサイズ。ナビゲーション、フッター、一般的な情報表示に使用される基本サイズです。通信キャリアのサイトとして情報密度を保ちつつ可読性を確保しています。</div>
+    <div class="type-meta">14px / 400 / line-height 1.43 / letter-spacing normal<span class="type-context">body ベース</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.43; color:#666666;">補助テキスト -- 14px / color #666666。注釈や補足情報に使用。</div>
+    <div class="type-meta">14px / 400 / line-height 1.43 / color #666666</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.5; color:#666666;">Small -- 利用規約・注釈・免責事項。通信キャリアサイトでは料金条件の注釈に頻出するサイズです。</div>
+    <div class="type-meta">12px / 400 / line-height 1.5 / color #666666</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / SERVICE -->
+<section class="section-blue" id="service">
+<div class="section-inner">
+  <div class="section-label">03 / Service -- 組版サンプル</div>
+  <h2 class="section-title">本文組版サンプル</h2>
+  <div class="article-preview">
+    <h1>あなたの毎日に、<br>つながるチカラを。</h1>
+    <p>ソフトバンクは、モバイル通信・光回線・IoT・法人向けソリューションを通じて、お客さまの生活やビジネスを支えています。5G ネットワークの拡充により、これまで以上に高速で安定した通信環境を提供します。</p>
+
+    <h2>5G で広がる新しい体験</h2>
+    <p>超高速・大容量の 5G ネットワークにより、4K/8K 動画のリアルタイムストリーミングや、AR/VR を活用したイマーシブなコンテンツ体験が可能になります。スマートフォンだけでなく、IoT デバイスとの連携で日常生活がさらに便利になります。</p>
+
+    <h3>料金プランのご案内</h3>
+    <p>データ使い放題のメリハリ無制限+から、ライトユーザー向けのミニフィットプラン+まで、お客さまのご利用スタイルに合わせた最適なプランをお選びいただけます。</p>
+
+    <div class="article-callout">
+      <strong>おトクな情報:</strong> 新規ご加入で PayPay ポイント最大 10,000 円相当プレゼント。対象期間中にオンラインショップからお申し込みいただいたお客さまが対象です。詳細は店頭またはオンラインショップをご確認ください。
+    </div>
+
+    <div class="article-alert">
+      <strong>重要なお知らせ:</strong> 2026年3月31日をもちまして、一部の旧プランの受付を終了いたします。現在ご利用中のお客さまは引き続きご利用いただけます。
+    </div>
+
+    <p class="helper">※ 表示価格は税込です。別途ユニバーサルサービス料がかかります。通信速度は技術規格上の最大値であり、実際の速度は通信環境により異なります。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PLAN CARDS -->
+<section class="section" id="plans">
+  <div class="section-label">04 / Product -- 料金プラン</div>
+  <h2 class="section-title">プランカード</h2>
+
+  <div class="plan-grid">
+    <div class="plan-card">
+      <div class="plan-tag">ライトユーザー向け</div>
+      <h3>ミニフィット+</h3>
+      <div class="plan-price">&#165;3,278<span>/月~</span></div>
+      <p class="plan-desc">使った分だけ支払うステップ型。Wi-Fi メインの方に最適。</p>
+      <ul class="plan-features">
+        <li>段階制 1GB / 2GB / 3GB</li>
+        <li>5G 対応</li>
+        <li>テザリング対応</li>
+      </ul>
+      <a class="plan-cta secondary" href="#">詳細を見る</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-tag">データ無制限</div>
+      <h3>メリハリ無制限+</h3>
+      <div class="plan-price">&#165;7,425<span>/月</span></div>
+      <p class="plan-desc">データ使い放題。動画・ゲームを思いきり楽しめる。</p>
+      <ul class="plan-features">
+        <li>データ使い放題</li>
+        <li>5G 対応</li>
+        <li>テザリング 50GB</li>
+        <li>割引で最大 &#165;4,928/月~</li>
+      </ul>
+      <a class="plan-cta primary" href="#">お申し込み</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-tag">シニア・キッズ</div>
+      <h3>スマホデビュー+</h3>
+      <div class="plan-price">&#165;2,266<span>/月~</span></div>
+      <p class="plan-desc">はじめてのスマホに。安心のサポート付き。</p>
+      <ul class="plan-features">
+        <li>4GB / 20GB から選べる</li>
+        <li>5分以内の通話無料</li>
+        <li>安心フィルター</li>
+      </ul>
+      <a class="plan-cta secondary" href="#">詳細を見る</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons -- Pill が基本</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary-blue" href="#">料金プランを見る</a><div class="button-label">Primary CTA -- Pill / #357eec</div></div>
+    <div class="button-item"><a class="btn-secondary-dark" href="#">オンラインショップ</a><div class="button-label">Secondary -- White + Blue Border</div></div>
+    <div class="button-item"><a class="btn-link" href="#">詳しくはこちら &rarr;</a><div class="button-label">Text Link -- #357eec</div></div>
+  </div>
+
+  <div class="color-group-label">Nav Pills (Frosted Glass)</div>
+  <div class="nav-pill-demo">
+    <a href="#">個人のお客さま</a>
+    <a href="#">法人のお客さま</a>
+    <a href="#">料金プラン</a>
+    <a href="#">製品情報</a>
+    <a href="#">キャンペーン</a>
+    <a href="#">サポート</a>
+  </div>
+  <div class="button-label" style="margin-bottom: 32px;">Nav Pill -- rgba(255,255,255,0.1) + backdrop-blur / radius 52px</div>
+
+  <div class="color-group-label">Badges / Tags</div>
+  <div class="badge-row">
+    <span class="pill pill-blue">NEW</span>
+    <span class="pill pill-red">重要なお知らせ</span>
+    <span class="pill pill-orange">キャンペーン</span>
+    <span class="pill pill-gray">5G 対応</span>
+    <span class="pill pill-gray">データ無制限</span>
+    <span class="pill pill-outline">詳細</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-blue" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" placeholder="例: 山田 太郎">
+      <div class="form-state-label">Default -- border #cccccc / radius 4px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="taro@example.com">
+      <div class="form-state-label">Focus -- border #357eec / ring 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-state-label">Error -- border #dc371e / ring 3px</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">none -- 基本</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 16px rgba(0,0,0,0.10)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 8px 32px rgba(0,0,0,0.12)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout -- Spacing & Radius</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-name">XL</div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:10px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">10px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:50px"></div>
+      <div class="spacing-name">Pill</div>
+      <div class="spacing-value">50px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:9999px"></div>
+      <div class="spacing-name">Full</div>
+      <div class="spacing-value">9999px</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.softbank.jp/">softbank.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-03）<br>
+  ※ 実サイトは Meiryo / Hiragino Kaku Gothic ProN のシステムフォントスタック。本プレビューでは <strong style="color:var(--white);">Noto Sans JP</strong> で代替表示しています。
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (288 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (291 sites)</a>
 </p>
 
 <table>
@@ -421,6 +421,11 @@
 <td align="center"><strong>Clé de Peau</strong><br><img src="design-md/cledepeau/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>FANCL</strong><br><img src="design-md/fancl/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>SoftBank</strong><br><img src="design-md/softbank/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KALDI</strong><br><img src="design-md/kaldi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>nano universe</strong><br><img src="design-md/nanouniverse/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -769,11 +774,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [AMBUSH (アンブッシュ)](https://www.ambushdesign.com/) | Fashion / Jewelry | [DESIGN.md](design-md/ambush/DESIGN.md) | [preview.html](design-md/ambush/preview.html) |
 | [Clé de Peau Beauté (クレ・ド・ポー ボーテ)](https://www.cledepeau-beaute.com/ja-jp/) | Luxury Beauty | [DESIGN.md](design-md/cledepeau/DESIGN.md) | [preview.html](design-md/cledepeau/preview.html) |
 | [FANCL (ファンケル)](https://www.fancl.co.jp/) | Beauty / Health | [DESIGN.md](design-md/fancl/DESIGN.md) | [preview.html](design-md/fancl/preview.html) |
+| [SoftBank (ソフトバンク)](https://www.softbank.jp/) | Telecom | [DESIGN.md](design-md/softbank/DESIGN.md) | [preview.html](design-md/softbank/preview.html) |
+| [KALDI Coffee Farm (カルディ)](https://www.kaldi.co.jp/) | Food Retail | [DESIGN.md](design-md/kaldi/DESIGN.md) | [preview.html](design-md/kaldi/preview.html) |
+| [nano universe (ナノ・ユニバース)](https://www.nanouniverse.jp/) | Fashion | [DESIGN.md](design-md/nanouniverse/DESIGN.md) | [preview.html](design-md/nanouniverse/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (288 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (291 sites)</a>
 </p>
 
 <table>
@@ -1159,6 +1167,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>AMBUSH</strong><br><img src="design-md/ambush/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Clé de Peau</strong><br><img src="design-md/cledepeau/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>FANCL</strong><br><img src="design-md/fancl/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>SoftBank</strong><br><img src="design-md/softbank/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KALDI</strong><br><img src="design-md/kaldi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>nano universe</strong><br><img src="design-md/nanouniverse/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

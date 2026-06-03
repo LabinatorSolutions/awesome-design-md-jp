@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: nano universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --color-black: #000000;
+    --color-text: #000000;
+    --color-text-secondary: #666666;
+    --color-text-tertiary: #333333;
+    --color-text-white: #ffffff;
+    --color-accent: #f3ff34;
+    --color-accent-text: #282828;
+    --color-bg: #f4f4f4;
+    --color-bg-secondary: #f5f5f5;
+    --color-surface: #ffffff;
+    --color-border: #cfcfcf;
+    --color-border-dark: #929292;
+    --color-error: #ea3e0a;
+    --color-error-bg: #f3e7e4;
+    --color-success: #2e9e7b;
+    --color-success-bg: #cce3dc;
+    --color-star: #f6a429;
+    --color-label-blue: #405de6;
+    --color-label-blue-2: #1763c2;
+    --color-footer-bg: #000000;
+    --color-loading: #000000;
+    /* === Elevation === */
+    --elevation-1: 0px 1px 4px rgba(0,0,0,0.08);
+    --elevation-2: 0px 4px 12px rgba(0,0,0,0.10);
+    /* === Fonts === */
+    /* Gill Sans Nova (Adobe Fonts) → Cabin (Google Fonts) 代替 */
+    --font-base: "Cabin", "Noto Sans JP", 游ゴシック体, YuGothic, 游ゴシック, "Yu Gothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+    /* === Button === */
+    --button-radius: 0px;
+    --button-height: 52px;
+    --button-small-height: 44px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-base);
+    font-size: 12px; font-weight: 400; line-height: 1.73;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-brand {
+    font-size: 14px; font-weight: 500; color: var(--color-text);
+    text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 11px; font-weight: 500; color: var(--color-text-secondary);
+    text-decoration: none; transition: color 0.15s; letter-spacing: 0.04em;
+  }
+  .nav-links a:hover { color: var(--color-text); }
+  .nav-cta {
+    display: inline-block; background: var(--color-black); color: var(--color-text-white);
+    padding: 4px 20px; border-radius: var(--button-radius); font-size: 11px; font-weight: 500;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.7; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px; text-align: center;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hero h1 {
+    font-size: 40px; font-weight: 500; line-height: 1.05;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--color-text); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 13px; font-weight: 400; line-height: 1.85;
+    color: var(--color-text-secondary); max-width: 560px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-black); color: var(--color-text-white);
+    padding: 0 32px; height: var(--button-height);
+    border-radius: var(--button-radius); border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    letter-spacing: 0.04em;
+  }
+  .btn-primary:hover { opacity: 0.7; }
+  .btn-accent {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-accent); color: var(--color-accent-text);
+    padding: 0 32px; height: var(--button-height);
+    border-radius: var(--button-radius); border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+    letter-spacing: 0.04em;
+  }
+  .btn-accent:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-surface); color: var(--color-text-secondary);
+    padding: 0 32px; height: var(--button-small-height);
+    border-radius: var(--button-radius);
+    border: 1px solid var(--color-border);
+    font-family: var(--font-base); font-size: 11px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: border-color 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--color-text); }
+  .btn-tertiary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-bg); color: var(--color-text);
+    padding: 0 35px; height: var(--button-small-height);
+    border-radius: var(--button-radius); border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-tertiary:hover { opacity: 0.7; }
+  .btn-small {
+    height: var(--button-small-height);
+    padding: 0 20px;
+    font-size: 11px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 500; color: var(--color-text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 500; line-height: 1.75;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+
+  .section-surface { background: var(--color-surface); padding: 64px 32px; }
+  .section-surface .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--color-surface); border: 1px solid var(--color-border); }
+  .color-swatch-block { height: 64px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 11px; font-weight: 500; margin-bottom: 2px; color: var(--color-text); }
+  .color-swatch-hex { font-size: 11px; color: var(--color-text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 10px; color: var(--color-text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 11px; font-weight: 600; color: var(--color-text-secondary); margin: 24px 0 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--color-text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--color-bg); color: var(--color-text-secondary); font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 10px; font-weight: 400; color: var(--color-text-secondary); margin-top: 8px; }
+  .btn-error {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-error); color: var(--color-text-white);
+    padding: 0 32px; height: var(--button-height);
+    border-radius: var(--button-radius); border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* CARDS (Product) */
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .card {
+    background: var(--color-surface);
+    transition: opacity 0.2s; cursor: pointer;
+  }
+  .card:hover { opacity: 0.85; }
+  .card-image {
+    width: 100%; aspect-ratio: 3 / 4;
+    background: var(--color-bg-secondary);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-border-dark); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .card-body { padding: 12px 0 16px; }
+  .card-brand { font-size: 10px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .card-name { font-size: 12px; font-weight: 400; line-height: 1.73; color: var(--color-text); margin-bottom: 4px; }
+  .card-price { font-size: 12px; font-weight: 500; color: var(--color-text); }
+  .card-price-sale { color: var(--color-error); }
+  .card-price-original { font-size: 11px; color: var(--color-text-secondary); text-decoration: line-through; margin-left: 6px; }
+  .card-label {
+    display: inline-block; font-size: 10px; font-weight: 500; color: var(--color-text-white);
+    padding: 2px 8px; margin-top: 6px; letter-spacing: 0.04em;
+  }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 24px; font-weight: 500; line-height: 1.75;
+    letter-spacing: 0.02em; margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-size: 18px; font-weight: 500; line-height: 1.56;
+    letter-spacing: 0.02em; margin: 28px 0 12px;
+  }
+  .article-preview p {
+    font-size: 13px; font-weight: 400; line-height: 1.85;
+    letter-spacing: normal; margin-bottom: 16px; color: var(--color-text);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 11px; font-weight: 500; color: var(--color-text); margin-bottom: 6px; letter-spacing: 0.04em; }
+  .form-input {
+    width: 100%; background: var(--color-surface); color: var(--color-text);
+    border: 1px solid var(--color-border); padding: 14px 12px;
+    border-radius: var(--button-radius);
+    font-family: var(--font-base); font-size: 12px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--color-black); }
+  .form-input--error { border-color: var(--color-error); }
+  .form-error-text { font-size: 11px; color: var(--color-error); margin-top: 4px; }
+  .form-state-label { font-size: 10px; color: var(--color-text-secondary); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--color-surface); padding: 24px; text-align: center; border: 1px solid var(--color-border); }
+  .elevation-label { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-secondary); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--color-black); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--color-text-secondary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--color-black); opacity: 0.12; }
+  .width-bar-label { font-size: 11px; font-weight: 500; color: var(--color-text); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-secondary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--color-footer-bg);
+    font-size: 11px; color: var(--color-text-white);
+    letter-spacing: 0.04em;
+  }
+  .footer a { color: var(--color-accent); text-decoration: underline; }
+
+  @media (max-width: 749px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 12px; line-height: 1.73; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-surface { padding: 48px 20px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .article-preview p { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">nano universe</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">試着予約</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>nano universe</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">商品を見る</a>
+    <a class="btn-accent" href="#">新規会員登録</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">メインブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3ff34"></div><div class="color-swatch-info"><div class="color-swatch-name">Neon Accent</div><div class="color-swatch-hex">#f3ff34</div><div class="color-swatch-role">セカンダリボタン・アクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト・ラベル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Tertiary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ボタンテキスト等</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #cfcfcf"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク背景上テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ea3e0a"></div><div class="color-swatch-info"><div class="color-swatch-name">Error / Sale</div><div class="color-swatch-hex">#ea3e0a</div><div class="color-swatch-role">エラー・セール・在庫僅少</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3e7e4"></div><div class="color-swatch-info"><div class="color-swatch-name">Error BG</div><div class="color-swatch-hex">#f3e7e4</div><div class="color-swatch-role">エラー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2e9e7b"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2e9e7b</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cce3dc"></div><div class="color-swatch-info"><div class="color-swatch-name">Success BG</div><div class="color-swatch-hex">#cce3dc</div><div class="color-swatch-role">成功背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6a429"></div><div class="color-swatch-info"><div class="color-swatch-name">Star Rating</div><div class="color-swatch-hex">#f6a429</div><div class="color-swatch-role">レビュー星評価</div></div></div>
+  </div>
+
+  <div class="color-group-label">Label</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#405de6"></div><div class="color-swatch-info"><div class="color-swatch-name">Label Blue</div><div class="color-swatch-hex">#405de6</div><div class="color-swatch-role">カスタムラベル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1763c2"></div><div class="color-swatch-info"><div class="color-swatch-name">Label Blue 2</div><div class="color-swatch-hex">#1763c2</div><div class="color-swatch-role">カスタムラベル 2</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">BG Secondary</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #cfcfcf"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード・ヘッダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cfcfcf"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cfcfcf</div><div class="color-swatch-role">標準ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#929292"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Dark</div><div class="color-swatch-hex">#929292</div><div class="color-swatch-role">強調ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">区切り線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:40px; font-weight:500; line-height:1.05; letter-spacing:0.04em; text-transform:uppercase;">Section Title Display</div>
+    <div class="type-meta">40px / 500 / line-height: 1.05 / letter-spacing: 0.04em / uppercase<span class="type-context">セクションタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:500; line-height:1.75; letter-spacing:normal;">カテゴリ見出し — Heading 2</div>
+    <div class="type-meta">24px / 500 / line-height: 1.75 / letter-spacing: normal<span class="type-context">カテゴリ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:13px; font-weight:600; line-height:1.23; letter-spacing:0.077em; text-transform:uppercase;">Navigation Subtitle</div>
+    <div class="type-meta">13px / 600 / line-height: 1.23 / letter-spacing: 0.077em<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.73; letter-spacing:normal;">本文テキスト — ナノ・ユニバースのベースフォントは12px。Gill Sans Novaの幾何学的なプロポーションと游ゴシックの組み合わせで、ファッションブランドらしいエレガントなタイポグラフィを実現しています。行間は1.73と広めに取ることで、小さな文字でも読みやすさを確保。ABCabc 123 あいうえお</div>
+    <div class="type-meta">12px / 400 / line-height: 1.73 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:13px; font-weight:600; line-height:1.85; letter-spacing:normal;">強調テキスト — Body Emphasis (13px / 600)</div>
+    <div class="type-meta">13px / 600 / line-height: 1.85 / letter-spacing: normal<span class="type-context">説明文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:500; line-height:1.67; letter-spacing:normal;">ニューステキスト — News (12px / 500)</div>
+    <div class="type-meta">12px / 500 / line-height: 1.67 / letter-spacing: normal<span class="type-context">ニュース</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:500; line-height:1.0; letter-spacing:normal; color:var(--color-text-secondary);">ナビゲーションラベル — Small (11px)</div>
+    <div class="type-meta">11px / 500 / line-height: 1.0 / color: #666666<span class="type-context">ナビ・注釈</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:11px; font-weight:400; line-height:1.82; letter-spacing:normal; color:var(--color-text-secondary);">注記キャプション — Caption (11px / 400)</div>
+    <div class="type-meta">11px / 400 / line-height: 1.82 / color: #666666<span class="type-context">注記</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT CARDS -->
+<section class="section-surface" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product — 商品カード</div>
+  <h2 class="section-title">商品カードサンプル</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">IMAGE</div>
+      <div class="card-body">
+        <div class="card-brand">nano universe</div>
+        <div class="card-name">ウォッシャブルメリノウールクルーネックニット</div>
+        <div class="card-price">&yen;9,900</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">IMAGE</div>
+      <div class="card-body">
+        <div class="card-brand">nano universe</div>
+        <div class="card-name">撥水ストレッチテーパードパンツ</div>
+        <div class="card-price card-price-sale">&yen;6,930 <span class="card-price-original">&yen;9,900</span></div>
+        <div class="card-label" style="background:var(--color-error);">30%OFF</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">IMAGE</div>
+      <div class="card-body">
+        <div class="card-brand">nano universe</div>
+        <div class="card-name">オーバーサイズCPOジャケット</div>
+        <div class="card-price">&yen;14,300</div>
+        <div class="card-label" style="background:var(--color-label-blue);">WEB限定</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">IMAGE</div>
+      <div class="card-body">
+        <div class="card-brand">nano universe</div>
+        <div class="card-name">リラックスフィットオープンカラーシャツ</div>
+        <div class="card-price">&yen;8,800</div>
+        <div class="card-label" style="background:var(--color-label-blue-2);">NEW</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:32px;">
+    <a class="btn-tertiary" href="#">もっと見る</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section" id="article">
+  <div class="section-label">04 / Article — 記事組版</div>
+  <h2 class="section-title">コンテンツ組版サンプル</h2>
+  <div class="article-preview">
+    <h1>大人の品格を纏うワードローブ</h1>
+    <p>シーズンごとのトレンドを取り入れながらも、タイムレスな美しさを追求するナノ・ユニバースのアプローチ。上質な素材選びと計算されたシルエットが、日常を特別なものに変えます。</p>
+    <h2>素材へのこだわり</h2>
+    <p>厳選されたファブリックは着心地の良さと美しいドレープを両立。ウォッシャブル加工やストレッチ性能など、現代のライフスタイルに寄り添う機能性も兼ね備えています。JAPAN quality の誇り。</p>
+    <p>オンラインストアでは試着予約サービスを提供。気になるアイテムを店舗で実際に試すことができるため、ECでの買い物に不安のある方にも安心です。ABC abc 123</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom:24px;">
+    <div class="button-item"><a class="btn-primary" href="#">カートに入れる</a><div class="button-label">Primary (Black)</div></div>
+    <div class="button-item"><a class="btn-accent" href="#">新規会員登録</a><div class="button-label">Accent (Neon)</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">メンバーズ特典</a><div class="button-label">Ghost (White)</div></div>
+    <div class="button-item"><a class="btn-tertiary" href="#">もっと見る</a><div class="button-label">Tertiary (Gray)</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary btn-small" href="#">試着予約</a><div class="button-label">Primary Small</div></div>
+    <div class="button-item"><a class="btn-error" href="#">削除する</a><div class="button-label">Error / Danger</div></div>
+  </div>
+  <div style="margin-top:24px; padding:16px; background:var(--color-surface); border:1px solid var(--color-border);">
+    <div style="font-size:11px; font-weight:500; color:var(--color-text-secondary); margin-bottom:8px; letter-spacing:0.04em;">BUTTON SPEC</div>
+    <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-text-secondary); line-height:1.8;">
+      border-radius: 0px (square, no rounding)<br>
+      height: 52px (default) / 44px (small)<br>
+      font-weight: 500<br>
+      letter-spacing: 0.04em
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #cfcfcf, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">パスワード</label>
+    <input class="form-input form-input--focus" type="password" value="mypassword123">
+    <div class="form-state-label">フォーカス — border: #000000</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー — border: #ea3e0a</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし。ボーダーのみ（基本状態）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">ホバー時カード</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">ドロップダウン</div></div>
+    <div class="elevation-card" style="border:2px solid var(--color-black);"><div class="elevation-label">Focus Border</div><div class="elevation-desc">#000000 (2px solid)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+
+  <div style="font-size:11px; font-weight:500; color:var(--color-text-secondary); margin-bottom:12px; letter-spacing:0.06em; text-transform:uppercase;">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64</div></div>
+  </div>
+
+  <div style="font-size:11px; font-weight:500; color:var(--color-text-secondary); margin: 32px 0 12px; letter-spacing:0.06em; text-transform:uppercase;">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Full Width <span class="width-bar-value">制限なし</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:80%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:52%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Product Grid (4-col) <span class="width-bar-value">100% / gap 16px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.nanouniverse.jp/">nanouniverse.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-03）
+</footer>
+
+</body>
+</html>
