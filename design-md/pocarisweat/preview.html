@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Pocari Sweat (pocarisweat.jp)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors === */
+    --pocari-blue: #015db2;
+    --pocari-blue-dark: #004a8f;
+    --pocari-blue-light: #e8f2fb;
+    --dark-navy: rgba(5, 33, 92, 0.8);
+    --dark-navy-solid: #05215c;
+    --text-primary: #42515a;
+    --text-nav: #606d75;
+    --text-link: #015db2;
+    --text-white: #ffffff;
+    --text-heading: #333d45;
+    --bg-primary: #ffffff;
+    --bg-surface: #f6f8f9;
+    --bg-footer: #ebebeb;
+    --border-default: #e0e4e7;
+    --border-light: #ebebeb;
+    --border-focus: #015db2;
+    --danger: #cc0000;
+    --success: #2e8b57;
+    --frosted-light: rgba(255, 255, 255, 0.4);
+    --frosted-medium: rgba(255, 255, 255, 0.5);
+    --frosted-strong: rgba(255, 255, 255, 0.8);
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0,0,0,0.12);
+    --elevation-2: 0 2px 8px rgba(0,0,0,0.15);
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", Helvetica, Arial, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    /* Note: 実サイトは Helvetica 先頭のシステムフォントスタック。
+       preview.html では Google Fonts の Noto Sans JP を先頭に追加し、
+       環境を問わず日本語を表示可能にしている */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV — Pocari Blue bar */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--pocari-blue);
+  }
+  .nav-brand {
+    font-size: 16px; font-weight: 700; color: var(--text-white);
+    text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.85);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-white); }
+  .nav-cta {
+    display: inline-block; background: var(--text-white); color: var(--pocari-blue);
+    padding: 6px 16px; border-radius: 0; font-size: 13px; font-weight: 700;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 80px 32px 72px; text-align: center;
+    background: linear-gradient(135deg, #015db2 0%, #0178d4 50%, #4da6e8 100%);
+    color: var(--text-white);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 30% 80%, rgba(255,255,255,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    position: relative;
+    font-size: 32px; font-weight: 700; line-height: 1.4;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    position: relative;
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 32px;
+  }
+  .hero-buttons { position: relative; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--text-white); color: var(--pocari-blue);
+    padding: 10px 28px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline-white {
+    display: inline-block; background: transparent; color: var(--text-white);
+    padding: 10px 28px; border-radius: 0;
+    border: 1px solid rgba(255,255,255,0.6);
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+  /* Button variants for sections */
+  .btn-blue {
+    display: inline-block; background: var(--pocari-blue); color: var(--text-white);
+    padding: 10px 28px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-blue:hover { opacity: 0.85; }
+  .btn-outline-blue {
+    display: inline-block; background: transparent; color: var(--pocari-blue);
+    padding: 10px 28px; border-radius: 0;
+    border: 1px solid var(--pocari-blue);
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline-blue:hover { background: var(--pocari-blue-light); }
+  .btn-text {
+    display: inline-block; background: transparent; color: var(--pocari-blue);
+    padding: 10px 0; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: underline; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--pocari-blue);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-size: 24px; font-weight: 700; line-height: 1.4;
+    color: var(--text-heading);
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--bg-surface); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  .section-navy {
+    background: linear-gradient(135deg, #05215c 0%, #0a3a7a 100%);
+    padding: 64px 32px; color: var(--text-white);
+  }
+  .section-navy .section-inner { max-width: 940px; margin: 0 auto; }
+  .section-navy .section-label { color: rgba(255,255,255,0.6); }
+  .section-navy .section-title { color: var(--text-white); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: #fff; box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-nav); font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--text-nav); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-heading); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--text-nav); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--pocari-blue-light); color: var(--pocari-blue); font-size: 11px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
+
+  /* FROSTED GLASS DEMO */
+  .frosted-demo {
+    position: relative; border-radius: 0; overflow: hidden;
+    background: linear-gradient(135deg, #015db2 0%, #4da6e8 100%);
+    padding: 40px; margin-bottom: 32px;
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  }
+  .frosted-card {
+    padding: 24px 32px; text-align: center;
+    color: var(--text-white); font-size: 13px; font-weight: 700;
+    min-width: 180px;
+  }
+  .frosted-card .frosted-label { font-size: 11px; font-weight: 400; margin-top: 4px; opacity: 0.8; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-nav); margin-top: 8px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--border-light);
+    border-radius: 0; padding: 0; overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-image {
+    width: 100%; height: 160px; object-fit: cover;
+    background: linear-gradient(135deg, #e8f2fb 0%, #cde4f7 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--pocari-blue); font-size: 36px; font-weight: 700;
+  }
+  .card-body { padding: 20px; }
+  .card h3 { font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--text-heading); margin-bottom: 8px; }
+  .card p { font-size: 13px; color: var(--text-primary); line-height: 1.6; }
+  .card-link { font-size: 13px; color: var(--pocari-blue); text-decoration: none; margin-top: 12px; display: inline-block; font-weight: 700; }
+  .card-link:hover { text-decoration: underline; }
+  .card-date { font-size: 11px; color: var(--text-nav); margin-bottom: 8px; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 28px; font-weight: 700; line-height: 1.5;
+    color: var(--text-heading);
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--pocari-blue);
+  }
+  .article-preview h2 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-heading);
+    margin: 28px 0 12px;
+    padding-left: 12px;
+    border-left: 3px solid var(--pocari-blue);
+  }
+  .article-preview p {
+    font-size: 15px; font-weight: 400; line-height: 1.8;
+    letter-spacing: normal;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview .article-note {
+    background: var(--pocari-blue-light);
+    border-left: 3px solid var(--pocari-blue);
+    padding: 16px 20px;
+    margin: 24px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--text-heading); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 8px 12px; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--border-focus); box-shadow: 0 0 0 2px rgba(1,93,178,0.2); }
+  .form-input--error { border-color: var(--danger); box-shadow: 0 0 0 2px rgba(204,0,0,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-nav); margin-top: 4px; }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 0; padding: 24px; text-align: center; border: 1px solid var(--border-default); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--text-heading); }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--text-nav); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--pocari-blue); border-radius: 0; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: monospace; font-size: 11px; font-weight: 500; color: var(--text-nav); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 0; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--pocari-blue); border-radius: 0; opacity: 0.25; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-heading); margin-bottom: 4px; }
+  .width-bar-value { font-family: monospace; font-size: 12px; color: var(--text-nav); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--bg-footer); font-size: 12px; color: var(--text-nav);
+  }
+  .footer a { color: var(--pocari-blue); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 14px; line-height: 1.7; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .section-navy { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 22px; }
+    .article-preview p { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">POCARI SWEAT</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">製品情報</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>pocarisweat.jp</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。アイコニックな「ポカリブルー」を軸にしたカラー、タイポグラフィ、コンポーネントの全仕様を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">製品について</a>
+    <a class="btn-outline-white" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#015db2"></div><div class="color-swatch-info"><div class="color-swatch-name">Pocari Blue</div><div class="color-swatch-hex">#015db2</div><div class="color-swatch-role">ブランドカラー・ロゴ・ナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#004a8f"></div><div class="color-swatch-info"><div class="color-swatch-name">Pocari Blue Dark</div><div class="color-swatch-hex">#004a8f</div><div class="color-swatch-role">ホバー・プレス時</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8f2fb; border: 1px solid #d0e4f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Pocari Blue Light</div><div class="color-swatch-hex">#e8f2fb</div><div class="color-swatch-role">アクセント背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#42515a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#42515a</div><div class="color-swatch-role">本文テキスト（ブルーグレー）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#606d75"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Nav</div><div class="color-swatch-hex">#606d75</div><div class="color-swatch-role">ナビゲーション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333d45"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Heading</div><div class="color-swatch-hex">#333d45</div><div class="color-swatch-role">見出しテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#015db2"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Link</div><div class="color-swatch-hex">#015db2</div><div class="color-swatch-role">リンクテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #e0e4e7"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f8f9"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f6f8f9</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#ebebeb</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e0e4e7"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e0e4e7</div><div class="color-swatch-role">区切り線</div></div></div>
+  </div>
+
+  <div class="color-group-label">Overlay</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(5,33,92,0.8)"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">rgba(5,33,92,0.8)</div><div class="color-swatch-role">ニュースオーバーレイ帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:linear-gradient(90deg, rgba(255,255,255,0.4), rgba(255,255,255,0.8)); border: 1px solid #e0e4e7"></div><div class="color-swatch-info"><div class="color-swatch-name">Frosted Glass</div><div class="color-swatch-hex">rgba(255,255,255,0.4~0.8)</div><div class="color-swatch-role">半透明オーバーレイ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">エラー・注意</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2e8b57"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2e8b57</div><div class="color-swatch-role">成功・完了</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FROSTED GLASS -->
+<section class="section-navy" id="frosted">
+<div class="section-inner">
+  <div class="section-label">01.5 / Frosted Glass</div>
+  <h2 class="section-title">フロステッドグラス オーバーレイ</h2>
+  <div class="frosted-demo">
+    <div class="frosted-card" style="background: rgba(255,255,255,0.4);">
+      0.4 alpha
+      <div class="frosted-label">Frosted Light</div>
+    </div>
+    <div class="frosted-card" style="background: rgba(255,255,255,0.5);">
+      0.5 alpha
+      <div class="frosted-label">Frosted Medium</div>
+    </div>
+    <div class="frosted-card" style="background: rgba(255,255,255,0.8); color: var(--pocari-blue);">
+      0.8 alpha
+      <div class="frosted-label" style="color: var(--pocari-blue); opacity: 0.7;">Frosted Strong</div>
+    </div>
+  </div>
+  <p style="font-size: 13px; color: rgba(255,255,255,0.7); text-align: center;">
+    ポカリスエットのサイトでは半透明ホワイトのオーバーレイでコンテンツ領域に奥行きを持たせている。<br>
+    影（box-shadow）の代わりにフロステッドグラスが深度を表現する特徴的な手法。
+  </p>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.4; color: var(--text-heading);">ポカリスエットは、からだにうるおいを — Display Heading</div>
+    <div class="type-meta">24px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">ページヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.5; color: var(--text-heading);">製品情報 — Heading 2</div>
+    <div class="type-meta">20px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.5; color: var(--text-heading);">成分と特徴 — Heading 3</div>
+    <div class="type-meta">16px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.8; color: var(--text-primary);">本文テキスト — ポカリスエットは、汗をかいたときに失われる水分とイオン（電解質）をスムーズに補給する健康飲料です。体液に近い成分バランスで、カラダにうるおいを届けます。ABCabc 123</div>
+    <div class="type-meta">14px / 400 / line-height: 1.8 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:400; line-height:1.5; color: var(--text-nav);">ナビゲーション / メタテキスト — Navigation Text (13px)</div>
+    <div class="type-meta">13px / 400 / line-height: 1.5 / color: #606d75<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:700; line-height:1.5; color: var(--text-primary);">リンクテキスト — Link Text (12px Bold)</div>
+    <div class="type-meta">12px / 700 / line-height: 1.5<span class="type-context">リンク・ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11px; font-weight:400; line-height:1.5; color: var(--text-nav);">フッター / 注釈テキスト — Caption (11px)</div>
+    <div class="type-meta">11px / 400 / line-height: 1.5 / color: #606d75<span class="type-context">フッター・注釈</span></div>
+  </div>
+
+  <div style="margin-top: 32px; padding: 20px; background: var(--pocari-blue-light); border-left: 3px solid var(--pocari-blue);">
+    <div style="font-size: 13px; font-weight: 700; color: var(--pocari-blue); margin-bottom: 8px;">Font Stack</div>
+    <div style="font-family: monospace; font-size: 12px; color: var(--text-primary); line-height: 1.6;">
+      font-family: Helvetica, Arial, "ヒラギノ角ゴ ProN W3",<br>
+      &nbsp;&nbsp;"Hiragino Kaku Gothic ProN", メイリオ, Meiryo,<br>
+      &nbsp;&nbsp;"ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    </div>
+    <div style="font-size: 11px; color: var(--text-nav); margin-top: 8px;">
+      欧文優先型（Helvetica 先頭）。Web フォントは不使用。<br>
+      ※ preview.html では環境非依存のため Noto Sans JP を先頭に追加
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">記事・製品紹介の組版サンプル</h2>
+  <div class="article-preview">
+    <h1>からだにうるおいを届ける、ポカリスエット</h1>
+    <p>ポカリスエットは1980年の発売以来、日本の夏を支える健康飲料として親しまれてきました。汗をかいたときに失われる水分とイオン（電解質）を、スムーズに補給できるよう設計されています。</p>
+    <h2>体液に近い成分バランス</h2>
+    <p>人間の体液に近い電解質バランスで構成されているため、水分の吸収がスムーズです。ナトリウム、カリウムなどの電解質が、汗で失われたミネラルを効率よく補います。Na+ や K+ といったイオンが最適なバランスで配合されています。</p>
+    <div class="article-note">
+      日常の水分補給から、スポーツ時の水分・イオン補給まで。ポカリスエットは、暮らしのさまざまなシーンで活躍する健康飲料です。
+    </div>
+    <h2>正しい水分補給の知識</h2>
+    <p>のどが渇いたと感じたときには、すでに体内の水分は不足しています。こまめな水分補給を心がけることが大切です。特に夏場の運動時や、入浴前後、就寝前のタイミングでの水分補給が推奨されています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div style="margin-bottom: 16px; font-size: 13px; color: var(--text-nav);">ポカリスエットのサイトはスクエア（角丸なし）のボタンが基調。画像ベースのナビゲーションが中心で、テキスト CTA は簡潔。</div>
+
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-blue" href="#">製品情報を見る</a><div class="button-label">Primary (Blue)</div></div>
+    <div class="button-item"><a class="btn-outline-blue" href="#">詳しく見る</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><a class="btn-text" href="#">一覧に戻る ></a><div class="button-label">Text Link</div></div>
+  </div>
+
+  <div class="color-group-label">On Dark Background</div>
+  <div style="background: var(--pocari-blue); padding: 24px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+    <div class="button-item"><a class="btn-primary" href="#">詳しく見る</a><div class="button-label" style="color: rgba(255,255,255,0.7);">White on Blue</div></div>
+    <div class="button-item"><a class="btn-outline-white" href="#">キャンペーン</a><div class="button-label" style="color: rgba(255,255,255,0.7);">Outline White</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #d4e8f7 0%, #a8d1f0 100%);">
+        <span style="font-size: 48px;">💧</span>
+      </div>
+      <div class="card-body">
+        <div class="card-date">2024.07.15</div>
+        <h3>夏の水分補給ガイド</h3>
+        <p>熱中症予防に欠かせない、正しい水分補給の方法をご紹介します。こまめな水分補給が大切です。</p>
+        <a class="card-link" href="#">詳しく見る ></a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #e8f2fb 0%, #b8d9f4 100%);">
+        <span style="font-size: 48px;">🏃</span>
+      </div>
+      <div class="card-body">
+        <div class="card-date">2024.06.28</div>
+        <h3>スポーツとイオン補給</h3>
+        <p>運動中に失われるイオン（電解質）の補給がパフォーマンス維持の鍵。科学的な根拠をもとに解説。</p>
+        <a class="card-link" href="#">詳しく見る ></a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #f0f6fb 0%, #cde4f7 100%);">
+        <span style="font-size: 48px;">🧪</span>
+      </div>
+      <div class="card-body">
+        <div class="card-date">2024.05.10</div>
+        <h3>ポカリスエットの成分</h3>
+        <p>体液に近い電解質バランスで設計。ナトリウム・カリウム・マグネシウムなどの配合について。</p>
+        <a class="card-link" href="#">詳しく見る ></a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #e0e4e7, border-radius: 0</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="大塚 太郎">
+    <div class="form-state-label">フォーカス — border: #015db2 (Pocari Blue)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="text" value="012-345">
+    <div class="form-error-text">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー — border: #cc0000 (Danger)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし、ボーダーのみ</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 1px 3px rgba(0,0,0,0.12)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 2px 8px rgba(0,0,0,0.15)</div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--pocari-blue);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">#015db2 (Pocari Blue)</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 32px;">
+    <div class="color-group-label">Frosted Glass as Depth</div>
+    <div style="font-size: 13px; color: var(--text-nav); margin-bottom: 16px;">
+      ポカリスエットのサイトでは box-shadow ではなく半透明ホワイトオーバーレイ（Frosted Glass）で深度を表現する。
+    </div>
+    <div style="position: relative; background: linear-gradient(135deg, #015db2, #4da6e8); padding: 32px; display: flex; gap: 16px; flex-wrap: wrap;">
+      <div style="background: rgba(255,255,255,0.4); padding: 20px; min-width: 150px; text-align: center; color: white; font-size: 13px; font-weight: 700;">
+        Frosted 0.4
+      </div>
+      <div style="background: rgba(255,255,255,0.5); padding: 20px; min-width: 150px; text-align: center; color: var(--pocari-blue); font-size: 13px; font-weight: 700;">
+        Frosted 0.5
+      </div>
+      <div style="background: rgba(255,255,255,0.8); padding: 20px; min-width: 150px; text-align: center; color: var(--pocari-blue); font-size: 13px; font-weight: 700;">
+        Frosted 0.8
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト & スペーシング</h2>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom: 32px;">
+    <div style="margin-bottom:16px"><div class="width-bar-label">Main Container <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Article Content <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:64.6%"></div></div></div>
+  </div>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <div class="color-group-label">Design Characteristics</div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px;">
+    <div style="padding: 16px; border: 1px solid var(--border-default); background: var(--bg-surface);">
+      <div style="font-size: 13px; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">Square Components</div>
+      <div style="font-size: 12px; color: var(--text-nav);">border-radius: 0 — 全コンポーネントがスクエア基調</div>
+    </div>
+    <div style="padding: 16px; border: 1px solid var(--border-default); background: var(--bg-surface);">
+      <div style="font-size: 13px; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">Image-Driven Layout</div>
+      <div style="font-size: 12px; color: var(--text-nav);">画像中心の構成。テキストは簡潔に</div>
+    </div>
+    <div style="padding: 16px; border: 1px solid var(--border-default); background: var(--bg-surface);">
+      <div style="font-size: 13px; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">System Font Stack</div>
+      <div style="font-size: 12px; color: var(--text-nav);">Helvetica 先頭の欧文優先型。Web フォント不使用</div>
+    </div>
+    <div style="padding: 16px; border: 1px solid var(--border-default); background: var(--bg-surface);">
+      <div style="font-size: 13px; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">Flat + Frosted Glass</div>
+      <div style="font-size: 12px; color: var(--text-nav);">影を最小限に抑え、半透明オーバーレイで深度表現</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://pocarisweat.jp/">pocarisweat.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SUQQU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --brand-black: #000000;
+    --brand-orange: #ec7205;
+    --text-primary: #19212b;
+    --text-heading: #333333;
+    --text-on-black: #ffffff;
+    --text-muted: #696969;
+    --bg-primary: #ffffff;
+    --surface-black: #000000;
+    --surface-card: #ffffff;
+    --surface-cookie: #696969;
+    --border-default: #cccccc;
+    --border-button: #696969;
+    /* === Elevation === */
+    --elevation-1: 0 1px 3px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.12);
+    /* === Fonts 実測値 === */
+    /* IwaNMNewsPro-Th → Shippori Mincho (Google Fonts 代替) */
+    --font-display: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+    /* FOT-ロダン Pro B → Zen Kaku Gothic New 700 (Google Fonts 代替) */
+    --font-gothic-bold: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    /* FOT-ロダン Pro M → Zen Kaku Gothic New 400 (Google Fonts 代替) */
+    --font-gothic: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    /* Noto Sans JP (ベースフォント) */
+    --font-base: "Noto Sans JP", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-gothic);
+    font-size: 14px; font-weight: 400; line-height: 1.7;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === NAV — Black Header === */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--surface-black);
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 400; color: var(--text-on-black);
+    text-decoration: none; letter-spacing: 0.15em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-gothic-bold);
+    font-size: 13px; font-weight: 400; color: var(--text-on-black);
+    text-decoration: none; letter-spacing: normal;
+    opacity: 0.85; transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-icon {
+    width: 20px; height: 20px; display: flex; flex-direction: column;
+    justify-content: center; gap: 4px; cursor: pointer;
+  }
+  .nav-icon span {
+    display: block; width: 100%; height: 2px;
+    background: var(--brand-orange);
+  }
+  .nav-search-icon { color: var(--brand-orange); font-size: 18px; cursor: pointer; }
+
+  /* === HERO === */
+  .hero {
+    padding: 100px 32px 80px; text-align: center;
+    background: var(--bg-primary);
+    border-bottom: 1px solid #eee;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 34px; font-weight: 400; line-height: 1.4;
+    letter-spacing: normal;
+    color: var(--text-heading); margin-bottom: 20px;
+  }
+  .hero p {
+    font-family: var(--font-gothic);
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary); max-width: 560px; margin: 0 auto 36px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* === BUTTONS (0px radius) === */
+  .btn-primary {
+    display: inline-block; background: var(--surface-black); color: var(--text-on-black);
+    padding: 12px 40px; border-radius: 0; border: none;
+    font-family: var(--font-gothic); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: normal;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 12px 40px; border-radius: 0;
+    border: 1px solid var(--text-primary);
+    font-family: var(--font-gothic); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; letter-spacing: normal;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { background: var(--surface-black); color: var(--text-on-black); }
+  .btn-cookie-ok {
+    display: inline-block; background: var(--surface-cookie); color: var(--text-on-black);
+    padding: 8px 24px; border-radius: 2px; border: 1px solid var(--surface-cookie);
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-cookie-settings {
+    display: inline-block; background: var(--bg-primary); color: var(--surface-cookie);
+    padding: 8px 24px; border-radius: 2px; border: 1px solid var(--surface-cookie);
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* === SECTIONS === */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 400; color: var(--text-muted);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 400; line-height: 1.4;
+    letter-spacing: normal;
+    margin-bottom: 36px; color: var(--text-heading);
+  }
+  .section-divider { border: none; border-top: 1px solid #eee; margin: 0; }
+
+  .section-gray { background: #f8f8f8; padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* === COLORS === */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: #fff; border: 1px solid #eee; }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-gothic-bold); font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: var(--text-muted); font-family: "SF Mono", "Consolas", monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-display); font-size: 14px; font-weight: 400; color: var(--text-muted); margin: 28px 0 10px; letter-spacing: 0.05em; }
+
+  /* === TYPOGRAPHY === */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: "SF Mono", "Consolas", monospace; font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 10px; }
+  .type-context { display: inline-block; background: #f4f4f4; color: var(--text-muted); font-size: 10px; padding: 2px 8px; margin-left: 8px; font-family: var(--font-gothic); }
+  .type-font-badge {
+    display: inline-block; padding: 2px 8px; font-size: 10px;
+    font-family: "SF Mono", "Consolas", monospace;
+    color: var(--text-muted); border: 1px solid #ddd; margin-left: 6px;
+  }
+
+  /* === BUTTONS SECTION === */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 10px; font-family: var(--font-gothic); }
+
+  /* === CARDS === */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card { background: var(--surface-card); padding: 0; transition: opacity 0.2s; }
+  .card:hover { opacity: 0.85; }
+  .card-image { width: 100%; height: 200px; background: #e8e8e8; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 12px; }
+  .card-body { padding: 16px 0; }
+  .card h3 {
+    font-family: var(--font-gothic-bold);
+    font-size: 13px; font-weight: 400; line-height: 1.7;
+    letter-spacing: normal;
+    margin-bottom: 6px; color: var(--text-primary);
+  }
+  .card p { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+  .card-price { font-family: var(--font-base); font-size: 14px; font-weight: 500; color: var(--text-primary); margin-top: 8px; }
+  .card-link {
+    display: inline-block; margin-top: 12px;
+    font-size: 12px; color: var(--text-primary); text-decoration: none;
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 2px;
+  }
+
+  /* === PRODUCT SECTION === */
+  .product-preview { max-width: 640px; margin: 0 auto; }
+  .product-preview .display-heading {
+    font-family: var(--font-display);
+    font-size: 34px; font-weight: 400; line-height: 1.4;
+    color: var(--text-heading); margin-bottom: 12px;
+  }
+  .product-preview .sub-heading {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 400; line-height: 1.0;
+    color: var(--text-heading); margin-bottom: 24px;
+  }
+  .product-preview p {
+    font-family: var(--font-gothic);
+    font-size: 14px; font-weight: 400; line-height: 1.8;
+    letter-spacing: normal;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .product-preview h3 {
+    font-family: var(--font-gothic-bold);
+    font-size: 13px; font-weight: 700; line-height: 1.7;
+    margin: 24px 0 8px; color: var(--text-primary);
+  }
+
+  /* === FORMS === */
+  .form-group { margin-bottom: 24px; max-width: 400px; }
+  .form-label {
+    display: block; font-family: var(--font-gothic-bold);
+    font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 10px 12px; border-radius: 0;
+    font-family: var(--font-gothic); font-size: 14px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-black); }
+  .form-input--error { border-color: #c00; }
+  .form-error-text { font-size: 11px; color: #c00; margin-top: 4px; font-family: var(--font-gothic); }
+  .form-state-label { font-size: 10px; color: var(--text-muted); margin-top: 4px; font-family: "SF Mono", "Consolas", monospace; }
+
+  /* === ELEVATION === */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card { background: #fff; padding: 28px; text-align: center; border: 1px solid #eee; }
+  .elevation-label { font-family: var(--font-gothic-bold); font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: "SF Mono", "Consolas", monospace; font-size: 10px; color: var(--text-muted); word-break: break-all; }
+
+  /* === SPACING === */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-black); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: "SF Mono", "Consolas", monospace; font-size: 10px; font-weight: 400; color: var(--text-muted); }
+
+  /* === CONTENT WIDTHS === */
+  .width-bar { height: 28px; background: #f4f4f4; border: 1px solid #eee; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand-black); opacity: 0.12; }
+  .width-bar-label { font-family: var(--font-gothic-bold); font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: "SF Mono", "Consolas", monospace; font-size: 11px; color: var(--text-muted); }
+
+  /* === CAROUSEL DOTS === */
+  .dot-row { display: flex; gap: 8px; align-items: center; margin-top: 16px; }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 1px solid var(--brand-black); background: transparent;
+  }
+  .dot--active { background: var(--brand-black); }
+
+  /* === FOOTER === */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--surface-black); color: var(--text-on-black);
+    font-family: var(--font-gothic); font-size: 11px;
+  }
+  .footer a { color: var(--text-on-black); text-decoration: underline; opacity: 0.7; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 13px; line-height: 1.7; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .product-preview .display-heading { font-size: 24px; }
+    .btn-primary, .btn-secondary { padding: 10px 28px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV: Black Header -->
+<nav class="nav">
+  <a class="nav-brand" href="#">SUQQU</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-search-icon">&#9906;</span>
+    <div class="nav-icon"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview<br>SUQQU</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。3書体構成（明朝 + ゴシック + サンセリフ）と角張った矩形 CTA が特徴的なラグジュアリーコスメティクスブランドの仕様を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">詳細はこちら</a>
+    <a class="btn-secondary" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヘッダー・CTA 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ec7205"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange Accent</div><div class="color-swatch-hex">#ec7205</div><div class="color-swatch-role">検索アイコン・メニューバー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#19212b"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#19212b</div><div class="color-swatch-role">本文テキスト（極濃紺黒）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Heading</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">セクション見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Black</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ヘッダー・CTA テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#696969"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#696969</div><div class="color-swatch-role">補足テキスト・クッキー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヘッダー・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">入力欄枠線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#696969"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Button</div><div class="color-swatch-hex">#696969</div><div class="color-swatch-role">セカンダリボタン枠線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">3-Font Typography System</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-display); font-size:34px; font-weight:400; line-height:1.4; color:var(--text-heading);">TOPICS</div>
+    <div class="type-meta">
+      34px / 400 / line-height: 1.4 / letter-spacing: normal
+      <span class="type-font-badge">IwaNMNewsPro-Th</span>
+      <span class="type-context">セクション見出し</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-display); font-size:18px; font-weight:400; line-height:1.0; color:var(--text-heading);">STAFF REVIEW</div>
+    <div class="type-meta">
+      18px / 400 / line-height: 1.0 / letter-spacing: normal
+      <span class="type-font-badge">IwaNMNewsPro-Th</span>
+      <span class="type-context">サブセクション見出し</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:18px; font-weight:400; line-height:1.4; color:var(--text-primary);">人気ランキング</div>
+    <div class="type-meta">
+      18px / 400 / line-height: 1.4 / letter-spacing: normal
+      <span class="type-font-badge">Noto Sans JP</span>
+      <span class="type-context">ランキング見出し</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-gothic-bold); font-size:13px; font-weight:400; line-height:1.7; color:var(--text-primary);">シグニチャー カラー アイズ</div>
+    <div class="type-meta">
+      13px / 400 / line-height: 1.7 / letter-spacing: normal
+      <span class="type-font-badge">FOT-ロダン Pro B</span>
+      <span class="type-context">商品名</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-gothic); font-size:14px; font-weight:400; line-height:1.8; color:var(--text-primary);">肌の奥深くからにじみ出るような血色感。日本人の肌に溶け込む繊細な色彩設計で、上品な印象を長時間キープします。素肌の美しさを引き立てる処方。</div>
+    <div class="type-meta">
+      14px / 400 / line-height: 1.8 / letter-spacing: normal
+      <span class="type-font-badge">FOT-ロダン Pro M</span>
+      <span class="type-context">本文テキスト</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:400; line-height:1.5; color:var(--text-primary);">ベーステキスト — base text (16px Noto Sans JP)</div>
+    <div class="type-meta">
+      16px / 400 / line-height: 1.5 / letter-spacing: normal
+      <span class="type-font-badge">Noto Sans JP</span>
+      <span class="type-context">ベース</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-gothic-bold); font-size:13px; font-weight:400; line-height:1.7; color:var(--text-on-black); background:var(--surface-black); display:inline-block; padding:8px 20px;">ナビゲーション</div>
+    <div class="type-meta">
+      13px / 400 / line-height: 1.7 / color: #ffffff on #000000
+      <span class="type-font-badge">FOT-ロダン Pro B</span>
+      <span class="type-context">ヘッダーナビ</span>
+    </div>
+  </div>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-gothic); font-size:16px; font-weight:400; line-height:1.5; color:var(--text-on-black); background:var(--surface-black); display:inline-block; padding:12px 40px;">詳細はこちら</div>
+    <div class="type-meta">
+      16px / 400 / line-height: 1.5 / CTA ボタンテキスト
+      <span class="type-font-badge">FOT-ロダン Pro M</span>
+      <span class="type-context">CTA</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT PREVIEW -->
+<section class="section-gray" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product</div>
+  <h2 class="section-title" style="font-family: var(--font-display);">商品ページ組版サンプル</h2>
+  <div class="product-preview">
+    <div class="display-heading">SIGNATURE COLOR EYES</div>
+    <div class="sub-heading">シグニチャー カラー アイズ</div>
+    <p>日本人の骨格と肌色を研究し尽くした4色のグラデーション。密着度の高いパウダーが瞼に溶け込み、奥行きのある目もとを演出します。ブラシを含めた全6アイテムで、SUQQU ならではの「顔立ちメイク」を実現。</p>
+    <h3>使い方</h3>
+    <p>左上のハイライトカラーをアイホール全体になじませ、右上のミディアムカラーを二重幅に重ねます。右下のシェードカラーでキワを引き締め、左下のアクセントカラーを下まぶたに入れて完成。</p>
+    <h3>成分特長</h3>
+    <p>スムースフィットオイル配合。肌への密着力を高め、粉飛びを防ぎます。保湿成分として椿オイルとシルクパウダーを採用し、長時間美しい発色をキープ。</p>
+    <div style="margin-top:32px;">
+      <a class="btn-primary" href="#">詳細はこちら</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Button Variations</h2>
+  <p style="font-size:12px; color:var(--text-muted); margin-bottom:32px;">SUQQU の CTA は border-radius: 0px の完全矩形。ラグジュアリーブランドに特徴的なシャープなデザイン。</p>
+
+  <div class="button-row" style="margin-bottom: 36px;">
+    <div class="button-item"><a class="btn-primary" href="#">詳細はこちら</a><div class="button-label">Primary CTA (0px radius)</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">店舗一覧</a><div class="button-label">Secondary (0px radius)</div></div>
+  </div>
+
+  <div class="button-row" style="margin-bottom: 36px;">
+    <div class="button-item"><a class="btn-primary" href="#" style="padding:15px 60px;">新規会員登録はこちら</a><div class="button-label">Wide CTA</div></div>
+    <div class="button-item"><a class="btn-primary" href="#" style="padding:15px 60px;">すべてのレビューを見る</a><div class="button-label">Review CTA</div></div>
+  </div>
+
+  <div class="button-row" style="margin-bottom: 36px;">
+    <div class="button-item"><a class="btn-cookie-ok" href="#">OK</a><div class="button-label">Cookie OK (2px radius)</div></div>
+    <div class="button-item"><a class="btn-cookie-settings" href="#">設定</a><div class="button-label">Cookie Settings (2px radius)</div></div>
+  </div>
+
+  <div>
+    <div class="button-label" style="margin-bottom:8px;">Carousel Dots</div>
+    <div class="dot-row">
+      <div class="dot dot--active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Product Cards</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">375 x 200</div>
+      <div class="card-body">
+        <h3>シグニチャー カラー アイズ</h3>
+        <p>洗練されたグラデーションで奥行きのある目もとを演出。日本人の骨格に合わせた4色パレット。</p>
+        <div class="card-price">&yen;7,700 (税込)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">375 x 200</div>
+      <div class="card-body">
+        <h3>ザ クリーム ファンデーション</h3>
+        <p>素肌から美しいと感じる仕上がり。みずみずしいクリームが肌に溶け込み、自然な艶を生む。</p>
+        <div class="card-price">&yen;11,000 (税込)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">375 x 200</div>
+      <div class="card-body">
+        <h3>モイスチャー リッチ リップスティック</h3>
+        <p>凛とした発色と潤いを両立。唇の形状に沿って美しく色づき、しなやかなフィット感が持続。</p>
+        <div class="card-price">&yen;5,500 (税込)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">Form Elements</h2>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト / border: #cccccc / radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">パスワード</label>
+    <input class="form-input form-input--focus" type="password" value="mypassword123">
+    <div class="form-state-label">フォーカス / border: #000000</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー / border: #cc0000</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <p style="font-size:12px; color:var(--text-muted); margin-bottom:28px;">SUQQU は基本フラット。影はほぼ使わず、黒と白のコントラストで階層を表現する。</p>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし（基本）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 1px 3px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 12px rgba(0,0,0,0.12)</div></div>
+    <div class="elevation-card" style="background: var(--surface-black); color: var(--text-on-black);"><div class="elevation-label" style="color: var(--text-on-black);">Surface Black</div><div class="elevation-desc" style="color: rgba(255,255,255,0.6);">ヘッダー・フッター・CTA</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Spacing & Widths</h2>
+
+  <div style="margin-bottom:40px;">
+    <div class="color-group-label">Spacing Scale</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="color-group-label">Content Widths</div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:80%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Article / Product <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:53.3%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Form <span class="width-bar-value">400px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:33.3%"></div></div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.suqqu.com/ja/">suqqu.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-04）
+</footer>
+
+</body>
+</html>

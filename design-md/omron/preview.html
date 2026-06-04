@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: OMRON (オムロン)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 (CSS Custom Properties 準拠) === */
+    --omron-blue: #005eb8;
+    --blue-10: #f5faff;
+    --blue-20: #e5f1ff;
+    --blue-30: #cce0ff;
+    --text-primary: #1d242b;
+    --text-body: #333333;
+    --text-secondary: #5a7186;
+    --gray: #8d9dad;
+    --gray-light: #c8d4de;
+    --border-primary: #c8d4de;
+    --input-border: #d1d1d1;
+    --surface-blue: #f5faff;
+    --surface-white: #ffffff;
+    --white: #ffffff;
+    --card-border: rgba(29, 36, 43, 0.1);
+    --selected-bg: #ebf5ff;
+
+    /* === Semantic === */
+    --danger: #d32f2f;
+    --success: #2e7d32;
+    --warning: #f5a623;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --elevation-3: 0 8px 32px rgba(0, 0, 0, 0.10);
+
+    /* === Fonts === */
+    --font-base: Roboto, "Noto Sans JP", sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-pill: 50px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-body);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    color: var(--omron-blue); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 4px; list-style: none; }
+  .nav-links a {
+    display: inline-flex; align-items: center;
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-links a:hover {
+    background: var(--omron-blue);
+    color: var(--white);
+  }
+  .nav-search {
+    display: flex; align-items: center;
+  }
+  .nav-search input {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    padding: 6px 16px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+    outline: none;
+    width: 180px;
+    transition: border-color 0.15s;
+  }
+  .nav-search input:focus { border-color: var(--omron-blue); }
+  .nav-search button {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500;
+    padding: 6px 16px;
+    background: var(--omron-blue);
+    color: var(--white);
+    border: 1px solid var(--omron-blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .nav-search button:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 72px;
+    background: linear-gradient(135deg, #003d7a 0%, var(--omron-blue) 60%, #0074e0 100%);
+    color: var(--white);
+    text-align: center;
+  }
+  .hero-inner {
+    max-width: 800px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 56px; font-weight: 600;
+    line-height: 1.4;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .hero p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 640px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--omron-blue);
+    padding: 12px 32px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-primary-blue {
+    display: inline-flex; align-items: center;
+    background: var(--omron-blue); color: var(--white);
+    padding: 12px 32px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-primary-blue:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--white);
+    padding: 11px 31px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
+  .btn-secondary-dark {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--omron-blue);
+    padding: 11px 31px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--omron-blue);
+    transition: background 0.15s;
+  }
+  .btn-secondary-dark:hover { background: var(--blue-10); }
+  .btn-tertiary {
+    display: inline-flex; align-items: center;
+    background: var(--white); color: var(--text-body);
+    padding: 8px 16px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--border-primary);
+    transition: background 0.15s;
+  }
+  .btn-tertiary:hover { background: var(--blue-10); }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--omron-blue);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .section { padding: 72px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 40px; font-weight: 600; line-height: 1.2;
+    color: var(--text-body);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--blue-10);
+    margin: 0;
+  }
+  .section-blue { background: var(--surface-blue); padding: 72px 32px; }
+  .section-blue .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); border: 1px solid var(--card-border); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--blue-10); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--blue-20); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; font-family: var(--font-base); }
+
+  /* PRODUCT CARDS */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .product-card {
+    background: var(--white);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 32px 24px;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .product-card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .product-card.featured {
+    border: 2px solid var(--omron-blue);
+    position: relative;
+  }
+  .product-card.featured::before {
+    content: "注目";
+    position: absolute; top: -12px; left: 24px;
+    background: var(--omron-blue); color: var(--white);
+    padding: 4px 16px; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 700;
+  }
+  .product-tag {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    background: var(--blue-20); color: var(--omron-blue);
+    padding: 4px 12px; border-radius: var(--radius-sm);
+    margin-bottom: 16px;
+  }
+  .product-card h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700; line-height: 1.3;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .product-desc {
+    font-size: 14px; line-height: 1.75;
+    color: var(--text-secondary); margin-bottom: 24px;
+  }
+  .product-features { list-style: none; margin-bottom: 24px; }
+  .product-features li {
+    font-size: 14px; line-height: 1.75;
+    padding: 4px 0; padding-left: 24px; position: relative;
+    color: var(--text-body);
+  }
+  .product-features li::before {
+    content: "\2713"; position: absolute; left: 0; top: 4px;
+    color: var(--omron-blue); font-weight: 700;
+  }
+  .product-cta {
+    display: inline-flex; width: 100%; justify-content: center;
+    padding: 12px 24px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .product-cta.primary { background: var(--omron-blue); color: var(--white); }
+  .product-cta.secondary { background: var(--white); color: var(--omron-blue); border: 1px solid var(--omron-blue); }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .pill {
+    display: inline-flex; align-items: center;
+    padding: 6px 16px; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 600;
+  }
+  .pill-blue { background: var(--omron-blue); color: var(--white); }
+  .pill-blue-light { background: var(--blue-20); color: var(--omron-blue); }
+  .pill-outline { background: transparent; color: var(--omron-blue); border: 1px solid var(--omron-blue); }
+  .pill-gray { background: var(--blue-10); color: var(--text-secondary); }
+  .pill-danger { background: var(--danger); color: var(--white); }
+  .pill-success { background: var(--success); color: var(--white); }
+
+  /* BUTTONS SECTION */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; font-family: var(--font-mono); }
+
+  /* ARTICLE SAMPLE */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 32px; font-weight: 700; line-height: 1.16;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 40px; font-weight: 600; line-height: 1.2;
+    color: var(--text-body);
+    margin: 40px 0 16px;
+  }
+  .article-preview h3 {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700; line-height: 1.3;
+    color: var(--text-primary);
+    margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.75;
+    margin-bottom: 20px; color: var(--text-body);
+  }
+  .article-preview p.helper {
+    color: var(--text-secondary); font-size: 14px; line-height: 1.75;
+  }
+  .article-callout {
+    background: var(--blue-20);
+    border-left: 4px solid var(--omron-blue);
+    padding: 20px 24px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.75;
+    color: var(--text-body);
+  }
+  .article-callout strong { color: var(--omron-blue); }
+  .article-alert {
+    background: #fdecea;
+    border-left: 4px solid var(--danger);
+    padding: 16px 20px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.75;
+    color: var(--text-body);
+  }
+  .article-alert strong { color: var(--danger); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--text-body);
+    border: 1px solid var(--border-primary);
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--gray); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--omron-blue);
+    box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.12);
+  }
+  .form-state-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; font-family: var(--font-mono); }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-md);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--card-border);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--omron-blue); border-radius: var(--radius-sm); margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--omron-blue);
+    margin-bottom: 8px;
+  }
+
+  /* NAV DEMO */
+  .nav-demo {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    background: var(--white);
+    border: 1px solid var(--card-border);
+    padding: 16px 24px;
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+  }
+  .nav-demo a {
+    display: inline-flex; align-items: center;
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-demo a:hover,
+  .nav-demo a.active {
+    background: var(--omron-blue);
+    color: var(--white);
+  }
+
+  /* SEARCH DEMO */
+  .search-demo {
+    display: flex; align-items: center;
+    max-width: 400px;
+    margin-bottom: 24px;
+  }
+  .search-demo input {
+    flex: 1;
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400;
+    padding: 10px 20px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+    outline: none;
+  }
+  .search-demo button {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 500;
+    padding: 10px 20px;
+    background: var(--omron-blue);
+    color: var(--white);
+    border: 1px solid var(--omron-blue);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    cursor: pointer;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 32px;
+    text-align: center;
+    background: var(--surface-blue);
+    border-top: 1px solid var(--card-border);
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.75;
+  }
+  .footer a { color: var(--omron-blue); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero { padding: 56px 20px 48px; }
+    .hero h1 { font-size: 32px; }
+    .nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .section { padding: 48px 20px; }
+    .section-blue { padding: 48px 20px; }
+    .section-title { font-size: 28px; }
+    .product-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 24px; }
+    .article-preview h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">OMRON</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-search">
+    <input type="text" placeholder="サイト内検索">
+    <button type="button">検索</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>技術で、社会を<br>よりよくする。</h1>
+    <p>OMRON のデザインシステムをカタログ化したプレビューです。omron.com/jp/ja/ の computed style 実測値（2026-06-04 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#">製品情報を見る</a>
+      <a class="btn-secondary" href="#">企業情報</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#005eb8"></div><div class="color-swatch-info"><div class="color-swatch-name">OMRON Blue</div><div class="color-swatch-hex">#005eb8</div><div class="color-swatch-role">CTA・リンク・ナビアクセント・ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5faff; border-bottom:1px solid #c8d4de"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue 10</div><div class="color-swatch-hex">#f5faff</div><div class="color-swatch-role">セクション背景（ブルーティント）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5f1ff"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue 20</div><div class="color-swatch-hex">#e5f1ff</div><div class="color-swatch-role">ホバー面・選択状態の背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cce0ff"></div><div class="color-swatch-info"><div class="color-swatch-name">Blue 30</div><div class="color-swatch-hex">#cce0ff</div><div class="color-swatch-role">フォーカスリング・アクセント補助</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1d242b"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#1d242b</div><div class="color-swatch-role">見出し・リンクテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Body</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5a7186"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#5a7186</div><div class="color-swatch-role">フッター・補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#8d9dad"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray</div><div class="color-swatch-hex">#8d9dad</div><div class="color-swatch-role">プレースホルダー・補助</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c8d4de; border-bottom:1px solid #8d9dad"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Primary</div><div class="color-swatch-hex">#c8d4de</div><div class="color-swatch-role">区切り線・入力欄ボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebf5ff; border-bottom:1px solid #c8d4de"></div><div class="color-swatch-info"><div class="color-swatch-name">Selected BG</div><div class="color-swatch-hex">#ebf5ff</div><div class="color-swatch-role">言語選択・アクティブ状態の背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #c8d4de"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・カード背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d32f2f"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#d32f2f</div><div class="color-swatch-role">エラー・アラート（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2e7d32"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#2e7d32</div><div class="color-swatch-role">成功・完了（推奨）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5a623"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#f5a623</div><div class="color-swatch-role">警告・注意（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:56px; font-weight:600; line-height:1.4; color:#1d242b;">ソーシャルニーズの創造 -- Vision Hero</div>
+    <div class="type-meta">56px / 600 / line-height 1.4 / letter-spacing normal<span class="type-context">ビジョン領域（白文字 on dark）</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:40px; font-weight:600; line-height:1.2; color:#333333;">事業セグメント -- Section H2</div>
+    <div class="type-meta">40px / 600 / line-height 1.2 / letter-spacing normal<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:32px; font-weight:700; line-height:1.16; color:#333333;">制御機器事業 -- H1</div>
+    <div class="type-meta">32px / 700 / line-height 1.16 / letter-spacing normal<span class="type-context">ページタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:16px; font-weight:700; line-height:1.3; color:#333333;">プログラマブルコントローラ -- H3</div>
+    <div class="type-meta">16px / 700 / line-height 1.3 / letter-spacing normal<span class="type-context">カード内見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:14px; font-weight:600; line-height:1.5; color:#333333;">センサ・スイッチ -- H4</div>
+    <div class="type-meta">14px / 600-700 / line-height 1.5 / letter-spacing normal<span class="type-context">サブ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:16px; font-weight:400; line-height:1.75; color:#333333;">本文テキスト -- オムロンは、制御機器・FA システム・電子部品・ヘルスケア製品の開発・製造・販売を通じて、工場の自動化から家庭の健康管理まで幅広い社会課題の解決に取り組んでいます。センシング＆コントロール＋Think の技術で、人と機械が融和する豊かな社会を実現します。line-height: 1.75 は B2B の技術情報サイトとしてゆとりある行間です。</div>
+    <div class="type-meta">16px / 400 / line-height 1.75 / letter-spacing normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:14px; font-weight:500; line-height:1.75; color:#1d242b;">ナビゲーションテキスト -- 14px / weight 500。ヘッダーのメニュー項目に使用。</div>
+    <div class="type-meta">14px / 500 / line-height 1.75 / letter-spacing normal<span class="type-context">ナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:14px; font-weight:400; line-height:1.75; color:#5a7186;">補助テキスト -- フッター・注釈に使用。color: #5a7186 のブルーグレーで本文より控えめな存在感。</div>
+    <div class="type-meta">14px / 400 / line-height 1.75 / color #5a7186<span class="type-context">フッター・補足</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:Roboto,'Noto Sans JP',sans-serif; font-size:12px; font-weight:400; line-height:1.75; color:#5a7186;">Small -- 利用規約・注釈・免責事項。技術仕様の補足に使用されるサイズです。</div>
+    <div class="type-meta">12px / 400 / line-height 1.75 / color #5a7186</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT -->
+<section class="section-blue" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article -- 組版サンプル</div>
+  <h2 class="section-title">本文組版サンプル</h2>
+  <div class="article-preview">
+    <h1>センシング＆コントロール＋Think で<br>社会的課題を解決する</h1>
+    <p>オムロンは、独自の「センシング＆コントロール＋Think」技術を基盤に、制御機器（FA）事業、ヘルスケア事業、社会システム事業、電子部品事業の4つの領域で、世界中の人々の生活と産業の発展に貢献しています。</p>
+
+    <h2>FA（工場自動化）ソリューション</h2>
+    <p>製造現場の生産性向上と品質改善を実現するため、プログラマブルコントローラ、サーボモータ、ビジョンセンサ、安全機器など、幅広い制御機器を提供しています。AI を活用した予知保全やロボティクスとの連携により、人と機械が協調するモノづくりの未来を創造します。</p>
+
+    <h3>ヘルスケア製品のご紹介</h3>
+    <p>家庭用血圧計で世界シェア No.1。正確な測定技術と使いやすさを追求し、高血圧の早期発見と管理を支援します。体温計、体組成計、ネブライザーなど、日々の健康管理をサポートする製品ラインナップを取り揃えています。</p>
+
+    <div class="article-callout">
+      <strong>技術トピック:</strong> オムロンの AI コントローラは、製造ラインの異常をリアルタイムに検知し、設備停止を未然に防ぐ予知保全を実現します。熟練技術者の知見を AI が学習することで、品質の安定化と生産効率の向上を同時に達成します。
+    </div>
+
+    <div class="article-alert">
+      <strong>安全に関する重要なお知らせ:</strong> 安全機器（セーフティコンポーネント）は、IEC 61508 / ISO 13849 に準拠した設計が必要です。システム設計時は必ず安全カテゴリとパフォーマンスレベルを確認してください。
+    </div>
+
+    <p class="helper">※ 製品の仕様は予告なく変更される場合があります。最新情報は製品カタログまたは営業担当までお問い合わせください。記載の規格は 2026年6月時点のものです。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT CARDS -->
+<section class="section" id="products">
+  <div class="section-label">04 / Product -- 事業セグメント</div>
+  <h2 class="section-title">プロダクトカード</h2>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-tag">制御機器</div>
+      <h3>FA ソリューション</h3>
+      <p class="product-desc">生産現場の自動化・省人化を支える制御機器群。センサからコントローラまで。</p>
+      <ul class="product-features">
+        <li>プログラマブルコントローラ (PLC)</li>
+        <li>サーボモータ / インバータ</li>
+        <li>ビジョンセンサ / 画像処理</li>
+        <li>安全機器 (セーフティ)</li>
+      </ul>
+      <a class="product-cta secondary" href="#">製品一覧</a>
+    </div>
+
+    <div class="product-card featured">
+      <div class="product-tag">ヘルスケア</div>
+      <h3>家庭用健康機器</h3>
+      <p class="product-desc">血圧計で世界シェア No.1。正確な測定と使いやすさの追求。</p>
+      <ul class="product-features">
+        <li>上腕式血圧計</li>
+        <li>体温計 / 体組成計</li>
+        <li>ネブライザー</li>
+        <li>OMRON connect アプリ連携</li>
+      </ul>
+      <a class="product-cta primary" href="#">製品を見る</a>
+    </div>
+
+    <div class="product-card">
+      <div class="product-tag">社会システム</div>
+      <h3>社会インフラ機器</h3>
+      <p class="product-desc">交通・エネルギー・決済分野で安全・快適な社会を支える。</p>
+      <ul class="product-features">
+        <li>交通管制システム</li>
+        <li>駅務機器 (自動改札)</li>
+        <li>無停電電源装置 (UPS)</li>
+        <li>環境データ管理</li>
+      </ul>
+      <a class="product-cta secondary" href="#">製品一覧</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">05 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary-blue" href="#">製品情報を見る</a><div class="button-label">Primary CTA -- #005eb8 / radius 4px</div></div>
+    <div class="button-item"><a class="btn-secondary-dark" href="#">お問い合わせ</a><div class="button-label">Secondary -- White + Blue Border</div></div>
+    <div class="button-item"><a class="btn-tertiary" href="#">キャンセル</a><div class="button-label">Tertiary -- White + Gray Border</div></div>
+    <div class="button-item"><a class="btn-link" href="#">詳しくはこちら &rarr;</a><div class="button-label">Text Link -- #005eb8</div></div>
+  </div>
+
+  <div class="color-group-label">Search Bar (Pill Input + Button)</div>
+  <div class="search-demo">
+    <input type="text" placeholder="キーワードで検索">
+    <button type="button">検索</button>
+  </div>
+  <div class="button-label" style="margin-bottom: 32px;">Search Input -- radius 50px 0 0 50px + Button radius 0 4px 4px 0 / bg #005eb8</div>
+
+  <div class="color-group-label">Nav Menu (Hover Indicator)</div>
+  <div class="nav-demo">
+    <a href="#">制御機器</a>
+    <a href="#" class="active">ヘルスケア</a>
+    <a href="#">社会システム</a>
+    <a href="#">電子部品</a>
+    <a href="#">企業情報</a>
+    <a href="#">IR</a>
+  </div>
+  <div class="button-label" style="margin-bottom: 32px;">Nav Item -- hover bg #005eb8 / text white / radius 8px</div>
+
+  <div class="color-group-label">Badges / Tags</div>
+  <div class="badge-row">
+    <span class="pill pill-blue">NEW</span>
+    <span class="pill pill-blue-light">制御機器</span>
+    <span class="pill pill-blue-light">ヘルスケア</span>
+    <span class="pill pill-gray">社会システム</span>
+    <span class="pill pill-outline">詳細</span>
+    <span class="pill pill-danger">重要</span>
+    <span class="pill pill-success">対応済</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section-blue" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">お名前</label>
+      <input class="form-input" type="text" placeholder="例: 山田 太郎">
+      <div class="form-state-label">Default -- border #c8d4de / radius 4px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="taro@example.com">
+      <div class="form-state-label">Focus -- border #005eb8 / ring 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">有効な電話番号を入力してください</div>
+      <div class="form-state-label">Error -- border #d32f2f / ring 3px</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">none -- 基本（border + 背景色で階層）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 4px 16px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 8px 32px rgba(0,0,0,0.10)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout -- Spacing & Radius</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-name">XL</div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:50px"></div>
+      <div class="spacing-name">Pill</div>
+      <div class="spacing-value">50px</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.omron.com/jp/ja/">omron.com/jp/ja/</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-04）<br>
+  フォント: <strong style="color:var(--text-primary);">Roboto + Noto Sans JP</strong>（実サイトと同じ Google Fonts を使用）
+</footer>
+
+</body>
+</html>
