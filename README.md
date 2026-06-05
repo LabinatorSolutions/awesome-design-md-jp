@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (294 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (297 sites)</a>
 </p>
 
 <table>
@@ -431,6 +431,11 @@
 <td align="center"><strong>SUQQU</strong><br><img src="design-md/suqqu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ポカリスエット</strong><br><img src="design-md/pocarisweat/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>DASSAI</strong><br><img src="design-md/dassai/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>UNDERCOVER</strong><br><img src="design-md/undercover/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LUSH</strong><br><img src="design-md/lush/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -785,11 +790,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [OMRON (オムロン)](https://www.omron.com/jp/ja/) | Healthcare / Electronics | [DESIGN.md](design-md/omron/DESIGN.md) | [preview.html](design-md/omron/preview.html) |
 | [SUQQU (スック)](https://www.suqqu.com/ja/) | Luxury Beauty | [DESIGN.md](design-md/suqqu/DESIGN.md) | [preview.html](design-md/suqqu/preview.html) |
 | [Pocari Sweat (ポカリスエット)](https://pocarisweat.jp/) | Beverage / Consumer Brand | [DESIGN.md](design-md/pocarisweat/DESIGN.md) | [preview.html](design-md/pocarisweat/preview.html) |
+| [DASSAI (獺祭)](https://www.asahishuzo.ne.jp/) | Premium Sake | [DESIGN.md](design-md/dassai/DESIGN.md) | [preview.html](design-md/dassai/preview.html) |
+| [UNDERCOVER (アンダーカバー)](https://undercoverism.com/) | Avant-Garde Fashion | [DESIGN.md](design-md/undercover/DESIGN.md) | [preview.html](design-md/undercover/preview.html) |
+| [LUSH Japan (ラッシュ)](https://www.lush.com/jp/ja) | Handmade Cosmetics | [DESIGN.md](design-md/lush/DESIGN.md) | [preview.html](design-md/lush/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (294 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (297 sites)</a>
 </p>
 
 <table>
@@ -1185,6 +1193,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>OMRON</strong><br><img src="design-md/omron/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>SUQQU</strong><br><img src="design-md/suqqu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Pocari Sweat</strong><br><img src="design-md/pocarisweat/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DASSAI</strong><br><img src="design-md/dassai/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>UNDERCOVER</strong><br><img src="design-md/undercover/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LUSH</strong><br><img src="design-md/lush/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
