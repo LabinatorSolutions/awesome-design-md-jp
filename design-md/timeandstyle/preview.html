@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Time & Style（タイムアンドスタイル）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --black: #000000;
+    --contrast: #222222;
+    --contrast-2: #575760;
+    --contrast-3: #b2b2be;
+    --nav-active: #878787;
+    --mid-gray: #cbcbcb;
+    --border-light: #bbbbbb;
+    --search-btn: #69727d;
+    --base: #f0f0f0;
+    --base-2: #f7f8f9;
+    --white: #ffffff;
+
+    /* === Semantic 推奨値 === */
+    --danger: #c0392b;
+    --warning: #8b6914;
+    --success: #2e7d32;
+
+    /* === Fonts === */
+    --font-jp: "Noto Sans JP", sans-serif;
+    --font-en: Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+    background: var(--white);
+    border-bottom: 1px solid var(--base);
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 14px; font-weight: 300;
+    color: var(--black); text-decoration: none;
+    letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 500;
+    color: var(--black); text-decoration: none;
+    letter-spacing: 1px;
+    padding: 6px 13px;
+    transition: color 0.2s;
+  }
+  .nav-links a.active { color: var(--nav-active); }
+  .nav-links a:hover { color: var(--nav-active); }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; }
+  .section-white { background: var(--white); }
+  .section-base { background: var(--base); }
+  .section-title {
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--contrast-3);
+    margin-bottom: 8px;
+  }
+  .section-heading {
+    font-family: var(--font-en);
+    font-size: 30px; font-weight: 300;
+    letter-spacing: 1.4px;
+    line-height: 1.0;
+    color: var(--black);
+    margin-bottom: 48px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--white);
+    padding: 120px 40px 100px;
+    text-align: center;
+  }
+  .hero-display {
+    font-family: var(--font-en);
+    font-size: 44px; font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.3;
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-family: var(--font-en);
+    font-size: 30px; font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    color: var(--black);
+    margin-bottom: 12px;
+  }
+  .hero-detail {
+    font-family: var(--font-en);
+    font-size: 33px; font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.0;
+    color: var(--black);
+    margin-bottom: 40px;
+  }
+  .hero-link {
+    font-family: var(--font-jp);
+    font-size: 15px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--contrast-3);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .hero-link:hover { border-color: var(--black); }
+
+  /* COLORS */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .color-swatch { overflow: hidden; }
+  .color-swatch-fill { height: 80px; }
+  .color-swatch-label {
+    padding: 10px 12px;
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+    color: var(--black);
+  }
+  .color-swatch-label .name { display: block; margin-bottom: 2px; }
+  .color-swatch-label .hex { color: var(--contrast-3); }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 40px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--base);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    flex: 0 0 200px;
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--contrast-3);
+    line-height: 1.6;
+  }
+  .type-sample { flex: 1; }
+
+  /* ARTICLE */
+  .article-demo { max-width: 720px; margin: 0 auto; }
+  .article-demo h2 {
+    font-family: var(--font-en);
+    font-size: 30px; font-weight: 300;
+    letter-spacing: 1px; line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .article-demo p {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .article-demo .link {
+    font-family: var(--font-jp);
+    font-size: 15px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--contrast-3);
+    padding-bottom: 2px;
+  }
+
+  /* BUTTONS */
+  .btn-grid {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+  .btn-text {
+    font-family: var(--font-jp);
+    font-size: 15px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--contrast-3);
+    padding-bottom: 2px;
+    background: none; border-top: none; border-left: none; border-right: none;
+    cursor: pointer;
+  }
+  .btn-surface {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--black);
+    background: var(--base);
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-see-more {
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--black);
+    background: rgba(255, 255, 255, 0.84);
+    border: none;
+    padding: 4px 8px;
+    border-radius: 9px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-search {
+    font-family: var(--font-en);
+    font-size: 16px; font-weight: 200;
+    color: var(--white);
+    background: var(--search-btn);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px; margin-bottom: 48px;
+  }
+  .card { background: var(--white); }
+  .card-image {
+    height: 240px; background: var(--base);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--contrast-3);
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 300;
+    letter-spacing: 0.5px;
+    position: relative;
+  }
+  .card-see-more {
+    position: absolute; bottom: 12px; right: 12px;
+    font-family: var(--font-en);
+    font-size: 12px; font-weight: 300;
+    color: var(--black);
+    background: rgba(255, 255, 255, 0.84);
+    padding: 4px 8px;
+    border-radius: 9px;
+  }
+  .card-body { padding: 16px 0; }
+  .card-title {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  .card-date {
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--contrast-3);
+    margin-top: 8px;
+  }
+
+  /* FORMS */
+  .form-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; max-width: 600px; margin-bottom: 48px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label {
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--contrast-2);
+  }
+  .form-input {
+    font-family: var(--font-en);
+    font-size: 15px; font-weight: 200;
+    letter-spacing: 1px;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid var(--border-light);
+    background: transparent;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-bottom-color: var(--black); }
+  .form-input.error { border-bottom-color: var(--danger); }
+  .form-error {
+    font-family: var(--font-jp);
+    font-size: 11px; font-weight: 300;
+    color: var(--danger);
+  }
+
+  /* ELEVATION */
+  .elevation-note {
+    font-family: var(--font-jp);
+    font-size: 14px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--contrast-2);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .elevation-demo {
+    display: flex; gap: 40px; margin-bottom: 48px;
+  }
+  .elevation-card {
+    width: 180px; height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--contrast-3);
+  }
+
+  /* LAYOUT */
+  .layout-demo {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px; margin-bottom: 48px;
+  }
+  .layout-box {
+    height: 100px; background: var(--base);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--contrast-3);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">Time & Style</a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">ホーム</a></li>
+    <li><a href="#">ニュース</a></li>
+    <li><a href="#">プロダクト</a></li>
+    <li><a href="#">プロジェクト</a></li>
+    <li><a href="#">ショップ</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-display">The Geography of Japanese Making</div>
+  <div class="hero-sub">Copenhagen 10 – 12 June 2026</div>
+  <div class="hero-detail">Materials, Regions and Craftsmanship</div>
+  <a href="#" class="hero-link">More info</a>
+</section>
+
+<!-- 1. COLORS -->
+<section class="section section-white">
+  <div class="section-title">01</div>
+  <div class="section-heading">colors</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #000000;"></div>
+      <div class="color-swatch-label"><span class="name">Black</span><span class="hex">#000000</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #222222;"></div>
+      <div class="color-swatch-label"><span class="name">Contrast</span><span class="hex">#222222</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #575760;"></div>
+      <div class="color-swatch-label"><span class="name">Contrast 2</span><span class="hex">#575760</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #878787;"></div>
+      <div class="color-swatch-label"><span class="name">Nav Active</span><span class="hex">#878787</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #b2b2be;"></div>
+      <div class="color-swatch-label"><span class="name">Contrast 3</span><span class="hex">#b2b2be</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #bbbbbb;"></div>
+      <div class="color-swatch-label"><span class="name">Border</span><span class="hex">#bbbbbb</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #cbcbcb;"></div>
+      <div class="color-swatch-label"><span class="name">Mid Gray</span><span class="hex">#cbcbcb</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #f0f0f0;"></div>
+      <div class="color-swatch-label"><span class="name">Base</span><span class="hex">#f0f0f0</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #f7f8f9;"></div>
+      <div class="color-swatch-label"><span class="name">Base 2</span><span class="hex">#f7f8f9</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #ffffff; border: 1px solid #f0f0f0;"></div>
+      <div class="color-swatch-label"><span class="name">White</span><span class="hex">#ffffff</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. TYPOGRAPHY -->
+<section class="section section-white" style="border-top: 1px solid var(--base);">
+  <div class="section-title">02</div>
+  <div class="section-heading">typography</div>
+  <div>
+    <div class="type-row">
+      <div class="type-meta">Hero EN<br>Helvetica 300<br>44px / ls 1px</div>
+      <div class="type-sample" style="font-family: Helvetica, Arial, sans-serif; font-size: 44px; font-weight: 300; letter-spacing: 1px; line-height: 1.3;">The Geography of Japanese Making</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Section EN<br>Helvetica 300<br>33px / ls 1px</div>
+      <div class="type-sample" style="font-family: Helvetica, Arial, sans-serif; font-size: 33px; font-weight: 300; letter-spacing: 1px; line-height: 1.0;">Materials, Regions and Craftsmanship</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Subheading EN<br>Helvetica 300<br>30px / ls 1px</div>
+      <div class="type-sample" style="font-family: Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 300; letter-spacing: 1px; line-height: 1.5;">Copenhagen 10 – 12 June 2026</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">H1<br>Helvetica 300<br>25px / ls 1px</div>
+      <div class="type-sample" style="font-family: Helvetica, Arial, sans-serif; font-size: 25px; font-weight: 300; letter-spacing: 1px; line-height: 1.6;">Time & Style Midtown</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Body JP<br>Noto Sans JP 300<br>16px / ls 0.5px</div>
+      <div class="type-sample" style="font-family: 'Noto Sans JP', sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.5px; line-height: 1.6;">タイムアンドスタイルと建築家・デザイナーによる空間プロジェクト。日本のものづくりの地理と伝統を現代に伝える。</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Button Label<br>Noto Sans JP 300<br>15px / ls 0.5px</div>
+      <div class="type-sample" style="font-family: 'Noto Sans JP', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 0.5px; line-height: 1.0;">More info</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Nav<br>Helvetica 500<br>12px / ls 1px</div>
+      <div class="type-sample" style="font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 1px; line-height: 1.67;">ニュース　　プロダクト　　プロジェクト　　ショップ</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Post Title JP<br>Noto Sans JP 300<br>16px / ls 0.5px</div>
+      <div class="type-sample" style="font-family: 'Noto Sans JP', sans-serif; font-size: 16px; font-weight: 300; letter-spacing: 0.5px; line-height: 1.2;">価格改定のお知らせ</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Caption<br>Noto Sans JP 300<br>13px / ls 0.5px</div>
+      <div class="type-sample" style="font-family: 'Noto Sans JP', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: 0.5px; color: var(--contrast-2);">ショップ一覧</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Copyright<br>Noto Sans JP 300<br>9px / ls 1px</div>
+      <div class="type-sample" style="font-family: 'Noto Sans JP', sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 1px;">&copy; Copyright PRESTIGE JAPAN INC. ALL rights reserved.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ARTICLE / PROJECT -->
+<section class="section section-white" style="border-top: 1px solid var(--base);">
+  <div class="section-title">03</div>
+  <div class="section-heading">article</div>
+  <div class="article-demo">
+    <h2>Time & Style Midtown</h2>
+    <p>タイムアンドスタイルは、家具・照明・食器・漆器のデザインと生産を行っています。デザインコンセプトと製造は、日本の伝統的な職人技を現代的に進化させたもので、日本の素材が持つ長く続く美しさを強調しています。</p>
+    <p>北海道旭川の木工、岐阜の美濃焼、石川の山中漆器など、日本各地の産地と連携し、その土地の素材と技術を活かしたものづくりを行っています。</p>
+    <a href="#" class="link">more projects</a>
+  </div>
+</section>
+
+<!-- 4. BUTTONS -->
+<section class="section section-base">
+  <div class="section-title">04</div>
+  <div class="section-heading">buttons</div>
+  <div class="btn-grid">
+    <a href="#" class="btn-text">More info</a>
+    <a href="#" class="btn-text">more projects</a>
+    <a href="#" class="btn-surface">more news</a>
+    <a href="#" class="btn-see-more">see more</a>
+    <button class="btn-search">Search</button>
+  </div>
+</section>
+
+<!-- 5. CARDS -->
+<section class="section section-white">
+  <div class="section-title">05</div>
+  <div class="section-heading">cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">
+        photo
+        <span class="card-see-more">see more</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">価格改定のお知らせ</div>
+        <div class="card-date">2026.05.15</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        photo
+        <span class="card-see-more">see more</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Time & Style ミッドタウン店リニューアル</div>
+        <div class="card-date">2026.04.20</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">
+        photo
+        <span class="card-see-more">see more</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Copenhagen 3daysofdesign 出展</div>
+        <div class="card-date">2026.03.01</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FORMS -->
+<section class="section section-white" style="border-top: 1px solid var(--base);">
+  <div class="section-title">06</div>
+  <div class="section-heading">forms</div>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">Name</label>
+      <input type="text" class="form-input" placeholder="Taro Yamada">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" placeholder="example@timeandstyle.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Phone</label>
+      <input type="tel" class="form-input" value="03-1234-5678" style="border-bottom-color: var(--black);">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Search</label>
+      <input type="text" class="form-input error" value="">
+      <span class="form-error">検索キーワードを入力してください</span>
+    </div>
+    <div class="form-group full">
+      <label class="form-label">Message</label>
+      <textarea class="form-input" rows="3" style="resize: none; border: none; border-bottom: 1px solid var(--border-light);" placeholder="お問い合わせ内容"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ELEVATION -->
+<section class="section section-base">
+  <div class="section-title">07</div>
+  <div class="section-heading">elevation</div>
+  <div class="elevation-note">シャドウは一切使用しない。深度は面色の違い（#ffffff vs #f0f0f0）のみで表現する。</div>
+  <div class="elevation-demo">
+    <div class="elevation-card" style="background: var(--base);">base<br>#f0f0f0</div>
+    <div class="elevation-card" style="background: var(--base-2);">base-2<br>#f7f8f9</div>
+    <div class="elevation-card" style="background: var(--white);">white<br>#ffffff</div>
+  </div>
+</section>
+
+<!-- 8. LAYOUT -->
+<section class="section section-white">
+  <div class="section-title">08</div>
+  <div class="section-heading">layout</div>
+  <div class="layout-demo">
+    <div class="layout-box">1</div>
+    <div class="layout-box">2</div>
+    <div class="layout-box">3</div>
+  </div>
+  <div style="font-family: var(--font-en); font-size: 11px; font-weight: 300; letter-spacing: 0.5px; color: var(--contrast-3);">
+    Grid: 1-3 columns / Gap: 40px / Max Width: 1200px / Padding: 40px
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: var(--base); padding: 48px 40px; text-align: center;">
+  <div style="font-family: var(--font-en); font-size: 14px; font-weight: 300; letter-spacing: 2px; color: var(--black); margin-bottom: 24px;">Time & Style</div>
+  <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 24px;">
+    <a href="#" style="font-family: var(--font-en); font-size: 11px; font-weight: 300; letter-spacing: 1px; color: var(--black); text-decoration: none;">Instagram</a>
+    <a href="#" style="font-family: var(--font-en); font-size: 11px; font-weight: 300; letter-spacing: 1px; color: var(--black); text-decoration: none;">Facebook</a>
+    <a href="#" style="font-family: var(--font-en); font-size: 11px; font-weight: 300; letter-spacing: 1px; color: var(--black); text-decoration: none;">Youtube</a>
+  </div>
+  <div style="font-family: var(--font-jp); font-size: 9px; font-weight: 300; letter-spacing: 1px; color: var(--contrast-3);">&copy; Copyright PRESTIGE JAPAN INC. ALL rights reserved.</div>
+</footer>
+
+</body>
+</html>

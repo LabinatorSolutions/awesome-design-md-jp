@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (297 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (300 sites)</a>
 </p>
 
 <table>
@@ -436,6 +436,11 @@
 <td align="center"><strong>UNDERCOVER</strong><br><img src="design-md/undercover/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LUSH</strong><br><img src="design-md/lush/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>NANGA</strong><br><img src="design-md/nanga/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KURAND</strong><br><img src="design-md/kurand/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Time & Style</strong><br><img src="design-md/timeandstyle/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -793,11 +798,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [DASSAI (獺祭)](https://www.asahishuzo.ne.jp/) | Premium Sake | [DESIGN.md](design-md/dassai/DESIGN.md) | [preview.html](design-md/dassai/preview.html) |
 | [UNDERCOVER (アンダーカバー)](https://undercoverism.com/) | Avant-Garde Fashion | [DESIGN.md](design-md/undercover/DESIGN.md) | [preview.html](design-md/undercover/preview.html) |
 | [LUSH Japan (ラッシュ)](https://www.lush.com/jp/ja) | Handmade Cosmetics | [DESIGN.md](design-md/lush/DESIGN.md) | [preview.html](design-md/lush/preview.html) |
+| [NANGA (ナンガ)](https://nanga.jp/) | Outdoor / Down | [DESIGN.md](design-md/nanga/DESIGN.md) | [preview.html](design-md/nanga/preview.html) |
+| [KURAND (クランド)](https://kurand.jp/) | Craft Sake EC | [DESIGN.md](design-md/kurand/DESIGN.md) | [preview.html](design-md/kurand/preview.html) |
+| [Time & Style (タイムアンドスタイル)](https://www.timeandstyle.com/jp/) | Premium Furniture | [DESIGN.md](design-md/timeandstyle/DESIGN.md) | [preview.html](design-md/timeandstyle/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (297 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (300 sites)</a>
 </p>
 
 <table>
@@ -1198,6 +1206,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>DASSAI</strong><br><img src="design-md/dassai/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>UNDERCOVER</strong><br><img src="design-md/undercover/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LUSH</strong><br><img src="design-md/lush/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NANGA</strong><br><img src="design-md/nanga/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KURAND</strong><br><img src="design-md/kurand/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Time & Style</strong><br><img src="design-md/timeandstyle/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

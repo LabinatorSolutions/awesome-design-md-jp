@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: NANGA（ナンガ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;900&family=Roboto:wght@400;500;700;900&family=Roboto+Condensed:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --key-red: #b32e36;
+    --sub-orange: #e75534;
+    --black: #000000;
+    --near-black: #1a1d1c;
+    --dark-text: #222222;
+    --gray: #b0b0b0;
+    --light-border: #e5e7eb;
+    --white: #ffffff;
+
+    /* === Semantic 推奨値 === */
+    --danger: #b32e36;
+    --warning: #e75534;
+    --success: #3d7a4a;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.12);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+    /* === Fonts === */
+    --font-brand: Roboto, "Noto Sans JP", sans-serif;
+    --font-condensed: "Roboto Condensed", sans-serif;
+    --font-store: "Open Sans", sans-serif;
+
+    /* === Radius === */
+    --radius-pill: 9999px;
+    --radius-none: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--dark-text);
+    font-family: var(--font-brand);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 64px;
+    background: var(--black);
+  }
+  .nav-brand {
+    font-family: var(--font-brand);
+    font-size: 18px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-brand);
+    font-size: 14px; font-weight: 400;
+    color: var(--white); text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-links .sub { font-size: 10px; display: block; margin-top: 2px; opacity: 0.7; }
+
+  /* SECTION HEADERS */
+  .section { padding: 64px 40px; }
+  .section-dark { background: var(--black); color: var(--white); }
+  .section-near-black { background: var(--near-black); color: var(--white); }
+  .section-light { background: var(--white); color: var(--dark-text); }
+  .section-title {
+    font-family: var(--font-brand);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: var(--font-brand);
+    font-size: 28px; font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--black);
+    color: var(--white);
+    padding: 120px 40px 100px;
+    text-align: center;
+  }
+  .hero-display {
+    font-family: var(--font-brand);
+    font-size: 48px; font-weight: 900;
+    letter-spacing: 0.1em;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-family: var(--font-brand);
+    font-size: 20px; font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 32px;
+    opacity: 0.9;
+  }
+
+  /* COLORS */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .color-swatch {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .color-swatch-fill {
+    height: 80px;
+  }
+  .color-swatch-label {
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 1.4;
+    background: var(--white);
+    color: var(--dark-text);
+  }
+  .color-swatch-label .name { font-weight: 700; display: block; }
+  .color-swatch-label .hex { opacity: 0.6; }
+
+  /* TYPOGRAPHY */
+  .type-scale { margin-bottom: 40px; }
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--light-border);
+    gap: 24px;
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta {
+    flex: 0 0 180px;
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; }
+
+  /* ARTICLE */
+  .article-demo {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .article-demo h2 {
+    font-family: var(--font-brand);
+    font-size: 28px; font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    color: var(--dark-text);
+  }
+  .article-demo p {
+    font-family: var(--font-brand);
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    color: var(--dark-text);
+  }
+  .article-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--gray);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    margin-right: 8px;
+    margin-bottom: 16px;
+  }
+
+  /* BUTTONS */
+  .btn-grid {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 8px 16px;
+    font-family: var(--font-brand);
+    font-size: 13.6px; font-weight: 400;
+    line-height: 1.5;
+    border-radius: var(--radius-pill);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.8; }
+  .btn-white { background: var(--white); color: var(--black); }
+  .btn-black { background: var(--black); color: var(--white); }
+  .btn-accent { background: var(--sub-orange); color: var(--dark-text); }
+  .btn-mono { background: var(--dark-text); color: var(--white); }
+  .btn-outline {
+    background: transparent; color: var(--gray);
+    border: 1px solid var(--gray);
+    font-size: 12px; padding: 4px 12px;
+  }
+  .btn-outline-white {
+    background: transparent; color: var(--white);
+    border: 1px solid var(--white);
+    font-size: 14px; padding: 6px 16px;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: var(--white);
+    overflow: hidden;
+  }
+  .card-image {
+    height: 200px;
+    background: var(--near-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    font-size: 14px;
+  }
+  .card-body { padding: 16px 0; }
+  .card-title {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--dark-text);
+  }
+  .card-price {
+    font-size: 14px; font-weight: 400;
+    color: var(--dark-text);
+  }
+
+  /* FORMS */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label {
+    font-size: 12px; font-weight: 600;
+    color: var(--dark-text);
+    letter-spacing: 0.05em;
+  }
+  .form-input {
+    font-family: var(--font-brand);
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid var(--light-border);
+    border-radius: 0;
+    background: var(--white);
+    color: var(--dark-text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--black); }
+  .form-input.error { border-color: var(--danger); }
+  .form-error {
+    font-size: 12px;
+    color: var(--danger);
+  }
+
+  /* ELEVATION */
+  .elevation-grid {
+    display: flex; gap: 32px;
+    margin-bottom: 40px;
+  }
+  .elevation-card {
+    width: 160px; height: 120px;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--gray);
+  }
+
+  /* LAYOUT */
+  .layout-demo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .layout-box {
+    height: 80px;
+    background: var(--near-black);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand">NANGA</a>
+  <ul class="nav-links">
+    <li><a href="#">PRODUCT<span class="sub">製品について</span></a></li>
+    <li><a href="#">ABOUT<span class="sub">ナンガについて</span></a></li>
+    <li><a href="#">FEATURE<span class="sub">特集</span></a></li>
+    <li><a href="#">STORE<span class="sub">店舗</span></a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-display">SLEEP WELL,<br>DREAM ALL DAY</div>
+  <div class="hero-sub">高品質な羽毛で、最高の眠りを届ける</div>
+  <a href="#" class="btn btn-white">READ MORE</a>
+</section>
+
+<!-- 1. COLORS -->
+<section class="section section-light">
+  <div class="section-title">01</div>
+  <div class="section-heading">Colors</div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #b32e36;"></div>
+      <div class="color-swatch-label"><span class="name">Key Red</span><span class="hex">#b32e36</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #e75534;"></div>
+      <div class="color-swatch-label"><span class="name">Sub Orange</span><span class="hex">#e75534</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #000000;"></div>
+      <div class="color-swatch-label"><span class="name">Black</span><span class="hex">#000000</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #1a1d1c;"></div>
+      <div class="color-swatch-label"><span class="name">Near Black</span><span class="hex">#1a1d1c</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #222222;"></div>
+      <div class="color-swatch-label"><span class="name">Dark Text</span><span class="hex">#222222</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #b0b0b0;"></div>
+      <div class="color-swatch-label"><span class="name">Gray</span><span class="hex">#b0b0b0</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #e5e7eb;"></div>
+      <div class="color-swatch-label"><span class="name">Light Border</span><span class="hex">#e5e7eb</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #ffffff; border: 1px solid #e5e7eb;"></div>
+      <div class="color-swatch-label"><span class="name">White</span><span class="hex">#ffffff</span></div>
+    </div>
+  </div>
+  <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Semantic</h3>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #b32e36;"></div>
+      <div class="color-swatch-label"><span class="name">Danger</span><span class="hex">#b32e36</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #e75534;"></div>
+      <div class="color-swatch-label"><span class="name">Warning</span><span class="hex">#e75534</span></div>
+    </div>
+    <div class="color-swatch">
+      <div class="color-swatch-fill" style="background: #3d7a4a;"></div>
+      <div class="color-swatch-label"><span class="name">Success</span><span class="hex">#3d7a4a</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. TYPOGRAPHY -->
+<section class="section section-light">
+  <div class="section-title">02</div>
+  <div class="section-heading">Typography</div>
+  <div class="type-scale">
+    <div class="type-row">
+      <div class="type-meta">Display<br>Roboto 900<br>48px / 0.1em</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 48px; font-weight: 900; letter-spacing: 0.1em; line-height: 1.25;">MEMBER SHIP</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Heading 1<br>Roboto 600<br>28px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 28px; font-weight: 600; line-height: 1.5;">FEATURE 特集</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Heading 2<br>Roboto 900<br>20px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 900; line-height: 1.25; color: #b32e36;">SLEEP WELL, DREAM ALL DAY</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Condensed H3<br>Roboto Condensed 700<br>32px / 0.03em</div>
+      <div class="type-sample" style="font-family: 'Roboto Condensed', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: 0.03em; line-height: 1.2;">NEW ARRIVALS</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Subheading<br>Roboto 600<br>20px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.5;">メンバーシップ プログラム</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Nav<br>Roboto 400<br>18px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 18px; font-weight: 400; line-height: 1.5;">PRODUCT 製品について</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Body<br>Roboto 400<br>16px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.5;">NANGAは滋賀県米原市で1941年に創業した、羽毛の産地ならではのクオリティにこだわるダウンメーカーです。</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">CTA<br>Roboto 400<br>13.6px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 13.6px; font-weight: 400; line-height: 1.5;">READ MORE</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Caption<br>Roboto 400<br>12px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 400; line-height: 1.5; color: #b0b0b0;">続きを読む</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">Small<br>Roboto 400<br>10px / normal</div>
+      <div class="type-sample" style="font-family: Roboto, 'Noto Sans JP', sans-serif; font-size: 10px; font-weight: 400; line-height: 1.5; color: #b0b0b0;">製品について</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ARTICLE -->
+<section class="section section-light">
+  <div class="section-title">03</div>
+  <div class="section-heading">Article</div>
+  <div class="article-demo">
+    <span class="article-tag">SLEEPING BAG</span>
+    <span class="article-tag">DOWN WEAR</span>
+    <h2>ZZZ BAG DEBUT — 化繊寝袋が新登場</h2>
+    <p>NANGAは1941年の創業以来、羽毛の産地・滋賀県米原市で「ものづくり」にこだわり続けてきました。国内洗浄・国内縫製にこだわり、熟練の職人たちが一つひとつ丁寧に仕上げています。</p>
+    <p>最高品質のダウンを追求し、自社工場で徹底した品質管理のもと生産。寝袋からダウンウェアまで、「暖かさ」と「軽さ」を両立した製品をお届けします。</p>
+    <a href="#" class="btn btn-black">READ MORE</a>
+  </div>
+</section>
+
+<!-- 4. BUTTONS -->
+<section class="section section-dark">
+  <div class="section-title" style="color: var(--white);">04</div>
+  <div class="section-heading" style="color: var(--white);">Buttons</div>
+  <h3 style="font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 16px; opacity: 0.6;">On dark background</h3>
+  <div class="btn-grid" style="margin-bottom: 32px;">
+    <a href="#" class="btn btn-white">READ MORE</a>
+    <a href="#" class="btn btn-accent">VIEW ALL</a>
+    <a href="#" class="btn btn-outline-white">ENGLISH</a>
+  </div>
+  <h3 style="font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 16px; opacity: 0.6;">On light background</h3>
+  <div class="btn-grid" style="background: var(--white); padding: 24px; margin-bottom: 0;">
+    <a href="#" class="btn btn-black">READ MORE</a>
+    <a href="#" class="btn btn-mono">VIEW ALL</a>
+    <a href="#" class="btn btn-outline">続きを読む</a>
+  </div>
+</section>
+
+<!-- 5. CARDS -->
+<section class="section section-light">
+  <div class="section-title">05</div>
+  <div class="section-heading">Cards</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">960 x 960</div>
+      <div class="card-body">
+        <div class="card-title">AURORA DOWN JACKET</div>
+        <div class="card-price">&yen;55,000</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">960 x 960</div>
+      <div class="card-body">
+        <div class="card-title">ZZZ BAG REG</div>
+        <div class="card-price">&yen;29,700</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">960 x 960</div>
+      <div class="card-body">
+        <div class="card-title">AURORA LIGHT 350DX</div>
+        <div class="card-price">&yen;38,500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FORMS -->
+<section class="section section-light" style="border-top: 1px solid var(--light-border);">
+  <div class="section-title">06</div>
+  <div class="section-heading">Forms</div>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">NAME</label>
+      <input type="text" class="form-input" placeholder="山田 太郎">
+    </div>
+    <div class="form-group">
+      <label class="form-label">EMAIL</label>
+      <input type="email" class="form-input" placeholder="example@nanga.jp">
+    </div>
+    <div class="form-group">
+      <label class="form-label">PHONE</label>
+      <input type="tel" class="form-input" value="090-1234-5678" style="border-color: var(--black);">
+    </div>
+    <div class="form-group">
+      <label class="form-label">POSTAL CODE</label>
+      <input type="text" class="form-input error" value="abc">
+      <span class="form-error">正しい郵便番号を入力してください</span>
+    </div>
+    <div class="form-group full">
+      <label class="form-label">MESSAGE</label>
+      <textarea class="form-input" rows="4" placeholder="お問い合わせ内容をご記入ください"></textarea>
+    </div>
+  </div>
+</section>
+
+<!-- 7. ELEVATION -->
+<section class="section section-light" style="background: #f0f0f0;">
+  <div class="section-title">07</div>
+  <div class="section-heading">Elevation</div>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="box-shadow: var(--elevation-0);">Level 0<br>flat</div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">Level 1<br>card</div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">Level 2<br>modal</div>
+  </div>
+</section>
+
+<!-- 8. LAYOUT -->
+<section class="section section-light">
+  <div class="section-title">08</div>
+  <div class="section-heading">Layout</div>
+  <div class="layout-demo">
+    <div class="layout-box">1</div>
+    <div class="layout-box">2</div>
+    <div class="layout-box">3</div>
+    <div class="layout-box">4</div>
+  </div>
+  <div style="font-size: 12px; color: var(--gray); margin-top: 8px;">
+    Grid: flexible columns / Gap: 16px / Max Width: 1440px / Padding: 20px
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: var(--black); color: var(--white); padding: 48px 40px; text-align: center;">
+  <div style="font-family: var(--font-brand); font-size: 18px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 24px;">NANGA</div>
+  <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 24px;">
+    <a href="#" style="color: var(--white); text-decoration: none; font-size: 12px;">Facebook</a>
+    <a href="#" style="color: var(--white); text-decoration: none; font-size: 12px;">X</a>
+    <a href="#" style="color: var(--white); text-decoration: none; font-size: 12px;">Instagram</a>
+    <a href="#" style="color: var(--white); text-decoration: none; font-size: 12px;">YouTube</a>
+  </div>
+  <div style="font-size: 11px; color: var(--gray);">&copy; NANGA Co., Ltd.</div>
+</footer>
+
+</body>
+</html>
