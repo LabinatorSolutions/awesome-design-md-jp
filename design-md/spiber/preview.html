@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Spiber</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #121212;
+    --white: #ffffff;
+    --bg-page: #ffffff;
+    --bg-surface: #f2f2f2;
+    --bg-surface-alt: #f3f3f3;
+    --bg-footer: #121212;
+    --text-primary: #121212;
+    --text-secondary: #a1a1a1;
+    --text-white: #ffffff;
+    --text-footer-dim: rgba(224, 221, 219, 0.4);
+    --border-default: rgb(229, 231, 235);
+    --cookie-bar: #e0dddb;
+    --font-primary: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Inter", "Yu Gothic", YuGothic, ui-sans-serif, system-ui, sans-serif;
+    --radius-pill: 50px;
+    --radius-sm: 2px;
+    --radius-md: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 62px;
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 16px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; display: flex; align-items: center; gap: 30px;
+  }
+  .nav-brand strong { font-weight: 700; font-size: 18px; }
+  .nav-links { display: flex; gap: 0; list-style: none; align-items: center; }
+  .nav-links li a {
+    display: block; padding: 17.5px 16px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--text-primary); text-decoration: none; text-transform: uppercase;
+    font-variant: small-caps; transition: opacity 0.2s;
+  }
+  .nav-links li a:hover { opacity: 0.75; }
+  .nav-links li a.dimmed { color: var(--text-secondary); }
+  .nav-actions { display: flex; gap: 8px; align-items: center; }
+  .nav-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    padding: 8px 30px; border-radius: var(--radius-pill);
+    text-decoration: none; transition: opacity 0.2s; white-space: nowrap;
+  }
+  .nav-pill:hover { opacity: 0.75; }
+  .nav-pill--outline {
+    color: var(--text-primary); background: transparent;
+    border: 1px solid var(--text-primary);
+  }
+  .nav-pill--filled {
+    color: var(--text-white); background: var(--black);
+    border: 1px solid var(--black);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 166px 40px 80px;
+    background: var(--bg-surface);
+    position: relative; overflow: hidden;
+  }
+  .hero--dark {
+    background: var(--black); color: var(--text-white);
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 60px; font-weight: 500; line-height: 1.1;
+    letter-spacing: -0.03em; margin-bottom: 32px;
+  }
+  .hero p {
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    max-width: 680px; margin-bottom: 40px;
+  }
+  .hero p.body { font-size: 16px; max-width: 600px; }
+
+  /* SECTIONS */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section--surface { background: var(--bg-surface); }
+  .section--dark { background: var(--black); color: var(--text-white); }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; font-variant: small-caps;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 48px; font-weight: 400; line-height: 1.2;
+    letter-spacing: -0.03em; margin-bottom: 24px;
+  }
+  .section-h3 {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    letter-spacing: -0.02em; margin-bottom: 16px;
+  }
+  .section-body {
+    font-size: 16px; line-height: 1.5; margin-bottom: 16px;
+    max-width: 680px;
+  }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; margin-bottom: 48px; }
+  .color-swatch { display: flex; flex-direction: column; gap: 8px; }
+  .color-swatch .swatch {
+    width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+  }
+  .color-swatch .label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .color-swatch .hex { font-size: 13px; color: var(--text-secondary); }
+
+  /* TYPOGRAPHY */
+  .type-specimen { margin-bottom: 48px; }
+  .type-specimen .meta {
+    font-size: 11px; font-weight: 700; color: var(--text-secondary);
+    letter-spacing: 0.1em; margin-bottom: 8px; text-transform: uppercase;
+  }
+
+  /* ARTICLE */
+  .article { max-width: 680px; margin: 0 auto 48px; }
+  .article h2 {
+    font-family: var(--font-heading);
+    font-size: 48px; font-weight: 400; line-height: 1.2;
+    letter-spacing: -0.03em; margin-bottom: 24px;
+  }
+  .article h3 {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    letter-spacing: -0.02em; margin-bottom: 16px; font-style: italic;
+  }
+  .article p {
+    font-size: 16px; line-height: 1.5; margin-bottom: 16px;
+  }
+  .article .label {
+    font-size: 16px; color: var(--text-secondary); margin-bottom: 4px;
+  }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 48px; }
+  .btn-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    padding: 10px 30px; border-radius: var(--radius-pill);
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s;
+    border: none;
+  }
+  .btn-pill:hover { opacity: 0.75; }
+  .btn-pill--primary {
+    color: var(--text-white); background: var(--black);
+    border: 1px solid var(--black);
+  }
+  .btn-pill--secondary {
+    color: var(--text-primary); background: transparent;
+    border: 1px solid var(--text-primary);
+  }
+  .btn-pill--ghost-white {
+    color: var(--text-white); background: transparent;
+    border: 1px solid var(--text-white);
+  }
+  .btn-pill--wide {
+    padding: 10px 90px;
+  }
+  .btn-text {
+    display: inline-flex; align-items: center;
+    font-family: var(--font-primary); font-size: 13px; font-weight: 400;
+    color: var(--text-primary); background: transparent;
+    border: none; border-radius: var(--radius-md);
+    text-decoration: none; cursor: pointer; padding: 4px 0;
+    transition: opacity 0.2s;
+  }
+  .btn-text:hover { opacity: 0.75; }
+  .btn-cookie {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-primary); font-size: 14px; font-weight: 500;
+    padding: 8px 27px; border-radius: var(--radius-sm);
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-cookie:hover { opacity: 0.75; }
+  .btn-cookie--accept {
+    color: var(--text-white); background: var(--black);
+    border: 2px solid var(--black);
+  }
+  .btn-cookie--outline {
+    color: var(--text-primary); background: var(--cookie-bar);
+    border: 2px solid var(--text-primary);
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+  .card {
+    background: var(--bg-page); border-radius: var(--radius-md);
+    overflow: hidden; border: 1px solid var(--border-default);
+  }
+  .card-image {
+    width: 100%; aspect-ratio: 16/9; background: var(--bg-surface);
+  }
+  .card-body { padding: 20px; }
+  .card-body .label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
+  }
+  .card-body h4 {
+    font-family: var(--font-heading);
+    font-size: 24px; font-weight: 400; line-height: 1.5;
+    letter-spacing: -0.02em; margin-bottom: 8px;
+  }
+  .card-body p { font-size: 16px; line-height: 1.5; color: var(--text-primary); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 480px; }
+  .form-label {
+    display: block; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-secondary); margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%; font-family: var(--font-primary);
+    font-size: 16px; font-weight: 400; padding: 10px 16px;
+    border: 1px solid var(--border-default); border-radius: var(--radius-md);
+    color: var(--text-primary); background: var(--bg-page);
+    outline: none; transition: border-color 0.2s;
+    font-feature-settings: "palt";
+  }
+  .form-input:focus { border-color: var(--black); box-shadow: 0 0 0 2px rgba(18, 18, 18, 0.1); }
+  .form-input::placeholder { color: var(--text-secondary); }
+  .form-input.error { border-color: #e53e3e; }
+  .form-error { font-size: 13px; color: #e53e3e; margin-top: 4px; }
+  .form-textarea {
+    width: 100%; font-family: var(--font-primary);
+    font-size: 16px; padding: 10px 16px;
+    border: 1px solid var(--border-default); border-radius: var(--radius-md);
+    color: var(--text-primary); background: var(--bg-page);
+    outline: none; resize: vertical; min-height: 120px;
+    font-feature-settings: "palt"; transition: border-color 0.2s;
+  }
+  .form-textarea:focus { border-color: var(--black); box-shadow: 0 0 0 2px rgba(18, 18, 18, 0.1); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+  .elevation-card {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-md); background: var(--bg-page);
+    font-size: 11px; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* LAYOUT */
+  .layout-demo { margin-bottom: 48px; }
+  .layout-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .layout-col {
+    height: 120px; background: var(--bg-surface); border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--bg-footer); color: var(--text-white);
+    padding: 60px 40px 20px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-col-title {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-white); margin-bottom: 16px;
+  }
+  .footer-link {
+    display: block; font-size: 11px; letter-spacing: 0.1em;
+    color: var(--text-footer-dim); text-decoration: none;
+    text-transform: uppercase; margin-bottom: 8px; transition: color 0.2s;
+  }
+  .footer-link:hover { color: var(--text-white); }
+  .footer-bottom {
+    font-size: 11px; color: var(--text-footer-dim);
+    letter-spacing: 0.1em; text-align: center; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-brand"><strong>Spiber</strong></a>
+  <ul class="nav-links">
+    <li><a href="#">Protein</a></li>
+    <li><a href="#" class="dimmed">Innovation</a></li>
+    <li><a href="#" class="dimmed">Creations</a></li>
+    <li><a href="#" class="dimmed">Discover</a></li>
+    <li><a href="#" class="dimmed">Sustainability</a></li>
+    <li><a href="#" class="dimmed">News &amp; Stories</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#" class="nav-pill nav-pill--outline">Careers</a>
+    <a href="#" class="nav-pill nav-pill--filled">Contact Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero hero--dark">
+  <h1>More than<br>materials.</h1>
+  <p>私たちは山形県鶴岡市に本社を置くバイオベンチャーです。持続可能なウェルビーイング、そして環境課題解決への貢献を目指し、タンパク質素材の研究開発に取り組んでいます。</p>
+  <a href="#" class="btn-pill btn-pill--ghost-white">About us</a>
+</section>
+
+<!-- COLORS -->
+<div class="section">
+  <p class="section-label">Colors</p>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="swatch" style="background: #121212;"></div>
+      <span class="label">Primary</span>
+      <span class="hex">#121212</span>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch" style="background: #ffffff;"></div>
+      <span class="label">White</span>
+      <span class="hex">#ffffff</span>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch" style="background: #f2f2f2;"></div>
+      <span class="label">Surface</span>
+      <span class="hex">#f2f2f2</span>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch" style="background: #f3f3f3;"></div>
+      <span class="label">Surface Alt</span>
+      <span class="hex">#f3f3f3</span>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch" style="background: #a1a1a1;"></div>
+      <span class="label">Secondary</span>
+      <span class="hex">#a1a1a1</span>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch" style="background: #e0dddb;"></div>
+      <span class="label">Cookie Bar</span>
+      <span class="hex">#e0dddb</span>
+    </div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="section section--surface">
+  <p class="section-label">Typography</p>
+
+  <div class="type-specimen">
+    <p class="meta">H1 — Inter 60px / Weight 500 / Line Height 1.1 / Spacing -0.03em</p>
+    <p style="font-family: var(--font-heading); font-size: 60px; font-weight: 500; line-height: 1.1; letter-spacing: -0.03em;">Company</p>
+  </div>
+
+  <div class="type-specimen">
+    <p class="meta">H2 — Inter 48px / Weight 400 / Line Height 1.2 / Spacing -0.03em</p>
+    <p style="font-family: var(--font-heading); font-size: 48px; font-weight: 400; line-height: 1.2; letter-spacing: -0.03em;">Brewed Protein™</p>
+  </div>
+
+  <div class="type-specimen">
+    <p class="meta">H3 — Inter 24px / Weight 400 / Line Height 1.5 / Spacing -0.02em / Italic</p>
+    <p style="font-family: var(--font-heading); font-size: 24px; font-weight: 400; line-height: 1.5; letter-spacing: -0.02em; font-style: italic;">CORDE by Spiber</p>
+  </div>
+
+  <div class="type-specimen">
+    <p class="meta">Body Large — Inter 24px / Weight 400 / Line Height 1.5</p>
+    <p style="font-size: 24px; font-weight: 400; line-height: 1.5;">プロテイン繊維は、SpiberのBrewed Protein™ファイバーが牽引する新しい繊維のカテゴリーです。</p>
+  </div>
+
+  <div class="type-specimen">
+    <p class="meta">Body — Inter 16px / Weight 400 / Line Height 1.5</p>
+    <p style="font-size: 16px; line-height: 1.5;">この世界に生まれてきた一人ひとりが、一人の人間として尊重され、大切にされ、幸せを感じながら生きられる社会を実現したい。そんな願いのもと、Spiberは植物由来のバイオマスを原料とする微生物発酵プロセスにより、タンパク質素材の開発を行っています。</p>
+  </div>
+
+  <div class="type-specimen">
+    <p class="meta">Nav — Inter 11px / Weight 700 / Spacing 0.1em / Uppercase / Small-caps</p>
+    <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-variant: small-caps;">Protein &nbsp; Innovation &nbsp; Creations &nbsp; Discover</p>
+  </div>
+
+  <div class="type-specimen">
+    <p class="meta">Label — Inter 16px / Weight 400 / Color #a1a1a1</p>
+    <p style="font-size: 16px; color: var(--text-secondary);">会社名</p>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<div class="section">
+  <p class="section-label">Article</p>
+
+  <div class="article">
+    <h2>Brewed Protein™ファイバーの可能性</h2>
+    <h3>CORDE by Spiber</h3>
+    <p>プロテイン繊維は、SpiberのBrewed Protein™ファイバーが牽引する新しい繊維のカテゴリーです。ファッション、自動車、建築など、幅広い産業での応用が期待されています。</p>
+    <p class="label">設立</p>
+    <p>2007年9月26日</p>
+    <p class="label">本社所在地</p>
+    <p>山形県鶴岡市覚岸寺字水上246-2</p>
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div class="section section--surface">
+  <p class="section-label">Buttons</p>
+
+  <p class="meta" style="font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Pill CTAs (Primary / Secondary / Wide)</p>
+  <div class="btn-grid">
+    <button class="btn-pill btn-pill--primary">Contact Us</button>
+    <button class="btn-pill btn-pill--secondary">Careers</button>
+    <button class="btn-pill btn-pill--secondary btn-pill--wide">View all projects &rarr;</button>
+  </div>
+
+  <p class="meta" style="font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Text Links</p>
+  <div class="btn-grid">
+    <a href="#" class="btn-text">Learn more &rarr;</a>
+    <a href="#" class="btn-text">Read more &rarr;</a>
+    <a href="#" class="btn-text">Discover more</a>
+  </div>
+
+  <p class="meta" style="font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">Cookie Consent Buttons</p>
+  <div class="btn-grid">
+    <button class="btn-cookie btn-cookie--accept">すべてを受け入れる</button>
+    <button class="btn-cookie btn-cookie--outline">Cookie設定管理ツール</button>
+    <button class="btn-cookie btn-cookie--outline">すべて拒否する</button>
+  </div>
+</div>
+
+<!-- BUTTONS ON DARK -->
+<div class="section section--dark" style="padding: 40px;">
+  <p class="section-label" style="color: rgba(224,221,219,0.4);">Buttons on Dark</p>
+  <div class="btn-grid">
+    <a href="#" class="btn-pill btn-pill--ghost-white">About us</a>
+    <a href="#" class="btn-pill btn-pill--ghost-white">Contact us</a>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="section">
+  <p class="section-label">Cards</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <p class="label">Innovation</p>
+        <h4>Brewed Protein™ 100%素材</h4>
+        <p>イタリアの国際的な見本市で発表された新素材の可能性。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <p class="label">Creations</p>
+        <h4>ランドクルーザープラド</h4>
+        <p>自動車として世界初、シートの一部にBrewed Protein™ファイバーを採用。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image"></div>
+      <div class="card-body">
+        <p class="label">Sustainability</p>
+        <h4>環境負荷低減への取り組み</h4>
+        <p>植物由来バイオマスを原料とする微生物発酵プロセスの開発。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMS -->
+<div class="section section--surface">
+  <p class="section-label">Forms</p>
+
+  <div class="form-group">
+    <label class="form-label">Company Name</label>
+    <input type="text" class="form-input" placeholder="会社名">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email</label>
+    <input type="email" class="form-input" placeholder="メールアドレス" value="info@spiber.inc" style="border-color: var(--black);">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email (Error)</label>
+    <input type="email" class="form-input error" placeholder="メールアドレス" value="invalid">
+    <p class="form-error">正しいメールアドレスを入力してください</p>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Message</label>
+    <textarea class="form-textarea" placeholder="お問い合わせ内容をご記入ください"></textarea>
+  </div>
+</div>
+
+<!-- ELEVATION -->
+<div class="section">
+  <p class="section-label">Elevation</p>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--border-default);">Level 0</div>
+    <div class="elevation-card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.08);">Level 1</div>
+    <div class="elevation-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);">Level 2</div>
+    <div class="elevation-card" style="box-shadow: 0 8px 24px rgba(0,0,0,0.12);">Level 3</div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="section section--surface">
+  <p class="section-label">Layout</p>
+  <div class="layout-demo">
+    <p style="font-size: 11px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;">3-Column Grid — Gap 24px</p>
+    <div class="layout-columns">
+      <div class="layout-col">Col 1</div>
+      <div class="layout-col">Col 2</div>
+      <div class="layout-col">Col 3</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid" style="max-width: 1200px; margin: 0 auto;">
+    <div>
+      <p class="footer-col-title">Protein</p>
+      <a href="#" class="footer-link">Creations</a>
+      <a href="#" class="footer-link">Innovation</a>
+      <a href="#" class="footer-link">Discover</a>
+    </div>
+    <div>
+      <p class="footer-col-title">News &amp; Stories</p>
+      <a href="#" class="footer-link">All News</a>
+      <a href="#" class="footer-link">Press Release</a>
+    </div>
+    <div>
+      <p class="footer-col-title">Company</p>
+      <a href="#" class="footer-link">About</a>
+      <a href="#" class="footer-link">Careers</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+    <div>
+      <p class="footer-col-title">Language</p>
+      <a href="#" class="footer-link" style="color: var(--text-white);">日本語</a>
+      <a href="#" class="footer-link">English</a>
+    </div>
+  </div>
+  <p class="footer-bottom">&copy; 2026 Spiber Inc. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (300 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (303 sites)</a>
 </p>
 
 <table>
@@ -441,6 +441,11 @@
 <td align="center"><strong>KURAND</strong><br><img src="design-md/kurand/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Time & Style</strong><br><img src="design-md/timeandstyle/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>Hender Scheme</strong><br><img src="design-md/henderscheme/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Spiber</strong><br><img src="design-md/spiber/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ARTS&SCIENCE</strong><br><img src="design-md/arts-science/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -801,11 +806,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [NANGA (ナンガ)](https://nanga.jp/) | Outdoor / Down | [DESIGN.md](design-md/nanga/DESIGN.md) | [preview.html](design-md/nanga/preview.html) |
 | [KURAND (クランド)](https://kurand.jp/) | Craft Sake EC | [DESIGN.md](design-md/kurand/DESIGN.md) | [preview.html](design-md/kurand/preview.html) |
 | [Time & Style (タイムアンドスタイル)](https://www.timeandstyle.com/jp/) | Premium Furniture | [DESIGN.md](design-md/timeandstyle/DESIGN.md) | [preview.html](design-md/timeandstyle/preview.html) |
+| [Hender Scheme (エンダースキーマ)](https://henderscheme.com/) | Leather Goods / Fashion | [DESIGN.md](design-md/henderscheme/DESIGN.md) | [preview.html](design-md/henderscheme/preview.html) |
+| [Spiber (スパイバー)](https://spiber.inc/) | Biotech / Materials | [DESIGN.md](design-md/spiber/DESIGN.md) | [preview.html](design-md/spiber/preview.html) |
+| [ARTS&SCIENCE (アーツアンドサイエンス)](https://arts-science.com/) | Fashion / Lifestyle | [DESIGN.md](design-md/arts-science/DESIGN.md) | [preview.html](design-md/arts-science/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (300 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (303 sites)</a>
 </p>
 
 <table>
@@ -1211,6 +1219,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>NANGA</strong><br><img src="design-md/nanga/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KURAND</strong><br><img src="design-md/kurand/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Time & Style</strong><br><img src="design-md/timeandstyle/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Hender Scheme</strong><br><img src="design-md/henderscheme/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Spiber</strong><br><img src="design-md/spiber/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ARTS&SCIENCE</strong><br><img src="design-md/arts-science/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
