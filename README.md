@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (303 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (306 sites)</a>
 </p>
 
 <table>
@@ -446,6 +446,11 @@
 <td align="center"><strong>Spiber</strong><br><img src="design-md/spiber/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ARTS&SCIENCE</strong><br><img src="design-md/arts-science/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>SUZUKI</strong><br><img src="design-md/suzuki/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TANITA</strong><br><img src="design-md/tanita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ASKUL</strong><br><img src="design-md/askul/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -809,11 +814,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Hender Scheme (エンダースキーマ)](https://henderscheme.com/) | Leather Goods / Fashion | [DESIGN.md](design-md/henderscheme/DESIGN.md) | [preview.html](design-md/henderscheme/preview.html) |
 | [Spiber (スパイバー)](https://spiber.inc/) | Biotech / Materials | [DESIGN.md](design-md/spiber/DESIGN.md) | [preview.html](design-md/spiber/preview.html) |
 | [ARTS&SCIENCE (アーツアンドサイエンス)](https://arts-science.com/) | Fashion / Lifestyle | [DESIGN.md](design-md/arts-science/DESIGN.md) | [preview.html](design-md/arts-science/preview.html) |
+| [SUZUKI (スズキ)](https://www.suzuki.co.jp/) | Automotive | [DESIGN.md](design-md/suzuki/DESIGN.md) | [preview.html](design-md/suzuki/preview.html) |
+| [TANITA (タニタ)](https://www.tanita.co.jp/) | Health / Wellness | [DESIGN.md](design-md/tanita/DESIGN.md) | [preview.html](design-md/tanita/preview.html) |
+| [ASKUL (アスクル)](https://www.askul.co.jp/) | Office Supplies / EC | [DESIGN.md](design-md/askul/DESIGN.md) | [preview.html](design-md/askul/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (303 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (306 sites)</a>
 </p>
 
 <table>
@@ -1224,6 +1232,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Hender Scheme</strong><br><img src="design-md/henderscheme/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Spiber</strong><br><img src="design-md/spiber/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ARTS&SCIENCE</strong><br><img src="design-md/arts-science/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>SUZUKI</strong><br><img src="design-md/suzuki/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TANITA</strong><br><img src="design-md/tanita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ASKUL</strong><br><img src="design-md/askul/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ASKUL (アスクル)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --askul-blue: #1b72e9;
+    --askul-navy: #172397;
+    --askul-orange: #ff8d00;
+    --askul-cyan: #33abee;
+    --askul-red: #d90916;
+    --askul-price-red: #d80000;
+    --text-primary: #333333;
+    --text-link-heading: #111184;
+    --text-link: #1b72e9;
+    --bg-primary: #ffffff;
+    --bg-surface: #f2f2f2;
+    --bg-footer: #efefef;
+    --bg-info: #ebf3fc;
+    --bg-danger: #fadfe1;
+    --bg-light: #f5f5f5;
+    --border-default: #cecece;
+    --border-input: #767676;
+    --border-navy: #183d9f;
+    --border-fax: #6e635f;
+    --text-fax: #30201a;
+    /* Sustainability pastels */
+    --eco-efficiency: #d4dbec;
+    --eco-wellbeing: #f7e0c8;
+    --eco-reduce: #c4dad4;
+    --eco-design: #eaccce;
+    --eco-social: #bce0e4;
+    --eco-resource: #dfe8c7;
+    /* === Elevation === */
+    --elevation-1: 0 1px 3px rgba(0,0,0,0.1);
+    /* === Font === */
+    --font-base: Arial, "Hiragino Sans", "Noto Sans JP", ヒラギノ角ゴシック, "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 13px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 56px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--askul-navy); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 20px; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 400; color: var(--text-primary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--askul-blue); }
+  .nav-search {
+    display: flex; align-items: center; gap: 0;
+  }
+  .nav-search input {
+    padding: 6px 12px; border: 1px solid var(--border-default); border-right: none;
+    font-family: var(--font-base); font-size: 13px; line-height: 27px; border-radius: 0; outline: none; width: 240px;
+  }
+  .nav-search input:focus { border-color: var(--askul-blue); }
+  .nav-search button {
+    padding: 6px 16px; background: var(--askul-blue); color: #fff; border: 1px solid var(--askul-blue);
+    border-radius: 0 6px 6px 0; font-size: 13px; cursor: pointer; line-height: 27px;
+  }
+  .nav-cta {
+    display: inline-block; background: var(--askul-orange); color: #fff;
+    padding: 8px 16px; border-radius: 5px; font-size: 13px; font-weight: 400;
+    text-decoration: none; letter-spacing: -0.05em; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero { padding: 56px 24px 48px; text-align: center; background: var(--bg-surface); border-bottom: 1px solid var(--border-default); }
+  .hero h1 {
+    font-size: 24px; font-weight: 400; line-height: 1.4;
+    color: var(--askul-navy); margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    color: var(--text-primary); max-width: 620px; margin: 0 auto 24px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--askul-orange); color: #fff;
+    padding: 10px 24px; border-radius: 5px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    letter-spacing: -0.05em; text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-outline {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 10px 24px; border-radius: 4px;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline:hover { background: var(--bg-surface); }
+
+  /* SECTIONS */
+  .section { padding: 48px 24px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--askul-blue);
+    text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 400; line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: var(--text-primary); margin-bottom: 28px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--bg-footer); padding: 48px 24px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 60px; width: 100%; }
+  .color-swatch-info { padding: 8px 10px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 11px; color: #666; font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 10px; color: #666; margin-top: 2px; }
+  .color-group-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin: 20px 0 8px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: #888; margin-top: 6px; }
+  .type-context { display: inline-block; background: var(--bg-surface); color: #666; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 6px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: #888; margin-top: 6px; }
+  .btn-secondary {
+    display: inline-block; background: var(--bg-surface); color: var(--text-primary);
+    padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 11.5px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-outlined {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 0px 11px; border-radius: 2px; border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400; line-height: 26px;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-fax {
+    display: inline-block; background: #fff; color: var(--text-fax);
+    padding: 6px 16px; border-radius: 5px; border: 1px solid var(--border-fax);
+    font-family: var(--font-base); font-size: 11px; font-weight: 700;
+    letter-spacing: -0.05em; text-decoration: none; cursor: pointer;
+  }
+  .btn-link {
+    display: inline-block; background: transparent; color: var(--askul-blue);
+    padding: 0 16px; border-radius: 4px; border: none;
+    font-family: var(--font-base); font-size: 10px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-danger {
+    display: inline-block; background: var(--askul-red); color: #fff;
+    padding: 10px 24px; border-radius: 5px; border: none;
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-cyan {
+    display: inline-block; background: var(--askul-cyan); color: #fff;
+    padding: 6px 20px; border-radius: 4px; border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .card { background: #fff; border: 1px solid var(--border-default); border-radius: 0; padding: 0; transition: box-shadow 0.3s; }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card-img { width: 100%; height: 140px; background: var(--bg-surface); display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 12px; border-bottom: 1px solid var(--border-default); }
+  .card-body { padding: 12px; }
+  .card h3 { font-size: 13px; font-weight: 400; line-height: 1.6; margin-bottom: 4px; }
+  .card h3 a { color: var(--askul-blue); text-decoration: none; }
+  .card h3 a:hover { text-decoration: underline; }
+  .card .card-brand { font-size: 12px; color: #888; margin-bottom: 6px; }
+  .card .card-price { font-size: 20px; font-weight: 700; color: var(--askul-price-red); }
+  .card .card-price-unit { font-size: 12px; font-weight: 400; color: var(--text-primary); }
+  .card .card-tax { font-size: 10px; color: #888; }
+  .card .card-delivery { font-size: 11px; color: var(--askul-blue); margin-top: 4px; }
+
+  /* PRODUCT TABLE */
+  .product-preview { max-width: 700px; margin: 0 auto; }
+  .product-preview h1 { font-size: 20px; font-weight: 400; line-height: 1.0; color: var(--askul-navy); margin-bottom: 16px; }
+  .product-preview h2 { font-size: 20px; font-weight: 400; line-height: 1.6; letter-spacing: 0.02em; margin: 20px 0 10px; color: var(--text-primary); }
+  .product-preview p { font-size: 13px; font-weight: 400; line-height: 1.6; margin-bottom: 12px; color: var(--text-primary); }
+  .product-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  .product-table th { text-align: left; padding: 8px 10px; background: var(--bg-surface); border: 1px solid var(--border-default); font-weight: 700; font-size: 12px; }
+  .product-table td { padding: 8px 10px; border: 1px solid var(--border-default); font-size: 12px; }
+  .notice-info { background: var(--bg-info); border: 1px solid var(--askul-blue); padding: 12px 16px; margin-bottom: 16px; border-radius: 0; font-size: 13px; }
+  .notice-danger { background: var(--bg-danger); border: 1px solid var(--askul-red); padding: 12px 16px; margin-bottom: 16px; border-radius: 0; font-size: 13px; }
+  .notice-danger strong { color: var(--askul-red); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 16px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 6px 10px; border-radius: 0;
+    font-family: var(--font-base); font-size: 13px; line-height: 27px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--askul-blue); box-shadow: 0 0 0 2px rgba(27,114,233,0.2); }
+  .form-input--error { border-color: var(--askul-red); box-shadow: 0 0 0 2px rgba(217,9,22,0.15); }
+  .form-state-label { font-size: 10px; color: #888; margin-top: 4px; }
+  .form-select {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-input); padding: 6px 10px; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; outline: none; appearance: auto;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .elevation-card { background: #fff; border-radius: 0; padding: 20px; text-align: center; border: 1px solid var(--border-default); }
+  .elevation-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: #888; word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--askul-blue); border-radius: 0; margin-bottom: 4px; height: 24px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: #888; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 0; margin-bottom: 6px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--askul-blue); opacity: 0.25; }
+  .width-bar-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: #888; }
+
+  /* FOOTER */
+  .footer { padding: 24px; text-align: center; background: var(--bg-footer); font-size: 11px; color: #888; border-top: 1px solid var(--border-default); }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 20px; }
+    .hero p { font-size: 13px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .section { padding: 36px 16px; }
+    .section-gray { padding: 36px 16px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-preview p { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">ASKUL</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <div class="nav-search">
+    <input type="text" placeholder="商品を検索...">
+    <button>検索</button>
+  </div>
+  <a class="nav-cta" href="#">新規会員登録</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>ASKUL (アスクル) — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">カンタン新規会員登録</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1b72e9"></div><div class="color-swatch-info"><div class="color-swatch-name">ASKUL Blue</div><div class="color-swatch-hex">#1b72e9</div><div class="color-swatch-role">リンク・アクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#172397"></div><div class="color-swatch-info"><div class="color-swatch-name">ASKUL Navy</div><div class="color-swatch-hex">#172397</div><div class="color-swatch-role">ページタイトル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff8d00"></div><div class="color-swatch-info"><div class="color-swatch-name">ASKUL Orange</div><div class="color-swatch-hex">#ff8d00</div><div class="color-swatch-role">主要 CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#33abee"></div><div class="color-swatch-info"><div class="color-swatch-name">ASKUL Cyan</div><div class="color-swatch-hex">#33abee</div><div class="color-swatch-role">もっと見るリンク</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#111184"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Heading</div><div class="color-swatch-hex">#111184</div><div class="color-swatch-role">リンク見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1b72e9"></div><div class="color-swatch-info"><div class="color-swatch-name">Link</div><div class="color-swatch-hex">#1b72e9</div><div class="color-swatch-role">リンクテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d90916"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#d90916</div><div class="color-swatch-role">エラー・重要通知</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d80000"></div><div class="color-swatch-info"><div class="color-swatch-name">Price Red</div><div class="color-swatch-hex">#d80000</div><div class="color-swatch-role">価格表示</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebf3fc"></div><div class="color-swatch-info"><div class="color-swatch-name">Info Light</div><div class="color-swatch-hex">#ebf3fc</div><div class="color-swatch-role">お知らせ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fadfe1"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger Light</div><div class="color-swatch-hex">#fadfe1</div><div class="color-swatch-role">重要通知背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff; border-bottom:1px solid #cecece"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2f2f2"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f2f2f2</div><div class="color-swatch-role">ボタン・カテゴリ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">フッター・ガイド背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Light</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">モーダル背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cecece"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cecece</div><div class="color-swatch-role">標準ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Sustainability パステル</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d4dbec"></div><div class="color-swatch-info"><div class="color-swatch-name">時短・効率</div><div class="color-swatch-hex">#d4dbec</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7e0c8"></div><div class="color-swatch-info"><div class="color-swatch-name">気持ちがはれる</div><div class="color-swatch-hex">#f7e0c8</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c4dad4"></div><div class="color-swatch-info"><div class="color-swatch-name">ごみを減らす</div><div class="color-swatch-hex">#c4dad4</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eaccce"></div><div class="color-swatch-info"><div class="color-swatch-name">心地よいデザイン</div><div class="color-swatch-hex">#eaccce</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bce0e4"></div><div class="color-swatch-info"><div class="color-swatch-name">社会にやさしい</div><div class="color-swatch-hex">#bce0e4</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dfe8c7"></div><div class="color-swatch-info"><div class="color-swatch-name">資源を守る</div><div class="color-swatch-hex">#dfe8c7</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography -- 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:400; line-height:1.0; color:#172397;">おすすめ特集一覧 — Page Title (h1)</div>
+    <div class="type-meta">20px / 400 / line-height: 1.0 / color: #172397 (Navy)<span class="type-context">ページタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:400; line-height:1.6; letter-spacing:0.02em;">注目のトピックス — Section Title (h2)</div>
+    <div class="type-meta">20px / 400 / line-height: 1.6 / letter-spacing: 0.02em<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.625; letter-spacing:0.02em;">取扱商品 15,766,762点 — Sidebar Title (h2)</div>
+    <div class="type-meta">16px / 400 / line-height: 1.625 / letter-spacing: 0.02em<span class="type-context">サイドバー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:700; line-height:1.54; color:#111184;">Webサイトリニューアルに関する重要なお知らせ — Sub Heading (h2)</div>
+    <div class="type-meta">13px / 700 / line-height: 1.54 / color: #111184<span class="type-context">お知らせ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:700; line-height:1.1;">検索範囲 — Label (p)</div>
+    <div class="type-meta">14px / 700 / line-height: 1.1<span class="type-context">ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:400; line-height:1.6;">本文テキスト — オフィス用品の通販サイトとして、アスクルは1,500万点以上の商品を取り揃えています。法人のお客様向けに翌日配送サービスを提供し、文房具からオフィス家具まで幅広くカバーしています。</div>
+    <div class="type-meta">13px / 400 / line-height: 1.6 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.33; color:#888;">補足テキスト — Small (12px)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.33<span class="type-context">補足・リスト</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:10px; font-weight:700; line-height:1.3;">履歴・再注文 — Nav (10px)</div>
+    <div class="type-meta">10px / 700 / line-height: 1.3<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.0; color:#d80000;">&#165;1,234<span style="font-size:12px; font-weight:400; color:#333;">（税込）</span></div>
+    <div class="type-meta">20px / 700 / color: #d80000 — 価格表示専用<span class="type-context">商品価格</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT PREVIEW -->
+<section class="section-gray" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product -- 商品ページ組版</div>
+  <h2 class="section-title">商品ページの組版サンプル</h2>
+  <div class="product-preview">
+    <h1>おすすめ特集一覧</h1>
+    <p>オフィスに必要な消耗品から、業務用の大型家具まで。アスクルなら翌日お届け（一部地域を除く）。法人様向けの請求書払いにも対応しています。</p>
+
+    <div class="notice-info">
+      <strong style="color:#111184;">お知らせ:</strong> 2024年度のオフィス用品カタログが更新されました。新商品を多数掲載しています。
+    </div>
+    <div class="notice-danger">
+      <strong>重要なお知らせ:</strong> システムメンテナンスのため、6月15日 0:00〜6:00 はサービスを一時停止します。
+    </div>
+
+    <h2>事務用品／文房具</h2>
+    <p>コピー用紙、ファイル、ペン、テープ、のり、はさみ、電卓など、オフィスに欠かせない事務用品を幅広く取り揃えています。</p>
+    <table class="product-table">
+      <tr><th>商品名</th><th>品番</th><th>単価（税込）</th><th>お届け日</th></tr>
+      <tr><td>コピー用紙 A4 500枚</td><td>ASK-A4500</td><td style="color:#d80000; font-weight:700;">&#165;398</td><td>翌日</td></tr>
+      <tr><td>ボールペン 黒 10本入</td><td>ASK-BP10B</td><td style="color:#d80000; font-weight:700;">&#165;528</td><td>翌日</td></tr>
+      <tr><td>クリアファイル A4 100枚</td><td>ASK-CF100</td><td style="color:#d80000; font-weight:700;">&#165;1,280</td><td>翌日</td></tr>
+    </table>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="btn-primary" href="#">新規会員登録</a><div class="button-label">Primary CTA<br>#ff8d00 / 5px radius</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">詳細設定</a><div class="button-label">Secondary<br>#f2f2f2 / 4px radius</div></div>
+    <div class="button-item"><a class="btn-outlined" href="#">バリエーションを見る</a><div class="button-label">Outlined<br>white / 2px radius</div></div>
+    <div class="button-item"><a class="btn-fax" href="#">FAXご利用中の方</a><div class="button-label">FAX User<br>#6e635f border</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-cyan" href="#">もっと見る</a><div class="button-label">Cyan Link<br>#33abee / 4px radius</div></div>
+    <div class="button-item"><a class="btn-link" href="#">もっと見る &gt;</a><div class="button-label">Text Link<br>#1b72e9</div></div>
+    <div class="button-item"><a class="btn-danger" href="#">削除する</a><div class="button-label">Danger<br>#d90916 / 5px radius</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards -- 商品カード</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">商品画像</div>
+      <div class="card-body">
+        <div class="card-brand">コクヨ</div>
+        <h3><a href="#">キャンパスノート A4 5冊パック セミB5 普通横罫</a></h3>
+        <div class="card-price">&#165;548<span class="card-price-unit">（税込）</span></div>
+        <div class="card-tax">1冊あたり &#165;109.6</div>
+        <div class="card-delivery">翌日お届け</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">商品画像</div>
+      <div class="card-body">
+        <div class="card-brand">アスクルオリジナル</div>
+        <h3><a href="#">ボールペン ノック式 0.7mm 黒 10本入</a></h3>
+        <div class="card-price">&#165;528<span class="card-price-unit">（税込）</span></div>
+        <div class="card-tax">1本あたり &#165;52.8</div>
+        <div class="card-delivery">翌日お届け</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">商品画像</div>
+      <div class="card-body">
+        <div class="card-brand">プラス</div>
+        <h3><a href="#">クリアファイル A4タテ 100枚入 透明</a></h3>
+        <div class="card-price">&#165;1,280<span class="card-price-unit">（税込）</span></div>
+        <div class="card-tax">1枚あたり &#165;12.8</div>
+        <div class="card-delivery">翌日お届け</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">商品画像</div>
+      <div class="card-body">
+        <div class="card-brand">エプソン</div>
+        <h3><a href="#">インクカートリッジ 4色パック 純正</a></h3>
+        <div class="card-price">&#165;4,380<span class="card-price-unit">（税込）</span></div>
+        <div class="card-tax"></div>
+        <div class="card-delivery">翌日お届け</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">商品名・カテゴリ名</label>
+    <input class="form-input" type="text" placeholder="キーワードを入力...">
+    <div class="form-state-label">デフォルト -- border: #cecece, radius: 0</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="text" value="info@example.co.jp">
+    <div class="form-state-label">フォーカス -- border: #1b72e9 (Blue)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">郵便番号</label>
+    <input class="form-input form-input--error" type="text" value="123-456">
+    <div class="form-state-label">エラー -- border: #d90916 (Danger)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">カテゴリ</label>
+    <select class="form-select">
+      <option>すべて</option>
+      <option>事務用品／文房具</option>
+      <option>生活雑貨／キッチン用品</option>
+      <option>飲料／食品／ギフト</option>
+      <option>衛生／医療／介護</option>
+    </select>
+    <div class="form-state-label">セレクト -- border: #767676, radius: 0</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダー #cecece のみ。ほぼ全要素がこのスタイル</div></div>
+    <div class="elevation-card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><div class="elevation-label">Level 1: Hover</div><div class="elevation-desc">0 1px 3px rgba(0,0,0,0.1) -- ホバー時のカード</div></div>
+    <div class="elevation-card" style="border: 2px solid #1b72e9;"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#1b72e9 (Blue) -- フォーカス状態</div></div>
+    <div class="elevation-card" style="border: 1px solid #183d9f; background: var(--bg-info);"><div class="elevation-label">Info Border</div><div class="elevation-desc">#183d9f -- 登録エリア枠線</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト & スペーシング</h2>
+
+  <div class="color-group-label">スペーシング</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:3px;"></div><div class="spacing-value">3px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:6px;"></div><div class="spacing-value">6px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:10px;"></div><div class="spacing-value">10px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:25px;"></div><div class="spacing-value">25px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:30px;"></div><div class="spacing-value">30px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:42px;"></div><div class="spacing-value">42px</div></div>
+  </div>
+
+  <div class="color-group-label">コンテンツ幅</div>
+  <div style="margin-bottom:12px"><div class="width-bar-label">Full Width <span class="width-bar-value">1440px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:12px"><div class="width-bar-label">Main + Sidebar <span class="width-bar-value">~1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:83%"></div></div></div>
+  <div style="margin-bottom:12px"><div class="width-bar-label">Main Column <span class="width-bar-value">~1000px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:69%"></div></div></div>
+  <div style="margin-bottom:12px"><div class="width-bar-label">Sidebar <span class="width-bar-value">~200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:14%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.askul.co.jp/" style="color:#1b72e9; text-decoration:underline;">askul.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-08）
+</footer>
+
+</body>
+</html>
