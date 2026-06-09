@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: LUUP (Light)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --brand-teal: #00b6ac;
+    --brand-teal-dark: #04a6a0;
+    --brand-teal-light: #00d1b2;
+    --text-primary: #313636;
+    --text-white: #ffffff;
+    --surface-light: #f7f7f7;
+    --surface-dark: #363636;
+    --divider: #dddddd;
+    --badge-bg: #dadee6;
+    --overlay-dark: #78848b;
+    --bg-white: #ffffff;
+    --danger: #e53e3e;
+    --success: #38a169;
+    --warning: #d69e2e;
+    /* === Elevation 実測値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.10);
+    --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.12);
+    /* === Fonts === */
+    --font-base: Inter, "Noto Sans JP", "Yu Gothic", YuGothic,
+      "Hiragino Kaku Gothic Pro", "Meiryo UI", Meiryo, "MS PGothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+    /* === Radius === */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-pill: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.08em;
+  }
+  .nav-brand span { color: var(--brand-teal); }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--brand-teal); }
+  .nav-cta {
+    display: inline-block; background: var(--bg-white); color: var(--brand-teal);
+    padding: 6px 14px; border-radius: var(--radius-pill);
+    border: 1px solid var(--divider);
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.7; }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-white); }
+  .hero h1 {
+    font-size: 56px; font-weight: 400; line-height: 1.0;
+    letter-spacing: 0.05em;
+    color: var(--text-primary); margin-bottom: 24px;
+  }
+  .hero h1 span { color: var(--brand-teal); }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary); max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-app {
+    display: inline-block; background: var(--brand-teal-dark); color: var(--text-white);
+    padding: 12px 24px; border-radius: var(--radius-pill); border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-app:hover { opacity: 0.7; }
+  .btn-ghost {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 7px 16px; border-radius: var(--radius-sm);
+    border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer; transition: color 0.15s;
+  }
+  .btn-ghost:hover { color: var(--brand-teal); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 400; color: var(--overlay-dark);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 32px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--divider); margin: 0; }
+
+  .section-gray { background: var(--surface-light); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-sm); overflow: hidden; background: var(--bg-white); border: 1px solid var(--divider); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--overlay-dark); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--overlay-dark); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 400; color: var(--overlay-dark); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--divider); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--overlay-dark); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-light); color: var(--overlay-dark); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--overlay-dark); margin-top: 8px; }
+  .btn-nav-cta {
+    display: inline-block; background: var(--bg-white); color: var(--brand-teal);
+    padding: 6px 14px; border-radius: var(--radius-pill);
+    border: 1px solid var(--divider);
+    font-family: var(--font-base); font-size: 14px; font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+  .tag-dark {
+    display: inline-block; background: var(--surface-dark); color: var(--text-white);
+    padding: 2px 8px; border-radius: var(--radius-sm);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  .tag-badge {
+    display: inline-block; background: var(--badge-bg); color: var(--text-primary);
+    padding: 2px 8px; border-radius: var(--radius-sm);
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--bg-white); border: 1px solid var(--divider);
+    border-radius: var(--radius-sm); padding: 24px;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card h3 {
+    font-size: 20px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .card p { font-size: 16px; color: var(--text-primary); line-height: 1.5; }
+  .card-link {
+    font-size: 14px; color: var(--brand-teal); text-decoration: none;
+    margin-top: 12px; display: inline-block;
+  }
+  .card-link:hover { text-decoration: underline; }
+  .card-tag { margin-bottom: 12px; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 32px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-size: 24px; font-weight: 400; line-height: 1.25;
+    letter-spacing: 0.05em;
+    margin: 24px 0 12px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview .accent { color: var(--brand-teal); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block; font-size: 14px; font-weight: 400;
+    color: var(--text-primary); margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .form-label .required {
+    display: inline-block; background: var(--surface-dark); color: var(--text-white);
+    padding: 1px 6px; border-radius: var(--radius-sm);
+    font-size: 11px; margin-left: 6px; vertical-align: middle;
+  }
+  .form-input {
+    width: 100%; background: var(--bg-white); color: var(--text-primary);
+    border: 1px solid var(--divider); padding: 8px 12px; border-radius: var(--radius-sm);
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.05em;
+    outline: none; height: 40px;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-teal); box-shadow: 0 0 0 3px rgba(0, 182, 172, 0.2); }
+  .form-input--error { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.2); }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--overlay-dark); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--bg-white); border-radius: var(--radius-sm);
+    padding: 24px; text-align: center;
+    border: 1px solid var(--divider);
+  }
+  .elevation-label { font-size: 14px; font-weight: 400; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--overlay-dark); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-teal); border-radius: 2px; margin-bottom: 6px; height: 28px; opacity: 0.6; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--overlay-dark); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--surface-light); border: 1px solid var(--divider); border-radius: var(--radius-sm); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand-teal); border-radius: 3px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 400; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--overlay-dark); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px 24px; text-align: center;
+    background: var(--surface-dark);
+    font-size: 12px; color: var(--text-white);
+  }
+  .footer a { color: var(--brand-teal); text-decoration: underline; }
+  .footer .copyright { font-size: 8px; margin-top: 16px; color: var(--text-white); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>LUUP</span></a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">アプリで乗る</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br><span>LUUP</span> — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-app" href="#">アプリをダウンロード</a>
+    <a class="btn-ghost" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00b6ac"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Teal</div><div class="color-swatch-hex">#00b6ac</div><div class="color-swatch-role">CTA テキスト・ブランドアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#04a6a0"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Teal Dark</div><div class="color-swatch-hex">#04a6a0</div><div class="color-swatch-role">アプリ CTA 背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00d1b2"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Teal Light</div><div class="color-swatch-hex">#00d1b2</div><div class="color-swatch-role">Bulma プライマリ・アイコン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#313636"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#313636</div><div class="color-swatch-role">本文・見出し（クールダークグレー）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#78848b"></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay / Muted</div><div class="color-swatch-hex">#78848b</div><div class="color-swatch-role">補足テキスト・オーバーレイ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダークセクション上の文字</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・カード面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">セクション背景（クールグレー）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#363636"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#363636</div><div class="color-swatch-role">フッター・"必須" タグ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dadee6"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge BG</div><div class="color-swatch-hex">#dadee6</div><div class="color-swatch-role">お知らせバッジ背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">ボーダー・区切り線・ナビ CTA 枠</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic（推奨値）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e53e3e"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#e53e3e</div><div class="color-swatch-role">エラー・返却エラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#38a169"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#38a169</div><div class="color-swatch-role">乗車完了・成功</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d69e2e"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#d69e2e</div><div class="color-swatch-role">バッテリー残量注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:96px; font-weight:400; line-height:1.0; letter-spacing:0.05em;">Why LUUP</div>
+    <div class="type-meta">96px / 400 / line-height: 1.0 / letter-spacing: 0.05em<span class="type-context">Display</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:56px; font-weight:400; line-height:1.0; letter-spacing:0.05em;">街じゅうを駅前化する</div>
+    <div class="type-meta">56px / 400 / line-height: 1.0 / letter-spacing: 0.05em<span class="type-context">Title Large</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:48px; font-weight:400; line-height:1.5; letter-spacing:0.05em;">サービス紹介</div>
+    <div class="type-meta">48px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Title Medium</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:32px; font-weight:400; line-height:1.5; letter-spacing:0.05em;">電動キックボードの乗り方</div>
+    <div class="type-meta">32px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Heading</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:24px; font-weight:400; line-height:1.25; letter-spacing:0.05em;">近くのポートを探す — Find a Port</div>
+    <div class="type-meta">24px / 400 / line-height: 1.25 / letter-spacing: 0.05em<span class="type-context">Subtitle</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:400; line-height:1.5; letter-spacing:0.05em;">LUUPは電動キックボードと電動アシスト自転車のシェアリングサービスです。</div>
+    <div class="type-meta">20px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Body Large</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:400; line-height:1.5; letter-spacing:0.05em;">アプリで最寄りのポートを探して、QRコードを読み取るだけで乗車できます。目的地の近くにあるポートに返却すれば完了です。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:500; line-height:1.5; letter-spacing:0.05em; color:var(--text-primary);">ナビゲーション — Nav (weight 500)</div>
+    <div class="type-meta">14px / 500 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Nav Button — 唯一の weight 500</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.5; letter-spacing:0.05em; color:var(--overlay-dark);">キャプション・補足テキスト — Caption (12px)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5 / letter-spacing: 0.05em<span class="type-context">Caption</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 記事組版</div>
+  <h2 class="section-title">電動モビリティの記事サンプル</h2>
+  <div class="article-preview">
+    <h1>電動キックボードが変える都市の移動</h1>
+    <p>ラストワンマイルの移動手段として、電動キックボードが世界中の都市で注目を集めています。駅やバス停から目的地までの短距離を、手軽に移動できるのが最大の魅力です。</p>
+    <h2>シェアリングという選択肢</h2>
+    <p>LUUPのようなシェアリングサービスでは、アプリで近くのポートを探し、QRコードを読み取るだけで乗車を開始できます。返却もポートに置くだけ。所有する必要がないため、メンテナンスの心配もありません。</p>
+    <p>2023年7月の道路交通法改正により、日本でも16歳以上であれば免許不要で電動キックボードに乗れるようになりました。最高速度<span class="accent">20km/h</span>以下の特定小型原動機付自転車として、自転車道や車道を走行できます。ABCabc 123</p>
+    <h2>都市インフラとしての可能性</h2>
+    <p>電動モビリティは単なる移動手段にとどまりません。ポートの設置場所がそのまま人の流れを生み出し、周辺の商業施設にも波及効果をもたらします。「街じゅうを駅前化する」というLUUPのビジョンは、都市計画の新しいあり方を提案しています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom:24px">
+    <div class="button-item"><a class="btn-nav-cta" href="#">アプリで乗る</a><div class="button-label">Nav CTA (pill)</div></div>
+    <div class="button-item"><a class="btn-app" href="#">アプリをダウンロード</a><div class="button-label">App Download CTA</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">詳しく見る →</a><div class="button-label">Ghost</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><span class="tag-dark">必須</span><div class="button-label">Dark Tag</div></div>
+    <div class="button-item"><span class="tag-badge">お知らせ</span><div class="button-label">Notice Badge</div></div>
+    <div class="button-item"><span class="tag-badge">キャンペーン</span><div class="button-label">Notice Badge</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag"><span class="tag-badge">サービス</span></div>
+      <h3>電動キックボード</h3>
+      <p>最高速度20km/hで快適に移動。16歳以上なら免許不要で乗車できます。アプリでQRコードを読み取るだけ。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-1);">
+      <div class="card-tag"><span class="tag-badge">サービス</span></div>
+      <h3>電動アシスト自転車</h3>
+      <p>坂道もらくらく。ポート間の移動に最適な電動アシスト自転車。同じアプリ、同じポートで利用できます。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <div class="card-tag"><span class="tag-dark">必須</span></div>
+      <h3>安全講習</h3>
+      <p>初めてご利用の方は、アプリ内の安全講習を受講してください。交通ルールとマナーを確認できます。</p>
+      <a class="card-link" href="#">受講する →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス<span class="required">必須</span></label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — border: #dddddd, radius: 4px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号<span class="required">必須</span></label>
+    <input class="form-input form-input--focus" type="tel" value="090-1234-5678">
+    <div class="form-state-label">フォーカス — border: #00b6ac (Brand Teal)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス<span class="required">必須</span></label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー — border: #e53e3e (Danger)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — フラットデザイン基調</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし — 基本状態。面の切り替えで階層を表現</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">--elevation-1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.08) — ホバー時</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">--elevation-2</div><div class="elevation-desc">0 4px 16px rgba(0,0,0,0.10) — ドロップダウン</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">--elevation-3</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12) — モーダル</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--brand-teal);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#00b6ac (Brand Teal)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout — Bulma 12-column grid</div>
+  <h2 class="section-title">コンテンツ幅とスペーシング</h2>
+
+  <div style="margin-bottom:32px">
+    <div style="margin-bottom:16px"><div class="width-bar-label">Container (Bulma default) <span class="width-bar-value">1152px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:81.6%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Article / Text <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:53.8%"></div></div></div>
+  </div>
+
+  <div class="color-group-label">Spacing Scale (8px grid)</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px;"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label">Border Radius</div>
+  <div class="spacing-row" style="align-items:center;">
+    <div class="spacing-item"><div style="width:64px; height:40px; background:var(--surface-light); border:1px solid var(--divider); border-radius:var(--radius-sm); margin-bottom:6px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div style="width:64px; height:40px; background:var(--surface-light); border:1px solid var(--divider); border-radius:var(--radius-md); margin-bottom:6px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div style="width:96px; height:40px; background:var(--surface-light); border:1px solid var(--divider); border-radius:var(--radius-pill); margin-bottom:6px;"></div><div class="spacing-value">20px (pill)</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://luup.sc/">luup.sc</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-09）
+  <div class="copyright">LUUP, Inc.</div>
+</footer>
+
+</body>
+</html>

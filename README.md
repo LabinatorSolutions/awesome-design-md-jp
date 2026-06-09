@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (306 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (309 sites)</a>
 </p>
 
 <table>
@@ -451,6 +451,11 @@
 <td align="center"><strong>TANITA</strong><br><img src="design-md/tanita/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ASKUL</strong><br><img src="design-md/askul/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>LUUP</strong><br><img src="design-md/luup/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>RAKSUL</strong><br><img src="design-md/raksul/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Benesse</strong><br><img src="design-md/benesse/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -817,11 +822,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [SUZUKI (スズキ)](https://www.suzuki.co.jp/) | Automotive | [DESIGN.md](design-md/suzuki/DESIGN.md) | [preview.html](design-md/suzuki/preview.html) |
 | [TANITA (タニタ)](https://www.tanita.co.jp/) | Health / Wellness | [DESIGN.md](design-md/tanita/DESIGN.md) | [preview.html](design-md/tanita/preview.html) |
 | [ASKUL (アスクル)](https://www.askul.co.jp/) | Office Supplies / EC | [DESIGN.md](design-md/askul/DESIGN.md) | [preview.html](design-md/askul/preview.html) |
+| [LUUP (ループ)](https://luup.sc/) | Mobility / Sharing | [DESIGN.md](design-md/luup/DESIGN.md) | [preview.html](design-md/luup/preview.html) |
+| [RAKSUL (ラクスル)](https://raksul.com/) | Printing / EC | [DESIGN.md](design-md/raksul/DESIGN.md) | [preview.html](design-md/raksul/preview.html) |
+| [Benesse (ベネッセ)](https://www.benesse.co.jp/) | Education / Corporate | [DESIGN.md](design-md/benesse/DESIGN.md) | [preview.html](design-md/benesse/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (306 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (309 sites)</a>
 </p>
 
 <table>
@@ -1237,6 +1245,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>SUZUKI</strong><br><img src="design-md/suzuki/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TANITA</strong><br><img src="design-md/tanita/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ASKUL</strong><br><img src="design-md/askul/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>LUUP</strong><br><img src="design-md/luup/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>RAKSUL</strong><br><img src="design-md/raksul/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Benesse</strong><br><img src="design-md/benesse/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
