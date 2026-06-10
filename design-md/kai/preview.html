@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KAI (貝印)</title>
+<style>
+  :root {
+    /* === Colors === */
+    --kai-blue: #094da4;
+    --kai-blue-dark: #073d83;
+    --text-primary: #242424;
+    --text-nav: #333333;
+    --text-muted: #5f5f5f;
+    --text-on-dark: #ffffff;
+    --bg-primary: #ffffff;
+    --surface-gray: #f7f7f7;
+    --surface-footer: #f6f6f6;
+    --border-default: #cccccc;
+    --border-focus: #094da4;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --warning: #e67e22;
+    /* === Elevation === */
+    --elevation-1: 0 2px 4px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.12);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.15);
+    /* === Fonts === */
+    --font-base: "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "ヒラギノ角ゴ ProN", "Yu Gothic", 游ゴシック, YuGothic,
+      游ゴシック体, メイリオ, Meiryo, "ＭＳ Ｐゴシック",
+      "MS PGothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    letter-spacing: 0.05em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; letter-spacing: 0.1em;
+    font-feature-settings: "palt";
+  }
+  .nav-brand span { color: var(--kai-blue); font-weight: 300; font-size: 12px; letter-spacing: 0.08em; display: block; line-height: 1; margin-top: -2px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--text-nav);
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--kai-blue); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 64px; text-align: center;
+    background: var(--surface-gray);
+  }
+  .hero h1 {
+    font-size: 28px; font-weight: 700; line-height: 1.7;
+    letter-spacing: 0.05em; font-feature-settings: "palt";
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 300; line-height: 1.75;
+    color: var(--text-muted); max-width: 620px; margin: 0 auto 32px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 700; line-height: 1.7;
+    letter-spacing: 0.05em; font-feature-settings: "palt";
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--surface-gray); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: #fff; border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0; }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .color-group-label { font-size: 13px; font-weight: 700; color: var(--text-nav); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 8px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--surface-gray); color: var(--text-muted); font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 24px; font-weight: 700; line-height: 1.7;
+    letter-spacing: 0.05em; font-feature-settings: "palt";
+    margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-size: 20px; font-weight: 700; line-height: 1.7;
+    letter-spacing: 0.05em; font-feature-settings: "palt";
+    margin: 24px 0 12px;
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 300; line-height: 1.75;
+    letter-spacing: 0.05em; font-feature-settings: normal;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 300; color: var(--text-muted); margin-top: 8px; }
+  .btn-nav-link {
+    display: inline-block; background: var(--surface-gray);
+    color: var(--text-nav); padding: 15px 48px 13px 20px;
+    font-family: var(--font-base); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.05em; text-decoration: none; border: none;
+    transition: color 0.15s; cursor: pointer; position: relative;
+  }
+  .btn-nav-link::after {
+    content: "→"; position: absolute; right: 20px; top: 50%;
+    transform: translateY(-50%); font-size: 12px; color: var(--text-muted);
+  }
+  .btn-nav-link:hover { color: var(--kai-blue); }
+  .btn-footer-action {
+    display: inline-block; background: transparent;
+    color: var(--kai-blue); padding: 10px 24px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 600;
+    letter-spacing: 0.05em; text-decoration: none; border: none;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-footer-action:hover { opacity: 0.7; }
+  .btn-outline {
+    display: inline-block; background: transparent;
+    color: var(--text-primary); padding: 10px 32px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    letter-spacing: 0.05em; text-decoration: none;
+    border: 1px solid var(--border-default); cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--kai-blue); color: var(--kai-blue); }
+  .btn-blue {
+    display: inline-block; background: var(--kai-blue);
+    color: var(--text-on-dark); padding: 10px 32px;
+    font-family: var(--font-base); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.05em; text-decoration: none; border: none;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn-blue:hover { background: var(--kai-blue-dark); }
+  .btn-text-link {
+    display: inline-block; background: transparent;
+    color: var(--kai-blue); padding: 10px 0;
+    font-family: var(--font-base); font-size: 14px; font-weight: 300;
+    letter-spacing: 0.05em; text-decoration: none; border: none;
+    border-bottom: 1px solid transparent; cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .btn-text-link:hover { border-bottom-color: var(--kai-blue); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--border-default);
+    padding: 0; transition: box-shadow 0.3s; overflow: hidden;
+  }
+  .card:hover { box-shadow: var(--elevation-1); }
+  .card-img { width: 100%; height: 180px; background: var(--surface-gray); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 12px; font-weight: 300; }
+  .card-body { padding: 20px; }
+  .card-body h3 {
+    font-size: 16px; font-weight: 700; line-height: 1.7;
+    letter-spacing: 0.05em; font-feature-settings: "palt";
+    margin-bottom: 8px;
+  }
+  .card-body p { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.75; }
+  .card-link {
+    font-size: 13px; font-weight: 300; color: var(--kai-blue);
+    text-decoration: none; margin-top: 12px; display: inline-block;
+    letter-spacing: 0.05em;
+  }
+  .card-link:hover { text-decoration: underline; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 10px 12px;
+    border-radius: 0; font-family: var(--font-base);
+    font-size: 14px; font-weight: 300; letter-spacing: 0.05em;
+    outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 2px rgba(9, 77, 164, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.15);
+  }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .form-error-text { font-size: 11px; color: var(--danger); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: #fff; padding: 24px; text-align: center;
+    border: 1px solid var(--border-default);
+  }
+  .elevation-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); word-break: break-all; letter-spacing: 0; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--kai-blue); opacity: 0.3; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--surface-gray); border: 1px solid var(--border-default); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--kai-blue); opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); letter-spacing: 0; }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--surface-footer);
+    font-size: 11px; color: var(--text-muted);
+  }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">KAI<span>貝印</span></a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>KAI (貝印) — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。本文 font-weight: 300 の軽やかな組版が特徴。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#094da4"></div><div class="color-swatch-info"><div class="color-swatch-name">KAI Blue</div><div class="color-swatch-hex">#094da4</div><div class="color-swatch-role">ブランドカラー・差し色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#073d83"></div><div class="color-swatch-info"><div class="color-swatch-name">KAI Blue Dark</div><div class="color-swatch-hex">#073d83</div><div class="color-swatch-role">ホバー・プレス時</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#242424"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#242424</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Nav</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">ナビゲーション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5f5f5f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#5f5f5f</div><div class="color-swatch-role">補助テキスト・キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ダーク面上のテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom: 1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">ナビドロワー背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f6"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Footer</div><div class="color-swatch-hex">#f6f6f6</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">ボーダー・入力欄枠</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c0392b"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#c0392b</div><div class="color-swatch-role">エラー・削除</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27ae60"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#27ae60</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e67e22"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#e67e22</div><div class="color-swatch-role">警告・注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:300; line-height:1.0; letter-spacing:0.05em; font-feature-settings:'palt';">KAI 貝印</div>
+    <div class="type-meta">28px / 300 (Light) / line-height: 1.0 / palt: あり<span class="type-context">ロゴ (h1)</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.7; letter-spacing:0.05em; font-feature-settings:'palt';">セクション見出し — Section Title (h2)</div>
+    <div class="type-meta">20px / 700 / line-height: 1.7 / letter-spacing: 0.05em / palt: あり<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.71; letter-spacing:0.05em; font-feature-settings:'palt';">ナビゲーション項目 — Nav Item (h3)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.71 / palt: あり<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:300; line-height:1.75; letter-spacing:0.05em; font-feature-settings:normal;">本文テキスト — font-weight: 300 の軽やかな組版。KAI は全体を Light ウェイトで組むことで、刃物メーカーらしい「研ぎ澄まされた精密さ」を表現しています。letter-spacing: 0.05em がグローバルに適用されています。</div>
+    <div class="type-meta">14px / 300 (Light) / line-height: 1.75 / letter-spacing: 0.05em / palt: なし<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:500; line-height:1.54; letter-spacing:0.05em;">ヘッダーナビゲーション — Nav Link (13px / 500)</div>
+    <div class="type-meta">13px / 500 / line-height: 1.54 / letter-spacing: 0.05em<span class="type-context">ヘッダーナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:600; line-height:1.75; color:var(--kai-blue);">フッターアクション — Footer Button (16px / 600)</div>
+    <div class="type-meta">16px / 600 / line-height: 1.75 / color: KAI Blue<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:600; line-height:1.75; color:var(--text-muted);">フッターリンク — Footer Link (12px / 600)</div>
+    <div class="type-meta">12px / 600 / line-height: 1.75<span class="type-context">フッター</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11px; font-weight:300; line-height:1.5; color:var(--text-muted);">キャプション・最小テキスト — Caption (11px / 300)</div>
+    <div class="type-meta">11px / 300 / line-height: 1.5</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article — 組版サンプル</div>
+  <h2 class="section-title">製品紹介の組版サンプル</h2>
+  <div class="article-preview">
+    <h1>一本の包丁に宿る、百年の技術</h1>
+    <p>貝印は1908年の創業以来、刃物づくりの技術を磨き続けてきました。岐阜県関市で培われた刃付けの技術は、家庭用包丁からプロフェッショナル向けまで、あらゆる切れ味に息づいています。</p>
+    <h2>素材と製法へのこだわり</h2>
+    <p>ステンレス鋼の選定から焼入れ、研ぎまで、すべての工程で品質を追求します。「関孫六」シリーズに代表される包丁は、ダマスカス鋼の美しい波紋と、鋭い切れ味を両立。ABC abc 123 のような英数字との混植も、システムフォントの和文グリフで自然に表示されます。</p>
+    <p>刃物だけでなく、カミソリ、ビューティケアツール、医療用メスまで。「切る」技術のすべてが、貝印のものづくりです。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-nav-link" href="#">包丁を見る</a><div class="button-label">Nav Link (ドロワー)</div></div>
+    <div class="button-item"><a class="btn-footer-action" href="#">オンラインストア</a><div class="button-label">Footer Action</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">詳しく見る</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><a class="btn-blue" href="#">お問い合わせ</a><div class="button-label">Blue CTA</div></div>
+    <div class="button-item"><a class="btn-text-link" href="#">製品一覧へ →</a><div class="button-label">Text Link</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">製品写真</div>
+      <div class="card-body">
+        <h3>関孫六 ダマスカス 三徳包丁</h3>
+        <p>33層のダマスカス鋼を使用。美しい波紋と鋭い切れ味を両立した、KAI を代表するシリーズ。</p>
+        <a class="card-link" href="#">詳しく見る →</a>
+      </div>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-1);">
+      <div class="card-img">製品写真</div>
+      <div class="card-body">
+        <h3>AUGER カミソリ</h3>
+        <p>肌への負担を最小限に抑えた5枚刃設計。独自のスムーサー搭載で、なめらかな剃り心地を実現。</p>
+        <a class="card-link" href="#">詳しく見る →</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">製品写真</div>
+      <div class="card-body">
+        <h3>SELECT100 ピーラー</h3>
+        <p>調理のストレスを軽減する、人間工学に基づいたキッチンツール。切れ味と握りやすさを追求。</p>
+        <a class="card-link" href="#">詳しく見る →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input" type="text" placeholder="山田 太郎">
+    <div class="form-state-label">デフォルト — border: #cccccc, radius: 0px, weight: 300</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--focus" type="email" value="taro@example.com">
+    <div class="form-state-label">フォーカス — border: #094da4 (KAI Blue)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="tel" value="090-xxxx">
+    <div class="form-error-text">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー — border: #c0392b (Danger)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし、ボーダーのみ（標準）</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1</div>
+      <div class="elevation-desc">0 2px 4px rgba(0,0,0,0.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.12)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);">
+      <div class="elevation-label">Level 3</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.15)</div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--border-focus);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">#094da4 (KAI Blue)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシングとコンテンツ幅</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:100px"></div><div class="spacing-value">100px</div></div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Page Max Width <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78.3%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Body <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:51.7%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.kai-group.com/" style="color:var(--kai-blue); text-decoration:underline;">kai-group.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>
