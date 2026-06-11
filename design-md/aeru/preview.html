@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: aeru / 和える</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --vermillion: #c73120;
+    --vermillion-dark: #a52819;
+    --text-primary: #262626;
+    --text-secondary: #666666;
+
+    --bg-white: #ffffff;
+    --surface-warm: #fbf9f7;
+    --surface-footer: #faf7f4;
+    --surface-deep: #f7f2ed;
+    --border: #dddddd;
+
+    /* === Semantic === */
+    --danger: #c73120;
+    --warning: #d97a00;
+    --success: #2e7d4f;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+    /* === Fonts === */
+    --font-base: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    --font-en: Roboto, sans-serif;
+
+    --radius-pill: 9999px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 12.96px;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--vermillion); color: var(--bg-white) !important;
+    padding: 8px 24px;
+    border-radius: var(--radius-pill);
+    font-weight: 700 !important;
+    letter-spacing: 0.1em;
+    font-feature-settings: "palt";
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--surface-warm);
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero .en-label {
+    font-family: var(--font-en);
+    font-size: 14.688px; font-weight: 500;
+    color: var(--vermillion);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 25.056px; font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    font-feature-settings: "palt";
+  }
+  .hero .lead {
+    font-family: var(--font-base);
+    font-size: 14.688px; font-weight: 400;
+    line-height: 2.2;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    max-width: 640px; margin: 0 auto 32px;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 56px 24px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section--surface {
+    background: var(--surface-warm);
+    max-width: none; padding: 56px 0;
+  }
+  .section--surface .section-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  }
+  .section--deep {
+    background: var(--surface-deep);
+    max-width: none; padding: 56px 0;
+  }
+  .section--deep .section-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  }
+
+  /* BILINGUAL HEADER */
+  .bilingual-header {
+    margin-bottom: 32px;
+  }
+  .bilingual-header .en-label {
+    font-family: var(--font-en);
+    font-size: 14.688px; font-weight: 500;
+    color: var(--vermillion);
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .bilingual-header h2 {
+    font-family: var(--font-base);
+    font-size: 25.056px; font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+    font-feature-settings: "palt";
+  }
+
+  .section .helper {
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.0;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .swatch {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .swatch-color { height: 96px; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-name {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .type-label {
+    flex: 0 0 320px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+
+  .type-en-label {
+    font-family: var(--font-en);
+    font-size: 14.688px; font-weight: 500;
+    color: var(--vermillion);
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+  }
+  .type-h2 {
+    font-family: var(--font-base);
+    font-size: 25.056px; font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    font-feature-settings: "palt";
+  }
+  .type-body-lead {
+    font-family: var(--font-base);
+    font-size: 14.688px; font-weight: 400;
+    line-height: 2.2;
+    letter-spacing: 0.05em;
+  }
+  .type-body {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+  }
+  .type-card-title {
+    font-family: var(--font-base);
+    font-size: 14.688px; font-weight: 700;
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+  }
+  .type-follow {
+    font-family: var(--font-en);
+    font-size: 15.552px; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .type-scroll {
+    font-family: var(--font-en);
+    font-size: 10.368px; font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+  }
+  .type-nav {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  .type-shop-title {
+    font-family: var(--font-base);
+    font-size: 13.824px; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--vermillion); color: var(--bg-white);
+    padding: 13.824px 51.84px 17.28px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 700;
+    letter-spacing: 0.1em;
+    font-feature-settings: "palt";
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-primary:hover { background: var(--vermillion-dark); }
+
+  .btn-primary-sm {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--vermillion); color: var(--bg-white);
+    padding: 10.368px 47.52px 12.96px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 700;
+    letter-spacing: 0.1em;
+    font-feature-settings: "palt";
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-primary-sm:hover { background: var(--vermillion-dark); }
+
+  .btn-outlined {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--vermillion);
+    border: 1px solid var(--vermillion);
+    padding: 10px 32px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-outlined:hover { background: var(--vermillion); color: var(--bg-white); }
+
+  .btn-nav {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 7.776px 27.648px 8.64px 17.28px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    letter-spacing: 0.05em;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-nav:hover { border-color: var(--text-primary); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--vermillion);
+    border: none;
+    padding: 6px 4px;
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    text-decoration: underline; text-underline-offset: 4px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+  }
+
+  /* TAG */
+  .tag {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--vermillion);
+    border: 1px solid var(--vermillion);
+    padding: 4px 16px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--bg-white);
+  }
+  .product-cover {
+    aspect-ratio: 1 / 1;
+    margin-bottom: 16px;
+    border-radius: 0;
+  }
+  .product-tags {
+    display: flex; gap: 8px; margin-bottom: 8px;
+  }
+  .product-name {
+    font-family: var(--font-base);
+    font-size: 14.688px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .product-desc {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .product-price {
+    font-family: var(--font-base);
+    font-size: 14.688px; font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+  }
+
+  /* ARTICLE CARD */
+  .article-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .article-card {
+    background: var(--bg-white);
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 0;
+  }
+  .article-card .en-label {
+    font-family: var(--font-en);
+    font-size: 11px; font-weight: 500;
+    color: var(--vermillion);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .article-card h3 {
+    font-family: var(--font-base);
+    font-size: 14.688px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .article-card p {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+  }
+  .form input, .form textarea, .form select {
+    width: 100%;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-family: var(--font-base);
+    font-size: 12.96px;
+    color: var(--text-primary);
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+  }
+  .form input:focus, .form textarea:focus, .form select:focus {
+    outline: none;
+    border-color: var(--vermillion);
+  }
+  .form .input-error { border-color: var(--danger); }
+  .form .error-text {
+    font-family: var(--font-base);
+    font-size: 11px;
+    color: var(--danger);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .elevation-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-base);
+    font-size: 12.96px; font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); border-color: transparent; }
+  .elevation-2 { box-shadow: var(--elevation-2); border-color: transparent; }
+
+  /* LAYOUT GRID */
+  .layout-grid {
+    background: var(--surface-deep);
+    padding: 16px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+  }
+  .layout-grid > div {
+    background: var(--vermillion);
+    opacity: 0.3;
+    height: 32px;
+    border-radius: 2px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--surface-footer);
+    padding: 64px 24px 80px;
+    color: var(--text-primary);
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer .en-label {
+    font-family: var(--font-en);
+    font-size: 14.688px; font-weight: 500;
+    color: var(--vermillion);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .footer h4 {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0.1em;
+    font-feature-settings: "palt";
+  }
+  .footer p {
+    font-family: var(--font-base);
+    font-size: 12.96px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+    margin-top: 16px;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .scroll-dot {
+    width: 8px; height: 8px;
+    background: var(--vermillion);
+    border-radius: 50%;
+  }
+  .scroll-text {
+    font-family: var(--font-en);
+    font-size: 10.368px; font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">aeru</a>
+  <ul class="nav-links">
+    <li><a href="#colors">aeru とは</a></li>
+    <li><a href="#typography">商品一覧</a></li>
+    <li><a href="#article">お知らせ</a></li>
+    <li><a href="#components">aeru room</a></li>
+    <li><a href="#" class="nav-cta">オンラインショップ</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="en-label">PHILOSOPHY</div>
+    <h1>日本の伝統を次世代につなぐ</h1>
+    <p class="lead">aeru（和える）は、日本全国の職人と共に、0歳から6歳の子どもが使える日本の伝統工芸品を企画・販売しています。「先人の智慧」を現代に「和える」ことで、伝統を次の世代へつないでいきます。</p>
+    <a href="#" class="btn-primary">aeru について詳しく</a>
+    <div style="margin-top: 40px;">
+      <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+        <div class="scroll-text">Scroll Down</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <div class="bilingual-header">
+    <div class="en-label">COLORS</div>
+    <h2>カラーパレット</h2>
+  </div>
+  <div class="helper">BRAND (朱色 / Vermillion)</div>
+  <div class="swatches" style="margin-bottom: 24px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--vermillion);"></div><div class="swatch-meta"><div class="swatch-name">Vermillion / 朱色</div><div class="swatch-hex">#c73120</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--vermillion-dark);"></div><div class="swatch-meta"><div class="swatch-name">Vermillion Dark</div><div class="swatch-hex">#a52819</div></div></div>
+  </div>
+  <div class="helper">TEXT</div>
+  <div class="swatches" style="margin-bottom: 24px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-primary);"></div><div class="swatch-meta"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#262626</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-secondary);"></div><div class="swatch-meta"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#666666</div></div></div>
+  </div>
+  <div class="helper">SURFACE (温かみのあるオフホワイト)</div>
+  <div class="swatches" style="margin-bottom: 24px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--bg-white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);"></div><div class="swatch-meta"><div class="swatch-name">Background</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-warm);"></div><div class="swatch-meta"><div class="swatch-name">Surface Warm</div><div class="swatch-hex">#fbf9f7</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-footer);"></div><div class="swatch-meta"><div class="swatch-name">Surface Footer</div><div class="swatch-hex">#faf7f4</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-deep);"></div><div class="swatch-meta"><div class="swatch-name">Surface Deep</div><div class="swatch-hex">#f7f2ed</div></div></div>
+  </div>
+  <div class="helper">SEMANTIC</div>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--danger);"></div><div class="swatch-meta"><div class="swatch-name">Danger</div><div class="swatch-hex">#c73120</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--warning);"></div><div class="swatch-meta"><div class="swatch-name">Warning</div><div class="swatch-hex">#d97a00</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--success);"></div><div class="swatch-meta"><div class="swatch-name">Success</div><div class="swatch-hex">#2e7d4f</div></div></div>
+  </div>
+</section>
+
+<section class="section--surface" id="typography">
+  <div class="section-inner">
+    <div class="bilingual-header">
+      <div class="en-label">TYPOGRAPHY</div>
+      <h2>タイポグラフィ</h2>
+    </div>
+    <p style="font-family: var(--font-base); font-size: 14.688px; line-height: 2.2; letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 32px; max-width: 720px;">本文は Helvetica Neue 先頭の欧文優先フォントスタック、12.96px / line-height 1.9 / letter-spacing 0.05em。英語セクションラベルは Roboto 500 / 朱色 #c73120。日本語見出しは 25px Bold / letter-spacing 0.15em / palt。CTAも letter-spacing 0.1em / palt で朱色のpillに統一。</p>
+
+    <div class="type-row">
+      <div class="type-label">English Label / Roboto / 14.7 / 500<br>color: #c73120 / ls: 0.1em</div>
+      <div class="type-sample"><div class="type-en-label">PHILOSOPHY</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">H2 Section / body stack / 25 / 700<br>ls: 0.15em / palt / lh: 1.5</div>
+      <div class="type-sample"><div class="type-h2">日本の伝統を次世代につなぐ</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Body Lead / 14.7 / 400 / lh: 2.2<br>ls: 0.05em</div>
+      <div class="type-sample"><div class="type-body-lead">全国の職人と共に、0歳から6歳の子どもが使える日本の伝統工芸品を企画・販売しています。</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Body / 12.96 / 400 / lh: 1.9<br>ls: 0.05em</div>
+      <div class="type-sample"><div class="type-body">aeru（和える）は、先人の智慧を現代に和えることで、次世代に日本の伝統をつなぐことを目指しています。愛媛県の砥部焼や青森県の津軽塗など、各地の職人が手がけた本物の工芸品を、小さな手にも届けます。</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Card Title / 14.7 / 700 / lh: 1.7<br>ls: 0.05em</div>
+      <div class="type-sample"><div class="type-card-title">愛媛県から届く砥部焼のこぼしにくい器</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Shop Menu Title / 13.8 / 700<br>ls: 0.05em</div>
+      <div class="type-sample"><div class="type-shop-title">オンラインショップ</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Nav Item / 12.96 / 400<br>ls: 0.05em</div>
+      <div class="type-sample"><div class="type-nav">商品一覧　　お知らせ　　aeru room　　企業情報</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Follow us / Roboto / 15.6 / 700<br>ls: 0.05em</div>
+      <div class="type-sample"><div class="type-follow">Follow us</div></div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">Scroll Down / Roboto / 10.4 / 400<br>ls: 0.1em</div>
+      <div class="type-sample"><div class="type-scroll">Scroll Down</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="article">
+  <div class="bilingual-header">
+    <div class="en-label">STORY</div>
+    <h2>日本の伝統と暮らし</h2>
+  </div>
+  <div class="article-grid">
+    <article class="article-card">
+      <div class="en-label">Tradition</div>
+      <h3>愛媛県の砥部焼——二百年の技が、子どもの手に届く</h3>
+      <p>愛媛県砥部町で二百年以上続く砥部焼。厚みのある白磁に藍色の絵付けが特徴のこの焼き物を、子どもの手に馴染むサイズで職人が一つひとつ手づくりしています。こぼしにくい器の底面は、職人が手作業で削り出した独自の形状。安定感がありながら、本物の磁器の手触りを小さな手で味わえます。</p>
+    </article>
+    <article class="article-card">
+      <div class="en-label">Philosophy</div>
+      <h3>「和える」という考え方——先人の智慧を、いまの暮らしに</h3>
+      <p>aeru のものづくりは「0から何かを生み出す」のではなく、すでにある先人の智慧を現代に「和える」こと。全国の産地を訪ね、職人と対話を重ねながら、伝統の技法を活かしつつ現代の暮らしに合う形を模索しています。使い手が本物に触れる機会をつくることで、伝統を次世代につないでいきます。</p>
+    </article>
+  </div>
+</section>
+
+<section class="section--deep">
+  <div class="section-inner">
+    <div class="bilingual-header">
+      <div class="en-label">PRODUCTS</div>
+      <h2>職人の手仕事</h2>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-cover" style="background: linear-gradient(135deg, #f0ebe4 0%, #d4cbc0 100%);"></div>
+        <div class="product-tags">
+          <span class="tag">愛媛県</span>
+          <span class="tag">砥部焼</span>
+        </div>
+        <div class="product-name">こぼしにくい器（砥部焼）</div>
+        <div class="product-desc">砥部焼の職人が子どもの手に合わせて一つひとつ手づくり。こぼしにくい独自の形状。</div>
+        <div class="product-price">&yen;5,940</div>
+      </div>
+      <div class="product-card">
+        <div class="product-cover" style="background: linear-gradient(135deg, #ede5d8 0%, #c8b8a4 100%);"></div>
+        <div class="product-tags">
+          <span class="tag">青森県</span>
+          <span class="tag">津軽塗</span>
+        </div>
+        <div class="product-name">こぼしにくいコップ（津軽塗）</div>
+        <div class="product-desc">青森県の伝統工芸、津軽塗のコップ。48回も塗り重ねた堅牢な漆の器。</div>
+        <div class="product-price">&yen;16,500</div>
+      </div>
+      <div class="product-card">
+        <div class="product-cover" style="background: linear-gradient(135deg, #f2ece2 0%, #d8ccb8 100%);"></div>
+        <div class="product-tags">
+          <span class="tag">徳島県</span>
+          <span class="tag">本藍染</span>
+        </div>
+        <div class="product-name">こぼしにくいお食事エプロン（本藍染）</div>
+        <div class="product-desc">天然藍で手染めしたオーガニックコットン。食べこぼしにも強い藍の抗菌力。</div>
+        <div class="product-price">&yen;8,800</div>
+      </div>
+      <div class="product-card">
+        <div class="product-cover" style="background: linear-gradient(135deg, #ebe4d6 0%, #cfc0a8 100%);"></div>
+        <div class="product-tags">
+          <span class="tag">京都府</span>
+          <span class="tag">京焼</span>
+        </div>
+        <div class="product-name">こぼしにくい器（京焼）</div>
+        <div class="product-desc">京都の窯元が手がける、華やかで繊細な絵付けの器。日常に京の美を。</div>
+        <div class="product-price">&yen;7,700</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <div class="bilingual-header">
+    <div class="en-label">BUTTONS</div>
+    <h2>ボタン</h2>
+  </div>
+  <div class="helper">PRIMARY CTA (MEDIUM)</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-primary">オンラインショップ</a>
+    <a href="#" class="btn-primary">詳しくはこちら</a>
+  </div>
+  <div class="helper">PRIMARY CTA (NORMAL / SMALL)</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-primary-sm">商品を見る</a>
+    <a href="#" class="btn-primary-sm">お問い合わせ</a>
+  </div>
+  <div class="helper">OUTLINED (TAG / BADGE)</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-outlined">aeru について</a>
+    <a href="#" class="btn-outlined">お知らせ一覧</a>
+  </div>
+  <div class="helper">NAV BUTTON</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-nav">Buy</a>
+    <a href="#" class="btn-nav">EN</a>
+  </div>
+  <div class="helper">TAG / BADGE</div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+    <span class="tag">愛媛県</span>
+    <span class="tag">砥部焼</span>
+    <span class="tag">本藍染</span>
+    <span class="tag">津軽塗</span>
+    <span class="tag">京焼</span>
+  </div>
+  <div class="helper">GHOST LINK</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+    <a href="#" class="btn-ghost">続きを読む &rsaquo;</a>
+    <a href="#" class="btn-ghost">すべての商品を見る &rsaquo;</a>
+  </div>
+</section>
+
+<section class="section--surface">
+  <div class="section-inner">
+    <div class="bilingual-header">
+      <div class="en-label">CARDS</div>
+      <h2>カードパターン</h2>
+    </div>
+    <div class="product-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="product-card" style="background: var(--bg-white); padding: 24px; border: 1px solid var(--border);">
+        <div class="product-cover" style="background: linear-gradient(135deg, #f5efe6 0%, #e0d4c4 100%); margin-bottom: 16px;"></div>
+        <div class="product-tags"><span class="tag">漆器</span></div>
+        <div class="product-name" style="margin-top: 8px;">津軽塗のこぼしにくいコップ</div>
+        <div class="product-desc">48回の塗り重ねが生む堅牢さ。</div>
+        <a href="#" class="btn-ghost" style="margin-top: 8px;">詳しく見る &rsaquo;</a>
+      </div>
+      <div class="product-card" style="background: var(--bg-white); padding: 24px; border: 1px solid var(--border);">
+        <div class="product-cover" style="background: linear-gradient(135deg, #f0e8dc 0%, #d8ccb8 100%); margin-bottom: 16px;"></div>
+        <div class="product-tags"><span class="tag">磁器</span></div>
+        <div class="product-name" style="margin-top: 8px;">砥部焼のこぼしにくい器</div>
+        <div class="product-desc">子どもの手に馴染む優しい丸み。</div>
+        <a href="#" class="btn-ghost" style="margin-top: 8px;">詳しく見る &rsaquo;</a>
+      </div>
+      <div class="product-card" style="background: var(--bg-white); padding: 24px; border: 1px solid var(--border);">
+        <div class="product-cover" style="background: linear-gradient(135deg, #e8e0d2 0%, #cfc0a8 100%); margin-bottom: 16px;"></div>
+        <div class="product-tags"><span class="tag">染物</span></div>
+        <div class="product-name" style="margin-top: 8px;">本藍染のお食事エプロン</div>
+        <div class="product-desc">天然藍の抗菌力が食べこぼしに。</div>
+        <a href="#" class="btn-ghost" style="margin-top: 8px;">詳しく見る &rsaquo;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="forms">
+  <div class="bilingual-header">
+    <div class="en-label">FORMS</div>
+    <h2>フォーム</h2>
+  </div>
+  <form class="form" onsubmit="return false;">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 太郎" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="taro@example.com" style="border-color: var(--vermillion);" />
+    </div>
+    <div>
+      <label for="zip">郵便番号（エラー）</label>
+      <input id="zip" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">郵便番号を入力してください</div>
+    </div>
+    <div>
+      <label for="pref">ご希望の産地</label>
+      <select id="pref">
+        <option value="">選択してください</option>
+        <option value="ehime">愛媛県（砥部焼）</option>
+        <option value="aomori">青森県（津軽塗）</option>
+        <option value="tokushima">徳島県（本藍染）</option>
+      </select>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="4" placeholder="ご質問・ご要望をお書きください"></textarea>
+    </div>
+    <div>
+      <a href="#" class="btn-primary-sm">送信する</a>
+    </div>
+  </form>
+</section>
+
+<section class="section--surface">
+  <div class="section-inner">
+    <div class="bilingual-header">
+      <div class="en-label">ELEVATION</div>
+      <h2>エレベーション</h2>
+    </div>
+    <p style="font-family: var(--font-base); font-size: 12.96px; line-height: 1.9; letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 24px; max-width: 720px;">aeru はフラットなデザインが基本。階層は温かみのある面色の差（#fff / #fbf9f7 / #faf7f4 / #f7f2ed）で表現し、shadow はホバーやモーダル等の限定的な場面でのみ使う。</p>
+    <div class="elevation-row">
+      <div class="elevation-card">Level 0 -- Flat</div>
+      <div class="elevation-card elevation-1">Level 1 -- Hover</div>
+      <div class="elevation-card elevation-2">Level 2 -- Modal</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="bilingual-header">
+    <div class="en-label">LAYOUT</div>
+    <h2>レイアウト</h2>
+  </div>
+  <p style="font-family: var(--font-base); font-size: 12.96px; line-height: 1.9; letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 24px; max-width: 720px;">12 カラムグリッド。max-width 1100px、ガッターは 24px。余白をたっぷり取り、工芸品一つひとつに視線が留まる呼吸のあるレイアウト。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="en-label">ABOUT THIS PREVIEW</div>
+    <h4>aeru</h4>
+    <p>このプレビューは aeru（和える / https://a-eru.co.jp/）の Web UI を参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。欧文は Roboto（Google Fonts）、和文は Helvetica Neue + Hiragino Kaku Gothic ProN のシステムフォントスタックを使用しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>

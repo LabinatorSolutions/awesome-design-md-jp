@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (312 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (315 sites)</a>
 </p>
 
 <table>
@@ -460,6 +460,9 @@
 <td align="center"><strong>貝印</strong><br><img src="design-md/kai/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>一蘭</strong><br><img src="design-md/ichiran/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BAYCREW'S</strong><br><img src="design-md/baycrew/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>1LDK</strong><br><img src="design-md/1ldk/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>aeru</strong><br><img src="design-md/aeru/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>cotogoto</strong><br><img src="design-md/cotogoto/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -833,11 +836,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [KAI (貝印)](https://www.kai-group.com/) | Kitchen / Beauty / Manufacturing | [DESIGN.md](design-md/kai/DESIGN.md) | [preview.html](design-md/kai/preview.html) |
 | [ICHIRAN (一蘭)](https://ichiran.com/) | Food / Restaurant | [DESIGN.md](design-md/ichiran/DESIGN.md) | [preview.html](design-md/ichiran/preview.html) |
 | [BAYCREW'S (ベイクルーズ)](https://baycrews.jp/) | Fashion EC / Retail | [DESIGN.md](design-md/baycrew/DESIGN.md) | [preview.html](design-md/baycrew/preview.html) |
+| [1LDK](https://1ldkshop.com/) | Fashion / Select Shop | [DESIGN.md](design-md/1ldk/DESIGN.md) | [preview.html](design-md/1ldk/preview.html) |
+| [aeru (和える)](https://a-eru.co.jp/) | Traditional Crafts / Social Enterprise | [DESIGN.md](design-md/aeru/DESIGN.md) | [preview.html](design-md/aeru/preview.html) |
+| [cotogoto (コトゴト)](https://www.cotogoto.jp/) | Kitchenware / Lifestyle EC | [DESIGN.md](design-md/cotogoto/DESIGN.md) | [preview.html](design-md/cotogoto/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (312 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (315 sites)</a>
 </p>
 
 <table>
@@ -1263,6 +1269,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>貝印</strong><br><img src="design-md/kai/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>一蘭</strong><br><img src="design-md/ichiran/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>BAYCREW'S</strong><br><img src="design-md/baycrew/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>1LDK</strong><br><img src="design-md/1ldk/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>aeru</strong><br><img src="design-md/aeru/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>cotogoto</strong><br><img src="design-md/cotogoto/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

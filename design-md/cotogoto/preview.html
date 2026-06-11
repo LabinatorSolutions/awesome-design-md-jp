@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: cotogoto（コトゴト）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --text-primary: #333333;
+    --text-secondary: #777777;
+    --star-yellow: #ffbf00;
+
+    --bg-white: #ffffff;
+    --surface-kinari: #f8f6ed;
+    --surface-kinari-deep: #ede9db;
+    --surface-modal: #999999;
+    --border: #333333;
+    --border-light: #cccccc;
+
+    /* === Semantic (推奨値) === */
+    --danger: #c0392b;
+    --warning: #d97a00;
+    --success: #2e7d4f;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    /* === Font ===
+       cotogoto は明朝体オンリー。Shippori Mincho（しっぽり明朝）を
+       全面に使用する、日本の EC サイトとしては極めて珍しい設計。
+       "exclamation" はアイコンフォントのため preview では省略 */
+    --font-mincho: "Shippori Mincho", serif;
+
+    --radius: 3px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    font-family: var(--font-mincho);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* TOP BANNER */
+  .top-banner {
+    background: var(--surface-kinari);
+    color: var(--text-primary);
+    padding: 10px 24px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--bg-white);
+    color: var(--text-primary);
+    padding: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-mincho);
+    font-size: 28px; font-weight: 600;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.04em;
+    line-height: 1.0;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-mincho);
+    font-size: 16px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-sub {
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-light);
+    padding: 8px 24px;
+    display: flex; gap: 20px;
+  }
+  .nav-sub a {
+    font-family: var(--font-mincho);
+    font-size: 11px; font-weight: 500;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--surface-kinari);
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero h1 {
+    font-family: var(--font-mincho);
+    font-size: 28px; font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0.08em;
+  }
+  .hero .lead {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 500;
+    line-height: 2.0;
+    color: var(--text-primary);
+    max-width: 600px; margin: 0 auto;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 56px 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section--kinari {
+    background: var(--surface-kinari);
+    max-width: none; padding: 56px 0;
+  }
+  .section--kinari .section-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  }
+  .section h2 {
+    font-family: var(--font-mincho);
+    font-size: 22px; font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+  }
+  .section h3 {
+    font-family: var(--font-mincho);
+    font-size: 18px; font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
+  }
+  .section .helper {
+    font-family: var(--font-mincho);
+    font-size: 11px; font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.0;
+  }
+
+  /* COLOR SWATCHES */
+  .swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .swatch {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+  }
+  .swatch-color { height: 96px; border-radius: var(--radius) var(--radius) 0 0; }
+  .swatch-meta { padding: 12px 14px; }
+  .swatch-name {
+    font-family: var(--font-mincho);
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .swatch-hex {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .type-label {
+    flex: 0 0 300px;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .type-sample { flex: 1; color: var(--text-primary); }
+  .type-display { font-family: var(--font-mincho); font-size: 28px; font-weight: 600; line-height: 1.2; letter-spacing: 0.08em; }
+  .type-section { font-family: var(--font-mincho); font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: 0.04em; }
+  .type-sub { font-family: var(--font-mincho); font-size: 21px; font-weight: 600; line-height: 1.3; letter-spacing: 0.04em; }
+  .type-h3-large { font-family: var(--font-mincho); font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: 0.04em; }
+  .type-h3 { font-family: var(--font-mincho); font-size: 18px; font-weight: 600; line-height: 1.5; letter-spacing: 0.04em; }
+  .type-h3-small { font-family: var(--font-mincho); font-size: 16px; font-weight: 600; line-height: 1.5; letter-spacing: 0.04em; }
+  .type-body { font-family: var(--font-mincho); font-size: 14px; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; }
+  .type-nav { font-family: var(--font-mincho); font-size: 16px; font-weight: 500; line-height: 1.0; letter-spacing: 0.04em; }
+  .type-nav-sub { font-family: var(--font-mincho); font-size: 11px; font-weight: 500; line-height: 1.0; letter-spacing: 0.04em; }
+  .type-caption { font-family: var(--font-mincho); font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--text-secondary); letter-spacing: 0.04em; }
+  .type-link-box { font-family: var(--font-mincho); font-size: 16px; font-weight: 500; line-height: 48px; letter-spacing: 0.04em; }
+
+  /* BUTTONS */
+  .btn-link-box {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 0 24px;
+    border-radius: var(--radius);
+    font-family: var(--font-mincho);
+    font-size: 16px; font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 48px;
+    text-decoration: none; cursor: pointer;
+    min-width: 200px; text-align: center;
+    height: 48px;
+  }
+  .btn-link-box:hover { background: var(--surface-kinari); }
+
+  .btn-dark {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #000000; color: var(--bg-white);
+    padding: 10px 24px;
+    border-radius: var(--radius);
+    font-family: var(--font-mincho);
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: none; cursor: pointer; border: none;
+    line-height: 1.5;
+  }
+  .btn-dark:hover { background: var(--text-primary); }
+
+  .btn-modal {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--surface-modal); color: var(--bg-white);
+    padding: 10px 24px;
+    border-radius: var(--radius);
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none; cursor: pointer; border: none;
+    line-height: 1.5;
+  }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text-primary);
+    border: none;
+    padding: 6px 0;
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: underline; text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    cursor: pointer;
+    line-height: 1.5;
+  }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--bg-white);
+  }
+  .product-cover {
+    aspect-ratio: 1 / 1;
+    margin-bottom: 12px;
+    border-radius: 0;
+  }
+  .product-name {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+  .product-maker {
+    font-family: var(--font-mincho);
+    font-size: 11px; font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .product-price {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .product-stars {
+    color: var(--star-yellow);
+    font-size: 12px;
+    margin-top: 4px;
+    letter-spacing: 2px;
+  }
+
+  /* ARTICLE */
+  .article-card {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  .article-visual {
+    aspect-ratio: 3 / 2;
+    border-radius: 0;
+  }
+  .article-body { display: flex; flex-direction: column; justify-content: center; }
+  .article-body h3 {
+    font-family: var(--font-mincho);
+    font-size: 20px; font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    padding-bottom: 0;
+    letter-spacing: 0.04em;
+  }
+  .article-body p {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 500;
+    line-height: 2.0;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+  }
+
+  /* FORMS */
+  .form { display: grid; gap: 16px; max-width: 480px; }
+  .form label {
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .form input, .form textarea, .form select {
+    width: 100%;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    font-family: var(--font-mincho);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+  }
+  .form input:focus, .form textarea:focus, .form select:focus {
+    outline: none;
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
+  }
+  .form .input-error { border-color: var(--danger); }
+  .form .error-text {
+    font-family: var(--font-mincho);
+    font-size: 12px;
+    color: var(--danger);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ELEVATION */
+  .elevation-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .elevation-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-mincho);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .elevation-1 { box-shadow: var(--elevation-1); }
+
+  /* LAYOUT GRID */
+  .layout-grid {
+    background: var(--surface-kinari);
+    padding: 16px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+    border-radius: var(--radius);
+  }
+  .layout-grid > div {
+    background: var(--text-primary);
+    opacity: 0.3;
+    height: 32px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--surface-kinari);
+    padding: 56px 24px 32px;
+    color: var(--text-primary);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top {
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 32px;
+  }
+  .footer h4 {
+    font-family: var(--font-mincho);
+    font-size: 24px; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+  }
+  .footer p {
+    font-family: var(--font-mincho);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 2.0;
+    letter-spacing: 0.04em;
+  }
+  .footer-bottom {
+    background: var(--surface-kinari-deep);
+    padding: 24px;
+    text-align: center;
+  }
+  .footer-bottom p {
+    font-family: var(--font-mincho);
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-banner">5,500 円以上のお買い上げで送料無料</div>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">cotogoto</a>
+  <ul class="nav-links">
+    <li><a href="#colors">台所道具</a></li>
+    <li><a href="#typography">食卓の道具</a></li>
+    <li><a href="#article">暮らしの道具</a></li>
+    <li><a href="#components">読みもの</a></li>
+    <li><a href="#">ログイン</a></li>
+  </ul>
+</nav>
+
+<nav class="nav-sub">
+  <a href="#">新商品</a>
+  <a href="#">ランキング</a>
+  <a href="#">特集</a>
+  <a href="#">つくり手から探す</a>
+  <a href="#">素材から探す</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>暮らしのなかの、ひとつひとつ。</h1>
+    <p class="lead">東京・高円寺の暮らしの道具店 cotogoto。日本各地のつくり手が丁寧に仕上げた台所道具・生活雑貨を、使い手の目線で選び、お届けしています。長く使える道具と、それにまつわる物語を、ひとつひとつ。</p>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <h2>Colors</h2>
+  <div class="helper">Text &amp; Background</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-primary);"></div><div class="swatch-meta"><div class="swatch-name">Text Primary / 墨色</div><div class="swatch-hex">#333333</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--text-secondary);"></div><div class="swatch-meta"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#777777</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: #000000;"></div><div class="swatch-meta"><div class="swatch-name">CTA Dark</div><div class="swatch-hex">#000000</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-modal);"></div><div class="swatch-meta"><div class="swatch-name">Modal Button</div><div class="swatch-hex">#999999</div></div></div>
+  </div>
+  <div class="helper">Surface / 生成り</div>
+  <div class="swatches" style="margin-bottom: 16px;">
+    <div class="swatch"><div class="swatch-color" style="background: var(--bg-white); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);"></div><div class="swatch-meta"><div class="swatch-name">Background</div><div class="swatch-hex">#ffffff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-kinari);"></div><div class="swatch-meta"><div class="swatch-name">Kinari / 生成り (最頻出)</div><div class="swatch-hex">#f8f6ed</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--surface-kinari-deep);"></div><div class="swatch-meta"><div class="swatch-name">Kinari Deep</div><div class="swatch-hex">#ede9db</div></div></div>
+  </div>
+  <div class="helper">Accent</div>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--star-yellow);"></div><div class="swatch-meta"><div class="swatch-name">Star Yellow (唯一の彩色)</div><div class="swatch-hex">#ffbf00</div></div></div>
+  </div>
+</section>
+
+<section class="section--kinari" id="typography">
+  <div class="section-inner">
+    <h2>Typography</h2>
+    <p style="font-family: var(--font-mincho); font-size: 14px; line-height: 2.0; color: var(--text-primary); margin-bottom: 32px; max-width: 720px; letter-spacing: 0.04em;">cotogoto はサイト全体を <strong>Shippori Mincho（しっぽり明朝）</strong>で統一している。日本の EC サイトとしては極めて珍しい明朝体オンリーの設計。本文 14px / weight 500 / line-height 1.4 / letter-spacing 0.04em。見出しは weight 600。Display H2 のみ letter-spacing 0.08em で堂々と組む。</p>
+    <div class="type-row"><div class="type-label">Display H2 / Shippori Mincho / 28 / 600 / ls 0.08em</div><div class="type-sample"><div class="type-display">新入荷＆注目商品！</div></div></div>
+    <div class="type-row"><div class="type-label">Section H2 / 22 / 600</div><div class="type-sample"><div class="type-section">ランキング</div></div></div>
+    <div class="type-row"><div class="type-label">Sub H2 / 21 / 600</div><div class="type-sample"><div class="type-sub">おすすめ</div></div></div>
+    <div class="type-row"><div class="type-label">H3 Large / 20 / 600 / lh 1.3</div><div class="type-sample"><div class="type-h3-large">せいろのある暮らし——蒸す料理の愉しみ</div></div></div>
+    <div class="type-row"><div class="type-label">H3 Medium / 18 / 600 / lh 1.5</div><div class="type-sample"><div class="type-h3">台所道具</div></div></div>
+    <div class="type-row"><div class="type-label">H3 Small / 16 / 600 / lh 1.5</div><div class="type-sample"><div class="type-h3-small">おろし金の選びかた</div></div></div>
+    <div class="type-row"><div class="type-label">Body / 14 / 500 / lh 1.4 / ls 0.04em</div><div class="type-sample"><div class="type-body">東京・高円寺にある暮らしの道具店 cotogoto では、日本各地のつくり手が丁寧に仕上げた台所道具・生活雑貨を扱っています。使うほどに手に馴染み、暮らしに溶け込んでいく、そんな道具をお届けしたいと考えています。</div></div></div>
+    <div class="type-row"><div class="type-label">Nav Main / 16 / 500</div><div class="type-sample"><div class="type-nav">台所道具　食卓の道具　暮らしの道具</div></div></div>
+    <div class="type-row"><div class="type-label">Nav Sub / 11 / 500</div><div class="type-sample"><div class="type-nav-sub">新商品　ランキング　特集　つくり手から探す</div></div></div>
+    <div class="type-row"><div class="type-label">Link Box / 16 / 500 / lh 48px</div><div class="type-sample"><div class="type-link-box">新商品一覧へ</div></div></div>
+    <div class="type-row"><div class="type-label">Caption / 12 / 400 / #777</div><div class="type-sample"><div class="type-caption">中村銅器製作所（東京都足立区）。職人の手打ちによる銅製おろし金。</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="article">
+  <div class="helper">Article / 読みもの</div>
+  <h2>せいろのある暮らし</h2>
+
+  <div class="article-card">
+    <div class="article-visual" style="background: linear-gradient(135deg, #f0ece0 0%, #d8d0c0 100%);"></div>
+    <div class="article-body">
+      <h3>蒸す、という料理の原点に還る</h3>
+      <p>せいろは、食材の水分と旨みをそのまま閉じ込めてくれる道具です。ガスの火にかけた鍋の上にのせて、蓋をして待つだけ。野菜はほくほくと甘く、魚は身がふっくら。特別な調味料がなくても、素材本来のおいしさを引き出してくれます。杉や檜でつくられたせいろは、使うほどに飴色に変わり、台所の風景の一部になっていきます。</p>
+    </div>
+  </div>
+
+  <div class="article-card">
+    <div class="article-visual" style="background: linear-gradient(135deg, #e8e2d4 0%, #c8bca8 100%);"></div>
+    <div class="article-body">
+      <h3>花ふきん——使い込むほど、柔らかく</h3>
+      <p>奈良の蚊帳生地を重ねた花ふきんは、洗うたびに繊維がほぐれ、使い込むほど柔らかな手触りになります。お皿を拭く、せいろの下に敷く、おにぎりを包む。一枚で何役もこなす頼もしさは、日本の台所の知恵そのものです。毎日使って、毎日干して、清潔に長く。そういう道具との付き合い方を、花ふきんは教えてくれます。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2>Buttons</h2>
+  <div class="helper">Link Box CTA (主要ボタン / 1px solid #333 / radius 3px / height 48px)</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-link-box">新商品一覧へ</a>
+    <a href="#" class="btn-link-box">もっと見る</a>
+    <a href="#" class="btn-link-box">ランキングを見る</a>
+  </div>
+  <div class="helper">Dark CTA (強調 / bg #000 / 12px)</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-dark">詳しく見る</a>
+    <a href="#" class="btn-dark">カートに入れる</a>
+  </div>
+  <div class="helper">Modal Confirm (bg #999)</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-modal">閉じる</a>
+    <a href="#" class="btn-modal">確認する</a>
+  </div>
+  <div class="helper">Ghost</div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+    <a href="#" class="btn-ghost">続きを読む</a>
+    <a href="#" class="btn-ghost">一覧に戻る</a>
+  </div>
+
+  <h2 id="cards" style="margin-top: 56px;">Products</h2>
+  <div class="helper">商品カード</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #f0ece0 0%, #d8cbb8 100%);"></div>
+      <div class="product-name">中華せいろ（21cm）</div>
+      <div class="product-maker">照宝</div>
+      <div class="product-price">&yen;3,190</div>
+      <div class="product-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #e8e0d0 0%, #c0b8a8 100%);"></div>
+      <div class="product-name">銅おろし金（箱型）</div>
+      <div class="product-maker">中村銅器製作所</div>
+      <div class="product-price">&yen;7,700</div>
+      <div class="product-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #f5f0e5 0%, #d0c8b8 100%);"></div>
+      <div class="product-name">花ふきん（蚊帳生地）</div>
+      <div class="product-maker">中川政七商店</div>
+      <div class="product-price">&yen;770</div>
+      <div class="product-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    </div>
+    <div class="product-card">
+      <div class="product-cover" style="background: linear-gradient(135deg, #e0dcd0 0%, #b8b0a0 100%);"></div>
+      <div class="product-name">鉄瓶 丸型（0.9L）</div>
+      <div class="product-maker">及源鋳造</div>
+      <div class="product-price">&yen;11,000</div>
+      <div class="product-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 32px;">
+    <a href="#" class="btn-link-box">商品一覧へ</a>
+  </div>
+
+  <h2 id="forms" style="margin-top: 56px;">Forms</h2>
+  <form class="form">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" type="text" placeholder="山田 花子" />
+    </div>
+    <div>
+      <label for="email">メールアドレス（フォーカス）</label>
+      <input id="email" type="email" value="hanako@example.com" autofocus />
+    </div>
+    <div>
+      <label for="zip">郵便番号（エラー）</label>
+      <input id="zip" type="text" class="input-error" value="" placeholder="必須項目です" />
+      <div class="error-text">郵便番号を入力してください</div>
+    </div>
+    <div>
+      <label for="message">お問い合わせ内容</label>
+      <textarea id="message" rows="4" placeholder="商品についてのご質問、在庫のお問い合わせなど"></textarea>
+    </div>
+  </form>
+</section>
+
+<section class="section">
+  <h2>Elevation</h2>
+  <p style="font-family: var(--font-mincho); font-size: 14px; line-height: 2.0; color: var(--text-primary); margin-bottom: 24px; max-width: 720px; letter-spacing: 0.04em;">cotogoto は box-shadow をほぼ使わず、白 (#ffffff) と生成り (#f8f6ed) の面色差で階層を作る。紙のカタログのような質感を保つため、影は最小限。</p>
+  <div class="elevation-row">
+    <div class="elevation-card">Level 0 --- Flat</div>
+    <div class="elevation-card elevation-1">Level 1 --- Sticky</div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Layout</h2>
+  <p style="font-family: var(--font-mincho); font-size: 14px; line-height: 2.0; color: var(--text-primary); margin-bottom: 24px; max-width: 720px; letter-spacing: 0.04em;">12 カラムグリッド。max-width 約 1200px、ガッター 16-24px。商品写真のあいだに呼吸を確保し、ひとつひとつの道具に目が留まるように。</p>
+  <div class="layout-grid">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <h4>cotogoto</h4>
+        <p style="color: var(--text-primary); font-size: 14px; font-weight: 500; line-height: 2.0;">暮らしのなかの、ひとつひとつ。</p>
+      </div>
+      <div>
+        <p>このプレビューは cotogoto（東京・高円寺の暮らしの道具店）の Web UI を参考にしたデザインシステム可視化用のショーケースです。実サービスとは無関係です。書体は Google Fonts の Shippori Mincho（しっぽり明朝）を使用しています。cotogoto の実サイトでもこの Google Font が使われています。</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>&copy; Design System Preview. This is not affiliated with cotogoto.</p>
+</div>
+
+</body>
+</html>
