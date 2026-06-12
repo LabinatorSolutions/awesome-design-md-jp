@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Chatwork (Light)</title>
+<!--
+  Chatwork Sans is a proprietary brand font and cannot be used externally.
+  This preview uses Google Fonts "Noto Sans JP" (weights 300,400,700,800) and
+  "Inter" (weights 400,700,800) as the closest available substitutes.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Noto+Sans+JP:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: DESIGN.md 実測値 === */
+    /* Brand */
+    --rise--color-brand-red: #f03748;
+    --rise--color-link-red: #df1c13;
+    --rise--color-yellow-accent: #ffbe2e;
+
+    /* Neutral — Dark Navy Scale */
+    --rise--color-cw-black: #13202f;
+    --rise--color-body-text: #191919;
+    --rise--color-cw-white: #ffffff;
+
+    /* Surface & Background */
+    --rise--color-bg: #f5f5f4;
+    --rise--color-surface: #ffffff;
+    --rise--color-surface-gray: #f6f6f6;
+    --rise--color-surface-alt: #f8f8f8;
+    --rise--color-surface-warm: #f7f1e7;
+    --rise--color-border: #ebebeb;
+
+    /* Semantic */
+    --rise--color-danger: #f03748;
+    --rise--color-success: #22c55e;
+    --rise--color-warning: #ffbe2e;
+
+    /* === Typography: Design Tokens === */
+    --rise--fontSize-other-large: 3rem;       /* 48px */
+    --rise--fontSize-headline1: 2.5rem;       /* 40px */
+    --rise--fontSize-headline2: 2rem;         /* 32px */
+    --rise--fontSize-headline3: 1.5rem;       /* 24px */
+    --rise--fontSize-subtitle: 1.25rem;       /* 20px */
+    --rise--fontSize-body1: 1rem;             /* 16px */
+    --rise--fontSize-body2: .875rem;          /* 14px */
+    --rise--fontSize-caption: .75rem;         /* 12px */
+    --rise--fontSize-other-xSmall: .625rem;   /* 10px */
+    --rise--fontSize-button-large: 1.25rem;   /* 20px */
+    --rise--fontSize-button-medium: 1rem;     /* 16px */
+    --rise--fontSize-button-small: .875rem;   /* 14px */
+
+    /* Line Height */
+    --rise--lineHeight-base: 1.6;
+    --rise--lineHeight-headline: 1.5;
+    --rise--lineHeight-feature: 1.85;
+    --rise--lineHeight-cta: 1.3;
+    --rise--lineHeight-stat: 1.8;
+
+    /* Font Family (Chatwork Sans substitute) */
+    --rise--fontFamily-body: "Noto Sans JP", "Hiragino Sans", "\30D2\30E9\30AE\30CE\角\30B4\30B7\30C3\30AF", Meiryo, Helvetica, Arial, system-ui, sans-serif;
+    --rise--fontFamily-heading: "Noto Sans JP", "Hiragino Sans", "\30D2\30E9\30AE\30CE\角\30B4\30B7\30C3\30AF", Meiryo, Helvetica, Arial, system-ui, sans-serif;
+    --rise--fontFamily-inter: "Inter", Helvetica, Arial, sans-serif;
+    --rise--fontFamily-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Elevation === */
+    --rise--elevation-0: none;
+    --rise--elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --rise--elevation-2: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --rise--elevation-3: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+    /* === Border Radius Scale === */
+    --rise--radius-small: 4px;
+    --rise--radius-medium: 5px;
+    --rise--radius-large: 16px;
+    --rise--radius-pill: 26px;
+
+    /* === Spacing Scale (8px grid) === */
+    --rise--spacing-xs: 4px;
+    --rise--spacing-s: 8px;
+    --rise--spacing-m: 16px;
+    --rise--spacing-l: 24px;
+    --rise--spacing-xl: 48px;
+    --rise--spacing-xxl: 80px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--rise--color-bg);
+    color: var(--rise--color-body-text);
+    font-family: var(--rise--fontFamily-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--rise--lineHeight-base);
+    letter-spacing: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+  }
+
+  /* ==================== NAV ==================== */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--rise--color-surface);
+    border-bottom: 1px solid var(--rise--color-border);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 20px; font-weight: 700;
+    color: var(--rise--color-cw-black);
+    text-decoration: none;
+  }
+  .nav-brand .logo-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    background: var(--rise--color-brand-red);
+    border-radius: var(--rise--radius-small);
+    color: #fff; font-size: 14px; font-weight: 800;
+    font-family: var(--rise--fontFamily-inter);
+  }
+  .nav-links {
+    display: flex; gap: var(--rise--spacing-l);
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    color: var(--rise--color-cw-black);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--rise--color-brand-red); }
+  .nav-right { display: flex; align-items: center; gap: var(--rise--spacing-m); }
+  .nav-login {
+    font-family: var(--rise--fontFamily-body);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 400;
+    color: var(--rise--color-cw-black);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-login:hover { color: var(--rise--color-brand-red); }
+  .nav-cta {
+    display: inline-block;
+    background: var(--rise--color-brand-red);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: var(--rise--radius-pill);
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ==================== HERO ==================== */
+  .hero {
+    padding: var(--rise--spacing-xxl) 32px;
+    text-align: center;
+    background: var(--rise--color-surface);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--rise--color-yellow-accent);
+    color: var(--rise--color-cw-black);
+    padding: 4px 12px;
+    border-radius: var(--rise--radius-small);
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-caption);
+    font-weight: 700;
+    margin-bottom: var(--rise--spacing-m);
+  }
+  .hero h1 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 41px;
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    letter-spacing: normal;
+    color: var(--rise--color-cw-black);
+    margin-bottom: var(--rise--spacing-m);
+  }
+  .hero p {
+    font-family: var(--rise--fontFamily-body);
+    font-size: var(--rise--fontSize-body1);
+    font-weight: 400;
+    line-height: var(--rise--lineHeight-feature);
+    color: var(--rise--color-body-text);
+    max-width: 620px;
+    margin: 0 auto var(--rise--spacing-l);
+  }
+  .hero-buttons {
+    display: flex; gap: 12px;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .hero-stat {
+    margin-top: var(--rise--spacing-xl);
+    display: flex; justify-content: center; gap: var(--rise--spacing-xl);
+    flex-wrap: wrap;
+  }
+  .hero-stat-item { text-align: center; }
+  .hero-stat-number {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-stat);
+    letter-spacing: 2px;
+    color: var(--rise--color-cw-black);
+  }
+  .hero-stat-number .accent { color: var(--rise--color-brand-red); }
+  .hero-stat-label {
+    font-size: var(--rise--fontSize-body2);
+    color: var(--rise--color-body-text);
+    margin-top: 4px;
+  }
+
+  /* ==================== BUTTONS (shared) ==================== */
+  .btn-primary {
+    display: inline-block;
+    background: var(--rise--color-brand-red);
+    color: #fff;
+    padding: 12px 32px;
+    border-radius: var(--rise--radius-pill);
+    border: none;
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body1);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary--large {
+    padding: 14px 40px;
+    font-size: 21px;
+    font-weight: 700;
+  }
+  .btn-secondary {
+    display: inline-block;
+    background: var(--rise--color-surface);
+    color: var(--rise--color-brand-red);
+    padding: 12px 32px;
+    border-radius: var(--rise--radius-pill);
+    border: 1px solid var(--rise--color-brand-red);
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body1);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: #fef2f3; }
+  .btn-text-link {
+    display: inline-block;
+    background: transparent;
+    color: var(--rise--color-cw-black);
+    padding: 0;
+    border: none;
+    font-family: var(--rise--fontFamily-body);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .btn-text-link:hover { color: var(--rise--color-brand-red); }
+
+  /* ==================== SECTIONS ==================== */
+  .section {
+    padding: 64px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--rise--fontFamily-inter);
+    font-size: 12px; font-weight: 700;
+    color: var(--rise--color-brand-red);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    color: var(--rise--color-cw-black);
+    margin-bottom: 32px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--rise--color-border);
+    margin: 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-surface {
+    background: var(--rise--color-surface);
+    padding: 64px 32px;
+    border-radius: 0;
+  }
+  .section-surface .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ==================== COLORS ==================== */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 12px;
+    margin-bottom: var(--rise--spacing-l);
+  }
+  .color-swatch {
+    border-radius: var(--rise--radius-medium);
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--rise--color-border);
+  }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name {
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--rise--color-cw-black);
+  }
+  .color-swatch-hex {
+    font-size: 12px;
+    color: var(--rise--color-body-text);
+    font-family: var(--rise--fontFamily-mono);
+    opacity: 0.7;
+  }
+  .color-swatch-role {
+    font-size: 11px;
+    color: var(--rise--color-body-text);
+    opacity: 0.6;
+    margin-top: 3px;
+  }
+  .color-group-label {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    color: var(--rise--color-cw-black);
+    margin: var(--rise--spacing-l) 0 10px;
+  }
+
+  /* ==================== TYPOGRAPHY ==================== */
+  .type-sample {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rise--color-border);
+  }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta {
+    font-family: var(--rise--fontFamily-mono);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--rise--color-body-text);
+    opacity: 0.6;
+    margin-top: 8px;
+  }
+  .type-context {
+    display: inline-block;
+    background: var(--rise--color-surface-gray);
+    color: var(--rise--color-body-text);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--rise--radius-small);
+    margin-left: 8px;
+    opacity: 1;
+  }
+
+  /* ==================== ARTICLE / CONTENT ==================== */
+  .article-preview { max-width: 700px; }
+  .article-preview h1 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    color: var(--rise--color-cw-black);
+    margin-bottom: var(--rise--spacing-m);
+  }
+  .article-preview h2 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    color: var(--rise--color-cw-black);
+    margin: var(--rise--spacing-l) 0 12px;
+  }
+  .article-preview h3 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 18.72px;
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    color: var(--rise--color-body-text);
+    margin: 20px 0 8px;
+  }
+  .article-preview p {
+    font-family: var(--rise--fontFamily-body);
+    font-size: var(--rise--fontSize-body1);
+    font-weight: 400;
+    line-height: var(--rise--lineHeight-feature);
+    color: var(--rise--color-body-text);
+    margin-bottom: var(--rise--spacing-m);
+  }
+  .article-preview a {
+    color: var(--rise--color-link-red);
+    text-decoration: none;
+  }
+  .article-preview a:hover { text-decoration: underline; }
+  .article-preview .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--rise--spacing-m);
+  }
+  .article-preview .feature-list li {
+    font-size: var(--rise--fontSize-body1);
+    line-height: var(--rise--lineHeight-feature);
+    padding: 4px 0 4px 24px;
+    position: relative;
+    color: var(--rise--color-body-text);
+  }
+  .article-preview .feature-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 12px;
+    width: 8px; height: 8px;
+    background: var(--rise--color-brand-red);
+    border-radius: 50%;
+  }
+
+  /* ==================== BUTTONS SECTION ==================== */
+  .button-row {
+    display: flex; gap: 24px;
+    flex-wrap: wrap; align-items: center;
+  }
+  .button-item { text-align: center; }
+  .button-label {
+    font-size: 12px; font-weight: 400;
+    color: var(--rise--color-body-text);
+    opacity: 0.6;
+    margin-top: 8px;
+    font-family: var(--rise--fontFamily-mono);
+  }
+
+  /* ==================== CARDS ==================== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--rise--spacing-l);
+  }
+  .card-industry {
+    background: var(--rise--color-surface);
+    border-radius: var(--rise--radius-medium);
+    padding: var(--rise--spacing-l);
+    padding-bottom: 40px;
+    border: 1px solid var(--rise--color-border);
+    transition: box-shadow 0.3s;
+  }
+  .card-industry:hover { box-shadow: var(--rise--elevation-1); }
+  .card-industry h3 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 17px; font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    color: var(--rise--color-body-text);
+    margin-bottom: 8px;
+  }
+  .card-industry p {
+    font-size: var(--rise--fontSize-body1);
+    color: var(--rise--color-body-text);
+    line-height: var(--rise--lineHeight-base);
+    opacity: 0.8;
+  }
+  .card-industry .card-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card-resource {
+    background: var(--rise--color-surface);
+    border-radius: var(--rise--radius-large);
+    padding: var(--rise--spacing-l);
+    padding-bottom: 20px;
+    border: 1px solid var(--rise--color-border);
+    transition: box-shadow 0.3s;
+  }
+  .card-resource:hover { box-shadow: var(--rise--elevation-1); }
+  .card-resource .card-thumb {
+    width: 100%;
+    height: 140px;
+    background: var(--rise--color-surface-gray);
+    border-radius: var(--rise--radius-medium);
+    margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    color: var(--rise--color-brand-red);
+  }
+  .card-resource h3 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body1);
+    font-weight: 700;
+    line-height: var(--rise--lineHeight-headline);
+    color: var(--rise--color-body-text);
+    margin-bottom: 4px;
+  }
+  .card-resource p {
+    font-size: var(--rise--fontSize-body2);
+    color: var(--rise--color-body-text);
+    line-height: var(--rise--lineHeight-base);
+    opacity: 0.7;
+  }
+  .card-resource .card-dl {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    color: var(--rise--color-brand-red);
+    text-decoration: none;
+  }
+  .card-resource .card-dl:hover { text-decoration: underline; }
+
+  /* ==================== FORMS ==================== */
+  .form-group {
+    margin-bottom: 20px;
+    max-width: 400px;
+  }
+  .form-label {
+    display: block;
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    color: var(--rise--color-cw-black);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--rise--color-surface);
+    color: var(--rise--color-body-text);
+    border: 1px solid var(--rise--color-border);
+    padding: 12px 16px;
+    border-radius: var(--rise--radius-medium);
+    font-family: Helvetica, Arial, var(--rise--fontFamily-body);
+    font-size: var(--rise--fontSize-body1);
+    font-weight: 400;
+    height: 44px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus,
+  .form-input--focus {
+    border-color: var(--rise--color-brand-red);
+    box-shadow: 0 0 0 3px rgba(240, 55, 72, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--rise--color-danger);
+    box-shadow: 0 0 0 3px rgba(240, 55, 72, 0.15);
+  }
+  .form-state-label {
+    font-size: 11px;
+    color: var(--rise--color-body-text);
+    opacity: 0.5;
+    margin-top: 4px;
+    font-family: var(--rise--fontFamily-mono);
+  }
+  .form-error-text {
+    font-size: var(--rise--fontSize-caption);
+    color: var(--rise--color-danger);
+    margin-top: 4px;
+  }
+
+  /* ==================== ELEVATION ==================== */
+  .elevation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .elevation-card {
+    background: var(--rise--color-surface);
+    border-radius: var(--rise--radius-large);
+    padding: var(--rise--spacing-l);
+    text-align: center;
+    border: 1px solid var(--rise--color-border);
+  }
+  .elevation-label {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--rise--color-cw-black);
+  }
+  .elevation-desc {
+    font-family: var(--rise--fontFamily-mono);
+    font-size: 11px;
+    color: var(--rise--color-body-text);
+    opacity: 0.6;
+    word-break: break-all;
+  }
+  .elevation-surface-demo {
+    margin-top: 32px;
+    display: flex; gap: var(--rise--spacing-l);
+    flex-wrap: wrap;
+  }
+  .surface-demo-box {
+    flex: 1;
+    min-width: 200px;
+    padding: var(--rise--spacing-l);
+    border-radius: var(--rise--radius-large);
+    text-align: center;
+  }
+  .surface-demo-box h4 {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .surface-demo-box p {
+    font-size: var(--rise--fontSize-caption);
+    opacity: 0.6;
+    font-family: var(--rise--fontFamily-mono);
+  }
+
+  /* ==================== SPACING / LAYOUT ==================== */
+  .spacing-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: var(--rise--spacing-l);
+  }
+  .spacing-item { text-align: center; }
+  .spacing-block {
+    background: var(--rise--color-brand-red);
+    border-radius: 3px;
+    margin-bottom: 6px;
+    height: 28px;
+    opacity: 0.8;
+  }
+  .spacing-value {
+    font-family: var(--rise--fontFamily-mono);
+    font-size: 11px; font-weight: 500;
+    color: var(--rise--color-body-text);
+    opacity: 0.6;
+  }
+  .spacing-label {
+    font-size: 10px;
+    color: var(--rise--color-body-text);
+    opacity: 0.5;
+    margin-top: 2px;
+    font-family: var(--rise--fontFamily-mono);
+  }
+
+  .grid-demo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--rise--spacing-l);
+    margin-top: var(--rise--spacing-l);
+  }
+  .grid-cell {
+    background: var(--rise--color-surface);
+    border: 1px solid var(--rise--color-border);
+    border-radius: var(--rise--radius-medium);
+    padding: var(--rise--spacing-l);
+    text-align: center;
+    font-size: var(--rise--fontSize-body2);
+    color: var(--rise--color-body-text);
+    font-family: var(--rise--fontFamily-mono);
+  }
+  .grid-label {
+    font-family: var(--rise--fontFamily-mono);
+    font-size: 12px;
+    color: var(--rise--color-body-text);
+    opacity: 0.5;
+    margin-top: 12px;
+  }
+
+  .width-bar {
+    height: 32px;
+    background: var(--rise--color-surface-gray);
+    border: 1px solid var(--rise--color-border);
+    border-radius: var(--rise--radius-medium);
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .width-bar-inner {
+    height: 100%;
+    background: var(--rise--color-brand-red);
+    border-radius: var(--rise--radius-small);
+    opacity: 0.2;
+  }
+  .width-bar-label {
+    font-family: var(--rise--fontFamily-heading);
+    font-size: 13px; font-weight: 700;
+    color: var(--rise--color-cw-black);
+    margin-bottom: 4px;
+  }
+  .width-bar-value {
+    font-family: var(--rise--fontFamily-mono);
+    font-size: 12px;
+    color: var(--rise--color-body-text);
+    opacity: 0.6;
+  }
+
+  /* ==================== FOOTER ==================== */
+  .footer {
+    padding: var(--rise--spacing-xl) 32px;
+    text-align: center;
+    background: var(--rise--color-cw-black);
+    color: var(--rise--color-cw-white);
+    font-family: var(--rise--fontFamily-body);
+    font-size: var(--rise--fontSize-body2);
+    font-weight: 400;
+    line-height: 1.71;
+  }
+  .footer a {
+    color: var(--rise--color-cw-white);
+    text-decoration: underline;
+    opacity: 0.7;
+  }
+  .footer a:hover { opacity: 1; }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--rise--spacing-l);
+    flex-wrap: wrap;
+    margin-bottom: var(--rise--spacing-m);
+    list-style: none;
+  }
+  .footer-links a { text-decoration: none; }
+  .footer-copyright {
+    font-size: var(--rise--fontSize-other-xSmall);
+    opacity: 0.5;
+    margin-top: var(--rise--spacing-m);
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-surface { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .grid-demo { grid-template-columns: 1fr; }
+    .hero-stat { gap: var(--rise--spacing-l); }
+    .elevation-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="logo-mark">CW</span>
+    Chatwork
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#content">Content</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-login" href="#">ログイン</a>
+    <a class="nav-cta" href="#">無料ではじめる</a>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-badge">国内利用者数No.1</div>
+  <h1>Design System Preview<br>Chatwork &mdash; 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary btn-primary--large" href="#">無料ではじめる</a>
+    <a class="btn-secondary" href="#">DESIGN.md を読む</a>
+  </div>
+  <div class="hero-stat">
+    <div class="hero-stat-item">
+      <div class="hero-stat-number"><span class="accent">98</span>万社</div>
+      <div class="hero-stat-label">導入社数</div>
+    </div>
+    <div class="hero-stat-item">
+      <div class="hero-stat-number">No.<span class="accent">1</span></div>
+      <div class="hero-stat-label">国内利用者数</div>
+    </div>
+    <div class="hero-stat-item">
+      <div class="hero-stat-number"><span class="accent">7</span>年連続</div>
+      <div class="hero-stat-label">シェア1位</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== COLORS ==================== -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f03748"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#f03748</div><div class="color-swatch-role">主要CTA・ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#df1c13"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Red</div><div class="color-swatch-hex">#df1c13</div><div class="color-swatch-role">テキストリンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffbe2e"></div><div class="color-swatch-info"><div class="color-swatch-name">Yellow Accent</div><div class="color-swatch-hex">#ffbe2e</div><div class="color-swatch-role">バッジ・ハイライト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral &mdash; Dark Navy Scale</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#13202f"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Navy</div><div class="color-swatch-hex">#13202f</div><div class="color-swatch-role">見出し・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#191919"></div><div class="color-swatch-info"><div class="color-swatch-name">Body Text</div><div class="color-swatch-hex">#191919</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">カード面・コンテンツ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface &amp; Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#f5f5f4</div><div class="color-swatch-role">ページ背景（warm stone）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">コンテンツ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f6"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f6f6f6</div><div class="color-swatch-role">セカンダリ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f8f8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Alt</div><div class="color-swatch-hex">#f8f8f8</div><div class="color-swatch-role">まとめセクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f1e7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Warm</div><div class="color-swatch-hex">#f7f1e7</div><div class="color-swatch-role">ウォームアクセント面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#ebebeb</div><div class="color-swatch-role">区切り線・ディバイダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f03748"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#f03748</div><div class="color-swatch-role">エラー・Brand Red共用</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#22c55e"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#22c55e</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffbe2e"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ffbe2e</div><div class="color-swatch-role">警告・Yellow共用</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== TYPOGRAPHY ==================== -->
+<section class="section-surface" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography &mdash; Design Tokens</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-heading); font-size:48px; font-weight:800; line-height:1.5; letter-spacing:2px; color:var(--rise--color-cw-black);">導入社数98万社</div>
+    <div class="type-meta">--rise--fontSize-other-large: 48px / 800 / line-height: 1.5 / letter-spacing: 2px<span class="type-context">数値強調 Display</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-heading); font-size:40px; font-weight:700; line-height:1.5; color:var(--rise--color-cw-black);">国内利用者数No.1 &mdash; Headline 1</div>
+    <div class="type-meta">--rise--fontSize-headline1: 40px (2.5rem) / 700 / line-height: 1.5<span class="type-context">セクション大見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-heading); font-size:32px; font-weight:700; line-height:1.5; color:var(--rise--color-cw-black);">ビジネスチャットで働き方を変える &mdash; Headline 2</div>
+    <div class="type-meta">--rise--fontSize-headline2: 32px (2rem) / 700 / line-height: 1.5<span class="type-context">サブセクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-heading); font-size:24px; font-weight:700; line-height:1.5; color:var(--rise--color-cw-black);">だれでも簡単に使える &mdash; Headline 3</div>
+    <div class="type-meta">--rise--fontSize-headline3: 24px (1.5rem) / 700 / line-height: 1.5<span class="type-context">小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-heading); font-size:20px; font-weight:700; line-height:1.5; color:var(--rise--color-body-text);">チャット・タスク管理・ビデオ通話 &mdash; Subtitle</div>
+    <div class="type-meta">--rise--fontSize-subtitle: 20px (1.25rem) / 700 / line-height: 1.5<span class="type-context">サブタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-body); font-size:16px; font-weight:400; line-height:1.6; color:var(--rise--color-body-text);">本文テキスト — ビジネスチャットで社内外のコミュニケーションを効率化。メールや電話よりも気軽に、スピーディーなやり取りを実現します。line-height: 1.6 のベースリズム。</div>
+    <div class="type-meta">--rise--fontSize-body1: 16px (1rem) / 400 / line-height: 1.6 (base)<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-body); font-size:16px; font-weight:400; line-height:1.85; color:var(--rise--color-body-text);">機能説明テキスト — グループチャットでプロジェクト単位のコミュニケーションが可能。必要なメンバーだけを招待し、情報を整理して共有できます。行間を広くとり、長文でも読みやすく。</div>
+    <div class="type-meta">--rise--fontSize-body1: 16px / 400 / line-height: 1.85 (feature)<span class="type-context">機能説明</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-body); font-size:14px; font-weight:400; line-height:1.6; color:var(--rise--color-body-text); opacity:0.8;">補助テキスト — 詳しくはヘルプページをご確認ください。Body 2 (14px)</div>
+    <div class="type-meta">--rise--fontSize-body2: 14px (.875rem) / 400 / line-height: 1.6<span class="type-context">ナビ・補助</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-body); font-size:12px; font-weight:400; line-height:1.5; color:var(--rise--color-body-text); opacity:0.6;">キャプション &mdash; プライバシーポリシー | 利用規約 | 特定商取引法に基づく表示</div>
+    <div class="type-meta">--rise--fontSize-caption: 12px (.75rem) / 400 / line-height: 1.5<span class="type-context">キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--rise--fontFamily-heading); font-size:21px; font-weight:700; line-height:1.3; color:#ffffff; background:var(--rise--color-brand-red); display:inline-block; padding:12px 32px; border-radius:var(--rise--radius-pill);">無料ではじめる</div>
+    <div class="type-meta">CTA Label: 21px / 700 / line-height: 1.3 / white on Brand Red<span class="type-context">CTA ボタン</span></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== ARTICLE / CONTENT ==================== -->
+<section class="section" id="content">
+  <div class="section-label">03 / Content &mdash; SaaS 機能説明</div>
+  <h2 class="section-title">コンテンツサンプル</h2>
+  <div class="article-preview">
+    <h1>日本製ビジネスチャット、Chatworkとは?</h1>
+    <p>Chatworkは、中小企業に最適なビジネスチャットツールです。メールや電話に代わる新しいコミュニケーション手段として、社内外のやり取りをシンプルにします。</p>
+
+    <h2>だれでも簡単に使えるビジネスチャット</h2>
+    <p>ITに詳しくない方でも直感的に操作できるシンプルなインターフェース。導入時のトレーニングコストを最小限に抑え、チーム全体がすぐに使い始められます。<a href="#">導入事例を見る</a></p>
+
+    <h3>他にも使える便利機能</h3>
+    <ul class="feature-list">
+      <li>グループチャットでプロジェクト単位の情報共有</li>
+      <li>タスク管理でチームの仕事を見える化</li>
+      <li>ファイル共有で資料のやり取りもスムーズ</li>
+      <li>ビデオ通話で離れた場所でもフェイスtoフェイス</li>
+    </ul>
+    <p>国内利用者数No.1のビジネスチャットとして、多くの中小企業に選ばれ続けている理由がここにあります。</p>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== BUTTONS ==================== -->
+<section class="section-surface" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item">
+      <a class="btn-primary btn-primary--large" href="#">無料ではじめる</a>
+      <div class="button-label">Primary CTA (pill, 21px, 700)</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-primary" href="#">無料ダウンロード</a>
+      <div class="button-label">Primary (16px, 700)</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">お問い合わせ</a>
+      <div class="button-label">Secondary Outline</div>
+    </div>
+    <div class="button-item">
+      <a class="btn-text-link" href="#">ログイン</a>
+      <div class="button-label">Login Link (text)</div>
+    </div>
+  </div>
+  <div style="margin-top:32px">
+    <div class="color-group-label">Badge</div>
+    <div class="button-row">
+      <div class="button-item">
+        <span style="display:inline-block; background:var(--rise--color-yellow-accent); color:var(--rise--color-cw-black); padding:4px 12px; border-radius:var(--rise--radius-small); font-family:var(--rise--fontFamily-heading); font-size:var(--rise--fontSize-caption); font-weight:700;">おすすめ</span>
+        <div class="button-label">Highlight Badge (yellow)</div>
+      </div>
+      <div class="button-item">
+        <span style="display:inline-block; background:var(--rise--color-brand-red); color:#fff; padding:4px 12px; border-radius:var(--rise--radius-small); font-family:var(--rise--fontFamily-heading); font-size:var(--rise--fontSize-caption); font-weight:700;">NEW</span>
+        <div class="button-label">Brand Badge (red)</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== CARDS ==================== -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="color-group-label">Industry Cards (radius: 5px)</div>
+  <div class="card-grid" style="margin-bottom:40px">
+    <div class="card-industry">
+      <span class="card-icon">&#x1F3E2;</span>
+      <h3>IT・情報通信業</h3>
+      <p>リモートワークの社内コミュニケーションを効率化。プロジェクト単位でのチャット管理が可能です。</p>
+    </div>
+    <div class="card-industry">
+      <span class="card-icon">&#x1F3D7;</span>
+      <h3>建設・不動産業</h3>
+      <p>現場とオフィスの連絡をリアルタイムに。写真やファイルの共有もスムーズに行えます。</p>
+    </div>
+    <div class="card-industry">
+      <span class="card-icon">&#x1F3EB;</span>
+      <h3>教育・学習支援業</h3>
+      <p>教職員間の情報共有や、保護者とのコミュニケーションに活用いただけます。</p>
+    </div>
+  </div>
+
+  <div class="color-group-label">Resource Cards (radius: 16px)</div>
+  <div class="card-grid">
+    <div class="card-resource">
+      <div class="card-thumb">&#x1F4CA;</div>
+      <h3>Chatwork 導入ガイドブック</h3>
+      <p>はじめての方でも安心。ステップバイステップで導入手順を解説。</p>
+      <a class="card-dl" href="#">無料ダウンロード &rarr;</a>
+    </div>
+    <div class="card-resource">
+      <div class="card-thumb">&#x1F4DD;</div>
+      <h3>業務効率化 事例集</h3>
+      <p>導入企業の成功事例を業種別にまとめた資料です。</p>
+      <a class="card-dl" href="#">無料ダウンロード &rarr;</a>
+    </div>
+    <div class="card-resource">
+      <div class="card-thumb">&#x1F4F1;</div>
+      <h3>リモートワーク活用術</h3>
+      <p>テレワーク環境でのChatwork活用ノウハウをご紹介。</p>
+      <a class="card-dl" href="#">無料ダウンロード &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== FORMS ==================== -->
+<section class="section-surface" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト &mdash; border: #ebebeb, radius: 5px, height: 44px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">会社名</label>
+    <input class="form-input form-input--focus" type="text" value="株式会社サンプル">
+    <div class="form-state-label">フォーカス &mdash; border: #f03748 (Brand Red)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー &mdash; border: #f03748 (Danger)</div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== ELEVATION ==================== -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation &mdash; Depth &amp; Surface Contrast</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">shadow: none (基本)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--rise--elevation-1);">
+      <div class="elevation-label">Level 1: Hover</div>
+      <div class="elevation-desc">0 2px 8px rgba(0,0,0,.06)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--rise--elevation-2);">
+      <div class="elevation-label">Level 2: Dropdown</div>
+      <div class="elevation-desc">0 4px 16px rgba(0,0,0,.08)</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--rise--elevation-3);">
+      <div class="elevation-label">Level 3: Modal</div>
+      <div class="elevation-desc">0 8px 32px rgba(0,0,0,.12)</div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Surface Contrast Hierarchy</div>
+  <p style="font-size:var(--rise--fontSize-body2); color:var(--rise--color-body-text); opacity:0.7; margin-bottom:var(--rise--spacing-m);">Chatwork は box-shadow をほぼ使わず、背景色とサーフェスのコントラストで立体感を表現する。</p>
+  <div class="elevation-surface-demo">
+    <div class="surface-demo-box" style="background:var(--rise--color-bg); border:1px solid var(--rise--color-border);">
+      <h4 style="color:var(--rise--color-cw-black);">Background</h4>
+      <p>#f5f5f4 (warm stone)</p>
+    </div>
+    <div class="surface-demo-box" style="background:var(--rise--color-surface); border:1px solid var(--rise--color-border);">
+      <h4 style="color:var(--rise--color-cw-black);">Surface</h4>
+      <p>#ffffff</p>
+    </div>
+    <div class="surface-demo-box" style="background:var(--rise--color-surface-warm); border:1px solid var(--rise--color-border);">
+      <h4 style="color:var(--rise--color-cw-black);">Surface Warm</h4>
+      <p>#f7f1e7</p>
+    </div>
+    <div class="surface-demo-box" style="background:var(--rise--color-cw-black);">
+      <h4 style="color:#fff;">Dark Navy</h4>
+      <p style="color:#fff;">#13202f (footer)</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ==================== LAYOUT ==================== -->
+<section class="section-surface" id="layout">
+<div class="section-inner">
+  <div class="section-label">08 / Layout &mdash; Spacing &amp; Grid</div>
+  <h2 class="section-title">レイアウト &amp; スペーシング</h2>
+
+  <div class="color-group-label">Spacing Scale (8px grid)</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div><div class="spacing-label">XS</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div><div class="spacing-label">S</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div><div class="spacing-label">M</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div><div class="spacing-label">L</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-value">48px</div><div class="spacing-label">XL</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">80px</div><div class="spacing-label">XXL</div></div>
+  </div>
+
+  <div class="color-group-label">Border Radius Scale</div>
+  <div class="spacing-row" style="margin-bottom:32px">
+    <div class="spacing-item" style="text-align:center">
+      <div style="width:48px; height:48px; background:var(--rise--color-surface-gray); border:1px solid var(--rise--color-border); border-radius:var(--rise--radius-small); margin:0 auto 6px;"></div>
+      <div class="spacing-value">4px</div><div class="spacing-label">Small</div>
+    </div>
+    <div class="spacing-item" style="text-align:center">
+      <div style="width:48px; height:48px; background:var(--rise--color-surface-gray); border:1px solid var(--rise--color-border); border-radius:var(--rise--radius-medium); margin:0 auto 6px;"></div>
+      <div class="spacing-value">5px</div><div class="spacing-label">Medium</div>
+    </div>
+    <div class="spacing-item" style="text-align:center">
+      <div style="width:48px; height:48px; background:var(--rise--color-surface-gray); border:1px solid var(--rise--color-border); border-radius:var(--rise--radius-large); margin:0 auto 6px;"></div>
+      <div class="spacing-value">16px</div><div class="spacing-label">Large</div>
+    </div>
+    <div class="spacing-item" style="text-align:center">
+      <div style="width:80px; height:48px; background:var(--rise--color-brand-red); border-radius:var(--rise--radius-pill); margin:0 auto 6px;"></div>
+      <div class="spacing-value">26px</div><div class="spacing-label">Pill</div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Container Width</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Width <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">~940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:78.3%"></div></div></div>
+  <div style="margin-bottom:32px"><div class="width-bar-label">Article / Form <span class="width-bar-value">~700px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:58.3%"></div></div></div>
+
+  <div class="color-group-label">Grid Demo (3-column, gap: 24px)</div>
+  <div class="grid-demo">
+    <div class="grid-cell">Column 1</div>
+    <div class="grid-cell">Column 2</div>
+    <div class="grid-cell">Column 3</div>
+  </div>
+  <div class="grid-label">grid-template-columns: repeat(3, 1fr) / gap: 24px</div>
+</div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <ul class="footer-links">
+    <li><a href="#">Chatworkとは</a></li>
+    <li><a href="#">料金プラン</a></li>
+    <li><a href="#">導入事例</a></li>
+    <li><a href="#">お役立ち資料</a></li>
+    <li><a href="#">ヘルプ</a></li>
+    <li><a href="#">お問い合わせ</a></li>
+  </ul>
+  <div>Generated from <a href="https://go.chatwork.com/ja/">go.chatwork.com</a> DESIGN.md &mdash; awesome-design-md-jp / computed style 実測値（2026-06-12）</div>
+  <div class="footer-copyright">&copy; Chatwork Co., Ltd.</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: CAMPFIRE (Light)</title>
+<style>
+  :root {
+    /* === Colors === */
+    --brand-red: #ef4846;
+    --text-primary: #4d4a4a;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --border: #e4e4e4;
+    --surface-alt: #f3f3f5;
+    --surface: #f6f8fa;
+    --white: #ffffff;
+    --gold: #ffb20e;
+    --orange: #de772d;
+    --navy: #4f6e98;
+    --footer-bg: #393f48;
+    --danger: #dc3545;
+    --success: #28a745;
+    --warning: #ffc107;
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.10);
+    --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.12);
+    /* === Font === */
+    --font-base: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+      "Hiragino Sans", Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+    /* === Radius === */
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-pill: 34px;
+    /* === Spacing === */
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 40px;
+    --space-xxl: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-size: 18px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+  }
+  .nav-brand .flame { color: var(--brand-red); font-size: 22px; }
+  .nav-links { display: flex; gap: 20px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; line-height: 1.4; transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-search {
+    display: flex; align-items: center;
+  }
+  .nav-search-input {
+    background: var(--surface-alt); border: 1px solid var(--border);
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+    padding: 6px 12px; font-family: var(--font-base); font-size: 12px;
+    outline: none; width: 180px; height: 32px;
+    color: var(--text-primary);
+  }
+  .nav-search-input::placeholder { color: var(--text-muted); }
+  .nav-search-btn {
+    background: var(--text-primary); color: var(--white); border: none;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 6px 12px; font-size: 12px; height: 32px; cursor: pointer;
+    font-family: var(--font-base); transition: opacity 0.15s;
+  }
+  .nav-search-btn:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero { padding: 64px 32px; text-align: center; background: var(--surface); }
+  .hero h1 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 1.4;
+    color: var(--text-secondary); max-width: 600px; margin: 0 auto 24px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-search-cta {
+    display: inline-flex; align-items: center;
+    background: var(--text-primary); color: var(--white);
+    padding: 8px 20px; border-radius: var(--radius-md);
+    border: none; font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-search-cta:hover { opacity: 0.8; }
+  .btn-secondary-cta {
+    display: inline-block; background: var(--white); color: var(--text-secondary);
+    padding: 8px 20px; border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-secondary-cta:hover { background: var(--surface); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .section-gray { background: var(--surface); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: var(--white); border: 1px solid var(--border); }
+  .color-swatch-block { height: 64px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); letter-spacing: 0.05em; }
+  .color-swatch-hex { font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 10px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
+  .type-context { display: inline-block; background: var(--surface); color: var(--text-secondary); font-size: 10px; padding: 2px 8px; border-radius: var(--radius-md); margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-top: 8px; }
+
+  .btn-search {
+    display: inline-flex; align-items: center;
+    background: var(--text-primary); color: var(--white);
+    padding: 8px 16px; border: none;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-search:hover { opacity: 0.8; }
+  .btn-secondary {
+    display: inline-block; background: var(--white); color: var(--text-secondary);
+    padding: 8px 16px; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-base); font-size: 14px; font-weight: 700;
+    cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--surface); }
+  .btn-pill {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 6px 16px; border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-base); font-size: 14px; font-weight: 400;
+    cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-pill:hover { background: var(--surface); }
+  .btn-pill.active { background: var(--text-primary); color: var(--white); border-color: var(--text-primary); }
+  .btn-footer-link {
+    display: inline-block; background: transparent; color: var(--white);
+    padding: 4px 0; border: none;
+    font-family: var(--font-base); font-size: 12px; font-weight: 400;
+    cursor: pointer; text-decoration: none;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .project-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius-md); overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .project-card:hover { box-shadow: var(--elevation-1); }
+  .card-thumbnail {
+    width: 100%; height: 160px; object-fit: cover; display: block;
+    background: var(--surface);
+  }
+  .card-thumbnail-placeholder {
+    width: 100%; height: 160px; display: flex; align-items: center; justify-content: center;
+    font-size: 48px; background: linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);
+    color: var(--text-muted);
+  }
+  .card-body { padding: 12px 16px 16px; }
+  .card-category { font-size: 10px; font-weight: 400; color: var(--text-muted); margin-bottom: 6px; line-height: 1.4; }
+  .card-title {
+    font-size: 12px; font-weight: 400; line-height: 1.42;
+    letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 10px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .progress-bar { height: 4px; background: var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--brand-red); border-radius: var(--radius-sm); }
+  .card-stats { display: flex; justify-content: space-between; align-items: baseline; }
+  .card-amount { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .card-percent { font-size: 12px; font-weight: 700; color: var(--brand-red); }
+  .card-meta { font-size: 10px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 700px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary); margin-bottom: 12px;
+  }
+  .article-preview h2 {
+    font-size: 18px; font-weight: 700; line-height: 1.4;
+    color: var(--text-primary); margin: 24px 0 12px;
+  }
+  .article-preview h3 {
+    font-size: 16px; font-weight: 700; line-height: 1.4;
+    color: var(--text-primary); margin: 20px 0 8px;
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400; line-height: 1.4;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .article-preview .highlight {
+    color: var(--brand-red); font-weight: 700;
+  }
+  .article-preview .funding-amount {
+    font-size: 18px; font-weight: 700; color: var(--text-primary);
+  }
+  .article-preview .funding-detail {
+    font-size: 12px; color: var(--text-muted); margin-top: 4px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-search-wrap { display: flex; }
+  .form-input {
+    width: 100%; background: var(--surface-alt); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 8px 12px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s; height: 36px;
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input--search {
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-primary); }
+  .form-input--error { border-color: var(--danger); }
+  .form-error-text { font-size: 11px; color: var(--danger); margin-top: 4px; }
+  .form-state-label { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  .form-search-btn {
+    background: var(--text-primary); color: var(--white); border: none;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 8px 16px; font-size: 14px; cursor: pointer; white-space: nowrap;
+    font-family: var(--font-base); transition: opacity 0.15s;
+  }
+  .form-search-btn:hover { opacity: 0.8; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: var(--white); border-radius: var(--radius-md); padding: 24px;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .elevation-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); word-break: break-all; line-height: 1.4; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-red); border-radius: var(--radius-sm); margin-bottom: 6px; height: 28px; opacity: 0.8; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--text-muted); }
+  .spacing-name { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 8px; position: relative; overflow: hidden; }
+  .width-bar-inner { height: 100%; background: var(--brand-red); border-radius: var(--radius-md); opacity: 0.2; }
+  .width-bar-label { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 32px; text-align: center;
+    background: var(--footer-bg);
+    font-size: 12px; color: var(--text-muted);
+  }
+  .footer a { color: var(--white); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 18px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .section { padding: 48px 16px; }
+    .section-gray { padding: 48px 16px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="#"><span class="flame">&#x1F525;</span> CAMPFIRE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-search">
+    <input class="nav-search-input" type="text" placeholder="プロジェクトを検索">
+    <button class="nav-search-btn">検索</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview<br>CAMPFIRE (camp-fire.jp)</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-search-cta" href="#">プロジェクトをさがす</a>
+    <a class="btn-secondary-cta" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ef4846"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#ef4846</div><div class="color-swatch-role">プログレスバー・達成率・炎アイコン</div></div></div>
+  </div>
+
+  <div class="color-group-label">CTA / Buttons</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4d4a4a"></div><div class="color-swatch-info"><div class="color-swatch-name">Search Button BG</div><div class="color-swatch-hex">#4d4a4a</div><div class="color-swatch-role">検索ボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e4e4e4"></div><div class="color-swatch-info"><div class="color-swatch-name">Secondary CTA BG</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">"もっと見る" ボタン背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4d4a4a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#4d4a4a</div><div class="color-swatch-role">見出し・本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト・ボタン文字</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">フッター・注釈</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4e4e4"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#e4e4e4</div><div class="color-swatch-role">カード枠線・区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Alt</div><div class="color-swatch-hex">#f3f3f5</div><div class="color-swatch-role">検索入力欄の背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f8fa"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f6f8fa</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e4e4e4"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景・カード背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffb20e"></div><div class="color-swatch-info"><div class="color-swatch-name">Gold</div><div class="color-swatch-hex">#ffb20e</div><div class="color-swatch-role">支援金額ハイライト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#de772d"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange</div><div class="color-swatch-hex">#de772d</div><div class="color-swatch-role">カテゴリーアクセント</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4f6e98"></div><div class="color-swatch-info"><div class="color-swatch-name">Navy</div><div class="color-swatch-hex">#4f6e98</div><div class="color-swatch-role">カテゴリーアクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Footer</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#393f48"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer BG</div><div class="color-swatch-hex">#393f48</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dc3545"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#dc3545</div><div class="color-swatch-role">エラー（推奨値）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#28a745"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#28a745</div><div class="color-swatch-role">成功（推奨値）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc107"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ffc107</div><div class="color-swatch-role">警告（推奨値）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:20px; font-weight:700; line-height:1.5; color:var(--text-primary);">人気のプロジェクト — Page Title (H1)</div>
+    <div class="type-meta">20px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:18px; font-weight:700; line-height:1.4; color:var(--text-primary);">カテゴリーからさがす — Section H3 (Bold)</div>
+    <div class="type-meta">18px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:16px; font-weight:700; line-height:1.4; color:var(--text-primary);">新着のプロジェクト — Section H3 (Sub)</div>
+    <div class="type-meta">16px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:14px; font-weight:400; line-height:1.4; color:var(--text-primary);">本文テキスト — 情報密度を重視した line-height 1.4 のタイトな行間。カードグリッドの整列感を保ちながら、プロジェクト概要を効率的に伝えます。ABCabc 123</div>
+    <div class="type-meta">14px / 400 / line-height: 1.4 / letter-spacing: normal<span class="type-context">本文基本</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:13px; font-weight:700; line-height:1.4; color:var(--text-primary);">ナビゲーションリンク — Nav Link</div>
+    <div class="type-meta">13px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">ヘッダーナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:12px; font-weight:400; line-height:1.42; letter-spacing:0.05em; color:var(--text-primary);">プロジェクトカードのタイトル — 小さな文字でも読みやすい letter-spacing: 0.05em — Card Title (H2)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.42 / letter-spacing: 0.05em<span class="type-context">プロジェクトカード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-base); font-size:10px; font-weight:400; line-height:1.4; color:var(--text-muted);">フッター・注釈テキスト — Caption (10-11px)</div>
+    <div class="type-meta">10-11px / 400 / line-height: 1.4 / color: #999999<span class="type-context">フッター・注釈</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / CONTENT -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">プロジェクト説明の組版サンプル</h2>
+  <div class="article-preview">
+    <h1>地元の伝統工芸を次世代へ。職人と挑む漆器復活プロジェクト</h1>
+    <p>福井県鯖江市で400年続く越前漆器の技術を、若い世代に引き継ぐためのプロジェクトです。最盛期には200軒あった工房も、いまでは30軒を切りました。しかし、ここで途絶えさせるわけにはいきません。</p>
+    <h2>なぜクラウドファンディングなのか</h2>
+    <p>伝統工芸品は量産品と異なり、市場規模だけでは価値を測れません。「この技術を残したい」という想いに共感してくださる方々と直接つながれるクラウドファンディングは、まさに最適な手段だと考えました。</p>
+    <h3>リターンのご紹介</h3>
+    <p>ご支援いただいた方には、職人が一つひとつ手作りした漆器をお届けします。普段使いできるお椀から、特別な日のための重箱まで、暮らしに寄り添う品をご用意しました。</p>
+    <div style="margin:24px 0; padding:16px; background:var(--white); border:1px solid var(--border); border-radius:var(--radius-md);">
+      <div class="funding-amount">3,456,000 <span style="font-size:12px; font-weight:400;">円</span></div>
+      <div style="display:flex; gap:16px; margin-top:8px;">
+        <span style="font-size:12px; color:var(--brand-red); font-weight:700;">達成率 172%</span>
+        <span style="font-size:12px; color:var(--text-muted);">支援者 234人</span>
+        <span style="font-size:12px; color:var(--text-muted);">残り 12日</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom:24px;">
+    <div class="button-item">
+      <div style="display:flex;">
+        <input type="text" placeholder="検索" style="font-family:var(--font-base); font-size:12px; padding:6px 12px; border:1px solid var(--border); border-radius:var(--radius-md) 0 0 var(--radius-md); background:var(--surface-alt); outline:none; width:140px; height:32px; color:var(--text-primary);">
+        <button class="btn-search">検索</button>
+      </div>
+      <div class="button-label">Search Button<br><span style="font-family:var(--font-mono); font-size:9px;">radius: 0 4px 4px 0</span></div>
+    </div>
+    <div class="button-item">
+      <a class="btn-secondary" href="#">もっと見る</a>
+      <div class="button-label">Secondary CTA<br><span style="font-family:var(--font-mono); font-size:9px;">14px / 700 / radius: 4px</span></div>
+    </div>
+  </div>
+  <div class="button-row" style="margin-bottom:24px;">
+    <div class="button-item"><a class="btn-pill active" href="#">すべて</a><div class="button-label">Category Pill (active)</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">テクノロジー</a><div class="button-label">Category Pill</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">プロダクト</a><div class="button-label">Category Pill</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">フード</a><div class="button-label">Category Pill</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">アート</a><div class="button-label">Category Pill</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">地域活性化</a><div class="button-label">Category Pill</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item" style="background:var(--footer-bg); padding:12px 20px; border-radius:var(--radius-md);">
+      <a class="btn-footer-link" href="#">会社概要</a>
+      <div class="button-label" style="color:var(--text-muted);">Footer Link</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-gray" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">プロジェクトカード</h2>
+  <div class="card-grid">
+
+    <div class="project-card">
+      <div class="card-thumbnail-placeholder">&#x1F3A8;</div>
+      <div class="card-body">
+        <div class="card-category">アート・写真</div>
+        <div class="card-title">廃校をアートの聖地に。地方から世界へ発信するアーティスト・イン・レジデンス</div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:85%"></div></div>
+        <div class="card-stats">
+          <span class="card-amount">1,280,000 円</span>
+          <span class="card-percent">85%</span>
+        </div>
+        <div class="card-meta">支援者 156人 / 残り 18日</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-thumbnail-placeholder">&#x1F37B;</div>
+      <div class="card-body">
+        <div class="card-category">フード・飲料</div>
+        <div class="card-title">農薬不使用の日本酒を全国へ。能登の小さな蔵元が挑む新銘柄づくり</div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:230%; max-width:100%"></div></div>
+        <div class="card-stats">
+          <span class="card-amount">4,612,000 円</span>
+          <span class="card-percent">230%</span>
+        </div>
+        <div class="card-meta">支援者 389人 / 残り 5日</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-thumbnail-placeholder">&#x1F4BB;</div>
+      <div class="card-body">
+        <div class="card-category">テクノロジー・ガジェット</div>
+        <div class="card-title">手のひらサイズの翻訳デバイス。20言語リアルタイム対応、旅をもっと自由に</div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:42%"></div></div>
+        <div class="card-stats">
+          <span class="card-amount">840,000 円</span>
+          <span class="card-percent">42%</span>
+        </div>
+        <div class="card-meta">支援者 78人 / 残り 31日</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-thumbnail-placeholder">&#x1F3B5;</div>
+      <div class="card-body">
+        <div class="card-category">音楽</div>
+        <div class="card-title">ストリートミュージシャンの全国ツアードキュメンタリー映像制作</div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:120%; max-width:100%"></div></div>
+        <div class="card-stats">
+          <span class="card-amount">1,800,000 円</span>
+          <span class="card-percent">120%</span>
+        </div>
+        <div class="card-meta">支援者 210人 / 残り 9日</div>
+      </div>
+    </div>
+
+  </div>
+  <div style="text-align:center; margin-top:32px;">
+    <a class="btn-secondary" href="#">もっと見る</a>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div class="form-group">
+    <label class="form-label">プロジェクト検索</label>
+    <div class="form-search-wrap">
+      <input class="form-input form-input--search" type="text" placeholder="キーワードでさがす">
+      <button class="form-search-btn">検索</button>
+    </div>
+    <div class="form-state-label">検索フォーム — 入力欄 radius: 4px 0 0 4px / ボタン radius: 0 4px 4px 0</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト — bg: #f3f3f5 / border: #e4e4e4 / radius: 4px</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">プロジェクト名</label>
+    <input class="form-input form-input--focus" type="text" value="地域活性化プロジェクト">
+    <div class="form-state-label">フォーカス — border: #4d4a4a (text-primary)</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">支援金額</label>
+    <input class="form-input form-input--error" type="text" value="abc">
+    <div class="form-error-text">半角数字を入力してください</div>
+    <div class="form-state-label">エラー — border: #dc3545 (danger)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">shadow: none / border: #e4e4e4<br>カード・ボタン・ヘッダー</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);">
+      <div class="elevation-label">Level 1: Hover</div>
+      <div class="elevation-desc">0 2px 4px rgba(0,0,0,0.08)<br>カードホバー時</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);">
+      <div class="elevation-label">Level 2: Dropdown</div>
+      <div class="elevation-desc">0 4px 12px rgba(0,0,0,0.10)<br>ドロップダウン・ポップオーバー</div>
+    </div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);">
+      <div class="elevation-label">Level 3: Modal</div>
+      <div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)<br>モーダル・ダイアログ</div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--text-primary);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">border: #4d4a4a<br>フォーカス時のボーダー強調</div>
+    </div>
+  </div>
+  <p style="font-size:12px; color:var(--text-muted); margin-top:16px; line-height:1.4;">
+    実測ではほぼ全要素 box-shadow: none のフラットデザイン。階層はボーダー #e4e4e4 とサーフェス背景色 #f6f8fa で表現。
+  </p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & レイアウト</h2>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Spacing Scale (4px / 8px grid)</div>
+    <div class="spacing-row">
+      <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div><div class="spacing-name">XS</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div><div class="spacing-name">S</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div><div class="spacing-name">M</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div><div class="spacing-name">L</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div><div class="spacing-name">XL</div></div>
+      <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div><div class="spacing-name">XXL</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Border Radius Scale</div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:flex-end;">
+      <div style="text-align:center;">
+        <div style="width:60px; height:40px; background:var(--brand-red); opacity:0.2; border-radius:var(--radius-sm);"></div>
+        <div class="spacing-value" style="margin-top:6px;">2px</div>
+        <div class="spacing-name">Small</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:60px; height:40px; background:var(--brand-red); opacity:0.2; border-radius:var(--radius-md);"></div>
+        <div class="spacing-value" style="margin-top:6px;">4px</div>
+        <div class="spacing-name">Medium</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:100px; height:40px; background:var(--brand-red); opacity:0.2; border-radius:var(--radius-pill);"></div>
+        <div class="spacing-value" style="margin-top:6px;">34px</div>
+        <div class="spacing-name">Pill</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Content Widths</div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Container Max <span class="width-bar-value">1100-1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Card Grid (3-4 col) <span class="width-bar-value">~1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:92%"></div></div></div>
+    <div style="margin-bottom:16px"><div class="width-bar-label">Gutter <span class="width-bar-value">16-24px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:2%"></div></div></div>
+  </div>
+
+  <div>
+    <div class="color-group-label">Grid Demo (3 columns)</div>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--text-muted);">Column 1</div>
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--text-muted);">Column 2</div>
+      <div style="height:80px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--text-muted);">Column 3</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  Generated from <a href="https://camp-fire.jp/">camp-fire.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-12）
+</footer>
+
+</body>
+</html>
