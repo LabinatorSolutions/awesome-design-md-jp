@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MOS BURGER</title>
+<style>
+  :root {
+    /* === Colors === */
+    --mos-green: #00a728;
+    --mos-green-dark: #006436;
+    --mos-green-deeper: #004924;
+    --mos-green-darkest: #002614;
+    --mos-green-pale: #d9f2df;
+    --mos-orange: #ff7e47;
+    --mos-red: #e90000;
+    --mos-pink: #ffebeb;
+    --mos-cream: #fffbf0;
+    --text-primary: #000000;
+    --text-on-green: #ffffff;
+    --text-secondary: #666666;
+    --text-disabled: #999999;
+    --border-default: #dddddd;
+    --bg-primary: #ffffff;
+    --bg-gray: #f5f5f5;
+    /* === Elevation === */
+    --elevation-1: 0 2px 8px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 16px rgba(0,0,0,0.12);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.16);
+    /* === Fonts === */
+    --font-base: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 18px; font-weight: 700; color: var(--mos-green);
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+  }
+  .nav-brand-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; background: var(--mos-green); border-radius: 50%;
+    color: #fff; font-size: 14px; font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--mos-green); }
+  .nav-cta {
+    display: inline-block; background: var(--mos-green); color: #fff;
+    padding: 8px 20px; border-radius: 24px; font-size: 14px; font-weight: 700;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 72px; text-align: center;
+    background: linear-gradient(180deg, var(--mos-green-pale) 0%, var(--bg-primary) 100%);
+  }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 36px; font-weight: 400; line-height: 1.33;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--mos-green); font-weight: 700; }
+  .hero p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    color: var(--text-secondary); max-width: 560px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--mos-green); color: #fff;
+    padding: 12px 32px; border-radius: 24px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    display: inline-block; background: var(--mos-orange); color: #fff;
+    padding: 12px 32px; border-radius: 24px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-secondary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 12px 32px; border-radius: 24px;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline:hover { background: var(--bg-gray); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 28px; font-weight: 400; line-height: 1.33;
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-warm { background: var(--mos-cream); padding: 64px 32px; }
+  .section-pink { background: var(--mos-pink); padding: 64px 32px; }
+  .section-green { background: var(--mos-green); padding: 64px 32px; color: #fff; }
+  .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 12px; overflow: hidden; background: #fff; box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--mos-green-pale); color: var(--mos-green-dark); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .btn-danger {
+    display: inline-block; background: var(--mos-red); color: #fff;
+    padding: 12px 32px; border-radius: 24px; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-category {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 6px 16px; border-radius: 10px;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-category:hover { background: var(--bg-gray); }
+  .btn-category.active { background: var(--mos-green); color: #fff; border-color: var(--mos-green); font-weight: 700; }
+  .btn-tag {
+    display: inline-block; background: var(--mos-green); color: #fff;
+    padding: 4px 12px; border-radius: 24px; border: none;
+    font-family: var(--font-base); font-size: 13px; font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border: 1px solid var(--border-default); border-radius: 12px;
+    overflow: hidden; transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--elevation-2); }
+  .card-img { width: 100%; height: 180px; object-fit: cover; display: block; background: var(--mos-cream); }
+  .card-img-placeholder {
+    width: 100%; height: 180px; display: flex; align-items: center; justify-content: center;
+    background: var(--mos-cream); color: var(--mos-green); font-size: 48px;
+  }
+  .card-body { padding: 16px; }
+  .card-body h3 {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700; line-height: 1.6; margin-bottom: 4px;
+  }
+  .card-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+  .card-price { font-size: 16px; font-weight: 700; color: var(--mos-green-dark); }
+  .card-price span { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+
+  /* ARTICLE / MENU PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 36px; font-weight: 400; line-height: 1.33; margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 22px; font-weight: 700; line-height: 1.6; margin: 24px 0 12px;
+    color: var(--mos-green-dark);
+  }
+  .article-preview p {
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 10px 14px; border-radius: 8px;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--mos-green); box-shadow: 0 0 0 3px rgba(0,167,40,0.2); }
+  .form-input--error { border-color: var(--mos-red); box-shadow: 0 0 0 3px rgba(233,0,0,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+  .form-error-text { font-size: 12px; color: var(--mos-red); margin-top: 4px; font-weight: 700; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 12px; padding: 24px; text-align: center; border: 1px solid var(--border-default); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--mos-green); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-gray); border: 1px solid var(--border-default); border-radius: 8px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--mos-green); border-radius: 7px; opacity: 0.25; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--mos-green-darkest); font-size: 12px; color: rgba(255,255,255,0.7); }
+  .footer a { color: var(--mos-green-pale); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-warm, .section-pink, .section-green { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="nav-brand-icon">M</span>
+    MOS BURGER
+  </a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ネット注文へ</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br><span>MOS BURGER</span> — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">今すぐ注文する</a>
+    <a class="btn-secondary" href="#">会員登録</a>
+    <a class="btn-outline" href="#">メニューへ</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand — Green</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00a728"></div><div class="color-swatch-info"><div class="color-swatch-name">MOS Green</div><div class="color-swatch-hex">#00a728</div><div class="color-swatch-role">Primary CTA・ブランドカラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#006436"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Dark</div><div class="color-swatch-hex">#006436</div><div class="color-swatch-role">強調見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#004924"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Deeper</div><div class="color-swatch-hex">#004924</div><div class="color-swatch-role">ダークセクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#002614"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Darkest</div><div class="color-swatch-hex">#002614</div><div class="color-swatch-role">フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d9f2df"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Pale</div><div class="color-swatch-hex">#d9f2df</div><div class="color-swatch-role">薄いグリーン背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Brand — Orange</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff7e47"></div><div class="color-swatch-info"><div class="color-swatch-name">MOS Orange</div><div class="color-swatch-hex">#ff7e47</div><div class="color-swatch-role">Secondary CTA・登録促進</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e90000"></div><div class="color-swatch-info"><div class="color-swatch-name">MOS Red</div><div class="color-swatch-hex">#e90000</div><div class="color-swatch-role">エラー・警告</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Warm Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom: 1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Pink</div><div class="color-swatch-hex">#ffebeb</div><div class="color-swatch-role">温かみ背景・フレーム</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fffbf0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Cream</div><div class="color-swatch-hex">#fffbf0</div><div class="color-swatch-role">温かみ背景・メニュー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">区切り線・枠</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:36px; font-weight:400; line-height:1.33;">おすすめメニュー — Display (h2)</div>
+    <div class="type-meta">36px / 400 / line-height: 1.33 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:30px; font-weight:700; line-height:1.3; color:#fff; background:var(--mos-green); padding:16px 20px; border-radius:8px;">おいしさの、その先へ — Heading 2 (on green)</div>
+    <div class="type-meta">30px / 700 / line-height: 1.3 / color: #fff on #00a728<span class="type-context">フッターヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:22px; font-weight:700; line-height:1.6; color:var(--mos-green-dark);">モスのアプリで、もっと便利に — Heading 2 (green text)</div>
+    <div class="type-meta">22px / 700 / line-height: 1.6 / color: #006436<span class="type-context">アプリ訴求</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:22px; font-weight:700; line-height:1.54;">会員限定メニュー — Heading 2 (standard)</div>
+    <div class="type-meta">22px / 700 / line-height: 1.54<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:20px; font-weight:700; line-height:1.65; color:#fff; background:var(--mos-green-dark); padding:12px 16px; border-radius:8px; display:inline-block;">期間限定メニュー — Heading 3 (on green)</div>
+    <div class="type-meta">20px / 700 / line-height: 1.65 / color: #fff<span class="type-context">セクション小見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:700; line-height:1.6;">ナビゲーション項目 — Heading 3 (nav)</div>
+    <div class="type-meta">14px / 700 / line-height: 1.6<span class="type-context">ナビゲーション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:400; line-height:1.6;">本文テキスト — モスバーガーは、日本のハンバーガーチェーンとして、こだわりの素材を使ったおいしさをお届けしています。注文を受けてからつくる「アフターオーダー方式」で、できたてのおいしさを大切にしています。</div>
+    <div class="type-meta">14px / 400 / line-height: 1.6 / letter-spacing: normal<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:700; line-height:1.6;">モスバーガー — Product Name (14px bold)</div>
+    <div class="type-meta">14px / 700 / line-height: 1.6<span class="type-context">商品名</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:15px; font-weight:700; line-height:1.6; color:var(--mos-green);">期間限定販売中 — Accent Text (green)</div>
+    <div class="type-meta">15px / 700 / line-height: 1.6 / color: #00a728<span class="type-context">アクセント</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:700; line-height:1.6; color:var(--mos-red);">販売終了しました — Warning Text</div>
+    <div class="type-meta">16px / 700 / line-height: 1.6 / color: #e90000<span class="type-context">警告</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:13px; font-weight:400; line-height:1.38;">カテゴリタブ — Menu Tab (13px)</div>
+    <div class="type-meta">13px / 400 / line-height: 1.38<span class="type-context">メニュー</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- MENU / ARTICLE PREVIEW -->
+<section class="section-warm" id="menu">
+<div class="section-inner">
+  <div class="section-label">03 / Menu — メニュー組版</div>
+  <h2 class="section-title" style="font-family: var(--font-base);">メニュー紹介サンプル</h2>
+  <div class="article-preview">
+    <h1 style="font-family: var(--font-base);">おすすめメニュー</h1>
+    <div class="article-tag-row">
+      <span class="btn-tag">バーガー</span>
+      <span class="btn-tag">期間限定</span>
+      <span class="btn-tag">テイクアウト</span>
+    </div>
+    <p style="font-family: var(--font-base);">モスバーガーは、1972年の創業以来「おいしさ」を追求し続けてきました。厳選された国産野菜、こだわりのミートパティ、そして秘伝のソース。注文を受けてからひとつひとつ手づくりする「アフターオーダー方式」が、モスのおいしさの原点です。</p>
+    <h2 style="font-family: var(--font-base);">こだわりの素材</h2>
+    <p style="font-family: var(--font-base);">レタスやトマトなどの生野菜は、全国の契約農家から届く国産野菜を使用。鮮度にこだわり、お客さまに安心・安全なおいしさをお届けしています。ミートソースには完熟トマトをたっぷり使い、じっくり煮込んだ深い味わいです。ABCabc 123</p>
+    <p style="font-family: var(--font-base);">テイクアウトやネット注文にも対応しており、ご自宅でもモスのおいしさをお楽しみいただけます。モスカードやアプリ会員なら、おトクなクーポンも配信中です。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="btn-primary" href="#">ネット注文へ</a><div class="button-label">Primary CTA (Green)</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">ダウンロード</a><div class="button-label">Secondary CTA (Orange)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">メニューへ</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><a class="btn-danger" href="#">販売終了</a><div class="button-label">Danger</div></div>
+  </div>
+  <div class="color-group-label">Category Pills</div>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="btn-category active" href="#">バーガー</a><div class="button-label">Active</div></div>
+    <div class="button-item"><a class="btn-category" href="#">サイドメニュー</a><div class="button-label">Default</div></div>
+    <div class="button-item"><a class="btn-category" href="#">ドリンク</a><div class="button-label">Default</div></div>
+    <div class="button-item"><a class="btn-category" href="#">スイーツ</a><div class="button-label">Default</div></div>
+  </div>
+  <div class="color-group-label">Tags</div>
+  <div class="button-row">
+    <span class="btn-tag">期間限定</span>
+    <span class="btn-tag">テイクアウト</span>
+    <span class="btn-tag">モーニング</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-pink" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img-placeholder">&#127828;</div>
+      <div class="card-body">
+        <h3 style="font-family: var(--font-base);">モスバーガー</h3>
+        <p>日本生まれ、日本育ちのハンバーガー。特製ミートソースが決め手。</p>
+        <div class="card-price">&#165;430 <span>(税込)</span></div>
+      </div>
+    </div>
+    <div class="card" style="box-shadow: var(--elevation-2);">
+      <div class="card-img-placeholder">&#127829;</div>
+      <div class="card-body">
+        <h3 style="font-family: var(--font-base);">テリヤキバーガー</h3>
+        <p>甘辛い特製テリヤキソースと、シャキシャキのレタスの絶妙なハーモニー。</p>
+        <div class="card-price">&#165;400 <span>(税込)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img-placeholder">&#127846;</div>
+      <div class="card-body">
+        <h3 style="font-family: var(--font-base);">モスシェイク バニラ</h3>
+        <p>なめらかな口あたりのバニラシェイク。バーガーとの相性も抜群です。</p>
+        <div class="card-price">&#165;290 <span>(税込)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト -- border: #dddddd, radius: 8px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="モス太郎">
+    <div class="form-state-label">フォーカス -- border: #00a728 (MOS Green)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">電話番号</label>
+    <input class="form-input form-input--error" type="text" value="abc-invalid">
+    <div class="form-error-text">正しい電話番号を入力してください</div>
+    <div class="form-state-label">エラー -- border: #e90000 (MOS Red)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">カード・商品タイル</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">ホバー・ドロップダウン</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">モーダル・オーバーレイ</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--mos-green);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#00a728 (MOS Green)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">コンテンツ幅 & スペーシング</h2>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Container Max <span class="width-bar-value">1040px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:90.4%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article / Menu Detail <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:59.6%"></div></div></div>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64px</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://mos.jp/">mos.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>

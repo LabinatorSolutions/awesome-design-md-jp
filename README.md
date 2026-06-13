@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (318 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (321 sites)</a>
 </p>
 
 <table>
@@ -468,6 +468,9 @@
 <td align="center"><strong>CAMPFIRE</strong><br><img src="design-md/campfire/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Creema</strong><br><img src="design-md/creema/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Chatwork</strong><br><img src="design-md/chatwork/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Hands</strong><br><img src="design-md/hands/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PLST</strong><br><img src="design-md/plst/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MOS BURGER</strong><br><img src="design-md/mosburger/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -847,11 +850,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [CAMPFIRE (キャンプファイヤー)](https://camp-fire.jp/) | Crowdfunding | [DESIGN.md](design-md/campfire/DESIGN.md) | [preview.html](design-md/campfire/preview.html) |
 | [Creema (クリーマ)](https://www.creema.jp/) | Handmade Marketplace | [DESIGN.md](design-md/creema/DESIGN.md) | [preview.html](design-md/creema/preview.html) |
 | [Chatwork (チャットワーク)](https://go.chatwork.com/ja/) | Business Chat SaaS | [DESIGN.md](design-md/chatwork/DESIGN.md) | [preview.html](design-md/chatwork/preview.html) |
+| [Hands (ハンズ)](https://hands.net/) | Lifestyle Retail / EC | [DESIGN.md](design-md/hands/DESIGN.md) | [preview.html](design-md/hands/preview.html) |
+| [PLST (プラステ)](https://www.plst.com/jp/) | Fashion EC | [DESIGN.md](design-md/plst/DESIGN.md) | [preview.html](design-md/plst/preview.html) |
+| [MOS BURGER (モスバーガー)](https://www.mos.jp/) | Food / Restaurant | [DESIGN.md](design-md/mosburger/DESIGN.md) | [preview.html](design-md/mosburger/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (318 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (321 sites)</a>
 </p>
 
 <table>
@@ -1285,6 +1291,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>CAMPFIRE</strong><br><img src="design-md/campfire/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Creema</strong><br><img src="design-md/creema/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Chatwork</strong><br><img src="design-md/chatwork/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Hands</strong><br><img src="design-md/hands/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PLST</strong><br><img src="design-md/plst/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MOS BURGER</strong><br><img src="design-md/mosburger/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
