@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (321 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (324 sites)</a>
 </p>
 
 <table>
@@ -472,6 +472,11 @@
 <td align="center"><strong>PLST</strong><br><img src="design-md/plst/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOS BURGER</strong><br><img src="design-md/mosburger/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>CHOYA</strong><br><img src="design-md/choya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TULLY'S</strong><br><img src="design-md/tullys/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kalita</strong><br><img src="design-md/kalita/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -853,11 +858,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Hands (ハンズ)](https://hands.net/) | Lifestyle Retail / EC | [DESIGN.md](design-md/hands/DESIGN.md) | [preview.html](design-md/hands/preview.html) |
 | [PLST (プラステ)](https://www.plst.com/jp/) | Fashion EC | [DESIGN.md](design-md/plst/DESIGN.md) | [preview.html](design-md/plst/preview.html) |
 | [MOS BURGER (モスバーガー)](https://www.mos.jp/) | Food / Restaurant | [DESIGN.md](design-md/mosburger/DESIGN.md) | [preview.html](design-md/mosburger/preview.html) |
+| [CHOYA (チョーヤ)](https://www.choya.co.jp/) | Beverage / Plum Wine | [DESIGN.md](design-md/choya/DESIGN.md) | [preview.html](design-md/choya/preview.html) |
+| [TULLY'S COFFEE (タリーズコーヒー)](https://www.tullys.co.jp/) | Cafe / Coffee Chain | [DESIGN.md](design-md/tullys/DESIGN.md) | [preview.html](design-md/tullys/preview.html) |
+| [Kalita (カリタ)](https://www.kalita.co.jp/) | Coffee Equipment / Manufacturing | [DESIGN.md](design-md/kalita/DESIGN.md) | [preview.html](design-md/kalita/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (321 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (324 sites)</a>
 </p>
 
 <table>
@@ -1294,6 +1302,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Hands</strong><br><img src="design-md/hands/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>PLST</strong><br><img src="design-md/plst/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>MOS BURGER</strong><br><img src="design-md/mosburger/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CHOYA</strong><br><img src="design-md/choya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TULLY'S</strong><br><img src="design-md/tullys/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Kalita</strong><br><img src="design-md/kalita/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
