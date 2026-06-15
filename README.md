@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (324 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (327 sites)</a>
 </p>
 
 <table>
@@ -476,6 +476,9 @@
 <td align="center"><strong>CHOYA</strong><br><img src="design-md/choya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TULLY'S</strong><br><img src="design-md/tullys/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kalita</strong><br><img src="design-md/kalita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ALBION</strong><br><img src="design-md/albion/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Square Enix</strong><br><img src="design-md/square-enix/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ITOKI</strong><br><img src="design-md/itoki/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -861,11 +864,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [CHOYA (チョーヤ)](https://www.choya.co.jp/) | Beverage / Plum Wine | [DESIGN.md](design-md/choya/DESIGN.md) | [preview.html](design-md/choya/preview.html) |
 | [TULLY'S COFFEE (タリーズコーヒー)](https://www.tullys.co.jp/) | Cafe / Coffee Chain | [DESIGN.md](design-md/tullys/DESIGN.md) | [preview.html](design-md/tullys/preview.html) |
 | [Kalita (カリタ)](https://www.kalita.co.jp/) | Coffee Equipment / Manufacturing | [DESIGN.md](design-md/kalita/DESIGN.md) | [preview.html](design-md/kalita/preview.html) |
+| [ALBION (アルビオン)](https://www.albion.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/albion/DESIGN.md) | [preview.html](design-md/albion/preview.html) |
+| [Square Enix (スクウェア・エニックス)](https://www.jp.square-enix.com/) | Gaming / Entertainment | [DESIGN.md](design-md/square-enix/DESIGN.md) | [preview.html](design-md/square-enix/preview.html) |
+| [ITOKI (イトーキ)](https://www.itoki.jp/) | Office Furniture / Manufacturing | [DESIGN.md](design-md/itoki/DESIGN.md) | [preview.html](design-md/itoki/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (324 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (327 sites)</a>
 </p>
 
 <table>
@@ -1307,6 +1313,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>CHOYA</strong><br><img src="design-md/choya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TULLY'S</strong><br><img src="design-md/tullys/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Kalita</strong><br><img src="design-md/kalita/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ALBION</strong><br><img src="design-md/albion/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Square Enix</strong><br><img src="design-md/square-enix/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ITOKI</strong><br><img src="design-md/itoki/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
