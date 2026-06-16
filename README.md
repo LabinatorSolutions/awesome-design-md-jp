@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (327 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (330 sites)</a>
 </p>
 
 <table>
@@ -480,6 +480,11 @@
 <td align="center"><strong>Square Enix</strong><br><img src="design-md/square-enix/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ITOKI</strong><br><img src="design-md/itoki/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>mont-bell</strong><br><img src="design-md/montbell/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CAPCOM</strong><br><img src="design-md/capcom/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>UCC</strong><br><img src="design-md/ucc/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -867,11 +872,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [ALBION (アルビオン)](https://www.albion.co.jp/) | Cosmetics / Beauty | [DESIGN.md](design-md/albion/DESIGN.md) | [preview.html](design-md/albion/preview.html) |
 | [Square Enix (スクウェア・エニックス)](https://www.jp.square-enix.com/) | Gaming / Entertainment | [DESIGN.md](design-md/square-enix/DESIGN.md) | [preview.html](design-md/square-enix/preview.html) |
 | [ITOKI (イトーキ)](https://www.itoki.jp/) | Office Furniture / Manufacturing | [DESIGN.md](design-md/itoki/DESIGN.md) | [preview.html](design-md/itoki/preview.html) |
+| [mont-bell (モンベル)](https://www.montbell.jp/) | Outdoor / Mountaineering | [DESIGN.md](design-md/montbell/DESIGN.md) | [preview.html](design-md/montbell/preview.html) |
+| [CAPCOM (カプコン)](https://www.capcom.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/capcom/DESIGN.md) | [preview.html](design-md/capcom/preview.html) |
+| [UCC Ueshima Coffee (UCC上島珈琲)](https://www.ucc.co.jp/) | Food & Beverage / Coffee | [DESIGN.md](design-md/ucc/DESIGN.md) | [preview.html](design-md/ucc/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (327 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (330 sites)</a>
 </p>
 
 <table>
@@ -1316,6 +1324,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>ALBION</strong><br><img src="design-md/albion/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Square Enix</strong><br><img src="design-md/square-enix/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ITOKI</strong><br><img src="design-md/itoki/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>mont-bell</strong><br><img src="design-md/montbell/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>CAPCOM</strong><br><img src="design-md/capcom/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>UCC</strong><br><img src="design-md/ucc/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

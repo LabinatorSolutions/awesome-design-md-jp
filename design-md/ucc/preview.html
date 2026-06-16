@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: UCC Ueshima Coffee (UCC上島珈琲)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値 === */
+    --ucc-red: #e60012;
+    --ucc-red-dark: #cc0010;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-muted: #786f5a;
+    --bg-primary: #ffffff;
+    --bg-beige: #f2ecde;
+    --bg-pink: #fef3f4;
+    --bg-gray: #f7f7f7;
+    --border-light: #eeeeee;
+    --border-medium: #cccccc;
+    --divider: #d2d2d2;
+    --overlay-hero: rgba(0,0,0,0.5);
+
+    /* === Semantic（推奨値）=== */
+    --danger: #c0392b;
+    --success: #27ae60;
+    --warning: #f39c12;
+
+    /* === Elevation === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0,0,0,0.08);
+    --elevation-2: 0 4px 16px rgba(0,0,0,0.10);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.12);
+
+    /* === Fonts: 実測値 === */
+    --font-jp: "Noto Sans JP", 游ゴシック, YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --font-en: Raleway, "Noto Sans JP", 游ゴシック, YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Radius === */
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-card: 20px;
+    --radius-pill: 18px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-jp);
+    font-size: 15px; font-weight: 400; line-height: 1.75;
+    letter-spacing: normal;
+    font-feature-settings: "pkna";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-en);
+    font-size: 18px; font-weight: 600;
+    color: var(--ucc-red);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; color: var(--text-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ucc-red); }
+  .nav-cta {
+    display: inline-block; background: var(--ucc-red); color: #fff;
+    padding: 8px 20px; border-radius: var(--radius-none);
+    font-size: 14px; font-weight: 400;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--ucc-red-dark); }
+
+  /* HERO */
+  .hero {
+    position: relative; padding: 80px 32px 64px; text-align: center;
+    background: linear-gradient(135deg, #3a1c0a 0%, #1a0a04 100%);
+    color: #fff; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(230,0,18,0.15), transparent 70%);
+  }
+  .hero-en {
+    font-family: var(--font-en); font-size: 14px; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ucc-red); margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: var(--font-jp);
+    font-size: 38px; font-weight: 300; line-height: 1.25;
+    letter-spacing: normal; font-feature-settings: "pkna";
+    margin-bottom: 16px; position: relative;
+  }
+  .hero p {
+    font-size: 15px; font-weight: 400; line-height: 1.75;
+    color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 32px;
+    position: relative;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-primary {
+    display: inline-block; background: var(--ucc-red); color: #fff;
+    padding: 10px 32px; border-radius: var(--radius-none); border: none;
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--ucc-red-dark); }
+  .btn-outline {
+    display: inline-block; background: transparent; color: #fff;
+    padding: 10px 32px; border-radius: var(--radius-none);
+    border: 1px solid rgba(255,255,255,0.5);
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: #fff; color: #fff; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-en {
+    font-family: var(--font-en); font-size: 16px; font-weight: 400;
+    color: var(--ucc-red); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-jp);
+    font-size: 30px; font-weight: 300; line-height: 1.25;
+    font-feature-settings: "pkna";
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--divider); margin: 0; }
+
+  .section-beige { background: var(--bg-beige); padding: 64px 32px; }
+  .section-pink { background: var(--bg-pink); padding: 64px 32px; }
+  .section-gray { background: var(--bg-gray); padding: 64px 32px; }
+  .section-beige .section-inner,
+  .section-pink .section-inner,
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: var(--radius-md); overflow: hidden; background: #fff; box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label {
+    font-family: var(--font-en); font-size: 13px; font-weight: 600;
+    color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase;
+    margin: 24px 0 10px;
+  }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-gray); color: var(--text-muted); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-sm); margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .btn-secondary {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 10px 32px; border-radius: var(--radius-none);
+    border: 1px solid var(--border-medium);
+    font-family: var(--font-jp); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: var(--bg-gray); }
+  .btn-pill {
+    display: inline-block; background: var(--ucc-red); color: #fff;
+    padding: 12px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-jp); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none; transition: background 0.2s;
+  }
+  .btn-pill:hover { background: var(--ucc-red-dark); }
+  .btn-page-top {
+    display: inline-block; background: var(--ucc-red); color: #fff;
+    padding: 10px 20px; border-radius: var(--radius-none);
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.086em; text-decoration: none; cursor: pointer;
+    text-transform: uppercase; border: none; transition: background 0.2s;
+  }
+  .btn-page-top:hover { background: var(--ucc-red-dark); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card-action {
+    background: #fff; border-radius: var(--radius-card);
+    padding: 32px 24px; transition: box-shadow 0.3s;
+    text-align: center; border: 1px solid var(--border-light);
+  }
+  .card-action:hover { box-shadow: var(--elevation-2); }
+  .card-action-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--bg-beige); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 24px;
+  }
+  .card-action h3 {
+    font-family: var(--font-jp); font-size: 20px; font-weight: 400;
+    line-height: 1.75; color: var(--text-muted); margin-bottom: 8px;
+    font-feature-settings: "pkna";
+  }
+  .card-action p { font-size: 13px; color: var(--text-secondary); line-height: 1.75; }
+
+  .card-news {
+    background: #fff; border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm); padding: 20px; transition: box-shadow 0.3s;
+  }
+  .card-news:hover { box-shadow: var(--elevation-1); }
+  .card-news-date {
+    font-family: var(--font-en); font-size: 12px; font-weight: 400;
+    color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 6px;
+  }
+  .card-news-tag {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    color: var(--ucc-red); background: var(--bg-pink);
+    padding: 2px 8px; border-radius: var(--radius-sm); margin-bottom: 8px;
+  }
+  .card-news h3 { font-size: 15px; font-weight: 400; line-height: 1.75; color: var(--text-primary); }
+
+  .card-footer {
+    border: 1px solid var(--border-light); padding: 30px 18px;
+    text-align: center; transition: background 0.2s;
+  }
+  .card-footer:hover { background: var(--bg-gray); }
+  .card-footer h3 { font-size: 22px; font-weight: 400; color: var(--text-primary); }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 640px; margin: 0 auto; }
+  .article-preview .en-label {
+    font-family: var(--font-en); font-size: 16px; font-weight: 400;
+    letter-spacing: 0.2em; color: var(--ucc-red); text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .article-preview h1 {
+    font-family: var(--font-jp);
+    font-size: 30px; font-weight: 300; line-height: 1.25;
+    font-feature-settings: "pkna"; margin-bottom: 20px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-jp);
+    font-size: 20px; font-weight: 400; line-height: 1.75;
+    font-feature-settings: "pkna"; margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-family: var(--font-jp);
+    font-size: 15px; font-weight: 400; line-height: 1.75;
+    font-feature-settings: "pkna"; margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .article-preview .caption {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.75;
+  }
+  .article-preview .highlight-box {
+    background: var(--bg-beige); border-radius: var(--radius-md);
+    padding: 24px; margin: 24px 0;
+  }
+  .article-preview .highlight-box h3 {
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 500; line-height: 1.75;
+    font-feature-settings: "pkna"; margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-medium); padding: 8px 12px; border-radius: var(--radius-sm);
+    font-family: var(--font-jp); font-size: 15px; font-feature-settings: "pkna";
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--text-secondary); }
+  .form-input:focus, .form-input--focus { border-color: var(--ucc-red); box-shadow: 0 0 0 3px rgba(230,0,18,0.15); }
+  .form-input--error { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(192,57,43,0.15); }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: var(--radius-md); padding: 24px; text-align: center; border: 1px solid var(--border-light); }
+  .elevation-label { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--ucc-red); border-radius: 2px; margin-bottom: 6px; height: 28px; opacity: 0.8; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-gray); border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--ucc-red); border-radius: 7px; opacity: 0.2; }
+  .width-bar-label { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--text-primary); color: rgba(255,255,255,0.6); font-size: 12px; }
+  .footer a { color: var(--ucc-red); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-beige, .section-pink, .section-gray { padding: 48px 20px; }
+    .section-title { font-size: 24px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">UCC UESHIMA COFFEE</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">お問い合わせ</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-en">Design System Preview</div>
+  <h1>UCC上島珈琲<br>デザインシステム</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">コーヒーを探す</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-en">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e60012"></div><div class="color-swatch-info"><div class="color-swatch-name">UCC Red</div><div class="color-swatch-hex">#e60012</div><div class="color-swatch-role">ブランドカラー・CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0010"></div><div class="color-swatch-info"><div class="color-swatch-name">UCC Red Dark</div><div class="color-swatch-hex">#cc0010</div><div class="color-swatch-role">ホバー・プレス時</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#786f5a"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#786f5a</div><div class="color-swatch-role">ヘッダーリンク・カード</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f2ecde"></div><div class="color-swatch-info"><div class="color-swatch-name">Beige</div><div class="color-swatch-hex">#f2ecde</div><div class="color-swatch-role">コーヒー知識セクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fef3f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Pink</div><div class="color-swatch-hex">#fef3f4</div><div class="color-swatch-role">サステナビリティ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">ニュースセクション</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Light</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">カード・サブナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Medium</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">入力欄・強めの区切り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d2d2d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#d2d2d2</div><div class="color-swatch-role">セクション区切り線</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27ae60"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#27ae60</div><div class="color-swatch-role">成功・完了</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c0392b"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#c0392b</div><div class="color-swatch-role">エラー・削除</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f39c12"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#f39c12</div><div class="color-swatch-role">警告・注意</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-en">02 / Typography</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:38px; font-weight:300; line-height:1.25; font-feature-settings:'pkna';">Display — UCC上島珈琲のこだわり</div>
+    <div class="type-meta">Noto Sans JP / 38px / 300 / line-height: 1.25 / pkna: あり<span class="type-context">ページタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:30px; font-weight:300; line-height:1.25; font-feature-settings:'pkna';">Section Heading — コーヒーを知る</div>
+    <div class="type-meta">Noto Sans JP / 30px / 300 / line-height: 1.25 / pkna: あり<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:16px; font-weight:400; line-height:1.75; letter-spacing:0.2em; color:var(--ucc-red); text-transform:uppercase;">English Label — Coffee Knowledge</div>
+    <div class="type-meta">Raleway / 16px / 400 / line-height: 1.75 / letter-spacing: 0.2em / UCC Red<span class="type-context">英語ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:20px; font-weight:400; line-height:1.75; font-feature-settings:'pkna';">Sub Heading — 産地から届くコーヒーの旅</div>
+    <div class="type-meta">Noto Sans JP / 20px / 400 / line-height: 1.75 / pkna: あり<span class="type-context">中見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:22px; font-weight:500; line-height:1.6; font-feature-settings:'pkna';">Action Heading — おいしいコーヒーの淹れ方</div>
+    <div class="type-meta">Noto Sans JP / 22px / 500 / line-height: 1.6 / pkna: あり<span class="type-context">アクションカード</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:18px; font-weight:600; line-height:1.6; font-feature-settings:'pkna';">CM Heading — 新TV-CM公開中</div>
+    <div class="type-meta">Noto Sans JP / 18px / 600 / line-height: 1.6 / pkna: あり<span class="type-context">CM・プロモ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:15px; font-weight:400; line-height:1.75; font-feature-settings:'pkna';">Body — UCC上島珈琲は1933年の創業以来、コーヒーの可能性を追求し続けています。農園から一杯のカップまで、すべてのプロセスに携わることで、最高品質のコーヒー体験をお届けします。ABCabc 0123456789</div>
+    <div class="type-meta">Noto Sans JP / 15px / 400 / line-height: 1.75 / pkna: あり<span class="type-context">本文・ナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:13px; font-weight:400; line-height:1.75; color:var(--text-secondary); font-feature-settings:'pkna';">Caption — 画像はイメージです。実際の商品とは異なる場合があります。</div>
+    <div class="type-meta">Noto Sans JP / 13px / 400 / line-height: 1.75 / Text Secondary<span class="type-context">キャプション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:12px; font-weight:400; line-height:1.75; color:var(--text-secondary); font-feature-settings:'pkna';">Footer Nav — プライバシーポリシー ｜ 利用規約 ｜ お問い合わせ</div>
+    <div class="type-meta">Noto Sans JP / 12px / 400 / line-height: 1.75 (実測 4.17 は padding 含む)<span class="type-context">フッター</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-beige" id="article">
+<div class="section-inner">
+  <div class="section-en">03 / Article</div>
+  <h2 class="section-title">記事組版サンプル</h2>
+  <div class="article-preview">
+    <div class="en-label">Coffee Knowledge</div>
+    <h1>コーヒー豆の焙煎度合いと味わいの関係</h1>
+    <p>コーヒーの味わいは、豆の産地や品種だけでなく、焙煎の度合いによって大きく変わります。浅煎りから深煎りまで、それぞれの特徴を理解することで、自分好みの一杯に出会えるはずです。</p>
+
+    <h2>浅煎り — ライトロースト</h2>
+    <p>酸味が際立ち、フルーティーな香りが特徴です。豆本来の個性を感じたい方におすすめ。エチオピアやケニアの豆は浅煎りで飲むと、柑橘系の爽やかな風味が楽しめます。抽出温度は90〜93度が適温です。</p>
+
+    <div class="highlight-box">
+      <h3>UCCのこだわり — 焙煎技術</h3>
+      <p>UCC上島珈琲では、各産地の豆に最適な焙煎プロファイルを設計。熟練の焙煎士が温度と時間を精密にコントロールし、豆の持つポテンシャルを最大限に引き出します。</p>
+    </div>
+
+    <h2>中煎り — ミディアムロースト</h2>
+    <p>酸味と苦味のバランスが取れた、日本で最もポピュラーな焙煎度。コクのある味わいで、ドリップコーヒーやプレスに適しています。ブラジルやコロンビアの豆との相性が良いのが特徴です。</p>
+    <p class="caption">※ 焙煎度合いの名称は業界共通の呼称に基づいています。各メーカーによって多少の違いがある場合があります。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-en">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary" href="#">コーヒーを探す</a><div class="button-label">Primary CTA<br>radius: 0px</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">詳しく見る</a><div class="button-label">Secondary<br>radius: 0px</div></div>
+    <div class="button-item"><button class="btn-pill">同意する</button><div class="button-label">Pill Button<br>radius: 18px</div></div>
+    <div class="button-item"><button class="btn-page-top">Page Top</button><div class="button-label">Page Top<br>Raleway</div></div>
+  </div>
+
+  <div style="margin-top: 24px;">
+    <div class="color-group-label">Button States</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary" href="#">デフォルト</a><div class="button-label">Default</div></div>
+      <div class="button-item"><a class="btn-primary" href="#" style="background:var(--ucc-red-dark);">ホバー</a><div class="button-label">Hover</div></div>
+      <div class="button-item"><a class="btn-primary" href="#" style="opacity:0.5; pointer-events:none;">無効</a><div class="button-label">Disabled</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-pink" id="cards">
+<div class="section-inner">
+  <div class="section-en">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="color-group-label">Action Cards — radius: 20px</div>
+  <div class="card-grid" style="margin-bottom: 40px;">
+    <div class="card-action">
+      <div class="card-action-icon">&#9749;</div>
+      <h3>コーヒーの淹れ方</h3>
+      <p>ドリップ、プレス、エスプレッソ。各抽出方法のコツと適切な器具の選び方をご紹介します。</p>
+    </div>
+    <div class="card-action">
+      <div class="card-action-icon">&#127793;</div>
+      <h3>産地を知る</h3>
+      <p>ブラジル、エチオピア、コロンビア。世界各地のコーヒー産地の特徴と風土をお伝えします。</p>
+    </div>
+    <div class="card-action">
+      <div class="card-action-icon">&#127968;</div>
+      <h3>カフェを探す</h3>
+      <p>お近くのUCCカフェ・直営店をお探しいただけます。各店舗のオリジナルメニューもチェック。</p>
+    </div>
+  </div>
+
+  <div class="color-group-label">News Cards — radius: 4px</div>
+  <div class="card-grid" style="margin-bottom: 40px;">
+    <div class="card-news">
+      <div class="card-news-date">2026.06.10</div>
+      <div class="card-news-tag">新商品</div>
+      <h3>UCC BLACK 無糖 リニューアル発売のお知らせ</h3>
+    </div>
+    <div class="card-news">
+      <div class="card-news-date">2026.05.28</div>
+      <div class="card-news-tag">イベント</div>
+      <h3>UCC コーヒー博物館 夏季特別展のご案内</h3>
+    </div>
+    <div class="card-news">
+      <div class="card-news-date">2026.05.15</div>
+      <div class="card-news-tag">サステナビリティ</div>
+      <h3>コーヒー農園支援プロジェクト 活動報告 2026</h3>
+    </div>
+  </div>
+
+  <div class="color-group-label">Footer Link Cards</div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+    <div class="card-footer"><h3>企業情報</h3></div>
+    <div class="card-footer"><h3>採用情報</h3></div>
+    <div class="card-footer"><h3>IR情報</h3></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-en">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="example@ucc.co.jp">
+    <div class="form-state-label">デフォルト — border: #cccccc, radius: 4px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="上島 太郎">
+    <div class="form-state-label">フォーカス — border: #e60012 (UCC Red), shadow: rgba(230,0,18,0.15)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください。</div>
+    <div class="form-state-label">エラー — border: #c0392b (Danger)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お問い合わせ内容</label>
+    <textarea class="form-input" rows="4" placeholder="お問い合わせ内容をご記入ください" style="resize: vertical;"></textarea>
+    <div class="form-state-label">テキストエリア — 同一スタイル</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-gray" id="elevation">
+<div class="section-inner">
+  <div class="section-en">07 / Elevation</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし — CTA、フラット要素</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.08) — カード</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 4px 16px rgba(0,0,0,0.10) — ドロップダウン</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Level 3</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12) — モーダル</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--ucc-red);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#e60012 + rgba(230,0,18,0.15)</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-en">08 / Layout</div>
+  <h2 class="section-title">スペーシング &amp; レイアウト</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px;"></div><div class="spacing-value">64px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top: 40px;">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Page Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:80%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Body <span class="width-bar-value">640px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:53.3%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Form Max Width <span class="width-bar-value">400px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:33.3%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.ucc.co.jp/">ucc.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>
