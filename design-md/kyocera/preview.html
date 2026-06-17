@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Kyocera (京セラ)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    /* Text */
+    --text-primary: #333333;
+    --text-heading: #000000;
+    --text-secondary: #666666;
+    --text-light: #999999;
+    --text-white: #ffffff;
+    /* Background & Surface */
+    --bg-primary: #ffffff;
+    --bg-section: #f7f7f7;
+    --bg-tag: #f9f9f9;
+    --bg-divider: #ededed;
+    --bg-footer: #f0f0f0;
+    /* Border */
+    --border-default: #dddddd;
+    /* Navigation (dark gray) */
+    --nav-primary: #4f4f4f;
+    --nav-secondary: #616161;
+    --nav-highlight: #747474;
+    --nav-header: #313131;
+    /* Search & Pagination */
+    --search-button: #666666;
+    --pagination-active: #999999;
+    /* Fonts */
+    --font-base: "Noto Sans JP", 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック, "Yu Gothic", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "Noto Sans", メイリオ, meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--text-heading); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-primary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--text-heading); }
+  .nav-search {
+    display: inline-flex; align-items: center; gap: 0;
+  }
+  .nav-search-input {
+    background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border-default); border-right: none;
+    padding: 6px 12px; font-family: var(--font-base); font-size: 14px;
+    outline: none; width: 180px;
+  }
+  .nav-search-btn {
+    background: var(--search-button); color: var(--text-white);
+    border: 1px solid var(--search-button);
+    padding: 6px 14px; font-family: var(--font-base); font-size: 13px;
+    font-weight: 500; cursor: pointer;
+  }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-section); }
+  .hero h1 {
+    font-size: 28px; font-weight: 700; line-height: 1.4;
+    color: var(--text-heading); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.625;
+    color: var(--text-secondary); max-width: 700px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-nav {
+    display: inline-block; background: var(--nav-primary); color: var(--text-white);
+    padding: 12px 24px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 15px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-nav:hover { background: var(--nav-secondary); }
+  .btn-outline {
+    display: inline-block; background: var(--bg-primary); color: var(--text-heading);
+    padding: 12px 24px; border-radius: 0;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 15px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-outline:hover { background: var(--bg-section); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 22.5px; font-weight: 700; line-height: 1.0;
+    color: var(--text-heading);
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--bg-section); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: #fff; border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-heading); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-heading); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-section); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 0; margin-left: 8px; border: 1px solid var(--border-default); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .btn-tag {
+    display: inline-block; background: var(--bg-tag); color: var(--text-heading);
+    padding: 9px 10px; border-radius: 6px; border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-tag:hover { background: var(--bg-divider); }
+  .btn-nav-link {
+    display: inline-block; background: var(--bg-primary); color: var(--text-heading);
+    padding: 16px; border-radius: 0; border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 13px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-nav-link:hover { background: var(--bg-section); }
+  .btn-mega {
+    display: inline-block; background: var(--bg-section); color: var(--text-heading);
+    padding: 10px 34px 10px 20px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 15px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+    text-align: left;
+  }
+  .btn-mega:hover { background: var(--bg-divider); }
+  .btn-pagination {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 100%;
+    background: var(--pagination-active); color: var(--text-white);
+    border: 1px solid var(--pagination-active);
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-pagination-inactive {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 100%;
+    background: transparent; color: var(--text-heading);
+    border: none;
+    font-family: var(--font-base); font-size: 15px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: var(--bg-primary); border: 1px solid var(--border-default); border-radius: 0; padding: 0; overflow: hidden; transition: opacity 0.15s; }
+  .card:hover { opacity: 0.85; }
+  .card-image { height: 180px; background: var(--bg-section); display: flex; align-items: center; justify-content: center; color: var(--text-light); font-size: 14px; border-bottom: 1px solid var(--border-default); }
+  .card-body { padding: 20px; }
+  .card h3 { font-size: 16px; font-weight: 700; line-height: 1.625; color: var(--text-heading); margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.571; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 700px; margin: 0 auto; }
+  .article-preview h1 { font-size: 24px; font-weight: 700; line-height: 1.375; color: var(--text-heading); margin-bottom: 16px; }
+  .article-preview h2 { font-size: 19px; font-weight: 500; line-height: 1.6; color: var(--text-primary); margin: 24px 0 12px; padding: 9.5px 19px; border: 1px solid var(--border-default); }
+  .article-preview p { font-size: 16px; font-weight: 400; line-height: 2.0; color: var(--text-primary); margin-bottom: 16px; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 12px 14px; border-radius: 0;
+    font-family: var(--font-base); font-size: 18px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--text-heading); box-shadow: 0 0 0 1px var(--text-heading); }
+  .form-input--error { border-color: #cc0000; box-shadow: 0 0 0 1px #cc0000; }
+  .form-error-text { font-size: 12px; color: #cc0000; margin-top: 4px; }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--bg-primary); border-radius: 0; padding: 24px; text-align: center; border: 1px solid var(--border-default); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--text-heading); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* LAYOUT / SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--nav-primary); border-radius: 0; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+
+  /* NAV PREVIEW */
+  .nav-demo { display: flex; gap: 0; margin-bottom: 24px; flex-wrap: wrap; }
+  .nav-demo-item {
+    padding: 18px 16px; font-size: 16px; font-weight: 500;
+    color: var(--text-white); text-decoration: none;
+    display: inline-block;
+  }
+  .nav-demo-sub {
+    padding: 18px 16px 18px 30px; font-size: 16px; font-weight: 500;
+    color: var(--text-white); text-decoration: none;
+    display: inline-block;
+  }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--bg-footer); font-size: 12px; color: var(--text-secondary); }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 22px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">KYOCERA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <div class="nav-search">
+    <input class="nav-search-input" type="text" placeholder="検索">
+    <button class="nav-search-btn">検索する</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>Kyocera (京セラ) — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-nav" href="#">製品・ソリューション</a>
+    <a class="btn-outline" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Heading</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">見出しテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">補足テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Light</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">ページネーション等</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f7f7f7"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f7f7f7</div><div class="color-swatch-role">セクション背景（最多使用）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9f9f9"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Tag</div><div class="color-swatch-hex">#f9f9f9</div><div class="color-swatch-role">タグボタン背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ededed"></div><div class="color-swatch-info"><div class="color-swatch-name">Divider</div><div class="color-swatch-hex">#ededed</div><div class="color-swatch-role">ナビ項目背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0f0f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#f0f0f0</div><div class="color-swatch-role">フッター背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">ボーダー・枠線</div></div></div>
+  </div>
+
+  <div class="color-group-label">Navigation (Dark Gray)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#313131"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Header</div><div class="color-swatch-hex">#313131</div><div class="color-swatch-role">ナビヘッダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4f4f4f"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Primary</div><div class="color-swatch-hex">#4f4f4f</div><div class="color-swatch-role">メインナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#616161"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Secondary</div><div class="color-swatch-hex">#616161</div><div class="color-swatch-role">サブナビ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#747474"></div><div class="color-swatch-info"><div class="color-swatch-name">Nav Highlight</div><div class="color-swatch-hex">#747474</div><div class="color-swatch-role">TOPリンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Search Button</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">検索ボタン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Pagination Active</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">現在ページ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography -- 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:22.5px; font-weight:700; line-height:1.0; color:var(--text-heading);">セクション見出し -- Section Title (h2)</div>
+    <div class="type-meta">22.5px / 700 / line-height: 1.0 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:24px; font-weight:700; line-height:1.375; color:var(--text-heading);">サブ見出し -- Sub Title (h3)</div>
+    <div class="type-meta">24px / 700 / line-height: 1.375 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.4; color:var(--text-heading);">特集記事見出し -- Feature Title (p)</div>
+    <div class="type-meta">20px / 700 / line-height: 1.4 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:19px; font-weight:500; line-height:1.6; color:var(--text-primary); padding:9.5px 19px; border:1px solid var(--border-default);">企業情報見出し -- Section Title (h2)</div>
+    <div class="type-meta">19px / 500 / line-height: 1.6 / border-bottom つき<span class="type-context">企業情報ページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:700; line-height:1.389; color:var(--text-heading);">バナー見出し -- Banner Title (h3)</div>
+    <div class="type-meta">18px / 700 / line-height: 1.389 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.625; color:var(--text-heading);">カードタイトル -- Card Title (p)</div>
+    <div class="type-meta">16px / 700 / line-height: 1.625 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:2.0; color:var(--text-primary);">企業情報の本文テキスト -- 世界を取り巻くさまざまな社会課題を技術の力で解決し、より良い未来をつくれないか。京セラは、ファインセラミックスをはじめとする先端技術で、情報通信、自動車関連、環境・エネルギー、医療・ヘルスケアなど、幅広い分野に貢献しています。</div>
+    <div class="type-meta">16px / 400 / line-height: 2.0 / letter-spacing: normal / palt: なし<span class="type-context">企業情報ページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:400; line-height:1.625; color:var(--text-primary);">トップページ本文 -- ニュースや製品情報の説明テキスト。line-height は 1.625 で企業情報ページより詰まっている。</div>
+    <div class="type-meta">16px / 400 / line-height: 1.625 / letter-spacing: normal / palt: なし<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.571; color:var(--text-secondary);">補足テキスト -- バナー説明文 (14px)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.571 / color: #666666<span class="type-context">トップページ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:13px; font-weight:500; line-height:1.846; color:var(--text-heading);">ナビゲーションリンク -- Nav Link (13px / 500)</div>
+    <div class="type-meta">13px / 500 / line-height: 1.846<span class="type-context">ヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.417; color:var(--text-heading);">キャプション -- Caption (12px)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.417<span class="type-context">トップページ</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article -- 企業情報の組版</div>
+  <h2 class="section-title">企業情報ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>ファインセラミックスの可能性</h1>
+    <p>京セラは1959年の創業以来、ファインセラミックスの技術を核に事業を展開してきました。高い耐熱性、耐摩耗性、絶縁性など、材料の特性を最大限に活かした製品で、さまざまな産業に貢献しています。</p>
+    <h2>技術の力で社会課題を解決する</h2>
+    <p>情報通信、自動車関連、環境・エネルギー、医療・ヘルスケアなど、幅広い分野で京セラの技術が活用されています。半導体パッケージ、電子部品、太陽電池、人工関節など、私たちの生活を支える製品の多くに京セラの技術が使われています。ABCabc 123</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div style="margin-bottom:32px">
+    <div class="color-group-label">Tag Button (最多使用)</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-tag" href="#">ファインセラミックス</a><div class="button-label">Tag (radius: 6px)</div></div>
+      <div class="button-item"><a class="btn-tag" href="#">電子部品</a><div class="button-label">Tag</div></div>
+      <div class="button-item"><a class="btn-tag" href="#">切削加工</a><div class="button-label">Tag</div></div>
+      <div class="button-item"><a class="btn-tag" href="#">スマートフォン</a><div class="button-label">Tag</div></div>
+      <div class="button-item"><a class="btn-tag" href="#">半導体レーザー</a><div class="button-label">Tag</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px">
+    <div class="color-group-label">Navigation & Action</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-nav" href="#">製品・ソリューション</a><div class="button-label">Nav Primary (#4f4f4f)</div></div>
+      <div class="button-item"><a class="btn-outline" href="#">詳しく見る</a><div class="button-label">Outline</div></div>
+      <div class="button-item"><a class="btn-nav-link" href="#">京セラをもっと知る 一覧へ</a><div class="button-label">Nav Link (border)</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px">
+    <div class="color-group-label">Mega Menu Item</div>
+    <div style="max-width:400px">
+      <a class="btn-mega" href="#" style="display:block; margin-bottom:1px;">セラミックパッケージ</a>
+      <a class="btn-mega" href="#" style="display:block; margin-bottom:1px;">パッケージ材料（封止材・ペースト）</a>
+      <a class="btn-mega" href="#" style="display:block; margin-bottom:1px;">有機パッケージ</a>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px">
+    <div class="color-group-label">Navigation Demo</div>
+    <div class="nav-demo">
+      <a class="nav-demo-item" href="#" style="background:var(--nav-primary);">ご挨拶</a>
+      <a class="nav-demo-item" href="#" style="background:var(--nav-primary);">会社概要</a>
+      <a class="nav-demo-item" href="#" style="background:var(--nav-primary);">グループの事業</a>
+      <a class="nav-demo-item" href="#" style="background:var(--nav-highlight);">文化施設 TOP</a>
+    </div>
+    <div class="nav-demo">
+      <a class="nav-demo-sub" href="#" style="background:var(--nav-secondary);">情報通信</a>
+      <a class="nav-demo-sub" href="#" style="background:var(--nav-secondary);">自動車関連</a>
+      <a class="nav-demo-sub" href="#" style="background:var(--nav-secondary);">環境・エネルギー</a>
+      <a class="nav-demo-sub" href="#" style="background:var(--nav-secondary);">医療・ヘルスケア</a>
+    </div>
+  </div>
+
+  <div>
+    <div class="color-group-label">Pagination</div>
+    <div class="button-row" style="align-items:center; gap:8px;">
+      <span class="btn-pagination">1</span>
+      <span class="btn-pagination-inactive">2</span>
+      <span class="btn-pagination-inactive">3</span>
+      <span class="btn-pagination-inactive">4</span>
+      <span class="btn-pagination-inactive">5</span>
+    </div>
+  </div>
+
+  <div style="margin-top:32px">
+    <div class="color-group-label">Search</div>
+    <div style="display:inline-flex; align-items:center;">
+      <input class="nav-search-input" type="text" placeholder="検索キーワード" style="width:280px;">
+      <button class="nav-search-btn">検索する</button>
+    </div>
+    <div class="button-label" style="text-align:left; margin-top:4px;">Search Button: bg #666666, border #666666</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">1440 x 810 Image</div>
+      <div class="card-body">
+        <h3>京セラが推進するモビリティの未来</h3>
+        <p>自動車関連事業で培った技術を活かし、次世代モビリティの実現に貢献します。</p>
+        <div class="card-tags">
+          <a class="btn-tag" href="#" style="font-size:11px; padding:4px 8px;">自動車関連</a>
+          <a class="btn-tag" href="#" style="font-size:11px; padding:4px 8px;">イノベーション</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">1440 x 810 Image</div>
+      <div class="card-body">
+        <h3>ファインセラミックスワールド</h3>
+        <p>材料の特性を生かし、社会で役立つファインセラミックスのすごさを紹介します。</p>
+        <div class="card-tags">
+          <a class="btn-tag" href="#" style="font-size:11px; padding:4px 8px;">セラミックス</a>
+          <a class="btn-tag" href="#" style="font-size:11px; padding:4px 8px;">技術紹介</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">1440 x 810 Image</div>
+      <div class="card-body">
+        <h3>セキュリティをわかりやすく</h3>
+        <p>難しいセキュリティの話題を、わかりやすく解説するコンテンツシリーズです。</p>
+        <div class="card-tags">
+          <a class="btn-tag" href="#" style="font-size:11px; padding:4px 8px;">セキュリティ</a>
+          <a class="btn-tag" href="#" style="font-size:11px; padding:4px 8px;">コラム</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group">
+    <label class="form-label">検索キーワード</label>
+    <input class="form-input" type="text" placeholder="製品名・型番で検索">
+    <div class="form-state-label">デフォルト -- border: #dddddd, radius: 0px, font-size: 18px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="京セラ太郎">
+    <div class="form-state-label">フォーカス -- border: #000000</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー -- border: #cc0000</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" style="padding-left:30px; position:relative;">
+      <input type="checkbox" style="position:absolute; left:0; top:3px;">
+      法人のお客様サイト全体から検索
+    </label>
+    <div class="form-state-label">チェックボックスラベル -- 14px / 500</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation -- フラットデザイン</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">影なし。border: #dddddd のみ。全要素がこのレベル</div>
+    </div>
+    <div class="elevation-card" style="background:var(--bg-section); border:none;">
+      <div class="elevation-label">Surface Light</div>
+      <div class="elevation-desc">背景色 #f7f7f7 で区別。影は使用しない</div>
+    </div>
+    <div class="elevation-card" style="background:var(--bg-tag); border:1px solid var(--border-default);">
+      <div class="elevation-label">Surface Tag</div>
+      <div class="elevation-desc">背景色 #f9f9f9 + border で区別</div>
+    </div>
+    <div class="elevation-card" style="background:var(--nav-primary); color:var(--text-white); border:none;">
+      <div class="elevation-label" style="color:var(--text-white);">Navigation</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.7);">ダークグレー #4f4f4f が最も高い視覚的深度</div>
+    </div>
+  </div>
+  <p style="margin-top:20px; font-size:14px; color:var(--text-secondary);">京セラのサイトは box-shadow を一切使用しない完全フラットデザイン。要素の区別はボーダーと背景色の差で表現する。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">レイアウト &amp; グレースケール</h2>
+
+  <div class="color-group-label">グレースケール階層</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#000000;"></div><div class="spacing-value">#000</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#313131;"></div><div class="spacing-value">#313131</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#333333;"></div><div class="spacing-value">#333</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#4f4f4f;"></div><div class="spacing-value">#4f4f4f</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#616161;"></div><div class="spacing-value">#616161</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#666666;"></div><div class="spacing-value">#666</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#747474;"></div><div class="spacing-value">#747474</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#999999;"></div><div class="spacing-value">#999</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#dddddd;"></div><div class="spacing-value">#ddd</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#ededed;"></div><div class="spacing-value">#ededed</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#f0f0f0;"></div><div class="spacing-value">#f0f0f0</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#f7f7f7;"></div><div class="spacing-value">#f7f7f7</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#f9f9f9;"></div><div class="spacing-value">#f9f9f9</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px; background:#ffffff; border:1px solid #ddd;"></div><div class="spacing-value">#fff</div></div>
+  </div>
+
+  <div class="color-group-label">Design Characteristics</div>
+  <div style="font-size:14px; line-height:1.8; color:var(--text-primary);">
+    <ul style="list-style:disc; padding-left:20px;">
+      <li>box-shadow: なし（完全フラットデザイン）</li>
+      <li>border-radius: タグボタンの 6px のみ。他はすべて 0px</li>
+      <li>letter-spacing: すべて normal</li>
+      <li>font-feature-settings: すべて normal（palt 未使用）</li>
+      <li>カラーはすべてグレースケール（ブランドカラー不在）</li>
+      <li>要素の区別は border (#dddddd) と背景色の段差で表現</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.kyocera.co.jp/" style="color:var(--nav-primary); text-decoration:underline;">kyocera.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-17）
+</footer>
+
+</body>
+</html>

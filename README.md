@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (330 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (333 sites)</a>
 </p>
 
 <table>
@@ -485,6 +485,11 @@
 <td align="center"><strong>CAPCOM</strong><br><img src="design-md/capcom/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>UCC</strong><br><img src="design-md/ucc/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>Kyocera</strong><br><img src="design-md/kyocera/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>au</strong><br><img src="design-md/au/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ENEOS</strong><br><img src="design-md/eneos/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -875,11 +880,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [mont-bell (モンベル)](https://www.montbell.jp/) | Outdoor / Mountaineering | [DESIGN.md](design-md/montbell/DESIGN.md) | [preview.html](design-md/montbell/preview.html) |
 | [CAPCOM (カプコン)](https://www.capcom.co.jp/) | Gaming / Entertainment | [DESIGN.md](design-md/capcom/DESIGN.md) | [preview.html](design-md/capcom/preview.html) |
 | [UCC Ueshima Coffee (UCC上島珈琲)](https://www.ucc.co.jp/) | Food & Beverage / Coffee | [DESIGN.md](design-md/ucc/DESIGN.md) | [preview.html](design-md/ucc/preview.html) |
+| [Kyocera (京セラ)](https://www.kyocera.co.jp/) | Electronics / Manufacturing | [DESIGN.md](design-md/kyocera/DESIGN.md) | [preview.html](design-md/kyocera/preview.html) |
+| [au (KDDI)](https://www.au.com/) | Telecommunications | [DESIGN.md](design-md/au/DESIGN.md) | [preview.html](design-md/au/preview.html) |
+| [ENEOS (エネオス)](https://www.eneos.co.jp/) | Energy / Petroleum | [DESIGN.md](design-md/eneos/DESIGN.md) | [preview.html](design-md/eneos/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (330 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (333 sites)</a>
 </p>
 
 <table>
@@ -1329,6 +1337,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>mont-bell</strong><br><img src="design-md/montbell/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CAPCOM</strong><br><img src="design-md/capcom/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>UCC</strong><br><img src="design-md/ucc/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Kyocera</strong><br><img src="design-md/kyocera/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>au</strong><br><img src="design-md/au/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ENEOS</strong><br><img src="design-md/eneos/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

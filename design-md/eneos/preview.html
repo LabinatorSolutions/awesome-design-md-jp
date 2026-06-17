@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ENEOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --eneos-teal: #00ada9;
+    --eneos-teal-70: rgba(0,173,169,0.7);
+    --eneos-orange: #e94709;
+    --eneos-orange-dark: #bf340a;
+    --attention-red: #cc0000;
+    --energy-orange: #fe6230;
+    --env-green: #8db501;
+    --corporate-navy: #27455c;
+    --stats-blue: #3b609a;
+    --energy-gold: #e3b102;
+    --corporate-green: #468254;
+    --text-primary: #333333;
+    --text-secondary: #696969;
+    --text-placeholder: #bbbbbb;
+    --text-white: #ffffff;
+    --border: #cccccc;
+    --border-light: #aaaaaa;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f4f4;
+    --bg-warm: #f4f4f0;
+    --surface-gray: #e4e4e4;
+    --assist-menu: #666666;
+    --footer-bg: #000000;
+    --overlay: rgba(0,0,0,0.6);
+    --slider-arrow: rgba(0,0,0,0.2);
+    /* === Fonts === */
+    --font-top: "Noto Sans JP", メイリオ, Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    --font-company: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-top);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand { font-size: 20px; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+  .nav-brand span { color: var(--eneos-teal); font-weight: 700; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 400; color: var(--text-primary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--eneos-teal); }
+  .nav-assist {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--assist-menu); color: var(--text-white);
+    padding: 6px 14px; border-radius: 0; font-size: 12px; font-weight: 400;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-secondary); }
+  .hero h1 {
+    font-family: var(--font-company);
+    font-size: 32px; font-weight: 700; line-height: 1.2;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    color: var(--text-secondary); max-width: 700px; margin: 0 auto 32px;
+  }
+  .hero-tabs { display: flex; gap: 0; justify-content: center; flex-wrap: wrap; }
+  .tab-active {
+    display: inline-block; background: var(--eneos-teal-70); color: var(--text-white);
+    padding: 10px 32px; border: none; font-family: var(--font-top);
+    font-size: 18px; font-weight: 400; text-decoration: none; cursor: pointer;
+  }
+  .tab-inactive {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 10px 32px; border: none; font-family: var(--font-top);
+    font-size: 18px; font-weight: 400; text-decoration: none; cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 600; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-family: var(--font-company);
+    font-size: 28px; font-weight: 500; line-height: 1.2;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-gray { background: var(--bg-secondary); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 960px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 0; overflow: hidden; background: #fff; border: 1px solid var(--border); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #e0e0e0; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-secondary); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 0; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+
+  .btn-standard {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 12px 40px 12px 30px; border: 1px solid var(--border);
+    border-radius: 0; font-family: var(--font-top); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; line-height: 1.4;
+  }
+  .btn-standard:hover { background: var(--bg-secondary); }
+  .btn-standard::after { content: " →"; }
+
+  .btn-accent {
+    display: inline-block; background: var(--eneos-teal); color: var(--text-white);
+    padding: 12px 30px; border: 1px solid var(--text-white);
+    border-radius: 2px; font-family: var(--font-top); font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+  }
+
+  .btn-outline-company {
+    display: inline-block; background: transparent; color: #000000;
+    padding: 19px 30px; border: 1px solid var(--border-light);
+    border-radius: 0; font-family: var(--font-company); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; line-height: 1.8;
+  }
+  .btn-outline-company:hover { background: var(--bg-secondary); }
+
+  .btn-nav-active {
+    display: inline-block; background: var(--eneos-orange); color: var(--text-white);
+    padding: 8px 20px; border: none; border-radius: 0;
+    font-family: var(--font-top); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  .btn-more {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 8px 40px 8px 30px; border: 1px solid var(--border);
+    border-radius: 0; font-family: var(--font-top); font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+  }
+
+  .btn-attention-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--attention-red); color: var(--text-white);
+    width: 36px; height: 36px; border-radius: 28px; border: none;
+    font-size: 24px; font-weight: 700; line-height: 1;
+    cursor: default;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--bg-primary); border: 1px solid var(--border);
+    border-radius: 0; padding: 24px; transition: background 0.2s;
+  }
+  .card:hover { background: var(--bg-secondary); }
+  .card h3 {
+    font-family: var(--font-company); font-size: 18px; font-weight: 500;
+    line-height: 1.4; margin-bottom: 8px; color: var(--text-primary);
+  }
+  .card p { font-size: 16px; color: var(--text-secondary); line-height: 1.6; }
+  .card-link { font-size: 14px; color: var(--text-primary); text-decoration: underline; margin-top: 12px; display: inline-block; }
+
+  /* OVERLAY CARD */
+  .overlay-card {
+    position: relative; height: 200px; overflow: hidden;
+    background: var(--corporate-navy); display: flex; align-items: flex-end;
+  }
+  .overlay-card-label {
+    background: var(--overlay); color: var(--text-white);
+    font-size: 18px; font-weight: 400; line-height: 1.4;
+    padding: 15px 30px 15px 15px; width: 100%;
+  }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 700px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-company); font-size: 43px; font-weight: 500;
+    line-height: 1.2; margin-bottom: 24px; color: var(--eneos-orange);
+  }
+  .article-preview .lead {
+    font-family: var(--font-company); font-size: 27px; font-weight: 700;
+    line-height: 1.5; color: var(--eneos-orange); margin-bottom: 16px;
+  }
+  .article-preview p {
+    font-family: var(--font-company); font-size: 16px; font-weight: 400;
+    line-height: 1.5; letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 16px; color: #000000;
+  }
+
+  /* CAROUSEL DOTS */
+  .dot-row { display: flex; gap: 8px; align-items: center; }
+  .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--surface-gray); border: none; cursor: pointer;
+  }
+  .dot.active { background: var(--eneos-teal); }
+  .dot-label { font-size: 12px; color: var(--text-secondary); margin-left: 12px; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 8px 12px; border-radius: 0;
+    font-family: var(--font-top); font-size: 16px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-placeholder); }
+  .form-input:focus, .form-input--focus { border-color: var(--eneos-teal); box-shadow: 0 0 0 2px rgba(0,173,169,0.25); }
+  .form-input--error { border-color: var(--attention-red); box-shadow: 0 0 0 2px rgba(204,0,0,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+  .form-error-text { font-size: 12px; color: var(--attention-red); margin-top: 4px; }
+
+  /* SEARCH INPUT (Assist style) */
+  .search-input-wrap { display: flex; max-width: 300px; }
+  .search-input {
+    flex: 1; background: var(--assist-menu); color: var(--text-white);
+    border: none; padding: 8px 12px; border-radius: 0;
+    font-family: var(--font-top); font-size: 14px; outline: none;
+  }
+  .search-input::placeholder { color: rgba(255,255,255,0.5); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 0; padding: 24px; text-align: center; border: 1px solid var(--border); }
+  .elevation-label { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 0; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--eneos-teal); border-radius: 0; opacity: 0.3; }
+  .width-bar-label { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--footer-bg); font-size: 12px; color: rgba(255,255,255,0.7);
+  }
+  .footer a { color: var(--eneos-teal); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 28px; }
+    .article-preview .lead { font-size: 20px; }
+    .hero-tabs { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span>ENEOS</span></a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-assist" href="#">SS&#26908;&#32034;</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>ENEOS &#8212; &#26085;&#26412;&#35486;&#29256;</h1>
+  <p>DESIGN.md&#12363;&#12425;&#25277;&#20986;&#12375;&#12383;&#12487;&#12470;&#12452;&#12531;&#12488;&#12540;&#12463;&#12531;&#12398;&#12459;&#12479;&#12525;&#12464;&#12290;&#12459;&#12521;&#12540;&#12289;&#12501;&#12457;&#12531;&#12488;&#12289;&#12467;&#12531;&#12509;&#12540;&#12493;&#12531;&#12488;&#12289;&#12473;&#12506;&#12540;&#12471;&#12531;&#12464;&#12398;&#20840;&#20516;&#12434;&#21487;&#35222;&#21270;&#12290;computed style &#23455;&#28204;&#20516;&#12395;&#22522;&#12389;&#12367;&#12290;</p>
+  <div class="hero-tabs">
+    <a class="tab-inactive" href="#">&#20491;&#20154;&#12398;&#12362;&#23458;&#27096;</a>
+    <a class="tab-active" href="#">&#27861;&#20154;&#12398;&#12362;&#23458;&#27096;</a>
+    <a class="tab-active" href="#">&#20225;&#26989;&#24773;&#22577;</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">&#12459;&#12521;&#12540;&#12497;&#12524;&#12483;&#12488;</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#00ada9"></div><div class="color-swatch-info"><div class="color-swatch-name">ENEOS Teal</div><div class="color-swatch-hex">#00ada9</div><div class="color-swatch-role">&#12479;&#12502;&#12539;&#12489;&#12483;&#12488;&#12539;&#12450;&#12463;&#12475;&#12531;&#12488;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(0,173,169,0.7)"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal 70%</div><div class="color-swatch-hex">rgba(0,173,169,0.7)</div><div class="color-swatch-role">&#12479;&#12502;&#12450;&#12463;&#12486;&#12451;&#12502;&#32972;&#26223;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e94709"></div><div class="color-swatch-info"><div class="color-swatch-name">ENEOS Orange</div><div class="color-swatch-hex">#e94709</div><div class="color-swatch-role">&#20225;&#26989;&#24773;&#22577;&#35211;&#20986;&#12375;&#12539;&#12490;&#12499;&#12450;&#12463;&#12486;&#12451;&#12502;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bf340a"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange Dark</div><div class="color-swatch-hex">#bf340a</div><div class="color-swatch-role">&#32076;&#21942;&#25126;&#30053;&#12475;&#12463;&#12471;&#12519;&#12531;&#32972;&#26223;</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cc0000"></div><div class="color-swatch-info"><div class="color-swatch-name">Attention</div><div class="color-swatch-hex">#cc0000</div><div class="color-swatch-role">&#27880;&#24847;&#21914;&#36215;&#12450;&#12452;&#12467;&#12531;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fe6230"></div><div class="color-swatch-info"><div class="color-swatch-name">Energy Orange</div><div class="color-swatch-hex">#fe6230</div><div class="color-swatch-role">&#30707;&#27833;&#12539;&#12460;&#12473;&#12459;&#12486;&#12468;&#12522;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#8db501"></div><div class="color-swatch-info"><div class="color-swatch-name">Environment</div><div class="color-swatch-hex">#8db501</div><div class="color-swatch-role">&#29872;&#22659;&#12459;&#12486;&#12468;&#12522;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e3b102"></div><div class="color-swatch-info"><div class="color-swatch-name">Energy Gold</div><div class="color-swatch-hex">#e3b102</div><div class="color-swatch-role">&#12456;&#12493;&#12523;&#12462;&#12540;&#12471;&#12473;&#12486;&#12512;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#27455c"></div><div class="color-swatch-info"><div class="color-swatch-name">Corporate Navy</div><div class="color-swatch-hex">#27455c</div><div class="color-swatch-role">&#35013;&#39166;&#32972;&#26223;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3b609a"></div><div class="color-swatch-info"><div class="color-swatch-name">Stats Blue</div><div class="color-swatch-hex">#3b609a</div><div class="color-swatch-role">&#25968;&#23383;&#12391;&#35211;&#12427;ENEOS</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#468254"></div><div class="color-swatch-info"><div class="color-swatch-name">Corporate Green</div><div class="color-swatch-hex">#468254</div><div class="color-swatch-role">&#35013;&#39166;&#35201;&#32032;</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">&#26412;&#25991;&#12486;&#12461;&#12473;&#12488;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#696969"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#696969</div><div class="color-swatch-role">&#35036;&#36275;&#12486;&#12461;&#12473;&#12488;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bbbbbb"></div><div class="color-swatch-info"><div class="color-swatch-name">Placeholder</div><div class="color-swatch-hex">#bbbbbb</div><div class="color-swatch-role">&#12503;&#12524;&#12540;&#12473;&#12507;&#12523;&#12480;&#12540;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">&#12508;&#12479;&#12531;&#26528;&#32218;&#12539;&#21306;&#20999;&#12426;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">&#12506;&#12540;&#12472;&#32972;&#26223;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f4"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Secondary</div><div class="color-swatch-hex">#f4f4f4</div><div class="color-swatch-role">&#12475;&#12463;&#12471;&#12519;&#12531;&#32972;&#26223;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4f4f0"></div><div class="color-swatch-info"><div class="color-swatch-name">Background Warm</div><div class="color-swatch-hex">#f4f4f0</div><div class="color-swatch-role">&#32113;&#35336;&#12475;&#12463;&#12471;&#12519;&#12531;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4e4e4"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#e4e4e4</div><div class="color-swatch-role">&#12459;&#12523;&#12540;&#12475;&#12523;&#38750;&#12450;&#12463;&#12486;&#12451;&#12502;&#12489;&#12483;&#12488;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Assist Menu</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">&#12501;&#12525;&#12540;&#12486;&#12451;&#12531;&#12464;&#12513;&#12491;&#12517;&#12540;</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">&#12501;&#12483;&#12479;&#12540;&#32972;&#26223;</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography -- &#23455;&#28204;&#20516;</div>
+  <h2 class="section-title">&#12479;&#12452;&#12509;&#12464;&#12521;&#12501;&#12451;&#38542;&#23652;</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-company); font-size:63px; font-weight:700; line-height:1.2;">&#20225;&#26989;&#24773;&#22577;</div>
+    <div class="type-meta">Noto Sans JP / 63px / 700 / line-height: 1.2 / letter-spacing: normal<span class="type-context">&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472; h1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-company); font-size:43px; font-weight:500; line-height:1.2; color:var(--eneos-orange);">&#31169;&#12383;&#12385;&#12398;&#20351;&#21629;&#12392;&#20385;&#20516;</div>
+    <div class="type-meta">Noto Sans JP / 43px / 500 / line-height: 1.2 / color: #e94709<span class="type-context">&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472; h2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-company); font-size:27px; font-weight:700; line-height:1.5; color:var(--eneos-orange);">&#12300;&#20170;&#26085;&#12398;&#12354;&#12383;&#12426;&#21069;&#12301;&#12434;&#25903;&#12360;&#12289;&#12300;&#26126;&#26085;&#12398;&#12354;&#12383;&#12426;&#21069;&#12301;&#12434;&#12522;&#12540;&#12489;&#12377;&#12427;&#12290;</div>
+    <div class="type-meta">Noto Sans JP / 27px / 700 / line-height: 1.5 / color: #e94709<span class="type-context">&#12522;&#12540;&#12489;&#25991;</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-company); font-size:20px; font-weight:400; line-height:1.8;">&#12488;&#12483;&#12503;&#12513;&#12483;&#12475;&#12540;&#12472;</div>
+    <div class="type-meta">Noto Sans JP / 20px / 400 / line-height: 1.8<span class="type-context">&#12508;&#12479;&#12531;v4&#12521;&#12505;&#12523;</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-top); font-size:18px; font-weight:400; line-height:1.6;">&#12479;&#12502;&#12521;&#12505;&#12523; -- Tab Label (18px)</div>
+    <div class="type-meta">Meiryo / 18px / 400 / line-height: 1.39~1.6<span class="type-context">&#12488;&#12483;&#12503;&#12506;&#12540;&#12472;</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-top); font-size:16px; font-weight:400; line-height:1.6;">&#26412;&#25991;&#12486;&#12461;&#12473;&#12488; -- ENEOS&#12398;&#12469;&#12452;&#12488;&#12399;&#12289;&#12513;&#12452;&#12522;&#12458;&#12434;&#22522;&#26412;&#12501;&#12457;&#12531;&#12488;&#12392;&#12375;&#12383;&#12289;&#33853;&#12385;&#30528;&#12356;&#12383;&#12467;&#12540;&#12509;&#12524;&#12540;&#12488;&#12487;&#12470;&#12452;&#12531;&#12391;&#12377;&#12290;letter-spacing&#12420;palt&#12399;&#20351;&#29992;&#12379;&#12378;&#12289;&#12513;&#12452;&#12522;&#12458;&#12398;&#12487;&#12501;&#12457;&#12523;&#12488;&#12513;&#12488;&#12522;&#12463;&#12473;&#12391;&#34920;&#31034;&#12375;&#12414;&#12377;&#12290;</div>
+    <div class="type-meta">Meiryo / 16px / 400 / line-height: 1.6 / letter-spacing: normal / palt: &#12394;&#12375;<span class="type-context">&#12488;&#12483;&#12503;&#12506;&#12540;&#12472; body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-company); font-size:16px; font-weight:400; line-height:1.5;">&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472;&#12398;&#26412;&#25991;&#12486;&#12461;&#12473;&#12488;&#12290;Noto Sans JP&#12434;&#20351;&#29992;&#12375;&#12289;&#32113;&#19968;&#24863;&#12398;&#12354;&#12427;&#12487;&#12470;&#12452;&#12531;&#12391;&#12377;&#12290;</div>
+    <div class="type-meta">Noto Sans JP / 16px / 400 / line-height: 1.5<span class="type-context">&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472; body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-top); font-size:14px; font-weight:400; line-height:1.6; color:var(--text-secondary);">&#12490;&#12499;&#12466;&#12540;&#12471;&#12519;&#12531;&#12522;&#12531;&#12463; -- Nav Link (14px)</div>
+    <div class="type-meta">Meiryo / 14px / 400 / line-height: 1.6 / color: #696969<span class="type-context">&#12504;&#12483;&#12480;&#12540;</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-top); font-size:13px; font-weight:400; line-height:1.6; color:var(--text-secondary);">&#12497;&#12531;&#12367;&#12378; -- Breadcrumb (13px)</div>
+    <div class="type-meta">Meiryo / 13px / 400 / line-height: 1.6<span class="type-context">&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472;</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-top); font-size:9px; font-weight:400; line-height:1.0; color:var(--text-white); background:var(--assist-menu); display:inline-block; padding:8px 12px;">&#12513;&#12491;&#12517;&#12540; / SS&#26908;&#32034; / &#26908;&#32034;</div>
+    <div class="type-meta">Meiryo / 9px / 400 / line-height: 1.0 / bg: #666666<span class="type-context">&#12501;&#12525;&#12540;&#12486;&#12451;&#12531;&#12464;&#12513;&#12491;&#12517;&#12540;</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article -- &#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472;&#32068;&#29256;</div>
+  <h2 class="section-title">&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472;&#12398;&#32068;&#29256;&#12469;&#12531;&#12503;&#12523;</h2>
+  <div class="article-preview">
+    <h1>&#31169;&#12383;&#12385;&#12398;&#20351;&#21629;&#12392;&#20385;&#20516;</h1>
+    <p class="lead">&#12300;&#20170;&#26085;&#12398;&#12354;&#12383;&#12426;&#21069;&#12301;&#12434;&#25903;&#12360;&#12289;&#12300;&#26126;&#26085;&#12398;&#12354;&#12383;&#12426;&#21069;&#12301;&#12434;&#12522;&#12540;&#12489;&#12377;&#12427;&#12290;</p>
+    <p>ENEOS&#12399;&#12289;&#31038;&#20250;&#12392;&#12392;&#12418;&#12395;&#27497;&#12416;&#20225;&#26989;&#12392;&#12375;&#12390;&#12398;&#23039;&#21218;&#12434;&#26126;&#30906;&#12395;&#12375;&#12390;&#12356;&#12414;&#12377;&#12290;&#23433;&#20840;&#12539;&#23433;&#24515;&#12398;&#12456;&#12493;&#12523;&#12462;&#12540;&#20379;&#32102;&#12420;&#12459;&#12540;&#12508;&#12531;&#12491;&#12517;&#12540;&#12488;&#12521;&#12523;&#12408;&#12398;&#25361;&#25126;&#12434;&#36890;&#12376;&#12390;&#12289;&#25345;&#32154;&#21487;&#33021;&#12394;&#31038;&#20250;&#12398;&#23455;&#29694;&#12395;&#36002;&#29486;&#12375;&#12414;&#12377;&#12290;</p>
+    <p>&#12456;&#12493;&#12523;&#12462;&#12540;&#20225;&#26989;&#12392;&#12375;&#12390;&#12398;&#20351;&#21629;&#12434;&#26524;&#12383;&#12375;&#12394;&#12364;&#12425;&#12289;&#27700;&#32032;&#29123;&#26009;&#38651;&#27744;&#12471;&#12473;&#12486;&#12512;&#12420;EV&#38306;&#36899;&#12469;&#12540;&#12499;&#12473;&#12394;&#12393;&#12289;&#27425;&#19990;&#20195;&#12456;&#12493;&#12523;&#12462;&#12540;&#12408;&#12398;&#25237;&#36039;&#12418;&#31309;&#26997;&#30340;&#12395;&#36914;&#12417;&#12390;&#12356;&#12414;&#12377;&#12290;ABCabc 12345</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">&#12508;&#12479;&#12531;&#12496;&#12522;&#12456;&#12540;&#12471;&#12519;&#12531;</h2>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="btn-standard" href="#">&#20491;&#20154;&#12398;&#12362;&#23458;&#27096; &#12488;&#12483;&#12503;&#12408;</a><div class="button-label">Standard CTA</div></div>
+    <div class="button-item"><a class="btn-more" href="#">MORE</a><div class="button-label">MORE</div></div>
+    <div class="button-item"><a class="btn-accent" href="#">Cookie&#35373;&#23450;</a><div class="button-label">Accent (Teal)</div></div>
+  </div>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="btn-outline-company" href="#">&#35519;&#36948;&#24773;&#22577;</a><div class="button-label">Outline (&#20225;&#26989;&#24773;&#22577;)</div></div>
+    <div class="button-item"><a class="btn-nav-active" href="#">&#20225;&#26989;&#24773;&#22577;</a><div class="button-label">Nav Active</div></div>
+    <div class="button-item"><span class="btn-attention-badge">&#65281;</span><div class="button-label">Attention Badge</div></div>
+  </div>
+  <div class="button-row" style="margin-bottom: 24px;">
+    <div class="button-item"><a class="tab-active" href="#" style="display:inline-block;">&#27861;&#20154;&#12398;&#12362;&#23458;&#27096;</a><div class="button-label">Tab Active</div></div>
+    <div class="button-item"><a class="tab-inactive" href="#" style="display:inline-block;">&#20491;&#20154;&#12398;&#12362;&#23458;&#27096;</a><div class="button-label">Tab Inactive</div></div>
+  </div>
+  <div style="margin-top: 16px;">
+    <div class="button-label" style="margin-bottom: 8px;">Carousel Dots</div>
+    <div class="dot-row">
+      <button class="dot"></button>
+      <button class="dot"></button>
+      <button class="dot active"></button>
+      <button class="dot"></button>
+      <button class="dot"></button>
+      <span class="dot-label">active = #00ada9 / inactive = #e4e4e4</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">&#12459;&#12540;&#12489;&#12467;&#12531;&#12509;&#12540;&#12493;&#12531;&#12488;</h2>
+  <div class="card-grid" style="margin-bottom: 24px;">
+    <div class="card">
+      <h3>&#27700;&#32032;&#29123;&#26009;&#38651;&#27744;&#12471;&#12473;&#12486;&#12512;</h3>
+      <p>&#26032;&#36896;&#12524;&#12473;&#12488;&#12521;&#12531;&#12471;&#12483;&#12503;&#12408;&#12398;&#27700;&#32032;&#20379;&#32102;&#12395;&#12388;&#12356;&#12390;&#12289;&#27425;&#19990;&#20195;&#12456;&#12493;&#12523;&#12462;&#12540;&#12408;&#12398;&#21462;&#12426;&#32068;&#12415;&#12434;&#32057;&#20171;&#12375;&#12414;&#12377;&#12290;</p>
+      <a class="card-link" href="#">&#35443;&#12375;&#12367;&#35211;&#12427;</a>
+    </div>
+    <div class="card">
+      <h3>&#12459;&#12540;&#12508;&#12531;&#12491;&#12517;&#12540;&#12488;&#12521;&#12523;&#25126;&#30053;</h3>
+      <p>2050&#24180;&#12398;&#12459;&#12540;&#12508;&#12531;&#12491;&#12517;&#12540;&#12488;&#12521;&#12523;&#23455;&#29694;&#12395;&#21521;&#12369;&#12383;ENEOS&#12398;&#20107;&#26989;&#25126;&#30053;&#12392;&#12525;&#12540;&#12489;&#12510;&#12483;&#12503;&#12290;</p>
+      <a class="card-link" href="#">&#35443;&#12375;&#12367;&#35211;&#12427;</a>
+    </div>
+    <div class="card">
+      <h3>&#12469;&#12540;&#12499;&#12473;&#12473;&#12486;&#12540;&#12471;&#12519;&#12531;&#26908;&#32034;</h3>
+      <p>&#12362;&#36817;&#12367;&#12398;ENEOS&#12469;&#12540;&#12499;&#12473;&#12473;&#12486;&#12540;&#12471;&#12519;&#12531;&#12434;&#25506;&#12379;&#12414;&#12377;&#12290;&#32102;&#27833;&#12289;EV&#20805;&#38651;&#12289;&#27700;&#32032;&#12473;&#12486;&#12540;&#12471;&#12519;&#12531;&#12395;&#23550;&#24540;&#12290;</p>
+      <a class="card-link" href="#">&#35443;&#12375;&#12367;&#35211;&#12427;</a>
+    </div>
+  </div>
+
+  <div class="color-group-label">Overlay Card</div>
+  <div class="card-grid">
+    <div class="overlay-card">
+      <div class="overlay-card-label">&#12469;&#12540;&#12499;&#12473;&#12473;&#12486;&#12540;&#12471;&#12519;&#12531;</div>
+    </div>
+    <div class="overlay-card" style="background: var(--stats-blue);">
+      <div class="overlay-card-label">&#27700;&#32032;&#12473;&#12486;&#12540;&#12471;&#12519;&#12531;</div>
+    </div>
+    <div class="overlay-card" style="background: var(--corporate-green);">
+      <div class="overlay-card-label">EV&#38306;&#36899;&#12469;&#12540;&#12499;&#12473;</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">&#12501;&#12457;&#12540;&#12512;&#35201;&#32032;</h2>
+  <div class="form-group">
+    <label class="form-label">&#12469;&#12540;&#12499;&#12473;&#12473;&#12486;&#12540;&#12471;&#12519;&#12531;&#26908;&#32034;</label>
+    <input class="form-input" type="text" placeholder="&#22320;&#21517;&#12539;&#20303;&#25152;&#12539;&#37109;&#20415;&#30058;&#21495;">
+    <div class="form-state-label">&#12487;&#12501;&#12457;&#12523;&#12488; -- border: #cccccc, radius: 0px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">&#12513;&#12540;&#12523;&#12450;&#12489;&#12524;&#12473;</label>
+    <input class="form-input form-input--focus" type="text" value="info@eneos.co.jp">
+    <div class="form-state-label">&#12501;&#12457;&#12540;&#12459;&#12473; -- border: #00ada9 (ENEOS Teal)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">&#12513;&#12540;&#12523;&#12450;&#12489;&#12524;&#12473;</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">&#27491;&#12375;&#12356;&#12513;&#12540;&#12523;&#12450;&#12489;&#12524;&#12473;&#12434;&#20837;&#21147;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;</div>
+    <div class="form-state-label">&#12456;&#12521;&#12540; -- border: #cc0000 (Attention)</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:32px;">Search (Assist Style)</div>
+  <div class="search-input-wrap">
+    <input class="search-input" type="text" placeholder="&#12469;&#12452;&#12488;&#20869;&#26908;&#32034;">
+  </div>
+  <div class="form-state-label" style="margin-top:4px;">bg: #666666, text: #ffffff, font-size: 14px</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation -- &#12501;&#12521;&#12483;&#12488;&#12487;&#12470;&#12452;&#12531;&#22522;&#35519;</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card">
+      <div class="elevation-label">Level 0: Flat</div>
+      <div class="elevation-desc">&#24433;&#12394;&#12375;&#12289;&#12508;&#12540;&#12480;&#12540;&#12398;&#12415;&#65288;&#22522;&#26412;&#65289;</div>
+    </div>
+    <div class="elevation-card" style="background:var(--overlay); color:#fff; border:none;">
+      <div class="elevation-label" style="color:#fff;">Overlay</div>
+      <div class="elevation-desc" style="color:rgba(255,255,255,0.7);">rgba(0,0,0,0.6) &#30011;&#20687;&#19978;&#12486;&#12461;&#12473;&#12488;</div>
+    </div>
+    <div class="elevation-card" style="background:var(--slider-arrow); border:none;">
+      <div class="elevation-label">Slider Arrow</div>
+      <div class="elevation-desc">rgba(0,0,0,0.2) &#12459;&#12523;&#12540;&#12475;&#12523;&#30690;&#21360;</div>
+    </div>
+    <div class="elevation-card" style="border: 2px solid var(--eneos-teal);">
+      <div class="elevation-label">Focus Ring</div>
+      <div class="elevation-desc">#00ada9 (ENEOS Teal)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">&#12524;&#12452;&#12450;&#12454;&#12488;</h2>
+
+  <div class="color-group-label">&#12467;&#12531;&#12486;&#12531;&#12484;&#24133;</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Main Content <span class="width-bar-value">~1100px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article / Company <span class="width-bar-value">~960px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:87%"></div></div></div>
+
+  <div class="color-group-label" style="margin-top:32px;">&#12501;&#12457;&#12531;&#12488;&#12473;&#12479;&#12483;&#12463;&#27604;&#36611;</div>
+  <div style="margin-bottom: 16px; padding: 16px; background: var(--bg-secondary); border: 1px solid var(--border);">
+    <div style="font-family:var(--font-top); font-size:16px; margin-bottom: 8px;"><strong>&#12488;&#12483;&#12503;&#12506;&#12540;&#12472;:</strong> &#12513;&#12452;&#12522;&#12458;&#12505;&#12540;&#12473;&#12398;&#12501;&#12457;&#12531;&#12488;&#12473;&#12479;&#12483;&#12463;&#12290;Windows&#29872;&#22659;&#12434;&#37325;&#35222;&#12375;&#12383;&#25351;&#23450;&#12290;</div>
+    <div style="font-family:var(--font-company); font-size:16px;"><strong>&#20225;&#26989;&#24773;&#22577;&#12506;&#12540;&#12472;:</strong> Noto Sans JP&#21336;&#29420;&#25351;&#23450;&#12290;&#32113;&#19968;&#24863;&#12398;&#12354;&#12427;&#34920;&#31034;&#12290;</div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:32px;">&#29305;&#24500;</div>
+  <ul style="font-size:14px; line-height:1.8; color:var(--text-secondary); padding-left:20px;">
+    <li>CSS Custom Properties &#26410;&#20351;&#29992;&#65288;&#24467;&#26469;&#22411;&#12398;CSS&#35373;&#35336;&#65289;</li>
+    <li>letter-spacing / palt &#26410;&#20351;&#29992;&#65288;&#12513;&#12452;&#12522;&#12458;&#12398;&#12487;&#12501;&#12457;&#12523;&#12488;&#12513;&#12488;&#12522;&#12463;&#12473;&#65289;</li>
+    <li>box-shadow &#12411;&#12412;&#12394;&#12375;&#65288;&#12501;&#12521;&#12483;&#12488;&#12487;&#12470;&#12452;&#12531;&#22522;&#35519;&#65289;</li>
+    <li>border-radius: 0px&#65288;&#30452;&#35282;&#12508;&#12479;&#12531;&#12364;&#22522;&#26412;&#65289;</li>
+    <li>&#12479;&#12502;&#20999;&#26367;&#12391;&#20491;&#20154;&#65295;&#27861;&#20154;&#65295;&#20225;&#26989;&#24773;&#22577;&#12434;&#20998;&#38626;</li>
+  </ul>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.eneos.co.jp/">eneos.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style &#23455;&#28204;&#20516;&#65288;2026-06-17&#65289;
+</footer>
+
+</body>
+</html>
