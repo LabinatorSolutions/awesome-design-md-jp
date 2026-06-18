@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (333 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (336 sites)</a>
 </p>
 
 <table>
@@ -490,6 +490,11 @@
 <td align="center"><strong>au</strong><br><img src="design-md/au/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ENEOS</strong><br><img src="design-md/eneos/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>TOKYU</strong><br><img src="design-md/tokyu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LOTTE</strong><br><img src="design-md/lotte/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>高島屋</strong><br><img src="design-md/takashimaya/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -883,11 +888,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Kyocera (京セラ)](https://www.kyocera.co.jp/) | Electronics / Manufacturing | [DESIGN.md](design-md/kyocera/DESIGN.md) | [preview.html](design-md/kyocera/preview.html) |
 | [au (KDDI)](https://www.au.com/) | Telecommunications | [DESIGN.md](design-md/au/DESIGN.md) | [preview.html](design-md/au/preview.html) |
 | [ENEOS (エネオス)](https://www.eneos.co.jp/) | Energy / Petroleum | [DESIGN.md](design-md/eneos/DESIGN.md) | [preview.html](design-md/eneos/preview.html) |
+| [TOKYU (東急)](https://www.tokyu.co.jp/) | Railway / Lifestyle | [DESIGN.md](design-md/tokyu/DESIGN.md) | [preview.html](design-md/tokyu/preview.html) |
+| [LOTTE (ロッテ)](https://www.lotte.co.jp/) | Food & Beverage / Confectionery | [DESIGN.md](design-md/lotte/DESIGN.md) | [preview.html](design-md/lotte/preview.html) |
+| [TAKASHIMAYA (高島屋)](https://www.takashimaya.co.jp/) | Retail / Department Store | [DESIGN.md](design-md/takashimaya/DESIGN.md) | [preview.html](design-md/takashimaya/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (333 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (336 sites)</a>
 </p>
 
 <table>
@@ -1342,6 +1350,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Kyocera</strong><br><img src="design-md/kyocera/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>au</strong><br><img src="design-md/au/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>ENEOS</strong><br><img src="design-md/eneos/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>TOKYU</strong><br><img src="design-md/tokyu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LOTTE</strong><br><img src="design-md/lotte/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TAKASHIMAYA</strong><br><img src="design-md/takashimaya/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

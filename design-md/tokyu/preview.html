@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: TOKYU（東急）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 実測値（CSS Custom Properties 準拠） === */
+    --tokyu-red: #f93628;
+    --teal-primary: #045f68;
+    --teal-dark: #02444c;
+    --teal-light: #f0fafa;
+
+    --portal-gray-900: #201c18;
+    --portal-gray-800: #343028;
+    --portal-gray-700: #49443c;
+    --portal-gray-600: #645d51;
+    --portal-gray-500: #888175;
+    --portal-gray-400: #afaaa2;
+    --portal-gray-300: #d0cbc4;
+    --portal-gray-200: #e4e1da;
+    --portal-gray-100: #f1eee9;
+    --portal-gray-50: #f8f7f5;
+
+    --text-primary: #1a2120;
+    --text-secondary: #5a605f;
+    --text-tertiary: #818988;
+    --text-disabled: #afaaa2;
+    --text-teal: #045f68;
+    --text-danger: #d92c1e;
+    --text-caution: #805e02;
+
+    --bg-light: #ffffff;
+    --bg-default: #f8f7f5;
+    --bg-strong: #f1eee9;
+    --bg-dark: #343028;
+    --bg-teal: #f0fafa;
+    --bg-teal-primary: #045f68;
+    --bg-new: #d92c1e;
+    --bg-danger: #fff4f3;
+    --bg-caution: #fff9e2;
+
+    --border-light: #e4e1da;
+    --border-medium: #afaaa2;
+    --border-focus: #2d60d6;
+    --border-danger: #ff8880;
+
+    --button-primary: #045f68;
+
+    /* Station line colors */
+    --station-line-ty: #db0042;
+    --station-line-mg: #009cd3;
+    --station-line-dt: #0a8540;
+    --station-line-om: #f18c2b;
+    --station-line-ik: #ef6d9a;
+    --station-line-tm: #b72e7e;
+    --station-line-sg: #d4a418;
+    --station-line-kd: #00a6c0;
+
+    /* === Elevation 推奨値 === */
+    --elevation-0: none;
+    --elevation-1: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --elevation-2: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --elevation-3: 0 16px 40px rgba(0, 0, 0, 0.10);
+
+    /* === Border Radius === */
+    --radius-xxs: 2px;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+
+    /* === Fonts === */
+    --font-base: Inter, "Noto Sans JP", "Helvetica Neue", Helvetica, Arial,
+      Roboto, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
+      "Noto Sans CJK JP", sans-serif;
+    --font-mono: "JetBrains Mono", SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-brand {
+    font-family: var(--font-base);
+    font-size: 20px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .nav-links a:hover { opacity: 0.6; }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--button-primary); color: #ffffff;
+    padding: 8px 20px; border-radius: var(--radius-pill);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--teal-dark); }
+
+  /* HERO */
+  .hero {
+    padding: 96px 32px 80px;
+    background: var(--bg-light);
+    text-align: left;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 32px; font-weight: 700;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    max-width: 880px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 640px; margin: 0 0 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--button-primary); color: #ffffff;
+    padding: 12px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: var(--teal-dark); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg-light); color: var(--text-primary);
+    padding: 11px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--border-light);
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: var(--bg-default); }
+  .btn-dark {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--portal-gray-900); color: #ffffff;
+    padding: 12px 24px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: opacity 0.15s;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+  .btn-danger-alert {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg-danger); color: var(--text-danger);
+    padding: 8px 16px; border-radius: var(--radius-pill);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 1px solid var(--border-danger);
+    transition: background 0.15s;
+  }
+  .btn-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; color: var(--text-teal);
+    padding: 8px 0; border-radius: 0;
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+  }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* BADGES */
+  .badge-event {
+    display: inline-block;
+    background: var(--bg-teal); color: var(--text-teal);
+    padding: 4px 8px; border-radius: var(--radius-xxs);
+    font-size: 14px; font-weight: 700; line-height: 1.25;
+  }
+  .badge-new {
+    display: inline-block;
+    background: var(--bg-new); color: #ffffff;
+    padding: 2px 8px; border-radius: var(--radius-xxs);
+    font-size: 12px; font-weight: 700;
+  }
+  .badge-caution {
+    display: inline-block;
+    background: var(--bg-caution); color: var(--text-caution);
+    padding: 4px 10px; border-radius: var(--radius-xs);
+    font-size: 12px; font-weight: 700;
+  }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 600; color: var(--text-tertiary);
+    text-transform: uppercase; margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+  .section-title {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--border-light);
+    margin: 0;
+  }
+  .section-warm { background: var(--bg-default); padding: 80px 32px; }
+  .section-warm .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .color-swatch { border-radius: var(--radius-sm); overflow: hidden; background: var(--bg-light); border: 1px solid var(--border-light); }
+  .color-swatch-block { height: 88px; width: 100%; }
+  .color-swatch-info { padding: 12px 14px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-tertiary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-light); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-tertiary); margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--bg-strong); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: var(--radius-xs); margin-left: 8px; font-family: var(--font-base); }
+
+  /* ARTICLE / RAILWAY */
+  .article-preview { max-width: 720px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  .article-preview h2 {
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    margin: 40px 0 16px;
+  }
+  .article-preview h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    margin: 32px 0 12px;
+  }
+  .article-preview p {
+    font-size: 16px; font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 20px; color: var(--text-primary);
+  }
+  .article-preview p.helper {
+    color: var(--text-secondary); font-size: 14px; line-height: 1.5;
+  }
+  .article-callout {
+    background: var(--bg-teal);
+    border-left: 4px solid var(--teal-primary);
+    padding: 20px 24px;
+    border-radius: var(--radius-sm);
+    margin: 24px 0;
+    font-size: 14px; line-height: 1.5;
+  }
+  .article-callout strong { color: var(--text-teal); }
+
+  /* CARDS */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .event-card {
+    background: var(--bg-light);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .event-card:hover { box-shadow: var(--elevation-1); transform: translateY(-2px); }
+  .event-card-img {
+    width: 100%; height: 180px;
+    background: var(--bg-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--text-tertiary);
+  }
+  .event-card-body { padding: 20px; }
+  .event-card-badges { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .event-card h3 {
+    font-size: 20px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 8px; color: var(--text-primary);
+  }
+  .event-card p {
+    font-size: 14px; line-height: 1.5;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .event-card-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 14px; font-weight: 700;
+    color: var(--text-teal); text-decoration: none;
+  }
+  .event-card-link:hover { text-decoration: underline; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; }
+  .form-group { margin-bottom: 0; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--bg-light); color: var(--text-primary);
+    border: 1px solid var(--border-medium);
+    padding: 20px 16px; border-radius: var(--radius-md);
+    font-family: var(--font-base);
+    font-size: 16px; letter-spacing: 0.2px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input::placeholder { color: var(--text-disabled); }
+  .form-input:focus, .form-input--focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(45, 96, 214, 0.15);
+  }
+  .form-input--error {
+    border-color: var(--border-danger);
+    box-shadow: 0 0 0 3px rgba(255, 136, 128, 0.15);
+  }
+  .form-error-text {
+    font-size: 12px; color: var(--text-danger); margin-top: 6px; font-weight: 400;
+  }
+  .form-state-label { font-size: 12px; color: var(--text-tertiary); margin-top: 6px; font-family: var(--font-mono); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--bg-light); border-radius: var(--radius-sm);
+    padding: 32px 24px; text-align: center;
+    border: 1px solid var(--border-light);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); word-break: break-all; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--teal-primary); border-radius: var(--radius-xs); margin-bottom: 8px; height: 32px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-tertiary); }
+  .spacing-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-block {
+    width: 96px; height: 64px;
+    background: var(--teal-primary);
+    margin-bottom: 8px;
+  }
+
+  /* BUTTON ROW */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .button-item { text-align: left; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-tertiary); margin-top: 8px; font-family: var(--font-mono); }
+
+  /* BADGE ROW */
+  .badge-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+
+  /* STATION LINE COLORS */
+  .line-color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .line-color-item { display: flex; align-items: center; gap: 10px; }
+  .line-color-dot { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; }
+  .line-color-name { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .line-color-hex { font-size: 11px; color: var(--text-tertiary); font-family: var(--font-mono); }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px;
+    background: var(--bg-dark);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .footer a { color: #ffffff; text-decoration: underline; }
+  .footer-company {
+    background: var(--portal-gray-700);
+    padding: 24px 32px;
+    margin-top: 32px;
+    border-radius: var(--radius-sm);
+    text-align: left;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 769px) {
+    .hero { padding: 64px 20px 56px; }
+    .hero h1 { font-size: 24px; }
+    .nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 20px; }
+    .section-warm { padding: 56px 20px; }
+    .section-title { font-size: 24px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 24px; }
+    .article-preview h2 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">TOKYU</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Railway</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <a class="nav-cta" href="#">路線検索</a>
+</nav>
+
+<section class="hero">
+  <div style="display:inline-flex; align-items:center; gap:8px; margin-bottom:20px;">
+    <span class="badge-event">2026.06.18 Wed</span>
+    <span class="badge-new">NEW</span>
+  </div>
+  <h1>東急線でつながる、<br>暮らしと街の新しいかたち。</h1>
+  <p>TOKYU のデザインシステムをカタログ化したプレビューです。ポータルサイト tokyu.co.jp の computed style 実測値（2026-06-18 取得）に基づき、カラー、タイポグラフィ、コンポーネント、レイアウトトークンを可視化しています。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">沿線イベントを探す</a>
+    <a class="btn-secondary" href="#">路線図・各駅情報</a>
+    <a class="btn-link" href="#">まちを楽しむ →</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors -- 実測値（124 CSS Custom Properties）</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand — Teal</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#045f68"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal Primary</div><div class="color-swatch-hex">#045f68</div><div class="color-swatch-role">主要 CTA 背景・テキストリンク（--button-primary）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#02444c"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal Dark</div><div class="color-swatch-hex">#02444c</div><div class="color-swatch-role">ホバー時（--portal-teal-800）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f0fafa"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal Light</div><div class="color-swatch-hex">#f0fafa</div><div class="color-swatch-role">イベントバッジ面（--bg-teal）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Brand — TOKYU RED</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f93628"></div><div class="color-swatch-info"><div class="color-swatch-name">TOKYU RED</div><div class="color-swatch-hex">#f93628</div><div class="color-swatch-role">アラート・NEW バッジ専用（--tokyu-red）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d92c1e"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger Text</div><div class="color-swatch-hex">#d92c1e</div><div class="color-swatch-role">エラー・運行情報テキスト（--text-danger）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a2120"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#1a2120</div><div class="color-swatch-role">本文テキスト（--text-primary）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5a605f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#5a605f</div><div class="color-swatch-role">補足テキスト（--text-secondary）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#818988"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Tertiary</div><div class="color-swatch-hex">#818988</div><div class="color-swatch-role">第三階層テキスト（--text-tertiary）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#afaaa2"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Disabled</div><div class="color-swatch-hex">#afaaa2</div><div class="color-swatch-role">無効テキスト（--text-disabled）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral — Warm Gray Scale (portal-gray)</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#201c18"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 900</div><div class="color-swatch-hex">#201c18</div><div class="color-swatch-role">ダーク CTA・最暗部</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#343028"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 800</div><div class="color-swatch-hex">#343028</div><div class="color-swatch-role">フッター背景（--bg-dark）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#49443c"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 700</div><div class="color-swatch-hex">#49443c</div><div class="color-swatch-role">フッター企業情報面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#645d51"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 600</div><div class="color-swatch-hex">#645d51</div><div class="color-swatch-role">暗い補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#888175"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 500</div><div class="color-swatch-hex">#888175</div><div class="color-swatch-role">中間グレー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#afaaa2"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 400</div><div class="color-swatch-hex">#afaaa2</div><div class="color-swatch-role">入力枠線（--border-medium）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d0cbc4"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 300</div><div class="color-swatch-hex">#d0cbc4</div><div class="color-swatch-role">薄いボーダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e4e1da; border-bottom:1px solid #d0cbc4"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 200</div><div class="color-swatch-hex">#e4e1da</div><div class="color-swatch-role">ライトボーダー（--border-light）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1eee9; border-bottom:1px solid #e4e1da"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 100</div><div class="color-swatch-hex">#f1eee9</div><div class="color-swatch-role">サーフェス強（--bg-strong）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f8f7f5; border-bottom:1px solid #e4e1da"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 50</div><div class="color-swatch-hex">#f8f7f5</div><div class="color-swatch-role">サーフェス既定（--bg-default）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff4f3; border-bottom:1px solid #ff8880"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger Surface</div><div class="color-swatch-hex">#fff4f3</div><div class="color-swatch-role">遅延・運行情報面（--bg-danger）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff9e2; border-bottom:1px solid #d4a418"></div><div class="color-swatch-info"><div class="color-swatch-name">Caution Surface</div><div class="color-swatch-hex">#fff9e2</div><div class="color-swatch-role">警告面（--bg-caution）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2d60d6"></div><div class="color-swatch-info"><div class="color-swatch-name">Focus Ring</div><div class="color-swatch-hex">#2d60d6</div><div class="color-swatch-role">フォーカスリング（--border-focus）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Station Line Colors（路線カラー）</div>
+  <div class="line-color-grid">
+    <div class="line-color-item"><div class="line-color-dot" style="background:#db0042"></div><div><div class="line-color-name">東横線</div><div class="line-color-hex">#db0042</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#009cd3"></div><div><div class="line-color-name">目黒線</div><div class="line-color-hex">#009cd3</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#0a8540"></div><div><div class="line-color-name">田園都市線</div><div class="line-color-hex">#0a8540</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#f18c2b"></div><div><div class="line-color-name">大井町線</div><div class="line-color-hex">#f18c2b</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#ef6d9a"></div><div><div class="line-color-name">池上線</div><div class="line-color-hex">#ef6d9a</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#b72e7e"></div><div><div class="line-color-name">東急多摩川線</div><div class="line-color-hex">#b72e7e</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#d4a418"></div><div><div class="line-color-name">世田谷線</div><div class="line-color-hex">#d4a418</div></div></div>
+    <div class="line-color-item"><div class="line-color-dot" style="background:#00a6c0"></div><div><div class="line-color-name">こどもの国線</div><div class="line-color-hex">#00a6c0</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography -- 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:32px; font-weight:700; line-height:1.5;">新着イベント -- Section H2</div>
+    <div class="type-meta">32px / 700 / line-height 1.5 / letter-spacing normal<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:24px; font-weight:700; line-height:1.5;">東急線をもっと知る -- H3 Section</div>
+    <div class="type-meta">24px / 700 / line-height 1.5 / letter-spacing normal<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:20px; font-weight:700; line-height:1.5;">サイト内検索 -- H2 Small</div>
+    <div class="type-meta">20px / 700 / line-height 1.5 / letter-spacing normal<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:400; line-height:1.5;">本文テキスト -- 東急沿線には自由が丘、二子玉川、武蔵小杉など魅力的なまちが広がっています。鉄道とまちづくりを一体で進めてきた東急グループの取り組みにより、住む人にも訪れる人にも心地よい暮らしのインフラが整っています。全階層で line-height 1.5 を統一し、安定したリズムを保つのが TOKYU のタイポグラフィの特徴です。</div>
+    <div class="type-meta">16px / 400 / line-height 1.5 / letter-spacing normal / color #1a2120<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:700; line-height:1.5;">ナビリンク -- 路線図・各駅情報</div>
+    <div class="type-meta">14px / 700 / line-height 1.5 / letter-spacing normal<span class="type-context">ナビ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:400; line-height:1.5; color:var(--text-secondary);">補足テキスト -- 運行情報はリアルタイムで更新されます。最新の情報は東急線アプリをご確認ください。</div>
+    <div class="type-meta">14px / 400 / line-height 1.5 / letter-spacing normal / color #5a605f</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:700; line-height:1.25; color:var(--text-teal); background:var(--bg-teal); display:inline-block; padding:4px 8px; border-radius:2px;">2026.06.18 Wed</div>
+    <div class="type-meta">14px / 700 / line-height 1.25 / bg #f0fafa / color #045f68 / radius 2px<span class="type-context">イベント</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:700; line-height:1.5; color:var(--text-secondary);">カテゴリ見出し -- まちの情報</div>
+    <div class="type-meta">12px / 700 / line-height 1.5 / color #5a605f<span class="type-context">ナビ小見出し</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / RAILWAY -->
+<section class="section-warm" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Railway -- 沿線まちづくりの組版</div>
+  <h2 class="section-title">本文組版サンプル</h2>
+  <div class="article-preview">
+    <h1>東急沿線のまちを楽しむ</h1>
+    <p>東急線沿線には、自由が丘の洗練されたカフェ文化、二子玉川の水辺と緑の都市空間、武蔵小杉の再開発による新しいライフスタイルなど、個性豊かなまちが広がっています。鉄道とまちづくりを一体で進めてきた東急グループならではの暮らしの質が、ここにあります。</p>
+
+    <h2>沿線イベント情報</h2>
+    <p>東急沿線では季節ごとに多彩なイベントが開催されています。地元商店街のマルシェ、駅ナカのポップアップショップ、沿線の公園で行われるアウトドアフェスティバルなど、電車で気軽に足を運べるイベントが目白押しです。</p>
+
+    <h3>二子玉川ライズ 夏のマルシェ</h3>
+    <p>二子玉川ライズのガレリアでは、近隣農家の新鮮な野菜や、沿線のベーカリー・スイーツ店が集う週末マルシェを定期開催しています。多摩川の風を感じながら、地元の味覚を楽しめます。</p>
+
+    <div class="article-callout">
+      <strong>東急線アプリのご案内：</strong>リアルタイム運行情報、駅構内ナビゲーション、沿線クーポンなど、東急線での移動と暮らしをサポートする公式アプリです。App Store / Google Play で無料ダウンロードいただけます。
+    </div>
+
+    <p class="helper">※ イベント情報は予告なく変更・中止となる場合があります。最新情報は各施設の公式サイトをご確認ください。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons -- Pill が基本</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">沿線イベントを探す</a><div class="button-label">Primary CTA -- Pill / #045f68</div></div>
+    <div class="button-item"><a class="btn-secondary" href="#">イベント一覧</a><div class="button-label">Secondary -- White Pill + Dark Text</div></div>
+    <div class="button-item"><a class="btn-dark" href="#">App Store</a><div class="button-label">Dark CTA -- #201c18</div></div>
+    <div class="button-item"><a class="btn-link" href="#">まちを楽しむ →</a><div class="button-label">Text Link -- #045f68</div></div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Alert / Status Buttons</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-danger-alert" href="#">遅延証明書</a><div class="button-label">Danger Alert -- bg #fff4f3 / border #ff8880</div></div>
+      <div class="button-item"><a class="btn-danger-alert" href="#">運行情報</a><div class="button-label">Danger Alert -- Pill</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="color-group-label">Badges</div>
+    <div class="badge-row">
+      <span class="badge-event">2026.06.18 Wed</span>
+      <span class="badge-new">NEW</span>
+      <span class="badge-caution">一部運休</span>
+      <span style="display:inline-block; background:var(--bg-strong); color:var(--text-secondary); padding:4px 10px; border-radius:var(--radius-pill); font-size:12px; font-weight:700;">更新</span>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-warm" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards -- イベントカード</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="event-card">
+      <div class="event-card-img">Image: 480 x 320</div>
+      <div class="event-card-body">
+        <div class="event-card-badges">
+          <span class="badge-event">2026.07.12 Sat</span>
+          <span class="badge-new">NEW</span>
+        </div>
+        <h3>自由が丘サマーフェスティバル</h3>
+        <p>自由が丘駅周辺の商店街と連携し、音楽ライブ、クラフトマーケット、キッズワークショップを開催します。</p>
+        <a class="event-card-link" href="#">詳しくみる →</a>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-card-img">Image: 480 x 320</div>
+      <div class="event-card-body">
+        <div class="event-card-badges">
+          <span class="badge-event">2026.07.20 Sun</span>
+        </div>
+        <h3>二子玉川ライズ 夏のマルシェ</h3>
+        <p>近隣農家の新鮮な野菜や、沿線のベーカリー・スイーツ店が集う週末マルシェ。多摩川の風を感じながら。</p>
+        <a class="event-card-link" href="#">詳しくみる →</a>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-card-img">Image: 480 x 320</div>
+      <div class="event-card-body">
+        <div class="event-card-badges">
+          <span class="badge-event">2026.08.03 Sun</span>
+          <span class="badge-caution">事前予約制</span>
+        </div>
+        <h3>武蔵小杉駅ナカ ポップアップ展</h3>
+        <p>武蔵小杉駅構内の特設スペースで、沿線のクリエイターによるポップアップショップを期間限定で開催。</p>
+        <a class="event-card-link" href="#">詳しくみる →</a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label">駅名・路線名</label>
+      <input class="form-input" type="text" placeholder="例：自由が丘">
+      <div class="form-state-label">Default -- border #afaaa2 / radius 12px / padding 20px 16px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input class="form-input form-input--focus" type="email" value="user@tokyu.example">
+      <div class="form-state-label">Focus -- border #2d60d6 / shadow 3px</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">電話番号</label>
+      <input class="form-input form-input--error" type="tel" value="invalid">
+      <div class="form-error-text">正しい電話番号を入力してください</div>
+      <div class="form-state-label">Error -- border #ff8880 / shadow 3px</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-warm" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation -- 推奨値</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし -- 基本</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1);"><div class="elevation-label">Elevation 1</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2);"><div class="elevation-label">Elevation 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3);"><div class="elevation-label">Elevation 3</div><div class="elevation-desc">0 16px 40px rgba(0,0,0,0.10)</div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout -- Spacing & Radius</div>
+  <h2 class="section-title">スペーシング & ラディウス</h2>
+
+  <div class="color-group-label">Spacing Scale（8px ベース）</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-name">XS</div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-name">S</div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-name">M</div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-name">L</div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px"></div><div class="spacing-name">XL</div><div class="spacing-value">48px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-name">XXL</div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label" style="margin-top:48px;">Border Radius Scale</div>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:2px"></div>
+      <div class="spacing-name">XXSmall</div>
+      <div class="spacing-value">2px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:4px"></div>
+      <div class="spacing-name">XSmall</div>
+      <div class="spacing-value">4px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:8px"></div>
+      <div class="spacing-name">Small</div>
+      <div class="spacing-value">8px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:12px"></div>
+      <div class="spacing-name">Medium</div>
+      <div class="spacing-value">12px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:16px"></div>
+      <div class="spacing-name">Large</div>
+      <div class="spacing-value">16px</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-block" style="border-radius:999px"></div>
+      <div class="spacing-name">Pill</div>
+      <div class="spacing-value">999px</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    Generated from <a href="https://www.tokyu.co.jp/">tokyu.co.jp</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-18）
+    <div class="footer-company">
+      <strong style="color:#ffffff;">TOKYU CORPORATION</strong><br>
+      東急株式会社 / 124の CSS Custom Properties による包括的デザイントークンシステム<br>
+      欧文: Inter（Google Fonts） / 和文: Noto Sans JP（Google Fonts）
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
