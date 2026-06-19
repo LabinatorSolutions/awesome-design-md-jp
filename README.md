@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (336 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (339 sites)</a>
 </p>
 
 <table>
@@ -495,6 +495,11 @@
 <td align="center"><strong>LOTTE</strong><br><img src="design-md/lotte/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>高島屋</strong><br><img src="design-md/takashimaya/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>KUMON</strong><br><img src="design-md/kumon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東京メトロ</strong><br><img src="design-md/tokyometro/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Epson</strong><br><img src="design-md/epson/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -891,11 +896,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [TOKYU (東急)](https://www.tokyu.co.jp/) | Railway / Lifestyle | [DESIGN.md](design-md/tokyu/DESIGN.md) | [preview.html](design-md/tokyu/preview.html) |
 | [LOTTE (ロッテ)](https://www.lotte.co.jp/) | Food & Beverage / Confectionery | [DESIGN.md](design-md/lotte/DESIGN.md) | [preview.html](design-md/lotte/preview.html) |
 | [TAKASHIMAYA (高島屋)](https://www.takashimaya.co.jp/) | Retail / Department Store | [DESIGN.md](design-md/takashimaya/DESIGN.md) | [preview.html](design-md/takashimaya/preview.html) |
+| [KUMON (公文)](https://www.kumon.ne.jp/) | Education | [DESIGN.md](design-md/kumon/DESIGN.md) | [preview.html](design-md/kumon/preview.html) |
+| [Tokyo Metro (東京メトロ)](https://www.tokyometro.jp/) | Transit / Infrastructure | [DESIGN.md](design-md/tokyometro/DESIGN.md) | [preview.html](design-md/tokyometro/preview.html) |
+| [Epson (エプソン)](https://www.epson.jp/) | Technology / Manufacturing | [DESIGN.md](design-md/epson/DESIGN.md) | [preview.html](design-md/epson/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (336 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (339 sites)</a>
 </p>
 
 <table>
@@ -1355,6 +1363,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>TOKYU</strong><br><img src="design-md/tokyu/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>LOTTE</strong><br><img src="design-md/lotte/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TAKASHIMAYA</strong><br><img src="design-md/takashimaya/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>KUMON</strong><br><img src="design-md/kumon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Tokyo Metro</strong><br><img src="design-md/tokyometro/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Epson</strong><br><img src="design-md/epson/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
