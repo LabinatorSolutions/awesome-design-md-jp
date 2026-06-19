@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: キッコーマン (Kikkoman)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --brand-orange: #e96600;
+    --brand-orange-hover: #d45c00;
+    --text-primary: #333333;
+    --text-placeholder: #898989;
+    --text-white: #ffffff;
+    --bg-primary: #ffffff;
+    --bg-warm-cream: #fdf5e2;
+    --bg-warm-cream-alt: #fdf7e0;
+    --bg-warm-peach: #ffe4c3;
+    --bg-light-gray: #f5f5f5;
+    --bg-error: #ffe7e7;
+    --border-default: #999999;
+    --border-dark: #333333;
+    --carousel-dot: #cccccc;
+    --sub-delmonte: #008f4b;
+    --sub-manjo: #fb3733;
+    --sub-manns: #922e41;
+    --sub-soymilk: #a3ca0f;
+    /* === Elevation 実測値 === */
+    --header-shadow: rgba(221, 221, 221, 0.004) 0px 1px 0px 0px;
+    --card-shadow: 0px 2px 8px rgba(0,0,0,0.08);
+    --card-shadow-hover: 0px 4px 16px rgba(0,0,0,0.12);
+    /* === Fonts === */
+    --font-base: "Noto Sans JP", 游ゴシック体, YuGothic, 游ゴシック, "Yu Gothic", "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, Arial, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 500; line-height: 1.6;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-primary);
+    box-shadow: var(--header-shadow);
+  }
+  .nav-brand { font-size: 20px; font-weight: 700; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-brand-mark { display: inline-block; width: 28px; height: 28px; background: var(--brand-orange); border-radius: 50%; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-primary); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--brand-orange); }
+  .nav-cta {
+    display: inline-block; background: var(--brand-orange); color: var(--text-white);
+    padding: 8px 20px; border-radius: 0; font-size: 14px; font-weight: 700;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--brand-orange-hover); }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-warm-cream); }
+  .hero h1 {
+    font-size: 32px; font-weight: 700; line-height: 1.6;
+    letter-spacing: normal; font-feature-settings: normal;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px; font-weight: 500; line-height: 1.6;
+    color: var(--text-primary); max-width: 700px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--brand-orange); color: var(--text-white);
+    padding: 13px 24px; border-radius: 0; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-primary:hover { background: var(--brand-orange-hover); }
+  .btn-pill {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 13px 22px; border-radius: 50px;
+    border: 1px solid var(--border-default);
+    font-family: var(--font-base); font-size: 16px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.15s;
+  }
+  .btn-pill:hover { background: var(--bg-light-gray); }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--brand-orange);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 700; line-height: 1.3;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid #ddd; margin: 0; }
+
+  .section-warm { background: var(--bg-warm-cream); padding: 64px 32px; }
+  .section-warm .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-peach { background: var(--bg-warm-peach); padding: 64px 32px; }
+  .section-peach .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-gray { background: var(--bg-light-gray); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 4px; overflow: hidden; background: #fff; box-shadow: var(--card-shadow); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-placeholder); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-placeholder); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #eee; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-placeholder); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-warm-cream); color: var(--brand-orange); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 500; color: var(--text-placeholder); margin-top: 8px; }
+  .btn-tab-active {
+    display: inline-block; background: var(--brand-orange); color: var(--text-white);
+    padding: 13px 23px; border-radius: 5px 5px 0 0; border: none;
+    font-family: var(--font-base); font-size: 18px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-tab-inactive {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 13px 23px; border-radius: 5px 5px 0 0; border: none;
+    font-family: var(--font-base); font-size: 18px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+  }
+  .btn-search-group { display: flex; align-items: stretch; }
+  .btn-search-input {
+    padding: 12px 18px; border: 1px solid var(--border-dark); border-right: none;
+    border-radius: 5px 0 0 5px; font-family: var(--font-base); font-size: 16px;
+    font-weight: 400; color: var(--text-placeholder); outline: none; width: 200px;
+  }
+  .btn-search-submit {
+    display: inline-block; background: var(--brand-orange); color: var(--text-white);
+    padding: 12px 22px; border-radius: 0 5px 5px 0; border: 1px solid var(--border-dark);
+    font-family: var(--font-base); font-size: 18px; font-weight: 700; cursor: pointer;
+  }
+  .carousel-dot {
+    display: inline-block; width: 12px; height: 12px;
+    background: var(--carousel-dot); border-radius: 50%; border: none; cursor: pointer;
+  }
+  .carousel-dot.active { background: var(--brand-orange); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border-radius: 4px; overflow: hidden;
+    box-shadow: var(--card-shadow); transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--card-shadow-hover); }
+  .card-img { height: 180px; width: 100%; object-fit: cover; background: var(--bg-warm-cream); display: flex; align-items: center; justify-content: center; color: var(--brand-orange); font-size: 40px; }
+  .card-body { padding: 16px; }
+  .card h3 { font-size: 16px; font-weight: 700; line-height: 1.6; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--text-placeholder); line-height: 1.6; }
+  .card-meta { font-size: 12px; color: var(--text-placeholder); margin-top: 8px; }
+
+  /* RECIPE PREVIEW */
+  .recipe-preview { max-width: 700px; margin: 0 auto; }
+  .recipe-preview h2 { font-size: 28px; font-weight: 700; line-height: 1.3; color: var(--brand-orange); margin-bottom: 16px; }
+  .recipe-preview h3 { font-size: 22px; font-weight: 500; line-height: 1.4; color: var(--brand-orange); margin: 24px 0 12px; }
+  .recipe-preview p { font-size: 16px; font-weight: 500; line-height: 1.6; letter-spacing: normal; font-feature-settings: normal; margin-bottom: 16px; color: var(--text-primary); }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 12px 16px; border-radius: 5px;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(233,102,0,0.15); }
+  .form-input--error { border-color: #c00; box-shadow: 0 0 0 3px rgba(204,0,0,0.1); }
+  .form-state-label { font-size: 11px; color: var(--text-placeholder); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: #fff; border-radius: 4px; padding: 24px; text-align: center; border: 1px solid #eee; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-placeholder); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-orange); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-placeholder); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-light-gray); border: 1px solid #eee; border-radius: 4px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand-orange); border-radius: 3px; opacity: 0.3; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-placeholder); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--bg-light-gray); font-size: 12px; color: var(--text-placeholder); }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-warm, .section-peach, .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span class="nav-brand-mark"></span> キッコーマン</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#recipe">Recipe</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">お問い合わせ</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>kikkoman.co.jp — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">レシピを検索</a>
+    <a class="btn-pill" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e96600"></div><div class="color-swatch-info"><div class="color-swatch-name">Kikkoman Orange</div><div class="color-swatch-hex">#e96600</div><div class="color-swatch-role">CTA・タブ・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d45c00"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange Hover</div><div class="color-swatch-hex">#d45c00</div><div class="color-swatch-role">ホバー時（推定）</div></div></div>
+  </div>
+
+  <div class="color-group-label">Sub Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#008f4b"></div><div class="color-swatch-info"><div class="color-swatch-name">Del Monte</div><div class="color-swatch-hex">#008f4b</div><div class="color-swatch-role">デルモンテ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fb3733"></div><div class="color-swatch-info"><div class="color-swatch-name">Manjo</div><div class="color-swatch-hex">#fb3733</div><div class="color-swatch-role">マンジョウ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#922e41"></div><div class="color-swatch-info"><div class="color-swatch-name">Manns Wine</div><div class="color-swatch-hex">#922e41</div><div class="color-swatch-role">マンズワイン</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#a3ca0f"></div><div class="color-swatch-info"><div class="color-swatch-name">Soymilk</div><div class="color-swatch-hex">#a3ca0f</div><div class="color-swatch-role">キッコーマン豆乳</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#898989"></div><div class="color-swatch-info"><div class="color-swatch-name">Placeholder</div><div class="color-swatch-hex">#898989</div><div class="color-swatch-role">入力プレースホルダー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">CTA上テキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border: 1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fdf5e2"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Cream</div><div class="color-swatch-hex">#fdf5e2</div><div class="color-swatch-role">レシピセクション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fdf7e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Cream Alt</div><div class="color-swatch-hex">#fdf7e0</div><div class="color-swatch-role">献立エリア</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffe4c3"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Peach</div><div class="color-swatch-hex">#ffe4c3</div><div class="color-swatch-role">検索ナビ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Gray</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffe7e7"></div><div class="color-swatch-info"><div class="color-swatch-name">Error Surface</div><div class="color-swatch-hex">#ffe7e7</div><div class="color-swatch-role">重要なお知らせ</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border & UI</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#999999"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#999999</div><div class="color-swatch-role">ボタン・入力枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Dark</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">検索枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Carousel Dot</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">スライダー</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-size:40px; font-weight:500; line-height:1.4;">ブランドサイト — Display (h2)</div>
+    <div class="type-meta">40px / 500 / line-height: 1.4 / letter-spacing: normal / palt: なし<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:32px; font-weight:700; line-height:1.6;">メインカルーセル見出し — Heading 1</div>
+    <div class="type-meta">32px / 700 / line-height: 1.6 / letter-spacing: normal / palt: なし<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:700; line-height:1.3; color:var(--brand-orange);">今日の献立 — Heading 2 (orange)</div>
+    <div class="type-meta">28px / 700 / line-height: 1.3 / color: #e96600<span class="type-context">レシピ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:26px; font-weight:700; line-height:1.4;">人気のレシピまとめ — Heading 2 (section)</div>
+    <div class="type-meta">26px / 700 / line-height: 1.4 / color: #333333<span class="type-context">レシピ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:22px; font-weight:700; line-height:1.4;">重要なお知らせ — Heading 2</div>
+    <div class="type-meta">22px / 700 / line-height: 1.4 / letter-spacing: normal<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:22px; font-weight:500; line-height:1.4; color:var(--brand-orange);">旬の緑黄色野菜で人気おかずを — Heading 3 (lead)</div>
+    <div class="type-meta">22px / 500 / line-height: 1.4 / color: #e96600<span class="type-context">レシピ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:20px; font-weight:700; line-height:1.6;">グローバルナビ — Nav Primary</div>
+    <div class="type-meta">20px / 700 / line-height: 1.6<span class="type-context">ヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:18px; font-weight:700; line-height:1.4;">ニュースタブ・サブナビ — Tab / Sub Nav</div>
+    <div class="type-meta">18px / 700 / line-height: 1.4<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:500; line-height:1.6;">本文テキスト — キッコーマンのサイトは font-weight: 500 がデフォルト。游ゴシックの Medium ウェイトで、細すぎず太すぎない絶妙なバランスです。letter-spacing と palt は全サイトで未使用。</div>
+    <div class="type-meta">16px / 500 / line-height: 1.6 / letter-spacing: normal / palt: なし<span class="type-context">body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:16px; font-weight:700; line-height:1.6;">レシピカードタイトル — Card Title (h3)</div>
+    <div class="type-meta">16px / 700 / line-height: 1.6<span class="type-context">レシピ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:700; line-height:1.4;">ナビボタン — Small (14px)</div>
+    <div class="type-meta">14px / 700 / line-height: 1.4<span class="type-context">ヘッダー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:500; line-height:1.6; color:var(--text-placeholder);">フッター注釈 — Caption (12px)</div>
+    <div class="type-meta">12px / 500 / line-height: 1.6<span class="type-context">フッター</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- RECIPE PREVIEW -->
+<section class="section-warm" id="recipe">
+<div class="section-inner">
+  <div class="section-label">03 / Recipe — レシピ組版</div>
+  <h2 class="section-title">レシピページの組版サンプル</h2>
+  <div class="recipe-preview">
+    <h2>今日の献立</h2>
+    <h3>旬の緑黄色野菜で人気おかずを</h3>
+    <p>ピーマンの肉詰めは簡単デミソースでリッチに仕上げ。レンチンかぼちゃはマヨしょうゆ味のサラダに。旬の食材を使った献立で、毎日の食卓をもっと豊かに。</p>
+    <p>キッコーマンのレシピサイト「ホームクッキング」では、365日キッコーマンのおすすめ献立をお届けしています。定番のしょうゆ料理から、季節の食材を活かしたレシピまで幅広くご紹介。ABCabc 123</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><a class="btn-primary" href="#">お問い合わせ</a><div class="button-label">Primary CTA (square)</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">ブランドサイト</a><div class="button-label">Pill Button</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">もっと見る</a><div class="button-label">Pill Button (more)</div></div>
+  </div>
+
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><button class="btn-tab-active">すべて</button><div class="button-label">Tab (active)</div></div>
+    <div class="button-item"><button class="btn-tab-inactive">ニュースリリース</button><div class="button-label">Tab (inactive)</div></div>
+    <div class="button-item"><button class="btn-tab-inactive">お知らせ</button><div class="button-label">Tab (inactive)</div></div>
+  </div>
+
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item">
+      <div class="btn-search-group">
+        <input class="btn-search-input" type="text" placeholder="レシピを検索">
+        <button class="btn-search-submit">検索</button>
+      </div>
+      <div class="button-label">Search (input + submit)</div>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <div class="button-item">
+      <div style="display:flex; gap:6px; align-items:center;">
+        <span class="carousel-dot active"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+        <span class="carousel-dot"></span>
+      </div>
+      <div class="button-label">Carousel Dots</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-warm" id="cards">
+<div class="section-inner">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-img">&#127858;</div>
+      <div class="card-body">
+        <h3>チヂミ風焼きそうめん</h3>
+        <p>余ったそうめんを活用した簡単レシピ。キッコーマンのしょうゆで香ばしく仕上げます。</p>
+        <div class="card-meta">調理時間 20分 / 2人分</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">&#127835;</div>
+      <div class="card-body">
+        <h3>基本のピーマンの肉詰め</h3>
+        <p>デミソースで仕上げるリッチな味わい。お弁当のおかずにもぴったりの定番レシピです。</p>
+        <div class="card-meta">調理時間 30分 / 4人分</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">&#127839;</div>
+      <div class="card-body">
+        <h3>なすの人気レシピカタログ</h3>
+        <p>旬のなすを使った人気レシピをまとめてご紹介。炒め物から煮物まで幅広くカバー。</p>
+        <div class="card-meta">レシピまとめ / 全12品</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="name@example.com"><div class="form-state-label">デフォルト — border: #999999, radius: 5px</div></div>
+  <div class="form-group"><label class="form-label">検索キーワード</label><input class="form-input form-input--focus" type="text" value="しょうゆ レシピ"><div class="form-state-label">フォーカス — border: #e96600 (brand orange)</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー — border: #c00</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section-gray" id="elevation">
+<div class="section-inner">
+  <div class="section-label">07 / Elevation — 実測値</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし — 大半の要素</div></div>
+    <div class="elevation-card" style="box-shadow: rgba(221,221,221,0.004) 0px 1px 0px 0px;"><div class="elevation-label">Header Shadow</div><div class="elevation-desc">rgba(221,221,221,0.004) 0 1px 0 0</div></div>
+    <div class="elevation-card" style="box-shadow: var(--card-shadow);"><div class="elevation-label">Card Shadow</div><div class="elevation-desc">0 2px 8px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow: var(--card-shadow-hover);"><div class="elevation-label">Card Hover</div><div class="elevation-desc">0 4px 16px rgba(0,0,0,0.12)</div></div>
+  </div>
+  <p style="margin-top:16px; font-size:14px; color:var(--text-placeholder);">フラットデザイン基調。要素の区切りは背景色の変化（白 → クリーム → ピーチ）で表現。</p>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout — Spacing & Surface</div>
+  <h2 class="section-title">面色の使い分け</h2>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px;">
+    <div style="background: var(--bg-primary); border: 1px solid #eee; padding: 24px; border-radius: 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">White</div>
+      <div style="font-size: 12px; color: var(--text-placeholder);">#ffffff — 標準背景</div>
+    </div>
+    <div style="background: var(--bg-warm-cream); padding: 24px; border-radius: 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Warm Cream</div>
+      <div style="font-size: 12px; color: var(--text-placeholder);">#fdf5e2 — レシピセクション</div>
+    </div>
+    <div style="background: var(--bg-warm-peach); padding: 24px; border-radius: 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Warm Peach</div>
+      <div style="font-size: 12px; color: var(--text-placeholder);">#ffe4c3 — 検索ナビ</div>
+    </div>
+    <div style="background: var(--bg-light-gray); padding: 24px; border-radius: 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Light Gray</div>
+      <div style="font-size: 12px; color: var(--text-placeholder);">#f5f5f5 — ニュートラル</div>
+    </div>
+    <div style="background: var(--bg-error); padding: 24px; border-radius: 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Error</div>
+      <div style="font-size: 12px; color: var(--text-placeholder);">#ffe7e7 — 重要なお知らせ</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.kikkoman.co.jp/" style="color:var(--brand-orange); text-decoration:underline;">kikkoman.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-19）
+</footer>
+
+</body>
+</html>

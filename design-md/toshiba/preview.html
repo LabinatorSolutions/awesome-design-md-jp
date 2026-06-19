@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Toshiba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --toshiba-blue: #0064d2;
+    --toshiba-light-blue: #0092ef;
+    --text-primary: #000000;
+    --text-on-blue: #eeeeee;
+    --text-on-blue-heading: #ffffff;
+    --bg-primary: #ffffff;
+    --surface-gray: #e7e7e8;
+    --surface-dark: #505054;
+    --border-default: #cccccc;
+    --border-light: #dddddd;
+    /* === Fonts 実測値 === */
+    --font-base: Arial, "Helvetica Neue", Helvetica, Meiryo, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 20px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+  }
+  .nav-brand-logo {
+    display: inline-block; width: 28px; height: 28px;
+    background: var(--toshiba-blue); border-radius: 2px;
+    color: #fff; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .nav-links { display: flex; gap: 0; list-style: none; }
+  .nav-links a {
+    font-size: 16px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; padding: 0 10px; line-height: 64px;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--toshiba-blue); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-lang { font-size: 14px; color: var(--text-primary); text-decoration: none; }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-primary); }
+  .hero h1 {
+    font-family: var(--font-base);
+    font-size: 48px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    color: var(--text-primary); max-width: 800px; margin: 0 auto 32px;
+    padding-bottom: 15px;
+  }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1040px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 400; color: var(--text-primary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+    opacity: 0.5;
+  }
+  .section-title {
+    font-family: var(--font-base);
+    font-size: 30px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 32px;
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--surface-gray); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 1040px; margin: 0 auto; }
+
+  .section-dark { background: var(--surface-dark); padding: 64px 32px; color: var(--text-on-blue-heading); }
+  .section-dark .section-inner { max-width: 1040px; margin: 0 auto; }
+  .section-dark .section-label { color: var(--text-on-blue); }
+  .section-dark .section-title { color: var(--text-on-blue-heading); }
+
+  .section-blue { background: var(--toshiba-blue); padding: 64px 32px; color: var(--text-on-blue-heading); }
+  .section-blue .section-inner { max-width: 1040px; margin: 0 auto; }
+  .section-blue .section-label { color: var(--text-on-blue); }
+  .section-blue .section-title { color: var(--text-on-blue-heading); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: #fff; border: 1px solid var(--border-default); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-primary); opacity: 0.6; font-family: monospace; }
+  .color-swatch-role { font-size: 11px; color: var(--text-primary); opacity: 0.5; margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: monospace; font-size: 12px; font-weight: 400; color: var(--text-primary); opacity: 0.5; margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-gray); color: var(--text-primary); font-size: 11px; padding: 2px 8px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-primary); opacity: 0.5; margin-top: 8px; }
+  .btn-search {
+    display: inline-block; background: var(--toshiba-blue); color: var(--text-on-blue);
+    padding: 8px 24px; border-radius: 3px; border: none;
+    font-family: Arial, sans-serif; font-size: 16px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-search:hover { opacity: 0.85; }
+  .btn-accordion {
+    display: inline-block; background: var(--bg-primary); color: var(--text-primary);
+    padding: 15px 16px; border-radius: 0; border: none; border-bottom: 1px solid var(--border-default);
+    font-family: Arial, sans-serif; font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; text-align: left;
+    transition: background 0.15s; width: 100%; max-width: 400px;
+  }
+  .btn-accordion:hover { background: var(--surface-gray); }
+  .btn-accordion::after { content: "＋"; float: right; color: var(--toshiba-blue); }
+  .btn-link {
+    display: inline-block; background: transparent; color: var(--toshiba-blue);
+    padding: 8px 0; border: none;
+    font-family: var(--font-base); font-size: 16px; font-weight: 400;
+    text-decoration: underline; cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
+  .card {
+    background: var(--bg-primary); border: 1px solid var(--border-default);
+    border-radius: 0; padding: 24px;
+    transition: background 0.15s;
+  }
+  .card:hover { background: var(--surface-gray); }
+  .card h3 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 8px;
+  }
+  .card p { font-size: 16px; color: var(--text-primary); line-height: 1.5; padding-bottom: 15px; }
+  .card-link { font-size: 14px; color: var(--toshiba-blue); text-decoration: none; display: inline-block; }
+  .card-link:hover { text-decoration: underline; }
+
+  .card-dark {
+    background: var(--surface-dark); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0; padding: 24px; color: var(--text-on-blue-heading);
+  }
+  .card-dark h3 { color: var(--text-on-blue-heading); font-size: 24px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+  .card-dark p { color: var(--text-on-blue); font-size: 16px; line-height: 1.5; padding-bottom: 15px; }
+  .card-dark .card-link { color: var(--text-on-blue-heading); }
+
+  /* ARTICLE / PRODUCT PREVIEW */
+  .article-preview { max-width: 800px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-base);
+    font-size: 48px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 16px;
+  }
+  .article-preview h2 {
+    font-family: var(--font-base);
+    font-size: 30px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin: 24px 0 12px;
+  }
+  .article-preview h3 {
+    font-family: var(--font-base);
+    font-size: 24px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin: 20px 0 10px;
+  }
+  .article-preview p {
+    font-family: var(--font-base);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal; font-feature-settings: normal;
+    margin-bottom: 0; padding-bottom: 15px;
+    color: var(--text-primary);
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 480px; }
+  .form-label { display: block; font-size: 14px; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
+  .form-search-group { display: flex; max-width: 480px; }
+  .form-select {
+    background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 8px 24px 8px 8px;
+    border-radius: 3px 0 0 3px;
+    font-family: Arial, sans-serif; font-size: 16px; outline: none;
+  }
+  .form-input {
+    flex: 1; background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border-light); border-left: none;
+    padding: 8px; border-radius: 0;
+    font-family: Arial, sans-serif; font-size: 16px; outline: none;
+  }
+  .form-input-standalone {
+    width: 100%; background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--border-light); padding: 8px;
+    border-radius: 0;
+    font-family: Arial, sans-serif; font-size: 16px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input-standalone:focus, .form-input-standalone--focus {
+    border-color: var(--toshiba-blue);
+    outline: 2px solid var(--toshiba-blue);
+    outline-offset: -2px;
+  }
+  .form-input-standalone--error {
+    border-color: #cc0000;
+    outline: 2px solid #cc0000;
+    outline-offset: -2px;
+  }
+  .form-submit {
+    background: var(--toshiba-blue); color: var(--text-on-blue);
+    border: none; border-radius: 0 3px 3px 0;
+    padding: 0 12px; font-family: Arial, sans-serif; font-size: 16px;
+    cursor: pointer;
+  }
+  .form-state-label { font-size: 11px; color: var(--text-primary); opacity: 0.5; margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--bg-primary); padding: 24px; text-align: center; border: 1px solid var(--border-default); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: monospace; font-size: 11px; color: var(--text-primary); opacity: 0.5; }
+
+  /* LAYOUT BARS */
+  .surface-bar { height: 48px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .surface-bar-label { font-size: 13px; font-weight: 700; }
+  .surface-bar-value { font-family: monospace; font-size: 12px; opacity: 0.6; margin-left: 8px; }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px; text-align: center;
+    background: var(--toshiba-blue);
+    font-size: 12px; color: var(--text-on-blue);
+  }
+  .footer a { color: var(--text-on-blue-heading); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 30px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray, .section-dark, .section-blue { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview h1 { font-size: 30px; }
+    .article-preview h2 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span class="nav-brand-logo">T</span> TOSHIBA</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#product">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-lang" href="#">English</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Design System Preview<br>global.toshiba — 日本語版</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。フラットデザイン・影なし・角丸なしの方針。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0064d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Toshiba Blue</div><div class="color-swatch-hex">#0064d2</div><div class="color-swatch-role">ブランドカラー・CTA・フッター</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0092ef"></div><div class="color-swatch-info"><div class="color-swatch-name">Light Blue</div><div class="color-swatch-hex">#0092ef</div><div class="color-swatch-role">アクセント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文テキスト（純粋な黒）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee"></div><div class="color-swatch-info"><div class="color-swatch-name">Text on Blue</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">ブルー背景上のテキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0064d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Link</div><div class="color-swatch-hex">#0064d2</div><div class="color-swatch-role">テキストリンク</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e7e7e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#e7e7e8</div><div class="color-swatch-role">セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#505054"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#505054</div><div class="color-swatch-role">ダークセクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0064d2"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Blue</div><div class="color-swatch-hex">#0064d2</div><div class="color-swatch-role">フッター背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cccccc"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#cccccc</div><div class="color-swatch-role">フォーム・区切り線</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dddddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Light</div><div class="color-swatch-hex">#dddddd</div><div class="color-swatch-role">検索入力欄</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:48px; font-weight:700; line-height:1.5; letter-spacing:normal; font-feature-settings:normal;">製品・サービス — Heading 1</div>
+    <div class="type-meta">48px / 700 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">ページタイトル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:30px; font-weight:700; line-height:1.5; letter-spacing:normal; font-feature-settings:normal;">スポットライト — Heading 2</div>
+    <div class="type-meta">30px / 700 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:24px; font-weight:700; line-height:1.5; letter-spacing:normal; font-feature-settings:normal;">エネルギーソリューション — Heading 3</div>
+    <div class="type-meta">24px / 700 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">サブセクション</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:16px; font-weight:400; line-height:1.5; letter-spacing:normal; font-feature-settings:normal;">本文テキスト — 東芝グループの事業領域は、「エネルギーソリューション」、「デジタルインフラソリューション」、「デバイス＆テクノロジー」の3つの柱で構成されています。ABCabc 123</div>
+    <div class="type-meta">16px / 400 / line-height: 1.5 / letter-spacing: normal / palt: なし<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:14px; font-weight:400; line-height:1.5; letter-spacing:normal; color: var(--text-primary);">補足テキスト — ナビサブメニュー、ラベル等 (14px)</div>
+    <div class="type-meta">14px / 400 / line-height: 1.5<span class="type-context">ナビサブ・ラベル</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family: var(--font-base); font-size:12px; font-weight:400; line-height:1.5; letter-spacing:normal;">パンくずリスト — Breadcrumb (12px)</div>
+    <div class="type-meta">12px / 400 / line-height: 1.5<span class="type-context">パンくず</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT PREVIEW -->
+<section class="section-gray" id="product">
+<div class="section-inner">
+  <div class="section-label">03 / Product — 製品ページ</div>
+  <h2 class="section-title">製品ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>エネルギーソリューション</h1>
+    <p>東芝グループの事業領域は、「エネルギーソリューション」、「デジタルインフラソリューション」、「デバイス＆テクノロジー」の3つの柱で構成されています。</p>
+    <h2>研究開発・技術</h2>
+    <p>お客様やパートナー企業様とともに未来を思い描き、アイデアをつないでいく。私たちの発想力と技術力で、これまでにない価値を共に生み出します。ABCabc 123</p>
+    <h3>デジタルトランスフォーメーション</h3>
+    <p>社会インフラや企業活動のデジタル化を推進し、持続可能な社会の実現に貢献します。量子コンピュータ、AI、IoTなどの先端技術を活用したソリューションを提供します。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+  <div class="button-row" style="margin-bottom: 32px;">
+    <div class="button-item"><button class="btn-search">検索</button><div class="button-label">Search CTA (radius: 3px)</div></div>
+    <div class="button-item"><a class="btn-link" href="#">製品・サービス一覧へ</a><div class="button-label">Text Link</div></div>
+  </div>
+  <div style="margin-top: 16px;">
+    <div class="button-item" style="max-width: 400px;">
+      <button class="btn-accordion">発電システム</button>
+      <button class="btn-accordion">電力流通システム</button>
+      <button class="btn-accordion">再生可能エネルギー・VPP</button>
+      <div class="button-label" style="margin-top: 8px;">Accordion Buttons (flat, border-bottom)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div style="margin-bottom: 16px; font-size: 14px; font-weight: 700;">White Cards（白背景）</div>
+  <div class="card-grid" style="margin-bottom: 32px;">
+    <div class="card">
+      <h3>エネルギーソリューション</h3>
+      <p>発電、送変電、太陽光、水素など、多様なエネルギー関連の製品・サービスを提供します。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>デジタルインフラソリューション</h3>
+      <p>IoTやAIを活用した社会インフラの高度化、企業のDXを推進するソリューションを提供します。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card">
+      <h3>デバイス＆テクノロジー</h3>
+      <p>パワー半導体、ストレージ等のデバイスとそれらを支える先端材料・技術を提供します。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 16px; font-size: 14px; font-weight: 700;">Dark Cards（ダーク背景 #505054）</div>
+  <div class="card-grid">
+    <div class="card-dark">
+      <h3>インフラシステムソリューション</h3>
+      <p>発電システム、送変電システム等のエネルギーインフラを支える製品群。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card-dark">
+      <h3>デジタルソリューション</h3>
+      <p>DX推進、量子コンピューティング等のデジタル技術を活用したソリューション。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+    <div class="card-dark">
+      <h3>デバイスソリューション</h3>
+      <p>セミコンダクター、ストレージ等の基盤技術を提供するデバイス事業。</p>
+      <a class="card-link" href="#">詳しく見る →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+
+  <div style="margin-bottom: 32px;">
+    <div class="form-label" style="margin-bottom: 8px;">サイト内検索</div>
+    <div class="form-search-group">
+      <select class="form-select"><option>All</option><option>html</option><option>pdf</option></select>
+      <input class="form-input" type="text" placeholder="キーワードを入力">
+      <button class="form-submit">検索</button>
+    </div>
+    <div class="form-state-label">検索フォーム — select: border-radius: 3px 0 0 3px / input: border: 1px solid #ddd / button: bg: #0064d2, radius: 0 3px 3px 0</div>
+  </div>
+
+  <div class="form-group"><label class="form-label">お名前</label><input class="form-input-standalone" type="text" placeholder="山田 太郎"><div class="form-state-label">デフォルト — border: 1px solid #dddddd, radius: 0px</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input-standalone form-input-standalone--focus" type="text" value="info@toshiba.co.jp"><div class="form-state-label">フォーカス — border: #0064d2 (Toshiba Blue)</div></div>
+  <div class="form-group"><label class="form-label">電話番号</label><input class="form-input-standalone form-input-standalone--error" type="text" value="invalid"><div class="form-state-label">エラー — border: #cc0000</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation — 完全フラットデザイン</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし — すべての要素がこのレベル</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--toshiba-blue);"><div class="elevation-label">Focus State</div><div class="elevation-desc">outline: 2px solid #0064d2</div></div>
+    <div class="elevation-card" style="background: var(--surface-gray); border-color: var(--surface-gray);"><div class="elevation-label">Hover State</div><div class="elevation-desc">background: #e7e7e8（色変化のみ）</div></div>
+  </div>
+  <div style="margin-top: 24px; font-size: 14px; color: var(--text-primary); opacity: 0.6;">
+    東芝サイトは完全なフラットデザイン。box-shadow はどの要素にも使用されていない。深度は背景色の違い（白→グレー→ダークグレー→ブルー）で表現する。
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SURFACE VARIATIONS -->
+<section class="section" id="surfaces">
+  <div class="section-label">08 / Layout — Surface Variations</div>
+  <h2 class="section-title">面のバリエーション</h2>
+
+  <div class="surface-bar" style="background: var(--bg-primary); border: 1px solid var(--border-default);">
+    <span class="surface-bar-label" style="color: var(--text-primary);">White</span>
+    <span class="surface-bar-value" style="color: var(--text-primary);">#ffffff — ページ背景</span>
+  </div>
+  <div class="surface-bar" style="background: var(--surface-gray);">
+    <span class="surface-bar-label" style="color: var(--text-primary);">Gray</span>
+    <span class="surface-bar-value" style="color: var(--text-primary);">#e7e7e8 — セクション背景</span>
+  </div>
+  <div class="surface-bar" style="background: var(--surface-dark);">
+    <span class="surface-bar-label" style="color: var(--text-on-blue-heading);">Dark</span>
+    <span class="surface-bar-value" style="color: var(--text-on-blue);">#505054 — ダークセクション</span>
+  </div>
+  <div class="surface-bar" style="background: var(--toshiba-blue);">
+    <span class="surface-bar-label" style="color: var(--text-on-blue-heading);">Blue</span>
+    <span class="surface-bar-value" style="color: var(--text-on-blue);">#0064d2 — フッター・CTA</span>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.global.toshiba/jp.html">global.toshiba</a> DESIGN.md — awesome-design-md-jp / computed style 実測値
+</footer>
+
+</body>
+</html>
