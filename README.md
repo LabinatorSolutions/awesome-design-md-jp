@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (342 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (345 sites)</a>
 </p>
 
 <table>
@@ -907,11 +907,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Kikkoman (キッコーマン)](https://www.kikkoman.co.jp/) | Food & Beverage | [DESIGN.md](design-md/kikkoman/DESIGN.md) | [preview.html](design-md/kikkoman/preview.html) |
 | [JR East (JR東日本)](https://www.jreast.co.jp/) | Railway / Transit | [DESIGN.md](design-md/jreast/DESIGN.md) | [preview.html](design-md/jreast/preview.html) |
 | [Toshiba (東芝)](https://www.global.toshiba/jp.html) | Technology / Energy | [DESIGN.md](design-md/toshiba/DESIGN.md) | [preview.html](design-md/toshiba/preview.html) |
+| [SmartNews (スマートニュース)](https://www.smartnews.com/ja/) | News / Media | [DESIGN.md](design-md/smartnews/DESIGN.md) | [preview.html](design-md/smartnews/preview.html) |
+| [TOMBOW (トンボ鉛筆)](https://www.tombow.com/) | Stationery / Manufacturing | [DESIGN.md](design-md/tombow/DESIGN.md) | [preview.html](design-md/tombow/preview.html) |
+| [KING JIM (キングジム)](https://www.kingjim.co.jp/) | Office Products / Stationery | [DESIGN.md](design-md/kingjim/DESIGN.md) | [preview.html](design-md/kingjim/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (342 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (345 sites)</a>
 </p>
 
 <table>
@@ -1381,6 +1384,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>Kikkoman</strong><br><img src="design-md/kikkoman/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>JR East</strong><br><img src="design-md/jreast/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Toshiba</strong><br><img src="design-md/toshiba/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>SmartNews</strong><br><img src="design-md/smartnews/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOMBOW</strong><br><img src="design-md/tombow/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KING JIM</strong><br><img src="design-md/kingjim/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

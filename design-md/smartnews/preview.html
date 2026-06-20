@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: SmartNews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Brand Colors === */
+    --brand-blue: #0fbbe7;
+    --brand-red: #ff645b;
+    --brand-orange: #ffc73d;
+    --brand-green: #54e470;
+    /* === Text === */
+    --text-primary: #333333;
+    --text-corporate: #0e0e0e;
+    --text-secondary: #6e6e6e;
+    --text-white: #ffffff;
+    /* === Surfaces === */
+    --bg-primary: #ffffff;
+    --bg-section: #f6f6f6;
+    --bg-warm: #f4ecea;
+    --bg-corporate-gray: #f3f3f3;
+    /* === Borders === */
+    --border-default: #e5e7eb;
+    --border-orange: #ffc73c;
+    /* === Elevation === */
+    --shadow-reasons: 3px 3px 4px rgba(0, 0, 0, 0.15);
+    --shadow-header: 0 0 6px rgba(0, 0, 0, 0.12);
+    --shadow-modal: 0 8px 24px rgba(0, 0, 0, 0.10);
+    /* === Fonts === */
+    --font-consumer: "Noto Sans JP", system-ui, Roboto, sans-serif;
+    --font-consumer-barlow: "Barlow", "Noto Sans JP", system-ui, Roboto, sans-serif;
+    --font-corporate-body: "Noto Sans JP", sans-serif;
+    --font-corporate-display: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+    /* === Misc === */
+    --new-badge: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-consumer);
+    font-size: 16px; font-weight: 400; line-height: 1.8;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 56px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-family: var(--font-consumer-barlow);
+    font-size: 20px; font-weight: 700; color: var(--text-primary);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+  }
+  .nav-brand .sn-icon { color: var(--brand-blue); font-size: 22px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 400; color: var(--text-secondary);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    display: inline-block; background: var(--brand-blue); color: var(--text-white);
+    padding: 8px 24px; border-radius: 40px; font-size: 14px; font-weight: 700;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.8; }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; text-align: center; background: var(--bg-primary); }
+  .hero h1 {
+    font-family: var(--font-consumer);
+    font-size: 26px; font-weight: 700; line-height: 2.0;
+    letter-spacing: -0.025em;
+    color: var(--text-primary); margin-bottom: 16px;
+  }
+  .hero .hero-number {
+    font-family: var(--font-consumer-barlow);
+    font-size: 64px; font-weight: 900; line-height: 1.13;
+    letter-spacing: -0.01em; color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .hero p {
+    font-size: 17px; font-weight: 400; line-height: 1.8;
+    color: var(--text-primary); max-width: 620px; margin: 0 auto 32px;
+  }
+  .hero .brand-lead {
+    font-size: 21px; font-weight: 500; line-height: 1.6;
+    color: var(--brand-blue); margin-bottom: 24px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--brand-blue); color: var(--text-white);
+    padding: 17px 78px; border-radius: 40px; border: none;
+    font-family: var(--font-consumer); font-size: 17px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.8; }
+  .btn-corp-primary {
+    display: inline-block; background: #000000; color: var(--text-white);
+    padding: 15px 80px 15px 30px; border-radius: 50px;
+    border: 1px solid var(--border-orange);
+    font-family: var(--font-corporate-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-corp-primary:hover { opacity: 0.8; }
+  .btn-corp-secondary {
+    display: inline-block; background: var(--bg-primary); color: #000000;
+    padding: 15px 80px 15px 30px; border-radius: 50px;
+    border: 1px solid var(--border-orange);
+    font-family: var(--font-corporate-body); font-size: 14px; font-weight: 400;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-corp-secondary:hover { background: #fafafa; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 940px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-family: var(--font-consumer);
+    font-size: 21px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal;
+    margin-bottom: 32px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-default); margin: 0; }
+
+  .section-gray { background: var(--bg-section); padding: 64px 32px; }
+  .section-gray .section-inner { max-width: 940px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 12px; overflow: hidden; background: #fff; box-shadow: var(--shadow-reasons); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
+  .color-swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin: 24px 0 10px; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--bg-section); color: var(--text-secondary); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 8px; }
+
+  /* CATEGORY BADGES */
+  .badge-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .category-badge {
+    display: inline-block; color: var(--text-white);
+    padding: 16px 24px; border-radius: 10px;
+    font-family: var(--font-consumer); font-size: 18px; font-weight: 700;
+    line-height: 1.23;
+  }
+  .badge-red { background: var(--brand-red); }
+  .badge-orange { background: var(--brand-orange); }
+  .badge-green { background: var(--brand-green); }
+  .badge-blue { background: var(--brand-blue); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: #fff; border-radius: 16px; padding: 24px;
+    box-shadow: var(--shadow-reasons);
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--shadow-modal); }
+  .card h3 {
+    font-family: var(--font-consumer);
+    font-size: 16px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 8px; color: var(--text-primary);
+  }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .card-link {
+    font-size: 14px; color: var(--brand-blue); text-decoration: none;
+    margin-top: 12px; display: inline-block; font-weight: 700;
+  }
+  .card-link:hover { text-decoration: underline; }
+
+  .card-review {
+    background: var(--bg-section); border-radius: 16px; padding: 24px;
+    box-shadow: none;
+  }
+  .card-review h3 { font-size: 21px; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+  .card-review p { font-size: 17px; color: var(--text-primary); line-height: 1.8; }
+
+  /* ARTICLE PREVIEW */
+  .article-preview { max-width: 620px; margin: 0 auto; }
+  .article-preview h1 {
+    font-family: var(--font-consumer);
+    font-size: 26px; font-weight: 700; line-height: 2.0;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview h2 {
+    font-family: var(--font-consumer);
+    font-size: 21px; font-weight: 700; line-height: 1.5;
+    margin: 24px 0 12px; color: var(--text-primary);
+  }
+  .article-preview p {
+    font-family: var(--font-consumer);
+    font-size: 17px; font-weight: 400; line-height: 1.8;
+    letter-spacing: normal;
+    margin-bottom: 16px; color: var(--text-primary);
+    text-align: justify;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 12px 16px; border-radius: 8px;
+    font-family: var(--font-consumer); font-size: 16px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(15, 187, 231, 0.2); }
+  .form-input--error { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2); }
+  .form-state-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card {
+    background: #fff; border-radius: 16px; padding: 24px; text-align: center;
+    border: 1px solid var(--border-default);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-blue); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--text-secondary); }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-section); border: 1px solid var(--border-default); border-radius: 8px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand-blue); border-radius: 7px; opacity: 0.3; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; background: var(--text-corporate); font-size: 12px; color: rgba(255,255,255,0.6); }
+  .footer a { color: var(--brand-blue); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 20px; }
+    .hero .hero-number { font-size: 40px; }
+    .hero p { font-size: 14px; }
+    .btn-primary { padding: 12px 40px; font-size: 14px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .article-preview p { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#"><span class="sn-icon">&#x25CF;</span> SmartNews</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Article</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">ダウンロード</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-number">No.1!</div>
+  <h1>Design System Preview<br>SmartNews — 日本語版</h1>
+  <p class="brand-lead">掲載媒体数・掲載記事数1位！無料で使えるニュースアプリ</p>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、フォント、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">今すぐダウンロード！</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">カラーパレット</h2>
+
+  <div class="color-group-label">Brand — 4色カテゴリシステム</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0fbbe7"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Blue</div><div class="color-swatch-hex">#0fbbe7</div><div class="color-swatch-role">CTA・エンタメ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff645b"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Red</div><div class="color-swatch-hex">#ff645b</div><div class="color-swatch-role">ニュース・地域情報</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc73d"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Orange</div><div class="color-swatch-hex">#ffc73d</div><div class="color-swatch-role">天気・リンク</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#54e470"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Green</div><div class="color-swatch-hex">#54e470</div><div class="color-swatch-role">おトク・クーポン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">本文テキスト（Consumer）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0e0e0e"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Corporate</div><div class="color-swatch-hex">#0e0e0e</div><div class="color-swatch-role">本文テキスト（Corporate）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#6e6e6e"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Secondary</div><div class="color-swatch-hex">#6e6e6e</div><div class="color-swatch-role">補助テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Text White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">バッジ・CTA上のテキスト</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface & Border</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fff; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f6"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f6f6f6</div><div class="color-swatch-role">セクション背景（Consumer）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f4ecea"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Warm</div><div class="color-swatch-hex">#f4ecea</div><div class="color-swatch-role">セクション背景（Corporate）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3f3f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#f3f3f3</div><div class="color-swatch-role">ニュース一覧背景（Corporate）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e5e7eb"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Default</div><div class="color-swatch-hex">#e5e7eb</div><div class="color-swatch-role">Tailwind default border</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc73c"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Orange</div><div class="color-swatch-hex">#ffc73c</div><div class="color-swatch-role">Corp CTA ボーダー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffd700"></div><div class="color-swatch-info"><div class="color-swatch-name">NEW Badge</div><div class="color-swatch-hex">#ffd700</div><div class="color-swatch-role">NEW バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:rgba(196,196,196,0.7)"></div><div class="color-swatch-info"><div class="color-swatch-name">Scroll Button</div><div class="color-swatch-hex">rgba(196,196,196,0.7)</div><div class="color-swatch-role">スクロールトップボタン</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography -- 実測値</div>
+  <h2 class="section-title">タイポグラフィ階層</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-consumer-barlow); font-size:64px; font-weight:900; line-height:1.13; letter-spacing:-0.01em;">情報量No.1!</div>
+    <div class="type-meta">Barlow 64px / 900 / line-height: 1.13 / letter-spacing: -0.01em<span class="type-context">Consumer Hero</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-consumer); font-size:26px; font-weight:700; line-height:2.0; letter-spacing:-0.025em;">情報で、人生は変わる。</div>
+    <div class="type-meta">26px / 700 / line-height: 2.0 / letter-spacing: -0.025em<span class="type-context">Consumer Hero H1</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-corporate-display); font-size:48px; font-weight:700; line-height:1.3;">世界中の良質な情報を<br>必要な人に送り届ける</div>
+    <div class="type-meta">neulis-sans / toppan-bunkyu-midashi-go-std (alt: Zen Kaku Gothic New) 57px / 700 / line-height: 1.3<span class="type-context">Corp Display H2</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-consumer); font-size:21px; font-weight:500; line-height:1.6; color:var(--brand-blue);">掲載媒体数・掲載記事数1位！無料で使えるニュースアプリ</div>
+    <div class="type-meta">21px / 500 / line-height: 1.6 / color: Brand Blue<span class="type-context">Consumer H2 Brand</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-consumer); font-size:21px; font-weight:700; line-height:1.5;">助かっています</div>
+    <div class="type-meta">21px / 700 / line-height: 1.5<span class="type-context">Consumer H2 Bold</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-corporate-body); font-size:29px; font-weight:700; line-height:1.3;">3,000以上の提携メディアから話題のニュースを毎日お届け</div>
+    <div class="type-meta">Noto Sans JP 29px / 700 / line-height: 1.3<span class="type-context">Corp H3</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-consumer); font-size:17px; font-weight:400; line-height:1.8;">SmartNews（スマートニュース）は、世の中で「いま」起きていることや、あなたの生活に役立つ、良質で身近な情報を毎日お届けします。本文テキストの組版サンプルです。line-height: 1.8 のゆったりとした行間で、ニュース記事でも疲れにくい読書体験を提供します。</div>
+    <div class="type-meta">17px / 400 / line-height: 1.8 / letter-spacing: normal<span class="type-context">Consumer Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-corporate-body); font-size:18px; font-weight:400; line-height:1.6;">スマートニュースは、ニュースアプリSmartNewsの開発・運営や、広告事業を展開しています。</div>
+    <div class="type-meta">Noto Sans JP 18px / 400 / line-height: 1.6<span class="type-context">Corp Body</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-consumer); font-size:10px; font-weight:400; line-height:1.8; color:var(--text-primary);">※1 出典：ICT総研「2021年モバイルニュースアプリ市場動向調査」より</div>
+    <div class="type-meta">10px / 400 / line-height: 1.8<span class="type-context">Consumer Caption</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-corporate-body); font-size:14px; font-weight:400; line-height:1.6; color:var(--text-secondary);">ニュースアプリ SmartNews</div>
+    <div class="type-meta">Noto Sans JP 14px / 400 / line-height: 1.6 / color: #6e6e6e<span class="type-context">Corp Small</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE PREVIEW -->
+<section class="section-gray" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Article -- ニュース記事組版</div>
+  <h2 class="section-title">記事ページの組版サンプル</h2>
+  <div class="article-preview">
+    <h1>AIが変えるニュースの届け方 -- 3,000メディアの情報を最適化する技術</h1>
+    <p>ニュースアグリゲーションアプリの核心は、膨大な情報の中から一人ひとりに最適な記事を届けることにあります。SmartNewsでは、独自の機械学習アルゴリズムが3,000以上の提携メディアから配信される記事を分析し、ユーザーの関心に合わせたフィードを構築しています。</p>
+    <h2>カテゴリ別の情報設計</h2>
+    <p>ニュース、天気、おトク、エンタメの4つのカテゴリは、それぞれ異なる色（Red、Orange、Green、Blue）で視覚的に区別されます。この4色カテゴリシステムにより、ユーザーは一目で情報のジャンルを識別できます。ABCabc 123,456</p>
+    <p>記事本文は line-height: 1.8 で組まれ、長文のニュース記事でも快適な読書体験を提供します。フォントは system-ui を採用し、各OSのネイティブフォントで表示することで、ユーザーが最も見慣れた書体で情報を受け取れるようにしています。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">ボタンバリエーション</h2>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Consumer Site</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-primary" href="#">今すぐダウンロード！</a><div class="button-label">Primary CTA (Blue Pill)</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Corporate Site</div>
+    <div class="button-row">
+      <div class="button-item"><a class="btn-corp-primary" href="#">私たちのミッションとバリュー</a><div class="button-label">Corp Primary (Black + Orange Border)</div></div>
+      <div class="button-item"><a class="btn-corp-secondary" href="#">採用サイト</a><div class="button-label">Corp Secondary (White + Orange Border)</div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div class="color-group-label">Category Badges</div>
+    <div class="badge-row">
+      <div class="category-badge badge-red">ニュース</div>
+      <div class="category-badge badge-orange">天気</div>
+      <div class="category-badge badge-green">おトク</div>
+      <div class="category-badge badge-blue">エンタメ</div>
+    </div>
+    <div class="button-label">h3 Feature Badge: bg-brand-[color] / white / radius 10px / padding 1em / weight 700</div>
+  </div>
+
+  <div>
+    <div class="color-group-label">Misc</div>
+    <div class="button-row">
+      <div class="button-item"><span style="display:inline-block; background:var(--new-badge); color:#333; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:700;">NEW</span><div class="button-label">NEW Badge</div></div>
+      <div class="button-item"><span style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(196,196,196,0.7); border-radius:50%; font-size:18px; cursor:pointer;">&#x25B2;</span><div class="button-label">Scroll-to-Top</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">カードコンポーネント</h2>
+
+  <div class="color-group-label">Consumer -- "利用される理由" カード</div>
+  <div class="card-grid" style="margin-bottom:32px;">
+    <div class="card">
+      <h3>掲載媒体数は約3,000媒体！</h3>
+      <p>掲載媒体数・記事数No.1のニュースアプリ。政治・経済から趣味・エンタメまで、幅広いジャンルのニュースをカバーしています。</p>
+      <a class="card-link" href="#">詳しく見る &#x2192;</a>
+    </div>
+    <div class="card">
+      <h3>あなたに合ったニュースをお届け</h3>
+      <p>独自のアルゴリズムが、あなたの関心に合った記事を自動で選び、毎日のフィードに表示します。</p>
+      <a class="card-link" href="#">詳しく見る &#x2192;</a>
+    </div>
+    <div class="card">
+      <h3>クーポンで毎日おトク</h3>
+      <p>コンビニや飲食店で使えるクーポンが毎日届きます。ニュースを読みながら、お得な情報も見逃しません。</p>
+      <a class="card-link" href="#">詳しく見る &#x2192;</a>
+    </div>
+  </div>
+
+  <div class="color-group-label">Consumer -- レビューカード</div>
+  <div class="card-grid">
+    <div class="card-review">
+      <h3>助かっています</h3>
+      <p>ページを捲る感覚でニュースが読めるので、自分の専門でない分野の情報も入ってきます。収集する情報が偏りにくく、とても助かっています。</p>
+    </div>
+    <div class="card-review">
+      <h3>クーポン当たりましたよ</h3>
+      <p>無料クーポンがよく当たります。コンビニのコーヒーやお菓子など、ちょっとした嬉しいプレゼントが毎日のニュースチェックのモチベーションになっています。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">フォーム要素</h2>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input" type="text" placeholder="name@example.com"><div class="form-state-label">デフォルト -- border: #e5e7eb, radius: 8px</div></div>
+  <div class="form-group"><label class="form-label">キーワード検索</label><input class="form-input form-input--focus" type="text" value="SmartNews"><div class="form-state-label">フォーカス -- border: #0fbbe7 (Brand Blue)</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー -- border: #dc2626 (danger)</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation -- 実測値</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし（大半の要素）</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-reasons);"><div class="elevation-label">shadow-reasons</div><div class="elevation-desc">3px 3px 4px rgba(0,0,0,0.15) -- "利用される理由" カード</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-header);"><div class="elevation-label">shadow-header</div><div class="elevation-desc">0 0 6px rgba(0,0,0,0.12) -- Corp ヘッダー</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-modal);"><div class="elevation-label">shadow-modal</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.10) -- モーダル（推奨）</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--brand-blue);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#0fbbe7 (Brand Blue)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">スペーシング & コンテンツ幅</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px;"></div><div class="spacing-value">4px XS</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px;"></div><div class="spacing-value">8px S</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px;"></div><div class="spacing-value">16px M</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px;"></div><div class="spacing-value">24px L</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:48px;"></div><div class="spacing-value">48px XL</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:72px;"></div><div class="spacing-value">72px XXL</div></div>
+  </div>
+
+  <div class="color-group-label">Border Radius Scale</div>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:32px;">
+    <div style="width:80px; height:80px; background:var(--bg-section); border:2px solid var(--border-default); border-radius:4px; display:flex; align-items:center; justify-content:center;"><span style="font-size:11px; color:var(--text-secondary);">4px</span></div>
+    <div style="width:80px; height:80px; background:var(--bg-section); border:2px solid var(--border-default); border-radius:10px; display:flex; align-items:center; justify-content:center;"><span style="font-size:11px; color:var(--text-secondary);">10px</span></div>
+    <div style="width:80px; height:80px; background:var(--bg-section); border:2px solid var(--border-default); border-radius:16px; display:flex; align-items:center; justify-content:center;"><span style="font-size:11px; color:var(--text-secondary);">16px</span></div>
+    <div style="width:80px; height:80px; background:var(--bg-section); border:2px solid var(--border-default); border-radius:20px; display:flex; align-items:center; justify-content:center;"><span style="font-size:11px; color:var(--text-secondary);">20px</span></div>
+    <div style="width:120px; height:48px; background:var(--brand-blue); border-radius:40px; display:flex; align-items:center; justify-content:center;"><span style="font-size:11px; color:#fff;">40px pill</span></div>
+    <div style="width:48px; height:48px; background:rgba(196,196,196,0.7); border-radius:50%; display:flex; align-items:center; justify-content:center;"><span style="font-size:11px; color:var(--text-primary);">50%</span></div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">~1440px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Content <span class="width-bar-value">~940px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:65.3%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article Preview <span class="width-bar-value">620px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:43%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.smartnews.com/ja/">smartnews.com</a> & <a href="https://about.smartnews.com/ja/">about.smartnews.com</a> DESIGN.md -- awesome-design-md-jp / computed style 実測値（2026-06-20）
+</footer>
+
+</body>
+</html>
