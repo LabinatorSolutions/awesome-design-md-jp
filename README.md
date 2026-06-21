@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (345 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (348 sites)</a>
 </p>
 
 <table>
@@ -910,11 +910,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [SmartNews (スマートニュース)](https://www.smartnews.com/ja/) | News / Media | [DESIGN.md](design-md/smartnews/DESIGN.md) | [preview.html](design-md/smartnews/preview.html) |
 | [TOMBOW (トンボ鉛筆)](https://www.tombow.com/) | Stationery / Manufacturing | [DESIGN.md](design-md/tombow/DESIGN.md) | [preview.html](design-md/tombow/preview.html) |
 | [KING JIM (キングジム)](https://www.kingjim.co.jp/) | Office Products / Stationery | [DESIGN.md](design-md/kingjim/DESIGN.md) | [preview.html](design-md/kingjim/preview.html) |
+| [mybest (マイベスト)](https://my-best.com/) | Product Comparison / Media | [DESIGN.md](design-md/mybest/DESIGN.md) | [preview.html](design-md/mybest/preview.html) |
+| [Ubie (ユビー)](https://ubie.life/) | Healthcare AI / Tech | [DESIGN.md](design-md/ubie/DESIGN.md) | [preview.html](design-md/ubie/preview.html) |
+| [READYFOR (レディーフォー)](https://readyfor.jp/) | Crowdfunding / Platform | [DESIGN.md](design-md/readyfor/DESIGN.md) | [preview.html](design-md/readyfor/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (345 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (348 sites)</a>
 </p>
 
 <table>
