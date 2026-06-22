@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (348 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (351 sites)</a>
 </p>
 
 <table>
@@ -505,6 +505,21 @@
 <td align="center"><strong>JR東日本</strong><br><img src="design-md/jreast/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOSHIBA</strong><br><img src="design-md/toshiba/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>SmartNews</strong><br><img src="design-md/smartnews/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TOMBOW</strong><br><img src="design-md/tombow/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>KING JIM</strong><br><img src="design-md/kingjim/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>mybest</strong><br><img src="design-md/mybest/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Ubie</strong><br><img src="design-md/ubie/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>READYFOR</strong><br><img src="design-md/readyfor/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Plaid</strong><br><img src="design-md/plaid/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LayerX</strong><br><img src="design-md/layerx/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Schoo</strong><br><img src="design-md/schoo/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -913,11 +928,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [mybest (マイベスト)](https://my-best.com/) | Product Comparison / Media | [DESIGN.md](design-md/mybest/DESIGN.md) | [preview.html](design-md/mybest/preview.html) |
 | [Ubie (ユビー)](https://ubie.life/) | Healthcare AI / Tech | [DESIGN.md](design-md/ubie/DESIGN.md) | [preview.html](design-md/ubie/preview.html) |
 | [READYFOR (レディーフォー)](https://readyfor.jp/) | Crowdfunding / Platform | [DESIGN.md](design-md/readyfor/DESIGN.md) | [preview.html](design-md/readyfor/preview.html) |
+| [Plaid (プレイド)](https://plaid.co.jp/) | CX / SaaS | [DESIGN.md](design-md/plaid/DESIGN.md) | [preview.html](design-md/plaid/preview.html) |
+| [LayerX (レイヤーエックス)](https://layerx.co.jp/) | DX / Fintech | [DESIGN.md](design-md/layerx/DESIGN.md) | [preview.html](design-md/layerx/preview.html) |
+| [Schoo (スクー)](https://schoo.jp/) | EdTech / Online Learning | [DESIGN.md](design-md/schoo/DESIGN.md) | [preview.html](design-md/schoo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (348 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (351 sites)</a>
 </p>
 
 <table>
@@ -1392,6 +1410,16 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>SmartNews</strong><br><img src="design-md/smartnews/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TOMBOW</strong><br><img src="design-md/tombow/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>KING JIM</strong><br><img src="design-md/kingjim/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>mybest</strong><br><img src="design-md/mybest/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Ubie</strong><br><img src="design-md/ubie/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>READYFOR</strong><br><img src="design-md/readyfor/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Plaid</strong><br><img src="design-md/plaid/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>LayerX</strong><br><img src="design-md/layerx/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Schoo</strong><br><img src="design-md/schoo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
