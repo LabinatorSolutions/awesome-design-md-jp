@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (354 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (357 sites)</a>
 </p>
 
 <table>
@@ -524,6 +524,9 @@
 <td align="center"><strong>THE</strong><br><img src="design-md/the/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CLAS</strong><br><img src="design-md/clas/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>graf</strong><br><img src="design-md/graf/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>10X</strong><br><img src="design-md/10x/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NEWT</strong><br><img src="design-md/newt/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>天童木工</strong><br><img src="design-md/tendo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -939,11 +942,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [THE (ザ)](https://the-web.co.jp/) | Design Products / EC | [DESIGN.md](design-md/the/DESIGN.md) | [preview.html](design-md/the/preview.html) |
 | [CLAS (クラス)](https://clas.style/) | Furniture Rental / Subscription | [DESIGN.md](design-md/clas/DESIGN.md) | [preview.html](design-md/clas/preview.html) |
 | [graf (グラフ)](https://www.graf-d3.com/) | Design Collective / Furniture | [DESIGN.md](design-md/graf/DESIGN.md) | [preview.html](design-md/graf/preview.html) |
+| [10X](https://10x.co.jp/) | Retail SaaS / OMO | [DESIGN.md](design-md/10x/DESIGN.md) | [preview.html](design-md/10x/preview.html) |
+| [NEWT (令和トラベル)](https://www.newt.net/) | Travel / Booking | [DESIGN.md](design-md/newt/DESIGN.md) | [preview.html](design-md/newt/preview.html) |
+| [天童木工 (Tendo Mokko)](https://www.tendo-mokko.co.jp/) | Furniture / Design Heritage | [DESIGN.md](design-md/tendo/DESIGN.md) | [preview.html](design-md/tendo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (354 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (357 sites)</a>
 </p>
 
 <table>
@@ -1433,6 +1439,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>THE</strong><br><img src="design-md/the/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>CLAS</strong><br><img src="design-md/clas/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>graf</strong><br><img src="design-md/graf/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>10X</strong><br><img src="design-md/10x/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NEWT</strong><br><img src="design-md/newt/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>天童木工</strong><br><img src="design-md/tendo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
