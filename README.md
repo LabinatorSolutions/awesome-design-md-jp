@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (357 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (360 sites)</a>
 </p>
 
 <table>
@@ -528,6 +528,11 @@
 <td align="center"><strong>NEWT</strong><br><img src="design-md/newt/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>天童木工</strong><br><img src="design-md/tendo/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>&Premium</strong><br><img src="design-md/and-premium/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>GO</strong><br><img src="design-md/goinc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>OMO</strong><br><img src="design-md/omo/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -945,11 +950,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [10X](https://10x.co.jp/) | Retail SaaS / OMO | [DESIGN.md](design-md/10x/DESIGN.md) | [preview.html](design-md/10x/preview.html) |
 | [NEWT (令和トラベル)](https://www.newt.net/) | Travel / Booking | [DESIGN.md](design-md/newt/DESIGN.md) | [preview.html](design-md/newt/preview.html) |
 | [天童木工 (Tendo Mokko)](https://www.tendo-mokko.co.jp/) | Furniture / Design Heritage | [DESIGN.md](design-md/tendo/DESIGN.md) | [preview.html](design-md/tendo/preview.html) |
+| [&Premium](https://andpremium.jp/) | Lifestyle Magazine | [DESIGN.md](design-md/and-premium/DESIGN.md) | [preview.html](design-md/and-premium/preview.html) |
+| [GO (GO株式会社)](https://goinc.jp/) | Mobility Tech | [DESIGN.md](design-md/goinc/DESIGN.md) | [preview.html](design-md/goinc/preview.html) |
+| [OMO by 星野リゾート](https://omo-hotels.com/) | Hotel / Hospitality | [DESIGN.md](design-md/omo/DESIGN.md) | [preview.html](design-md/omo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (357 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (360 sites)</a>
 </p>
 
 <table>
@@ -1442,6 +1450,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>10X</strong><br><img src="design-md/10x/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>NEWT</strong><br><img src="design-md/newt/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>天童木工</strong><br><img src="design-md/tendo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>&Premium</strong><br><img src="design-md/and-premium/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>GO</strong><br><img src="design-md/goinc/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>OMO</strong><br><img src="design-md/omo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
