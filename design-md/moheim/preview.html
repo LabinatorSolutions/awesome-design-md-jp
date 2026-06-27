@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: MOHEIM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --bg: #f1f2ee;          /* Off-White */
+    --surface: #efefef;
+    --surface-2: #ecece9;
+    --ink: #1a1311;          /* Near-Black (warm) */
+    --ink-cool: #161a14;
+    --black: #000000;
+    --muted: #959595;
+    --border: #d1d1cd;
+    --border-cta: #9da69f;
+    --surface-dark: #7e807c;
+    --charcoal: #1c1c1c;
+    --sale: #e32c2b;
+    --success: #307a07;
+    --warning: #ed8a00;
+    --white: #ffffff;
+    /* === Fonts（代替: TT Commons Pro→Hanken Grotesk / 游ゴシック Medium→Noto Sans JP） === */
+    --font-base: "Hanken Grotesk", "Noto Sans JP", "Yu Gothic Medium", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-base);
+    font-size: 14px; font-weight: 400; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand { font-size: 18px; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 400; color: var(--ink); text-decoration: none; text-transform: uppercase; letter-spacing: 0.18em; transition: opacity 0.15s; }
+  .nav-links a:hover { opacity: 0.5; }
+  .nav-cta {
+    display: inline-block; background: transparent; color: var(--ink);
+    padding: 8px 18px; border: 1px solid var(--border-cta); font-size: 12px; font-weight: 400;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    text-decoration: none; transition: all 0.15s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--white); }
+
+  /* HERO */
+  .hero { padding: 96px 32px 80px; text-align: center; background: var(--surface); }
+  .hero h1 {
+    font-size: 52px; font-weight: 700; line-height: 1.2;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-cool); margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 15px; font-weight: 400; line-height: 1.9;
+    color: var(--ink); max-width: 560px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--ink); color: var(--white);
+    padding: 12px 32px; border: 1px solid var(--ink);
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.7; }
+  .btn-outline {
+    display: inline-block; background: transparent; color: var(--ink);
+    padding: 12px 32px; border: 1px solid var(--border-cta);
+    font-family: var(--font-base); font-size: 13px; font-weight: 400;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    text-decoration: none; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--white); }
+
+  /* SECTIONS */
+  .section { padding: 72px 32px; max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 500; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.2em;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 700; line-height: 1.3;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    margin-bottom: 32px; color: var(--ink-cool);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-gray { background: var(--surface); padding: 72px 32px; }
+  .section-gray .section-inner { max-width: 1000px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--border); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; color: var(--ink); }
+  .color-swatch-hex { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .color-group-label { font-size: 13px; font-weight: 600; color: var(--ink); margin: 24px 0 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 8px; }
+  .type-context { display: inline-block; background: var(--surface-2); color: var(--ink); font-size: 11px; padding: 2px 8px; margin-left: 8px; }
+
+  /* PRODUCT GRID */
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .product { background: var(--white); border: 1px solid var(--border); }
+  .product-img { aspect-ratio: 4/5; background: var(--surface-2); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .product-info { padding: 14px 16px; }
+  .product-name { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); }
+  .product-price { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .product-cart { display: block; margin-top: 12px; width: 100%; background: var(--white); border: 1px solid var(--border); color: var(--charcoal); padding: 10px; font-family: var(--font-base); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all 0.15s; }
+  .product-cart:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 8px; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--ink);
+    border: 1px solid var(--border); padding: 10px 12px; border-radius: 0;
+    font-family: var(--font-base); font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--ink); }
+  .form-input--error { border-color: var(--sale); }
+  .form-state-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--white); padding: 24px; text-align: center; border: 1px solid var(--border); }
+  .elevation-label { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--muted); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--ink); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted); }
+
+  /* FOOTER */
+  .footer { padding: 40px 32px; text-align: center; background: var(--charcoal); font-size: 12px; color: #cfcfcc; letter-spacing: 0.06em; }
+  .footer a { color: #fff; text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 32px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-gray { padding: 48px 20px; }
+    .product-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">MOHEIM</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Cart</a>
+</nav>
+
+<section class="hero">
+  <h1>MOHEIM<br>Online Store</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。オフホワイトの余白と全大文字タイポグラフィを軸にした、ミニマルなプロダクト・ギャラリー。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">Shop Now</a>
+    <a class="btn-outline" href="#">Read DESIGN.md</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand / Core</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f2ee; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Off-White</div><div class="color-swatch-hex">#f1f2ee</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1a1311"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink (Near-Black)</div><div class="color-swatch-hex">#1a1311</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#161a14"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink (Cool)</div><div class="color-swatch-hex">#161a14</div><div class="color-swatch-role">大見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">モーダル枠</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral / Grey</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">セクション面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ecece9; border-bottom:1px solid #ddd"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface 2</div><div class="color-swatch-hex">#ecece9</div><div class="color-swatch-role">面（暗め）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#959595"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#959595</div><div class="color-swatch-role">キャプション</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d1d1cd"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#d1d1cd</div><div class="color-swatch-role">区切り・枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9da69f"></div><div class="color-swatch-info"><div class="color-swatch-name">Border (CTA)</div><div class="color-swatch-hex">#9da69f</div><div class="color-swatch-role">アウトライン枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7e807c"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Dark</div><div class="color-swatch-hex">#7e807c</div><div class="color-swatch-role">ダーク帯</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1c1c1c"></div><div class="color-swatch-info"><div class="color-swatch-name">Charcoal</div><div class="color-swatch-hex">#1c1c1c</div><div class="color-swatch-role">告知バー</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic（機能色・最小限）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e32c2b"></div><div class="color-swatch-info"><div class="color-swatch-name">Sale / Error</div><div class="color-swatch-hex">#e32c2b</div><div class="color-swatch-role">セール・エラー</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#307a07"></div><div class="color-swatch-info"><div class="color-swatch-name">Success</div><div class="color-swatch-hex">#307a07</div><div class="color-swatch-role">在庫あり</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ed8a00"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ed8a00</div><div class="color-swatch-role">警告</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography — 実測値</div>
+  <h2 class="section-title">Typography</h2>
+  <p style="font-size:12px; color:var(--muted); margin:-18px 0 28px;">原典は TT Commons Pro（Adobe Fonts）＋游ゴシック Medium。本プレビューは代替の Hanken Grotesk ＋ Noto Sans JP で表示。</p>
+
+  <div class="type-sample">
+    <div style="font-size:67px; font-weight:700; line-height:1.2; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-cool);">More Story,</div>
+    <div class="type-meta">Display — 67.5px / 700 / line-height: 1.65 / uppercase<span class="type-context">トップ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:28px; font-weight:700; line-height:1.4; letter-spacing:0.09em; text-transform:uppercase; color:var(--ink-cool);">Recommended Item</div>
+    <div class="type-meta">Heading 1 — 28px / 700 / ls 2.5px(0.09em) / uppercase<span class="type-context">main</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:17px; font-weight:700; line-height:1.5; color:var(--ink);">サブ見出し — 用と美をめぐるストーリー</div>
+    <div class="type-meta">Heading 2 — 16.8px / 700 / line-height: 1.65</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:500; line-height:2.0; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-cool);">The common denominator</div>
+    <div class="type-meta">Label / Lead — 12px / 500 / ls 0.2px / uppercase</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:14px; font-weight:400; line-height:1.65; color:var(--ink);">本文テキスト — MOHEIM のプロダクトは、暮らしの道具としての機能と、空間に置いたときの佇まいを両立させています。余白と素材感を大切にした、流行に左右されない普遍的なデザイン。ABCabc 123</div>
+    <div class="type-meta">Body — 14px / 400 / line-height: 1.65 / ls normal</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:12px; font-weight:400; line-height:1.65; color:var(--muted);">ACCESSORIES — 価格・カテゴリ等のキャプション</div>
+    <div class="type-meta">Caption — 12px / 400 / color: #959595</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-size:11px; font-weight:400; line-height:1.65; letter-spacing:0.18em; color:var(--ink);">NOTICE REGARDING ORDER</div>
+    <div class="type-meta">Small — 11px / 400 / ls 1.98px</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCTS -->
+<section class="section-gray" id="products">
+<div class="section-inner">
+  <div class="section-label">03 / Product — ギャラリーグリッド</div>
+  <h2 class="section-title">Recommended Item</h2>
+  <div class="product-grid">
+    <div class="product"><div class="product-img">SWING BIN</div><div class="product-info"><div class="product-name">Swing Bin</div><div class="product-price">¥ 13,200</div><button class="product-cart">Add to Cart</button></div></div>
+    <div class="product"><div class="product-img">TISSUE CASE</div><div class="product-info"><div class="product-name">Tissue Case</div><div class="product-price">¥ 5,500</div><button class="product-cart">Add to Cart</button></div></div>
+    <div class="product"><div class="product-img">TRAY</div><div class="product-info"><div class="product-name">Tray Round</div><div class="product-price">¥ 4,400</div><button class="product-cart">Choose Options</button></div></div>
+    <div class="product"><div class="product-img">VASE</div><div class="product-info"><div class="product-name">Stoneware Vase</div><div class="product-price">¥ 7,700</div><button class="product-cart">Add to Cart</button></div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Buttons</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-primary" href="#">Shop Now</a><div class="button-label">Primary (Solid)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">View More</a><div class="button-label">Outline</div></div>
+    <div class="button-item"><button class="product-cart" style="width:auto; padding:10px 28px;">Add to Cart</button><div class="button-label">Product</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="text" placeholder="name@example.com"><div class="form-state-label">デフォルト — border: #d1d1cd, radius: 0</div></div>
+  <div class="form-group"><label class="form-label">Password</label><input class="form-input form-input--focus" type="password" value="mypassword123"><div class="form-state-label">フォーカス — border: #1a1311</div></div>
+  <div class="form-group"><label class="form-label">Email</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label">エラー — border: #e32c2b</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">06 / Elevation</div>
+  <h2 class="section-title">Depth & Elevation</h2>
+  <p style="font-size:12px; color:var(--muted); margin:-18px 0 24px;">MOHEIM はほぼフラット。面の色差で階層を表現する。</p>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ（基本）</div></div>
+    <div class="elevation-card" style="box-shadow:0 1px 2px rgba(0,0,0,0.06);"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 1px 2px rgba(0,0,0,0.06)</div></div>
+    <div class="elevation-card" style="box-shadow:0 8px 24px rgba(0,0,0,0.10);"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.10)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-label">07 / Layout — Spacing Scale</div>
+  <h2 class="section-title">Spacing</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">XS 4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">S 8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M 16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L 24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">XL 40</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">XXL 80</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://moheim.com/">moheim.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-27）
+</footer>
+
+</body>
+</html>

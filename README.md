@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (360 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (363 sites)</a>
 </p>
 
 <table>
@@ -532,6 +532,9 @@
 <td align="center"><strong>&Premium</strong><br><img src="design-md/and-premium/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>GO</strong><br><img src="design-md/goinc/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>OMO</strong><br><img src="design-md/omo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MOHEIM</strong><br><img src="design-md/moheim/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TENGA</strong><br><img src="design-md/tenga/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>K5</strong><br><img src="design-md/k5/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -953,11 +956,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [&Premium](https://andpremium.jp/) | Lifestyle Magazine | [DESIGN.md](design-md/and-premium/DESIGN.md) | [preview.html](design-md/and-premium/preview.html) |
 | [GO (GO株式会社)](https://goinc.jp/) | Mobility Tech | [DESIGN.md](design-md/goinc/DESIGN.md) | [preview.html](design-md/goinc/preview.html) |
 | [OMO by 星野リゾート](https://omo-hotels.com/) | Hotel / Hospitality | [DESIGN.md](design-md/omo/DESIGN.md) | [preview.html](design-md/omo/preview.html) |
+| [MOHEIM (モハイム)](https://moheim.com/) | Lifestyle / Homeware | [DESIGN.md](design-md/moheim/DESIGN.md) | [preview.html](design-md/moheim/preview.html) |
+| [TENGA (テンガ)](https://www.tenga.co.jp/) | Lifestyle / Product Design | [DESIGN.md](design-md/tenga/DESIGN.md) | [preview.html](design-md/tenga/preview.html) |
+| [K5](https://k5-tokyo.com/) | Hotel / Hospitality | [DESIGN.md](design-md/k5/DESIGN.md) | [preview.html](design-md/k5/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (360 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (363 sites)</a>
 </p>
 
 <table>
@@ -1455,6 +1461,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>&Premium</strong><br><img src="design-md/and-premium/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>GO</strong><br><img src="design-md/goinc/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>OMO</strong><br><img src="design-md/omo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MOHEIM</strong><br><img src="design-md/moheim/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>TENGA</strong><br><img src="design-md/tenga/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>K5</strong><br><img src="design-md/k5/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
