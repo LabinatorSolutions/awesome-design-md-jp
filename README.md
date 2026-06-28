@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (363 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (366 sites)</a>
 </p>
 
 <table>
@@ -536,6 +536,11 @@
 <td align="center"><strong>TENGA</strong><br><img src="design-md/tenga/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>K5</strong><br><img src="design-md/k5/preview-screenshot.png" width="120"></td>
 </tr>
+<tr>
+<td align="center"><strong>TYPICA</strong><br><img src="design-md/typica/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東京茶寮</strong><br><img src="design-md/tokyosaryo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DDD HOTEL</strong><br><img src="design-md/dddhotel/preview-screenshot.png" width="120"></td>
+</tr>
 </table>
 
 ### テンプレートの使い方
@@ -959,11 +964,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [MOHEIM (モハイム)](https://moheim.com/) | Lifestyle / Homeware | [DESIGN.md](design-md/moheim/DESIGN.md) | [preview.html](design-md/moheim/preview.html) |
 | [TENGA (テンガ)](https://www.tenga.co.jp/) | Lifestyle / Product Design | [DESIGN.md](design-md/tenga/DESIGN.md) | [preview.html](design-md/tenga/preview.html) |
 | [K5](https://k5-tokyo.com/) | Hotel / Hospitality | [DESIGN.md](design-md/k5/DESIGN.md) | [preview.html](design-md/k5/preview.html) |
+| [TYPICA (ティピカ)](https://typica.jp/) | Specialty Coffee / Marketplace | [DESIGN.md](design-md/typica/DESIGN.md) | [preview.html](design-md/typica/preview.html) |
+| [東京茶寮 (Tokyo Saryo)](https://www.tokyosaryo.jp/) | Tea / Cafe | [DESIGN.md](design-md/tokyosaryo/DESIGN.md) | [preview.html](design-md/tokyosaryo/preview.html) |
+| [DDD HOTEL](https://dddhotel.jp/) | Hotel / Design Hotel | [DESIGN.md](design-md/dddhotel/DESIGN.md) | [preview.html](design-md/dddhotel/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (363 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (366 sites)</a>
 </p>
 
 <table>
@@ -1464,6 +1472,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>MOHEIM</strong><br><img src="design-md/moheim/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>TENGA</strong><br><img src="design-md/tenga/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>K5</strong><br><img src="design-md/k5/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>TYPICA</strong><br><img src="design-md/typica/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東京茶寮</strong><br><img src="design-md/tokyosaryo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>DDD HOTEL</strong><br><img src="design-md/dddhotel/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
