@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: AXIS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=Archivo:wght@400;500;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --bg: #ffffff;          /* ページ背景（html/body、--wp--preset--color--white） */
+    --ink: #000000;         /* ナビ・最重要テキスト */
+    --text: #333333;        /* 見出し・本文・リンク標準色 */
+    --muted: #666666;       /* メタ・ラベル・タグ枠線 */
+    --surface: #f1f1f1;     /* カテゴリナビ・タグ面（最頻出 count 29） */
+    --image: #eeeeee;       /* 画像プレースホルダ（count 24） */
+    --surface-light: #f9f9f9; /* 薄い区画面（count 7） */
+    --surface-light2: #f5f5f5;/* 補助面 */
+    --dark: #2b2b2b;        /* ニュースレター帯のダーク地 */
+    --error: #cf2e2e;       /* 汎用エラー（WP vivid-red） */
+    --border: #e0e0e0;
+    --white: #ffffff;
+    /* === Fonts（代替: AXIS Font→IBM Plex Sans JP / DIN Next LT Pro→Archivo） === */
+    --font-jp: "IBM Plex Sans JP", "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+    --font-din: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400; line-height: 1.0;
+    letter-spacing: normal;
+    font-feature-settings: normal;   /* AXIS は palt オフ */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--surface);
+  }
+  .nav-brand { font-family: var(--font-din); font-size: 26px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; }
+  .nav-links a { font-family: var(--font-jp); font-size: 16px; font-weight: 400; color: var(--text); text-decoration: none; transition: opacity 0.15s; }
+  .nav-links a:hover { opacity: 0.5; }
+  .nav-search {
+    display: inline-block; background: var(--surface); color: var(--text);
+    font-family: var(--font-jp); padding: 9px 18px; border: none; border-radius: 0;
+    font-size: 14px; font-weight: 400; text-decoration: none; transition: background 0.15s;
+  }
+  .nav-search:hover { background: #e6e6e6; }
+
+  /* HERO */
+  .hero { padding: 80px 32px 64px; max-width: 1040px; margin: 0 auto; }
+  .hero .eyebrow { font-family: var(--font-din); font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 18px; text-transform: uppercase; }
+  .hero h1 {
+    font-family: var(--font-jp); font-size: 44px; font-weight: 500; line-height: 1.4;
+    color: var(--text); margin-bottom: 20px; max-width: 760px;
+  }
+  .hero p {
+    font-size: 15px; font-weight: 400; line-height: 1.8;
+    color: var(--muted); max-width: 600px; margin-bottom: 32px;
+  }
+  .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block; font-family: var(--font-jp); font-size: 15px; font-weight: 400;
+    cursor: pointer; text-decoration: none; letter-spacing: normal; transition: opacity 0.15s, background 0.15s, color 0.15s;
+  }
+  .btn--nav { background: var(--surface); color: var(--text); padding: 12px 18px; border: none; border-radius: 0; }
+  .btn--nav:hover { background: #e6e6e6; }
+  .btn--tag { background: var(--white); color: var(--muted); border: 1px solid var(--muted); border-radius: 46px; padding: 11px 18px; line-height: 1.0; }
+  .btn--tag:hover { background: var(--muted); color: var(--white); }
+  .btn--submit { background: var(--ink); color: var(--white); border: none; border-radius: 25px; padding: 12px 40px; font-weight: 700; font-family: "Noto Sans JP", var(--font-jp); }
+  .btn--submit:hover { opacity: 0.82; }
+  .btn--submit-light { background: var(--white); color: var(--dark); border: none; border-radius: 25px; padding: 12px 40px; font-weight: 700; font-family: "Noto Sans JP", var(--font-jp); }
+  .btn--submit-light:hover { opacity: 0.82; }
+
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1040px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-din); font-size: 13px; font-weight: 500; color: var(--muted);
+    letter-spacing: 0.06em; margin-bottom: 8px; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--font-jp); font-size: 24px; font-weight: 500; line-height: 1.2;
+    margin-bottom: 32px; color: var(--ink);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--surface); margin: 0; }
+  .section-tint { background: var(--surface-light); }
+  .section-tint .section-inner { max-width: 1040px; margin: 0 auto; padding: 64px 32px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--surface); border-radius: 0; }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 3px; color: var(--ink); }
+  .color-swatch-hex { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.3; }
+  .color-group-label { font-family: var(--font-din); font-size: 13px; font-weight: 500; color: var(--muted); margin: 24px 0 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 26px; padding-bottom: 22px; border-bottom: 1px solid var(--surface); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 10px; letter-spacing: 0; line-height: 1.4; }
+  .type-context { display: inline-block; background: var(--surface); color: var(--text); font-size: 11px; padding: 2px 8px; margin-left: 8px; border-radius: 0; }
+
+  /* ARTICLE CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .card { background: var(--white); border: none; border-radius: 0; overflow: hidden; }
+  .card-img { aspect-ratio: 4/3; background: var(--image); display: flex; align-items: center; justify-content: center; }
+  .card-img .ph { font-family: var(--font-din); font-size: 13px; font-weight: 500; color: #bbb; letter-spacing: 0.1em; }
+  .card-info { padding: 14px 2px 4px; }
+  .card-cat { font-family: var(--font-jp); font-size: 12px; font-weight: 400; color: var(--muted); margin-bottom: 8px; line-height: 1.3; }
+  .card-name { font-size: 16px; font-weight: 500; line-height: 1.5; color: var(--text); }
+  .card-meta { font-family: var(--font-din); font-size: 12px; color: var(--muted); margin-top: 8px; letter-spacing: 0.02em; }
+
+  /* CATEGORY NAV (矩形) */
+  .cat-row { display: flex; gap: 1px; flex-wrap: wrap; margin-bottom: 28px; background: var(--surface); padding: 1px; }
+  .cat { font-family: var(--font-jp); font-size: 14px; font-weight: 400; padding: 12px 14px; border-radius: 0; border: none; background: var(--surface); color: var(--text); cursor: pointer; transition: background 0.15s; }
+  .cat:hover { background: #e6e6e6; }
+  .cat.is-active { background: var(--ink); color: var(--white); }
+  .cat .en { font-family: var(--font-din); font-size: 12px; color: var(--muted); margin-left: 6px; }
+  .cat.is-active .en { color: #aaa; }
+
+  /* BUTTONS showcase */
+  .button-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-item-dark { background: var(--dark); padding: 18px; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 10px; }
+  .button-item-dark .button-label { color: #aaa; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 22px; max-width: 420px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 7px; }
+  .form-input {
+    width: 100%; background: var(--surface); color: var(--ink);
+    border: none; padding: 13px 16px; border-radius: 0;
+    font-family: var(--font-jp); font-size: 16px; outline: none;
+    transition: box-shadow 0.15s, background 0.15s;
+  }
+  .form-input:focus, .form-input--focus { background: var(--white); box-shadow: inset 0 0 0 1px var(--ink); }
+  .form-input--error { background: var(--white); box-shadow: inset 0 0 0 1px var(--error); }
+  .form-state-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .form-state-label--error { color: var(--error); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--white); padding: 24px; text-align: center; border: 1px solid var(--surface); border-radius: 0; }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--muted); word-break: break-all; line-height: 1.4; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--ink); margin-bottom: 6px; height: 28px; border-radius: 0; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted); }
+
+  /* FOOTER */
+  .footer { padding: 40px 32px; text-align: center; background: var(--dark); font-size: 12px; color: #cfc9c6; letter-spacing: 0.04em; line-height: 1.6; }
+  .footer a { color: var(--white); text-decoration: underline; }
+
+  @media (max-width: 769px) {
+    .hero h1 { font-size: 26px; }
+    .section-title { font-size: 20px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .hero { padding: 56px 20px 40px; }
+    .section-tint .section-inner { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">AXIS</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#articles">Journal</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a class="nav-search" href="#">検索</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">World's Design Journal</div>
+  <h1>デザインの視点で、人間の可能性や創造性を伝えるメディア</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。純白の地に黒〜濃グレーのモノクロームだけで組み、AXIS Font の硬質でニュートラルな版面を再現する。computed style 実測値（2026-06-29）に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn btn--nav" href="#">記事を読む</a>
+    <a class="btn btn--tag" href="#">#プロダクトデザイン</a>
+    <a class="btn btn--submit" href="#">購読する</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand / Core（モノクローム）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ナビ・最重要</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Text</div><div class="color-swatch-hex">#333333</div><div class="color-swatch-role">見出し・本文</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">メタ・タグ枠線</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface（面のグレー濃淡）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f1f1; border-bottom:1px solid #e6e6e6"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface</div><div class="color-swatch-hex">#f1f1f1</div><div class="color-swatch-role">ナビ・タグ面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eeeeee; border-bottom:1px solid #e2e2e2"></div><div class="color-swatch-info"><div class="color-swatch-name">Image</div><div class="color-swatch-hex">#eeeeee</div><div class="color-swatch-role">画像プレースホルダ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f9f9f9; border-bottom:1px solid #eee"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#f9f9f9</div><div class="color-swatch-role">薄い区画面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f5; border-bottom:1px solid #ececec"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light 2</div><div class="color-swatch-hex">#f5f5f5</div><div class="color-swatch-role">補助面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#2b2b2b"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#2b2b2b</div><div class="color-swatch-role">ニュースレター帯</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic（最小限）</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cf2e2e"></div><div class="color-swatch-info"><div class="color-swatch-name">Error</div><div class="color-swatch-hex">#cf2e2e</div><div class="color-swatch-role">汎用エラー（WP vivid-red）</div></div></div>
+  </div>
+  <p style="font-size:12px; color:var(--muted); margin-top:14px; line-height:1.6;">AXIS は色相を持つブランドカラーを使わない徹底したモノクローム。WordPress プリセットの vivid 系・gradient・<code style="font-family:var(--font-mono)">--swiper-theme-color #01aeeb</code> はブランド色ではない。</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / Typography — 実測値</div>
+  <h2 class="section-title">Typography</h2>
+  <p style="font-size:12px; color:var(--muted); margin:-18px 0 28px; line-height:1.6;">原典は和欧ともに AXIS Font（"AXIS ProN M" / "AXIS ProN B"、Type Project）、英字ラベルに DIN Next LT Pro。本プレビューは代替の IBM Plex Sans JP / Archivo で表示。<code style="font-family:var(--font-mono)">letter-spacing: normal</code> / <code style="font-family:var(--font-mono)">font-feature-settings: normal</code>（palt オフ）。</p>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:32px; font-weight:500; line-height:1.4; color:var(--text);">循環型デザインを体験できる子ども向けプロダクト</div>
+    <div class="type-meta">Heading (Feature) — AXIS ProN M 32px / 500 / lh 1.4 (44.8px) / ls normal</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:24px; font-weight:500; line-height:1.0; color:var(--ink);">World's Design Journal</div>
+    <div class="type-meta">Section Title — AXIS ProN M 24px / 400 / lh 1.0 / ls normal<span class="type-context">section</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:18px; font-weight:700; line-height:1.0; color:var(--text);">記事のカテゴリー</div>
+    <div class="type-meta">Article Title — AXIS ProN B 18px（Bold 書体）/ lh 1.0</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-din); font-size:16px; font-weight:400; line-height:1.0; letter-spacing:0.02em; color:var(--ink);">Product</div>
+    <div class="type-meta">English Label — DIN Next LT Pro 16px / 400 / lh 1.0 / ls 0.32px(0.02em)</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:16px; font-weight:400; line-height:1.0; color:var(--text);">本文・グローバルナビ — デザインの視点で語る</div>
+    <div class="type-meta">Body / Nav — AXIS ProN M 16px / 400 / lh 1.0</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:16px; font-weight:400; line-height:1.8; color:var(--text);">段落本文（推奨 lh） — AXIS は、デザインの視点で人間の可能性や創造性を伝えるメディアです。建築・プロダクト・グラフィック・テクノロジーなど、領域を横断してデザインの今を記事化します。実サイトの一覧は line-height 1.0 ですが、長文本文は可読性のため 1.6〜1.8 を推奨します。ABCabc 123</div>
+    <div class="type-meta">Body (段落) — 16px / 400 / lh 1.8（推奨。実サイト一覧の lh 1.0 を長文に使わない）</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:14px; font-weight:400; line-height:1.0; color:var(--text);">サブナビ・カテゴリ — 建築 / プロダクト / インテリア / グラフィック</div>
+    <div class="type-meta">Sub Nav — AXIS ProN M 14px / 400 / lh 1.0 / #f1f1f1 面</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:12px; font-weight:400; line-height:1.3; color:var(--muted);">NEWS ｜ 展覧会 / 建築　2026.06.23</div>
+    <div class="type-meta">Caption / Meta — AXIS ProN M 12px / 400 / lh 1.3 / #666</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLES -->
+<section class="section-tint" id="articles">
+<div class="section-inner">
+  <div class="section-eyebrow">03 / Journal — editorial グリッド</div>
+  <h2 class="section-title">World's Design Journal</h2>
+  <div class="cat-row">
+    <button class="cat is-active">建築<span class="en">Architecture</span></button>
+    <button class="cat">プロダクト<span class="en">Product</span></button>
+    <button class="cat">インテリア<span class="en">Interior</span></button>
+    <button class="cat">グラフィック<span class="en">Graphic</span></button>
+    <button class="cat">テクノロジー<span class="en">Technology</span></button>
+    <button class="cat">アート<span class="en">Art</span></button>
+  </div>
+  <div class="card-grid">
+    <div class="card"><div class="card-img"><span class="ph">IMAGE</span></div><div class="card-info"><div class="card-cat">REPORT ｜ 展覧会</div><div class="card-name">循環型デザインを体験できる子ども向けヘッドホン</div><div class="card-meta">2026.06.23</div></div></div>
+    <div class="card"><div class="card-img"><span class="ph">IMAGE</span></div><div class="card-info"><div class="card-cat">NEWS ｜ 建築</div><div class="card-name">都市の余白を編集する、新しい公共空間の設計</div><div class="card-meta">2026.06.20</div></div></div>
+    <div class="card"><div class="card-img"><span class="ph">IMAGE</span></div><div class="card-info"><div class="card-cat">INTERVIEW ｜ プロダクト</div><div class="card-name">道具の佇まいを問い直すプロダクトデザイナーの視点</div><div class="card-meta">2026.06.18</div></div></div>
+    <div class="card"><div class="card-img"><span class="ph">IMAGE</span></div><div class="card-info"><div class="card-cat">FEATURE ｜ テクノロジー</div><div class="card-name">AIと共につくる、これからのデザインプロセス</div><div class="card-meta">2026.06.15</div></div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / Buttons — 役割で形を分ける</div>
+  <h2 class="section-title">Buttons</h2>
+  <div class="button-row">
+    <div class="button-item"><button class="cat is-active" style="border-radius:0;">建築<span class="en" style="color:#aaa;">Architecture</span></button><div class="button-label">Category Nav（矩形 radius 0）</div></div>
+    <div class="button-item"><a class="btn btn--nav" href="#">記事を読む</a><div class="button-label">Nav（矩形・グレー面）</div></div>
+    <div class="button-item"><a class="btn btn--tag" href="#">#TAKT PROJECT</a><div class="button-label">Tag（完全 pill radius 46px）</div></div>
+    <div class="button-item button-item-dark"><a class="btn btn--submit-light" href="#">購読する</a><div class="button-label">Newsletter（pill radius 25px）</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / Forms</div>
+  <h2 class="section-title">Forms</h2>
+  <div class="form-group"><label class="form-label">キーワード検索</label><input class="form-input" type="text" placeholder="記事を検索"><div class="form-state-label">デフォルト — bg: #f1f1f1, radius: 0（矩形・枠線なし）</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--focus" type="text" value="name@example.com"><div class="form-state-label">フォーカス — 白地＋濃グレー枠（inset 1px #000）</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label form-state-label--error">エラー — 白地＋赤枠（#cf2e2e）</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">06 / Elevation</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+  <p style="font-size:12px; color:var(--muted); margin:-18px 0 24px; line-height:1.6;">AXIS は影をほとんど使わず、グレーの面とテキスト濃度で階層を作るフラット設計。</p>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、グレー面で区切る（基本）</div></div>
+    <div class="elevation-card" style="box-shadow:0 1px 3px rgba(0,0,0,0.08);"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 1px 3px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow:0 6px 18px rgba(0,0,0,0.12);"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 6px 18px rgba(0,0,0,0.12)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-eyebrow">07 / Layout — Spacing Scale</div>
+  <h2 class="section-title">Spacing</h2>
+  <p style="font-size:12px; color:var(--muted); margin:-18px 0 24px; line-height:1.6;">WordPress スペーシングプリセット（rem基準）を px 換算した目安。</p>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:7px"></div><div class="spacing-value">XS 7</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:11px"></div><div class="spacing-value">S 11</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M 16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L 24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:36px"></div><div class="spacing-value">XL 36</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:54px"></div><div class="spacing-value">XXL 54</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:81px"></div><div class="spacing-value">XXXL 81</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.axismag.jp/">axismag.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-29）
+</footer>
+
+</body>
+</html>

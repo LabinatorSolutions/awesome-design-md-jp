@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: DRAFT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --black: #000000;       /* Hero 背景・テキスト主色（--wp--preset--color--black） */
+    --white: #ffffff;       /* コンテンツ背景・反転面テキスト（--wp--preset--color--white） */
+    --gray-surface: #efefef;/* 補助面（最頻出グレー count 18） */
+    --gray-light: #fcfcfc;  /* ごく薄い面 */
+    --footer-tint: #f6f6f6; /* フッター近傍の面 */
+    --teal: #006790;        /* アクセント（ごくワンポイント） */
+    --ink: #000000;         /* 本文 */
+    --muted: #6b6b6b;       /* 補助テキスト（プレビュー用） */
+    --border: #000000;      /* DRAFT は線を黒で引く */
+    --border-soft: #e2e2e2; /* 補助の細罫（プレビュー用） */
+    --error: #cf2e2e;       /* WordPress vivid-red */
+    --overlay: rgba(0,0,0,0.40);
+    /* === Fonts（代替: PPEiko-Light→Playfair Display / Graphik→Inter / 游ゴシック・ヒラギノ→Zen Kaku Gothic New） === */
+    --font-display: "Playfair Display", "Times New Roman", Georgia, serif;
+    --font-en: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-jp: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font-jp);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    letter-spacing: normal;        /* DRAFT ベース本文（ヒラギノ）はベタ組み・palt なし */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 64px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-brand { font-family: var(--font-en); font-size: 22px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: 0.12em; }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .nav-links a { font-family: var(--font-en); font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: none; transition: opacity 0.15s; font-feature-settings: "palt"; }
+  .nav-links a:hover { opacity: 0.45; }
+  .nav-pill {
+    display: inline-block; background: transparent; color: var(--ink);
+    font-family: var(--font-en); padding: 10px 22px; border: 1px dashed var(--black);
+    border-radius: 25px; font-size: 13px; font-weight: 500; text-decoration: none;
+    transition: background 0.15s, color 0.15s; font-feature-settings: "palt";
+  }
+  .nav-pill:hover { background: var(--black); color: var(--white); }
+
+  /* HERO (黒一色) */
+  .hero {
+    background: var(--black); color: var(--white);
+    padding: 120px 32px 110px; text-align: center;
+  }
+  .hero .eyebrow { font-family: var(--font-en); font-size: 13px; font-weight: 500; color: var(--white); letter-spacing: 0.22em; margin-bottom: 28px; opacity: 0.7; text-transform: uppercase; }
+  .hero h1 {
+    font-family: var(--font-display); font-size: 64px; font-weight: 400; line-height: 1.3;
+    color: var(--white); letter-spacing: 0.025em; margin: 0 auto 28px; max-width: 880px;
+    font-feature-settings: "palt";
+  }
+  .hero .jp-lead {
+    font-family: var(--font-jp); font-size: 16px; font-weight: 400; line-height: 2.0;
+    color: var(--white); letter-spacing: 0.04em; max-width: 600px; margin: 0 auto 40px; opacity: 0.85;
+  }
+  .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS — 破線 pill が基本 */
+  .btn {
+    display: inline-block; font-family: var(--font-en); font-size: 14px; font-weight: 500;
+    padding: 16px 28px; border-radius: 25px; cursor: pointer; text-decoration: none;
+    letter-spacing: 0.04em; transition: background 0.15s, color 0.15s, opacity 0.15s;
+    font-feature-settings: "palt";
+  }
+  .btn--dashed { background: transparent; color: var(--ink); border: 1px dashed var(--black); }
+  .btn--dashed:hover { background: var(--black); color: var(--white); }
+  .btn--dashed-light { background: transparent; color: var(--white); border: 1px dashed var(--white); }
+  .btn--dashed-light:hover { background: var(--white); color: var(--black); }
+  .btn--solid { background: var(--black); color: var(--white); border: 1px solid var(--black); }
+  .btn--solid:hover { opacity: 0.78; }
+  .btn--link { background: transparent; color: var(--ink); border: none; padding: 14px 4px; border-bottom: 1px solid transparent; border-radius: 0; }
+  .btn--link:hover { border-bottom-color: var(--black); }
+
+  /* SECTIONS */
+  .section { padding: 80px 32px; max-width: 1080px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--font-en); font-size: 13px; font-weight: 600; color: var(--ink);
+    letter-spacing: 0.16em; margin-bottom: 10px; text-transform: uppercase; font-feature-settings: "palt";
+  }
+  .section-title {
+    font-family: var(--font-display); font-size: 44px; font-weight: 400; line-height: 1.3;
+    margin-bottom: 36px; color: var(--ink); letter-spacing: 0.02em; font-feature-settings: "palt";
+  }
+  .section-divider { border: none; border-top: 1px solid var(--border-soft); margin: 0; }
+  .section-gray { background: var(--gray-surface); }
+  .section-gray .section-inner { max-width: 1080px; margin: 0 auto; padding: 80px 32px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--border-soft); }
+  .color-swatch-block { height: 76px; width: 100%; }
+  .color-swatch-info { padding: 11px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--ink); }
+  .color-swatch-hex { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .color-group-label { font-family: var(--font-en); font-size: 13px; font-weight: 600; color: var(--ink); margin: 24px 0 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 30px; padding-bottom: 26px; border-bottom: 1px solid var(--border-soft); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 10px; letter-spacing: 0; }
+  .type-context { display: inline-block; background: var(--gray-surface); color: var(--ink); font-size: 11px; padding: 2px 8px; margin-left: 8px; }
+
+  /* WORK CARDS (ギャラリー) */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+  .card { background: var(--white); }
+  .card-img { aspect-ratio: 4/3; position: relative; display: flex; align-items: flex-end; padding: 18px; overflow: hidden; }
+  .card-img--a { background: #111111; }
+  .card-img--b { background: #1c1c1c; }
+  .card-img--c { background: #efefef; }
+  .card-img--d { background: #2a2a2a; }
+  .card-img .corner { position: absolute; top: 16px; left: 18px; font-family: var(--font-en); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--white); opacity: 0.7; }
+  .card-img--c .corner { color: var(--ink); opacity: 0.55; }
+  .card-img .num { font-family: var(--font-display); font-size: 52px; font-weight: 400; line-height: 1.0; color: var(--white); font-feature-settings: "palt"; }
+  .card-img--c .num { color: var(--ink); }
+  .card-img .hover-view { position: absolute; inset: 0; background: var(--overlay); color: var(--white); display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 14px; letter-spacing: 0.12em; opacity: 0; transition: opacity 0.2s; }
+  .card:hover .hover-view { opacity: 1; }
+  .card-info { padding: 16px 2px 0; }
+  .card-cate { display: block; font-family: var(--font-en); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 7px; text-transform: uppercase; font-feature-settings: "palt"; }
+  .card-name { font-family: var(--font-en); font-size: 16px; font-weight: 600; line-height: 1.45; color: var(--ink); font-feature-settings: "palt"; }
+  .card-name .jp { font-family: var(--font-jp); display: block; font-weight: 500; margin-top: 4px; }
+
+  /* FILTER (dashed pill) */
+  .filter-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+  .filter {
+    font-family: var(--font-en); font-size: 14px; font-weight: 500; padding: 14px 24px;
+    border-radius: 25px; border: 1px dashed var(--black); background: transparent; color: var(--ink);
+    cursor: pointer; letter-spacing: 0.04em; transition: background 0.15s, color 0.15s; font-feature-settings: "palt";
+  }
+  .filter:hover { background: var(--black); color: var(--white); }
+  .filter.is-active { background: var(--black); color: var(--white); border-style: solid; }
+
+  /* BUTTONS showcase */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-row--dark { background: var(--black); padding: 28px; margin-top: 20px; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 10px; }
+  .button-row--dark .button-label { color: #b8b8b8; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 22px; max-width: 440px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; letter-spacing: 0.02em; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--ink);
+    border: 1px solid var(--black); padding: 12px 14px; border-radius: 0;
+    font-family: var(--font-jp); font-size: 16px; outline: none;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .form-input:focus, .form-input--focus { border-color: var(--black); box-shadow: 0 0 0 2px rgba(0,0,0,0.12); }
+  .form-input--error { border-color: var(--error); box-shadow: 0 0 0 2px rgba(207,46,46,0.16); }
+  .form-state-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .form-state-label--error { color: var(--error); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px; }
+  .elevation-card { background: var(--white); padding: 26px; text-align: center; border: 1px solid var(--border-soft); }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--muted); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--black); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--muted); }
+
+  /* FOOTER */
+  .footer { padding: 80px 32px 32px; text-align: center; background: var(--footer-tint); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+  .footer a { color: var(--ink); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 36px; }
+    .section-title { font-size: 30px; }
+    .nav-links { display: none; }
+    .section { padding: 52px 20px; }
+    .section-gray .section-inner { padding: 52px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">DRAFT</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#works">Works</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a class="nav-pill" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Branding &amp; Design Since 1978</div>
+  <h1>A Proposal for a New Lifestyle</h1>
+  <div class="jp-lead">ブランドをつくる。黒と白の余白で、作品そのものを語らせる、ギャラリーのようなデザインシステム。computed style 実測値（2026-06-29）に基づく。</div>
+  <div class="hero-buttons">
+    <a class="btn btn--dashed-light" href="#">View Works</a>
+    <a class="btn btn--dashed-light" href="#">DESIGN.md を読む</a>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand / Core</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Black (Hero)</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">ヒーロー背景・主色</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e2e2e2"></div><div class="color-swatch-info"><div class="color-swatch-name">White (Surface)</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">コンテンツ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#006790"></div><div class="color-swatch-info"><div class="color-swatch-name">Teal Accent</div><div class="color-swatch-hex">#006790</div><div class="color-swatch-role">ワンポイント</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface / Gray</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef; border-bottom:1px solid #e0e0e0"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Gray</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">補助面（count 18）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fcfcfc; border-bottom:1px solid #ececec"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Light</div><div class="color-swatch-hex">#fcfcfc</div><div class="color-swatch-role">ごく薄い面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f6f6f6; border-bottom:1px solid #e8e8e8"></div><div class="color-swatch-info"><div class="color-swatch-name">Footer Tint</div><div class="color-swatch-hex">#f6f6f6</div><div class="color-swatch-role">フッター面</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text / Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #e2e2e2"></div><div class="color-swatch-info"><div class="color-swatch-name">On Dark</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">反転面テキスト</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#cf2e2e"></div><div class="color-swatch-info"><div class="color-swatch-name">Error</div><div class="color-swatch-hex">#cf2e2e</div><div class="color-swatch-role">エラー（推奨）</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / Typography — 実測値</div>
+  <h2 class="section-title">Typography</h2>
+  <p style="font-size:13px; color:var(--muted); margin:-22px 0 30px; line-height:1.7;">原典は英字ディスプレイ＝PPEiko-Light、和欧混植＝Graphik＋游ゴシック Pr6N、ベース本文＝ヒラギノ角ゴ ProN。本プレビューは代替の Playfair Display / Inter / Zen Kaku Gothic New で表示。<code style="font-family:var(--font-mono)">palt</code> は見出し・ラベルにのみ適用し、ベース本文はベタ組み。</p>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-display); font-size:56px; font-weight:400; line-height:1.3; letter-spacing:0.025em; color:var(--ink);">A Proposal for a New Lifestyle</div>
+    <div class="type-meta">Display (Hero) — PPEiko-Light 24px〜 / 300 / lh 1.5 / ls 0.6px(0.025em) / palt<span class="type-context">黒地は白文字</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:22px; font-weight:500; line-height:1.0; color:var(--ink); font-feature-settings:'palt';">Featured Journal</div>
+    <div class="type-meta">Heading (英字) — Graphik Medium 16px / lh 1.0 / palt</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:20px; font-weight:600; line-height:1.25; color:var(--ink); font-feature-settings:'palt';">Milan Design Week 2026 ≪LAST SAMPLE≫</div>
+    <div class="type-meta">Title (作品名) — Graphik Semibold 16px / lh 1.25 / palt</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-jp); font-size:16px; font-weight:400; line-height:2.0; letter-spacing:normal; color:var(--ink);">本文テキスト — DRAFT は宮田識が率いるブランディング／デザイン会社です。広告から空間、プロダクト、店舗まで領域を横断し、ブランドそのものをつくります。ベース本文はヒラギノ角ゴ ProN でベタ組み（palt なし）。ABCabc 123</div>
+    <div class="type-meta">Body / Link — ヒラギノ角ゴ ProN 16px / 400 / lh 1.0–1.5 / ls normal / palt なし</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-en); font-size:11px; font-weight:500; line-height:1.0; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase; font-feature-settings:'palt';">Product</div>
+    <div class="type-meta">Label / Category — Graphik Medium 11px / lh 1.0 / palt</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WORKS -->
+<section class="section-gray" id="works">
+<div class="section-inner">
+  <div class="section-eyebrow">03 / Works — ギャラリーグリッド</div>
+  <h2 class="section-title">Selected Works</h2>
+  <div class="filter-row">
+    <button class="filter is-active">ALL</button>
+    <button class="filter">Architecture</button>
+    <button class="filter">Interior</button>
+    <button class="filter">Branding</button>
+    <button class="filter">Product</button>
+  </div>
+  <div class="card-grid">
+    <div class="card"><div class="card-img card-img--a"><span class="corner">PRODUCT</span><div class="num">01</div><div class="hover-view">View</div></div><div class="card-info"><span class="card-cate">Product</span><div class="card-name">Milan Design Week 2026<span class="jp">ミラノ・デザインウィーク出展</span></div></div></div>
+    <div class="card"><div class="card-img card-img--b"><span class="corner">BRANDING</span><div class="num">02</div><div class="hover-view">View</div></div><div class="card-info"><span class="card-cate">Branding</span><div class="card-name">A New Yokohama Lifestyle<span class="jp">横浜の新しい暮らしの提案</span></div></div></div>
+    <div class="card"><div class="card-img card-img--c"><span class="corner">INTERIOR</span><div class="num">03</div><div class="hover-view">View</div></div><div class="card-info"><span class="card-cate">Interior</span><div class="card-name">CIBONE Aoyama<span class="jp">空間と編集のディレクション</span></div></div></div>
+    <div class="card"><div class="card-img card-img--d"><span class="corner">ARCHITECTURE</span><div class="num">04</div><div class="hover-view">View</div></div><div class="card-info"><span class="card-cate">Architecture</span><div class="card-name">Hospitality Project<span class="jp">ホスピタリティ施設のブランディング</span></div></div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / Buttons — 破線 pill</div>
+  <h2 class="section-title">Buttons</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn btn--dashed" href="#">Architecture</a><div class="button-label">Dashed pill（基本）</div></div>
+    <div class="button-item"><a class="btn btn--solid" href="#">Contact</a><div class="button-label">Solid（黒地・白文字）</div></div>
+    <div class="button-item"><a class="btn btn--link" href="#">See All Journal</a><div class="button-label">Text link（下線ホバー）</div></div>
+    <div class="button-item"><button class="filter is-active">ALL</button><div class="button-label">Filter（選択中）</div></div>
+  </div>
+  <div class="button-row button-row--dark">
+    <div class="button-item"><a class="btn btn--dashed-light" href="#">View</a><div class="button-label">On Dark（白の破線 pill）</div></div>
+    <div class="button-item"><a class="btn btn--dashed-light" href="#">Read More</a><div class="button-label">ヒーロー上 CTA</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / Forms</div>
+  <h2 class="section-title">Forms</h2>
+  <p style="font-size:13px; color:var(--muted); margin:-22px 0 28px; line-height:1.7;">DRAFT は線を黒で引く。入力欄は角を立て（radius 0px）、枠は 1px solid #000000。</p>
+  <div class="form-group"><label class="form-label">お名前</label><input class="form-input" type="text" placeholder="山田 太郎"><div class="form-state-label">デフォルト — border: #000000 / radius: 0</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--focus" type="text" value="name@example.com"><div class="form-state-label">フォーカス — border: #000000 + リング</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label form-state-label--error">エラー — border: #cf2e2e</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">06 / Elevation</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+  <p style="font-size:13px; color:var(--muted); margin:-22px 0 26px; line-height:1.7;">DRAFT は影をほぼ使わない。黒／白の面の対比と余白で奥行きを作るフラット設計。</p>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、黒白の対比と余白で区切る（基本）</div></div>
+    <div class="elevation-card" style="box-shadow:6px 6px 9px rgba(0,0,0,0.2);"><div class="elevation-label">Level 1</div><div class="elevation-desc">6px 6px 9px rgba(0,0,0,0.2)</div></div>
+    <div class="elevation-card" style="box-shadow:12px 12px 50px rgba(0,0,0,0.4);"><div class="elevation-label">Level 2</div><div class="elevation-desc">12px 12px 50px rgba(0,0,0,0.4)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-eyebrow">07 / Layout — Spacing Scale</div>
+  <h2 class="section-title">Spacing</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:7px"></div><div class="spacing-value">XS 7</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:11px"></div><div class="spacing-value">S 11</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">M 16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">L 24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:36px"></div><div class="spacing-value">XL 36</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:54px"></div><div class="spacing-value">XXL 54</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:81px"></div><div class="spacing-value">3XL 81</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.draft.co.jp/">draft.co.jp</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-29）
+</footer>
+
+</body>
+</html>

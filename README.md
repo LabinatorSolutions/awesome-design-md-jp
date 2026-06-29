@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (366 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (369 sites)</a>
 </p>
 
 <table>
@@ -540,6 +540,11 @@
 <td align="center"><strong>TYPICA</strong><br><img src="design-md/typica/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>東京茶寮</strong><br><img src="design-md/tokyosaryo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DDD HOTEL</strong><br><img src="design-md/dddhotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AXIS</strong><br><img src="design-md/axis/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>good design company</strong><br><img src="design-md/good-design-company/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DRAFT</strong><br><img src="design-md/draft/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -967,11 +972,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [TYPICA (ティピカ)](https://typica.jp/) | Specialty Coffee / Marketplace | [DESIGN.md](design-md/typica/DESIGN.md) | [preview.html](design-md/typica/preview.html) |
 | [東京茶寮 (Tokyo Saryo)](https://www.tokyosaryo.jp/) | Tea / Cafe | [DESIGN.md](design-md/tokyosaryo/DESIGN.md) | [preview.html](design-md/tokyosaryo/preview.html) |
 | [DDD HOTEL](https://dddhotel.jp/) | Hotel / Design Hotel | [DESIGN.md](design-md/dddhotel/DESIGN.md) | [preview.html](design-md/dddhotel/preview.html) |
+| [AXIS (アクシス)](https://www.axismag.jp/) | Design Magazine / Media | [DESIGN.md](design-md/axis/DESIGN.md) | [preview.html](design-md/axis/preview.html) |
+| [good design company](https://gooddesigncompany.com/) | Branding / Design Studio | [DESIGN.md](design-md/good-design-company/DESIGN.md) | [preview.html](design-md/good-design-company/preview.html) |
+| [DRAFT (ドラフト)](https://www.draft.co.jp/) | Branding / Design Studio | [DESIGN.md](design-md/draft/DESIGN.md) | [preview.html](design-md/draft/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (366 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (369 sites)</a>
 </p>
 
 <table>
@@ -1477,6 +1485,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>TYPICA</strong><br><img src="design-md/typica/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>東京茶寮</strong><br><img src="design-md/tokyosaryo/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>DDD HOTEL</strong><br><img src="design-md/dddhotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>AXIS</strong><br><img src="design-md/axis/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>good design company</strong><br><img src="design-md/good-design-company/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DRAFT</strong><br><img src="design-md/draft/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
