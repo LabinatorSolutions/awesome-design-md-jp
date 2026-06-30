@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 茅乃舎</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: computed style 実測値 === */
+    --white: #ffffff;
+    --ink: #000000;            /* 本文・見出し（コンテンツ面） */
+    --moss: #5b5d22;           /* 萱色・ブランド地（スプラッシュ） */
+    --brown: #1c130a;          /* 濃褐・ヴェール／塗り */
+    --brown-veil: rgba(28,19,10,0.5);  /* ヒーロー写真ヴェール */
+    --gold: #8f7e4b;           /* 金茶・区分ラベル */
+    --vermilion: #9f0e14;      /* 朱・限定バッジ */
+    --border-gray: #827e7a;    /* CTA 枠 */
+    --muted: #bbbbbb;          /* 非アクティブ・補助 */
+    --paper: #f6f4ef;          /* 薄い和紙地（プレビュー用セクション面） */
+    --shadow-1: 0 1px 3px rgba(28,19,10,0.10);
+    --shadow-2: 0 8px 24px rgba(28,19,10,0.16);
+    /* === Fonts（代替: 筑紫明朝→Shippori Mincho / Baskerville→Libre Baskerville / 游ゴ→Zen Kaku Gothic New） === */
+    --font-primary: "Shippori Mincho", "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "YuMincho", serif;
+    --font-num: "Libre Baskerville", "Times New Roman", serif;
+    --font-gothic: "Zen Kaku Gothic New", "游ゴシック", YuGothic, "Hiragino Kaku Gothic Pro", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font-primary);
+    font-size: 16px; font-weight: 400; line-height: 1.7; letter-spacing: 0.02em;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw; height: 72px;
+    background: var(--white);
+    border-bottom: 1px solid #ece9e2;
+  }
+  .nav-brand { font-family: var(--font-primary); font-size: 22px; font-weight: 500; color: var(--ink); text-decoration: none; letter-spacing: 0.1em; }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .nav-links a { font-family: var(--font-primary); font-size: 16px; font-weight: 500; color: var(--ink); text-decoration: none; letter-spacing: 0.04em; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 0.5; }
+  .nav-en { font-family: var(--font-gothic); font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.04em; }
+
+  /* HERO（写真＋濃褐ヴェール＋白の明朝） */
+  .hero {
+    position: relative; min-height: 560px; display: flex; align-items: center; justify-content: center;
+    text-align: center; color: var(--white); overflow: hidden;
+    background:
+      linear-gradient(var(--brown-veil), var(--brown-veil)),
+      radial-gradient(120% 90% at 50% 95%, #3a2f1e 0%, #241a10 55%, #140d06 100%);
+  }
+  .hero-inner { position: relative; z-index: 2; padding: 80px 6vw; }
+  .hero .month { font-family: var(--font-primary); font-size: 20px; font-weight: 400; letter-spacing: 0.5em; margin-bottom: 6px; }
+  .hero .date { font-family: var(--font-num); font-size: 120px; font-weight: 400; line-height: 1; margin-bottom: 10px; }
+  .hero .ko { font-family: var(--font-primary); font-size: 24px; font-weight: 400; letter-spacing: 0.3em; margin-bottom: 8px; }
+  .hero .furi { font-family: var(--font-primary); font-size: 12px; font-weight: 400; letter-spacing: 0.1em; opacity: 0.85; margin-bottom: 36px; }
+  .hero .lead { font-family: var(--font-primary); font-size: 18px; font-weight: 400; line-height: 1.7; letter-spacing: 0.1em; max-width: 560px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block; font-family: var(--font-primary); font-size: 16px; font-weight: 400;
+    padding: 16px 30px; border-radius: 0; cursor: pointer; text-decoration: none; letter-spacing: 0.02em;
+    transition: opacity 0.2s, background 0.2s;
+  }
+  .btn--veil { background: var(--brown-veil); color: var(--white); border: 1px solid var(--border-gray); }
+  .btn--veil:hover { background: rgba(28,19,10,0.7); }
+  .btn--dark { background: var(--ink); color: var(--white); border: 1px solid var(--ink); font-family: var(--font-gothic); }
+  .btn--dark:hover { opacity: 0.82; }
+  .btn--moss { background: var(--moss); color: var(--white); border: 1px solid var(--moss); }
+  .btn--moss:hover { opacity: 0.88; }
+  .btn--ghost-dark { background: transparent; color: var(--ink); border: 1px solid var(--border-gray); }
+  .btn--ghost-dark:hover { background: var(--paper); }
+
+  /* SECTIONS */
+  .section { padding: 88px 6vw; max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow { font-family: var(--font-gothic); font-size: 12px; font-weight: 500; color: var(--gold); letter-spacing: 0.16em; margin-bottom: 12px; }
+  .section-title { font-family: var(--font-primary); font-size: 32px; font-weight: 500; line-height: 1.5; margin-bottom: 32px; color: var(--ink); letter-spacing: 0.06em; }
+  .section-lead { font-size: 14px; color: #6b655c; margin: -20px 0 30px; max-width: 640px; line-height: 1.9; }
+  .section-divider { border: none; border-top: 1px solid #ece9e2; margin: 0; }
+  .section-tint { background: var(--paper); }
+  .section-tint .section-inner { max-width: 1200px; margin: 0 auto; padding: 88px 6vw; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid #ece9e2; border-radius: 0; }
+  .color-swatch-block { height: 76px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-gothic); font-size: 12px; font-weight: 500; margin-bottom: 2px; color: var(--ink); }
+  .color-swatch-hex { font-size: 12px; color: #6b655c; font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: #6b655c; margin-top: 3px; }
+  .color-group-label { font-family: var(--font-gothic); font-size: 13px; font-weight: 500; color: #6b655c; margin: 28px 0 12px; letter-spacing: 0.1em; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 30px; padding-bottom: 26px; border-bottom: 1px solid #ece9e2; }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; color: #6b655c; margin-top: 10px; }
+  .type-context { display: inline-block; background: var(--paper); color: #6b655c; font-size: 11px; padding: 2px 8px; margin-left: 8px; border-radius: 0; }
+  .type-dark-row { background: #241a10; padding: 28px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
+  .card { background: var(--white); }
+  .card-img { aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .card-img .ph { font-family: var(--font-num); font-size: 18px; color: rgba(255,255,255,0.85); letter-spacing: 0.08em; }
+  .card-img--1 { background: radial-gradient(120% 90% at 50% 80%, #4a3f28 0%, #241a10 100%); }
+  .card-img--2 { background: radial-gradient(120% 90% at 50% 80%, #5b5d22 0%, #2f3012 100%); }
+  .card-img--3 { background: radial-gradient(120% 90% at 50% 80%, #6b5a35 0%, #2c2414 100%); }
+  .card-img--4 { background: radial-gradient(120% 90% at 50% 80%, #3a3326 0%, #1c130a 100%); }
+  .card-info { padding: 16px 2px 0; }
+  .card-label { font-family: var(--font-gothic); font-size: 12px; line-height: 2; }
+  .card-label--event { color: var(--gold); }
+  .card-label--ltd { color: var(--vermilion); }
+  .card-name { font-family: var(--font-primary); font-size: 18px; font-weight: 500; line-height: 1.6; color: var(--ink); }
+  .card-meta { font-family: var(--font-primary); font-size: 13px; color: #6b655c; margin-top: 4px; }
+
+  /* BUTTONS showcase */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; color: #6b655c; margin-top: 10px; font-family: var(--font-gothic); }
+  .button-stage { background: radial-gradient(120% 90% at 50% 90%, #3a2f1e 0%, #1c130a 100%); padding: 28px; margin-bottom: 20px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 22px; max-width: 440px; }
+  .form-label { display: block; font-family: var(--font-primary); font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--ink);
+    border: 1px solid var(--border-gray); padding: 12px 14px; border-radius: 0;
+    font-family: var(--font-primary); font-size: 16px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input::placeholder { color: var(--muted); }
+  .form-input:focus, .form-input--focus { border-color: var(--brown); box-shadow: 0 0 0 3px rgba(28,19,10,0.10); }
+  .form-input--error { border-color: var(--vermilion); box-shadow: 0 0 0 3px rgba(159,14,20,0.12); }
+  .form-state-label { font-size: 12px; color: #6b655c; margin-top: 6px; font-family: var(--font-gothic); }
+  .form-state-label--error { color: var(--vermilion); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--white); padding: 26px; text-align: center; border: 1px solid #ece9e2; border-radius: 0; }
+  .elevation-label { font-family: var(--font-gothic); font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: #6b655c; word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--moss); margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: #6b655c; }
+
+  /* FOOTER */
+  .footer { padding: 48px 6vw; text-align: center; background: var(--brown); color: rgba(255,255,255,0.7); font-size: 12px; font-family: var(--font-primary); letter-spacing: 0.04em; }
+  .footer a { color: #fff; text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero .date { font-size: 80px; }
+    .section-title { font-size: 26px; }
+    .nav-links { display: none; }
+    .section { padding: 56px 6vw; }
+    .section-tint .section-inner { padding: 56px 6vw; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">茅乃舎</a>
+  <ul class="nav-links">
+    <li><a href="#colors">商品のご紹介</a></li>
+    <li><a href="#typography">茅乃舎だし</a></li>
+    <li><a href="#cards">お知らせ</a></li>
+    <li><a href="#buttons">オンラインショップ</a></li>
+    <li><span class="nav-en">English</span></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="month">六　月</div>
+    <div class="date">30</div>
+    <div class="ko">菖蒲華</div>
+    <div class="furi">あやめはなさく</div>
+    <div class="lead">料理人の知恵と技を、家庭の食卓へ。<br>季節のうつろいとともに、ていねいな出汁の一杯を。</div>
+    <div class="hero-buttons">
+      <a class="btn btn--veil" href="#">茅乃舎が大切にしていること</a>
+      <a class="btn btn--veil" href="#">オンラインショップ</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow">01 / COLORS</div>
+  <h2 class="section-title">色彩</h2>
+  <p class="section-lead">萱色（オリーブ）と濃褐を軸に、コンテンツ面は黒文字×白地。区分は金茶、限定強調は朱を最小限あてる。</p>
+
+  <div class="color-group-label">Brand / 地</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#5b5d22"></div><div class="color-swatch-info"><div class="color-swatch-name">萱色 Moss</div><div class="color-swatch-hex">#5b5d22</div><div class="color-swatch-role">ブランド地</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1c130a"></div><div class="color-swatch-info"><div class="color-swatch-name">濃褐 Brown</div><div class="color-swatch-hex">#1c130a</div><div class="color-swatch-role">ヴェール・塗り</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ece9e2"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">コンテンツ地</div></div></div>
+  </div>
+
+  <div class="color-group-label">Accent / Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#8f7e4b"></div><div class="color-swatch-info"><div class="color-swatch-name">金茶 Khaki Gold</div><div class="color-swatch-hex">#8f7e4b</div><div class="color-swatch-role">区分ラベル</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9f0e14"></div><div class="color-swatch-info"><div class="color-swatch-name">朱 Vermilion</div><div class="color-swatch-hex">#9f0e14</div><div class="color-swatch-role">限定バッジ</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#827e7a"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Gray</div><div class="color-swatch-hex">#827e7a</div><div class="color-swatch-role">CTA 枠</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#bbbbbb"></div><div class="color-swatch-info"><div class="color-swatch-name">Muted</div><div class="color-swatch-hex">#bbbbbb</div><div class="color-swatch-role">非アクティブ</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow">02 / TYPOGRAPHY — 実測値</div>
+  <h2 class="section-title">組版</h2>
+  <p class="section-lead">原典は本文・見出し・ナビすべて筑紫明朝（FOT-筑紫明朝 Pr6）。日付の大数字のみ Baskerville、機能ラベルのみ游ゴシック。本プレビューは代替の Shippori Mincho / Libre Baskerville / Zen Kaku Gothic New で表示。<code style="font-family:var(--font-mono)">font-feature-settings: normal</code>（palt なし）。</p>
+
+  <div class="type-sample type-dark-row">
+    <div style="font-family:var(--font-num); font-size:96px; font-weight:400; line-height:1; color:#fff;">30</div>
+    <div class="type-meta" style="color:rgba(255,255,255,0.7)">Hero Date — Baskerville / 160px / lh 1.0（白 #fff）<span class="type-context" style="background:rgba(255,255,255,0.12); color:#fff">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:32px; font-weight:400; line-height:1.7; color:var(--ink);">茅乃舎</div>
+    <div class="type-meta">H1 — 明朝 32px / 400 / lh 1.7 / ls 0.02em</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:24px; font-weight:500; line-height:1.5; color:var(--ink);">定番のだし／お知らせ</div>
+    <div class="type-meta">H2 — 明朝 M 24px / 400 / lh 1.5 / ls normal</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:24px; font-weight:400; line-height:1; letter-spacing:0.3em; color:var(--ink);">菖蒲華</div>
+    <div class="type-meta">季節語（候）— 明朝 24px / 400 / ls 7.2px (0.3em)</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:16px; font-weight:400; line-height:1.7; letter-spacing:0.02em; color:var(--ink);">本文テキスト — 私たち茅乃舎は、料理人の知恵と技を家庭の食卓にお届けします。素材を活かし、ていねいにとった出汁の一杯を、季節のうつろいとともに。<span style="font-family:var(--font-num)">ABCabc 0123</span></div>
+    <div class="type-meta">Body — 明朝 16px / 400 / lh 1.7 (27.2px) / ls 0.32px (0.02em)</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:18px; font-weight:500; line-height:1.7; letter-spacing:0.04em; color:var(--ink);">トップページ　オンラインショップ　お問い合わせ</div>
+    <div class="type-meta">Nav — 明朝 M 18px / 400 / lh 1.7 / ls 0.32px (0.02em)</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-gothic); font-size:12px; font-weight:400; line-height:2; color:var(--gold);">イベント　&nbsp;<span style="color:var(--vermilion)">店舗限定</span></div>
+    <div class="type-meta">Label（区分・ゴシック）— 游ゴシック 12px / 400 / lh 2.0（金茶 #8f7e4b ／ 朱 #9f0e14）</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section-tint" id="cards">
+<div class="section-inner">
+  <div class="section-eyebrow">03 / PRODUCTS — 写真主役のグリッド</div>
+  <h2 class="section-title">商品のご紹介</h2>
+  <p class="section-lead">写真を大きく置き、その下に明朝の品名と区分ラベル（金茶・朱）を添える。角丸は持たず、写真と余白・直線で面を分ける。</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-img card-img--1"><span class="ph">茅乃舎だし</span></div><div class="card-info"><div class="card-label card-label--event">定番のだし</div><div class="card-name">茅乃舎だし</div><div class="card-meta">8g×30袋</div></div></div>
+    <div class="card"><div class="card-img card-img--2"><span class="ph">野菜だし</span></div><div class="card-info"><div class="card-label card-label--event">定番のだし</div><div class="card-name">野菜だし</div><div class="card-meta">8g×24袋</div></div></div>
+    <div class="card"><div class="card-img card-img--3"><span class="ph">茅乃舎の和食</span></div><div class="card-info"><div class="card-label card-label--ltd">店舗限定</div><div class="card-name">煮干しだし</div><div class="card-meta">8g×18袋</div></div></div>
+    <div class="card"><div class="card-img card-img--4"><span class="ph">久原本家</span></div><div class="card-info"><div class="card-label card-label--ltd">地域限定</div><div class="card-name">茅乃舎 黄金比だし</div><div class="card-meta">9g×20袋</div></div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow">04 / BUTTONS</div>
+  <h2 class="section-title">ボタン</h2>
+  <p class="section-lead">角丸なし（radius 0）。ヒーローは濃褐ヴェール地＋細枠の明朝、コンテンツ面は黒地＋白文字。</p>
+  <div class="button-stage">
+    <div class="button-item"><a class="btn btn--veil" href="#">茅乃舎が大切にしていること</a><div class="button-label" style="color:rgba(255,255,255,0.7)">Hero Veil（#1c130a/0.5＋枠 #827e7a）</div></div>
+  </div>
+  <div class="button-row">
+    <div class="button-item"><a class="btn btn--dark" href="#">もっと見る</a><div class="button-label">Content Dark（#000 地・白文字）</div></div>
+    <div class="button-item"><a class="btn btn--moss" href="#">オンラインショップへ</a><div class="button-label">Moss（萱色 #5b5d22）</div></div>
+    <div class="button-item"><a class="btn btn--ghost-dark" href="#">詳しく見る</a><div class="button-label">Ghost（白地＋枠 #827e7a）</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow">05 / FORMS</div>
+  <h2 class="section-title">フォーム</h2>
+  <p class="section-lead">角丸なし。フォーカスは枠 #1c130a（濃褐）＋薄いリング。エラーは朱 #9f0e14。</p>
+  <div class="form-group"><label class="form-label">お名前</label><input class="form-input" type="text" placeholder="山田 太郎"><div class="form-state-label">デフォルト — border: #827e7a, radius: 0</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--focus" type="text" value="name@example.com"><div class="form-state-label">フォーカス — border: #1c130a + 薄いリング</div></div>
+  <div class="form-group"><label class="form-label">メールアドレス</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label form-state-label--error">エラー — border: #9f0e14（朱）</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow">06 / ELEVATION</div>
+  <h2 class="section-title">奥行き</h2>
+  <p class="section-lead">影はほぼ使わず、写真・濃褐ヴェール・余白・直線で階層をつくる。影を使う場合も濃褐ベースの墨色にする。</p>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、写真と余白で分ける（基本）</div></div>
+    <div class="elevation-card" style="box-shadow:var(--shadow-1);"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 1px 3px rgba(28,19,10,0.10)</div></div>
+    <div class="elevation-card" style="box-shadow:var(--shadow-2);"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 8px 24px rgba(28,19,10,0.16)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-eyebrow">07 / LAYOUT — Spacing</div>
+  <h2 class="section-title">余白</h2>
+  <p class="section-lead">大きな写真と広い余白で「間」をつくる。セクション間は 80〜120px の縦余白。</p>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:64px"></div><div class="spacing-value">64</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:96px"></div><div class="spacing-value">96</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:120px"></div><div class="spacing-value">120</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://www.kayanoya.com/">kayanoya.com</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-06-30）
+</footer>
+
+</body>
+</html>

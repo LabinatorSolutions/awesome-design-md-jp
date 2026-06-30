@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (369 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (372 sites)</a>
 </p>
 
 <table>
@@ -545,6 +545,9 @@
 </tr>
 <tr>
 <td align="center"><strong>DRAFT</strong><br><img src="design-md/draft/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>茅乃舎</strong><br><img src="design-md/kayanoya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Graphpaper</strong><br><img src="design-md/graphpaper/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>美術手帖</strong><br><img src="design-md/bijutsutecho/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -975,11 +978,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [AXIS (アクシス)](https://www.axismag.jp/) | Design Magazine / Media | [DESIGN.md](design-md/axis/DESIGN.md) | [preview.html](design-md/axis/preview.html) |
 | [good design company](https://gooddesigncompany.com/) | Branding / Design Studio | [DESIGN.md](design-md/good-design-company/DESIGN.md) | [preview.html](design-md/good-design-company/preview.html) |
 | [DRAFT (ドラフト)](https://www.draft.co.jp/) | Branding / Design Studio | [DESIGN.md](design-md/draft/DESIGN.md) | [preview.html](design-md/draft/preview.html) |
+| [茅乃舎 (Kayanoya)](https://www.kayanoya.com/) | Food / Dashi / Premium Brand | [DESIGN.md](design-md/kayanoya/DESIGN.md) | [preview.html](design-md/kayanoya/preview.html) |
+| [Graphpaper (グラフペーパー)](https://graphpaper-tokyo.com/) | Fashion / Select Shop | [DESIGN.md](design-md/graphpaper/DESIGN.md) | [preview.html](design-md/graphpaper/preview.html) |
+| [美術手帖 (Bijutsu Techo)](https://bijutsutecho.com/) | Art Media / Magazine | [DESIGN.md](design-md/bijutsutecho/DESIGN.md) | [preview.html](design-md/bijutsutecho/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (369 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (372 sites)</a>
 </p>
 
 <table>
@@ -1490,6 +1496,9 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>DRAFT</strong><br><img src="design-md/draft/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>茅乃舎</strong><br><img src="design-md/kayanoya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Graphpaper</strong><br><img src="design-md/graphpaper/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>美術手帖</strong><br><img src="design-md/bijutsutecho/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
