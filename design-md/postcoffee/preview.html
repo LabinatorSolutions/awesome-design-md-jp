@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: PostCoffee</title>
+<style>
+  :root {
+    /* === Colors === */
+    --brand-green: #4cc764;
+    --brand-green-dark: #3fae55;
+    --rating-yellow: #ffc93f;
+    --subscribe-orange: #ffa500;
+    --announce-blue: #306fdc;
+    --sale-red: #e10112;
+    --pop-pink: #ff3399;
+    --text-primary: #000000;
+    --text-dark: #1d1d1f;
+    --text-muted: #777777;
+    --text-disabled: #dfdfdf;
+    --border-default: #efefef;
+    --divider: #e2e2e2;
+    --bg-page: #ffffff;
+    --bg-surface-alt: #fafafa;
+    --bg-surface-alt2: #f5f5f7;
+    --panel-dark: #1d1d1f;
+    --border-focus: #4cc764;
+    --danger: #e10112;
+    /* === Elevation === */
+    --elevation-1: 0 0 5px rgba(0,0,0,0.1);
+    --elevation-2: 0 4px 12px rgba(0,0,0,0.12);
+    --elevation-3: 0 8px 24px rgba(0,0,0,0.16);
+    /* === Fonts (site uses native system stack — Webフォント非依存) === */
+    --font-body: "Helvetica Neue", Arial, "ヒラギノ角ゴ ProN W3", "Hiragino Sans", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400; line-height: 1.5;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+  }
+
+  /* ANNOUNCE BAR */
+  .announce {
+    background: var(--announce-blue); color: #fff;
+    text-align: center; padding: 8px 16px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.1em; line-height: 1.5;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .nav-brand {
+    font-size: 22px; font-weight: 700;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 0.02em;
+  }
+  .nav-brand span { color: var(--brand-green); }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; color: var(--text-primary);
+    text-decoration: none; transition: color 0.2s ease; letter-spacing: normal; line-height: 1.5;
+  }
+  .nav-links a:hover { color: var(--brand-green); }
+  .nav-right { display: flex; gap: 12px; align-items: center; }
+  .nav-diagnose {
+    display: inline-block; background: var(--text-primary); color: #fff;
+    padding: 10px 16px 9px; border-radius: 16px; border: none;
+    font-family: var(--font-body); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.145em; text-decoration: none; cursor: pointer;
+    box-shadow: var(--elevation-1); transition: opacity 0.2s ease;
+  }
+  .nav-diagnose:hover { opacity: 0.85; }
+  .nav-login {
+    display: inline-block; background: transparent; color: var(--text-primary);
+    padding: 10px 16px 9px; border-radius: 16px; border: none;
+    font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.145em;
+    text-decoration: none; box-shadow: var(--elevation-1); cursor: pointer;
+  }
+
+  /* HERO */
+  .hero { padding: 80px 32px 72px; text-align: center; background: var(--bg-page); }
+  .hero h1 {
+    font-size: 58px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; color: var(--text-primary); margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--brand-green); }
+  .hero p {
+    font-size: 14px; font-weight: 400; line-height: 2.0; letter-spacing: normal;
+    color: var(--text-primary); max-width: 600px; margin: 0 auto 32px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-brand {
+    display: inline-block; background: var(--brand-green); color: #fff;
+    padding: 14px 32px; border-radius: 16px; border: none;
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: background 0.2s ease;
+    letter-spacing: 0.1em;
+  }
+  .btn-brand:hover { background: var(--brand-green-dark); }
+  .btn-subscribe {
+    display: inline-block; background: var(--subscribe-orange); color: #fff;
+    padding: 14px 32px; border-radius: 100px; border: none;
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer; transition: opacity 0.2s ease;
+    letter-spacing: 0.1em;
+  }
+  .btn-subscribe:hover { opacity: 0.88; }
+
+  /* SECTIONS */
+  .section { padding: 72px 32px; max-width: 1040px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700;
+    color: var(--brand-green); text-transform: uppercase; margin-bottom: 8px;
+    letter-spacing: 0.145em;
+  }
+  .section-title {
+    font-size: 40px; font-weight: 700; line-height: 1.5;
+    letter-spacing: normal; margin-bottom: 40px; color: var(--text-primary);
+  }
+  .section-divider { border: none; border-top: 1px solid var(--divider); margin: 0; }
+
+  .section-alt { background: var(--bg-surface-alt2); padding: 72px 32px; }
+  .section-alt .section-inner { max-width: 1040px; margin: 0 auto; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 12px; overflow: hidden; background: #fff; box-shadow: var(--elevation-1); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); letter-spacing: normal; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: normal; }
+  .color-swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 3px; letter-spacing: normal; }
+  .color-group-label { font-size: 16px; font-weight: 700; color: var(--text-dark); margin: 32px 0 12px; letter-spacing: normal; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--border-default); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--text-muted); margin-top: 10px; letter-spacing: normal; line-height: 1.5; }
+  .type-context { display: inline-block; background: var(--bg-surface-alt); color: var(--text-muted); font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; letter-spacing: normal; }
+
+  /* BUTTONS */
+  .button-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 400; color: var(--text-muted); margin-top: 10px; letter-spacing: normal; }
+  .btn-dark {
+    display: inline-block; background: var(--text-primary); color: #fff;
+    padding: 10px 16px 9px; border-radius: 16px; border: none;
+    font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.145em;
+    text-decoration: none; cursor: pointer; box-shadow: var(--elevation-1);
+  }
+  .btn-outline {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 10px 20px; border-radius: 22px; border: 1px solid var(--text-primary);
+    font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0.1em;
+    text-decoration: none; cursor: pointer;
+  }
+  .chip {
+    display: inline-block; background: #fff; color: var(--text-primary);
+    padding: 3px 16px 2px; border-radius: 16px; border: 1px solid var(--border-default);
+    font-family: var(--font-body); font-size: 14px; font-weight: 700; letter-spacing: 0.1em;
+    text-decoration: none; cursor: pointer;
+  }
+
+  /* CHIP ROW */
+  .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--bg-surface-alt); border-radius: 8px; overflow: hidden;
+    box-shadow: var(--elevation-1); transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover { box-shadow: var(--elevation-2); transform: translateY(-2px); }
+  .card-image {
+    height: 170px; background: var(--bg-surface-alt2); position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px; color: var(--brand-green);
+  }
+  .card-image .new-badge {
+    position: absolute; top: 10px; left: 10px;
+    background: var(--brand-green); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .card-image .sale-badge {
+    position: absolute; top: 10px; left: 10px;
+    background: var(--panel-dark); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .card-body { padding: 16px; }
+  .card-rating {
+    display: inline-flex; align-items: center; gap: 4px; margin-bottom: 8px;
+    background: var(--rating-yellow); color: #000;
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: normal;
+  }
+  .card-roaster { font-size: 10px; font-weight: 400; color: var(--text-muted); letter-spacing: normal; margin-bottom: 4px; text-transform: uppercase; }
+  .card h3 {
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    line-height: 1.5; letter-spacing: normal; margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 11px; color: var(--text-muted); line-height: 1.6; letter-spacing: normal;
+  }
+  .card-price {
+    margin-top: 12px; font-size: 14px;
+    font-weight: 700; color: var(--text-primary); letter-spacing: normal;
+  }
+  .card-price span { font-size: 11px; font-weight: 300; color: var(--text-muted); }
+
+  /* ARTICLE / PRODUCT PREVIEW */
+  .article-preview { max-width: 680px; margin: 0 auto; }
+  .article-preview h1 {
+    font-size: 40px; font-weight: 700;
+    line-height: 1.5; letter-spacing: normal; margin-bottom: 20px;
+  }
+  .article-preview h1 span { color: var(--brand-green); }
+  .article-preview h2 {
+    font-size: 26px; font-weight: 700;
+    line-height: 1.5; letter-spacing: normal; margin: 32px 0 16px;
+  }
+  .article-preview p {
+    font-size: 14px; font-weight: 400; line-height: 2.0; letter-spacing: normal;
+    font-feature-settings: normal; margin-bottom: 16px; color: var(--text-primary);
+  }
+  .article-preview .lead {
+    font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: normal;
+    margin-bottom: 24px;
+  }
+
+  /* FORMS */
+  .form-group { margin-bottom: 24px; max-width: 400px; }
+  .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; letter-spacing: normal; }
+  .form-input {
+    width: 100%; background: #fff; color: var(--text-primary);
+    border: 1px solid var(--border-default); padding: 12px 16px; border-radius: 8px;
+    font-family: var(--font-body); font-size: 14px; outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: normal; line-height: 1.5;
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input:focus, .form-input--focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(76,199,100,0.18); }
+  .form-input--error { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(225,1,18,0.15); }
+  .form-state-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; letter-spacing: normal; line-height: 1.5; }
+  .form-error-text { font-size: 12px; color: var(--danger); margin-top: 6px; letter-spacing: normal; line-height: 1.5; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: #fff; border-radius: 8px; padding: 28px; text-align: center;
+    border: 1px solid var(--border-default);
+  }
+  .elevation-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; letter-spacing: normal; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); word-break: break-all; letter-spacing: normal; line-height: 1.5; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--brand-green); border-radius: 4px; margin-bottom: 8px; height: 28px; opacity: 0.75; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 400; color: var(--text-muted); letter-spacing: normal; }
+
+  /* CONTENT WIDTHS */
+  .width-bar { height: 32px; background: var(--bg-surface-alt); border: 1px solid var(--border-default); border-radius: 8px; margin-bottom: 8px; position: relative; }
+  .width-bar-inner { height: 100%; background: var(--brand-green); border-radius: 7px; opacity: 0.3; }
+  .width-bar-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; letter-spacing: normal; }
+  .width-bar-value { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); letter-spacing: normal; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 32px; text-align: center; background: var(--panel-dark);
+    font-size: 12px; color: #fff; letter-spacing: normal; line-height: 1.8;
+  }
+  .footer a { color: var(--brand-green); text-decoration: underline; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 13px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .section-alt { padding: 48px 20px; }
+    .section-title { font-size: 24px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .article-preview h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">15:00までのご注文で当日発送！ ミルクで割るだけ。4種のラテベースが新登場。</div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">Post<span>Coffee</span></a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#article">Product</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#elevation">Elevation</a></li>
+    <li><a href="#layout">Layout</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-diagnose" href="#">無料でコーヒー診断</a>
+    <a class="nav-login" href="#">LOGIN</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>コーヒーのサブスクで<br><span>毎日のコーヒー</span>を</h1>
+  <p>DESIGN.md から抽出したデザイントークンのカタログ。カラー、タイポグラフィ、コンポーネント、スペーシングの全値を可視化。computed style 実測値に基づく。</p>
+  <div class="hero-buttons">
+    <a class="btn-brand" href="#">無料でコーヒー診断</a>
+    <a class="btn-subscribe" href="#">今すぐ始める</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Brand &amp; Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4cc764"></div><div class="color-swatch-info"><div class="color-swatch-name">Brand Green</div><div class="color-swatch-hex">#4cc764</div><div class="color-swatch-role">New バッジ・診断・成功</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#3fae55"></div><div class="color-swatch-info"><div class="color-swatch-name">Green Dark</div><div class="color-swatch-hex">#3fae55</div><div class="color-swatch-role">ホバー・プレス</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc93f"></div><div class="color-swatch-info"><div class="color-swatch-name">Rating Yellow</div><div class="color-swatch-hex">#ffc93f</div><div class="color-swatch-role">レビュー星</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffa500"></div><div class="color-swatch-info"><div class="color-swatch-name">Subscribe Orange</div><div class="color-swatch-hex">#ffa500</div><div class="color-swatch-role">サブスク CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#306fdc"></div><div class="color-swatch-info"><div class="color-swatch-name">Announce Blue</div><div class="color-swatch-hex">#306fdc</div><div class="color-swatch-role">告知バー背景</div></div></div>
+  </div>
+
+  <div class="color-group-label">Semantic / Minor Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e10112"></div><div class="color-swatch-info"><div class="color-swatch-name">Sale Red</div><div class="color-swatch-hex">#e10112</div><div class="color-swatch-role">セール・在庫警告</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff3399"></div><div class="color-swatch-info"><div class="color-swatch-name">Pop Pink</div><div class="color-swatch-hex">#ff3399</div><div class="color-swatch-role">限定・キャンペーン</div></div></div>
+  </div>
+
+  <div class="color-group-label">Text</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Primary</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">本文・見出し</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#1d1d1f"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Dark / Panel</div><div class="color-swatch-hex">#1d1d1f</div><div class="color-swatch-role">ダークチップ背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#777777"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Muted</div><div class="color-swatch-hex">#777777</div><div class="color-swatch-role">補足・ロースター名</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#dfdfdf"></div><div class="color-swatch-info"><div class="color-swatch-name">Text Disabled</div><div class="color-swatch-hex">#dfdfdf</div><div class="color-swatch-role">NO REVIEWS</div></div></div>
+  </div>
+
+  <div class="color-group-label">Surface &amp; Background</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border:1px solid #efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Page Background</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">ページ背景（純白）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa; border:1px solid #efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Alt</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">商品カード面</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f5f5f7; border:1px solid #efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Surface Alt 2</div><div class="color-swatch-hex">#f5f5f7</div><div class="color-swatch-role">特集セクション背景</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#efefef"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#efefef</div><div class="color-swatch-role">チップ・カード枠線</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Typography Hierarchy</h2>
+
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:58px; font-weight:700; line-height:1.5; letter-spacing:normal;">コーヒーのサブスク</div>
+    <div class="type-meta">Hero Heading / 58px / 700 / line-height: 1.5 / letter-spacing: normal<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:40px; font-weight:700; line-height:1.5; letter-spacing:normal;">新入荷</div>
+    <div class="type-meta">Section Heading / 40px / 700 / line-height: 1.5<span class="type-context">セクション見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:26px; font-weight:700; line-height:1.5; letter-spacing:normal;">たくさんのコーヒーに出会うキッカケ</div>
+    <div class="type-meta">Sub Heading / 26px / 700 / line-height: 1.5<span class="type-context">サブ見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:20px; font-weight:700; line-height:1.5; letter-spacing:normal;">お支払い方法を知りたい</div>
+    <div class="type-meta">Lead / Modal Title / 20px / 700 / line-height: 1.5<span class="type-context">モーダル見出し</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:700; line-height:1.5; letter-spacing:normal;">ブリュードコーヒートニック | ビター &nbsp;&nbsp; ¥864</div>
+    <div class="type-meta">Product Name / Price / 14px / 700 / line-height: 1.5<span class="type-context">商品名・価格</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:14px; font-weight:400; line-height:2.0; letter-spacing:normal;">世界中のスペシャルティコーヒーが揃うオンラインストア。あなたの好みに合わせて、焙煎士が厳選したコーヒーを毎月ポストにお届けします。説明文は line-height 2.0 とゆったり組む。</div>
+    <div class="type-meta">Description / 14px / 400 / line-height: 2.0<span class="type-context">説明文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:13px; font-weight:400; line-height:1.5; letter-spacing:normal;">標準の本文テキスト。欧文優先の Helvetica Neue + ヒラギノ角ゴのシステムスタックで組まれ、Webフォントに依存しないため表示が高速。body 既定は 13px / line-height 1.5。</div>
+    <div class="type-meta">Body / 13px / 400 / line-height: 1.5<span class="type-context">本文</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:12px; font-weight:500; line-height:1.5; letter-spacing:0.1em;">15:00までのご注文で当日発送！</div>
+    <div class="type-meta">Announce Text / 12px / 500 / line-height: 1.5 / letter-spacing: 0.1em<span class="type-context">告知バー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:11px; font-weight:700; line-height:1.5; letter-spacing:0.145em;">無料でコーヒー診断</div>
+    <div class="type-meta">Badge / CTA Label / 11px / 700 / letter-spacing: 0.145em<span class="type-context">小 CTA・バッジ</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-body); font-size:10px; font-weight:400; line-height:1.2; letter-spacing:normal; color:var(--text-muted);">BREWED COFFEE TONIC | BITTER</div>
+    <div class="type-meta">Roaster Name / 10px / 400 / line-height: 1.2 / color: Text Muted<span class="type-context">ロースター名</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE / PRODUCT PREVIEW -->
+<section class="section-alt" id="article">
+<div class="section-inner">
+  <div class="section-label">03 / Product</div>
+  <h2 class="section-title">Coffee Content Sample</h2>
+  <div class="article-preview">
+    <h1>あなただけの<span>コーヒー診断</span></h1>
+    <p class="lead">3分の質問に答えるだけ。あなた好みの一杯が見つかる。</p>
+    <p>PostCoffee は、世界中のスペシャルティコーヒーから、あなたの好みに合わせて焙煎士が厳選した一杯を、毎月ポストにお届けするサブスクリプションサービスです。無料のコーヒー診断で、酸味・苦味・コクの好みを分析し、10万通り以上の組み合わせからぴったりのコーヒーをマッチング。</p>
+    <h2>Fresh Roasted</h2>
+    <p>フルーティー、ナッティー、ジューシー、しっかり、すっきり。国内外の名だたるロースターが焙煎したコーヒーを、鮮度の高い状態でお届けします。ドリップバッグ、粉、豆から選べて、ミルクで割るだけのラテベースも新登場。</p>
+    <p>ポストに届くから、受け取りの手間もありません。忙しい毎日でも、おうちでカフェのような一杯を。</p>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons</div>
+  <h2 class="section-title">Button Variations</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-brand" href="#">無料でコーヒー診断</a><div class="button-label">Brand CTA (green)</div></div>
+    <div class="button-item"><a class="btn-subscribe" href="#">今すぐ始める</a><div class="button-label">Subscribe (orange pill)</div></div>
+    <div class="button-item"><a class="btn-dark" href="#">無料でコーヒー診断</a><div class="button-label">Dark CTA (radius 16px)</div></div>
+    <div class="button-item"><a class="btn-outline" href="#">すべてのブランドを見る</a><div class="button-label">Round Outline (pill)</div></div>
+  </div>
+  <div class="color-group-label">Keyword Chips</div>
+  <div class="chip-row">
+    <a class="chip" href="#">フルーティー</a>
+    <a class="chip" href="#">ナッティー</a>
+    <a class="chip" href="#">すっきり</a>
+    <a class="chip" href="#">しっかり</a>
+    <a class="chip" href="#">デカフェ</a>
+    <a class="chip" href="#">国内ロースター</a>
+    <a class="chip" href="#">チョコレートに合う</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">Coffee Cards</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-image">&#9749;<span class="new-badge">New</span></div>
+      <div class="card-body">
+        <div class="card-rating">&#9733; 4.5</div>
+        <div class="card-roaster">FRIEDHATS</div>
+        <h3>エチオピア ゲイシャ ナチュラル</h3>
+        <p>華やかなフローラルとベリーの香り。フルーティーで軽やかな飲み口。</p>
+        <div class="card-price">&yen;1,620 <span>/ 100g</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">&#9749;<span class="new-badge">New</span></div>
+      <div class="card-body">
+        <div class="card-rating">&#9733; 4.8</div>
+        <div class="card-roaster">CFFBNS</div>
+        <h3>コロンビア ウォッシュド</h3>
+        <p>バランスの取れた酸味とナッティーな甘み。毎日飲みたい定番の一杯。</p>
+        <div class="card-price">&yen;1,380 <span>/ 100g</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">&#9749;<span class="sale-badge">まもなく終売</span></div>
+      <div class="card-body">
+        <div class="card-rating">&#9733; 4.2</div>
+        <div class="card-roaster">NEMESIS</div>
+        <h3>ケニア AA アナエロビック</h3>
+        <p>ジューシーでしっかりとしたコク。ブラックカラントのような余韻。</p>
+        <div class="card-price">&yen;1,780 <span>/ 100g</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-image">&#9749;<span class="new-badge">New</span></div>
+      <div class="card-body">
+        <div class="card-rating">&#9733; 4.6</div>
+        <div class="card-roaster">DAK</div>
+        <h3>ブリュードコーヒートニック</h3>
+        <p>シュワっと弾ける、大人のためのクラフトコーヒートニック。ビター。</p>
+        <div class="card-price">&yen;864 <span>/ 1本</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">Form Elements</h2>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input" type="text" placeholder="name@example.com">
+    <div class="form-state-label">デフォルト --- border: #efefef, radius: 8px</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">お名前</label>
+    <input class="form-input form-input--focus" type="text" value="山田 花子">
+    <div class="form-state-label">フォーカス --- border: #4cc764 (Brand Green)</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">メールアドレス</label>
+    <input class="form-input form-input--error" type="text" value="invalid@">
+    <div class="form-error-text">正しいメールアドレスを入力してください</div>
+    <div class="form-state-label">エラー --- border: #e10112 (Danger)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Elevation</div>
+  <h2 class="section-title">Depth &amp; Elevation</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、ボーダーのみ / バッジ・チップ</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-1); border-color: transparent;"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 0 5px rgba(0,0,0,0.1) --- CTA・カード・矢印</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-2); border-color: transparent;"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 4px 12px rgba(0,0,0,0.12) --- ホバー時カード</div></div>
+    <div class="elevation-card" style="box-shadow: var(--elevation-3); border-color: transparent;"><div class="elevation-label">Level 3</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.16) --- モーダル</div></div>
+    <div class="elevation-card" style="border: 2px solid var(--brand-green);"><div class="elevation-label">Focus Ring</div><div class="elevation-desc">#4cc764 + shadow rgba(76,199,100,0.18)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- LAYOUT -->
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout</div>
+  <h2 class="section-title">Spacing &amp; Container</h2>
+
+  <div class="color-group-label">Spacing Scale</div>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40px</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:80px"></div><div class="spacing-value">80px</div></div>
+  </div>
+
+  <div class="color-group-label">Content Widths</div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Max Container <span class="width-bar-value">1200px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:100%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Content Area <span class="width-bar-value">1040px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:87%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Article / Text <span class="width-bar-value">680px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:57%"></div></div></div>
+  <div style="margin-bottom:16px"><div class="width-bar-label">Form / Input <span class="width-bar-value">400px</span></div><div class="width-bar"><div class="width-bar-inner" style="width:33%"></div></div></div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://postcoffee.co/">postcoffee.co</a> DESIGN.md --- awesome-design-md-jp / computed style 実測値（2026-07-01）。フォントはサイト実物と同じ欧文優先システムスタック（Helvetica Neue + ヒラギノ角ゴ）で表示。Webフォント非依存のため代替フォント不要。
+</footer>
+
+</body>
+</html>

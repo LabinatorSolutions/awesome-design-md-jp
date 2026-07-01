@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Ishinomaki Laboratory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CSS Custom Properties 実測値 === */
+    --white: #ffffff;        /* --white / ページ・カード地 */
+    --sand: #f3efe8;         /* --sand / パネル・面色 */
+    --dark: #151515;         /* ダーク面（footer 等、実測 rgb(21,21,21)） */
+    --ink: #000000;          /* --black / 基本テキスト（純黒） */
+    --grey: #8d8c8a;         /* --grey / 補助・価格（rgb(141,140,138)） */
+    --border: #f1f1f1;       /* 標準ヘアライン（実測最頻背景） */
+    --light-grey: rgba(0,0,0,0.2); /* --light-grey / オーバーレイ */
+    --red: #c70e0e;          /* --red / エラー・稀な強調 */
+    --shadow-1: 0 1px 2px rgba(0,0,0,0.08);
+    --shadow-2: 0 8px 24px rgba(0,0,0,0.12);
+    /* === Fonts（General Grotesque Mono 一系統。preview は Space Mono＋和文 Noto Sans JP で近似） === */
+    --font-primary: "Space Mono", "Noto Sans JP", ui-monospace, monospace;
+    --font-mono: "Space Mono", ui-monospace, monospace;
+    --radius: 0px;           /* 角丸なし */
+    --tracking: 0.06em;      /* 全要素の字送り（0.84px ≒ 0.06em） */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font-primary);
+    font-size: 14px; font-weight: 400; line-height: 1.4;
+    letter-spacing: var(--tracking);
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .caps { text-transform: uppercase; }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 72px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-mark { width: 34px; height: 34px; background: var(--ink); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 9px; line-height: 1; text-align: center; letter-spacing: 0.02em; }
+  .nav-brand-name { font-family: var(--font-primary); font-size: 14px; font-weight: 400; color: var(--ink); letter-spacing: var(--tracking); }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .nav-links a { font-family: var(--font-primary); font-size: 13px; font-weight: 400; color: var(--ink); text-decoration: none; letter-spacing: var(--tracking); transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 0.5; }
+
+  /* HERO */
+  .hero { padding: 0; }
+  .hero-img { aspect-ratio: 16/7; background: linear-gradient(135deg, #d8cbb2 0%, #c9b48f 55%, #b59a6d 100%); display: flex; align-items: flex-end; position: relative; }
+  .hero-img::after { content: ""; position: absolute; inset: 0; background: var(--light-grey); }
+  .hero-caption { padding: 0 5vw 40px; position: relative; z-index: 2; }
+  .hero-caption .eyebrow { font-family: var(--font-primary); font-size: 12px; font-weight: 400; color: var(--white); letter-spacing: var(--tracking); margin-bottom: 10px; }
+  .hero-caption h1 { font-family: var(--font-primary); font-size: 30px; font-weight: 400; color: var(--white); letter-spacing: var(--tracking); line-height: 1.2; margin-bottom: 8px; }
+  .hero-caption p { font-family: var(--font-primary); font-size: 12.8px; font-weight: 400; color: rgba(255,255,255,0.9); letter-spacing: var(--tracking); }
+  .hero-row { padding: 26px 5vw; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-primary); font-size: 14px; font-weight: 400; letter-spacing: var(--tracking);
+    padding: 16px 26px; border-radius: var(--radius); cursor: pointer; text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s;
+  }
+  .btn--ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn--ghost:hover { background: var(--ink); color: var(--white); }
+  .btn--dark { background: var(--ink); color: var(--white); border: 1px solid var(--ink); }
+  .btn--dark:hover { background: var(--dark); }
+  .btn--sand { background: var(--sand); color: var(--ink); border: 1px solid var(--sand); }
+  .btn--sand:hover { background: #eae4d7; }
+  .btn--text { background: transparent; color: var(--ink); border: none; padding: 16px 4px; position: relative; }
+  .btn--text::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 10px; height: 1px; background: var(--ink); }
+  .btn--text:hover { opacity: 0.5; }
+
+  /* SECTIONS */
+  .section { padding: 76px 5vw; max-width: 1240px; margin: 0 auto; }
+  .section-eyebrow { font-family: var(--font-primary); font-size: 12px; font-weight: 400; color: var(--grey); letter-spacing: var(--tracking); margin-bottom: 12px; }
+  .section-title { font-family: var(--font-primary); font-size: 14px; font-weight: 400; line-height: 1.3; margin-bottom: 28px; color: var(--ink); letter-spacing: var(--tracking); }
+  .section-lead { font-size: 13px; color: var(--grey); margin: -16px 0 28px; max-width: 620px; line-height: 1.6; letter-spacing: var(--tracking); }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  .section-sand { background: var(--sand); }
+  .section-sand .section-inner { max-width: 1240px; margin: 0 auto; padding: 76px 5vw; }
+  .section-dark { background: var(--dark); color: var(--white); }
+  .section-dark .section-inner { max-width: 1240px; margin: 0 auto; padding: 76px 5vw; }
+  .section-dark .section-eyebrow { color: rgba(255,255,255,0.55); }
+  .section-dark .section-title { color: var(--white); }
+  .section-dark .section-lead { color: rgba(255,255,255,0.7); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 24px; }
+  .color-swatch { overflow: hidden; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); }
+  .color-swatch-block { height: 76px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-family: var(--font-primary); font-size: 12px; font-weight: 400; margin-bottom: 3px; color: var(--ink); }
+  .color-swatch-hex { font-size: 11px; color: var(--grey); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--grey); margin-top: 4px; }
+  .color-group-label { font-family: var(--font-primary); font-size: 12px; font-weight: 400; color: var(--grey); margin: 26px 0 12px; letter-spacing: var(--tracking); }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 26px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--grey); margin-top: 12px; letter-spacing: 0.02em; }
+  .type-context { display: inline-block; background: var(--sand); color: var(--grey); font-size: 10px; padding: 2px 8px; margin-left: 8px; }
+
+  /* PRODUCT CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 26px; }
+  .card { background: var(--white); }
+  .card-img { aspect-ratio: 4/5; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .card-img .ph { font-family: var(--font-primary); font-size: 11px; color: var(--grey); letter-spacing: var(--tracking); }
+  .card-img--1 { background: linear-gradient(160deg,#e9ddc6,#d8c6a3); }
+  .card-img--2 { background: linear-gradient(160deg,#e4e4e2,#cfcfcb); }
+  .card-img--3 { background: linear-gradient(160deg,#efe9dd,#ddd2bd); }
+  .card-img--4 { background: linear-gradient(160deg,#e0d3b8,#c9b48f); }
+  .card-info { padding: 14px 2px 0; }
+  .card-name { font-family: var(--font-primary); font-size: 14px; font-weight: 400; line-height: 1.4; color: var(--ink); letter-spacing: var(--tracking); }
+  .card-price { font-family: var(--font-primary); font-size: 14px; color: var(--grey); margin-top: 5px; letter-spacing: var(--tracking); }
+
+  /* ARTICLE */
+  .article { max-width: 680px; }
+  .article-kicker { font-size: 12px; color: var(--grey); letter-spacing: var(--tracking); margin-bottom: 8px; }
+  .article h3 { font-family: var(--font-primary); font-size: 18px; font-weight: 400; line-height: 1.4; color: var(--ink); letter-spacing: var(--tracking); margin-bottom: 18px; }
+  .article p { font-size: 14px; line-height: 1.9; color: var(--ink); letter-spacing: var(--tracking); margin-bottom: 18px; }
+
+  /* BUTTONS showcase */
+  .button-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 11px; color: var(--grey); margin-top: 12px; letter-spacing: 0.02em; }
+
+  /* FORMS — 下線スタイル */
+  .form-group { margin-bottom: 28px; max-width: 440px; }
+  .form-label { display: block; font-family: var(--font-primary); font-size: 12px; font-weight: 400; color: var(--ink); margin-bottom: 6px; letter-spacing: var(--tracking); }
+  .form-input {
+    width: 100%; background: transparent; color: var(--ink);
+    border: none; border-bottom: 1px solid var(--ink); padding: 14px 0; border-radius: var(--radius);
+    font-family: var(--font-primary); font-size: 14px; letter-spacing: var(--tracking); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input::placeholder { color: var(--grey); }
+  .form-input:focus, .form-input--focus { border-bottom: 1px solid var(--ink); box-shadow: 0 2px 0 -1px var(--light-grey); }
+  .form-input--error { border-bottom: 1px solid var(--red); }
+  .form-state-label { font-size: 11px; color: var(--grey); margin-top: 8px; letter-spacing: 0.02em; }
+  .form-state-label--error { color: var(--red); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+  .elevation-card { background: var(--white); padding: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius); }
+  .elevation-label { font-family: var(--font-primary); font-size: 13px; font-weight: 400; margin-bottom: 6px; letter-spacing: var(--tracking); }
+  .elevation-desc { font-family: var(--font-mono); font-size: 10px; color: var(--grey); word-break: break-all; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--ink); margin-bottom: 8px; height: 26px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--grey); }
+
+  /* FOOTER */
+  .footer { padding: 52px 5vw; background: var(--dark); color: rgba(255,255,255,0.7); font-size: 12px; letter-spacing: var(--tracking); }
+  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 40px; }
+  .footer-brand { color: var(--white); font-size: 14px; }
+  .footer-cols { display: flex; gap: 60px; flex-wrap: wrap; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-note { font-size: 11px; color: rgba(255,255,255,0.45); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 24px; }
+  .footer-note a { color: rgba(255,255,255,0.7); }
+
+  @media (max-width: 767px) {
+    .hero-caption h1 { font-size: 22px; }
+    .nav-links { display: none; }
+    .section { padding: 52px 5vw; }
+    .section-sand .section-inner, .section-dark .section-inner { padding: 52px 5vw; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <span class="nav-mark caps">石巻<br>工房</span>
+    <span class="nav-brand-name caps">Ishinomaki Laboratory</span>
+  </a>
+  <ul class="nav-links">
+    <li><a class="caps" href="#colors">Online Store</a></li>
+    <li><a class="caps" href="#typography">Shoplist</a></li>
+    <li><a class="caps" href="#cards">Products</a></li>
+    <li><a class="caps" href="#article">About</a></li>
+    <li><a class="caps" href="#forms">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-img">
+    <div class="hero-caption">
+      <div class="eyebrow caps">Made in Local — since 2011</div>
+      <h1 class="caps">Explore our furniture</h1>
+      <p>DIY: Do It Yourself. 素の合板でつくる、頑丈でシンプルな家具。</p>
+    </div>
+  </div>
+  <div class="hero-row">
+    <a class="btn btn--ghost caps" href="#">View Products</a>
+    <a class="btn btn--dark caps" href="#">Online Store</a>
+    <a class="btn btn--text caps" href="#">DESIGN.md →</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-eyebrow caps">01 / Colors</div>
+  <h2 class="section-title caps">Color Palette</h2>
+  <p class="section-lead">無彩色＋極小の差し色。白 #FFF ／ サンド #F3EFE8 ／ ダーク #151515 の三段の面色で階層をつくり、罫線はヘアライン #f1f1f1。差し色はレッド #c70e0e のみ（エラー・稀な強調）。</p>
+
+  <div class="color-group-label caps">Core / Surfaces</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ededed"></div><div class="color-swatch-info"><div class="color-swatch-name">White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">背景 --white</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f3efe8"></div><div class="color-swatch-info"><div class="color-swatch-name">Sand</div><div class="color-swatch-hex">#f3efe8</div><div class="color-swatch-role">面色 --sand</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#151515"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark</div><div class="color-swatch-hex">#151515</div><div class="color-swatch-role">暗面（footer 等）</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#f1f1f1"></div><div class="color-swatch-info"><div class="color-swatch-name">Border</div><div class="color-swatch-hex">#f1f1f1</div><div class="color-swatch-role">ヘアライン</div></div></div>
+  </div>
+
+  <div class="color-group-label caps">Text / Accent</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">Ink</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">基本テキスト --black</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#8d8c8a"></div><div class="color-swatch-info"><div class="color-swatch-name">Grey</div><div class="color-swatch-hex">#8d8c8a</div><div class="color-swatch-role">補助・価格 --grey</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#c70e0e"></div><div class="color-swatch-info"><div class="color-swatch-name">Red</div><div class="color-swatch-hex">#c70e0e</div><div class="color-swatch-role">エラー・稀な強調 --red</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#333333"></div><div class="color-swatch-info"><div class="color-swatch-name">Overlay</div><div class="color-swatch-hex">rgba(0,0,0,.2)</div><div class="color-swatch-role">--light-grey</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-eyebrow caps">02 / Typography — 実測値</div>
+  <h2 class="section-title caps">Typography</h2>
+  <p class="section-lead">原典は General Grotesque Mono Regular, sans-serif の等幅一系統のみ（和文は未指定でシステム委任）。本プレビューは Space Mono＋和文 Noto Sans JP で近似。全要素に広めの字送り <code style="font-family:var(--font-mono)">letter-spacing: 0.06em</code>（0.84px）。サイズ差は小さく、階層は大文字・余白・面色でつくる。<code style="font-family:var(--font-mono)">font-feature-settings: normal</code>（palt なし）。</p>
+
+  <div class="type-sample">
+    <div class="caps" style="font-family:var(--font-primary); font-size:30px; font-weight:400; line-height:1.2; color:var(--ink); letter-spacing:var(--tracking);">Explore our furniture</div>
+    <div class="type-meta">Hero (en) — Mono 30px / 400 / lh 1.2 / ls 0.06em<span class="type-context">ヒーロー</span></div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.3; color:var(--ink); letter-spacing:var(--tracking);">Explore our furniture — Section Heading（h2）</div>
+    <div class="type-meta">Section Heading (h2) — Mono 14px / 400 / lh 1.3</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.4; color:var(--ink); letter-spacing:var(--tracking);">AA High Stool（合板スツール）— 商品名</div>
+    <div class="type-meta">Product Name — Mono 14px / 400 / lh 1.4（#000）</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.9; color:var(--ink); letter-spacing:var(--tracking);">本文テキスト — 2011年3月11日の東日本大震災をきっかけに石巻工房ができてから、私たちは「DIY：自分自身でやる」という思想を核にものづくりを続けてきました。ABCabc 0123</div>
+    <div class="type-meta">Body — Mono 14px / 400 / lh 1.4〜1.9 / ls 0.06em</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.4; color:var(--grey); letter-spacing:var(--tracking);">¥115,500 — Price</div>
+    <div class="type-meta">Price — Mono 14px / 400 / #8d8c8a</div>
+  </div>
+  <div class="type-sample">
+    <div class="caps" style="font-family:var(--font-primary); font-size:14px; font-weight:400; line-height:1.4; color:var(--ink); letter-spacing:var(--tracking);">Online Store　Shoplist　Contact　About</div>
+    <div class="type-meta">Nav Item — Mono 14px / 400 / 大文字 / ls 0.06em</div>
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-primary); font-size:13px; font-weight:400; line-height:1.4; color:var(--ink); letter-spacing:var(--tracking);">Exhibitions　2026/Jun/02 — Meta / Date（small）</div>
+    <div class="type-meta">Body small / Date — Mono 13px / 400 / lh 1.4</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PRODUCT CARDS -->
+<section class="section-sand" id="cards">
+<div class="section-inner">
+  <div class="section-eyebrow caps">03 / Products — 直角グリッド</div>
+  <h2 class="section-title caps">the Originals</h2>
+  <p class="section-lead">合板の家具ビジュアルを大きく直角の枠で置き、その下に等幅の商品名（#000）と価格（#8d8c8a）を添える。角丸なし（radius 0）、面はサンド地。UI は引いて写真で語る。</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-img card-img--1"><span class="ph caps">Plywood</span></div><div class="card-info"><div class="card-name">AA High Stool</div><div class="card-price">¥28,600</div></div></div>
+    <div class="card"><div class="card-img card-img--2"><span class="ph caps">Plywood</span></div><div class="card-info"><div class="card-name">Ishinomaki Bench</div><div class="card-price">¥46,200</div></div></div>
+    <div class="card"><div class="card-img card-img--3"><span class="ph caps">Plywood</span></div><div class="card-info"><div class="card-name">Koro Table</div><div class="card-price">¥115,500</div></div></div>
+    <div class="card"><div class="card-img card-img--4"><span class="ph caps">Plywood</span></div><div class="card-info"><div class="card-name">Sea Stool</div><div class="card-price">¥19,800</div></div></div>
+  </div>
+</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ARTICLE -->
+<section class="section" id="article">
+  <div class="section-eyebrow caps">04 / Article — 組版サンプル</div>
+  <h2 class="section-title caps">Concept</h2>
+  <div class="article">
+    <div class="article-kicker caps">Made in Local</div>
+    <h3>合板ひとつで、暮らしは自分の手に取り戻せる</h3>
+    <p>2011年3月11日の東日本大震災をきっかけに石巻工房ができてから、私たちは「DIY：自分自身でやる」ということは必ずしも一人で完結するものではなく、地域や仲間と手を動かしながらものをつくる営みそのものだと考えてきました。</p>
+    <p>素の合板を、切って、留めて、組む。装飾を足さず、頑丈さと使いやすさだけを残す。その最小限のものづくりが、いつのまにか世界のデザインシーンから評価されるようになりました。私たちがつくるのは家具であると同時に、誰もが自分の手で暮らしを直せるという実感でもあります。</p>
+    <p>Web もまた同じ思想でつくられています。等幅のモノスペース書体、角のない直角、白とサンドとダークの三段の面色。飾らないことを、飾りにしないこと。</p>
+    <a class="btn btn--text caps" href="#" style="padding-left:0;">Read the full story →</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-eyebrow caps">05 / Buttons</div>
+  <h2 class="section-title caps">Buttons</h2>
+  <p class="section-lead">角丸なし（radius 0）が絶対。基本は下線テキストリンクと大文字ラベル。塗りが必要なら #000（ダーク面 #151515）地＋白文字、または サンド地。いずれも直角。</p>
+  <div class="button-row">
+    <div class="button-item"><a class="btn btn--ghost caps" href="#">View Products</a><div class="button-label">Ghost（白地＋1px solid #000 / radius 0）</div></div>
+    <div class="button-item"><a class="btn btn--dark caps" href="#">Online Store</a><div class="button-label">Dark（#000 地・白文字・大文字）</div></div>
+    <div class="button-item"><a class="btn btn--sand caps" href="#">Newsletter</a><div class="button-label">Sand（#F3EFE8 地）</div></div>
+    <div class="button-item"><a class="btn btn--text caps" href="#">Read More →</a><div class="button-label">Text link（下線）</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FORMS -->
+<section class="section" id="forms">
+  <div class="section-eyebrow caps">06 / Forms — 下線スタイル</div>
+  <h2 class="section-title caps">Forms</h2>
+  <p class="section-lead">入力は下線スタイル（border-bottom: 1px solid #000）を基本にする。角丸なし。フォーカスは下線＋ごく薄い墨リング。エラーのみレッド #c70e0e。</p>
+  <div class="form-group"><label class="form-label caps">Name</label><input class="form-input" type="text" placeholder="Taro Yamada"><div class="form-state-label">デフォルト — border-bottom: #000, radius: 0</div></div>
+  <div class="form-group"><label class="form-label caps">Email（Newsletter）</label><input class="form-input form-input--focus" type="text" value="name@example.com"><div class="form-state-label">フォーカス — 下線 #000 ＋ 薄い墨リング</div></div>
+  <div class="form-group"><label class="form-label caps">Email</label><input class="form-input form-input--error" type="text" value="invalid@"><div class="form-state-label form-state-label--error">エラー — border-bottom: #c70e0e（唯一の差し色）</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-eyebrow caps">07 / Elevation</div>
+  <h2 class="section-title caps">Depth &amp; Elevation</h2>
+  <p class="section-lead">影をほぼ使わない完全フラット設計。面色（白・サンド・ダーク）・ヘアライン #f1f1f1・余白・直角で階層をつくる。濃淡は純黒の α 値（--light-grey）で。</p>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">影なし、面色とヘアラインで分ける（基本）</div></div>
+    <div class="elevation-card" style="box-shadow:var(--shadow-1);"><div class="elevation-label">Level 1</div><div class="elevation-desc">0 1px 2px rgba(0,0,0,0.08)</div></div>
+    <div class="elevation-card" style="box-shadow:var(--shadow-2);"><div class="elevation-label">Level 2</div><div class="elevation-desc">0 8px 24px rgba(0,0,0,0.12)</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-eyebrow caps">08 / Layout — Spacing</div>
+  <h2 class="section-title caps">Spacing</h2>
+  <p class="section-lead">大きな家具ビジュアルと広い余白。ヘッダー分の上部余白を取り、要素間を十分に空けて等幅の文字が窮屈に見えないようにする。</p>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:76px"></div><div class="spacing-value">76</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:130px"></div><div class="spacing-value">130</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand caps">Ishinomaki Laboratory</div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <a class="caps" href="#">Online Store</a>
+        <a class="caps" href="#">Shoplist</a>
+        <a class="caps" href="#">Products</a>
+      </div>
+      <div class="footer-col">
+        <a class="caps" href="#">About</a>
+        <a class="caps" href="#">Contact</a>
+        <a class="caps" href="#">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">
+    Generated from <a class="caps" href="https://ishinomaki-lab.org/">ishinomaki-lab.org</a> DESIGN.md — awesome-design-md-jp / computed style 実測値（2026-07-01）
+  </div>
+</footer>
+
+</body>
+</html>

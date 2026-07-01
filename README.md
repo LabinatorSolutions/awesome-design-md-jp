@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (372 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (375 sites)</a>
 </p>
 
 <table>
@@ -548,6 +548,11 @@
 <td align="center"><strong>茅乃舎</strong><br><img src="design-md/kayanoya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Graphpaper</strong><br><img src="design-md/graphpaper/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>美術手帖</strong><br><img src="design-md/bijutsutecho/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>石巻工房</strong><br><img src="design-md/ishinomaki-lab/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NOHGA HOTEL</strong><br><img src="design-md/nohga-hotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PostCoffee</strong><br><img src="design-md/postcoffee/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -981,11 +986,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [茅乃舎 (Kayanoya)](https://www.kayanoya.com/) | Food / Dashi / Premium Brand | [DESIGN.md](design-md/kayanoya/DESIGN.md) | [preview.html](design-md/kayanoya/preview.html) |
 | [Graphpaper (グラフペーパー)](https://graphpaper-tokyo.com/) | Fashion / Select Shop | [DESIGN.md](design-md/graphpaper/DESIGN.md) | [preview.html](design-md/graphpaper/preview.html) |
 | [美術手帖 (Bijutsu Techo)](https://bijutsutecho.com/) | Art Media / Magazine | [DESIGN.md](design-md/bijutsutecho/DESIGN.md) | [preview.html](design-md/bijutsutecho/preview.html) |
+| [石巻工房 (Ishinomaki Laboratory)](https://ishinomaki-lab.org/) | Furniture / Product Design | [DESIGN.md](design-md/ishinomaki-lab/DESIGN.md) | [preview.html](design-md/ishinomaki-lab/preview.html) |
+| [NOHGA HOTEL (ノーガホテル)](https://www.nohgahotel.com/) | Hotel / Design Hotel | [DESIGN.md](design-md/nohga-hotel/DESIGN.md) | [preview.html](design-md/nohga-hotel/preview.html) |
+| [PostCoffee (ポストコーヒー)](https://postcoffee.co/) | D2C / Specialty Coffee | [DESIGN.md](design-md/postcoffee/DESIGN.md) | [preview.html](design-md/postcoffee/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (372 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (375 sites)</a>
 </p>
 
 <table>
@@ -1499,6 +1507,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <td align="center"><strong>茅乃舎</strong><br><img src="design-md/kayanoya/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Graphpaper</strong><br><img src="design-md/graphpaper/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>美術手帖</strong><br><img src="design-md/bijutsutecho/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>石巻工房</strong><br><img src="design-md/ishinomaki-lab/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>NOHGA HOTEL</strong><br><img src="design-md/nohga-hotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>PostCoffee</strong><br><img src="design-md/postcoffee/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
