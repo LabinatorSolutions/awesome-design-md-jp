@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (375 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (378 sites)</a>
 </p>
 
 <table>
@@ -553,6 +553,11 @@
 <tr>
 <td align="center"><strong>NOHGA HOTEL</strong><br><img src="design-md/nohga-hotel/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>PostCoffee</strong><br><img src="design-md/postcoffee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Ambientec</strong><br><img src="design-md/ambientec/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>釜浅商店</strong><br><img src="design-md/kamaasa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東屋</strong><br><img src="design-md/azmaya/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -989,11 +994,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [石巻工房 (Ishinomaki Laboratory)](https://ishinomaki-lab.org/) | Furniture / Product Design | [DESIGN.md](design-md/ishinomaki-lab/DESIGN.md) | [preview.html](design-md/ishinomaki-lab/preview.html) |
 | [NOHGA HOTEL (ノーガホテル)](https://www.nohgahotel.com/) | Hotel / Design Hotel | [DESIGN.md](design-md/nohga-hotel/DESIGN.md) | [preview.html](design-md/nohga-hotel/preview.html) |
 | [PostCoffee (ポストコーヒー)](https://postcoffee.co/) | D2C / Specialty Coffee | [DESIGN.md](design-md/postcoffee/DESIGN.md) | [preview.html](design-md/postcoffee/preview.html) |
+| [Ambientec (アンビエンテック)](https://ambientec.co.jp/) | Lighting / Product Design | [DESIGN.md](design-md/ambientec/DESIGN.md) | [preview.html](design-md/ambientec/preview.html) |
+| [釜浅商店 (Kama-asa)](https://www.kama-asa.co.jp/) | Kitchen Tools / Craft Retail | [DESIGN.md](design-md/kamaasa/DESIGN.md) | [preview.html](design-md/kamaasa/preview.html) |
+| [東屋 (Azmaya)](https://www.azmaya.co.jp/) | Homeware / Product Design | [DESIGN.md](design-md/azmaya/DESIGN.md) | [preview.html](design-md/azmaya/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (375 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (378 sites)</a>
 </p>
 
 <table>
@@ -1512,6 +1520,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>NOHGA HOTEL</strong><br><img src="design-md/nohga-hotel/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>PostCoffee</strong><br><img src="design-md/postcoffee/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Ambientec</strong><br><img src="design-md/ambientec/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>釜浅商店</strong><br><img src="design-md/kamaasa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東屋</strong><br><img src="design-md/azmaya/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

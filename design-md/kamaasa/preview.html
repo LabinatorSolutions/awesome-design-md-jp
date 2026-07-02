@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 釜浅商店 Kama-asa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: 釜浅商店 実測値 === */
+    --charcoal:  #383838;
+    --taupe:     #a28f74;
+    --white:     #ffffff;
+    --surface:   #efefef;
+    --border:    #e1e1e1;
+    --border-dk: #afafaf;
+    /* category accents */
+    --sage:      #dfe3e3;
+    --cream:     #eae4d2;
+    --sand:      #f0e6d9;
+    --slateblue: #6c88ba;
+    --navy:      #2e4877;
+    --copper:    #c49166;
+    /* semantic */
+    --success:   #2e9e7b;
+    --instock:   #3370bf;
+    --danger:    #e85f5f;
+
+    /* === Fonts ===
+       見出し: Noto Sans JP（実サイトの "Noto Sans Japanese"）
+       本文: 游ゴシック優先。Noto Sans JP を Web フォールバックに */
+    --font-heading: "Noto Sans JP", sans-serif;
+    --font-body: YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+                 "Noto Sans JP", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 32px; border-bottom: 1px solid var(--border);
+  }
+  header.site .logo { font-family: var(--font-heading); font-weight: 700; font-size: 22px; letter-spacing: 0.1em; }
+  header.site nav { display: flex; gap: 26px; }
+  header.site nav a {
+    font-family: var(--font-heading); color: var(--charcoal); text-decoration: none;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  header.site nav a:hover { color: var(--taupe); }
+
+  .section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label {
+    font-family: var(--font-heading); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--taupe); margin-bottom: 28px; text-transform: uppercase;
+  }
+  h2.big { font-family: var(--font-heading); font-size: 21px; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 24px; }
+
+  /* Colors */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 14px; }
+  .swatch { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .swatch .chip { height: 76px; }
+  .swatch .meta { padding: 9px 11px; }
+  .swatch .meta .name { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
+  .swatch .meta .hex { color: #888; font-size: 11px; }
+  .group-title { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; margin: 26px 0 12px; color: var(--charcoal); }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-row .tag { width: 150px; flex: none; font-family: var(--font-heading); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #999; }
+  .t-hl { font-family: var(--font-heading); font-size: 21px; font-weight: 700; letter-spacing: 0.2em; }
+  .t-hm { font-family: var(--font-heading); font-size: 15px; font-weight: 400; letter-spacing: 0.075em; }
+  .t-label { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.083em; background: var(--charcoal); color: #fff; padding: 4px 10px; border-radius: 15px; display: inline-block; }
+  .t-body { font-size: 16px; line-height: 1.8; }
+  .t-link { font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--charcoal); }
+  .t-cap { font-size: 11px; line-height: 1.9; color: #777; }
+
+  /* Product / Article */
+  .prose { max-width: 640px; }
+  .prose h3 { font-family: var(--font-heading); font-size: 21px; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 18px; }
+  .prose p { font-size: 16px; line-height: 1.8; margin-bottom: 18px; }
+
+  /* Buttons */
+  .btns { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .btn { font-family: var(--font-heading); font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.06em; }
+  .btn.primary { background: var(--charcoal); color: #fff; border: none; border-radius: 16px; padding: 12px 28px; }
+  .btn.primary:hover { opacity: 0.85; }
+  .btn.secondary { background: var(--surface); color: var(--charcoal); border: none; border-radius: 8px; padding: 12px 28px; }
+  .btn.pill { background: #fff; color: #000; border: 1px solid var(--charcoal); border-radius: 30px; padding: 10px 35px; }
+  .btn.accent { background: var(--taupe); color: #fff; border: none; border-radius: 16px; padding: 12px 28px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 20px; }
+  .card { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #fff; }
+  .card .band { height: 92px; display: flex; align-items: flex-end; padding: 12px; }
+  .card .band span { font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--charcoal); }
+  .card .body { padding: 14px 16px 18px; }
+  .card .body .name { font-family: var(--font-heading); font-weight: 700; font-size: 15px; }
+  .card .body .price { font-size: 13px; color: #666; margin-top: 4px; }
+  .card .body .stock { font-size: 12px; color: var(--instock); margin-top: 6px; }
+
+  /* Forms */
+  .field { margin-bottom: 20px; max-width: 420px; }
+  .field label { display: block; font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .field input { width: 100%; font-family: var(--font-body); font-size: 15px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--charcoal); }
+  .field input:focus { outline: none; border-color: var(--charcoal); }
+  .field.err input { border-color: var(--danger); }
+  .field.err .msg { color: var(--danger); font-size: 12px; margin-top: 6px; }
+
+  /* Elevation */
+  .elevs { display: flex; gap: 26px; flex-wrap: wrap; }
+  .elev { width: 180px; height: 108px; background: #fff; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: #999; }
+  .elev.e1 { box-shadow: 0 1px 3px rgba(56,56,56,0.10); }
+  .elev.e2 { box-shadow: 0 6px 16px rgba(56,56,56,0.12); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+  .layout-demo .col { background: var(--surface); border-radius: 8px; grid-column: span 3; height: 68px; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: #999; }
+
+  footer { padding: 44px 24px; text-align: center; font-family: var(--font-heading); font-size: 12px; letter-spacing: 0.1em; color: #999; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="logo">釜浅商店</div>
+  <nav><a href="#">包丁</a><a href="#">料理道具</a><a href="#">釜浅のサービス</a><a href="#">読みもの</a><a href="#">お知らせ</a></nav>
+</header>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-label">01 — Colors</div>
+    <h2 class="big">配色</h2>
+    <div class="group-title">Base / Neutral</div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#383838"></div><div class="meta"><div class="name">Charcoal</div><div class="hex">#383838</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#a28f74"></div><div class="meta"><div class="name">Warm Taupe</div><div class="hex">#a28f74</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#efefef"></div><div class="meta"><div class="name">Surface</div><div class="hex">#efefef</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#e1e1e1"></div><div class="meta"><div class="name">Border</div><div class="hex">#e1e1e1</div></div></div>
+    </div>
+    <div class="group-title">Category Accent</div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#dfe3e3"></div><div class="meta"><div class="name">Sage</div><div class="hex">#dfe3e3</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#eae4d2"></div><div class="meta"><div class="name">Cream</div><div class="hex">#eae4d2</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f0e6d9"></div><div class="meta"><div class="name">Sand</div><div class="hex">#f0e6d9</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#6c88ba"></div><div class="meta"><div class="name">Slate Blue</div><div class="hex">#6c88ba</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#2e4877"></div><div class="meta"><div class="name">Navy</div><div class="hex">#2e4877</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#c49166"></div><div class="meta"><div class="name">Copper</div><div class="hex">#c49166</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 — Typography</div>
+    <div class="type-row"><div class="tag">Heading L 21 / 700 / 0.2em</div><div class="t-hl">良理道具</div></div>
+    <div class="type-row"><div class="tag">Heading M 15 / 400</div><div class="t-hm">末長く使える、大切な1本を。</div></div>
+    <div class="type-row"><div class="tag">Label 12 / 700</div><div><span class="t-label">包丁</span></div></div>
+    <div class="type-row"><div class="tag">Body 16 / 1.8</div><div class="t-body">料理道具のこと、釜浅のこと。暮らしを豊かにする道具を、使い方から選び方までお届けします。</div></div>
+    <div class="type-row"><div class="tag">Link 15 / 700</div><div class="t-link">オリジナル包丁 amane を見る →</div></div>
+    <div class="type-row"><div class="tag">Caption 11</div><div class="t-cap">※ 数量限定・お一人様1点まで</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 — Article</div>
+    <div class="prose">
+      <h3>鉄を育てる</h3>
+      <p>鉄の打出しフライパンは、使うほどに油が馴染み、焦げつきにくくなっていきます。最初は少し手がかかりますが、その手間こそが道具を育てる楽しみです。</p>
+      <p>釜浅商店では、良い道具の理（ことわり）を「良理道具」と呼び、末長く使える一本をお届けしています。合羽橋の店頭でも、実際に手に取ってお選びいただけます。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 — Buttons</div>
+    <div class="btns">
+      <button class="btn primary">カートに入れる</button>
+      <button class="btn secondary">お気に入り</button>
+      <button class="btn pill">究極のスタンダード包丁</button>
+      <button class="btn accent">レビューを書く</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 — Cards</div>
+    <div class="cards">
+      <div class="card"><div class="band" style="background:#dfe3e3"><span>包丁</span></div><div class="body"><div class="name">オリジナル包丁 amane</div><div class="price">¥16,500</div><div class="stock">在庫あり</div></div></div>
+      <div class="card"><div class="band" style="background:#eae4d2"><span>料理道具</span></div><div class="body"><div class="name">鉄打出しフライパン</div><div class="price">¥9,900</div><div class="stock">在庫あり</div></div></div>
+      <div class="card"><div class="band" style="background:#f0e6d9"><span>読みもの</span></div><div class="body"><div class="name">釜浅のごはん釜</div><div class="price">¥13,200</div><div class="stock" style="color:var(--danger)">残りわずか</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 — Forms</div>
+    <div class="field"><label>お名前</label><input type="text" value="山田 太郎"></div>
+    <div class="field"><label>メールアドレス</label><input type="email" placeholder="you@example.com"></div>
+    <div class="field err"><label>郵便番号</label><input type="text" value="000"><div class="msg">郵便番号を正しく入力してください</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">07 — Elevation</div>
+    <div class="elevs">
+      <div class="elev">Level 0 · Flat</div>
+      <div class="elev e1">Level 1 · Card</div>
+      <div class="elev e2">Level 2 · Drawer</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">08 — Layout · 12 col</div>
+    <div class="layout-demo"><div class="col">3</div><div class="col">3</div><div class="col">3</div><div class="col">3</div></div>
+  </section>
+
+</div>
+
+<footer>釜浅商店 Kama-asa — Design System Preview · 代替フォント: Noto Sans JP / 游ゴシック</footer>
+
+</body>
+</html>
