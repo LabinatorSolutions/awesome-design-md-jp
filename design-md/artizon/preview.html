@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: アーティゾン美術館 (Artizon Museum)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: アーティゾン美術館 実測値 === */
+    --bg:         #ffffff;
+    --surface:    #f5f5f5;
+    --surface-c:  #ebeff1;
+    --dark:       #111111;
+    --dark-btn:   #333333;
+    --text:       #000000;
+    --border:     #cccccc;
+    --white:      #ffffff;
+
+    /* === Fonts ===
+       AXIS Font ベーシック ProN (Type Project) → Noto Sans JP で代替
+       ウェイトは R→400 / M→500 / B→700 に対応 */
+    --font: "A+mfCv-AXIS Font ベーシック R ProN", "Noto Sans JP", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 2.0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .topbar { background: var(--dark); color: var(--white); font-size: 13px; letter-spacing: 0.02em; padding: 10px 40px; display: flex; gap: 24px; align-items: center; }
+  .topbar .now { font-weight: 700; }
+  .topbar .shop { margin-left: auto; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 40px; border-bottom: 1px solid var(--border);
+  }
+  header.site .logo { font-size: 22px; font-weight: 700; letter-spacing: 0.04em; }
+  header.site nav { display: flex; gap: 26px; }
+  header.site nav a {
+    color: var(--text); text-decoration: none; font-size: 15px; font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  header.site nav a:hover { opacity: 0.5; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+  .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  .section-label {
+    font-size: 12px; letter-spacing: 0.14em; color: #888; margin-bottom: 28px;
+  }
+  h2.display {
+    font-size: 42px; font-weight: 700; line-height: 1.0; letter-spacing: -0.019em;
+    margin-bottom: 24px;
+  }
+
+  /* Colors */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--border); }
+  .swatch .chip { height: 84px; }
+  .swatch .meta { padding: 10px 12px; font-size: 12px; }
+  .swatch .meta .name { letter-spacing: 0.04em; }
+  .swatch .meta .hex { color: #888; font-size: 11px; letter-spacing: 0.04em; }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .type-row .tag { width: 160px; flex: none; font-size: 11px; letter-spacing: 0.06em; color: #888; }
+  .t-display { font-size: 42px; font-weight: 700; line-height: 1.0; letter-spacing: -0.019em; }
+  .t-h3 { font-size: 26px; font-weight: 700; line-height: 1.2; letter-spacing: 0.05em; }
+  .t-lead { font-size: 18px; font-weight: 400; line-height: 2.0; }
+  .t-body { font-size: 15px; font-weight: 400; line-height: 2.0; }
+  .t-nav { font-size: 15px; font-weight: 500; line-height: 1.6; }
+  .t-cap { font-size: 13px; font-weight: 400; line-height: 1.8; color: #555; }
+
+  /* Article */
+  .prose { max-width: 660px; }
+  .prose p { font-size: 15px; line-height: 2.0; margin-bottom: 20px; }
+  .prose .caption { font-size: 13px; letter-spacing: 0.04em; color: #888; }
+
+  /* Buttons */
+  .btns { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: var(--font); font-size: 15px; font-weight: 400;
+    letter-spacing: 0.02em; border-radius: 0;
+    padding: 13px 24px; cursor: pointer; background: transparent;
+    border: 1px solid var(--text); color: var(--text);
+  }
+  .btn:hover { background: var(--text); color: var(--white); }
+  .btn.dark { background: var(--dark-btn); color: var(--white); border-color: var(--dark-btn); }
+  .btn.dark:hover { opacity: 0.85; background: var(--dark-btn); }
+  .btn.sm { padding: 9px 18px; font-size: 14px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 24px; }
+  .card { background: var(--bg); }
+  .card .ph { height: 180px; background: var(--surface); }
+  .card .body { padding: 16px 2px 0; }
+  .card .body .term { font-size: 13px; color: #888; letter-spacing: 0.04em; }
+  .card .body .name { font-size: 18px; font-weight: 700; letter-spacing: 0.02em; margin-top: 4px; line-height: 1.4; }
+
+  /* Forms */
+  .field { margin-bottom: 22px; max-width: 440px; }
+  .field label { display: block; font-size: 13px; letter-spacing: 0.04em; color: #666; margin-bottom: 8px; }
+  .field input {
+    width: 100%; font-family: var(--font); font-size: 15px;
+    padding: 12px 16px; border: 1px solid var(--border); border-radius: 0;
+    background: var(--white); color: var(--text);
+  }
+  .field input:focus { outline: none; border-color: var(--text); }
+  .field.err input { border-color: var(--text); }
+  .field.err .msg { color: var(--dark); font-size: 13px; margin-top: 6px; letter-spacing: 0.02em; }
+
+  /* Elevation */
+  .elevs { display: flex; gap: 28px; flex-wrap: wrap; }
+  .elev { width: 190px; height: 110px; background: var(--bg); border: 1px solid var(--border); border-radius: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 0.06em; color: #888; }
+  .elev.e1 { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .elev.e2 { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+  .layout-demo .col { background: var(--surface); grid-column: span 4; height: 72px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #888; letter-spacing: 0.06em; }
+
+  footer { padding: 48px 40px; color: #999; font-size: 12px; letter-spacing: 0.08em; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="now">本日開館</span><span>10:00 — 18:00</span><span class="shop">オンラインショップ ↗</span>
+</div>
+<header class="site">
+  <div class="logo">ARTIZON MUSEUM</div>
+  <nav>
+    <a href="#">展覧会</a><a href="#">ご利用案内</a><a href="#">ラーニングプログラム</a><a href="#">コレクション</a><a href="#">当館について</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-label">01 — Colors</div>
+    <h2 class="display">Palette</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#ffffff;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Background</div><div class="hex">#ffffff</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f5f5f5"></div><div class="meta"><div class="name">Surface</div><div class="hex">#f5f5f5</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ebeff1"></div><div class="meta"><div class="name">Surface Cool</div><div class="hex">#ebeff1</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#111111"></div><div class="meta"><div class="name">Dark Bar</div><div class="hex">#111111</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#333333"></div><div class="meta"><div class="name">Dark Button</div><div class="hex">#333333</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#cccccc"></div><div class="meta"><div class="name">Border</div><div class="hex">#cccccc</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 — Typography（AXIS Font）</div>
+    <div class="type-row"><div class="tag">Display 42 / Bold / -0.02em</div><div class="t-display">SOTTSASS</div></div>
+    <div class="type-row"><div class="tag">Heading 26 / Bold</div><div class="t-h3">エットレ・ソットサス</div></div>
+    <div class="type-row"><div class="tag">Lead 18 / 2.0</div><div class="t-lead">魔法がはじまるとき、デザインは生まれる。</div></div>
+    <div class="type-row"><div class="tag">Body 15 / 2.0</div><div class="t-body">印象派から現代美術まで、時代とジャンルを横断するコレクションを、ゆったりとした余白のなかで鑑賞できます。</div></div>
+    <div class="type-row"><div class="tag">Nav 15 / Medium</div><div class="t-nav">展覧会 — コレクション</div></div>
+    <div class="type-row"><div class="tag">Caption 13 / R</div><div class="t-cap">2026.6.23 TUE — 10.4 SUN</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 — Exhibition</div>
+    <div class="prose">
+      <p class="caption" style="margin-bottom:12px">開催中の展覧会</p>
+      <p>アーティゾン美術館は、東京・京橋に位置する美術館です。石橋財団のコレクションを核に、印象派やエコール・ド・パリ、日本近代洋画、そして現代美術までを幅広く収蔵しています。</p>
+      <p>巨大なタイポグラフィと余白を主役にした空間で、作品そのものと静かに向き合う時間を提供します。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 — Buttons</div>
+    <div class="btns">
+      <button class="btn">美術館について</button>
+      <button class="btn">建築・デザインについて</button>
+      <button class="btn dark">オンラインショップ</button>
+      <button class="btn sm">チケットを見る</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 — Cards</div>
+    <div class="cards">
+      <div class="card"><div class="ph"></div><div class="body"><div class="term">2026.6.23 — 10.4</div><div class="name">エットレ・ソットサス</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="term">2026.10.18 — 2027.1.24</div><div class="name">石橋財団コレクション選</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 — Forms</div>
+    <div class="field"><label>メールアドレス</label><input type="email" placeholder="you@example.com"></div>
+    <div class="field"><label>お名前</label><input type="text" value="山田 太郎"></div>
+    <div class="field err"><label>郵便番号</label><input type="text" value="000"><div class="msg">郵便番号を正しく入力してください</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">07 — Elevation</div>
+    <div class="elevs">
+      <div class="elev">Level 0 · Flat</div>
+      <div class="elev e1">Level 1 · Dropdown</div>
+      <div class="elev e2">Level 2 · Modal</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">08 — Layout · 12 col</div>
+    <div class="layout-demo">
+      <div class="col">4</div><div class="col">4</div><div class="col">4</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>アーティゾン美術館 — Design System Preview · 代替フォント: Noto Sans JP（AXIS Font ベーシック ProN）</footer>
+
+</body>
+</html>

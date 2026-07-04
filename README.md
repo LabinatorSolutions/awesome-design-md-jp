@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (378 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (381 sites)</a>
 </p>
 
 <table>
@@ -558,6 +558,11 @@
 <tr>
 <td align="center"><strong>釜浅商店</strong><br><img src="design-md/kamaasa/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>東屋</strong><br><img src="design-md/azmaya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>たねや</strong><br><img src="design-md/taneya/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>White Mtn.</strong><br><img src="design-md/whitemountaineering/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Artizon</strong><br><img src="design-md/artizon/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -997,11 +1002,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [Ambientec (アンビエンテック)](https://ambientec.co.jp/) | Lighting / Product Design | [DESIGN.md](design-md/ambientec/DESIGN.md) | [preview.html](design-md/ambientec/preview.html) |
 | [釜浅商店 (Kama-asa)](https://www.kama-asa.co.jp/) | Kitchen Tools / Craft Retail | [DESIGN.md](design-md/kamaasa/DESIGN.md) | [preview.html](design-md/kamaasa/preview.html) |
 | [東屋 (Azmaya)](https://www.azmaya.co.jp/) | Homeware / Product Design | [DESIGN.md](design-md/azmaya/DESIGN.md) | [preview.html](design-md/azmaya/preview.html) |
+| [たねや (Taneya)](https://taneya.jp/) | Confectionery / Wagashi | [DESIGN.md](design-md/taneya/DESIGN.md) | [preview.html](design-md/taneya/preview.html) |
+| [White Mountaineering](https://whitemountaineering.com/) | Fashion / Apparel | [DESIGN.md](design-md/whitemountaineering/DESIGN.md) | [preview.html](design-md/whitemountaineering/preview.html) |
+| [アーティゾン美術館 (Artizon Museum)](https://www.artizon.museum/) | Museum / Art | [DESIGN.md](design-md/artizon/DESIGN.md) | [preview.html](design-md/artizon/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (378 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (381 sites)</a>
 </p>
 
 <table>
@@ -1525,6 +1533,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>釜浅商店</strong><br><img src="design-md/kamaasa/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>東屋</strong><br><img src="design-md/azmaya/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>たねや</strong><br><img src="design-md/taneya/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>White Mtn.</strong><br><img src="design-md/whitemountaineering/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Artizon</strong><br><img src="design-md/artizon/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

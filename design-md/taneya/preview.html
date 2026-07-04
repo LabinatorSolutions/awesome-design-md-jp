@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: たねや (Taneya)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: たねや 実測値 === */
+    --bg:        #ffffff;
+    --surface:   #f2f2f2;
+    --text:      #000000;
+    --text-2:    #333333;
+    --muted:     #888888;
+    --red:       #bf0000;
+    --border:    #e5e5e5;
+    --line:      #000000;
+    --white:     #ffffff;
+
+    /* === Fonts ===
+       DNP 秀英角ゴシック銀 (Adobe Fonts) → Zen Kaku Gothic New で代替 */
+    --font: "Zen Kaku Gothic New", "dnp-shuei-gothic-gin-std", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+    font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 32px 40px 28px; border-bottom: 1px solid var(--border);
+  }
+  header.site .logo { font-size: 26px; font-weight: 700; letter-spacing: 0.08em; }
+  header.site nav { display: flex; gap: 28px; }
+  header.site nav a {
+    color: var(--text); text-decoration: none; font-size: 14px; font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  header.site nav a:hover { opacity: 0.55; }
+
+  .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  .section-label {
+    font-size: 12px; letter-spacing: 0.18em; color: var(--muted); margin-bottom: 28px;
+  }
+  h2.display {
+    font-size: 27px; font-weight: 400; line-height: 1.7; letter-spacing: 0.1em;
+    margin-bottom: 24px;
+  }
+
+  /* Colors */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--border); }
+  .swatch .chip { height: 84px; }
+  .swatch .meta { padding: 10px 12px; font-size: 12px; }
+  .swatch .meta .name { letter-spacing: 0.04em; }
+  .swatch .meta .hex { color: var(--muted); font-size: 11px; letter-spacing: 0.04em; }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-row .tag { width: 150px; flex: none; font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
+  .t-display { font-size: 27px; font-weight: 400; line-height: 1.7; letter-spacing: 0.1em; }
+  .t-h3 { font-size: 20px; font-weight: 400; line-height: 1.7; letter-spacing: 0.05em; }
+  .t-h4 { font-size: 17.5px; font-weight: 400; line-height: 1.7; letter-spacing: 0.17em; }
+  .t-nav { font-size: 14px; font-weight: 700; line-height: 1.7; }
+  .t-body { font-size: 14px; font-weight: 400; line-height: 1.7; }
+  .t-link { font-size: 12px; font-weight: 600; line-height: 1.7; letter-spacing: 0.18em; }
+  .t-badge { font-size: 10px; font-weight: 700; line-height: 1; color: var(--red); }
+
+  /* Product */
+  .prose { max-width: 620px; }
+  .prose p { font-size: 14px; line-height: 1.86; letter-spacing: 0.1em; margin-bottom: 20px; }
+  .prose .caption { font-size: 12px; letter-spacing: 0.1em; color: var(--muted); }
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; color: var(--red); border: 1px solid var(--red); padding: 2px 8px; letter-spacing: 0.1em; margin-bottom: 12px; }
+
+  /* Buttons */
+  .btns { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: var(--font); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; border-radius: 2px; font-feature-settings: "palt" 1;
+    padding: 13px 22px; cursor: pointer; background: var(--white);
+    border: 1px solid var(--line); color: var(--text);
+  }
+  .btn:hover { background: var(--text); color: var(--white); }
+  .btn.sm { padding: 9px 16px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 24px; }
+  .card { background: var(--bg); }
+  .card .ph { height: 170px; background: var(--surface); }
+  .card .body { padding: 14px 2px 0; }
+  .card .body .name { letter-spacing: 0.05em; font-size: 15px; font-weight: 400; }
+  .card .body .price { font-size: 13px; color: var(--text-2); margin-top: 6px; letter-spacing: 0.04em; }
+
+  /* Forms */
+  .field { margin-bottom: 22px; max-width: 420px; }
+  .field label { display: block; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
+  .field input {
+    width: 100%; font-family: var(--font); font-size: 14px;
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 2px;
+    background: var(--white); color: var(--text);
+  }
+  .field input:focus { outline: none; border-color: var(--line); }
+  .field.err input { border-color: var(--red); }
+  .field.err .msg { color: var(--red); font-size: 12px; margin-top: 6px; letter-spacing: 0.04em; }
+
+  /* Elevation */
+  .elevs { display: flex; gap: 28px; flex-wrap: wrap; }
+  .elev { width: 180px; height: 110px; background: var(--bg); border: 1px solid var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); }
+  .elev.e1 { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .elev.e2 { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+  .layout-demo .col { background: var(--surface); grid-column: span 4; height: 72px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+
+  footer { padding: 48px 40px; color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="logo">たねや</div>
+  <nav>
+    <a href="#">たねやのお菓子</a><a href="#">店舗のご案内</a><a href="#">たねやについて</a><a href="#">大切にするきもち</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-label">01 — Colors</div>
+    <h2 class="display">パレット</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#ffffff;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Background</div><div class="hex">#ffffff</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f2f2f2"></div><div class="meta"><div class="name">Surface</div><div class="hex">#f2f2f2</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#000000"></div><div class="meta"><div class="name">Text</div><div class="hex">#000000</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#333333"></div><div class="meta"><div class="name">Text 2</div><div class="hex">#333333</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#bf0000"></div><div class="meta"><div class="name">Notice Red</div><div class="hex">#bf0000</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#e5e5e5"></div><div class="meta"><div class="name">Border</div><div class="hex">#e5e5e5</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 — Typography（palt on）</div>
+    <div class="type-row"><div class="tag">Display 27 / 400</div><div class="t-display">季節をいただく</div></div>
+    <div class="type-row"><div class="tag">Heading 20 / 400</div><div class="t-h3">たねやのお菓子づくり</div></div>
+    <div class="type-row"><div class="tag">Heading 17.5 / 0.17em</div><div class="t-h4">近江の風土とともに</div></div>
+    <div class="type-row"><div class="tag">Nav 14 / 700</div><div class="t-nav">大切にするきもち</div></div>
+    <div class="type-row"><div class="tag">Body 14 / 400</div><div class="t-body">四季の移ろいを映した和菓子を、その日いちばんおいしい姿でお届けします。素材の香りと余白を大切にしています。</div></div>
+    <div class="type-row"><div class="tag">Link 12 / 0.18em</div><div class="t-link">一覧をみる</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 — Product</div>
+    <div class="prose">
+      <span class="badge">NEW</span>
+      <p class="caption" style="margin-bottom:12px">ふくみ天平 — 最中</p>
+      <p>香ばしく焼き上げた最中種と、炊きたての餡を別々にお届けします。召し上がる直前にご自身で挟むことで、種のぱりっとした食感と餡のみずみずしさを同時に味わえます。</p>
+      <p>近江の水と土に育まれた素材を、余計な手を加えずそのままに。季節の移ろいを、手のひらの上のひとくちに映します。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 — Buttons</div>
+    <div class="btns">
+      <button class="btn">一覧をみる</button>
+      <button class="btn sm">店舗をさがす</button>
+      <button class="btn">ラ コリーナ近江八幡 ウェブサイトへ</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 — Cards</div>
+    <div class="cards">
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">ふくみ天平</div><div class="price">¥1,404</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">たねやの栗饅頭</div><div class="price">¥1,296</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">末廣饅頭</div><div class="price">¥1,080</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 — Forms</div>
+    <div class="field"><label>メールアドレス</label><input type="email" placeholder="you@example.com"></div>
+    <div class="field"><label>お名前</label><input type="text" value="山田 太郎"></div>
+    <div class="field err"><label>郵便番号</label><input type="text" value="000"><div class="msg">郵便番号を正しく入力してください</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">07 — Elevation</div>
+    <div class="elevs">
+      <div class="elev">Level 0 · Flat</div>
+      <div class="elev e1">Level 1 · Dropdown</div>
+      <div class="elev e2">Level 2 · Overlay</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">08 — Layout · 12 col</div>
+    <div class="layout-demo">
+      <div class="col">4</div><div class="col">4</div><div class="col">4</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>たねや — Design System Preview · 代替フォント: Zen Kaku Gothic New（秀英角ゴシック銀）</footer>
+
+</body>
+</html>
