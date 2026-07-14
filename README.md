@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (381 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (384 sites)</a>
 </p>
 
 <table>
@@ -563,6 +563,11 @@
 <tr>
 <td align="center"><strong>White Mtn.</strong><br><img src="design-md/whitemountaineering/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Artizon</strong><br><img src="design-md/artizon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カンディハウス</strong><br><img src="design-md/condehouse/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Celvoke</strong><br><img src="design-md/celvoke/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Discover Japan</strong><br><img src="design-md/discoverjapan/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1005,11 +1010,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [たねや (Taneya)](https://taneya.jp/) | Confectionery / Wagashi | [DESIGN.md](design-md/taneya/DESIGN.md) | [preview.html](design-md/taneya/preview.html) |
 | [White Mountaineering](https://whitemountaineering.com/) | Fashion / Apparel | [DESIGN.md](design-md/whitemountaineering/DESIGN.md) | [preview.html](design-md/whitemountaineering/preview.html) |
 | [アーティゾン美術館 (Artizon Museum)](https://www.artizon.museum/) | Museum / Art | [DESIGN.md](design-md/artizon/DESIGN.md) | [preview.html](design-md/artizon/preview.html) |
+| [カンディハウス (Conde House)](https://www.condehouse.co.jp/) | Furniture / Product Design | [DESIGN.md](design-md/condehouse/DESIGN.md) | [preview.html](design-md/condehouse/preview.html) |
+| [Celvoke (セルヴォーク)](https://celvoke.com/) | Cosmetics / Beauty | [DESIGN.md](design-md/celvoke/DESIGN.md) | [preview.html](design-md/celvoke/preview.html) |
+| [Discover Japan (ディスカバー・ジャパン)](https://discoverjapan-web.com/) | Media / Magazine | [DESIGN.md](design-md/discoverjapan/DESIGN.md) | [preview.html](design-md/discoverjapan/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (381 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (384 sites)</a>
 </p>
 
 <table>
@@ -1538,6 +1546,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>White Mtn.</strong><br><img src="design-md/whitemountaineering/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Artizon</strong><br><img src="design-md/artizon/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>カンディハウス</strong><br><img src="design-md/condehouse/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>Celvoke</strong><br><img src="design-md/celvoke/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Discover Japan</strong><br><img src="design-md/discoverjapan/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

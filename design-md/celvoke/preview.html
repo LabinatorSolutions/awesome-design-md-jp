@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Celvoke (セルヴォーク)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: Celvoke 実測値 === */
+    --bg:        #fafafa;
+    --surface:   #ffffff;
+    --ink:       #000000;
+    --green:     #053931;
+    --highlight: #ebfe9a;
+    --brown:     #241816;
+    --text:      #000000;
+    --text-2:    #212121;
+    --muted:     #6e6e6e;
+    --citrus:    #f88329;
+    --border:    #dddddd;
+    --white:     #ffffff;
+
+    /* === Fonts ===
+       --font-base: "Nunito", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif
+       Pragmatica (Adobe, 英字見出し) → Inter で代替 */
+    --font: "Nunito", "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .promo { background: var(--ink); color: var(--white); text-align: center; font-size: 12px; letter-spacing: 0.2em; padding: 10px; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 34px 40px 28px; border-bottom: 1px solid var(--border);
+  }
+  header.site .logo { font-size: 34px; font-weight: 400; font-style: italic; letter-spacing: 0.01em; }
+  header.site nav { display: flex; gap: 30px; }
+  header.site nav a {
+    color: var(--text); text-decoration: none; font-size: 12px; font-weight: 400;
+    letter-spacing: 0.2em;
+  }
+  header.site nav a:hover { opacity: 0.5; }
+
+  .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+  .section-label {
+    font-size: 12px; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 26px;
+  }
+  h2.display {
+    font-size: 36px; font-weight: 700; line-height: 1.5; letter-spacing: 0.025em;
+    margin-bottom: 22px;
+  }
+
+  /* Colors */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--border); }
+  .swatch .chip { height: 84px; }
+  .swatch .meta { padding: 10px 12px; font-size: 12px; }
+  .swatch .meta .name { letter-spacing: 0.02em; }
+  .swatch .meta .hex { color: var(--muted); font-size: 11px; letter-spacing: 0.02em; }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-row .tag { width: 160px; flex: none; font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
+  .t-h1 { font-size: 36px; font-weight: 700; line-height: 1.5; letter-spacing: 0.025em; }
+  .t-h2 { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: 0.04em; }
+  .t-h3 { font-size: 16px; font-weight: 700; line-height: 1.5; }
+  .t-body { font-size: 18px; font-weight: 400; line-height: 1.5; }
+  .t-nav { font-size: 18px; font-weight: 400; line-height: 1.5; letter-spacing: 0.05em; }
+  .t-label { font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: 0.2em; color: var(--text-2); }
+
+  /* Product */
+  .prose { max-width: 640px; }
+  .prose p { font-size: 18px; line-height: 1.5; margin-bottom: 20px; }
+  .prose .caption { font-size: 14px; letter-spacing: 0.2em; color: var(--muted); }
+
+  /* Buttons */
+  .btns { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .btn { font-family: var(--font); cursor: pointer; border: none; }
+  .btn-pill {
+    background: var(--ink); color: var(--white); font-size: 15px; font-weight: 600;
+    border-radius: 900px; padding: 15px 40px;
+  }
+  .btn-pill:hover { opacity: 0.85; }
+  .btn-link {
+    background: var(--ink); color: var(--white); font-size: 14px; font-weight: 700;
+    border-radius: 0; padding: 14px 32px; letter-spacing: 0.1em;
+  }
+  .btn-link:hover { opacity: 0.85; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 28px; }
+  .card { background: var(--surface); }
+  .card .ph { height: 200px; background: #eeeeee; }
+  .card .body { padding: 16px 2px 0; text-align: center; }
+  .card .body .name { letter-spacing: 0.04em; font-size: 15px; font-weight: 400; }
+  .card .body .price { font-size: 13px; color: var(--text-2); margin-top: 6px; }
+
+  /* Forms */
+  .field { margin-bottom: 18px; max-width: 420px; }
+  .field label { display: block; font-size: 12px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+  .field input {
+    width: 100%; font-family: var(--font); font-size: 16px;
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 0;
+    background: var(--white); color: var(--text);
+  }
+  .field input:focus { outline: none; border-color: var(--ink); }
+  .field.err input { border-color: var(--citrus); }
+  .field.err .msg { color: var(--citrus); font-size: 12px; margin-top: 6px; }
+
+  /* Elevation */
+  .elevs { display: flex; gap: 28px; flex-wrap: wrap; }
+  .elev { width: 180px; height: 110px; background: var(--white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 0.06em; color: var(--muted); }
+  .elev.e1 { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .elev.e2 { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+  .layout-demo .col { background: #eeeeee; grid-column: span 3; height: 72px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); }
+
+  footer { padding: 48px 40px; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="promo">NEW MOON SPECIAL EVENT</div>
+
+<header class="site">
+  <div class="logo">Celvoke</div>
+  <nav>
+    <a href="#">ABOUT</a><a href="#">PRODUCTS</a><a href="#">BESTSELLERS</a><a href="#">EVENT</a><a href="#">NEWS</a><a href="#">SHOP LIST</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-label">01 — COLORS</div>
+    <h2 class="display">パレット</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#fafafa;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Background</div><div class="hex">#fafafa</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ffffff;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Surface</div><div class="hex">#ffffff</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#000000"></div><div class="meta"><div class="name">Ink / CTA</div><div class="hex">#000000</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#053931"></div><div class="meta"><div class="name">Brand Green</div><div class="hex">#053931</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ebfe9a"></div><div class="meta"><div class="name">Highlight</div><div class="hex">#ebfe9a</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#241816"></div><div class="meta"><div class="name">Dark Brown</div><div class="hex">#241816</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#212121"></div><div class="meta"><div class="name">Text Default</div><div class="hex">#212121</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f88329"></div><div class="meta"><div class="name">Summer Citrus</div><div class="hex">#f88329</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 — TYPOGRAPHY（ラベルは字間 0.2em）</div>
+    <div class="type-row"><div class="tag">H1 36 / 700</div><div class="t-h1">Summer Makeup Collection</div></div>
+    <div class="type-row"><div class="tag">H2 20 / 700</div><div class="t-h2">揺るがない、透明感を素肌へ</div></div>
+    <div class="type-row"><div class="tag">H3 16 / 700</div><div class="t-h3">ボタニカルの力を、肌へ</div></div>
+    <div class="type-row"><div class="tag">Body 18 / 400</div><div class="t-body">美容オイルで洗う贅沢。植物の恵みを凝縮したクレンジングが、うるおいを守りながら一日の汚れを溶かします。</div></div>
+    <div class="type-row"><div class="tag">Nav 18 / 0.05em</div><div class="t-nav">ベストセラー</div></div>
+    <div class="type-row"><div class="tag">Label 14 / 0.2em</div><div class="t-label">LIP CATALOG</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 — PRODUCT</div>
+    <div class="prose">
+      <p class="caption" style="margin-bottom:12px">CALM BRIGHTENING CLEANSING OIL</p>
+      <p>美容オイルで洗う、贅沢なひととき。ボタニカルエキスを贅沢に配合したクレンジングオイルが、メイクや毛穴の汚れをやさしく溶かし出します。洗い上がりはつっぱらず、透明感のある素肌へ。</p>
+      <p>朝晩のクレンジングを、肌をいたわる時間に。揺らがない肌の透明感を、日々の習慣から育てます。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 — BUTTONS</div>
+    <div class="btns">
+      <button class="btn btn-pill">カートにすすむ</button>
+      <button class="btn btn-link">VIEW MORE</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 — CARDS</div>
+    <div class="cards">
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">インフィニトアイズ 09</div><div class="price">¥3,850</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">ヴェールルージュ 21</div><div class="price">¥3,520</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">カームクレンジングオイル</div><div class="price">¥4,400</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 — FORMS</div>
+    <div class="field"><label>メールアドレス</label><input type="email" placeholder="you@example.com"></div>
+    <div class="field"><label>お名前</label><input type="text" value="山田 花子"></div>
+    <div class="field err"><label>郵便番号</label><input type="text" value="000"><div class="msg">郵便番号を正しく入力してください</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">07 — ELEVATION</div>
+    <div class="elevs">
+      <div class="elev">Level 0 · Flat</div>
+      <div class="elev e1">Level 1 · Dropdown</div>
+      <div class="elev e2">Level 2 · Overlay</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">08 — LAYOUT · 12 col</div>
+    <div class="layout-demo">
+      <div class="col">3</div><div class="col">3</div><div class="col">3</div><div class="col">3</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>Celvoke (セルヴォーク) — Design System Preview · 代替フォント: Nunito + Noto Sans JP（Pragmatica → Inter）</footer>
+
+</body>
+</html>

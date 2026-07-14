@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: カンディハウス (Conde House)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: カンディハウス 実測値 === */
+    --bg:          #fcfcfa;
+    --surface:     #f5f4f0;
+    --surface-alt: #f5f5f5;
+    --green:       #15654c;
+    --yellow:      #f3ff34;
+    --blue:        #405de6;
+    --text:        #000000;
+    --text-muted:  #333333;
+    --muted:       #979796;
+    --success:     #2e9e7b;
+    --error:       #de2a2a;
+    --border:      #d6d6d5;
+    --border-out:  #e0e0d7;
+    --white:       #ffffff;
+
+    /* === Fonts ===
+       aktiv-grotesk (Adobe) → Inter ／ source-han-sans-japanese → Noto Sans JP */
+    --font: "Inter", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.73;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 30px 40px 26px; border-bottom: 1px solid var(--border);
+  }
+  header.site .logo { font-size: 24px; font-weight: 400; letter-spacing: 0.01em; }
+  header.site nav { display: flex; gap: 26px; }
+  header.site nav a {
+    color: var(--text); text-decoration: none; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  header.site nav a:hover { opacity: 0.55; }
+
+  .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+  .section-label {
+    font-size: 12px; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 26px;
+  }
+  h2.display {
+    font-size: 32px; font-weight: 400; line-height: 1.5; letter-spacing: 0.01em;
+    margin-bottom: 22px;
+  }
+
+  /* Colors */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--border); }
+  .swatch .chip { height: 84px; }
+  .swatch .meta { padding: 10px 12px; font-size: 12px; }
+  .swatch .meta .name { letter-spacing: 0.02em; }
+  .swatch .meta .hex { color: var(--muted); font-size: 11px; letter-spacing: 0.02em; }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-row .tag { width: 160px; flex: none; font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
+  .t-hero { font-size: 30px; font-weight: 700; line-height: 1.73; }
+  .t-display { font-size: 32px; font-weight: 400; line-height: 1.5; letter-spacing: 0.01em; }
+  .t-h2 { font-size: 26px; font-weight: 400; line-height: 1.5; letter-spacing: 0.02em; }
+  .t-label { font-size: 12px; font-weight: 400; letter-spacing: 0.08em; color: var(--text-muted); }
+  .t-body { font-size: 15px; font-weight: 400; line-height: 1.73; }
+  .t-caption { font-size: 12px; font-weight: 400; line-height: 1.5; letter-spacing: 0.03em; color: var(--muted); }
+
+  /* Product */
+  .prose { max-width: 620px; }
+  .prose p { font-size: 15px; line-height: 1.73; margin-bottom: 20px; }
+  .prose .caption { font-size: 12px; letter-spacing: 0.03em; color: var(--muted); }
+
+  /* Buttons */
+  .btns { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: var(--font); cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--green); color: var(--white); font-size: 14px; font-weight: 400;
+    border-radius: 4px; padding: 14px 20px;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    background: transparent; color: var(--text); font-size: 12px; font-weight: 400;
+    border: 1px solid var(--border-out); border-radius: 60px; padding: 12px 35px;
+  }
+  .btn-outline:hover { background: var(--surface); }
+  .btn-circle {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--white);
+    border: 1px solid var(--border-out); font-size: 14px;
+  }
+  .btn-tag {
+    background: var(--surface); color: var(--text); font-size: 12px;
+    border-radius: 2px; padding: 5px 10px;
+  }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 24px; }
+  .card { background: var(--bg); }
+  .card .ph { height: 180px; background: var(--surface); }
+  .card .body { padding: 14px 2px 0; }
+  .card .body .name { letter-spacing: 0.02em; font-size: 15px; font-weight: 400; }
+  .card .body .price { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+  /* Forms */
+  .field { margin-bottom: 16px; max-width: 420px; }
+  .field label { display: block; font-size: 12px; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 8px; }
+  .field input {
+    width: 100%; font-family: var(--font); font-size: 15px;
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 0;
+    background: var(--white); color: var(--text);
+  }
+  .field input:focus { outline: none; border-color: var(--text); }
+  .field.err input { border-color: var(--error); }
+  .field.err .msg { color: var(--error); font-size: 12px; margin-top: 6px; }
+
+  /* Elevation */
+  .elevs { display: flex; gap: 28px; flex-wrap: wrap; }
+  .elev { width: 180px; height: 110px; background: var(--white); border: 1px solid var(--border); border-radius: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 0.04em; color: var(--muted); }
+  .elev.e1 { box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+  .elev.e2 { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: repeat(20, 1fr); gap: 8px; }
+  .layout-demo .col { background: var(--surface); grid-column: span 5; height: 72px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); }
+
+  footer { padding: 48px 40px; color: var(--muted); font-size: 12px; letter-spacing: 0.04em; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="logo">CondeHouse</div>
+  <nav>
+    <a href="#">製品</a><a href="#">カンディハウスについて</a><a href="#">店舗</a><a href="#">納品事例</a><a href="#">お知らせ</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-label">01 — COLORS</div>
+    <h2 class="display">パレット</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#fcfcfa;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Background</div><div class="hex">#fcfcfa</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f5f4f0"></div><div class="meta"><div class="name">Surface</div><div class="hex">#f5f4f0</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#15654c"></div><div class="meta"><div class="name">Brand Green</div><div class="hex">#15654c</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f3ff34"></div><div class="meta"><div class="name">Accent Yellow</div><div class="hex">#f3ff34</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#000000"></div><div class="meta"><div class="name">Text</div><div class="hex">#000000</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#333333"></div><div class="meta"><div class="name">Text Muted</div><div class="hex">#333333</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#de2a2a"></div><div class="meta"><div class="name">Error / Sale</div><div class="hex">#de2a2a</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#d6d6d5"></div><div class="meta"><div class="name">Border</div><div class="hex">#d6d6d5</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 — TYPOGRAPHY（heading weight 400）</div>
+    <div class="type-row"><div class="tag">Hero 30 / 700</div><div class="t-hero">木と暮らす</div></div>
+    <div class="type-row"><div class="tag">Display 32 / 400</div><div class="t-display">カンディハウスの家具づくり</div></div>
+    <div class="type-row"><div class="tag">Heading 26 / 400</div><div class="t-h2">旭川から、世界へ</div></div>
+    <div class="type-row"><div class="tag">Label 12 / 0.08em</div><div class="t-label">PRODUCTS</div></div>
+    <div class="type-row"><div class="tag">Body 15 / 400</div><div class="t-body">北海道の広葉樹を無垢のまま活かし、木目と経年変化を愉しむ家具をつくります。使い込むほどに味わいが増します。</div></div>
+    <div class="type-row"><div class="tag">Caption 12 / 400</div><div class="t-caption">WING チェア — ナラ材 / オイル仕上げ</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 — PRODUCT</div>
+    <div class="prose">
+      <p class="caption" style="margin-bottom:12px">WING LOUNGE CHAIR</p>
+      <p>背もたれが翼のように広がるラウンジチェア。ナラの無垢材を削り出し、手に触れる稜線をやわらかく仕上げました。座面は身体に沿う曲面で、長時間の読書にも心地よく寄り添います。</p>
+      <p>北海道旭川の職人が一脚ずつ組み上げ、木目の表情を確かめながら仕上げます。時とともに深まる色合いを、暮らしのなかで育ててください。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 — BUTTONS</div>
+    <div class="btns">
+      <button class="btn btn-primary">News Letter を登録</button>
+      <button class="btn btn-outline">詳しく見る</button>
+      <button class="btn btn-circle">‹</button>
+      <button class="btn btn-circle">›</button>
+      <button class="btn btn-tag">ショップ</button>
+      <button class="btn btn-tag">お知らせ</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 — CARDS</div>
+    <div class="cards">
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">WING チェア</div><div class="price">¥143,000</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">TEN テーブル</div><div class="price">¥297,000</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="name">LUFT ソファ</div><div class="price">¥385,000</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 — FORMS</div>
+    <div class="field"><label>メールアドレス</label><input type="email" placeholder="you@example.com"></div>
+    <div class="field"><label>お名前</label><input type="text" value="山田 太郎"></div>
+    <div class="field err"><label>郵便番号</label><input type="text" value="000"><div class="msg">郵便番号を正しく入力してください</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">07 — ELEVATION</div>
+    <div class="elevs">
+      <div class="elev">Level 0 · Flat</div>
+      <div class="elev e1">Level 1 · Dropdown</div>
+      <div class="elev e2">Level 2 · Overlay</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">08 — LAYOUT · 20 col grid</div>
+    <div class="layout-demo">
+      <div class="col">5</div><div class="col">5</div><div class="col">5</div><div class="col">5</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>カンディハウス (Conde House) — Design System Preview · 代替フォント: Inter + Noto Sans JP（Aktiv Grotesk + 源ノ角ゴシック）</footer>
+
+</body>
+</html>
