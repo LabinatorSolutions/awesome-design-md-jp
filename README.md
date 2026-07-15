@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (384 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (387 sites)</a>
 </p>
 
 <table>
@@ -568,6 +568,11 @@
 <tr>
 <td align="center"><strong>Celvoke</strong><br><img src="design-md/celvoke/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Discover Japan</strong><br><img src="design-md/discoverjapan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BAUM</strong><br><img src="design-md/baum/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CINRA</strong><br><img src="design-md/cinra/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Loftwork</strong><br><img src="design-md/loftwork/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1013,11 +1018,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [カンディハウス (Conde House)](https://www.condehouse.co.jp/) | Furniture / Product Design | [DESIGN.md](design-md/condehouse/DESIGN.md) | [preview.html](design-md/condehouse/preview.html) |
 | [Celvoke (セルヴォーク)](https://celvoke.com/) | Cosmetics / Beauty | [DESIGN.md](design-md/celvoke/DESIGN.md) | [preview.html](design-md/celvoke/preview.html) |
 | [Discover Japan (ディスカバー・ジャパン)](https://discoverjapan-web.com/) | Media / Magazine | [DESIGN.md](design-md/discoverjapan/DESIGN.md) | [preview.html](design-md/discoverjapan/preview.html) |
+| [BAUM (バウム)](https://www.baumjapan.com/) | Botanical Skincare / Beauty | [DESIGN.md](design-md/baum/DESIGN.md) | [preview.html](design-md/baum/preview.html) |
+| [CINRA (シンラ)](https://www.cinra.net/) | Culture Media / Editorial | [DESIGN.md](design-md/cinra/DESIGN.md) | [preview.html](design-md/cinra/preview.html) |
+| [Loftwork (ロフトワーク)](https://loftwork.com/jp/) | Creative Company / Agency | [DESIGN.md](design-md/loftwork/DESIGN.md) | [preview.html](design-md/loftwork/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (384 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (387 sites)</a>
 </p>
 
 <table>
@@ -1551,6 +1559,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 <tr>
 <td align="center"><strong>Celvoke</strong><br><img src="design-md/celvoke/preview-screenshot.png" width="120"></td>
 <td align="center"><strong>Discover Japan</strong><br><img src="design-md/discoverjapan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>BAUM</strong><br><img src="design-md/baum/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>CINRA</strong><br><img src="design-md/cinra/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Loftwork</strong><br><img src="design-md/loftwork/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

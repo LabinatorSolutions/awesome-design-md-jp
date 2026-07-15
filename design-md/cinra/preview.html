@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: CINRA (シンラ)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors: CINRA 実測値（--color_*） === */
+    --bg:        #f4f5f6;
+    --surface:   #ffffff;
+    --border:    #e3e4e5;
+    --icon:      #c6c7c8;
+    --base:      #000a02;  /* 緑みの黒 */
+    --sub:       #868788;
+    --series:    #f12b00;  /* 連載・赤橙 */
+    --link:      #224b8f;  /* 紺 */
+    --underline: #f5ea68;  /* 黄マーカー */
+    --job:       #50b478;  /* 求人・緑 */
+
+    /* === Fonts ===
+       --font_base: システムゴシック（ヒラギノ角ゴ ProN 等）→ preview は Noto Sans JP
+       --font_en: "DM Sans"（Google Fonts, そのまま使用可） */
+    --font-jp: "Noto Sans JP", -apple-system, "Hiragino Kaku Gothic ProN", YuGothic, Meiryo, sans-serif;
+    --font-en: "DM Sans", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--base);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 48px; }
+
+  header.site {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  header.site .logo { font-family: var(--font-en); font-size: 28px; font-weight: 700; letter-spacing: 0.02em; }
+  header.site nav { display: flex; gap: 22px; }
+  header.site nav a { font-family: var(--font-en); color: var(--base); text-decoration: none; font-size: 14px; font-weight: 700; }
+  header.site nav a:hover { color: var(--series); }
+
+  .section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-family: var(--font-en); font-size: 12px; letter-spacing: 0.06em; color: var(--sub); margin-bottom: 22px; text-transform: uppercase; }
+  h2.display { font-family: var(--font-en); font-size: 32px; font-weight: 700; line-height: 1.05; margin-bottom: 20px; }
+
+  /* Colors */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 16px; }
+  .swatch { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .swatch .chip { height: 80px; }
+  .swatch .meta { padding: 10px 12px; }
+  .swatch .meta .name { font-size: 12px; }
+  .swatch .meta .hex { font-family: var(--font-en); color: var(--sub); font-size: 11px; }
+
+  /* Typography */
+  .type-row { display: flex; align-items: baseline; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-row .tag { font-family: var(--font-en); width: 172px; flex: none; font-size: 11px; color: var(--sub); }
+  .t-display { font-family: var(--font-en); font-size: 48px; font-weight: 700; line-height: 1.15; }
+  .t-section { font-family: var(--font-en); font-size: 28px; font-weight: 700; line-height: 1.05; }
+  .t-feature { font-size: 30px; font-weight: 700; line-height: 1.39; }
+  .t-title { font-size: 22px; font-weight: 700; line-height: 1.39; }
+  .t-series { font-size: 18px; font-weight: 700; line-height: 1.2; color: var(--series); }
+  .t-body { font-size: 18px; font-weight: 400; line-height: 1.78; }
+  .t-meta { font-size: 12px; font-weight: 400; color: var(--sub); }
+
+  /* Article */
+  .prose { max-width: 660px; }
+  .prose .series { font-size: 16px; font-weight: 700; color: var(--series); margin-bottom: 10px; }
+  .prose h3 { font-size: 30px; font-weight: 700; line-height: 1.39; margin-bottom: 8px; }
+  .prose h3 .mark { background: linear-gradient(transparent 62%, var(--underline) 62%); }
+  .prose .byline { font-size: 12px; color: var(--sub); margin-bottom: 20px; }
+  .prose p { font-size: 18px; line-height: 1.78; margin-bottom: 20px; }
+  .prose a { color: var(--link); text-decoration: underline; }
+
+  /* Buttons */
+  .btns { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .btn { font-family: var(--font-jp); cursor: pointer; }
+  .btn-pill {
+    background: var(--surface); color: var(--base); border: 1px solid var(--border);
+    border-radius: 24px; font-size: 14px; font-weight: 400; padding: 12px 28px;
+  }
+  .btn-pill:hover { border-color: var(--base); }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag-chip { background: var(--bg); color: var(--base); border-radius: 5px; padding: 5px 10px; font-size: 12px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 24px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .card .ph { height: 150px; background: #e7e9eb; }
+  .card .body { padding: 14px 16px 18px; }
+  .card .body .series { font-size: 12px; font-weight: 700; color: var(--series); margin-bottom: 6px; }
+  .card .body .title { font-size: 16px; font-weight: 700; line-height: 1.45; }
+  .card .body .meta { font-size: 12px; color: var(--sub); margin-top: 10px; }
+
+  /* Forms */
+  .field { margin-bottom: 18px; max-width: 420px; }
+  .field label { display: block; font-size: 12px; color: var(--sub); margin-bottom: 8px; }
+  .field input {
+    width: 100%; font-family: var(--font-jp); font-size: 16px;
+    padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--base);
+  }
+  .field input:focus { outline: none; border-color: var(--link); }
+  .field.err input { border-color: var(--series); }
+  .field.err .msg { color: var(--series); font-size: 12px; margin-top: 6px; }
+
+  /* Elevation */
+  .elevs { display: flex; gap: 28px; flex-wrap: wrap; }
+  .elev { width: 180px; height: 108px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 12px; color: var(--sub); }
+  .elev.e1 { box-shadow: 0 1px 3px rgba(0,10,2,0.06); }
+  .elev.e2 { box-shadow: 0 8px 24px rgba(0,10,2,0.10); }
+
+  /* Layout */
+  .layout-demo { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+  .layout-demo .col { background: #e7e9eb; border-radius: 6px; grid-column: span 3; height: 72px; display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 12px; color: var(--sub); }
+  .layout-demo .main { grid-column: span 8; }
+  .layout-demo .side { grid-column: span 4; background: #eef0f2; }
+
+  footer { padding: 44px 48px; color: var(--sub); font-family: var(--font-en); font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="logo">CINRA</div>
+  <nav>
+    <a href="#">Latest</a><a href="#">Music</a><a href="#">Movie</a><a href="#">Art</a><a href="#">Interview</a><a href="#">Job</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="section">
+    <div class="section-label">01 — Colors</div>
+    <h2 class="display">Palette</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#f4f5f6;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Background</div><div class="hex">#f4f5f6</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ffffff;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Surface</div><div class="hex">#ffffff</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#000a02"></div><div class="meta"><div class="name">Text Base</div><div class="hex">#000a02</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#868788"></div><div class="meta"><div class="name">Text Sub</div><div class="hex">#868788</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f12b00"></div><div class="meta"><div class="name">Series Red</div><div class="hex">#f12b00</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#224b8f"></div><div class="meta"><div class="name">Link Navy</div><div class="hex">#224b8f</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#f5ea68"></div><div class="meta"><div class="name">Underline</div><div class="hex">#f5ea68</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#50b478"></div><div class="meta"><div class="name">Job Green</div><div class="hex">#50b478</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">02 — Typography（letter-spacing: normal / 本文 line-height 1.78）</div>
+    <div class="type-row"><div class="tag">Display EN 48 / 700</div><div class="t-display">Newsletter</div></div>
+    <div class="type-row"><div class="tag">Section EN 28 / 700</div><div class="t-section">Playlist</div></div>
+    <div class="type-row"><div class="tag">Feature JP 30 / 700</div><div class="t-feature">編集部が選ぶ、今月のカルチャー</div></div>
+    <div class="type-row"><div class="tag">Title JP 22 / 700</div><div class="t-title">ユニクロが「映画」を選ぶ理由</div></div>
+    <div class="type-row"><div class="tag">Series 18 / 700 赤橙</div><div class="t-series">連載『どこだよここは、だれだよおまえ』</div></div>
+    <div class="type-row"><div class="tag">Body JP 18 / 1.78</div><div class="t-body">芸術文化をルーツとする私たちは、クリエイティブな意思を社会へ届けるためのメディアと事業を営んでいます。</div></div>
+    <div class="type-row"><div class="tag">Meta 12 / gray</div><div class="t-meta">2026.07.15 ｜ by CINRA編集部</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">03 — Article</div>
+    <div class="prose">
+      <div class="series">連載：カルチャーの現在地</div>
+      <h3><span class="mark">「制裁は生活を致命的に変える」</span>。映画が映す、日常の手触り</h3>
+      <div class="byline">2026.07.10 ｜ by CINRA編集部</div>
+      <p>芸術文化をルーツとする CINRA は、音楽・映画・アート・演劇といった領域を横断しながら、つくり手の意思と作品の背景を丁寧に伝えてきました。ニュースや批評、インタビューを通じて、いま何が生まれつつあるのかを読者へ届けます。</p>
+      <p>関連する特集は<a href="#">こちらの一覧</a>から。編集部が選ぶ注目作を、毎週更新しています。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">04 — Buttons &amp; Tags（アウトラインピル radius 24 / タグ radius 5）</div>
+    <div class="btns" style="margin-bottom:24px">
+      <button class="btn btn-pill">記事一覧をみる</button>
+      <button class="btn btn-pill">もっとみる</button>
+      <button class="btn btn-pill">すべての連載をみる</button>
+    </div>
+    <div class="tags">
+      <span class="tag-chip">#Music</span><span class="tag-chip">#Movie,Drama</span><span class="tag-chip">#interview</span><span class="tag-chip">#column</span><span class="tag-chip">#Art,Design</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">05 — Cards</div>
+    <div class="cards">
+      <div class="card"><div class="ph"></div><div class="body"><div class="series">Interview</div><div class="title">映画監督が語る、余白のある物語のつくり方</div><div class="meta">2026.07.15 ｜ by CINRA編集部</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="series">Music</div><div class="title">新譜レビュー：静けさの中で鳴る音</div><div class="meta">2026.07.14 ｜ by ISO</div></div></div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="series">Art,Design</div><div class="title">展覧会レポート：都市と記憶をめぐる</div><div class="meta">2026.07.12 ｜ by CINRA編集部</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">06 — Forms</div>
+    <div class="field"><label>メールアドレス</label><input type="email" placeholder="you@example.com"></div>
+    <div class="field"><label>お名前</label><input type="text" value="山田 花子"></div>
+    <div class="field err"><label>郵便番号</label><input type="text" value="000"><div class="msg">郵便番号を正しく入力してください</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">07 — Elevation</div>
+    <div class="elevs">
+      <div class="elev">Level 0 · Flat</div>
+      <div class="elev e1">Level 1 · Hover</div>
+      <div class="elev e2">Level 2 · Overlay</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">08 — Layout · Main + Sidebar</div>
+    <div class="layout-demo">
+      <div class="col main">Main 8</div><div class="col side">Sidebar 4</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>CINRA (シンラ) — Design System Preview · 代替フォント: DM Sans + Noto Sans JP（システムゴシック → Noto Sans JP）</footer>
+
+</body>
+</html>
