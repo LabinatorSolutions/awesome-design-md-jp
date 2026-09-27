@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 大林組（OBAYASHI）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<!-- 実サイトと同じ約物サブセット（YakuHanJPs）を CDN から読む。スタックの先頭に置くのが実装の要 -->
+<link href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.1.1/dist/css/yakuhanjp_s.min.css" rel="stylesheet">
+<style>
+  :root {
+    /* === Design Tokens ===
+       実サイトの :root（index.css）にある自社変数は 14 個。うち Swiper 由来の 2 個は除いた。
+       main.css には変数が無く、色はベタ書き。2026-09-27 実測 */
+
+    /* Color — 括弧内は実測の可視要素数（トップ + /company/philosophy.html の合計） */
+    --main-text-color:    #272727;  /* --main-text-color。文字 94 要素。純黒は使わない */
+    --notice-text-color:  #666666;  /* 注記・黒ボタンのホバー。文字 46 要素 */
+    --news-tab-text-color:#767676;  /* ニュースのタブ。文字 4 要素 */
+    --text-on-dark:       #d5d5d5;  /* ★フッターの文字。白ではない。126 要素 */
+    --white:              #ffffff;
+    --bg:                 #ffffff;  /* ページ背景。html/body は transparent で、
+                                       pageBackground.resolved はヒーローの色を返すので信用しない */
+    --border:             #cad0d5;  /* 罫線。CSS 全文で 37 回。最頻の線色 */
+    --surface-badge:      #eff0f2;  /* ニュース種別バッジの面。30 要素 */
+    --surface-notice:     #f1f2f4;  /* --important-notice-background */
+    --footer-bg:          #565656;  /* フッター全面 */
+    --basic-button-hover-color:       #d6dade;
+    --basic-button-black-hover-color: #666666;
+
+    /* コーポレートグリーン。★静止状態では可視 0 要素。
+       ナビ項目の ::before（height:1px / opacity:0）としてのみ存在する */
+    --corporate-green: #018A0E;
+
+    /* News カテゴリ色（文字色として使う。面は種別で変えない） */
+    --news-press-release:  #cc3d2e;
+    --news-ir:             #255aa5;
+    --news-sustainability: #3e8f79;
+    --news-others:         #e68e43;
+
+    /* Fonts — YakuHanJPs（約物サブセット）を必ず先頭に置く。
+       実サイトの 2 番目は MyYuGothicM（游ゴシック Medium の別名・local() のみ）。
+       ローカルに游ゴシックが無い環境では status:error になり、次のヒラギノへ落ちる。
+       ここでは撮影環境で再現するため Noto Sans JP を代替に置いている（実サイトには無い）。 */
+    --font: YakuHanJPs, "MyYuGothicM", "游ゴシック Medium", "Yu Gothic Medium",
+            "游ゴシック体", YuGothic, "Noto Sans JP",
+            "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",
+            "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    --font-en: Roboto, sans-serif;   /* --en-font-family */
+
+    /* Size — px を 16 で割って小数 2 桁に丸めた rem。実測が半端になるのはこのため。
+       CSS 出現回数: 0.88rem 66 / 0.75rem 36 / 1rem 35 / 0.82rem 32 / 1.13rem 23 */
+    --fs-meta: 0.82rem;   /* 13.12px */
+    --fs-nav:  0.88rem;   /* 14.08px */
+    --fs-body: 1rem;      /* 16px */
+    --fs-h2:   1.25rem;   /* 20px */
+    --fs-h1:   1.75rem;   /* 28px */
+    --fs-page: 2.38rem;   /* 38.08px */
+
+    /* Line height — 1.7 が既定（113 要素）、本文だけ 1.8（21 要素） */
+    --lh-base: 1.7;
+    --lh-body: 1.8;
+    --lh-card: 1.5;
+    --lh-head: 1.6;
+
+    /* Radius / Shadow — 実測 2 ページで 0 種類ずつ。値を持たないこと自体が仕様 */
+    --radius: 0;
+
+    --hover-scale-value: 1.05;
+    --hover-scale-transition: scale 0.35s ease-out;
+
+    --container: 1240px;
+    --container-read: 800px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    /* ★実サイトは html と body の両方に font-family を書いている */
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background: var(--bg);
+    color: var(--main-text-color);
+    font-size: var(--fs-body);
+    font-weight: 400;
+    line-height: var(--lh-base);
+    /* ★letter-spacing は書かない。実測 353 要素中 346 要素が normal。
+       詰まって見えるのは YakuHanJPs が約物だけを詰めているから */
+  }
+
+  code { font-family: var(--font-en); font-size: .88em; background: var(--surface-badge);
+         padding: 1px 5px; border-radius: var(--radius); }
+  b { font-weight: 700; }
+
+  /* ---------- header ---------- */
+  .header { position: sticky; top: 0; z-index: 10; background: var(--white);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 24px; padding: 20px 30px; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: 40px; height: 32px; position: relative; }
+  .logo-mark::before { content: ""; position: absolute; left: 0; top: 0; width: 0; height: 0;
+                       border-left: 20px solid transparent; border-right: 20px solid transparent;
+                       border-bottom: 13px solid #7f9dbe; }
+  .logo-mark::after  { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 0;
+                       border-left: 20px solid transparent; border-right: 20px solid transparent;
+                       border-top: 17px solid var(--corporate-green); }
+  .logo-text { display: flex; flex-direction: column; gap: 2px; }
+  .logo-tag { font-size: .63rem; line-height: 1.4; color: var(--notice-text-color); }
+  .logo-name { font-size: 1.75rem; font-weight: 700; line-height: 1; }
+  .header-nav { margin-left: auto; display: flex; align-items: center; gap: 26px; }
+  .header-nav a { color: var(--main-text-color); text-decoration: none;
+                  font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-base);
+                  position: relative; padding-bottom: 6px; }
+  /* ★ブランドグリーンはここにしか出てこない。1px の下線・右から引く */
+  .header-nav a::before { content: ""; position: absolute; left: 0; bottom: 4px;
+                          width: 100%; height: 1px; background: var(--corporate-green);
+                          opacity: 0; transform-origin: right center;
+                          transition: opacity .3s linear; }
+  .header-nav a.is-current::before, .header-nav a:hover::before { opacity: 1; }
+
+  /* ---------- sections ---------- */
+  .section { max-width: var(--container); margin: 0 auto; padding: 72px 30px; }
+  .section-alt { background: var(--surface-notice); }
+  .section-label { font-family: var(--font-en); font-size: var(--fs-nav); font-weight: 700;
+                   color: var(--notice-text-color); margin-bottom: 8px; }
+  .section-title { font-size: var(--fs-h1); font-weight: 700; line-height: var(--lh-head);
+                   margin-bottom: 12px; }
+  .section-lead { font-size: var(--fs-body); line-height: var(--lh-body);
+                  max-width: var(--container-read); margin-bottom: 32px; }
+
+  .note { border-left: 3px solid var(--corporate-green); background: var(--surface-badge);
+          padding: 14px 18px; border-radius: var(--radius);
+          font-size: var(--fs-nav); line-height: var(--lh-base); margin-top: 26px; }
+
+  /* ---------- 01 colors ---------- */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .swatch-chip { height: 74px; }
+  .swatch-body { padding: 12px 14px; }
+  .swatch-name { font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-card); }
+  .swatch-hex  { font-family: var(--font-en); font-size: var(--fs-meta);
+                 color: var(--notice-text-color); line-height: var(--lh-card); }
+  .swatch-use  { font-size: 0.75rem; line-height: var(--lh-card);
+                 color: var(--notice-text-color); margin-top: 6px; }
+
+  /* ---------- 02 typography ---------- */
+  .type-row { border-top: 1px solid var(--border); padding: 22px 0;
+              display: grid; grid-template-columns: 240px 1fr; gap: 28px; align-items: baseline; }
+  .type-row:last-child { border-bottom: 1px solid var(--border); }
+  .type-meta { font-family: var(--font-en); font-size: 0.75rem; line-height: var(--lh-head);
+               color: var(--notice-text-color); }
+  .t-en    { font-family: var(--font-en); font-size: 70px; font-weight: 700; line-height: 1.31; }
+  .t-page  { font-size: var(--fs-page); font-weight: 400; line-height: var(--lh-head); }
+  .t-hero  { font-size: var(--fs-h1); font-weight: 400; line-height: var(--lh-card);
+             letter-spacing: 0.01em; }   /* ★サイト唯一の字間。7 要素だけ */
+  .t-h1    { font-size: var(--fs-h1); font-weight: 700; line-height: var(--lh-head); }
+  .t-h2    { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-head); }
+  .t-body  { font-size: var(--fs-body); font-weight: 400; line-height: var(--lh-body); }
+  .t-nav   { font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-base); }
+  .t-meta  { font-size: var(--fs-meta); font-weight: 400; line-height: var(--lh-base); }
+  .t-small { font-size: 0.75rem; font-weight: 400; line-height: var(--lh-base); }
+
+  .yaku-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 30px; }
+  .yaku-box { border: 1px solid var(--border); padding: 20px 22px; }
+  .yaku-box .lbl { font-family: var(--font-en); font-size: 0.75rem;
+                   color: var(--notice-text-color); margin-bottom: 8px; }
+  .yaku-on  { font-family: var(--font); font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-head); }
+  .yaku-off { font-family: "Noto Sans JP", sans-serif; font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-head); }
+
+  /* ---------- 03 doc ---------- */
+  .doc { max-width: var(--container-read); }
+  .doc h3 { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-head); margin-bottom: 14px; }
+  .doc p  { font-size: var(--fs-body); line-height: var(--lh-body); margin-bottom: 20px; }
+  .doc ul { list-style: none; margin-bottom: 20px; }
+  .doc li { font-size: var(--fs-body); line-height: var(--lh-body);
+            padding: 6px 0 6px 20px; position: relative; }
+  .doc li::before { content: ""; position: absolute; left: 2px; top: 17px;
+                    width: 6px; height: 6px; background: var(--main-text-color); }
+  .doc-lead { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+              padding: 24px 0; margin-bottom: 26px; }
+
+  /* ---------- 04 buttons ---------- */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 26px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center;
+         font-family: var(--font); font-size: var(--fs-nav); font-weight: 700;
+         line-height: 1; text-decoration: none; cursor: pointer;
+         border-radius: var(--radius); padding: 16px 28px; transition: background-color .3s linear; }
+  .btn-basic  { background: var(--white); color: var(--main-text-color); border: 1px solid var(--border); }
+  .btn-basic:hover { background: var(--basic-button-hover-color); }
+  .btn-black  { background: var(--main-text-color); color: var(--white); border: 1px solid var(--main-text-color); }
+  .btn-black:hover { background: var(--basic-button-black-hover-color); }
+  .btn-hover-basic { background: var(--basic-button-hover-color); color: var(--main-text-color);
+                     border: 1px solid var(--border); }
+  .btn-hover-black { background: var(--basic-button-black-hover-color); color: var(--white);
+                     border: 1px solid var(--basic-button-black-hover-color); }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  /* ★バッジの面と文字は種別を問わず共通。種別色は左端 4px の帯にだけ塗る */
+  .badge { display: inline-grid; place-items: center; position: relative;
+           background: var(--surface-badge); color: var(--main-text-color);
+           border-radius: var(--radius); min-height: 21px;
+           font-size: 0.6875rem; font-weight: 700; line-height: 1.7; padding: 2px 12px 2px 16px; }
+  .badge::before { content: ""; position: absolute; top: 0; left: 0;
+                   width: 4px; height: 100%; background: var(--main-text-color); }
+  .badge.is-press::before { background: var(--news-press-release); }
+  .badge.is-ir::before    { background: var(--news-ir); }
+  .badge.is-sus::before   { background: var(--news-sustainability); }
+  .badge.is-oth::before   { background: var(--news-others); }
+  /* 暗い面のニュース一覧で使う別バリアント */
+  .badge-dark { display: inline-grid; place-items: center; position: relative;
+                background: #585858; color: var(--white); border-radius: var(--radius);
+                width: 190px; min-height: 20px;
+                font-size: 0.75rem; font-weight: 700; line-height: 1.7; }
+  .badge-dark::before { content: ""; position: absolute; top: 0; left: 0;
+                        width: 5px; height: 100%; background: var(--white); }
+  .badge-dark.is-press::before { background: var(--news-press-release); }
+  .badge-dark.is-ir::before    { background: var(--news-ir); }
+  .badge-dark.is-sus::before   { background: var(--news-sustainability); }
+  .dark-news { background: var(--main-text-color); padding: 26px 30px; margin-top: 26px;
+               display: flex; gap: 26px; flex-wrap: wrap; }
+  .dark-news .t { color: var(--white); font-size: var(--fs-nav); font-weight: 700;
+                  line-height: var(--lh-base); margin-top: 8px; }
+  .news-line { display: flex; align-items: baseline; gap: 16px;
+               border-bottom: 1px solid var(--border); padding: 16px 0; }
+  .news-date { font-family: var(--font-en); font-size: var(--fs-meta); color: var(--news-tab-text-color); }
+  .news-ttl  { font-size: var(--fs-nav); font-weight: 700; text-decoration: underline; }
+
+  /* ---------- 05 cards ---------- */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 30px; }
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: none;
+          text-decoration: none; color: inherit; display: block; }
+  .card-thumb { height: 150px; overflow: hidden; }
+  .card-thumb span { display: block; width: 100%; height: 100%;
+                     transition: var(--hover-scale-transition); }
+  .card:hover .card-thumb span { scale: var(--hover-scale-value); }
+  .card-body  { padding: 16px 0 0; }
+  .card-title { font-size: var(--fs-h1); font-weight: 400; line-height: var(--lh-card);
+                letter-spacing: 0.01em; margin-bottom: 8px; }
+  .card-desc  { font-size: var(--fs-nav); line-height: var(--lh-base); color: var(--notice-text-color); }
+
+  .cat-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px 40px; margin-top: 34px; }
+  .cat { border-top: 1px solid var(--border); padding-top: 14px; }
+  .cat-name { font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-base); }
+  .cat-hex  { font-family: var(--font-en); font-size: 0.75rem; color: var(--notice-text-color); }
+
+  /* ---------- 06 forms ---------- */
+  .form { max-width: 540px; display: grid; gap: 22px; }
+  .field-label { font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-base);
+                 margin-bottom: 7px; display: block; }
+  .field { width: 100%; font-family: var(--font); font-size: var(--fs-body);
+           line-height: var(--lh-card); color: var(--main-text-color);
+           background: var(--white); border: 1px solid var(--border);
+           border-radius: var(--radius); padding: 12px 14px; }
+  .field::placeholder { color: var(--news-tab-text-color); }
+  .field.is-focus { border-color: var(--main-text-color); outline: none;
+                    box-shadow: 0 0 2px 3px rgba(0,0,0,.2); }  /* CSS 全文で唯一の box-shadow */
+  .field-hint { font-size: 0.75rem; line-height: var(--lh-base);
+                color: var(--notice-text-color); margin-top: 6px; }
+
+  /* ---------- 07 elevation ---------- */
+  .elev-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 340px)); gap: 24px; }
+  .elev { background: var(--white); border: 1px solid var(--border);
+          border-radius: var(--radius); padding: 22px; }
+  .elev-name { font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-base); }
+  .elev-val  { font-family: var(--font-en); font-size: 0.75rem;
+               color: var(--notice-text-color); line-height: var(--lh-head); margin-top: 4px; }
+
+  /* ---------- 08 layout ---------- */
+  .layout-demo { border: 1px solid var(--border); overflow: hidden; }
+  .layout-band { background: var(--surface-badge); text-align: center; font-family: var(--font-en);
+                 font-size: 0.75rem; color: var(--notice-text-color); padding: 7px; }
+  .layout-inner { max-width: 1240px; margin: 0 auto; background: var(--surface-notice);
+                  border-left: 1px dashed var(--border); border-right: 1px dashed var(--border);
+                  padding: 26px 20px; text-align: center; font-size: var(--fs-nav); }
+  .layout-read  { max-width: 800px; margin: 12px auto 0; background: var(--white);
+                  border: 1px dashed var(--border); padding: 18px 20px;
+                  text-align: center; font-size: var(--fs-nav); }
+  .bp-table { width: 100%; border-collapse: collapse; margin-top: 22px; }
+  .bp-table th, .bp-table td { border-bottom: 1px solid var(--border);
+                               padding: 10px 12px; text-align: left;
+                               font-size: var(--fs-nav); line-height: var(--lh-base); }
+  .bp-table th { font-weight: 700; }
+  .bp-table td.num { font-family: var(--font-en); }
+
+  /* ---------- footer ---------- */
+  .footer { background: var(--footer-bg); color: var(--text-on-dark);
+            margin-top: 40px; padding: 48px 30px; border-bottom: 10px solid var(--footer-bg); }
+  .footer-inner { max-width: var(--container); margin: 0 auto;
+                  display: flex; gap: 60px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: var(--fs-nav); font-weight: 700; line-height: var(--lh-base); margin-bottom: 10px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { font-size: var(--fs-meta); line-height: var(--lh-body); }
+  .footer-note { font-size: 0.75rem; line-height: var(--lh-head); margin-top: 26px;
+                 max-width: var(--container); margin-left: auto; margin-right: auto; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <span class="logo-mark"></span>
+    <span class="logo-text">
+      <span class="logo-tag">MAKE BEYOND　つくるを拓く</span>
+      <span class="logo-name">大 林 組</span>
+    </span>
+  </div>
+  <nav class="header-nav">
+    <a class="is-current" href="#colors">事業</a>
+    <a href="#typography">実績</a>
+    <a href="#doc">技術・ソリューション</a>
+    <a href="#buttons">会社情報</a>
+    <a href="#cards">サステナビリティ</a>
+  </nav>
+</header>
+
+<!-- 01 COLORS -->
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">ブランド色は「塗る色」ではなく「引く線」</h2>
+  <p class="section-lead">
+    コーポレートグリーン <code>#018A0E</code> は CSS 全文で 21 回現れるが、<b>静止状態で描画される要素は 0 個</b>。
+    グローバルナビ項目の <code>::before</code>（<code>height: 1px</code> / <code>opacity: 0</code>）として仕込まれ、ホバーとカレント表示でだけ現れる。
+    上のナビ「事業」に引かれている 1px の緑線がそれ。面は <b>白・淡グレー・フッターの <code>#565656</code></b> しか使わない。
+  </p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#018A0E"></div><div class="swatch-body"><div class="swatch-name">Corporate Green</div><div class="swatch-hex">#018A0E</div><div class="swatch-use">★ ナビの 1px 下線のみ。面に塗らない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#272727"></div><div class="swatch-body"><div class="swatch-name">Main Text</div><div class="swatch-hex">#272727</div><div class="swatch-use">--main-text-color。文字 94 要素。純黒は使わない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#666666"></div><div class="swatch-body"><div class="swatch-name">Notice Text</div><div class="swatch-hex">#666666</div><div class="swatch-use">注記・黒ボタンのホバー。文字 46 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#767676"></div><div class="swatch-body"><div class="swatch-name">News Tab Text</div><div class="swatch-hex">#767676</div><div class="swatch-use">ニュースのタブ・日付</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#cad0d5"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#cad0d5</div><div class="swatch-use">罫線。CSS 全文で 37 回。最頻の線色</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eff0f2"></div><div class="swatch-body"><div class="swatch-name">Surface / Badge</div><div class="swatch-hex">#eff0f2</div><div class="swatch-use">ニュース種別バッジの面。30 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f1f2f4"></div><div class="swatch-body"><div class="swatch-name">Surface / Notice</div><div class="swatch-hex">#f1f2f4</div><div class="swatch-use">--important-notice-background</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d6dade"></div><div class="swatch-body"><div class="swatch-name">Button Hover</div><div class="swatch-hex">#d6dade</div><div class="swatch-use">--basic-button-hover-color</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#565656"></div><div class="swatch-body"><div class="swatch-name">Footer</div><div class="swatch-hex">#565656</div><div class="swatch-use">フッター全面。文字は #d5d5d5</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d5d5d5"></div><div class="swatch-body"><div class="swatch-name">Text on Dark</div><div class="swatch-hex">#d5d5d5</div><div class="swatch-use">★フッターの文字。白を置かない</div></div></div>
+  </div>
+
+  <div class="cat-list">
+    <div class="cat"><div class="cat-name" style="color:#cc3d2e">プレスリリース</div><div class="cat-hex">--news-press-release #cc3d2e</div></div>
+    <div class="cat"><div class="cat-name" style="color:#255aa5">株主・投資家情報</div><div class="cat-hex">--news-ir #255aa5</div></div>
+    <div class="cat"><div class="cat-name" style="color:#3e8f79">サステナビリティ</div><div class="cat-hex">--news-sustainability #3e8f79</div></div>
+    <div class="cat"><div class="cat-name" style="color:#e68e43">イベント情報</div><div class="cat-hex">--news-others #e68e43</div></div>
+  </div>
+
+  <p class="note">
+    <b>ニュースのカテゴリ色は文字にだけ使い、バッジの面は種別を問わず <code>#eff0f2</code> で共通。</b>
+    実測のバッジ面は <code>#eff0f2</code> が 30 要素あり、4 色のいずれも面色としては現れなかった。
+  </p>
+</section>
+
+<!-- 02 TYPOGRAPHY -->
+<div class="section-alt">
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">字間は書かない。詰めるのは約物だけ</h2>
+  <p class="section-lead">
+    スタックの先頭に <b>YakuHanJPs</b>（約物だけのサブセット書体）を置き、2 番目に <b>游ゴシック Medium の別名 <code>MyYuGothicM</code></b> を置く。
+    <code>letter-spacing</code> は実測 353 要素中 <b>346 要素が <code>normal</code></b>、<code>font-feature-settings</code> は <b>0 件</b>。
+    サイズはすべて rem だが、px を 16 で割って小数 2 桁に丸めているため <b>14.08px / 13.12px / 38.08px</b> という半端な実測値になる。
+  </p>
+
+  <div class="type-row"><div class="type-meta">EN Section Title<br>Roboto 70px / 700 / 1.31</div><div class="t-en">NEWS</div></div>
+  <div class="type-row"><div class="type-meta">Page Title<br>2.38rem = 38.08px / 400 / 1.6</div><div class="t-page">大林組基本理念</div></div>
+  <div class="type-row"><div class="type-meta">Hero Caption<br>1.75rem = 28px / 400 / 1.5 / ls .01em</div><div class="t-hero">JR長崎駅ビル</div></div>
+  <div class="type-row"><div class="type-meta">Heading 1<br>1.75rem = 28px / 700 / 1.6</div><div class="t-h1">「地球に優しい」リーディングカンパニー</div></div>
+  <div class="type-row"><div class="type-meta">Heading 2<br>1.25rem = 20px / 700 / 1.6</div><div class="t-h2">優れた技術による誠実なものづくり</div></div>
+  <div class="type-row"><div class="type-meta">Body<br>1rem = 16px / 400 / 1.8</div><div class="t-body">大林組がめざす姿、社会において果たすべき使命を示したものが「大林組基本理念」です。</div></div>
+  <div class="type-row"><div class="type-meta">Nav / List<br>0.88rem = 14.08px / 700 / 1.7</div><div class="t-nav">技術・ソリューション</div></div>
+  <div class="type-row"><div class="type-meta">Meta<br>0.82rem = 13.12px / 400 / 1.7</div><div class="t-meta">大林組公式ソーシャルメディアアカウント</div></div>
+  <div class="type-row"><div class="type-meta">Utility<br>0.75rem = 12px / 400 / 1.7</div><div class="t-small">このサイトについて／個人情報保護について</div></div>
+
+  <div class="yaku-demo">
+    <div class="yaku-box">
+      <div class="lbl">YakuHanJPs あり（実サイト）</div>
+      <div class="yaku-on">「技術・ソリューション」（土木）、および建築。</div>
+    </div>
+    <div class="yaku-box">
+      <div class="lbl">YakuHanJPs なし（比較）</div>
+      <div class="yaku-off">「技術・ソリューション」（土木）、および建築。</div>
+    </div>
+  </div>
+
+  <p class="note">
+    <b>詰めているのは約物（かっこ・句読点・中黒）だけで、かなと漢字の間は詰まらない。</b>
+    <code>palt</code> と違って OS やブラウザで結果が変わらない反面、<code>letter-spacing</code> を足すと約物が二重に詰まって崩れる。
+    <code>MyYuGothicM</code> の <code>@font-face</code> は <code>local()</code> だけで書かれており、游ゴシックが無い環境では <code>status: error</code> になってヒラギノへ落ちる。<b>これは意図どおりで、URL を足してはいけない。</b>
+  </p>
+</section>
+</div>
+
+<!-- 03 DOC -->
+<section class="section" id="doc">
+  <div class="section-label">03 / Article</div>
+  <h2 class="section-title">本文は 1rem / line-height 1.8、読み物は 800px</h2>
+  <div class="doc">
+    <div class="doc-lead">
+      <p style="margin:0">大林組がめざす姿、社会において果たすべき使命を示したものが「大林組基本理念」です。</p>
+    </div>
+    <h3>三箴（さんしん）</h3>
+    <p>
+      「良く、速く、廉く、しかも安全に」——創業以来受け継がれてきた言葉を、いまの事業のことばに置き換えて示しています。
+      本文は <code>1rem</code>（16px）／<code>line-height: 1.8</code>。ナビゲーションやリストの <code>1.7</code> より一段ゆるく組み、読み物であることを行間で示します。
+    </p>
+    <ul>
+      <li>優れた技術による誠実なものづくりを通じて、空間と環境の価値を高める</li>
+      <li>地球環境に配慮し、良き企業市民として社会の課題解決に貢献する</li>
+      <li>公正・透明な企業活動を徹底し、社会からの信頼に応える</li>
+    </ul>
+    <p>
+      箇条書きの行頭記号は円ではなく <b>6px の正方形</b>。このサイトは <code>border-radius</code> を持たないので、リストマーカーも角のままにします。
+    </p>
+  </div>
+</section>
+
+<!-- 04 BUTTONS -->
+<div class="section-alt">
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons &amp; Badges</div>
+  <h2 class="section-title">面で塗った CTA が無い</h2>
+  <p class="section-lead">
+    押せるものは「白地に <code>#cad0d5</code> の罫で囲む」か「<code>#272727</code> の黒面」の 2 種類だけ。
+    どちらも <code>border-radius: 0</code>、<code>box-shadow: none</code>。ホバーは色を <code>#d6dade</code> / <code>#666666</code> に差し替える。
+    ニュース種別のバッジは<b>面 <code>#eff0f2</code>・文字 <code>#272727</code> で共通</b>、種別色は <code>::before</code> の <b>左端 4px の帯</b>にだけ塗る。
+    暗い面では面が <code>#585858</code>・幅 190px・帯 5px の別バリアントになる。
+  </p>
+  <div class="btn-row">
+    <a class="btn btn-basic" href="#buttons">詳細を見る</a>
+    <a class="btn btn-hover-basic" href="#buttons">詳細を見る（hover）</a>
+    <a class="btn btn-black" href="#buttons">一覧へ</a>
+    <a class="btn btn-hover-black" href="#buttons">一覧へ（hover）</a>
+  </div>
+  <div class="badge-row">
+    <span class="badge is-press">プレスリリース</span>
+    <span class="badge is-ir">株主・投資家情報</span>
+    <span class="badge is-sus">サステナビリティ</span>
+    <span class="badge is-oth">イベント情報</span>
+    <span class="badge">会社情報</span>
+  </div>
+  <div style="max-width:800px;margin-top:30px">
+    <div class="news-line"><span class="news-date">2026.09.24</span><span class="badge is-ir">株主・投資家情報</span><a class="news-ttl" href="#buttons" style="color:#272727">2027年3月期 第2四半期決算説明会の開催について</a></div>
+    <div class="news-line"><span class="news-date">2026.09.18</span><span class="badge is-sus">サステナビリティ</span><a class="news-ttl" href="#buttons" style="color:#272727">建設現場の再生可能エネルギー転換を全支店へ拡大</a></div>
+    <div class="news-line"><span class="news-date">2026.09.05</span><span class="badge is-press">プレスリリース</span><a class="news-ttl" href="#buttons" style="color:#272727">自動搬送ロボットの実証を大規模物流施設で開始</a></div>
+  </div>
+  <div class="dark-news">
+    <div><span class="badge-dark is-press">プレスリリース</span><div class="t">自動搬送ロボットの実証を開始</div></div>
+    <div><span class="badge-dark is-ir">株主・投資家情報</span><div class="t">第2四半期決算説明会の開催について</div></div>
+    <div><span class="badge-dark is-sus">サステナビリティ</span><div class="t">再生可能エネルギー転換を全支店へ</div></div>
+  </div>
+</section>
+</div>
+
+<!-- 05 CARDS -->
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">ホバーは色ではなく 1.05 倍の拡大で示す</h2>
+  <p class="section-lead">
+    カードは枠も影も持たず、写真とテキストだけ。<code>--hover-scale-value: 1.05</code> と <code>--hover-scale-transition: scale 0.35s ease-out</code> が変数化されており、
+    <b>ホバーで写真だけが拡大する</b>（カード全体の色は変わらない）。カード見出しは実績名なので <code>1.75rem / 400 / line-height 1.5 / letter-spacing .01em</code>。
+  </p>
+  <div class="card-grid">
+    <a class="card" href="#cards"><div class="card-thumb"><span style="background:linear-gradient(140deg,#3b4a5c,#8ea3b8)"></span></div><div class="card-body"><div class="card-title">JR長崎駅ビル</div><div class="card-desc">駅と街をひとつづきにする、長崎の新しい玄関口</div></div></a>
+    <a class="card" href="#cards"><div class="card-thumb"><span style="background:linear-gradient(140deg,#5c5347,#b3a48f)"></span></div><div class="card-body"><div class="card-title">GLION ARENA KOBE</div><div class="card-desc">海に開いたアリーナ。ウォーターフロントの再生</div></div></a>
+    <a class="card" href="#cards"><div class="card-thumb"><span style="background:linear-gradient(140deg,#46584a,#9fb39c)"></span></div><div class="card-body"><div class="card-title">ジャムナ鉄道橋</div><div class="card-desc">バングラデシュ。全長4.8kmの複線鉄道専用橋</div></div></a>
+  </div>
+</section>
+
+<!-- 06 FORMS -->
+<div class="section-alt">
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">入力欄も角のまま</h2>
+  <div class="form">
+    <div>
+      <label class="field-label">お名前</label>
+      <input class="field" type="text" placeholder="大林 太郎">
+      <div class="field-hint">全角でご入力ください</div>
+    </div>
+    <div>
+      <label class="field-label">メールアドレス（フォーカス状態）</label>
+      <input class="field is-focus" type="text" value="taro@example.co.jp">
+      <div class="field-hint">CSS 全文で唯一の box-shadow <code>0 0 2px 3px rgba(0,0,0,.2)</code> がフォーカスリングに使われている</div>
+    </div>
+    <div>
+      <label class="field-label">お問い合わせ内容</label>
+      <input class="field" type="text" placeholder="ご用件をご記入ください">
+    </div>
+    <div class="btn-row" style="margin:0">
+      <button class="btn btn-black" type="button">送信する</button>
+      <button class="btn btn-basic" type="button">戻る</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 07 ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-label">07 / Depth &amp; Elevation</div>
+  <h2 class="section-title">影は無い。奥行きは罫線と明度差で作る</h2>
+  <p class="section-lead">
+    実測 2 ページで <code>box-shadow</code> は <b>0 種類</b>、<code>border-radius</code> も <b>0 種類</b>。
+    段差は <code>#cad0d5</code> の 1px 罫と、<code>#ffffff</code> → <code>#eff0f2</code> → <code>#f1f2f4</code> → <code>#565656</code> という面の明度差だけで表す。
+  </p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0 — すべての要素</div><div class="elev-val">box-shadow: none / border-radius: 0</div></div>
+    <div class="elev" style="background:var(--surface-badge);border-color:transparent"><div class="elev-name">面の明度差で段を作る</div><div class="elev-val">#ffffff → #eff0f2 → #f1f2f4</div></div>
+  </div>
+</section>
+
+<!-- 08 LAYOUT -->
+<div class="section-alt">
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout &amp; Responsive</div>
+  <h2 class="section-title">標準 1240px、読み物 800px</h2>
+  <div class="layout-demo">
+    <div class="layout-band">viewport</div>
+    <div class="layout-inner">
+      max-width: 1240px（標準コンテンツ・実測 8 要素）
+      <div class="layout-read">max-width: 800px（理念・本文などの読み物）</div>
+    </div>
+  </div>
+  <table class="bp-table">
+    <tr><th>Query</th><th>出現</th><th>用途</th></tr>
+    <tr><td class="num">only screen and (max-width: 767px)</td><td class="num">58</td><td>モバイル。主要な切り替え点</td></tr>
+    <tr><td class="num">only screen and (max-width: 1060px)</td><td class="num">10</td><td>タブレット／小型ノート</td></tr>
+    <tr><td class="num">only screen and (min-width: 768px)</td><td class="num">5</td><td>モバイル以上</td></tr>
+    <tr><td class="num">only screen and (max-width: 1150px)</td><td class="num">3</td><td>ナビの折り返し</td></tr>
+    <tr><td class="num">(-ms-high-contrast: none)</td><td class="num">3</td><td>IE 向けにフォントスタックを差し替える</td></tr>
+    <tr><td class="num">(max-height: 760px) and (min-width: 1000px)</td><td class="num">1</td><td>★高さで切り替える唯一の分岐（ヒーローの高さ）</td></tr>
+  </table>
+  <p class="note">
+    <b>デスクトップファースト（max-width 主体）。</b>余白は <code>%</code> と <code>em</code> で持っているため、ブレークポイントを跨いでも自動で縮む。
+    見出しだけ rem を下げる（<code>1.75rem</code> → <code>1.375rem</code>、<code>1.25rem</code> → <code>1.13rem</code>）。
+  </p>
+</section>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>事業</h4>
+      <ul><li>国内建設事業（建築）</li><li>国内建設事業（土木）</li><li>海外建設事業</li><li>エンジニアリング事業</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>会社情報</h4>
+      <ul><li>ごあいさつ</li><li>大林組基本理念</li><li>中期経営計画</li><li>沿革</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>サステナビリティ</h4>
+      <ul><li>環境</li><li>社会</li><li>ガバナンス</li></ul>
+    </div>
+  </div>
+  <div class="footer-note">
+    フッターの文字色は <code style="background:#6d6d6c;color:#d5d5d5">#d5d5d5</code>。白ではなく薄いグレーを置くのがこのサイトの流儀（実測 126 要素）。
+  </div>
+</footer>
+
+</body>
+</html>

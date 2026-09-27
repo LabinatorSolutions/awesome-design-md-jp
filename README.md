@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (526 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (529 sites)</a>
 </p>
 
 <table>
@@ -806,6 +806,11 @@
 </tr>
 <tr>
 <td align="center"><strong>野村不動産</strong><br><img src="design-md/nomura-re/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大林組</strong><br><img src="design-md/obayashi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>及源鋳造</strong><br><img src="design-md/oigen/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>大倉陶園</strong><br><img src="design-md/okura-touen/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1393,11 +1398,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [奈良国立博物館 (Nara National Museum)](https://www.narahaku.go.jp/) | Museum / Culture | [DESIGN.md](design-md/narahaku/DESIGN.md) | [preview.html](design-md/narahaku/preview.html) |
 | [ニッカウヰスキー (NIKKA WHISKY)](https://www.nikka.com/) | Beverage / Whisky | [DESIGN.md](design-md/nikka/DESIGN.md) | [preview.html](design-md/nikka/preview.html) |
 | [野村不動産 (NOMURA REAL ESTATE)](https://www.nomura-re.co.jp/) | Real Estate / Corporate | [DESIGN.md](design-md/nomura-re/DESIGN.md) | [preview.html](design-md/nomura-re/preview.html) |
+| [大林組 (OBAYASHI)](https://www.obayashi.co.jp/) | Construction / Corporate | [DESIGN.md](design-md/obayashi/DESIGN.md) | [preview.html](design-md/obayashi/preview.html) |
+| [及源鋳造 (OIGEN)](https://oigen.jp/) | Craft / Cast Iron | [DESIGN.md](design-md/oigen/DESIGN.md) | [preview.html](design-md/oigen/preview.html) |
+| [大倉陶園 (OKURA ART CHINA)](https://www.okuratouen.co.jp/) | Porcelain / Tableware | [DESIGN.md](design-md/okura-touen/DESIGN.md) | [preview.html](design-md/okura-touen/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (526 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (529 sites)</a>
 </p>
 
 <table>
@@ -2169,6 +2177,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>野村不動産</strong><br><img src="design-md/nomura-re/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大林組</strong><br><img src="design-md/obayashi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>及源鋳造</strong><br><img src="design-md/oigen/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>大倉陶園</strong><br><img src="design-md/okura-touen/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

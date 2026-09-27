@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 大倉陶園（OKURA ART CHINA）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトと同じ URL。400 と 500 を取りに行っているが、500 を当てている要素は 1 つも無く
+     document.fonts でも unloaded。実際に描画されるのは 400 だけ -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Design Tokens ===
+       ★実サイトに CSS Custom Properties は 1 個も無い（styles.css に色をベタ書き）。
+       以下は実測値と CSS の出現回数から起こしたもの。2026-09-27 実測 */
+
+    /* Color — 括弧内は 2 ページ合計の可視要素数 */
+    --navy:        #24315a;  /* ★オークラの紺。文字 67 要素 / 面 10 要素。CSS 全文で 30 回 */
+    --gold:        #af8c55;  /* ★金。欧文サブタイトルと店舗ラベル。文字 17 要素。CSS 全文で 4 回 */
+    --navy-hover:  #656e8b;  /* 紺を薄めた中間色。CSS 全文で 15 回 */
+    --navy-dark:   #152453;  /* CSS 全文で 1 回 */
+    --text:        #333333;  /* .l-page の color。本文 */
+    --text-muted:  #666666;  /* 日付 */
+    --border:      #dedede;  /* ニュース項目の区切り */
+    --border-light:#dbdbdb;  /* 表・区切り。CSS 全文で 10 回 */
+    --surface-bc:  #f2f3f5;  /* パンくず帯 */
+    --surface-in:  #eeeeee;  /* 入力欄の面 */
+    --surface-fc:  #eaedf4;  /* 入力欄のフォーカス（紺寄りの淡色） */
+    --error:       #e74f4f;
+    --white:       #ffffff;
+    --bg:          #ffffff;  /* ページ背景（根拠 body） */
+
+    /* Fonts — ★body ではなくラッパ要素（.l-page）に 1 回だけ書く。
+       実サイトの body は font-family 未指定で、computed は
+       ブラウザの日本語既定（"Hiragino Kaku Gothic ProN"）が返るだけ */
+    --font: "Noto Serif JP", serif;
+
+    /* Size — すべて em。基準は .l-page の 16px */
+    --fs-hero:    2.5em;      /* 40px — ヒーローのコピー */
+    --fs-page:    2.125em;    /* 34px — ページタイトル */
+    --fs-section: 1.875em;    /* 30px — セクション見出し（和文） */
+    --fs-h2:      1.625em;    /* 26px — 本文中の h2 */
+    --fs-dir:     1.25em;     /* 20px — ディレクトリ見出し */
+    --fs-body:    1em;        /* 16px — 本文 */
+    --fs-nav:     .875em;     /* 14px — ナビ・ボタン・欧文サブタイトル */
+    --fs-label:   .8125em;    /* 13px — ニュースラベル */
+    --fs-sub:     .6em;       /* 12px — 店舗カードの欧文 */
+    --fs-scroll:  .625em;     /* 10px — SCROLL */
+
+    /* Line height — ★1.73。1.7 や 1.75 に丸めない */
+    --lh-base: 1.73;
+    --lh-tight: 1;            /* 見出し・欧文サブタイトル */
+    --lh-label: 2;            /* ニュースラベル */
+
+    /* Letter spacing — 本文は normal。字空けを使うのは 3 箇所だけ */
+    --ls-hero: .1em;          /* ヒーローのコピー（40px → 4px）。サイト全体で 1 要素 */
+    --ls-sub:  .05em;         /* 欧文サブタイトル（14px → 0.7px） */
+
+    --radius: 0;
+    --container: 1236px;      /* ★コンテナ幅とブレークポイントを兼ねる */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body { background: var(--bg); }
+
+  /* ★書体・本文色・行間はページのラッパに 1 回だけ書く（実サイトの .l-page） */
+  .l-page {
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: normal;      /* ★400 だけ。太字は一切使わない */
+    line-height: var(--lh-base);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code { font-family: SFMono-Regular, Consolas, Menlo, monospace; font-size: .85em;
+         background: var(--surface-bc); padding: 1px 5px; border-radius: var(--radius); }
+  /* ★このサイトに太字は無い。強調は太さではなく紺で示す */
+  b, strong { font-weight: 400; color: var(--navy); }
+
+  /* ---------- header ---------- */
+  .l-header { background-color: var(--white); display: flex; justify-content: space-between;
+              width: 100%; border-bottom: 1px solid var(--border-light);
+              position: sticky; top: 0; z-index: 10; }
+  .l-header__nav { align-items: center; display: flex; padding: 0 1.5em;
+                   position: relative; width: calc(100% - 100px); gap: 2em; }
+  .l-header__logo { margin-right: 3.25em; display: flex; align-items: center; gap: .6em; }
+  .l-header__logo .mark { width: 34px; height: 34px; border: 1px solid var(--navy);
+                          border-radius: 50%; display: flex; align-items: center;
+                          justify-content: center; font-size: .5em; color: var(--navy);
+                          letter-spacing: .05em; }
+  .l-header__logo .name { color: var(--navy); font-size: 1.5em; letter-spacing: .3em; }
+  .l-header__nav a { color: var(--navy); text-decoration: none; font-size: var(--fs-nav); }
+  .l-header__cart { width: 100px; }
+  .l-header__cart a { align-items: center; background-color: var(--navy); display: flex;
+                      height: 70px; justify-content: center; transition: background-color .4s ease;
+                      text-decoration: none; }
+  .l-header__cart a span { color: var(--white); font-size: .6875em; text-align: center; }
+  .l-header__cart a:hover { background-color: var(--navy-hover); }
+
+  /* ---------- breadcrumbs ---------- */
+  .l-breadcrumbs { background-color: var(--surface-bc); padding: .6em 1.5em; }
+  .l-breadcrumbs__list { display: flex; max-width: var(--container); margin: 0 auto;
+                         gap: .8em; font-size: .8125em; line-height: var(--lh-tight); }
+  .l-breadcrumbs__list span { color: var(--text-muted); }
+
+  /* ---------- sections ---------- */
+  .c-inner { margin: 0 auto; max-width: var(--container); position: relative;
+             width: 100%; padding: 4.5em 1.5em; }
+  .section-alt { background: var(--surface-bc); }
+  .c-section__title { margin-bottom: 2.375em; }
+  .c-section__title span { color: var(--navy); font-size: var(--fs-section);
+                           line-height: var(--lh-tight); white-space: nowrap; display: block; }
+  .c-section__title small { color: var(--gold); display: block; font-size: var(--fs-nav);
+                            letter-spacing: var(--ls-sub); line-height: var(--lh-tight); margin-top: .6em; }
+  .c-lead { font-size: var(--fs-body); line-height: var(--lh-base);
+            max-width: 46em; margin-bottom: 2.5em; }
+  .note { border-left: 3px solid var(--navy); background: var(--surface-bc);
+          padding: 1em 1.25em; font-size: var(--fs-nav); line-height: var(--lh-base); margin-top: 2em; }
+
+  /* ---------- hero ---------- */
+  .c-mv { position: relative; height: 22em;
+          background: linear-gradient(160deg,#d3d6e0,#b9bdcb 55%,#cfd2dc); }
+  .c-mv::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 96%);
+                 bottom: 0; content: ""; display: block; height: 6.25em;
+                 left: 0; position: absolute; width: 100%; }
+  .c-mv__copy { color: var(--white); filter: drop-shadow(5px 5px 5px rgba(0,0,0,.6));
+                font-size: var(--fs-hero); left: 10%; letter-spacing: var(--ls-hero);
+                margin-top: -1.25em; position: absolute; top: 50%; z-index: 1; }
+  .c-mv__scroll { bottom: 2em; position: absolute; right: 2.5em; z-index: 1; }
+  .c-mv__scroll p { color: var(--white); font-size: var(--fs-scroll); letter-spacing: var(--ls-hero);
+                    filter: drop-shadow(5px 5px 5px rgba(0,0,0,.6)); }
+
+  /* ---------- 01 colors ---------- */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1em; }
+  .swatch { border: 1px solid var(--border-light); border-radius: var(--radius); overflow: hidden; }
+  .swatch-chip { height: 74px; }
+  .swatch-body { padding: .875em 1em; }
+  .swatch-name { font-size: var(--fs-nav); line-height: var(--lh-base); color: var(--navy); }
+  .swatch-hex  { font-family: SFMono-Regular, Consolas, Menlo, monospace;
+                 font-size: .75em; color: var(--text-muted); line-height: var(--lh-base); }
+  .swatch-use  { font-size: .8125em; line-height: var(--lh-base);
+                 color: var(--text); margin-top: .4em; }
+
+  /* ---------- 02 typography ---------- */
+  .type-row { border-top: 1px solid var(--border); padding: 1.4em 0;
+              display: grid; grid-template-columns: 17em 1fr; gap: 2em; align-items: baseline; }
+  .type-row:last-child { border-bottom: 1px solid var(--border); }
+  .type-meta { font-family: SFMono-Regular, Consolas, Menlo, monospace;
+               font-size: .75em; line-height: var(--lh-base); color: var(--text-muted); }
+  .t-hero { font-size: var(--fs-hero); letter-spacing: var(--ls-hero); line-height: var(--lh-base); color: var(--navy); }
+  .t-page { font-size: var(--fs-page); color: var(--navy); line-height: var(--lh-base); }
+  .t-sec  { font-size: var(--fs-section); color: var(--navy); line-height: var(--lh-tight); }
+  .t-h2   { font-size: var(--fs-h2); color: var(--navy); line-height: var(--lh-base); }
+  .t-dir  { font-size: var(--fs-dir); color: var(--navy); line-height: var(--lh-base); }
+  .t-body { font-size: var(--fs-body); line-height: var(--lh-base); }
+  .t-nav  { font-size: var(--fs-nav); line-height: var(--lh-base); }
+  .t-sub  { font-size: var(--fs-nav); color: var(--gold); letter-spacing: var(--ls-sub); line-height: var(--lh-tight); }
+  .t-label{ font-size: var(--fs-label); line-height: var(--lh-label); }
+
+  .w-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; margin-top: 2em; }
+  .w-box { border: 1px solid var(--border-light); padding: 1.25em 1.375em; }
+  .w-box .lbl { font-family: SFMono-Regular, Consolas, Menlo, monospace;
+                font-size: .75em; color: var(--text-muted); margin-bottom: .6em; }
+  .w-400 { font-size: var(--fs-dir); font-weight: 400; color: var(--navy); line-height: var(--lh-base); }
+  .w-500 { font-size: var(--fs-dir); font-weight: 500; color: var(--navy); line-height: var(--lh-base); }
+  .w-700 { font-size: var(--fs-dir); font-weight: 700; color: var(--navy); line-height: var(--lh-base); }
+
+  /* ---------- 03 doc ---------- */
+  .c-contents { max-width: 46em; }
+  .c-contents h2 { color: var(--navy); font-size: var(--fs-h2); margin: .5em 0 1em; position: relative; }
+  .c-title__line { position: relative; }
+  .c-title__line::after { background-color: var(--navy); content: ""; display: inline-block;
+                          height: 1px; position: absolute; right: 0; top: 50%; width: 98%; }
+  .c-title__line span { background-color: var(--white); padding-right: 1.5em;
+                        position: relative; z-index: 1; }
+  .c-contents p { font-size: var(--fs-body); line-height: var(--lh-base); margin-bottom: 1.5em; }
+  .c-entry__title { border-bottom: 1px solid var(--navy); color: var(--navy);
+                    font-size: var(--fs-page); margin-bottom: 1em; padding-bottom: .2em;
+                    line-height: var(--lh-tight); }
+
+  /* ---------- 04 buttons ---------- */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 2em; align-items: center; margin-bottom: 2em; }
+  .c-button { align-items: center; background-color: var(--white); border: 1px solid var(--navy);
+              border-radius: var(--radius); display: flex; height: 3em; justify-content: center;
+              max-width: 16.75em; position: relative; width: 100%; text-decoration: none;
+              flex: 0 0 16.75em; }
+  /* ★影を使わず、右下に 4px ずらした L 字の罫で奥行きを出す */
+  .c-button::after { border: solid var(--navy); border-width: 0 1px 1px 0; bottom: -4px;
+                     content: ""; display: block; height: 100%; position: absolute;
+                     right: -4px; width: 100%; }
+  .c-button::before { background-color: rgba(36,49,90,0); content: ""; height: 100%;
+                      left: 0; position: absolute; top: 0; width: 0;
+                      transition: all .4s ease-in-out; }
+  .c-button span { color: var(--navy); font-size: var(--fs-nav); text-align: center;
+                   transition: all .4s ease-in-out; z-index: 1; }
+  .c-button:hover::before { background-color: rgba(36,49,90,1); width: 100%; }
+  .c-button:hover span { color: var(--white); }
+  /* hover 状態の見本（静止表示用。実サイトは ::before の幅アニメーションで同じ見えになる） */
+  .c-button.is-hover { background-color: var(--navy); }
+  .c-button.is-hover::before { background-color: rgba(36,49,90,1); width: 100%; }
+  .c-button.is-hover span { color: var(--white); }
+  /* 写真の上に置くとき */
+  .on-photo { background: linear-gradient(140deg,#4d5570,#2f3a55); padding: 2.5em 2em; margin-top: 1em; }
+  .on-photo .c-button { background-color: transparent; border-color: var(--white); }
+  .on-photo .c-button::after { border-color: var(--white); }
+  .on-photo .c-button span { color: var(--white); }
+
+  .c-news__label { background-color: var(--navy); color: var(--white); display: inline-block;
+                   font-size: var(--fs-label); line-height: var(--lh-label);
+                   text-align: center; width: 7.6154em; border-radius: var(--radius); }
+  .label-factory { background-color: var(--gold); }
+  .label-magazine { background-color: var(--navy-hover); }
+  .c-news__block { align-items: baseline; display: flex; gap: 1.5em;
+                   border-bottom: 1px solid var(--border); padding-bottom: 1.75em;
+                   padding-top: 1.75em; text-decoration: none; }
+  .c-news__date { color: var(--text-muted); font-size: var(--fs-nav); }
+  .c-news__txt  { color: var(--text); font-size: var(--fs-nav); }
+
+  /* ---------- 05 shop cards ---------- */
+  .c-shop { display: flex; flex-wrap: wrap; gap: 2em; }
+  .c-shop__item { max-width: 500px; width: calc(50% - 1em); }
+  .c-shop__pic { height: 13em; margin-bottom: 1.5em; }
+  .c-shop__item .c-button { height: auto; max-width: initial; padding: 2.25em 0;
+                            flex-direction: column; flex: 1 1 auto; }
+  .c-shop__item .c-button span { font-size: var(--fs-dir); }
+  .c-shop__item .c-button small { color: var(--gold); display: block; font-size: var(--fs-sub);
+                                  letter-spacing: var(--ls-sub); line-height: 1;
+                                  margin-top: .6em; width: 100%; text-align: center; }
+
+  /* ---------- 06 forms ---------- */
+  .c-form { max-width: 34em; display: grid; gap: 1.5em; }
+  .c-form label { display: block; color: var(--navy); font-size: var(--fs-nav);
+                  line-height: var(--lh-base); margin-bottom: .4em; }
+  .c-form input { background-color: var(--surface-in); border: none;
+                  font-family: var(--font); font-size: var(--fs-body); outline: none;
+                  padding: .6em 1em; width: 100%; border-radius: var(--radius); color: var(--text); }
+  .c-form input.is-focus { background-color: var(--surface-fc); }
+  .c-form .error { color: var(--error); font-size: var(--fs-nav); margin-top: .4em; }
+  .c-flow__label { background-color: var(--navy); border-radius: .25em; color: var(--white);
+                   display: inline-block; font-size: .75em; line-height: 1.2; margin-right: 2em;
+                   padding: .4em 0; text-align: center; vertical-align: middle; width: 4.4em; }
+
+  /* ---------- 07 elevation ---------- */
+  .elev-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 22em)); gap: 1.5em; }
+  .elev { background: var(--white); border: 1px solid var(--border-light); padding: 1.4em; position: relative; }
+  .elev-2 { box-shadow: 0 0 .5em .25em #d4d7df inset; }
+  .elev-name { font-size: var(--fs-nav); color: var(--navy); line-height: var(--lh-base); }
+  .elev-val  { font-family: SFMono-Regular, Consolas, Menlo, monospace;
+               font-size: .75em; color: var(--text-muted); line-height: var(--lh-base); margin-top: .3em; }
+  .shadow-demo { background: linear-gradient(140deg,#4d5570,#2f3a55); padding: 2.5em 2em; margin-top: 1.5em; }
+  .shadow-demo .a { color: var(--white); font-size: var(--fs-section);
+                    letter-spacing: var(--ls-hero); line-height: var(--lh-tight);
+                    filter: drop-shadow(5px 5px 5px rgba(0,0,0,.6)); }
+  .shadow-demo .b { color: var(--white); font-size: var(--fs-section);
+                    letter-spacing: var(--ls-hero); line-height: var(--lh-tight); margin-top: 1em; }
+  .shadow-demo .cap { color: var(--white); font-size: .75em; margin-top: 1.2em; line-height: var(--lh-base); }
+
+  /* ---------- 08 layout ---------- */
+  .layout-demo { border: 1px solid var(--border-light); overflow: hidden; }
+  .layout-band { background: var(--surface-bc); text-align: center;
+                 font-family: SFMono-Regular, Consolas, Menlo, monospace;
+                 font-size: .75em; color: var(--text-muted); padding: .5em; }
+  .layout-inner { max-width: 1236px; margin: 0 auto; background: var(--surface-bc);
+                  border-left: 1px dashed var(--navy); border-right: 1px dashed var(--navy);
+                  padding: 1.6em 1.25em; text-align: center; font-size: var(--fs-nav); }
+  .bp-table { width: 100%; border-collapse: collapse; margin-top: 1.5em; }
+  .bp-table th, .bp-table td { border-bottom: 1px solid var(--border-light);
+                               padding: .625em .75em; text-align: left;
+                               font-size: var(--fs-nav); line-height: var(--lh-base); }
+  .bp-table th { color: var(--navy); }
+  .bp-table td.num { font-family: SFMono-Regular, Consolas, Menlo, monospace; }
+
+  /* ---------- footer ---------- */
+  .l-footer { background: var(--navy); color: var(--white); margin-top: 3em; padding: 3.5em 1.5em; }
+  .l-footer__inner { max-width: var(--container); margin: 0 auto;
+                     display: flex; gap: 4em; flex-wrap: wrap; }
+  .l-footer h4 { font-size: var(--fs-nav); letter-spacing: var(--ls-sub); margin-bottom: .8em; }
+  .l-footer ul { list-style: none; }
+  .l-footer li { font-size: var(--fs-label); line-height: var(--lh-label); }
+  .l-footer__note { max-width: var(--container); margin: 2em auto 0;
+                    font-size: .75em; line-height: var(--lh-base); }
+</style>
+</head>
+<body>
+<div class="l-page">
+
+<header class="l-header">
+  <div class="l-header__nav">
+    <span class="l-header__logo">
+      <span class="mark">OKURA</span>
+      <span class="name">大倉陶園</span>
+    </span>
+    <a href="#colors">お知らせ</a>
+    <a href="#typography">企業情報</a>
+    <a href="#doc">伝統の技</a>
+    <a href="#buttons">店舗紹介</a>
+    <a href="#shops">オーダー・記念品</a>
+    <a href="#forms">お問い合わせ</a>
+  </div>
+  <div class="l-header__cart"><a href="#buttons"><span>Online<br>Shop</span></a></div>
+</header>
+
+<div class="c-mv">
+  <p class="c-mv__copy">良きが上にも良きものを</p>
+  <div class="c-mv__scroll"><p>SCROLL</p></div>
+</div>
+
+<div class="l-breadcrumbs">
+  <div class="l-breadcrumbs__list"><span>ホーム</span><span>／</span><span>伝統の技</span><span>／</span><span>大倉陶園のホワイト</span></div>
+</div>
+
+<!-- 01 COLORS -->
+<section class="c-inner" id="colors">
+  <div class="c-section__title"><span>紺と金の2色だけ</span><small>01 / Colors</small></div>
+  <p class="c-lead">
+    CSS 変数は <b>1 個も無い</b>。<code>#24315a</code> を CSS 全文に 30 回、<code>#af8c55</code> を 4 回ベタ書きしている。
+    和文見出しが紺、その下の欧文サブタイトルが金 —— この 2 段が全セクション共通の型で、上の「紺と金の2色だけ／01 / Colors」がそれ。
+  </p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#24315a"></div><div class="swatch-body"><div class="swatch-name">Okura Navy</div><div class="swatch-hex">#24315a</div><div class="swatch-use">★見出し・リンク・ボタンの枠と文字・ラベルの面。文字 67 / 面 10 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#af8c55"></div><div class="swatch-body"><div class="swatch-name">Okura Gold</div><div class="swatch-hex">#af8c55</div><div class="swatch-use">★欧文サブタイトルと店舗ラベル。文字 17 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#656e8b"></div><div class="swatch-body"><div class="swatch-name">Navy Hover</div><div class="swatch-hex">#656e8b</div><div class="swatch-use">カートボタンのホバー／雑誌掲載ラベル。CSS 全文で 15 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text</div><div class="swatch-hex">#333333</div><div class="swatch-use">.l-page の color。見出しは紺なので黒に近い色は本文だけ</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#666666"></div><div class="swatch-body"><div class="swatch-name">Text Muted</div><div class="swatch-hex">#666666</div><div class="swatch-use">日付</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#dedede"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#dedede / #dbdbdb</div><div class="swatch-use">ニュースの区切り／表の罫</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f2f3f5"></div><div class="swatch-body"><div class="swatch-name">Surface / Breadcrumb</div><div class="swatch-hex">#f2f3f5</div><div class="swatch-use">パンくず帯</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eeeeee"></div><div class="swatch-body"><div class="swatch-name">Surface / Input</div><div class="swatch-hex">#eeeeee → #eaedf4</div><div class="swatch-use">入力欄の面。フォーカスで紺寄りの淡色へ</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e74f4f"></div><div class="swatch-body"><div class="swatch-name">Error</div><div class="swatch-hex">#e74f4f</div><div class="swatch-use">フォームのエラー</div></div></div>
+  </div>
+  <p class="note">
+    <b>ニュースラベルは幅 <code>7.6154em</code> の固定幅。</b>文字数が違っても同じ幅で揃う。
+    既定は紺、店舗（本社店・帝国ホテル店・軽井沢店）は金、雑誌掲載は <code>#656e8b</code>。
+  </p>
+</section>
+
+<!-- 02 TYPOGRAPHY -->
+<div class="section-alt">
+<section class="c-inner" id="typography">
+  <div class="c-section__title"><span>明朝1書体・weight 400 だけ</span><small>02 / Typography</small></div>
+  <p class="c-lead">
+    書体は <b>Noto Serif JP のみ</b>（実測 136/142 要素）。<b><code>font-weight</code> は 400 が 142 要素、500 と 700 は 0 要素</b>。
+    <code>letter-spacing</code> は本文 <code>normal</code> が 124 要素で、字空けはヒーローの 1 行（<code>0.1em</code>）と欧文サブタイトル（<code>0.05em</code>）だけ。
+    行間は <code>1.73</code> をラッパー要素に 1 回書いて継承させる。
+  </p>
+
+  <div class="type-row"><div class="type-meta">Hero Copy<br>2.5em = 40px / 400 / ls .1em</div><div class="t-hero">良きが上にも良きものを</div></div>
+  <div class="type-row"><div class="type-meta">Page Title<br>2.125em = 34px / 400</div><div class="t-page">大倉陶園のホワイト</div></div>
+  <div class="type-row"><div class="type-meta">Section Title 和文<br>1.875em = 30px / 400 / LH 1</div><div class="t-sec">伝統の技</div></div>
+  <div class="type-row"><div class="type-meta">Section Sub 欧文<br>.875em = 14px / 400 / LH 1 / ls .05em</div><div class="t-sub">Traditional Techniques</div></div>
+  <div class="type-row"><div class="type-meta">Contents h2<br>1.625em = 26px / 400</div><div class="t-h2">セーブルのブルー、オークラのホワイト</div></div>
+  <div class="type-row"><div class="type-meta">Directory Title<br>1.25em = 20px / 400</div><div class="t-dir">岡染め</div></div>
+  <div class="type-row"><div class="type-meta">Body<br>1em = 16px / 400 / LH 1.73</div><div class="t-body">1919（大正8）年、「良きが上にも良きものを」の志を理念として創立しました。</div></div>
+  <div class="type-row"><div class="type-meta">Nav / Button<br>.875em = 14px / 400</div><div class="t-nav">ペインティングスクール</div></div>
+  <div class="type-row"><div class="type-meta">News Label<br>.8125em = 13px / 400 / LH 2</div><div class="t-label">お知らせ</div></div>
+
+  <div class="w-demo">
+    <div class="w-box"><div class="lbl">400 — 実体あり</div><div class="w-400">大倉陶園のホワイト</div></div>
+    <div class="w-box"><div class="lbl">500 — ★リクエストはするが unloaded</div><div class="w-500">大倉陶園のホワイト</div></div>
+    <div class="w-box"><div class="lbl">700 — ★宣言なし＝合成太字</div><div class="w-700">大倉陶園のホワイト</div></div>
+  </div>
+
+  <p class="note">
+    Google Fonts の URL は <code>family=Noto+Serif+JP:wght@400;500</code> だが、<b>500 を当てている要素は 1 つも無く、<code>document.fonts</code> でも <code>unloaded</code></b>。
+    500 を書いても 400 のまま描画される。700 は宣言すら無いので合成太字になる。<b>このサイトに太字は存在しない</b>と読むのが正しい。
+  </p>
+</section>
+</div>
+
+<!-- 03 DOC -->
+<section class="c-inner" id="doc">
+  <div class="c-section__title"><span>罫線見出しと 1.73 の行間</span><small>03 / Article</small></div>
+  <div class="c-contents">
+    <h2 class="c-entry__title">大倉陶園のホワイト</h2>
+    <h2 class="c-title__line"><span>“セーブルのブルー、オークラのホワイト”</span></h2>
+    <p>
+      創立以来「良きが上にも良きものを」の志を理念とし、原料・成形・焼成のすべてに手を抜かずにきました。
+      製品は “セーブルのブルー、オークラのホワイト” と並び称され、独自の白さで知られています。
+    </p>
+    <p>
+      本文は <code>16px</code> / <code>line-height: 1.73</code>、字間は <code>normal</code>。
+      「間」は行間と余白が作るので、<code>letter-spacing</code> を足す必要がありません。
+      見出しの背後には <code>::after</code> で 1px の罫を全幅に引き、文字の後ろだけ白で抜いています。
+    </p>
+  </div>
+</section>
+
+<!-- 04 BUTTONS -->
+<div class="section-alt">
+<section class="c-inner" id="buttons">
+  <div class="c-section__title"><span>CTA は 1 種類。面で塗らない</span><small>04 / Buttons</small></div>
+  <p class="c-lead">
+    白地に <code>1px solid #24315a</code> の枠、高さ <code>3em</code>（48px）、幅 <code>16.75em</code>（268px）、<code>border-radius: 0</code>。
+    <b>右下に 4px ずらした L 字の罫（<code>border-width: 0 1px 1px 0</code>）</b>が影の代わり。
+    ホバーでは <code>::before</code> の幅が 0 → 100% に伸び、紺が左から満ちて文字が白へ反転する。
+  </p>
+  <div class="btn-row">
+    <a class="c-button" href="#buttons"><span>オンラインショップ</span></a>
+    <a class="c-button is-hover" href="#buttons"><span>オンラインショップ（hover）</span></a>
+  </div>
+  <div class="on-photo">
+    <a class="c-button" href="#buttons"><span>詳細はこちら</span></a>
+  </div>
+
+  <div style="max-width:52em;margin-top:2.5em">
+    <a class="c-news__block" href="#buttons"><span class="c-news__date">2026.08.25</span><span class="c-news__label">お知らせ</span><span class="c-news__txt">帝国ホテル店 期間限定企画「ブルーローズショップ」開催</span></a>
+    <a class="c-news__block" href="#buttons"><span class="c-news__date">2026.08.24</span><span class="c-news__label label-factory">本社店</span><span class="c-news__txt">シルバーウィーク中の営業について</span></a>
+    <a class="c-news__block" href="#buttons"><span class="c-news__date">2026.08.04</span><span class="c-news__label label-magazine">雑誌掲載</span><span class="c-news__txt">『家庭画報』10月号に岡染めの記事が掲載されました</span></a>
+  </div>
+</section>
+</div>
+
+<!-- 05 SHOP CARDS -->
+<section class="c-inner" id="shops">
+  <div class="c-section__title"><span>店舗カードは和文の下に金の欧文</span><small>05 / Shops</small></div>
+  <div class="c-shop">
+    <div class="c-shop__item">
+      <div class="c-shop__pic" style="background:linear-gradient(140deg,#c9ccd8,#9aa1b5)"></div>
+      <a class="c-button" href="#shops"><span>本社店<small>Factory Shop</small></span></a>
+    </div>
+    <div class="c-shop__item">
+      <div class="c-shop__pic" style="background:linear-gradient(140deg,#d6cfc2,#ab9c83)"></div>
+      <a class="c-button" href="#shops"><span>帝国ホテル店<small>Imperial Hotel Shop</small></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 06 FORMS -->
+<div class="section-alt">
+<section class="c-inner" id="forms">
+  <div class="c-section__title"><span>入力欄は枠を持たず面だけ</span><small>06 / Forms</small></div>
+  <div class="c-form">
+    <div>
+      <label>お名前</label>
+      <input type="text" placeholder="大倉 花子">
+    </div>
+    <div>
+      <label>メールアドレス（フォーカス状態）</label>
+      <input class="is-focus" type="text" value="hanako@example.co.jp">
+    </div>
+    <div>
+      <label>郵便番号</label>
+      <input type="text" value="2440817">
+      <p class="error">ハイフンを含めてご入力ください</p>
+    </div>
+    <div>
+      <span class="c-flow__label">STEP<span style="display:block;font-size:2em;line-height:1">1</span></span>
+      <span class="t-nav">ご入力</span>
+    </div>
+    <div class="btn-row" style="margin:0">
+      <a class="c-button" href="#forms"><span>確認画面へ</span></a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 07 ELEVATION -->
+<section class="c-inner" id="elevation">
+  <div class="c-section__title"><span>box-shadow は 0 種類。それでも影はある</span><small>07 / Depth &amp; Elevation</small></div>
+  <p class="c-lead">
+    実測 2 ページの <code>box-shadow</code> は <b>0 種類</b>。奥行きはボタンの <code>::after</code>（右下 4px の L 字罫）で作る。
+    ただし<b>ヒーローの白いコピーだけは <code>filter: drop-shadow(5px 5px 5px rgba(0,0,0,.6))</code> で浮かせている</b> —— 別プロパティなので分布には現れない。
+  </p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0 — ほぼすべての要素</div><div class="elev-val">box-shadow: none / border-radius: 0</div></div>
+    <div class="elev elev-2"><div class="elev-name">内側の陰（CSS 全文で 1 件）</div><div class="elev-val">box-shadow: 0 0 .5em .25em #d4d7df inset</div></div>
+  </div>
+  <div class="shadow-demo">
+    <div class="a">良きが上にも良きものを</div>
+    <div class="b">良きが上にも良きものを</div>
+    <div class="cap">上 = <code style="background:rgba(255,255,255,.18);color:#fff">filter: drop-shadow(5px 5px 5px rgba(0,0,0,.6))</code> あり（実サイト） ／ 下 = なし。<br>写真の上に白文字を置くときは必ず drop-shadow を添える。</div>
+  </div>
+</section>
+
+<!-- 08 LAYOUT -->
+<div class="section-alt">
+<section class="c-inner" id="layout">
+  <div class="c-section__title"><span>1236px がコンテナ幅と分岐を兼ねる</span><small>08 / Layout &amp; Responsive</small></div>
+  <div class="layout-demo">
+    <div class="layout-band">viewport</div>
+    <div class="layout-inner">.c-inner { max-width: 1236px; margin: 0 auto; width: 100% }</div>
+  </div>
+  <table class="bp-table">
+    <tr><th>Query</th><th>用途</th></tr>
+    <tr><td class="num">screen and (max-width: 768px)</td><td>モバイル</td></tr>
+    <tr><td class="num">screen and (min-width: 769px)</td><td>タブレット以上</td></tr>
+    <tr><td class="num">screen and (min-width: 769px) and (max-width: 1236px)</td><td>★コンテナ幅未満のデスクトップ（左右に余白を足す）</td></tr>
+    <tr><td class="num">screen and (min-width: 1600px)</td><td>ワイド</td></tr>
+  </table>
+  <p class="note">
+    <b>メディアクエリは 4 つだけ。</b>余白はすべて <code>em</code> で持っているため、分岐を増やさなくても崩れない。
+    モバイルではディレクトリ見出しが <code>1.25em</code> → <code>1.5em</code> と<b>大きくなる</b>（見出しを強める）。
+  </p>
+</section>
+</div>
+
+<footer class="l-footer">
+  <div class="l-footer__inner">
+    <div>
+      <h4>OKURA ART CHINA</h4>
+      <ul><li>企業理念</li><li>会社概要</li><li>工場見学</li></ul>
+    </div>
+    <div>
+      <h4>Traditional Techniques</h4>
+      <ul><li>大倉陶園のホワイト</li><li>手描き</li><li>岡染め</li><li>金蝕</li></ul>
+    </div>
+    <div>
+      <h4>Shops</h4>
+      <ul><li>本社店</li><li>帝国ホテル店</li><li>軽井沢店</li></ul>
+    </div>
+  </div>
+  <div class="l-footer__note">© 2026 OKURA ART CHINA INC.</div>
+</footer>
+
+</div>
+</body>
+</html>
