@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (529 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (532 sites)</a>
 </p>
 
 <table>
@@ -811,6 +811,11 @@
 </tr>
 <tr>
 <td align="center"><strong>大倉陶園</strong><br><img src="design-md/okura-touen/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>リノベる。</strong><br><img src="design-md/renoveru/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>三陽商会</strong><br><img src="design-md/sanyo-shokai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>誠文堂新光社</strong><br><img src="design-md/seibundo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1401,11 +1406,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [大林組 (OBAYASHI)](https://www.obayashi.co.jp/) | Construction / Corporate | [DESIGN.md](design-md/obayashi/DESIGN.md) | [preview.html](design-md/obayashi/preview.html) |
 | [及源鋳造 (OIGEN)](https://oigen.jp/) | Craft / Cast Iron | [DESIGN.md](design-md/oigen/DESIGN.md) | [preview.html](design-md/oigen/preview.html) |
 | [大倉陶園 (OKURA ART CHINA)](https://www.okuratouen.co.jp/) | Porcelain / Tableware | [DESIGN.md](design-md/okura-touen/DESIGN.md) | [preview.html](design-md/okura-touen/preview.html) |
+| [リノベる。(RENOVERU)](https://www.renoveru.jp/) | Housing / Renovation | [DESIGN.md](design-md/renoveru/DESIGN.md) | [preview.html](design-md/renoveru/preview.html) |
+| [三陽商会 (SANYO SHOKAI)](https://www.sanyo-shokai.co.jp/) | Apparel / Corporate | [DESIGN.md](design-md/sanyo-shokai/DESIGN.md) | [preview.html](design-md/sanyo-shokai/preview.html) |
+| [誠文堂新光社 (SEIBUNDO SHINKOSHA)](https://www.seibundo-shinkosha.net/) | Publishing | [DESIGN.md](design-md/seibundo/DESIGN.md) | [preview.html](design-md/seibundo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (529 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (532 sites)</a>
 </p>
 
 <table>
@@ -2182,6 +2190,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>大倉陶園</strong><br><img src="design-md/okura-touen/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>リノベる。</strong><br><img src="design-md/renoveru/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>三陽商会</strong><br><img src="design-md/sanyo-shokai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>誠文堂新光社</strong><br><img src="design-md/seibundo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 誠文堂新光社（SEIBUNDO SHINKOSHA）</title>
+<!-- ★Web フォントは読み込まない。実サイトの common.css には Roboto / Noto Sans JP の
+     @font-face が 9 件書かれているが、まるごとコメントアウトされており、
+     実測でもフォントファイルのリクエストは 0 件・document.fonts は空だった。
+     游ゴシック体・游明朝は OS ローカル書体なので <link> も不要。 -->
+<style>
+  /* ★html に font-size を書かない。ブラウザ既定の 16px のまま使う
+     （1440 / 1200 / 834 / 375px の4条件で計測して全て 16px）。
+     サイズは px で直接書くのがこのサイトの流儀。 */
+
+  :root {
+    /* === Design Tokens ===
+       ★実サイトの CSS 変数は 0 個（customPropertiesSummary.total = 0）。
+       ここでは preview のために名前を付けているが、実装は値のベタ書きで構わない。
+       2026-09-28 実測（トップ + /book/） */
+
+    /* Color — 括弧内は実測の可視／面の要素数 */
+    --shinkan:  #ff5224;  /* 「新刊」バッジの面。45 要素 */
+    --kinkan:   #00a7e5;  /* 「近刊」バッジの面。19 要素 */
+    --link:     #006cb8;  /* 外部リンク・資料請求。4 要素 */
+    --text:     #222222;  /* 本文。文字 208 要素 */
+    --heading:  #111111;  /* body の color 宣言値。見出し */
+    --black:    #000000;  /* ★リセット CSS の残り。31 要素。新規では使わない */
+    --gray-btn: #cccccc;  /* 角丸なしの押下型ボタン */
+    --rail:     #f2f6f9;  /* トップ左の縦タイムライン帯（289,800px²） */
+    --divider:  #eeeeee;
+    --overlay:  rgba(0, 0, 0, .75);  /* 書影に重ねる紹介文のレイヤー。66 要素 */
+    --white:    #ffffff;
+
+    /* Fonts — ★游ゴシック体スタックは「Medium をあとに置く」並び。
+       macOS は 1〜2 番目（Regular）、Windows は 3〜4 番目（Medium）が当たる。
+       @font-face の別名方式ではなく、順番だけで Windows の游ゴシック問題を処理している。 */
+    --font: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+            "游ゴシック", "Yu Gothic", sans-serif;
+    /* ★"Noto Serif JP" は読み込んでいないので、実体は游明朝／ヒラギノ明朝 */
+    --font-mincho: "Noto Serif JP", 游明朝, "Yu Mincho", 游明朝体, YuMincho,
+                   "ヒラギノ明朝 Pro W3", "Hiragino Mincho Pro", HiraMinProN-W3,
+                   HGS明朝E, "ＭＳ Ｐ明朝", "MS PMincho", serif;
+    /* ★Roboto も読み込んでいない。実体は OS の既定サンセリフ */
+    --font-en: "Roboto", sans-serif;
+
+    /* Size — px 直書き */
+    --fs-hero:   42px;
+    --fs-h2:     40px;
+    --fs-num:    30px;
+    --fs-genre:  20px;
+    --fs-title:  20px;
+    --fs-desc:   16px;
+    --fs-body:   14px;
+    --fs-meta:   13px;
+    --fs-badge:  12px;
+    --fs-label:  11px;
+
+    /* Line height — 1.00 が 163 要素。見出しとラベルはベタ組み */
+    --lh-flat: 1;
+    --lh-title:1.4;
+    --lh-date: 1.6;
+    --lh-body: 1.8;   /* body の既定。モバイルでは 2.0 */
+
+    /* Radius — 実測 30px が 70 要素、あとは円だけ。中間の角丸を持たない */
+    --r-pill: 30px;
+
+    --container: 960px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    /* ★実サイトの body 宣言をそのまま写す */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    font-family: var(--font);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--heading);
+    background-color: var(--white);
+    /* letter-spacing は書かない。実測 366 要素中 364 要素が normal */
+    /* font-feature-settings も書かない。palt は本体で 0 件 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ★IE 向けにだけスタックを差し替える分岐が残っている */
+  @media all and (-ms-high-contrast: none) {
+    body { font-family: "メイリオ", Meiryo, var(--font); }
+  }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+         font-size: .85em; background: var(--divider); color: var(--text);
+         padding: 1px 6px; }
+  b { font-weight: 700; }
+
+  /* ---------- header ---------- */
+  .header { display: flex; align-items: center; gap: 26px;
+            padding: 22px 40px; border-bottom: 1px solid var(--divider); }
+  .header-nav { display: flex; gap: 24px; list-style: none; }
+  .header-nav li { font-size: var(--fs-meta); line-height: 1.2; color: var(--black); }
+  .logo { margin-left: auto; font-size: 26px; font-weight: 700;
+          line-height: 1; color: var(--heading); }
+
+  /* ---------- hero（年表レール） ---------- */
+  .hero { display: grid; grid-template-columns: 325px 1fr; min-height: 420px; }
+  .hero-rail { background: var(--rail); padding: 40px 0 0 120px; position: relative; }
+  .hero-rail .since { font-family: var(--font-en); font-size: var(--fs-body);
+                      font-weight: 700; line-height: var(--lh-flat); }
+  .rail-line { position: absolute; left: 164px; top: 78px; bottom: 60px;
+               width: 1px; background: #9aa7b0; }
+  .rail-dot { position: absolute; left: 160px; width: 9px; height: 9px;
+              border-radius: 50%; border: 1px solid #9aa7b0; background: var(--rail); }
+  .rail-tag { position: absolute; left: 60px; background: var(--gray-btn);
+              padding: 8px 14px; font-family: var(--font-en); font-size: var(--fs-num);
+              font-weight: 700; line-height: var(--lh-flat); color: var(--heading); }
+  .rail-tag span { font-family: var(--font); font-size: var(--fs-meta); font-weight: 400; }
+  .rail-foot { position: absolute; left: 130px; bottom: 20px;
+               font-size: var(--fs-meta); font-weight: 500; line-height: var(--lh-flat); }
+  .hero-photo { margin: 60px 0; background: linear-gradient(120deg, #f4f1e6 55%, #f5e27a 45%); }
+  .hero-photo-inner { width: 100%; height: 100%;
+                      display: grid; place-items: center; }
+  .hero-book { width: 190px; height: 260px; background: linear-gradient(160deg, #2f7fd1, #1b5a99);
+               border: 6px solid var(--white); }
+
+  /* ---------- sections ---------- */
+  .section { max-width: var(--container); margin: 0 auto; padding: 80px 0; }
+  .section-wrap { padding: 0 40px; }
+  .section-alt { background: var(--rail); }
+  .section-label { font-family: var(--font-en); font-size: var(--fs-meta);
+                   line-height: var(--lh-flat); margin-bottom: 10px; }
+  /* ★見出しの下線は border ではなく SVG 画像。ここではかすれ線を再現した SVG を data URI で置く */
+  .section-title { font-family: var(--font-mincho); font-size: var(--fs-h2);
+                   font-weight: 600; line-height: 52px; text-align: center; }
+  .section-title::after {
+    content: ""; display: block; width: 160px; height: 12px; margin: 15px auto 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12'><path d='M2 8 C30 3, 55 10, 82 6 S130 2, 158 7' stroke='%23111' stroke-width='2' fill='none' stroke-linecap='round'/></svg>") no-repeat center bottom / contain;
+  }
+  .section-lead { font-size: var(--fs-desc); line-height: var(--lh-body);
+                  margin: 26px auto 34px; max-width: 800px; }
+  .section-h { font-family: var(--font-mincho); font-size: var(--fs-num);
+               font-weight: 600; line-height: 1.67; margin-bottom: 16px; }
+
+  .note { background: var(--white); border: 1px solid var(--divider);
+          padding: 20px 24px; margin-top: 30px;
+          font-size: var(--fs-body); line-height: var(--lh-body); }
+
+  /* ---------- 01 colors ---------- */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--divider); background: var(--white); }
+  .swatch-chip { height: 72px; }
+  .swatch-body { padding: 12px 14px; }
+  .swatch-name { font-size: var(--fs-meta); font-weight: 700; line-height: 1.4; }
+  .swatch-hex  { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                 font-size: var(--fs-label); line-height: 1.6; color: var(--text); }
+  .swatch-use  { font-size: var(--fs-label); line-height: 1.6; margin-top: 5px; color: var(--text); }
+
+  /* ---------- 02 typography ---------- */
+  .type-row { border-top: 1px solid var(--divider); padding: 20px 0;
+              display: grid; grid-template-columns: 240px 1fr; gap: 24px; align-items: baseline; }
+  .type-row:last-child { border-bottom: 1px solid var(--divider); }
+  .type-meta { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+               font-size: var(--fs-label); line-height: 1.6; color: var(--text); }
+  .t-hero   { font-family: var(--font-mincho); font-size: var(--fs-hero);
+              font-weight: 600; line-height: var(--lh-flat); }
+  .t-h2     { font-family: var(--font-mincho); font-size: var(--fs-h2);
+              font-weight: 600; line-height: 52px; }
+  .t-num    { font-family: var(--font-en); font-size: var(--fs-num);
+              font-weight: 700; line-height: var(--lh-flat); }
+  .t-sub    { font-family: var(--font-mincho); font-size: var(--fs-num);
+              font-weight: 600; line-height: 1.67; }
+  .t-title  { font-size: var(--fs-title); line-height: var(--lh-title); color: var(--text); }
+  .t-desc   { font-size: var(--fs-desc); line-height: var(--lh-body); color: var(--text); }
+  .t-body   { font-size: var(--fs-body); line-height: var(--lh-body); }
+  .t-meta   { font-size: var(--fs-meta); line-height: var(--lh-date); }
+  .t-label  { font-family: var(--font-en); font-size: var(--fs-label); line-height: var(--lh-flat); }
+
+  .ls-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+  .ls-box { border: 1px solid var(--divider); background: var(--white); padding: 20px 22px; }
+  .ls-lbl { font-size: var(--fs-label); line-height: 1.6; color: var(--text); margin-bottom: 10px; }
+  .ls-a   { font-size: var(--fs-title); line-height: var(--lh-title); }
+  .ls-b   { font-size: var(--fs-title); line-height: var(--lh-title); letter-spacing: .08em; }
+
+  /* ---------- 03 vertical ---------- */
+  .genre-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .genre { background: var(--white); border: 1px solid var(--divider);
+           height: 300px; display: grid; place-items: center; text-decoration: none; }
+  /* ★本物の縦組み。游ゴシック体 20px / line-height 20px（ベタ組み）/ 700。字間は normal */
+  .genre p { writing-mode: vertical-rl;
+             font-family: var(--font); font-size: var(--fs-genre);
+             font-weight: 700; line-height: var(--fs-genre);
+             letter-spacing: normal; color: var(--heading); }
+  .loading-demo { margin-top: 26px; background: var(--white);
+                  border: 1px solid var(--divider); padding: 26px;
+                  display: flex; justify-content: center; }
+  /* トップのローディング表示は明朝 24px / line-height 48px（＝ちょうど 2 倍） */
+  .loading-demo p { writing-mode: vertical-rl; font-family: var(--font-mincho);
+                    font-size: 24px; line-height: 48px; height: 260px;
+                    color: var(--heading); }
+
+  @media screen and (max-width: 768px) {
+    /* ★縦組みはデスクトップだけの表現。モバイルでは横組みに戻す */
+    .genre p, .loading-demo p { writing-mode: horizontal-tb; }
+  }
+
+  /* ---------- 04 buttons & badges ---------- */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 26px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center;
+         font-family: var(--font); text-decoration: none; cursor: pointer; }
+  /* ★押せるものは pill（30px）。padding が左右非対称なのは右端に矢印を置くため */
+  .btn-dark  { background: var(--text); color: var(--white); border: 1px solid var(--black);
+               border-radius: var(--r-pill); padding: 15px 15px 15px 25px;
+               font-size: var(--fs-body); font-weight: 400; line-height: var(--fs-body); }
+  .btn-line  { background: var(--white); color: var(--text); border: 1px solid var(--text);
+               border-radius: var(--r-pill); padding: 3px 10px;
+               font-size: var(--fs-label); font-weight: 400; line-height: var(--fs-label); }
+  /* ★角のままなのはグレーのボタンだけ */
+  .btn-gray  { background: var(--gray-btn); color: var(--heading); border: none;
+               border-radius: 0; padding: 12px 30px;
+               font-size: var(--fs-body); font-weight: 700; line-height: var(--fs-body); }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  /* ★ボタンは丸く、バッジは角のまま。押せるものと押せないものを形で分けている */
+  .bdg { display: inline-flex; align-items: center; color: var(--white);
+         border-radius: 0; padding: 3px 15px;
+         font-size: var(--fs-badge); font-weight: 400; line-height: var(--fs-badge); }
+  .bdg-new  { background: var(--shinkan); }
+  .bdg-soon { background: var(--kinkan); }
+
+  /* ---------- 05 cards ---------- */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .card { background: var(--white); border-radius: 0; box-shadow: none;
+          text-decoration: none; color: inherit; display: block; }
+  .card-cover { position: relative; height: 280px; overflow: hidden; }
+  .card-cover-art { width: 100%; height: 100%; }
+  .card-badge { position: absolute; left: 0; top: 0; }
+  /* ★書影の上に rgba(0,0,0,.75) を重ねて紹介文を白 16px / 1.8 で載せる */
+  .card-overlay { position: absolute; inset: 0; background: var(--overlay);
+                  color: var(--white); padding: 26px 24px;
+                  font-size: var(--fs-desc); line-height: var(--lh-body); }
+  .card-body { padding: 14px 0 0; }
+  .card-label { font-family: var(--font-en); font-size: var(--fs-label);
+                line-height: var(--lh-flat); color: var(--text); }
+  .card-title { font-size: var(--fs-title); line-height: var(--lh-title);
+                color: var(--text); margin: 8px 0 6px; }
+  .card-date  { font-size: var(--fs-meta); line-height: var(--lh-date); color: var(--text); }
+
+  /* ---------- 06 forms ---------- */
+  .form { max-width: 560px; display: grid; gap: 22px; }
+  .field-label { font-size: var(--fs-body); font-weight: 700;
+                 line-height: var(--lh-body); margin-bottom: 6px; display: block; }
+  .field { width: 100%; font-family: var(--font); font-size: var(--fs-body);
+           line-height: var(--lh-body); color: var(--text); background: var(--white);
+           border: 1px solid var(--gray-btn); border-radius: 0; padding: 10px 14px; }
+  .field::placeholder { color: #999999; }
+  .field.is-focus { border-color: var(--text); outline: none; }
+  .field-hint { font-size: var(--fs-meta); line-height: var(--lh-date);
+                color: var(--text); margin-top: 6px; }
+
+  /* ---------- 07 elevation ---------- */
+  .elev-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .elev { padding: 22px 24px; border: 1px solid var(--divider); }
+  .elev-name { font-size: var(--fs-body); font-weight: 700; line-height: var(--lh-body); }
+  .elev-val  { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+               font-size: var(--fs-label); line-height: 1.6; color: var(--text); margin-top: 5px; }
+
+  /* ---------- 08 layout ---------- */
+  .layout-demo { border: 1px solid var(--divider); }
+  .layout-band { background: var(--divider); text-align: center;
+                 font-size: var(--fs-label); line-height: 1.8; padding: 6px; }
+  .layout-inner { width: 960px; max-width: 100%; margin: 0 auto; background: var(--rail);
+                  border-left: 1px dashed var(--gray-btn); border-right: 1px dashed var(--gray-btn);
+                  padding: 26px 20px; text-align: center; font-size: var(--fs-body); }
+  .bp-table { width: 100%; border-collapse: collapse; margin-top: 24px; background: var(--white); }
+  .bp-table th, .bp-table td { border-bottom: 1px solid var(--divider);
+                               padding: 10px 14px; text-align: left;
+                               font-size: var(--fs-meta); line-height: var(--lh-date); }
+  .bp-table th { font-weight: 700; }
+
+  /* ---------- footer ---------- */
+  .footer { border-top: 1px solid var(--divider); margin-top: 40px; padding: 44px 40px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; display: flex; gap: 60px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: var(--fs-body); font-weight: 700; line-height: var(--lh-body); margin-bottom: 8px; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { font-size: var(--fs-meta); line-height: var(--lh-body); color: var(--text); }
+
+  @media screen and (max-width: 768px) {
+    body { line-height: 2; }   /* ★モバイルだけ行間を広げる。文字サイズは変えない */
+    .hero { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .genre-grid { grid-template-columns: repeat(2, 1fr); }
+    .type-row, .ls-demo { grid-template-columns: 1fr; }
+    .elev-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <ul class="header-nav">
+    <li>書籍</li><li>雑誌・ムック</li><li>イベント</li><li>グッズ</li><li>図書館様向けセット</li><li>自費出版</li>
+  </ul>
+  <div class="logo">誠文堂新光社</div>
+</header>
+
+<section class="hero">
+  <div class="hero-rail">
+    <div class="since">Since 1912</div>
+    <div class="rail-line"></div>
+    <div class="rail-dot" style="top:150px"></div>
+    <div class="rail-dot" style="top:230px"></div>
+    <div class="rail-dot" style="top:310px"></div>
+    <div class="rail-tag" style="top:216px">1972<span>年</span></div>
+    <div class="rail-foot">未来は今日から</div>
+  </div>
+  <div class="hero-photo">
+    <div class="hero-photo-inner"><div class="hero-book"></div></div>
+  </div>
+</section>
+
+<!-- 01 COLORS -->
+<div class="section-wrap">
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">ブランド色は「新刊」と「近刊」の2色だけ</h2>
+  <p class="section-lead">
+    面として広く塗る色を持たない。<code>#ff5224</code>（新刊・面 45 要素）と <code>#00a7e5</code>（近刊・面 19 要素）は
+    <b>書影のバッジ以外に出てこない</b>。黒が <code>#000000</code> / <code>#111111</code> / <code>#222222</code> の 3 段あるのは、
+    リセット CSS の <code>body { line-height: 1; color: #000 }</code> と本体 CSS の <code>color: #111</code> が二重にかかっているため。
+  </p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#ff5224"></div><div class="swatch-body"><div class="swatch-name">新刊バッジ</div><div class="swatch-hex">#ff5224</div><div class="swatch-use">面 45 要素。バッジ以外に使わない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#00a7e5"></div><div class="swatch-body"><div class="swatch-name">近刊バッジ</div><div class="swatch-hex">#00a7e5</div><div class="swatch-use">面 19 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#006cb8"></div><div class="swatch-body"><div class="swatch-name">Link Blue</div><div class="swatch-hex">#006cb8</div><div class="swatch-use">外部リンク・資料請求</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#222222"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#222222</div><div class="swatch-use">文字 208 要素。本文・書名</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#111111"></div><div class="swatch-body"><div class="swatch-name">Text Heading</div><div class="swatch-hex">#111111</div><div class="swatch-use">body の color 宣言値。見出し</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Pure Black</div><div class="swatch-hex">#000000</div><div class="swatch-use">★リセット CSS の残り。新規では使わない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#cccccc"></div><div class="swatch-body"><div class="swatch-name">Button Gray</div><div class="swatch-hex">#cccccc</div><div class="swatch-use">角丸なしの押下型ボタン</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f2f6f9"></div><div class="swatch-body"><div class="swatch-name">Rail</div><div class="swatch-hex">#f2f6f9</div><div class="swatch-use">年表の縦レール（289,800px²）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eeeeee"></div><div class="swatch-body"><div class="swatch-name">Divider</div><div class="swatch-hex">#eeeeee</div><div class="swatch-use">区切り線</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:rgba(0,0,0,.75)"></div><div class="swatch-body"><div class="swatch-name">Overlay</div><div class="swatch-hex">rgba(0,0,0,.75)</div><div class="swatch-use">書影に重ねる紹介文。66 要素</div></div></div>
+  </div>
+</section>
+</div>
+
+<!-- 02 TYPOGRAPHY -->
+<div class="section-alt">
+<div class="section-wrap">
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Web フォントを1本も読み込まない</h2>
+  <p class="section-lead">
+    <code>common.css</code> には Roboto と Noto Sans JP の <code>@font-face</code> が 9 件書かれているが、
+    <b><code>/*font*/</code> の後ろがまるごとコメントアウトされている</b>。
+    実測でも<b>フォントファイルのリクエストは 0 件</b>、<code>document.fonts</code> は空だった。
+    <code>Roboto, sans-serif</code> が 10 要素に当たっているが、<b>実体は OS の既定サンセリフ</b>。
+    <code>html</code> に <code>font-size</code> の宣言も無く、<b>ブラウザ既定の 16px のまま</b>使っている。
+  </p>
+
+  <div class="type-row"><div class="type-meta">Hero Serif<br>明朝 42px / 600 / 1.00</div><div class="t-hero">「玉川児童百科大辞典」発行</div></div>
+  <div class="type-row"><div class="type-meta">Section Title<br>明朝 40px / 600 / 52px</div><div class="t-h2">好きに出合える12ジャンル</div></div>
+  <div class="type-row"><div class="type-meta">EN Numeral<br>Roboto 指定（実体は OS）30px / 700 / 1.00</div><div class="t-num">1967</div></div>
+  <div class="type-row"><div class="type-meta">Sub Heading<br>明朝 30px / 600 / 1.67</div><div class="t-sub">書籍　新刊・近刊情報</div></div>
+  <div class="type-row"><div class="type-meta">Book Title<br>游ゴシック体 20px / 400 / 1.40</div><div class="t-title">数式を使わない パラボラアンテナ入門</div></div>
+  <div class="type-row"><div class="type-meta">Description<br>16px / 400 / 1.80</div><div class="t-desc">身近にあるパラボラアンテナの秘密を、折り図などを使いながら数式なしで解き明かす。</div></div>
+  <div class="type-row"><div class="type-meta">Body<br>14px / 400 / 25.2px（1.80）</div><div class="t-body">1912年の創業以来、科学・技術・デザイン・工芸の書籍をつくり続けてきました。</div></div>
+  <div class="type-row"><div class="type-meta">Nav / Meta<br>13px / 400 / 1.20〜1.60（最頻 89 要素）</div><div class="t-meta">発売日：2026年09月25日</div></div>
+  <div class="type-row"><div class="type-meta">Label<br>Roboto 指定 11px / 400 / 1.00（66 要素）</div><div class="t-label">Book</div></div>
+
+  <div class="ls-demo">
+    <div class="ls-box">
+      <div class="ls-lbl">letter-spacing: normal（実サイト）— 366 要素中 364 要素がこれ</div>
+      <div class="ls-a">2027年カレンダー ポメラニアン</div>
+    </div>
+    <div class="ls-box">
+      <div class="ls-lbl">★字間を足した場合 — 書影一覧の行が揃わなくなる</div>
+      <div class="ls-b">2027年カレンダー ポメラニアン</div>
+    </div>
+  </div>
+
+  <p class="note">
+    <b><code>document.fonts.check()</code> を根拠にしない。</b>このサイトで
+    <code>document.fonts.check('400 16px "Roboto"')</code> は <code>true</code> を返すが、
+    <code>document.fonts</code> 自体は空で、フォントは 1 本も読み込まれていない。<br>
+    <b>親切のつもりで Google Fonts を足さない。</b>游ゴシック体と游明朝だけで組むことがこのサイトの見え方をつくっている。
+  </p>
+</section>
+</div>
+</div>
+
+<!-- 03 VERTICAL -->
+<div class="section-wrap">
+<section class="section" id="vertical">
+  <div class="section-label">03 / Vertical Writing</div>
+  <h2 class="section-title">ジャンル見出しは縦組み</h2>
+  <p class="section-lead">
+    <code>/book/</code> の 12 ジャンル見出しが <code>writing-mode: vertical-rl</code>。
+    游ゴシック体 20px / <code>line-height: 20px</code>（ベタ組み）/ 700 で、<b>字間は <code>normal</code> のまま</b>。
+    <code>@media screen and (max-width: 768px)</code> で <code>horizontal-tb</code> に戻すので、
+    <b>縦組みはデスクトップだけの表現</b>。「コンピューター・ＩＴ」のように<b>全角英字を使って縦中横を避けている</b>のが実装上の工夫。
+  </p>
+  <div class="genre-grid">
+    <a class="genre" href="#vertical"><p>科学・テクノロジー・農業</p></a>
+    <a class="genre" href="#vertical"><p>コンピューター・ＩＴ</p></a>
+    <a class="genre" href="#vertical"><p>天文・宇宙</p></a>
+    <a class="genre" href="#vertical"><p>アート・デザイン</p></a>
+    <a class="genre" href="#vertical"><p>工芸・ものづくり</p></a>
+    <a class="genre" href="#vertical"><p>暮らし・料理</p></a>
+  </div>
+  <div class="loading-demo">
+    <p>未来は今日から。科学と技術と、手のしごとの本を。</p>
+  </div>
+  <p class="note">
+    トップのローディング表示だけ<b>明朝 24px / <code>line-height: 48px</code></b>（＝ちょうど 2 倍）。
+    ジャンル見出しのベタ組み（<code>line-height: 20px</code>）とは、同じ縦組みでも行送りの考え方が逆になっている。
+  </p>
+</section>
+</div>
+
+<!-- 04 BUTTONS -->
+<div class="section-alt">
+<div class="section-wrap">
+<section class="section" id="buttons">
+  <div class="section-label">04 / Buttons &amp; Badges</div>
+  <h2 class="section-title">ボタンは丸く、バッジは角のまま</h2>
+  <p class="section-lead">
+    押せるものは <code>border-radius: 30px</code> の pill（実測 70 要素）。
+    バッジは <code>border-radius: 0</code>。<b>押せるものと押せないものを形で分けている</b>ので、
+    「新刊」「近刊」を丸めてはいけない。角のままのボタンはグレーの <code>#cccccc</code> 1 種類だけ。
+  </p>
+  <div class="btn-row">
+    <a class="btn btn-dark" href="#buttons">書籍一覧を見る　→</a>
+    <a class="btn btn-line" href="#buttons">科学・テクノロジー</a>
+    <a class="btn btn-line" href="#buttons">アート・デザイン</a>
+    <button class="btn btn-gray" type="button">もっと見る</button>
+  </div>
+  <div class="badge-row">
+    <span class="bdg bdg-new">新刊</span>
+    <span class="bdg bdg-soon">近刊</span>
+  </div>
+  <p class="note">
+    <b>中間の角丸を持たない。</b>実測の <code>border-radius</code> は <code>30px</code>（70 要素）と円（<code>50%</code> / <code>99%</code>）だけで、
+    <code>4px</code> や <code>8px</code> は 1 件も無い。
+  </p>
+</section>
+</div>
+</div>
+
+<!-- 05 CARDS -->
+<div class="section-wrap">
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">紹介文は書影の上に 75% の黒を重ねて載せる</h2>
+  <p class="section-lead">
+    カードは枠も影も持たない。書影にかぶせる <code>rgba(0, 0, 0, .75)</code> のレイヤーが実測 <b>66 要素</b>で、
+    白 16px / <code>line-height: 1.8</code> の紹介文をそこに置く。<b>奥行きは影ではなくこのオーバーレイで作る</b>。
+  </p>
+  <div class="card-grid">
+    <a class="card" href="#cards">
+      <div class="card-cover">
+        <div class="card-cover-art" style="background:linear-gradient(160deg,#f0e6d2,#c9b48c)"></div>
+        <span class="bdg bdg-new card-badge">新刊</span>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Book</div>
+        <div class="card-title">2027年カレンダー ポメラニアン</div>
+        <div class="card-date">発売日：2026年09月25日</div>
+      </div>
+    </a>
+    <a class="card" href="#cards">
+      <div class="card-cover">
+        <div class="card-cover-art" style="background:linear-gradient(160deg,#dfe9f2,#8aa7bf)"></div>
+        <span class="bdg bdg-soon card-badge">近刊</span>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Book</div>
+        <div class="card-title">数式を使わない パラボラアンテナ入門</div>
+        <div class="card-date">発売日：2026年10月17日</div>
+      </div>
+    </a>
+    <a class="card" href="#cards">
+      <div class="card-cover">
+        <div class="card-cover-art" style="background:linear-gradient(160deg,#e8e0ef,#9e8bb5)"></div>
+        <div class="card-overlay">ふわふわのポメラニアンたちの魅力がギュッと詰まった大判カレンダー。毎月ちがう表情に出合える。</div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Book</div>
+        <div class="card-title">ホバーで紹介文が出る状態</div>
+        <div class="card-date">発売日：2026年09月25日</div>
+      </div>
+    </a>
+  </div>
+</section>
+</div>
+
+<!-- 06 FORMS -->
+<div class="section-alt">
+<div class="section-wrap">
+<section class="section" id="forms">
+  <div class="section-label">06 / Forms</div>
+  <h2 class="section-title">入力欄は角のまま</h2>
+  <div class="form">
+    <div>
+      <label class="field-label">お名前</label>
+      <input class="field" type="text" placeholder="山田 太郎">
+      <div class="field-hint">全角でご入力ください</div>
+    </div>
+    <div>
+      <label class="field-label">メールアドレス（フォーカス状態）</label>
+      <input class="field is-focus" type="text" value="taro@example.jp">
+      <div class="field-hint">フォーカスは枠色を <code>#222222</code> に差し替えるだけ。影は足さない</div>
+    </div>
+    <div class="btn-row" style="margin:0">
+      <button class="btn btn-dark" type="button">送信する　→</button>
+      <button class="btn btn-gray" type="button">戻る</button>
+    </div>
+  </div>
+</section>
+</div>
+</div>
+
+<!-- 07 ELEVATION -->
+<div class="section-wrap">
+<section class="section" id="elevation">
+  <div class="section-label">07 / Depth &amp; Elevation</div>
+  <h2 class="section-title">影を一切持たない</h2>
+  <p class="section-lead">
+    実測 2 ページで <code>box-shadow</code> は <b>0 種類</b>、<code>filter: drop-shadow()</code> も使っていない。
+    奥行きは <b>オーバーレイ・明度差・角丸の対比</b>の 3 つで作る。
+  </p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0 — 全要素</div><div class="elev-val">box-shadow: none</div></div>
+    <div class="elev" style="background:var(--rail);border-color:transparent"><div class="elev-name">明度差で段を作る</div><div class="elev-val">#ffffff → #eeeeee → #f2f6f9</div></div>
+    <div class="elev" style="background:rgba(0,0,0,.75);border-color:transparent;color:#ffffff"><div class="elev-name">オーバーレイで前後を作る</div><div class="elev-val" style="color:#ffffff">rgba(0, 0, 0, .75)</div></div>
+  </div>
+</section>
+</div>
+
+<!-- 08 LAYOUT -->
+<div class="section-alt">
+<div class="section-wrap">
+<section class="section" id="layout">
+  <div class="section-label">08 / Layout &amp; Responsive</div>
+  <h2 class="section-title">max-width ではなく 960px 固定</h2>
+  <p class="section-lead">
+    <code>#wrapper { min-width: 960px }</code> ＋ <code>.parts.section { width: 960px; margin: 100px auto 0 }</code>。
+    <b><code>max-width</code> ではなく固定幅</b>で、デスクトップは横スクロールを許す。
+    768px 以下で別レイアウトに切り替える。
+  </p>
+  <div class="layout-demo">
+    <div class="layout-band">viewport</div>
+    <div class="layout-inner">width: 960px（<code>#wrapper</code> に <code>min-width: 960px</code>）</div>
+  </div>
+  <table class="bp-table">
+    <tr><th>Viewport</th><th>html</th><th>body font-size</th><th>line-height</th><th>letter-spacing</th></tr>
+    <tr><td>1440px</td><td>16px</td><td>14px</td><td>25.2px（1.8）</td><td>normal</td></tr>
+    <tr><td>1200px</td><td>16px</td><td>14px</td><td>25.2px（1.8）</td><td>normal</td></tr>
+    <tr><td>834px</td><td>16px</td><td>14px</td><td>25.2px（1.8）</td><td>normal</td></tr>
+    <tr><td>375px</td><td>16px</td><td>14px</td><td><b>28px（2.0）</b></td><td>normal</td></tr>
+  </table>
+  <p class="note">
+    <b>モバイルでは文字を大きくせず、行間だけ 1.8 → 2.0 に広げる。</b>
+    1 回の計測を「このサイトの行間」と書かないこと。
+    ほかに <code>(max-height: 790px) and (min-width: 768px)</code> という<b>高さで切り替える分岐</b>と、
+    IE 向けにメイリオへ差し替える <code>(-ms-high-contrast: none)</code> が残っている。
+  </p>
+</section>
+</div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>出版物</h4>
+      <ul><li>書籍</li><li>雑誌・ムック</li><li>グッズ</li><li>図書館様向けセット</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>会社情報</h4>
+      <ul><li>会社概要</li><li>事業領域</li><li>歴史・沿革</li><li>採用情報</li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>お取引の方へ</h4>
+      <ul><li>書店・学校・図書館の皆様へ</li><li>法人・メディアの方へ</li><li>各種注文書・POP</li><li>広告掲載詳細</li></ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
