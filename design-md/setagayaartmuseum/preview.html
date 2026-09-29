@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 世田谷美術館（SETAGAYA ART MUSEUM）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;200;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個（own 0 / platform 0）。
+       実サイトは色を hex そのままクラス名にしている（.color_039788 等）。
+       以下は computed style と CSS 全文の実測値。2026-09-29 */
+
+    /* カテゴリカラー6色。CSS 全文の出現回数がほぼ揃う（12〜15 回）＝体系として書かれている */
+    --cat-blue:   #3e4eb8;   /* 可視 3 要素 / CSS 12 回 */
+    --cat-green:  #039788;   /* 可視 3 要素 / CSS 12 回 */
+    --cat-yellow: #fed910;   /* 可視 3 要素 / CSS 12 回 */
+    --cat-red:    #d70000;   /* 可視 4 要素 / CSS 15 回（最多） */
+    --cat-pink:   #ec1561;   /* 可視 4 要素 / CSS 12 回 */
+    --cat-olive:  #a7b809;   /* ★下層の見出し専用。可視 7 要素 / CSS 12 回 */
+
+    --text:     #333333;   /* ★本文。可視 43 要素 / CSS 152 回。純黒ではない */
+    --white:    #ffffff;
+    --muted:    #666666;   /* カレンダーのイベント名（可視 10 要素） */
+    --disabled: #808080;   /* 分館リンク・寄付の案内（可視 3 要素） */
+    --surface:  #f5f5f5;   /* ★最多の面色。可視 25 要素 / CSS 60 回 */
+    --black:    #000000;   /* ボタン・タブの塗り面（可視 26 要素） */
+    --bg:       #ffffff;   /* pageBackground.resolved / 根拠 viewportTopBySample (12/12) */
+
+    /* === Fonts ===
+       実サイトは YakuHanJP, "Noto Sans Japanese", sans-serif の 1 本だけ（可視 168/168 要素）。
+       ・YakuHanJP は unicode-range で約物だけに限定したサブセットフォント（自前ホスト）。
+         Google Fonts に無いためローカルでは再現できない。
+         → このプレビューでは約物が詰まらない。実サイトでは「、。「」（）・：；？！」が詰まる。
+       ・"Noto Sans Japanese" は Noto Sans CJK JP を自前ホストしたもの（.eot 付き＝IE 時代の実装）。
+         Google Fonts の Noto Sans JP で代替する（同じ書体。名前だけが違う）。 */
+    --font: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Letter spacing: em を各要素に当てる。本文は normal（実測 107 要素で最多） === */
+    --ls-body:   normal;   /* ★本文は詰めも空けもしない。約物は YakuHanJP が詰める */
+    --ls-small:  .03em;    /* CSS 13 回 */
+    --ls-head:   .05em;    /* ★CSS 38 回で最多 */
+    --ls-date:   .08em;    /* 会期の日付（42px → 3.36px） */
+    --ls-label:  .1em;     /* 分館名・下層 h1（CSS 8 回） */
+    --ls-nav:    .2em;     /* ★グローバルナビ。最も大きく空ける */
+    --ls-tight:  -.01em;   /* フッターリンク。負の字間（CSS に -.01em 〜 -.05em が計 8 回） */
+
+    /* === Line height === */
+    --lh-body:  1.73;   /* ★本文（15px → 25.95px） */
+    --lh-title: 2.10;   /* ★展覧会タイトル（20px → 42px）。極端に広い */
+    --lh-mid:   1.50;
+    --lh-sub:   1.10;   /* 分館名 */
+    --lh-one:   1.00;   /* 単一行のラベル。実測 134 要素で最多だが「本文の行間」ではない */
+
+    --r: 0px;           /* サイト全体で 0。例外はバッジの 100% とトップ戻りの 26px だけ */
+    --shadow: rgba(0, 0, 0, 0.2) -3px 3px 10px 0px;   /* 実測 1 要素のみ。offset が左下 */
+
+    --container: 950px;   /* ★CSS 全文で max-width: 950px が 11 回 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-body);
+    /* font-feature-settings は実サイトで 1 件も宣言されていない（CSS 全文 0 件 / 実測 0 要素）。
+       約物詰めは YakuHanJP が担当するので palt は書かない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ HEADER ============ */
+  .header { border-bottom: 1px solid #e5e5e5; }
+  .header-inner { max-width: var(--container); margin: 0 auto; padding: 18px 20px; display: flex; align-items: center; gap: 28px; }
+  .burger { width: 30px; display: flex; flex-direction: column; gap: 6px; }
+  .burger span { display: block; height: 2px; background: var(--text); }
+  .logo { margin: 0 auto; text-align: center; }
+  .logo-ja { font-size: 18px; font-weight: 700; letter-spacing: var(--ls-nav); color: var(--text); }
+  .logo-en { font-size: 9px; font-weight: 400; letter-spacing: var(--ls-nav); color: var(--text); line-height: var(--lh-sub); }
+  .header-nav { display: flex; gap: 20px; }
+  .header-nav a { font-size: 14px; line-height: var(--lh-one); letter-spacing: var(--ls-head); color: var(--text); text-decoration: none; }
+  .header-nav a::before { content: "●"; font-size: 7px; vertical-align: middle; margin-right: 4px; }
+
+  /* ============ HERO / 展覧会カード ============ */
+  .hero { max-width: var(--container); margin: 0 auto; padding: 34px 20px 10px; }
+  .hero-visual { height: 260px; background: var(--cat-blue); position: relative; }
+  .hero-visual .tag { position: absolute; top: 0; right: 0; background: var(--black); color: var(--white); font-size: 13px; font-weight: 700; line-height: var(--lh-one); padding: 8px 18px; letter-spacing: var(--ls-body); }
+  .exh { display: flex; gap: 22px; padding: 22px 0 30px; border-bottom: 1px solid #e5e5e5; }
+  .exh-badge { flex: 0 0 82px; height: 82px; border-radius: 100%; background: var(--cat-blue); color: var(--white); font-size: 15px; font-weight: 700; line-height: var(--lh-one); display: flex; align-items: center; justify-content: center; }
+  .exh-body { flex: 1; }
+  .exh-room { font-size: 15px; font-weight: 400; line-height: var(--lh-one); letter-spacing: var(--ls-small); color: var(--cat-blue); text-align: right; }
+  /* ★会期は 42px / weight 100（Thin）。このサイトの見せ場 */
+  .exh-date { font-size: 42px; font-weight: 100; line-height: var(--lh-one); letter-spacing: var(--ls-date); color: var(--cat-blue); margin: 10px 0 18px; }
+  .exh-title { font-size: 20px; font-weight: 400; line-height: var(--lh-title); letter-spacing: var(--ls-body); color: var(--cat-blue); }
+
+  /* ============ SECTION ============ */
+  .section { max-width: var(--container); margin: 0 auto; padding: 46px 20px; border-bottom: 1px solid #e5e5e5; }
+  .eyebrow { font-size: 16px; font-weight: 700; line-height: var(--lh-one); letter-spacing: var(--ls-head); color: var(--white); background: var(--black); display: inline-block; padding: 7px 16px; }
+  /* ★下層 h1 は 22px / weight 200（ExtraLight）/ .1em / オリーブ */
+  .section-title { font-size: 22px; font-weight: 200; line-height: var(--lh-one); letter-spacing: var(--ls-label); color: var(--cat-olive); margin: 18px 0 14px; }
+  .section-lead { font-size: 15px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-body); color: var(--text); max-width: 760px; }
+  .section-note { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-label); color: var(--disabled); margin-top: 14px; }
+
+  /* ============ COLORS ============ */
+  .color-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #e5e5e5; margin-top: 26px; }
+  .swatch { background: var(--bg); padding: 0; }
+  .swatch-chip { height: 68px; }
+  .swatch-body { padding: 12px 14px 16px; }
+  .swatch-name { font-size: 15px; font-weight: 700; line-height: var(--lh-one); letter-spacing: var(--ls-head); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 12px; line-height: var(--lh-sub); letter-spacing: var(--ls-body); color: var(--muted); margin-top: 5px; }
+  .swatch-use { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-label); color: var(--disabled); margin-top: 7px; }
+
+  /* ============ TYPE SCALE ============ */
+  .type-row { padding: 20px 0; border-bottom: 1px solid #efefef; }
+  .type-row:last-child { border-bottom: 0; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-sub); letter-spacing: var(--ls-body); color: var(--disabled); margin-top: 8px; }
+  .t-date   { font-size: 42px; font-weight: 100; line-height: var(--lh-one); letter-spacing: var(--ls-date);  color: var(--cat-green); }
+  .t-h1     { font-size: 22px; font-weight: 200; line-height: var(--lh-one); letter-spacing: var(--ls-label); color: var(--cat-olive); }
+  .t-h3     { font-size: 20px; font-weight: 400; line-height: var(--lh-title); letter-spacing: var(--ls-body); color: var(--cat-green); }
+  .t-h2     { font-size: 16px; font-weight: 700; line-height: var(--lh-one); letter-spacing: var(--ls-head); }
+  .t-sub    { font-size: 15px; font-weight: 700; line-height: var(--lh-mid); letter-spacing: var(--ls-head); }
+  .t-body   { font-size: 15px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-body); }
+  .t-nav    { font-size: 15px; font-weight: 400; line-height: var(--lh-one); letter-spacing: var(--ls-nav); }
+  .t-label  { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-label); }
+  .t-footer { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-tight); }
+
+  /* ============ WEIGHT ============ */
+  .weight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e5e5e5; margin-top: 24px; }
+  .weight-cell { background: var(--bg); padding: 18px 16px 20px; }
+  .weight-sample { font-size: 28px; line-height: var(--lh-one); letter-spacing: var(--ls-head); }
+  .w100 { font-weight: 100; } .w200 { font-weight: 200; } .w400 { font-weight: 400; } .w700 { font-weight: 700; }
+  .weight-name { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-sub); color: var(--muted); margin-top: 12px; }
+  .weight-note { font-size: 12px; line-height: var(--lh-sub); letter-spacing: var(--ls-label); color: var(--disabled); margin-top: 6px; }
+
+  /* ============ COMPONENTS ============ */
+  .comp-grid { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 24px; }
+  .btn-primary { background: var(--black); color: var(--white); border: 0; border-radius: var(--r); font-family: var(--font); font-size: 15px; font-weight: 700; line-height: var(--lh-one); letter-spacing: var(--ls-body); padding: 13px 26px; cursor: pointer; }
+  .btn-outline { background: var(--black); color: var(--white); border: 1px solid var(--text); border-radius: var(--r); font-family: var(--font); font-size: 13px; font-weight: 700; line-height: var(--lh-one); letter-spacing: var(--ls-body); padding: 11px 22px; cursor: pointer; }
+  .btn-top { background: var(--white); color: var(--text); border: 1px solid #d8d8d8; border-radius: 26px; font-family: var(--font); font-size: 12px; font-weight: 400; line-height: var(--lh-one); letter-spacing: var(--ls-label); padding: 12px 22px; cursor: pointer; }
+  .badge { width: 62px; height: 62px; border-radius: 100%; color: var(--white); font-size: 15px; font-weight: 700; line-height: var(--lh-one); display: flex; align-items: center; justify-content: center; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .card { background: var(--surface); border-radius: var(--r); padding: 20px 18px 22px; }
+  .card-cat { font-size: 13px; font-weight: 700; line-height: var(--lh-one); letter-spacing: var(--ls-body); color: var(--white); display: inline-block; padding: 5px 12px; }
+  .card-title { font-size: 15px; font-weight: 700; line-height: var(--lh-mid); letter-spacing: var(--ls-small); margin-top: 13px; }
+  .card-date { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-label); color: var(--muted); margin-top: 9px; }
+
+  /* ============ TABLE ============ */
+  table { border-collapse: collapse; width: 100%; margin-top: 24px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #e5e5e5; font-size: 14px; line-height: var(--lh-mid); letter-spacing: var(--ls-body); }
+  th { font-weight: 700; letter-spacing: var(--ls-head); background: var(--surface); }
+  td.mono { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+  /* ============ FOOTER ============ */
+  .footer { background: var(--surface); margin-top: 0; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; padding: 38px 20px 46px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+  .footer-links a { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-tight); color: var(--text); text-decoration: none; }
+  .footer-branch { display: flex; gap: 18px; margin-top: 22px; }
+  .footer-branch span { font-size: 12px; font-weight: 400; line-height: var(--lh-sub); letter-spacing: var(--ls-label); color: var(--disabled); }
+  .footer-copy { font-size: 10px; font-weight: 400; line-height: var(--lh-one); letter-spacing: var(--ls-small); color: var(--muted); margin-top: 26px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="burger"><span></span><span></span><span></span></div>
+    <div class="logo">
+      <div class="logo-ja">世田谷美術館</div>
+      <div class="logo-en">SETAGAYA ART MUSEUM</div>
+    </div>
+    <nav class="header-nav">
+      <a href="#">チケット</a><a href="#">アクセス</a><a href="#">言語</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-visual"><span class="tag">企画展</span></div>
+  <div class="exh">
+    <div class="exh-badge">開催中</div>
+    <div class="exh-body">
+      <div class="exh-room">1階展示室</div>
+      <div class="exh-date">2026.09.19 - 11.15</div>
+      <div class="exh-title">スウェーデン・テキスタイル<br>暮らしと自然に息づく北欧デザイン</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <span class="eyebrow">Color</span>
+  <h2 class="section-title">館に色を持たせず、展覧会に色を割り当てる</h2>
+  <p class="section-lead">ブランドカラーが存在しない。代わりに6色のカテゴリカラーがあり、展覧会・イベントごとに1色が割り当てられる。CSS 全文での出現回数がほぼ揃っている（12〜15 回）のは、6色が同じ役割の体系として書かれている証拠。</p>
+  <p class="section-note">色の指定は CSS 変数を介さず、クラス名が <code style="font-family:var(--font-mono)">color_</code> ＋ hex そのもの（<code style="font-family:var(--font-mono)">.color_039788</code>）。CSS Custom Properties は実サイトに 0 個。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#3e4eb8"></div><div class="swatch-body"><div class="swatch-name">Blue</div><div class="swatch-hex">#3e4eb8</div><div class="swatch-use">展覧会。可視 3 要素 / CSS 12 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#039788"></div><div class="swatch-body"><div class="swatch-name">Green</div><div class="swatch-hex">#039788</div><div class="swatch-use">展覧会。可視 3 要素 / CSS 12 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#fed910"></div><div class="swatch-body"><div class="swatch-name">Yellow</div><div class="swatch-hex">#fed910</div><div class="swatch-use">展覧会。可視 3 要素 / CSS 12 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d70000"></div><div class="swatch-body"><div class="swatch-name">Red</div><div class="swatch-hex">#d70000</div><div class="swatch-use">イベント。可視 4 要素 / CSS 15 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ec1561"></div><div class="swatch-body"><div class="swatch-name">Pink</div><div class="swatch-hex">#ec1561</div><div class="swatch-use">デジタルコンテンツ。可視 4 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#a7b809"></div><div class="swatch-body"><div class="swatch-name">Olive</div><div class="swatch-hex">#a7b809</div><div class="swatch-use">下層の見出し専用。可視 7 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text</div><div class="swatch-hex">#333333</div><div class="swatch-use">本文。可視 43 要素 / CSS 152 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f5f5f5;border:1px solid #e5e5e5"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#f5f5f5</div><div class="swatch-use">最多の面色。可視 25 要素 / CSS 60 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div><div class="swatch-use">ボタン・タブの塗り面（可視 26 要素）</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="type">
+  <span class="eyebrow">Typography</span>
+  <h2 class="section-title">書体は1本。差は太さとサイズでつける</h2>
+  <p class="section-lead">可視テキストの全要素が <code style="font-family:var(--font-mono)">YakuHanJP, "Noto Sans Japanese", sans-serif</code>（トップ 168/168、下層 108/108）。見出しも本文もナビも同じ1行で組み、太さとサイズだけで階層を作る。</p>
+  <p class="section-note">YakuHanJP は unicode-range で約物だけに限定したサブセットフォントで、Google Fonts に無いためこのプレビューでは再現できない。実サイトでは「、。「」（）・：；？！」が詰まって出る。<code style="font-family:var(--font-mono)">font-feature-settings</code> の宣言は CSS 全文で 0 件＝<strong>palt は使っていない</strong>。</p>
+
+  <div class="type-row"><div class="t-date">2026.09.19 - 11.15</div><div class="type-meta">42px / 100 / line-height: 1.00 / letter-spacing: .08em<span style="margin-left:14px">会期の日付。Thin で大きく組む</span></div></div>
+  <div class="type-row"><div class="t-h1">展覧会</div><div class="type-meta">22px / 200 / line-height: 1.00 / letter-spacing: .1em<span style="margin-left:14px">下層 h1。ExtraLight ＋ オリーブ</span></div></div>
+  <div class="type-row"><div class="t-h3">銅版画家・駒井哲郎<br>掌上にひろがる星座のような世界</div><div class="type-meta">20px / 400 / line-height: 2.10 / letter-spacing: normal<span style="margin-left:14px">展覧会タイトル。行間が極端に広い</span></div></div>
+  <div class="type-row"><div class="t-h2">新着情報</div><div class="type-meta">16px / 700 / line-height: 1.00 / letter-spacing: .05em</div></div>
+  <div class="type-row"><div class="t-sub">ミュージアム コレクション</div><div class="type-meta">15px / 700 / line-height: 1.50 / letter-spacing: .05em</div></div>
+  <div class="type-row"><div class="t-body">世田谷ゆかりの作家の展覧会をはじめ、先史美術から現代美術まで、国内外の美術館・博物館などと協力して様々な企画展を開催します。また、ミュージアム コレクションでは、約1万点の収蔵作品をテーマにそって入替えながらご紹介しています。</div><div class="type-meta">15px / 400 / line-height: 1.73 / letter-spacing: normal<span style="margin-left:14px">本文。字間は触らない</span></div></div>
+  <div class="type-row"><div class="t-nav">利用案内　展覧会　催し物　収蔵品</div><div class="type-meta">15px / 400 / line-height: 1.00 / letter-spacing: .2em<span style="margin-left:14px">グローバルナビ。最も大きく空ける</span></div></div>
+  <div class="type-row"><div class="t-label">向井潤吉アトリエ館　清川泰次記念ギャラリー　宮本三郎記念美術館</div><div class="type-meta">12px / 400 / line-height: 1.10 / letter-spacing: .1em</div></div>
+  <div class="type-row"><div class="t-footer">（公財）せたがや文化財団　ご支援のお願い　よくあるご質問</div><div class="type-meta">12px / 400 / letter-spacing: -.01em<span style="margin-left:14px">フッターリンク。負の字間</span></div></div>
+</section>
+
+<section class="section" id="weight">
+  <span class="eyebrow">Font Weight</span>
+  <h2 class="section-title">使えるのは 100 / 200 / 400 / 700 の4本だけ</h2>
+  <p class="section-lead">CSS は <code style="font-family:var(--font-mono)">@font-face</code> を 100 / 200 / 300 / 400 / 500 / 700 / 900 の7本宣言しているが、<code style="font-family:var(--font-mono)">document.fonts</code> に載るのは 100 / 200 / 400 / 700 の4本だけ。CSS が当てている 500（実測 37 要素）と 900（実測 4 要素）は、指定どおりの太さで出ていない可能性が高い。</p>
+  <p class="section-note">読み込まれるウェイトはページごとに違う。トップは 100 が loaded / 200 が unloaded、下層はその逆。ページに現れた字形しか読み込まれない。</p>
+
+  <div class="weight-grid">
+    <div class="weight-cell"><div class="weight-sample w100">世田谷美術館</div><div class="weight-name">100 Thin</div><div class="weight-note">会期の日付（42px）</div></div>
+    <div class="weight-cell"><div class="weight-sample w200">世田谷美術館</div><div class="weight-name">200 ExtraLight</div><div class="weight-note">下層 h1（22px）</div></div>
+    <div class="weight-cell"><div class="weight-sample w400">世田谷美術館</div><div class="weight-name">400 Regular</div><div class="weight-note">本文・ナビ（33 要素）</div></div>
+    <div class="weight-cell"><div class="weight-sample w700">世田谷美術館</div><div class="weight-name">700 Bold</div><div class="weight-note">見出し・バッジ（91 要素で最多）</div></div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <span class="eyebrow">Components</span>
+  <h2 class="section-title">角丸ゼロ、影なし。丸いのはバッジだけ</h2>
+  <p class="section-lead">実測で <code style="font-family:var(--font-mono)">border-radius</code> は 3 種しかなく、<code style="font-family:var(--font-mono)">box-shadow</code> はトップの 1 要素のみ。面の区別は <code style="font-family:var(--font-mono)">#f5f5f5</code> と <code style="font-family:var(--font-mono)">#ffffff</code> の差でつける。</p>
+
+  <div class="comp-grid">
+    <button class="btn-primary">展覧会を見る</button>
+    <button class="btn-outline">新着情報一覧</button>
+    <button class="btn-top">ページの先頭へ戻る</button>
+    <span class="badge" style="background:#3e4eb8">開催中</span>
+    <span class="badge" style="background:#039788">次回</span>
+    <!-- 実サイトの黄色バッジは白文字（コントラスト比 1.39）。読めないのでここは本文色に直している -->
+    <span class="badge" style="background:#fed910;color:#333333">終了</span>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-cat" style="background:#d70000">ワークショップ</span>
+      <div class="card-title">世田谷美術館×世田谷区民健康村交流ワークショップ</div>
+      <div class="card-date">2026.10.18 - 10.19</div>
+    </div>
+    <div class="card">
+      <span class="card-cat" style="background:#ec1561">デジタルコンテンツ</span>
+      <div class="card-title">セタビ Podcasting／美術大学通信講座</div>
+      <div class="card-date">2026.07.01</div>
+    </div>
+    <div class="card">
+      <span class="card-cat" style="background:#039788">企画展</span>
+      <div class="card-title">銅版画家・駒井哲郎　掌上にひろがる星座</div>
+      <div class="card-date">2026.11.28 - 01.31</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="layout">
+  <span class="eyebrow">Layout &amp; Responsive</span>
+  <h2 class="section-title">950px 固定。印刷もデスクトップで刷る</h2>
+  <p class="section-lead">コンテナは <code style="font-family:var(--font-mono)">max-width: 950px</code> 固定（CSS 全文で 11 回）。メディアクエリがすべて <code style="font-family:var(--font-mono)">print, screen and (...)</code> で書かれていて、展覧会情報を印刷する前提になっている。</p>
+
+  <table>
+    <tr><th style="width:26%">Name</th><th>Query</th><th style="width:18%">CSS 出現</th></tr>
+    <tr><td>Mobile</td><td class="mono">screen and (max-width: 600px)</td><td>3 回</td></tr>
+    <tr><td>Tablet</td><td class="mono">print, screen and (min-width: 601px) and (max-width: 949px)</td><td>3 回</td></tr>
+    <tr><td>Desktop (S)</td><td class="mono">print, screen and (min-width: 950px) and (max-width: 1023px)</td><td>1 回</td></tr>
+    <tr><td>Desktop (M)</td><td class="mono">print, screen and (min-width: 1024px) and (max-width: 1279px)</td><td>1 回</td></tr>
+    <tr><td>Desktop (L)</td><td class="mono">print, screen and (min-width: 1280px)</td><td>1 回</td></tr>
+  </table>
+
+  <p class="section-note" style="margin-top:22px"><strong>ルートの font-size は流体。</strong> 1440px で 10px、834px で 8px、375px で <strong>4.99999px</strong> まで縮む。rem を px に読み替えて固定しないこと。グローバルナビは 375px で 16px / 500 / letter-spacing 3.2px と、サイズも太さも変わる（字間は .2em のまま）。</p>
+
+  <table>
+    <tr><th style="width:26%">画面幅</th><th>html の font-size</th><th>body の font-size</th></tr>
+    <tr><td>1440px</td><td class="mono">10px</td><td class="mono">10px</td></tr>
+    <tr><td>1200px</td><td class="mono">10px</td><td class="mono">10px</td></tr>
+    <tr><td>834px</td><td class="mono">8px</td><td class="mono">8px</td></tr>
+    <tr><td>375px</td><td class="mono">4.99999px</td><td class="mono">4.99999px</td></tr>
+  </table>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">（公財）せたがや文化財団</a><a href="#">ご支援のお願い</a><a href="#">よくあるご質問</a><a href="#">プライバシーポリシー</a><a href="#">サイトマップ</a>
+    </div>
+    <div class="footer-branch">
+      <span>世田谷美術館分館</span><span>向井潤吉アトリエ館</span><span>清川泰次記念ギャラリー</span><span>宮本三郎記念美術館</span>
+    </div>
+    <div class="footer-copy">© Setagaya Art Museum.</div>
+  </div>
+</footer>
+
+</body>
+</html>

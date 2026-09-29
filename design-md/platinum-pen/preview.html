@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: プラチナ万年筆（PLATINUM PEN）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 6 個あるが、すべて問い合わせフォーム専用
+       （--input-rect-height / --cb-radio-size / --form-row-gap / --dt-label-color /
+         --dt-label-text: "任意" / --inner-text-color）。
+       色とタイポグラフィのトークンは存在せず、hex 直書き。
+       以下は computed style と CSS 全文の実測値。2026-09-29 */
+    --ink:      #040000;   /* ★本文・見出し。可視 137 要素 / CSS 9 回。純黒ではなく赤みを含む */
+    --charcoal: #131312;   /* ★ナビ・カテゴリラベル。可視 18 要素 / CSS 5 回 */
+    --black:    #000000;   /* 面。ヒーロー・ヘッダー・ボタン（viewport 最大面積 1,134,720 px²） */
+    --white:    #ffffff;   /* 黒面の上のテキスト。可視 53 / 42 要素 */
+    --gray:     #666666;   /* カルーセルのインジケータ（可視 26 要素） */
+    --gray-light: #9e9e9e; /* インジケータの非選択（可視 4 要素） */
+    --surface:  #f7f7f7;   /* セクションの面。可視 2 要素 / CSS 4 回 */
+    --bg:       #ffffff;   /* pageBackground.resolved / 根拠 body */
+    /* ヒーローは黒、その下のコンテンツは白の2層構造。heroCovered は false */
+
+    /* === Fonts ===
+       実サイトは Adobe Fonts（Typekit kit: ezj0xos）から3本。
+       ドメインライセンスのためローカルでは表示できず、以下で代替する：
+         myriad-pro          → Source Sans 3（Adobe 自身の後継。字形がほぼ同系）
+         kozuka-gothic-pr6n  → Noto Sans JP（小塚より少し太いが骨格が近い）
+         urw-din             → Archivo（DIN 系の縦長サンセリフ）
+       実サイトの body スタックは欧文が先頭の和欧二層：
+         "myriad-pro", "kozuka-gothic-pr6n", "YuGothic",
+         "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", sans-serif !important
+       ※ Adobe Fonts は document.fonts に載らない。実測の fontFaces は
+          Script / nautica の3件（全部 unloaded）だけで、これを「Webフォント未使用」と
+          読み違えないこと。 */
+    --font-body: "Source Sans 3", "Noto Sans JP", "YuGothic",
+                 "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", sans-serif;
+    --font-ja:   "Noto Sans JP", sans-serif;        /* 代替: kozuka-gothic-pr6n（CSS 50 回） */
+    --font-din:  "Archivo", sans-serif;             /* 代替: urw-din（CSS 31 回） */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Letter spacing: em を各要素に当てる。CSS 全文で .06em が 45 回で最多 === */
+    --ls-xs:    .02em;   /* CSS 5 回 */
+    --ls-sm:    .04em;   /* 一覧ラベル（10px → 0.4px） */
+    --ls-base:  .06em;   /* ★最多。英字ラベル・日付・見出し */
+    --ls-md:    .1em;    /* 商品名・カテゴリ（CSS 10 回） */
+    --ls-lg:    .12em;   /* ★ナビ・VIEW MORE（CSS 9 回） */
+    --ls-hero:  .05em;   /* ブランドの惹句 */
+
+    /* === Line height === */
+    --lh-normal: normal; /* ★実測で最多（トップ 61 要素）。単一行のラベル */
+    --lh-body:   1.30;   /* ★折り返す本文（下層 125 要素） */
+    --lh-hero:   1.50;   /* 惹句（25px → 37.5px） */
+    --lh-lead:   2.00;   /* ブランドの説明文（1 要素） */
+    --lh-one:    1.00;
+
+    --r: 0px;            /* ★角丸なし。例外はカルーセルのドットの 50% だけ */
+    /* box-shadow は実測 0 種 / 0 要素。影を足さない */
+
+    --container: 1014px; /* ★半端だがこれが本文幅（実測 5〜6 要素で最多） */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: var(--lh-normal);
+    letter-spacing: normal;
+    /* ★実サイトは body に1回だけ palt を書いて全体に継承させている（CSS 全文 1 件 / 実測 560〜564 要素） */
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ HEADER ============ */
+  .header { background: var(--black); color: var(--white); }
+  .header-top { display: flex; align-items: center; padding: 16px 30px; }
+  .burger { width: 26px; display: flex; flex-direction: column; gap: 5px; }
+  .burger span { display: block; height: 1px; background: var(--white); }
+  .header-search { font-family: var(--font-din); font-size: 11px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-base); margin-left: 22px; }
+  .brandmark { margin: 0 auto; text-align: center; }
+  .brandmark-name { font-family: var(--font-din); font-size: 20px; font-weight: 500; letter-spacing: var(--ls-lg); line-height: var(--lh-one); }
+  .brandmark-sub { font-family: var(--font-din); font-size: 9px; font-weight: 400; letter-spacing: var(--ls-lg); line-height: var(--lh-one); margin-top: 5px; }
+  .header-lang { font-family: var(--font-din); font-size: 11px; font-weight: 500; letter-spacing: var(--ls-base); }
+  .header-nav { display: flex; border-top: 1px solid #222; }
+  .header-nav a { flex: 1; text-align: center; font-family: var(--font-ja); font-size: 12px; font-weight: 600; line-height: var(--lh-normal); letter-spacing: var(--ls-lg); color: var(--white); text-decoration: none; padding: 15px 0; border-left: 1px solid #222; }
+  .header-nav a:first-child { border-left: 0; }
+
+  /* ============ HERO ============ */
+  .hero { background: var(--black); padding: 74px 30px 88px; text-align: center; }
+  .hero-crumbs { font-family: var(--font-ja); font-size: 12px; font-weight: 500; letter-spacing: var(--ls-lg); color: var(--gray-light); }
+  /* ★惹句は 25px / 500 / line-height 1.5 / .05em */
+  .hero-title { font-family: var(--font-ja); font-size: 25px; font-weight: 500; line-height: var(--lh-hero); letter-spacing: var(--ls-hero); color: var(--white); margin: 40px 0 26px; }
+  .hero-lead { font-family: var(--font-ja); font-size: 13px; font-weight: 400; line-height: var(--lh-lead); letter-spacing: var(--ls-md); color: var(--white); max-width: 620px; margin: 0 auto; }
+  .hero-more { display: inline-block; margin-top: 34px; background: transparent; color: var(--white); border: 2px solid var(--white); border-radius: var(--r); font-family: var(--font-din); font-size: 11.232px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-lg); padding: 15px 38px; text-decoration: none; }
+
+  /* ============ SECTION ============ */
+  .section { max-width: var(--container); margin: 0 auto; padding: 60px 20px; border-bottom: 1px solid #e8e8e8; }
+  /* ★セクション見出しは 英字（urw-din 18px）の下に 和文を 10px で小さく添える */
+  .sec-en { font-family: var(--font-din); font-size: 18px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-base); color: var(--ink); }
+  .sec-ja { font-family: var(--font-ja); font-size: 10px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-md); color: var(--ink); margin-top: 9px; }
+  .sec-lead { font-family: var(--font-ja); font-size: 13px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-md); color: var(--ink); max-width: 780px; margin-top: 26px; }
+  .sec-note { font-family: var(--font-ja); font-size: 12px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-sm); color: var(--gray); margin-top: 14px; max-width: 780px; }
+
+  /* ============ COLORS ============ */
+  .color-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e8e8e8; margin-top: 30px; }
+  .swatch { background: var(--bg); }
+  .swatch-chip { height: 64px; }
+  .swatch-body { padding: 13px 14px 17px; }
+  .swatch-name { font-family: var(--font-ja); font-size: 12px; font-weight: 600; line-height: var(--lh-one); letter-spacing: var(--ls-md); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-body); color: var(--gray); margin-top: 6px; }
+  .swatch-use { font-family: var(--font-ja); font-size: 10px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-sm); color: var(--gray); margin-top: 7px; }
+
+  /* ============ TYPE ============ */
+  .type-row { padding: 19px 0; border-bottom: 1px solid #f0f0f0; }
+  .type-row:last-child { border-bottom: 0; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-body); color: var(--gray); margin-top: 9px; }
+  .t-h1    { font-family: var(--font-ja); font-size: 30px; font-weight: 500; line-height: var(--lh-normal); letter-spacing: normal; }
+  .t-hero  { font-family: var(--font-ja); font-size: 25px; font-weight: 500; line-height: var(--lh-hero); letter-spacing: var(--ls-hero); }
+  .t-secen { font-family: var(--font-din); font-size: 18px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-base); }
+  .t-secja { font-family: var(--font-ja); font-size: 10px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-md); }
+  .t-nav   { font-family: var(--font-ja); font-size: 12px; font-weight: 600; line-height: var(--lh-normal); letter-spacing: var(--ls-lg); }
+  .t-item  { font-family: var(--font-ja); font-size: 13px; font-weight: 500; line-height: var(--lh-body); letter-spacing: var(--ls-md); }
+  .t-label { font-family: var(--font-ja); font-size: 10px; font-weight: 500; line-height: var(--lh-body); letter-spacing: var(--ls-sm); }
+  .t-din   { font-family: var(--font-din); font-size: 11px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-base); }
+  .t-date  { font-family: var(--font-ja); font-size: 12px; font-weight: 500; letter-spacing: var(--ls-base); }
+
+  /* ============ WEIGHT ============ */
+  .weight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e8e8e8; margin-top: 26px; }
+  .weight-cell { background: var(--bg); padding: 18px 16px 20px; }
+  .weight-sample { font-family: var(--font-ja); font-size: 24px; line-height: var(--lh-one); letter-spacing: var(--ls-base); }
+  .w400 { font-weight: 400; } .w500 { font-weight: 500; } .w600 { font-weight: 600; } .w700 { font-weight: 700; }
+  .weight-name { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-body); color: var(--gray); margin-top: 13px; }
+  .weight-note { font-family: var(--font-ja); font-size: 10px; line-height: var(--lh-body); letter-spacing: var(--ls-sm); color: var(--gray); margin-top: 6px; }
+  .weight-cell.off { background: var(--surface); }
+  .weight-cell.off .weight-sample { color: var(--gray-light); }
+
+  /* ============ COMPONENTS ============ */
+  .comp-dark { background: var(--black); padding: 40px 30px; margin-top: 30px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .comp-light { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 22px; }
+  .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); border-radius: var(--r); font-family: var(--font-din); font-size: 11.232px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-lg); padding: 14px 34px; cursor: pointer; }
+  .btn-fill { background: var(--black); color: var(--white); border: 2px solid var(--black); border-radius: var(--r); font-family: var(--font-ja); font-size: 10px; font-weight: 500; line-height: var(--lh-one); letter-spacing: var(--ls-md); padding: 14px 30px; cursor: pointer; }
+  .btn-tag { background: var(--black); color: var(--white); border: 0; border-radius: var(--r); font-family: var(--font-ja); font-size: 12px; font-weight: 400; line-height: var(--lh-normal); letter-spacing: var(--ls-md); padding: 7px 14px; }
+  .dots { display: flex; gap: 9px; align-items: center; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gray); }
+  .dot.on { background: var(--white); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 26px; }
+  .card { background: var(--bg); }
+  .card-img { height: 128px; background: var(--surface); border: 1px solid #ececec; }
+  .card-name { font-family: var(--font-ja); font-size: 13px; font-weight: 500; line-height: var(--lh-body); letter-spacing: var(--ls-md); margin-top: 13px; }
+  .card-sku { font-family: var(--font-ja); font-size: 10px; font-weight: 500; line-height: var(--lh-body); letter-spacing: var(--ls-sm); color: var(--gray); margin-top: 7px; }
+
+  /* ============ TABLE ============ */
+  table { border-collapse: collapse; width: 100%; margin-top: 26px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #e8e8e8; font-family: var(--font-ja); font-size: 13px; line-height: var(--lh-body); letter-spacing: var(--ls-sm); }
+  th { font-weight: 600; letter-spacing: var(--ls-md); background: var(--surface); }
+  td.mono { font-family: var(--font-mono); font-size: 11px; color: var(--gray); letter-spacing: normal; }
+
+  /* ============ FOOTER ============ */
+  .footer { background: var(--black); color: var(--white); }
+  .footer-inner { max-width: var(--container); margin: 0 auto; padding: 44px 20px 50px; }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 26px; }
+  .footer-nav a { font-family: var(--font-ja); font-size: 12px; font-weight: 500; line-height: var(--lh-normal); letter-spacing: var(--ls-md); color: var(--white); text-decoration: none; }
+  .footer-follow { font-family: var(--font-din); font-size: 12px; font-weight: 500; letter-spacing: var(--ls-base); margin-top: 30px; }
+  .footer-copy { font-family: var(--font-din); font-size: 10px; font-weight: 400; letter-spacing: var(--ls-base); color: var(--gray-light); margin-top: 22px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div class="burger"><span></span><span></span><span></span></div>
+    <span class="header-search">SEARCH</span>
+    <div class="brandmark">
+      <div class="brandmark-name">PLATINUM</div>
+      <div class="brandmark-sub">JAPAN 1919</div>
+    </div>
+    <span class="header-lang">LANGUAGE</span>
+  </div>
+  <nav class="header-nav">
+    <a href="#">商品情報</a><a href="#">新着情報</a><a href="#">スペシャル</a><a href="#">取扱店舗</a><a href="#">万年筆について</a><a href="#">オンラインストア</a><a href="#">修理について</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-crumbs">TOP ＞ ブランド一覧 ＞ 出雲</div>
+  <h1 class="hero-title">急がず淀みなく精緻な技巧を紡ぎ出す</h1>
+  <p class="hero-lead">日本の神々が年に一度集まり、太古より祀られる場所。その地の名を冠した万年筆は、八雲塗りの艶やかな軸に、幾重にも塗り重ねた漆の層を宿す。</p>
+  <a href="#" class="hero-more">VIEW MORE</a>
+</div>
+
+<section class="section" id="colors">
+  <div class="sec-en">COLOR</div>
+  <div class="sec-ja">配色</div>
+  <p class="sec-lead">彩度を持つブランドカラーが無い。黒・白・グレーだけで組み、色は製品写真が担う。黒が2つある（<code style="font-family:var(--font-mono)">#040000</code> と <code style="font-family:var(--font-mono)">#131312</code>）のは実装の実態で、テキストと ナビ・ラベルで使い分けられている。</p>
+  <p class="sec-note">ヒーローは黒（viewport 最大面積 1,134,720 px²）、その下のコンテンツは白の2層構造。pageBackground.resolved は #ffffff（根拠 body）だが、「このサイトは白地」とも「黒地」とも書けない。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#040000"></div><div class="swatch-body"><div class="swatch-name">Ink Black</div><div class="swatch-hex">#040000</div><div class="swatch-use">本文・見出し。可視 137 要素 / CSS 9 回。純黒ではない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#131312"></div><div class="swatch-body"><div class="swatch-name">Charcoal</div><div class="swatch-hex">#131312</div><div class="swatch-use">ナビ・カテゴリラベル。可視 18 要素 / CSS 5 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black（面）</div><div class="swatch-hex">#000000</div><div class="swatch-use">ヒーロー・ヘッダー・ボタンの塗り面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border:1px solid #e8e8e8"></div><div class="swatch-body"><div class="swatch-name">White</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">黒面の上のテキスト。可視 53 / 42 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#666666"></div><div class="swatch-body"><div class="swatch-name">Gray</div><div class="swatch-hex">#666666</div><div class="swatch-use">カルーセルのインジケータ（可視 26 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#9e9e9e"></div><div class="swatch-body"><div class="swatch-name">Gray Light</div><div class="swatch-hex">#9e9e9e</div><div class="swatch-use">インジケータの非選択（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f7f7f7;border:1px solid #e8e8e8"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#f7f7f7</div><div class="swatch-use">セクションの面。可視 2 要素 / CSS 4 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:rgba(0,0,0,0.4)"></div><div class="swatch-body"><div class="swatch-name">Overlay</div><div class="swatch-hex">rgba(0,0,0,.4)</div><div class="swatch-use">写真の上に文字を置くときの調整（2 要素）</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="type">
+  <div class="sec-en">TYPOGRAPHY</div>
+  <div class="sec-ja">書体</div>
+  <p class="sec-lead">Adobe Fonts（Typekit kit: <code style="font-family:var(--font-mono)">ezj0xos</code>）から3本。欧文 <code style="font-family:var(--font-mono)">myriad-pro</code>、和文 <code style="font-family:var(--font-mono)">kozuka-gothic-pr6n</code>（小塚ゴシック Pr6N）、ラベル用に <code style="font-family:var(--font-mono)">urw-din</code>。body のスタックは欧文が先頭の和欧二層で、英数字だけ Myriad Pro、かなと漢字は小塚ゴシックに落ちる。</p>
+  <p class="sec-note">Adobe Fonts はドメインライセンスのためローカルでは表示できない。このプレビューは Source Sans 3 / Noto Sans JP / Archivo で代替している。セクション見出しは英字（urw-din 18px）の下に和文を 10px で小さく添えるのが型。</p>
+
+  <div class="type-row"><div class="t-h1">出雲</div><div class="type-meta">30px / 500 / line-height: normal / letter-spacing: normal<span style="margin-left:14px">ページ見出し（h1）</span></div></div>
+  <div class="type-row"><div class="t-hero">急がず淀みなく精緻な技巧を紡ぎ出す</div><div class="type-meta">25px / 500 / line-height: 1.50 / letter-spacing: .05em<span style="margin-left:14px">ブランドの惹句</span></div></div>
+  <div class="type-row"><div class="t-secen">IZUMO'S LINEUP</div><div class="t-secja" style="margin-top:8px">出雲の商品</div><div class="type-meta">英字 18px / 500 / .06em（urw-din）＋ 和文 10px / 500 / .1em<span style="margin-left:14px">セクション見出しの型</span></div></div>
+  <div class="type-row"><div class="t-nav">商品情報　新着情報　スペシャル　取扱店舗</div><div class="type-meta">12px / 600 / line-height: normal / letter-spacing: .12em<span style="margin-left:14px">グローバルナビ</span></div></div>
+  <div class="type-row"><div class="t-item">八雲塗り 『八雲白檀』</div><div class="type-meta">13px / 500 / line-height: 1.30 / letter-spacing: .1em<span style="margin-left:14px">商品名。下層 45 要素</span></div></div>
+  <div class="type-row"><div class="t-label">#19 ヤクモビャクダン　万年筆の仕組み　加飾技法と軸素材　ペンポイントの種類</div><div class="type-meta">10px / 500 / line-height: 1.30 / letter-spacing: .04em<span style="margin-left:14px">一覧ラベル。下層 107 要素で最多</span></div></div>
+  <div class="type-row"><div class="t-din">SEARCH　LANGUAGE　GIFT　VIEW MORE</div><div class="type-meta">11px / 500 / line-height: 1.00 / letter-spacing: .06em（urw-din）<span style="margin-left:14px">UI ラベルはすべて英字書体</span></div></div>
+  <div class="type-row"><div class="t-date">2026.9.28　プレスリリース</div><div class="type-meta">12px / 500 / letter-spacing: .06em</div></div>
+</section>
+
+<section class="section" id="weight">
+  <div class="sec-en">FONT WEIGHT</div>
+  <div class="sec-ja">太さ</div>
+  <p class="sec-lead"><strong>font-weight: 700 が 1 要素も無い。</strong> 実測は 500 が 161 要素で最多、次いで 400（28）・600（9）。CSS 全文でも <code style="font-family:var(--font-mono)">font-weight: 500</code> が 83 回で圧倒的。太字を書かない設計で、強調はサイズ（10px ↔ 25px）と字間（.04em ↔ .12em）でつける。</p>
+  <p class="sec-note">Typekit が配信しているのは fvd=n4（Regular）と fvd=n7（Bold）の2本。CSS が当てている 500 / 600 は、その間で最近傍に寄る。新規実装では 400 と 500 の2段で組む。</p>
+
+  <div class="weight-grid">
+    <div class="weight-cell"><div class="weight-sample w400">万年筆</div><div class="weight-name">400 Regular</div><div class="weight-note">本文・カテゴリ（28 要素）</div></div>
+    <div class="weight-cell"><div class="weight-sample w500">万年筆</div><div class="weight-name">500 Medium</div><div class="weight-note">★最多（161 要素）。既定の太さ</div></div>
+    <div class="weight-cell"><div class="weight-sample w600">万年筆</div><div class="weight-name">600 SemiBold</div><div class="weight-note">ナビのみ（9 要素）</div></div>
+    <div class="weight-cell off"><div class="weight-sample w700">万年筆</div><div class="weight-name">700 Bold</div><div class="weight-note">実測 0 要素。使わない</div></div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <div class="sec-en">COMPONENTS</div>
+  <div class="sec-ja">部品</div>
+  <p class="sec-lead">角丸は <code style="font-family:var(--font-mono)">0px</code>、影は実測 0 種 / 0 要素。角丸が付く唯一の要素はカルーセルのドット（50%）。ボタンの枠は <strong>2px</strong> で、1px ではない。</p>
+
+  <div class="comp-dark">
+    <button class="btn-outline">VIEW MORE</button>
+    <button class="btn-fill">新着情報一覧</button>
+    <span class="btn-tag">プレスリリース</span>
+    <div class="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-img"></div><div class="card-name">八雲塗り 『八雲白檀』</div><div class="card-sku">#19 ヤクモビャクダン</div></div>
+    <div class="card"><div class="card-img"></div><div class="card-name">センチュリー 3776</div><div class="card-sku">PNB-15000 ブルゴーニュ</div></div>
+    <div class="card"><div class="card-img"></div><div class="card-name">プレジデント</div><div class="card-sku">PTB-20000 ブラック</div></div>
+    <div class="card"><div class="card-img"></div><div class="card-name">プロシオン</div><div class="card-sku">PNS-5000 ディープシー</div></div>
+  </div>
+</section>
+
+<section class="section" id="layout">
+  <div class="sec-en">LAYOUT &amp; RESPONSIVE</div>
+  <div class="sec-ja">レイアウト</div>
+  <p class="sec-lead">コンテナは <code style="font-family:var(--font-mono)">1014px</code>（半端だがこれが本文幅）。ブレークポイントは <strong>768px の1本だけ</strong>で、タブレット専用のレイアウトを持たない。<code style="font-family:var(--font-mono)">prefers-reduced-motion</code> に対応している。</p>
+
+  <table>
+    <tr><th style="width:26%">Name</th><th>Query</th><th style="width:18%">CSS 出現</th></tr>
+    <tr><td>Mobile</td><td class="mono">screen and (max-width: 767px)</td><td>524 回</td></tr>
+    <tr><td>Desktop</td><td class="mono">screen and (min-width: 768px)</td><td>219 回</td></tr>
+    <tr><td>補助</td><td class="mono">(min-width: 600px)</td><td>4 回</td></tr>
+    <tr><td>モーション</td><td class="mono">(prefers-reduced-motion: reduce)</td><td>4 回</td></tr>
+  </table>
+
+  <p class="sec-note" style="margin-top:22px"><strong>実サイトに、絶対にマッチしない条件が 2 件ある。</strong> <code style="font-family:var(--font-mono)">screen and (min-width: 768px) and (max-width: 767px)</code> は下限が上限を上回っているため、この中の宣言はどの画面幅でも適用されない。複製したコードの書き換え漏れとみられる。真似しないこと。</p>
+  <p class="sec-note">ルートの font-size は 4 幅（1440 / 1200 / 834 / 375px）すべてで <code style="font-family:var(--font-mono)">10px</code>、body は <code style="font-family:var(--font-mono)">15px</code> で固定。流体ではない。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <nav class="footer-nav">
+      <a href="#">商品情報一覧</a><a href="#">ブランド一覧</a><a href="#">ギフト</a><a href="#">ノベルティー（名入れ）</a><a href="#">会社案内</a><a href="#">採用情報</a><a href="#">お問い合わせ</a>
+    </nav>
+    <div class="footer-follow">FOLLOW US!!</div>
+    <div class="footer-copy">© PLATINUM PEN CO., LTD.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: シロカ（siroca）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Montserrat:wght@300&family=Shippori+Mincho:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       自社の CSS Custom Properties は 0 個（実測で検出された 3 個は WordPress admin bar 由来）。
+       以下は computed style と CSS 全文の実測値。2026-09-29 */
+    --blue:       #11ade6;   /* ★主アクセント。可視 5 要素 / CSS 26 回。リンク・バッジ */
+    --blue-dark:  #0098d5;   /* ヘッダーのボタンの面。可視 2 要素 / CSS 10 回 */
+    --blue-ind:   #0faee8;   /* カルーセルの選択中インジケータ（可視 2 要素） */
+    /* ★水色が3つある。#11ade6 に丸めるとヘッダーのボタンだけ浮く */
+
+    --text:       #000000;   /* ★本文。可視 87 / 163 要素。このサイトは純黒を使う */
+    --white:      #ffffff;
+    --muted:      #a5a5a5;   /* 日付（可視 1 要素） */
+    --secondary:  #707070;   /* 補足文（可視 1 要素） */
+    --bg:         #e4e4e4;   /* ★ページ背景。body 直指定。実測 289 要素 / CSS 15 回。白ではない */
+    --surface:    #ffffff;   /* カード。地色との明度差で面を作る */
+    --surface-header: #f2f2f2;  /* お知らせ帯・ヘッダー。可視 2 要素 / CSS 7 回 */
+    --surface-chip:   #eef2f3;  /* 製品カテゴリのチップ（可視 4 要素） */
+    --indicator:  #cccccc;   /* カルーセルのドット（可視 15 要素） */
+    /* body の CSS には color: #40464d と書いてあるが CSS 全文で 1 回だけ。
+       実測の本文色は #000000 で、各要素が黒で上書きしている。#40464d は採用しない */
+
+    /* === Fonts ===
+       実サイトは "Noto Sans JP", sans-serif の 1 本（可視 87 / 173 要素）。
+       self-host で @font-face を unicode-range で 1017 件に分割して配信。
+       300 / 400 / 500 / 700 の 4 本すべてが loaded。
+       ・Montserrat は日付・年号のみ（可視 6 要素）。loaded は 300 だけ。
+       ・"Noto Serif JP" を 400/500/600/700 の 4 本読み込んでいるが
+         document.fonts で全部 unloaded、可視 0 要素。明朝のサイトではない。
+         （CSS 全文に font-family: 'Noto Serif JP' が 496 回あるのは @font-face のサブセット定義）
+       ・明朝はトップの惹句 1 箇所だけで、OS ローカルのヒラギノ明朝スタックを使う。
+         ローカル再現のため Shippori Mincho をフォールバックに足している。 */
+    --font:        "Noto Sans JP", sans-serif;
+    --font-num:    "Montserrat", sans-serif;
+    --font-mincho: "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", 游明朝, YuMincho,
+                   HG明朝E, "ＭＳ Ｐ明朝", "ＭＳ 明朝", "Shippori Mincho", serif;
+    --font-mono:   SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Letter spacing: em を 2 段階だけ。normal は英語ラベルのみ === */
+    --ls-sm:   .1em;     /* ★CSS 95 回。小さい文字（製品名・お知らせ・チップ・日付） */
+    --ls-lg:   .2em;     /* ★CSS 50 回。見せる文字（ナビ・見出し・ページタイトル） */
+    --ls-mid:  .14em;    /* CSS 8 回 */
+    --ls-none: normal;   /* 英語ラベルのみ（Previous / Next / Launguage / English） */
+
+    /* === Line height === */
+    --lh-body: 1.50;   /* ★body の line-height: 24px（= 16px × 1.5）。実測 87 / 103 要素 */
+    --lh-list: 1.60;   /* 製品一覧（下層 70 要素） */
+    --lh-lead: 1.95;   /* リード文（1 要素） */
+
+    --r-card: 8px;     /* カード・チップ */
+    --r-badge: 10px;   /* アウトラインのバッジ */
+    --r-btn: 0px;      /* ヘッダーのボタンは角丸なし */
+    /* box-shadow は実測 0 種 / 0 要素。面の区別は地色 #e4e4e4 と白の差でつける */
+
+    --container: 1200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;   /* ★絶対値で書かれている。単位なしの 1.5 に書き換えると別物になる */
+    letter-spacing: var(--ls-none);
+    /* font-feature-settings は実サイトで 1 件も宣言されていない（CSS 全文 0 件 / 実測 0 要素）。
+       約物サブセット（YakuHanJP 等）も入れていない。
+       ＝約物は詰まらない。その上に letter-spacing を重ねるのがこのサイトの字面の作り方 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ NOTICE BAR ============ */
+  .notice { background: var(--surface-header); display: flex; align-items: center; }
+  .notice-body { flex: 1; display: flex; align-items: center; gap: 14px; padding: 14px 24px; }
+  .notice-icon { width: 20px; height: 20px; border-radius: 50%; background: var(--blue); }
+  .notice-date { font-family: var(--font-num); font-size: 12px; font-weight: 300; line-height: 18px; letter-spacing: var(--ls-sm); color: var(--muted); }
+  .notice-text { font-size: 12px; font-weight: 400; line-height: 18px; letter-spacing: var(--ls-sm); }
+  .notice-btns { display: flex; }
+  .notice-btns a { background: var(--blue-dark); color: var(--white); border-radius: var(--r-btn); font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: var(--ls-sm); padding: 15px 22px; text-decoration: none; border-left: 1px solid rgba(255,255,255,.35); }
+  .notice-plain { padding: 15px 22px; font-size: 12px; font-weight: 500; line-height: 18px; letter-spacing: var(--ls-lg); }
+
+  /* ============ HEADER ============ */
+  .header { background: var(--surface); }
+  .header-inner { max-width: var(--container); margin: 0 auto; padding: 26px 24px; display: flex; align-items: center; }
+  .logo { font-size: 30px; font-weight: 300; letter-spacing: var(--ls-lg); color: var(--blue); line-height: 1; }
+  .gnav { margin-left: auto; display: flex; gap: 34px; }
+  /* ★グローバルナビ 14px / 700 / .2em */
+  .gnav a { font-size: 14px; font-weight: 700; line-height: 21px; letter-spacing: var(--ls-lg); color: var(--text); text-decoration: none; }
+
+  /* ============ HERO ============ */
+  .hero { background: var(--surface); }
+  .hero-visual { height: 300px; background: linear-gradient(160deg, #d4d8da 0%, #b9c0c3 55%, #9ea6aa 100%); display: flex; align-items: center; justify-content: center; }
+  .hero-logo { font-size: 58px; font-weight: 300; letter-spacing: var(--ls-lg); color: var(--white); line-height: 1; }
+  .hero-dots { display: flex; gap: 9px; justify-content: center; padding: 20px 0 26px; background: var(--surface); }
+  .hero-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--indicator); }
+  .hero-dot.on { background: var(--blue-ind); }
+
+  /* ============ SECTION ============ */
+  .section { max-width: var(--container); margin: 34px auto; padding: 42px 30px 48px; background: var(--surface); border-radius: var(--r-card); }
+  /* ★セクション見出し 20px / 700 / .2em */
+  .sec-title { font-size: 20px; font-weight: 700; line-height: 30px; letter-spacing: var(--ls-lg); }
+  .sec-lead { font-size: 16px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-none); max-width: 830px; margin-top: 20px; }
+  .sec-note { font-size: 12px; font-weight: 400; line-height: 18px; letter-spacing: var(--ls-sm); color: var(--secondary); margin-top: 14px; max-width: 830px; }
+
+  /* ============ COLORS ============ */
+  .color-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 30px; }
+  .swatch { background: var(--bg); border-radius: var(--r-card); overflow: hidden; }
+  .swatch-chip { height: 62px; }
+  .swatch-body { padding: 13px 14px 17px; }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: 21px; letter-spacing: var(--ls-sm); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; line-height: 18px; color: var(--secondary); margin-top: 4px; }
+  .swatch-use { font-size: 10px; font-weight: 400; line-height: var(--lh-list); letter-spacing: var(--ls-sm); color: var(--secondary); margin-top: 7px; }
+
+  /* ============ TYPE ============ */
+  .type-row { padding: 20px 0; border-bottom: 1px solid #ececec; }
+  .type-row:last-child { border-bottom: 0; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: 18px; color: var(--secondary); margin-top: 9px; }
+  /* ★ページタイトル 36.5px / 300（Light）/ .2em */
+  .t-page   { font-size: 36.5px; font-weight: 300; line-height: 54.75px; letter-spacing: var(--ls-lg); }
+  .t-hero   { font-size: 29px; font-weight: 700; line-height: 43.5px; letter-spacing: var(--ls-sm); }
+  .t-mincho { font-family: var(--font-mincho); font-size: 28px; line-height: 54.6px; }
+  .t-sec    { font-size: 20px; font-weight: 700; line-height: 30px; letter-spacing: var(--ls-lg); }
+  .t-h4     { font-size: 16px; font-weight: 700; line-height: 24px; letter-spacing: var(--ls-none); }
+  .t-body   { font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: var(--ls-none); }
+  .t-nav    { font-size: 14px; font-weight: 700; line-height: 21px; letter-spacing: var(--ls-lg); }
+  .t-item   { font-size: 10px; font-weight: 400; line-height: var(--lh-list); letter-spacing: var(--ls-sm); }
+  .t-link   { font-size: 12px; font-weight: 400; line-height: 18px; letter-spacing: var(--ls-sm); }
+  .t-crumb  { font-size: 12px; font-weight: 500; line-height: 18px; letter-spacing: var(--ls-lg); }
+  .t-date   { font-family: var(--font-num); font-size: 12px; font-weight: 300; line-height: 18px; letter-spacing: var(--ls-sm); color: var(--muted); }
+
+  /* ============ LETTER SPACING DEMO ============ */
+  .ls-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .ls-cell { background: var(--bg); border-radius: var(--r-card); padding: 22px 20px 24px; }
+  .ls-sample { font-size: 16px; font-weight: 700; line-height: 24px; }
+  .ls-a { letter-spacing: .1em; } .ls-b { letter-spacing: .2em; } .ls-c { letter-spacing: normal; }
+  .ls-name { font-family: var(--font-mono); font-size: 11px; line-height: 18px; color: var(--secondary); margin-top: 12px; }
+  .ls-note { font-size: 10px; line-height: var(--lh-list); letter-spacing: var(--ls-sm); color: var(--secondary); margin-top: 6px; }
+
+  /* ============ WEIGHT ============ */
+  .weight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 26px; }
+  .weight-cell { background: var(--bg); border-radius: var(--r-card); padding: 20px 18px 22px; }
+  .weight-sample { font-size: 26px; line-height: 1.2; letter-spacing: var(--ls-sm); }
+  .w300 { font-weight: 300; } .w400 { font-weight: 400; } .w700 { font-weight: 700; } .w900 { font-weight: 900; }
+  .weight-name { font-family: var(--font-mono); font-size: 11px; line-height: 18px; color: var(--secondary); margin-top: 13px; }
+  .weight-note { font-size: 10px; line-height: var(--lh-list); letter-spacing: var(--ls-sm); color: var(--secondary); margin-top: 6px; }
+  .weight-cell.off .weight-sample { color: var(--secondary); }
+
+  /* ============ COMPONENTS ============ */
+  .comp-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 28px; }
+  .btn-header { background: var(--blue-dark); color: var(--white); border: 0; border-radius: var(--r-btn); font-family: var(--font); font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: var(--ls-sm); padding: 15px 22px; cursor: pointer; }
+  .btn-strong { background: var(--blue); color: var(--white); border: 0; border-radius: var(--r-card); font-family: var(--font); font-size: 16px; font-weight: 900; line-height: 24px; letter-spacing: var(--ls-lg); padding: 24px 32px; cursor: pointer; }
+  .badge-out { background: transparent; color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r-badge); font-family: var(--font); font-size: 12.2px; font-weight: 700; line-height: 18px; letter-spacing: var(--ls-sm); padding: 8px 18px; }
+  .chip { background: var(--surface-chip); color: var(--blue); border-radius: var(--r-card); font-size: 12.2px; font-weight: 700; line-height: 18px; letter-spacing: var(--ls-sm); padding: 9px 18px 12px; display: inline-block; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 28px; }
+  .card { background: var(--bg); border-radius: var(--r-card); padding: 18px 16px 20px; }
+  .card-img { height: 104px; background: var(--surface); border-radius: var(--r-card); }
+  .card-name { font-size: 10px; font-weight: 400; line-height: var(--lh-list); letter-spacing: var(--ls-sm); margin-top: 14px; }
+
+  .support { background: var(--surface); border-radius: var(--r-card); padding: 20px 15px 20px 20px; margin-top: 18px; border: 1px solid #ececec; }
+  .support-title { font-size: 18px; font-weight: 400; line-height: 27px; letter-spacing: var(--ls-lg); }
+  .support-text { font-size: 16px; font-weight: 400; line-height: 21.28px; letter-spacing: var(--ls-none); color: var(--secondary); margin-top: 8px; }
+
+  /* ============ TABLE ============ */
+  table { border-collapse: collapse; width: 100%; margin-top: 26px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #ececec; font-size: 14px; line-height: 21px; letter-spacing: var(--ls-sm); }
+  th { font-weight: 700; letter-spacing: var(--ls-lg); background: var(--bg); }
+  td.mono { font-family: var(--font-mono); font-size: 11px; color: var(--secondary); letter-spacing: normal; }
+
+  /* ============ FOOTER ============ */
+  .footer { max-width: var(--container); margin: 34px auto 50px; padding: 0 30px; }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 26px; }
+  .footer-nav a { font-size: 12px; font-weight: 400; line-height: 18px; letter-spacing: var(--ls-sm); color: var(--text); text-decoration: none; }
+  .footer-copy { font-family: var(--font-num); font-size: 12px; font-weight: 300; line-height: 18px; letter-spacing: var(--ls-sm); color: var(--secondary); margin-top: 22px; }
+</style>
+</head>
+<body>
+
+<div class="notice">
+  <div class="notice-body">
+    <span class="notice-icon"></span>
+    <span class="notice-date">2026.07.31</span>
+    <span class="notice-text">令和８年熊本地震により被災した弊社製品の修理対応につきまして</span>
+  </div>
+  <div class="notice-btns">
+    <span class="notice-plain">企業情報</span>
+    <a href="#">オンラインストア</a>
+    <a href="#">法人様向けページ</a>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">siroca</div>
+    <nav class="gnav">
+      <a href="#">製品情報</a><a href="#">レシピ</a><a href="#">読みもの</a><a href="#">お客様サポート</a><a href="#">グループブランド</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-visual"><div class="hero-logo">siroca</div></div>
+  <div class="hero-dots">
+    <span class="hero-dot"></span><span class="hero-dot on"></span><span class="hero-dot"></span><span class="hero-dot"></span><span class="hero-dot"></span>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <h2 class="sec-title">灰色の地に、白い面を浮かべる</h2>
+  <p class="sec-lead">ページ背景が <code style="font-family:var(--font-mono)">#ffffff</code> ではなく <code style="font-family:var(--font-mono)">#e4e4e4</code>（body 直指定・実測 289 要素）。カードだけが白く抜ける。影を一切使わず、面の区別は明度差だけでつけている。</p>
+  <p class="sec-note">水色が3つある。#11ade6（リンク・バッジ）、#0098d5（ヘッダーのボタンの面）、#0faee8（インジケータ）。#11ade6 を基準にしてよいが、既存ページと並べるときは3つあることを前提にする。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#11ade6"></div><div class="swatch-body"><div class="swatch-name">siroca Blue</div><div class="swatch-hex">#11ade6</div><div class="swatch-use">主アクセント。可視 5 要素 / CSS 26 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#0098d5"></div><div class="swatch-body"><div class="swatch-name">Blue Dark</div><div class="swatch-hex">#0098d5</div><div class="swatch-use">ヘッダーのボタンの面。CSS 10 回</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#0faee8"></div><div class="swatch-body"><div class="swatch-name">Indicator</div><div class="swatch-hex">#0faee8</div><div class="swatch-use">カルーセルの選択中（可視 2 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text</div><div class="swatch-hex">#000000</div><div class="swatch-use">本文。可視 87 / 163 要素。純黒を使う</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e4e4e4;border:1px solid #d4d4d4"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#e4e4e4</div><div class="swatch-use">ページ背景。実測 289 要素。白ではない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border:1px solid #d4d4d4"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">カード。地色との明度差で面を作る</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eef2f3;border:1px solid #d4d4d4"></div><div class="swatch-body"><div class="swatch-name">Chip</div><div class="swatch-hex">#eef2f3</div><div class="swatch-use">製品カテゴリのチップ（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#a5a5a5"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#a5a5a5</div><div class="swatch-use">日付（Montserrat 300）</div></div></div>
+  </div>
+</section>
+
+<section class="section" id="letterspacing">
+  <h2 class="sec-title">詰めずに、空ける</h2>
+  <p class="sec-lead"><code style="font-family:var(--font-mono)">font-feature-settings</code> の宣言は CSS 全文で <strong>0 件</strong>（palt を使わない）。約物サブセットフォントも入れていない。代わりに <code style="font-family:var(--font-mono)">letter-spacing</code> を <strong>.1em と .2em の2段階</strong>でほぼ全要素に当てる（CSS 全文で .1em が 95 回、.2em が 50 回）。</p>
+  <p class="sec-note">letter-spacing: normal の要素はトップで 6 / 96、下層で 4 / 174 しかなく、その中身は Previous / Next / Launguage / English といった英語ラベルだけ。「日本語は必ず空ける、英語は触らない」という明確なルール。</p>
+
+  <div class="ls-grid">
+    <div class="ls-cell"><div class="ls-sample ls-a">製品情報・レシピ・読みもの</div><div class="ls-name">letter-spacing: .1em</div><div class="ls-note">CSS 95 回。小さい文字（製品名・お知らせ・チップ・日付）</div></div>
+    <div class="ls-cell"><div class="ls-sample ls-b">製品情報・レシピ・読みもの</div><div class="ls-name">letter-spacing: .2em</div><div class="ls-note">CSS 50 回。見せる文字（ナビ・見出し・ページタイトル）</div></div>
+    <div class="ls-cell"><div class="ls-sample ls-c">Previous / Next / English</div><div class="ls-name">letter-spacing: normal</div><div class="ls-note">英語ラベルのみ。日本語には当たらない</div></div>
+  </div>
+
+  <p class="sec-note" style="margin-top:22px"><strong>約物は詰まらない。</strong> palt も約物サブセットも無いので、「、。「」（）・」の前後には全角分の空きがそのまま残る。この状態の上に .2em を重ねるのが、このサイトの字面の作り方。<strong>palt を足すと約物が詰まり、字空けと喧嘩する。</strong></p>
+</section>
+
+<section class="section" id="type">
+  <h2 class="sec-title">Light を主役に組む</h2>
+  <p class="sec-lead">最も多いウェイトは <strong>300（Light）</strong>（トップ 44 要素 / 下層 40 要素）。次いで 700（31 / 54）、400（20 / 79）。500 は 1 要素だけ。300 と 700 の対比で組む。</p>
+
+  <div class="type-row"><div class="t-page">製品情報</div><div class="type-meta">36.5px / 300 / line-height: 1.50 / letter-spacing: .2em<span style="margin-left:14px">ページタイトル。Light で大きく、最大限に空ける</span></div></div>
+  <div class="type-row"><div class="t-hero">毎日をちょっと特別に</div><div class="type-meta">29px / 700 / line-height: 1.50 / letter-spacing: .1em<span style="margin-left:14px">ヒーロー見出し</span></div></div>
+  <div class="type-row"><div class="t-mincho">毎日がちょっと特別に。</div><div class="type-meta">28px / line-height: 1.95 / ヒラギノ明朝 ProN<span style="margin-left:14px">トップの惹句 1 要素のみ。Web フォントではなく OS ローカル</span></div></div>
+  <div class="type-row"><div class="t-sec">ピックアップ　オススメの製品　ニュース</div><div class="type-meta">20px / 700 / line-height: 1.50 / letter-spacing: .2em<span style="margin-left:14px">セクション見出し</span></div></div>
+  <div class="type-row"><div class="t-nav">製品情報　レシピ　読みもの　お客様サポート</div><div class="type-meta">14px / 700 / line-height: 1.50 / letter-spacing: .2em<span style="margin-left:14px">グローバルナビ。23〜38 要素</span></div></div>
+  <div class="type-row"><div class="t-h4">炊飯器</div><div class="type-meta">16px / 700 / line-height: 1.50 / letter-spacing: normal</div></div>
+  <div class="type-row"><div class="t-body">家族団らんの時間。趣味に没頭する時間。そんなかけがえのない時間を、もっと豊かにする道具をつくっています。</div><div class="type-meta">16px / 400 / line-height: 24px（1.50）/ letter-spacing: normal<span style="margin-left:14px">本文</span></div></div>
+  <div class="type-row"><div class="t-item">自動調理鍋おうちシェフクッカー5L　冷却プレート付きハンディファン　3D サーキュレーター</div><div class="type-meta">10px / 400 / line-height: 1.60 / letter-spacing: .1em<span style="margin-left:14px">製品名・一覧ラベル。下層 107 要素で最多</span></div></div>
+  <div class="type-row"><div class="t-crumb">TOP ＞ 製品情報 ＞ キッチン家電</div><div class="type-meta">12px / 500 / line-height: 1.50 / letter-spacing: .2em</div></div>
+  <div class="type-row"><div class="t-date">2026.09.25　2026.09.04　2026.07.31</div><div class="type-meta">12px / 300 / Montserrat / letter-spacing: .1em<span style="margin-left:14px">日付。loaded は 300 だけ</span></div></div>
+</section>
+
+<section class="section" id="weight">
+  <h2 class="sec-title">300 / 400 / 700 の3段で組む</h2>
+  <p class="sec-lead"><code style="font-family:var(--font-mono)">@font-face</code> は Noto Sans JP の 300 / 400 / 500 / 700 の4本で、すべて loaded。ただし <strong>CTA の1つに font-weight: 900 が当たっている</strong>（ヘッダーの「法人様向けページ」）。900 の @font-face は無いので、ブラウザの合成太字で出る。</p>
+  <p class="sec-note">Noto Serif JP を 400/500/600/700 の4本読み込んでいるが、document.fonts で全部 unloaded・可視 0 要素。1文字も使われていないので、新規実装では @font-face を削ってよい。</p>
+
+  <div class="weight-grid">
+    <div class="weight-cell"><div class="weight-sample w300">毎日を、特別に</div><div class="weight-name">300 Light</div><div class="weight-note">★最多（44 / 40 要素）。ページタイトルに使う</div></div>
+    <div class="weight-cell"><div class="weight-sample w400">毎日を、特別に</div><div class="weight-name">400 Regular</div><div class="weight-note">本文・製品名（20 / 79 要素）</div></div>
+    <div class="weight-cell"><div class="weight-sample w700">毎日を、特別に</div><div class="weight-name">700 Bold</div><div class="weight-note">ナビ・見出し（31 / 54 要素）</div></div>
+    <div class="weight-cell off"><div class="weight-sample w900">毎日を、特別に</div><div class="weight-name">900 Black</div><div class="weight-note">@font-face が無く合成太字。使わない</div></div>
+  </div>
+</section>
+
+<section class="section" id="components">
+  <h2 class="sec-title">角丸 8px、影なし</h2>
+  <p class="sec-lead">カードとチップは <code style="font-family:var(--font-mono)">8px</code>、アウトラインのバッジは <code style="font-family:var(--font-mono)">10px</code>、ヘッダーのボタンだけ <code style="font-family:var(--font-mono)">0px</code>。<code style="font-family:var(--font-mono)">box-shadow</code> は実測 0 種 / 0 要素。</p>
+  <p class="sec-note">ボタンの padding は左右非対称（15px 10px 17px 43px）。アイコンの分を左に確保する書き方。</p>
+
+  <div class="comp-grid">
+    <button class="btn-header">オンラインストア</button>
+    <button class="btn-strong">法人様向けページ</button>
+    <span class="badge-out">プレスリリース</span>
+    <span class="chip">キッチン家電</span>
+    <span class="chip">季節家電</span>
+    <span class="chip">生活家電</span>
+  </div>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-img"></div><div class="card-name">かまどさん電気</div></div>
+    <div class="card"><div class="card-img"></div><div class="card-name">おうちいろり</div></div>
+    <div class="card"><div class="card-img"></div><div class="card-name">コーン式全自動コーヒーメーカー</div></div>
+    <div class="card"><div class="card-img"></div><div class="card-name">3D サーキュレーター</div></div>
+  </div>
+
+  <div class="support">
+    <div class="support-title">部品・消耗品のご購入</div>
+    <div class="support-text">製品ごとの部品一覧よりご購入ページにアクセスしてください。</div>
+  </div>
+</section>
+
+<section class="section" id="layout">
+  <h2 class="sec-title">896px で body ごと切り替わる</h2>
+  <p class="sec-lead">コンテナは <code style="font-family:var(--font-mono)">1200px</code>。ルート（html）は全幅 <code style="font-family:var(--font-mono)">10px</code> で固定だが、<strong>body の font-size と line-height が 896px で切り替わる</strong>。見出しやナビはサイズだけでなくウェイトも変わる。</p>
+
+  <table>
+    <tr><th style="width:16%">画面幅</th><th style="width:12%">html</th><th style="width:22%">body</th><th>グローバルナビ</th><th>h2</th></tr>
+    <tr><td>1440px</td><td class="mono">10px</td><td class="mono">16px / lh 24px</td><td class="mono">12px / 400 / ls 1.2px</td><td class="mono">29px / 700 / ls 2.9px</td></tr>
+    <tr><td>1200px</td><td class="mono">10px</td><td class="mono">16px / lh 24px</td><td class="mono">12px / 400 / ls 1.2px</td><td class="mono">29px / 700 / ls 2.9px</td></tr>
+    <tr><td>834px</td><td class="mono">10px</td><td class="mono">10px / lh 15px</td><td class="mono">10px / 300 / ls 1px</td><td class="mono">15px / 700 / ls 1.5px</td></tr>
+    <tr><td>375px</td><td class="mono">10px</td><td class="mono">10px / lh 15px</td><td class="mono">10px / 300 / ls 1px</td><td class="mono">15px / 700 / ls 1.5px</td></tr>
+  </table>
+
+  <p class="sec-note" style="margin-top:22px">字間は em 宣言なので比率で追従する（ナビの 1.2px → 1px はどちらも .1em）。<strong>字間を px に読み替えて固定するとモバイルで崩れる。</strong> ナビのウェイトは 400 → 300 に落ち、モバイルでより細くなる。</p>
+
+  <table>
+    <tr><th style="width:30%">Name</th><th>Query</th><th style="width:18%">CSS 出現</th></tr>
+    <tr><td>Mobile / Tablet</td><td class="mono">(max-width: 896px)</td><td>57〜58 回</td></tr>
+    <tr><td>Desktop</td><td class="mono">(min-width: 897px) and (max-width: 1280px)</td><td>4〜5 回</td></tr>
+    <tr><td>補助</td><td class="mono">(max-width: 374px)</td><td>3 回</td></tr>
+    <tr><td>モーション</td><td class="mono">(prefers-reduced-motion: reduce)</td><td>2 回</td></tr>
+  </table>
+</section>
+
+<footer class="footer">
+  <nav class="footer-nav">
+    <a href="#">企業情報</a><a href="#">製品情報</a><a href="#">レシピ</a><a href="#">読みもの</a><a href="#">お客様サポート</a><a href="#">法人様向けページ</a><a href="#">プライバシーポリシー</a>
+  </nav>
+  <div class="footer-copy">Copyright© 2021- Siroca Inc. All Rights Reserved.</div>
+</footer>
+
+</body>
+</html>
