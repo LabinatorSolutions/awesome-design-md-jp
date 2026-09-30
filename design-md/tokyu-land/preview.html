@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 東急不動産（TOKYU LAND）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトは 6 ファミリーを配信しているが、トップと会社情報で描画されるのは
+     Noto Sans JP と Inter の 2 つだけ（Jost / Noto Sans / Noto Serif JP / Train One は可視 0 要素）。
+     このプレビューも実際に使う 2 つだけを読み込む。 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* 実サイトは Windows 游ゴシック対策として別名方式の @font-face を持つ:
+       @font-face { font-family: YuGothicM; src: local("Yu Gothic Medium") }
+     src が local() だけなのでダウンロードは発生せず、document.fonts 上では永久に
+     unloaded のまま（これが正常）。このプレビューでは macOS に "Yu Gothic Medium" が
+     存在せず @font-face が error になるため宣言は置かず、スタックに名前だけ残している。
+     いずれにせよ実サイトでも先頭の Noto Sans JP が loaded するので出番は無い。 */
+
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は自社トークン 0 個（検出 1 個は Swiper の --swiper-theme-color）。
+       以下は computed style と CSS 全文の実測値。2026-09-30 */
+    --green:        #0B8100;   /* ★東急グリーン。文字 47 / 面 21 要素。このサイトを定義する 1 色 */
+    --green-hero:   #2C9622;   /* 写真の上に敷くラベル面 10 要素。--green より明るい */
+    --text:         #000000;   /* ★本文。可視 153 要素。純黒（#333333 ではない） */
+    --white:        #ffffff;
+    --muted:        #6E6E6E;   /* 日付（9 要素） */
+    --muted-light:  #7F7F7F;   /* ヒーローの非選択タブ（8 要素） */
+    --surface-green:#EDF5E6;   /* 統計ブロックの面（3 要素） */
+    --surface-warm: #F4F5F2;   /* セクションの面（2 要素） */
+    --surface-gray: #F2F2F2;
+    --surface-gray2:#EDEDED;
+    --bg:           #ffffff;   /* pageBackground.resolved */
+
+    /* グラデーション（実測 4 種。すべて淡く、面の境目をぼかす用途） */
+    --grad-a: linear-gradient(120deg, rgba(243, 244, 241, 0.4), rgb(244, 245, 242));
+    --grad-b: linear-gradient(315deg, rgb(237, 245, 230), rgba(237, 245, 229, 0.5));
+    --grad-hero: linear-gradient(90deg, rgb(72, 166, 63) 36%, rgb(169, 203, 3));  /* 下層ヒーローの ::after */
+
+    /* === Fonts ===
+       和文と欧文でファミリーを切り替える方式（1 つのスタックに混ぜていない）。 */
+    --font-jp: "Noto Sans JP", YuGothic, YuGothicM, メイリオ, Meiryo, sans-serif;
+    --font-en: Inter, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: 1.40 / 1.70 / 1.60 の 3 段 === */
+    --lh-ui:   1.4;    /* ★最多（71 要素）。13px のヘッダー・フッターリンク */
+    --lh-body: 1.7;    /* ★body の既定（16px / 27.2px） */
+    --lh-desc: 1.6;    /* 事業紹介の説明文（50 / 52 要素） */
+    --lh-tight:1.2;    /* ヒーローのタブ・英字見出し */
+    --lh-stat: .9;     /* 統計数値 */
+
+    /* === Letter spacing: normal が既定（254 要素中 201）===
+       残りは CSS 全文で 36 種類のバラバラな値。段になっていないので normal だけを引き継ぐ。 */
+    --ls: normal;
+
+    --r: 0px;   /* サイト全体で 0。例外は円形要素（100%）3 要素だけ */
+    /* --shadow は定義しない。可視要素で box-shadow / text-shadow / drop-shadow はすべて 0 件 */
+
+    --container: 1200px;   /* ★実測 12 要素で最多 */
+    --wide:      1400px;
+    --column:    1020px;   /* 会社情報の本文カラム */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 16px;              /* ★4 幅すべてで 16px / 1.7 のまま。流体も SP 縮小も無い */
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    word-break: normal;           /* 実サイトの body 指定 */
+    /* font-feature-settings は実サイトで 0 要素（CSS 全文でも 0 回）。palt を足さない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { background: var(--white); }
+  .header-top { display: flex; align-items: center; max-width: var(--wide); margin: 0 auto; padding: 14px 28px; gap: 14px; }
+  .logo { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text); }
+  .logo-mark { width: 30px; height: 30px; border: 2px solid var(--green); border-radius: 50%; }
+  .logo-text { font-size: 24px; font-weight: 700; line-height: var(--lh-tight); }
+  .header-top .spacer { margin-left: auto; }
+  .tag { display: inline-block; border: 1px solid var(--green); border-radius: var(--r); padding: 2px 5px; font-size: 13px; line-height: var(--lh-ui); color: var(--text); text-decoration: none; }
+  .tag.fill { background: var(--green); color: var(--white); border-color: var(--green); }
+  .header-top .en { font-family: var(--font-en); font-size: 16px; font-weight: 500; color: var(--green); letter-spacing: .5px; text-decoration: none; }
+  .header-nav { display: flex; gap: 26px; max-width: var(--wide); margin: 0 auto; padding: 0 28px 14px; }
+  .header-nav a { font-size: 16px; line-height: var(--lh-body); color: var(--text); text-decoration: none; }
+
+  /* HERO */
+  .hero { position: relative; }
+  .hero-img { height: 400px; background: linear-gradient(160deg, #7ec8e8 0%, #4a9fd0 38%, #6ba84f 70%, #3f7a35 100%); position: relative; }
+  .hero-panel { position: absolute; left: 52px; top: 50%; transform: translateY(-50%);
+                background: var(--green-hero); color: var(--white); padding: 34px 40px; max-width: 480px; }
+  .hero-eyebrow { font-family: var(--font-en); font-size: 14px; font-weight: 500; line-height: var(--lh-tight); letter-spacing: 1.4px; }
+  .hero-panel h2 { font-size: 28.8px; font-weight: 500; line-height: 1.47; letter-spacing: 1.1px; margin: 20px 0 16px; }
+  .hero-panel p { font-size: 15px; line-height: var(--lh-desc); }
+  .hero-tabs { display: flex; gap: 34px; max-width: var(--wide); margin: 0 auto; padding: 18px 28px; flex-wrap: wrap; align-items: center; }
+  .hero-tab { font-family: var(--font-en); font-size: 14px; font-weight: 500; line-height: var(--lh-tight); letter-spacing: 1.2px;
+              color: var(--muted-light); text-decoration: none; padding: 0 22px 0 0; }
+  .hero-tab.on { color: var(--green); }
+
+  /* SECTIONS */
+  .section { padding: 76px 28px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--grad-a); }
+  .section-alt .section-inner { padding: 76px 28px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  .eyebrow { font-family: var(--font-en); font-size: 74px; font-weight: 600; line-height: var(--lh-tight); letter-spacing: 4px; color: var(--green); }
+  .section-title { font-size: 28px; font-weight: 700; line-height: var(--lh-body); letter-spacing: 2.6px; color: var(--green); margin: 10px 0 22px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); max-width: var(--column); margin-bottom: 40px; }
+  .note { font-size: 15px; line-height: var(--lh-desc); color: #3a3a3a; margin-top: 24px; max-width: var(--column); }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surface-gray); padding: 1px 5px; }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 20px; }
+  .swatch { border: 1px solid #d8d8d8; background: var(--white); }
+  .swatch-chip { height: 78px; }
+  .swatch-body { padding: 14px; }
+  .swatch-name { font-size: 15px; font-weight: 500; line-height: var(--lh-desc); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .swatch-use { font-size: 12px; line-height: var(--lh-desc); color: #3a3a3a; margin-top: 7px; }
+
+  /* TYPOGRAPHY */
+  .scale-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; align-items: baseline; }
+  .scale-bar span { background: var(--surface-gray); padding: 8px 14px; line-height: 1; }
+  .type-row { display: grid; grid-template-columns: 252px 1fr; gap: 26px; padding: 22px 0; border-bottom: 1px solid #e0e0e0; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.8; }
+  .type-meta em { display: block; font-family: var(--font-jp); font-style: normal; font-size: 13px; font-weight: 700; color: var(--text); }
+
+  /* FONT AUDIT TABLE */
+  .audit { width: 100%; border-collapse: collapse; font-size: 14px; line-height: var(--lh-desc); }
+  .audit th, .audit td { border: 1px solid #e0e0e0; padding: 9px 12px; text-align: left; }
+  .audit th { background: var(--surface-gray); font-weight: 700; }
+  .audit td.n { font-family: var(--font-mono); font-size: 12px; }
+  .audit tr.used td { background: var(--surface-green); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+  .btn-outline { display: inline-block; background: transparent; color: var(--text);
+                 border: 1px solid var(--green); border-radius: var(--r);
+                 padding: 10px 18px; font-family: var(--font-jp); font-size: 15px; line-height: var(--lh-ui);
+                 text-decoration: none; cursor: pointer; }
+  .btn-solid { display: inline-block; background: var(--green); color: var(--white);
+               border: none; border-radius: var(--r); padding: 5px 20px;
+               font-family: var(--font-jp); font-size: 16px; line-height: var(--lh-body); text-decoration: none; cursor: pointer; }
+  .btn-solid.sm { padding: 5px 13px; }
+  .btn-contact { display: inline-block; background: var(--white); color: var(--text);
+                 border: 1px solid #d8d8d8; border-radius: var(--r); padding: 10px 18px 10px 15px;
+                 font-family: var(--font-jp); font-size: 17px; line-height: var(--lh-ui); text-decoration: none; }
+
+  /* STAT */
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .stat { background: var(--surface-green); padding: 34px 28px; border-radius: var(--r); }
+  .stat-label { font-size: 18px; line-height: var(--lh-desc); }
+  .stat-num { font-family: var(--font-en); font-size: 42px; font-weight: 700; line-height: var(--lh-stat); color: var(--green); margin-top: 14px; }
+  .stat-num .u { font-size: 16.8px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .card { background: var(--white); border: none; border-radius: var(--r); }
+  .card .img { width: 100%; aspect-ratio: 16 / 10; background: linear-gradient(150deg, #a9c7a2, #52794a); }
+  .card .img.b { background: linear-gradient(150deg, #9fc3d6, #3f6e88); }
+  .card .img.c { background: linear-gradient(150deg, #cfd2c6, #7c8470); }
+  .card-title { font-size: 20px; font-weight: 500; line-height: var(--lh-ui); letter-spacing: 1px; margin-top: 15px; }
+  .card-text { font-size: 15px; line-height: 1.8; margin-top: 10px; }
+  .card-date { font-size: 13px; line-height: var(--lh-ui); color: var(--muted); margin-top: 12px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 15px; font-weight: 500; line-height: var(--lh-desc); margin-bottom: 9px; }
+  .field input {
+    width: 100%; background: var(--white); color: var(--text);
+    border: 1px solid #c4c4c4; border-radius: var(--r);
+    padding: 12px; font-size: 16px; line-height: var(--lh-body); font-family: var(--font-jp);
+  }
+  .field.is-focus input { outline: 2px solid var(--green); }
+  .field.is-error input { outline: 2px solid #b02a1e; }
+  .field-msg { font-size: 13px; line-height: var(--lh-ui); color: var(--muted); margin-top: 8px; }
+  .field.is-error .field-msg { color: #b02a1e; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+  .elev { background: var(--white); border: 1px solid var(--green); padding: 30px; text-align: center; }
+  .elev-name { font-size: 16px; font-weight: 500; line-height: var(--lh-desc); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 9px; }
+
+  /* PHOTO TEXT DEMO */
+  .photo-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .photo { height: 210px; background: linear-gradient(150deg, #86b8d8, #4a8c40); position: relative; display: flex; align-items: center; }
+  .photo .ok { background: var(--green-hero); color: var(--white); padding: 14px 20px; margin-left: 22px; font-size: 18px; line-height: var(--lh-desc); }
+  .photo .ng { color: var(--white); padding: 14px 20px; margin-left: 22px; font-size: 18px; line-height: var(--lh-desc); text-shadow: 0 2px 6px rgba(0,0,0,.7); }
+  .photo-cap { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 9px; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--surface-gray); height: 38px; display: flex; align-items: center; justify-content: center;
+                font-family: var(--font-mono); font-size: 11px; color: #3a3a3a; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 32px; justify-content: center; align-items: flex-end; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 108px; height: 68px; background: var(--surface-gray); border: 1px solid var(--green); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+  /* SUB HERO (疑似要素のグラデーション) */
+  .subhero { max-width: var(--wide); margin: 0 auto; background: var(--grad-hero);
+             height: 130px; display: flex; align-items: center; padding: 0 34px; }
+  .subhero .ttl { font-size: 38px; font-weight: 500; line-height: 1.5; color: var(--white); }
+
+  /* FOOTER */
+  .footer { background: var(--green); color: var(--white); padding: 50px 28px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-family: var(--font-en); font-size: 42px; font-weight: 600; line-height: var(--lh-tight); letter-spacing: 4px; }
+  .footer-cols { display: flex; gap: 52px; margin-top: 28px; flex-wrap: wrap; }
+  .footer-col a { display: block; font-size: 13px; line-height: 2; color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 13px; line-height: var(--lh-ui); margin-top: 34px; }
+
+  @media (max-width: 767px) {
+    .section, .section-alt .section-inner { padding: 48px 18px; }
+    .eyebrow { font-size: 40px; }
+    .section-title { font-size: 22px; }
+    .hero-panel { position: static; transform: none; max-width: none; }
+    .hero-img { height: auto; padding: 0; }
+    .card-grid, .stat-grid, .photo-demo { grid-template-columns: 1fr; gap: 24px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <a href="#" class="logo"><span class="logo-mark"></span><span class="logo-text">東急不動産</span></a>
+    <span class="spacer"></span>
+    <a href="#" class="tag fill">ニュースリリース</a>
+    <a href="#" class="tag">Webマガジン</a>
+    <a href="#" class="tag">採用情報</a>
+    <a href="#" class="tag">サステナビリティ</a>
+    <a href="#" class="en">English</a>
+  </div>
+  <nav class="header-nav">
+    <a href="#">会社情報</a><a href="#">都市事業</a><a href="#">住宅事業</a><a href="#">ウェルネス事業</a><a href="#">インダストリー事業</a><a href="#">環境エネルギー事業</a><a href="#">海外事業</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-img">
+    <div class="hero-panel">
+      <div class="hero-eyebrow">02&nbsp;&nbsp;SUSTAINABILITY</div>
+      <h2>価値を創造する<br>環境先進企業へ</h2>
+      <p>東急不動産のサステナビリティ</p>
+    </div>
+  </div>
+  <div class="hero-tabs">
+    <a href="#" class="hero-tab">01&nbsp;&nbsp;CM</a>
+    <a href="#" class="hero-tab on">02&nbsp;&nbsp;SUSTAINABILITY</a>
+    <a href="#" class="hero-tab">03&nbsp;&nbsp;URBAN DEVELOPMENT</a>
+    <a href="#" class="hero-tab">04&nbsp;&nbsp;WEB MAGAZINE</a>
+    <a href="#" class="hero-tab">05&nbsp;&nbsp;MIXED DEVELOPMENT</a>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="eyebrow">COLOR</div>
+  <h2 class="section-title">緑 1 色と純黒</h2>
+  <p class="section-lead">ブランド色は <b>東急グリーン #0B8100</b> ひとつ（文字 47 / 面 21 要素）。写真の上に載せる面だけ明るい <code>#2C9622</code> を使う。<b>本文は純黒 #000000</b>（可視 153 要素）で、<code>#333333</code> に逃げていない。<b>CSS Custom Properties による自社トークンは 0 個</b>で、検出された 1 個は Swiper の既定値だった。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#0B8100"></div><div class="swatch-body"><div class="swatch-name">東急グリーン</div><div class="swatch-hex">#0B8100</div><div class="swatch-use">★文字 47 / 面 21 要素。リンク・見出し・CTA</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#2C9622"></div><div class="swatch-body"><div class="swatch-name">Hero Green</div><div class="swatch-hex">#2C9622</div><div class="swatch-use">写真の上に敷くラベル面 10 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#000000</div><div class="swatch-use">★本文。可視 153 要素。<b>純黒を使う</b></div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#6E6E6E"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#6E6E6E</div><div class="swatch-use">日付（9 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#7F7F7F"></div><div class="swatch-body"><div class="swatch-name">Muted Light</div><div class="swatch-hex">#7F7F7F</div><div class="swatch-use">ヒーローの非選択タブ（8 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EDF5E6"></div><div class="swatch-body"><div class="swatch-name">Surface Green</div><div class="swatch-hex">#EDF5E6</div><div class="swatch-use">統計数値ブロックの面（3 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F4F5F2"></div><div class="swatch-body"><div class="swatch-name">Surface Warm</div><div class="swatch-hex">#F4F5F2</div><div class="swatch-use">セクションの面（2 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:linear-gradient(90deg,#48A63F 36%,#A9CB03)"></div><div class="swatch-body"><div class="swatch-name">Sub Hero Gradient</div><div class="swatch-hex">#48A63F → #A9CB03</div><div class="swatch-use"><b>div::after の疑似要素</b>に塗られている</div></div></div>
+  </div>
+
+  <div class="subhero" style="margin-top:34px"><div class="ttl">東急不動産について</div></div>
+  <p class="note"><b>下層ページの帯は <code>div::after.c-hero-sub</code> の疑似要素。</b><code>querySelectorAll("*")</code> の走査には出てこないので、要素側だけ見て「帯に色が無い」と判断しないこと。<br>また <b>トップは <code>heroCover: true</code></b>（1440×560px の写真が画面上部を覆う）。抽出の <code>viewportTopByArea</code> は先頭に <code>#2C9622</code> を返すが、これはラベル面であって<b>ページの地色は白</b>。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">TYPE</div>
+  <h2 class="section-title">6 書体を読んで、2 書体しか使わない</h2>
+  <p class="section-lead"><code>document.fonts</code> で <code>loaded</code> なのは <b>Noto Sans JP・Noto Sans・Inter・Jost・Noto Serif JP・Train One の 6 ファミリー</b>。ところが実測でトップに出るのは <b>Noto Sans JP 210 要素と Inter 44 要素の 2 つだけ</b>で、残り 4 つは可視 0 要素だった。<b><code>loaded</code> は「使っている」証拠にならない。</b></p>
+
+  <table class="audit">
+    <tr><th>Family</th><th>loaded weight</th><th>トップの可視要素</th><th>判定</th></tr>
+    <tr class="used"><td>Noto Sans JP</td><td class="n">400 / 500 / 700</td><td class="n">210</td><td>★和文の本体</td></tr>
+    <tr class="used"><td>Inter</td><td class="n">400 / 500 / 600</td><td class="n">44</td><td>★欧文ラベル・数値</td></tr>
+    <tr><td>Noto Sans</td><td class="n">400 / 500 / 700</td><td class="n">0</td><td>読み込んでいるが未使用</td></tr>
+    <tr><td>Jost</td><td class="n">600 / 700</td><td class="n">0</td><td>読み込んでいるが未使用</td></tr>
+    <tr><td>Noto Serif JP</td><td class="n">400 / 600</td><td class="n">0</td><td>読み込んでいるが未使用</td></tr>
+    <tr><td>Train One</td><td class="n">400</td><td class="n">0</td><td>読み込んでいるが未使用</td></tr>
+    <tr><td>YuGothicM</td><td class="n">（local のみ）</td><td class="n">0</td><td><b>unloaded が正常</b>（下記）</td></tr>
+  </table>
+
+  <p class="note"><b>游ゴシックの Windows 対策を <code>local()</code> だけの <code>@font-face</code> で書いている。</b></p>
+  <p class="note" style="margin-top:8px"><code>@font-face { font-family: YuGothicM; src: local("Yu Gothic Medium") }</code> を定義し、スタックの <code>YuGothic</code> の直後に置く（別名方式）。素の <code>YuGothic</code> は macOS で游ゴシック体 Regular に当たり、Windows では家族名が <code>Yu Gothic</code>（スペース入り）なので当たらない。そこで Windows だけが <code>YuGothicM</code> → Medium を拾う。<br><b><code>src</code> が <code>local()</code> だけなのでダウンロードは発生せず、<code>document.fonts</code> 上では永久に <code>unloaded</code> のまま。これは失敗ではなく正常な挙動で、「使われていない」と読み違えないこと。</b><br>ただし<b>このサイトでは効く場面が無い</b> — スタック先頭の Noto Sans JP が <code>loaded</code> するので游ゴシックまで降りてこない。別名方式そのものは正しいので、Web フォントを使わない案件で流用する価値がある。</p>
+
+  <div class="scale-bar" style="margin-top:34px">
+    <span style="font-size:12px">12</span><span style="font-size:13px">13</span><span style="font-size:14px">14</span>
+    <span style="font-size:15px">15</span><span style="font-size:16px">16</span><span style="font-size:18px">18</span>
+    <span style="font-size:20px">20</span><span style="font-size:22px">22</span><span style="font-size:28px">28</span>
+    <span style="font-size:28.8px">28.8</span><span style="font-size:38px">38</span><span style="font-family:var(--font-en);font-size:42px;font-weight:700">42</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><em>Section Heading (EN)</em>Inter / 74px / 600<br>lh 1.20 / ls 4px</div><div style="font-family:var(--font-en);font-size:74px;font-weight:600;line-height:1.2;letter-spacing:4px;color:#0B8100">NEWS</div></div>
+  <div class="type-row"><div class="type-meta"><em>Stat Number ★</em>Inter / 42px / 700<br>lh 0.90</div><div style="font-family:var(--font-en);font-size:42px;font-weight:700;line-height:.9;color:#0B8100">173<span style="font-size:16.8px">件</span></div></div>
+  <div class="type-row"><div class="type-meta"><em>Hero Heading</em>Noto Sans JP / 28.8px / 500<br>lh 1.47 / ls 1.1px</div><div style="font-size:28.8px;font-weight:500;line-height:1.47;letter-spacing:1.1px">価値を創造する環境先進企業へ</div></div>
+  <div class="type-row"><div class="type-meta"><em>Section Heading (JP)</em>Noto Sans JP / 28px / 700<br>lh 1.70 / ls 2.6px / #0B8100</div><div style="font-size:28px;font-weight:700;line-height:1.7;letter-spacing:2.6px;color:#0B8100">特徴的な取り組み</div></div>
+  <div class="type-row"><div class="type-meta"><em>Sub Heading</em>Noto Sans JP / 22px / 500<br>lh 1.60</div><div style="font-size:22px;font-weight:500;line-height:1.6">広域渋谷圏での取り組み</div></div>
+  <div class="type-row"><div class="type-meta"><em>Card Heading</em>Noto Sans JP / 20px / 500<br>lh 1.40 / ls 1px</div><div style="font-size:20px;font-weight:500;line-height:1.4;letter-spacing:1px">東急不動産Webマガジン</div></div>
+  <div class="type-row"><div class="type-meta"><em>Body ★</em>Noto Sans JP / 16px / 400<br>lh 1.70（body の既定）</div><div style="font-size:16px;line-height:1.7">渋谷駅を中心とした広域渋谷圏では、長期持続的にエリアの価値を高める取り組みを進めています。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Card Text</em>Noto Sans JP / 15px / 400<br>lh 1.80</div><div style="font-size:15px;line-height:1.8">海の森を再生し地域を繋ぐ「勝浦ブルーカーボン推進プロジェクト」</div></div>
+  <div class="type-row"><div class="type-meta"><em>Hero Tab</em>Inter / 14px / 500<br>lh 1.20 / ls 1.2–1.4px</div><div style="font-family:var(--font-en);font-size:14px;font-weight:500;line-height:1.2;letter-spacing:1.2px">01&nbsp;&nbsp;CM　<span style="color:#0B8100">02&nbsp;&nbsp;SUSTAINABILITY</span></div></div>
+  <div class="type-row"><div class="type-meta"><em>UI Link ★</em>Noto Sans JP / 13px / 400<br>lh 1.40（最多 64 要素）</div><div style="font-size:13px;line-height:1.4">ニュースリリース　／　Webマガジン　／　採用情報　／　サステナビリティ</div></div>
+
+  <p class="note"><b>字間に設計が無い。</b><code>letter-spacing: normal</code> が 254 要素中 201 要素。残りは CSS 全文で <b>36 種類</b>のバラバラな値で、px（<code>4px</code> <code>2.6px</code> <code>1.2px</code> <code>-.3px</code>）と em（<code>.02em</code> <code>.007em</code> <code>.002em</code> <code>-.06em</code>）と rem（<code>.02rem</code>）が混在し、<code>0.084px</code> のような目視では判別不能な値まである。<b>段になっていないので、真似るなら normal だけを引き継ぐこと。</b></p>
+  <p class="note"><b>font-feature-settings / palt / writing-mode / &lt;ruby&gt; はいずれも 0 件。</b>Noto Sans JP の既定の字送りのまま組む。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <div class="eyebrow">PARTS</div>
+  <h2 class="section-title">緑の枠か、緑の面か</h2>
+  <p class="section-lead">CTA は「<code>1px solid #0B8100</code> の枠」と「<code>#0B8100</code> の面 + 白文字」の 2 種だけ。<b>border-radius はサイト全体で 0px</b> で、例外は円形要素（100%）3 要素。</p>
+
+  <div class="btn-row">
+    <a href="#" class="btn-outline">長期ビジョン</a>
+    <a href="#" class="btn-outline">中期経営計画</a>
+    <a href="#" class="btn-solid">採用情報を詳しく見る</a>
+    <a href="#" class="btn-solid sm">会社案内</a>
+    <a href="#" class="btn-contact">✉　各種お問い合わせ</a>
+  </div>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:56px">統計ブロック</h3>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-label">国内発電総事業数</div><div class="stat-num">173<span class="u">件</span></div></div>
+    <div class="stat"><div class="stat-label">切替完了施設数</div><div class="stat-num">218<span class="u">施設</span></div></div>
+    <div class="stat"><div class="stat-label">RE100 達成年</div><div class="stat-num">2022<span class="u">年</span></div></div>
+  </div>
+  <p class="note">数値は <b>Inter 42px / weight 700 / line-height 0.90</b>、単位は 16.8px、ラベルは Noto Sans JP 18px / lh 1.60。面は <code>#EDF5E6</code>。</p>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:56px">記事カード</h3>
+  <div class="card-grid">
+    <div class="card"><div class="img"></div><div class="card-title">広域渋谷圏での取り組み</div><div class="card-text">遊んで、涼んで、夏を楽しむ。広域渋谷圏で広がる CLEAN な夏。</div><div class="card-date">2026.09.29</div></div>
+    <div class="card"><div class="img b"></div><div class="card-title">竹芝エリアでの取り組み</div><div class="card-text">海の森を再生し地域を繋ぐ「勝浦ブルーカーボン推進プロジェクト」</div><div class="card-date">2026.09.28</div></div>
+    <div class="card"><div class="img c"></div><div class="card-title">再生可能エネルギー事業</div><div class="card-text">国内事業会社初 RE100 の目標達成について</div><div class="card-date">2026.09.25</div></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:56px">写真の上に文字を載せる作法</h3>
+  <div class="photo-demo">
+    <div>
+      <div class="photo"><div class="ok">価値を創造する<br>環境先進企業へ</div></div>
+      <div class="photo-cap">DO — #2C9622 の面を敷いて白文字を置く（実サイトの作法）</div>
+    </div>
+    <div>
+      <div class="photo"><div class="ng">価値を創造する<br>環境先進企業へ</div></div>
+      <div class="photo-cap">DON'T — text-shadow で済ませる（実サイトは可視 0 件）</div>
+    </div>
+  </div>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:56px">入力欄</h3>
+  <div class="form-grid">
+    <div class="field"><label for="f1">会社名</label><input id="f1" type="text" value="東急不動産株式会社"><div class="field-msg">既定の状態</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス</label><input id="f2" type="text" value="info@example.jp"><div class="field-msg">フォーカス（outline に東急グリーン）</div></div>
+    <div class="field is-error"><label for="f3">電話番号</label><input id="f3" type="text" value="03-"><div class="field-msg">市外局番から入力してください</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="section-inner">
+  <div class="section-label">04 / Layout &amp; Elevation</div>
+  <div class="eyebrow">GRID</div>
+  <h2 class="section-title">1200px のコンテナ、影ゼロ</h2>
+
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">Full bleed — ヒーロー 1440×560px</div>
+    <div class="layout-bar" style="width:1400px;max-width:100%">Wide 1400px</div>
+    <div class="layout-bar" style="width:1200px;max-width:100%">Container 1200px ★最多（12 要素）</div>
+    <div class="layout-bar" style="width:1020px;max-width:100%">Column 1020px — 会社情報の本文</div>
+    <div class="layout-bar" style="width:calc(100% - 120px)">calc(100% - 120px) — 左右 60px を残す全幅ブロック（4 要素）</div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box"></div><div class="radius-label">0px ★全体</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:100%;width:68px;height:68px"></div><div class="radius-label">100% 円（3 要素）</div></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:64px">Depth &amp; Elevation</h3>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0（唯一）</div><div class="elev-val">box-shadow: none</div></div>
+    <div class="elev" style="border-color:transparent;background:var(--surface-green)"><div class="elev-name">階層は淡い面で</div><div class="elev-val">#EDF5E6 / #F4F5F2</div></div>
+    <div class="elev"><div class="elev-name">階層は緑の枠で</div><div class="elev-val">1px solid #0B8100</div></div>
+  </div>
+  <p class="note"><b>影を使わないサイト。</b>CSS 全文には <code>box-shadow</code> が 46 回、<code>text-shadow</code> が 10 回宣言されているが、<b>実測した 2 ページの可視要素では 1 つも使われていない</b>。<code>filter: drop-shadow()</code> は 0 回。</p>
+
+  <h3 class="section-title" style="font-size:22px;margin-top:56px">Responsive</h3>
+  <p class="section-lead"><b><code>body</code> は動かない。</b>1440 / 1200 / 834 / 375px の 4 幅すべてで <code>16px / line-height 1.70 / letter-spacing normal</code> のまま。流体（vw / clamp）も SP での縮小も無い。<code>html</code> は 10px 固定なので <code>rem</code> は 10 倍で読む（<code>2.88rem</code> = 28.8px）。</p>
+  <p class="note">ブレークポイントは <code>(max-width: 767px)</code> が CSS 全文で <b>1513 回</b>と圧倒的に多く、767/768px が主分岐。ほかに 991 / 1059 / 1060 / 1200px で細かく調整する。<code>@custom-media</code> 由来の <code>(--sm-gt) and (--lg-lte)</code> も 19 回出てくる。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">GROUP INFO</div>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">会社情報</a><a href="#">東急不動産について</a><a href="#">トップメッセージ</a><a href="#">グループ理念</a></div>
+      <div class="footer-col"><a href="#">都市事業</a><a href="#">住宅事業</a><a href="#">ウェルネス事業</a><a href="#">海外事業</a></div>
+      <div class="footer-col"><a href="#">サステナビリティ</a><a href="#">ニュースリリース</a><a href="#">Webマガジン</a><a href="#">採用情報</a></div>
+    </div>
+    <div class="footer-copy">Copyright© TOKYU LAND CORPORATION All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
