@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: クラウドサイン（CloudSign）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトは Noto Sans JP（Regular/Medium/Bold）と Inter（24pt Regular/Bold、18pt Medium）を
+     セルフホストしている。このプレビューは Google Fonts から同じ 3 ウェイトを読む。 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* 実サイトは丸数字①〜⑨のために @font-face を 9 本積み、本文スタックの先頭に置いている:
+       @font-face { font-family: NotoSansJP-circled-1;
+                    src: url(https://fonts.gstatic.com/.../...92.woff2) format("woff2");
+                    unicode-range: U+2460; }      ← ① だけ。-9（U+2468）まで 9 本
+     unicode-range が 1 文字に絞ってあるので、そのページに①〜⑨が無ければ
+     ブラウザは 1 バイトも取りに行かない。実測でもフォントのリクエストは 0 本で、
+     document.fonts 上は 9 本とも unloaded —— これが正常な挙動。
+     このプレビューでは宣言を置かず、スタックに名前だけ残してある。 */
+
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は自社トークン 0 個。検出した 60 個は全部
+       WordPress / Gutenberg 由来（--wp--preset--* 49 / WordPress admin 11）。
+       以下は computed style の実測値。2026-10-01 */
+    --magenta:  #f42859;  /* ★主CTA。面 17 / 8 要素。資料ダウンロード系だけ */
+    --blue:     #0d64c9;  /* ★ブランド色。文字 26 / 44 要素。見出し・リンク・副次ボタン */
+
+    --text:     #30363e;  /* ★本文。171 / 134 要素 */
+    --text-2:   #495158;  /* 注釈（3 要素） */
+    --text-3:   #697482;  /* 認証制度のラベル（19 要素） */
+    --text-4:   #8897a7;  /* ※ の但し書き・連番（18 / 12 要素） */
+    --text-5:   #bcc8d6;  /* フッターのリンク（12 / 13 要素） */
+    --text-6:   #dae3ed;  /* ドロワー見出し（42 要素） */
+    --white:    #ffffff;
+
+    --surf:     #fafcfd;  /* ★最多 56 要素。機能一覧・料金表の地 */
+    --surf-blue:#eaf0f6;  /* 表のヘッダ行（30 要素） */
+    --surf-cool:#f4f7fa;  /* 認証チップ（24 / 11 要素） */
+    --surf-acc: #f2f8ff;  /* キャッチの背面（2 要素）。最も青い面 */
+    --surf-dark:#49515a;  /* 導入事例の業種バッジ（18 要素）。白文字 */
+    --bg:       #ffffff;  /* pageBackground.resolved（根拠 body） */
+
+    /* === Fonts ===
+       実サイトのスタックは末尾が "Noto Sans JP", sans-serif で OS フォントの具体名が無い。
+       ここでは DESIGN.md の推奨どおりフォールバックを足してある。 */
+    --font: NotoSansJP-circled-1, NotoSansJP-circled-2, NotoSansJP-circled-3,
+            NotoSansJP-circled-4, NotoSansJP-circled-5, NotoSansJP-circled-6,
+            NotoSansJP-circled-7, NotoSansJP-circled-8, NotoSansJP-circled-9,
+            Inter, "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+    --font-en: Inter, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height === */
+    --lh-body:  1.6;   /* ★188 / 181 要素。body の既定 */
+    --lh-long:  2.0;   /* ★下層の 18px 説明文だけ（27 要素） */
+    --lh-head:  1.4;
+    --lh-tight: 1.3;
+    --lh-flat:  1.0;   /* ヘッダーの小リンク（57 要素） */
+
+    /* === Letter spacing は em の段（実在する 9 段）=== */
+    --ls-base:  0.1em;   /* ★body。16px → 1.6px、375px の 14px → 1.4px に自動追従 */
+    --ls-head:  0.04em;  /* ★見出し・表の既定 */
+    --ls-nav:   0.06em;  /* ナビ・特徴見出し */
+    --ls-long:  0.08em;  /* 下層の説明文 */
+    --ls-wide:  0.15em;  /* 最上部の細帯・バナー */
+    --ls-xwide: 0.2em;   /* 下層 h1（青帯の白文字） */
+    --ls-tag:   0.02em;  /* タグライン */
+
+    --r: 4px;   /* ★実測 50 要素。カードもボタンも表も全部これ */
+
+    --shadow:      0 3px 6px rgba(0, 0, 0, 0.1);      /* ★最多 21 / 12 要素 */
+    --shadow-drop: 0 2px 4px rgba(0, 0, 0, 0.1);      /* ヘッダーのドロップダウン */
+    --shadow-float:0 4px 20px rgba(48, 54, 62, 0.1);  /* 影の色が本文色の 10%（黒ではない） */
+
+    --container: 1000px;
+    --wide:      1200px;
+    --gap:       16px;   /* ★gap の最多 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-base);      /* ★em で書く。px に読み替えない */
+    font-feature-settings: "palt";        /* ★1,070 / 684 要素に効いている */
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 実サイトは outline: none でフォーカスリングを消している。これは真似てはいけない実装。 */
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  /* TOP BAND */
+  .band { background: var(--surf); border-bottom: 1px solid #e7edf3; }
+  .band-in { display: flex; align-items: center; gap: 20px; max-width: var(--wide); margin: 0 auto; padding: 9px 32px; }
+  .band p { font-size: 12px; line-height: var(--lh-flat); letter-spacing: var(--ls-wide); color: var(--text); }
+  .band .spacer { margin-left: auto; }
+  .band a { font-size: 12px; line-height: var(--lh-flat); letter-spacing: var(--ls-nav); color: var(--text); text-decoration: none; }
+  .band a.on { color: var(--blue); font-weight: 700; }
+
+  /* HEADER */
+  .header { background: var(--white); border-bottom: 1px solid #e7edf3; }
+  .header-in { display: flex; align-items: center; gap: 26px; max-width: var(--wide); margin: 0 auto; padding: 18px 32px; flex-wrap: wrap; }
+  .logo { font-family: var(--font-en); font-size: 22px; font-weight: 700; letter-spacing: 0.04em; color: var(--blue); }
+  .nav { display: flex; gap: 22px; flex-wrap: wrap; }
+  .nav a { font-size: 13px; font-weight: 700; line-height: var(--lh-body); letter-spacing: 0.01em; color: var(--text); text-decoration: none; }
+  .header-in .spacer { margin-left: auto; }
+
+  /* BUTTONS — radius 4px 一択 */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+         font-family: var(--font); font-weight: 700; line-height: 1;
+         letter-spacing: var(--ls-base); border: 1px solid transparent; border-radius: var(--r);
+         text-decoration: none; cursor: pointer; }
+  .btn.sm { height: 38px; padding: 0 32px; font-size: 13px; }
+  .btn.lg { padding: 22px 36px; font-size: 16px; }
+  .btn.cta   { background: var(--magenta); color: var(--white); }
+  .btn.blue  { background: var(--blue); color: var(--white); }
+  .btn.ghost { background: var(--white); color: var(--blue); border-color: var(--blue); }
+
+  /* HERO */
+  .hero { background: linear-gradient(100deg, var(--white) 0%, var(--white) 52%, #e8f1fc 52%, #cfe2f8 100%); }
+  .hero-in { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: var(--wide); margin: 0 auto; padding: 76px 32px 86px; align-items: center; }
+  .hero .eyebrow { font-size: 28px; font-weight: 700; line-height: var(--lh-head); color: var(--blue); }
+  .hero h1 { font-size: 60px; font-weight: 700; line-height: var(--lh-tight); color: var(--blue); margin-top: 10px; }
+  .hero .sub { font-size: 20px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls-nav); margin-top: 18px; }
+  .hero .btns { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; max-width: 420px; }
+  .hero-art { height: 320px; border-radius: var(--r); background: linear-gradient(150deg, #ffffff, #dbe9fa); box-shadow: var(--shadow); }
+
+  /* LOGOS */
+  .logos { max-width: var(--wide); margin: 0 auto; padding: 32px; display: flex; gap: 44px; flex-wrap: wrap; justify-content: center; }
+  .logos span { font-family: var(--font-en); font-size: 18px; font-weight: 700; letter-spacing: 0.04em; color: var(--text-4); }
+
+  /* SECTIONS */
+  .section { max-width: var(--container); margin: 0 auto; padding: 72px 32px; }
+  .section-wide { max-width: var(--wide); margin: 0 auto; padding: 72px 32px; }
+  .section-alt { background: var(--surf); }
+  .kicker { font-family: var(--font-mono); font-size: 12px; line-height: var(--lh-body); letter-spacing: normal; color: var(--text-4); margin-bottom: 10px; }
+  h2.sec { font-size: 40px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls-head); margin-bottom: 18px; }
+  h2.sec .hl { color: var(--blue); }
+  h3.sub { font-size: 24px; font-weight: 700; line-height: var(--lh-body); margin: 46px 0 16px; }
+  .lead { font-size: 16px; line-height: var(--lh-body); margin-bottom: 26px; }
+  .long { font-size: 18px; line-height: var(--lh-long); letter-spacing: var(--ls-long); }
+  .note { font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls-head); color: var(--text-2); margin-top: 18px; }
+  code { font-family: var(--font-mono); font-size: 12px; letter-spacing: normal; background: var(--surf-blue); padding: 1px 5px; border-radius: var(--r); }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(206px, 1fr)); gap: 20px; }
+  .sw { border: 1px solid #e7edf3; border-radius: var(--r); overflow: hidden; background: var(--white); }
+  .sw-chip { height: 76px; }
+  .sw-body { padding: 13px 14px 16px; }
+  .sw-name { font-size: 15px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls-head); }
+  .sw-hex { font-family: var(--font-mono); font-size: 11px; letter-spacing: normal; color: var(--text-4); margin-top: 4px; }
+  .sw-use { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls-head); color: var(--text-3); margin-top: 7px; }
+
+  /* TYPE */
+  .scale { display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale span { background: var(--surf-blue); padding: 7px 12px; line-height: 1; border-radius: var(--r); }
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 26px; padding: 20px 0; border-bottom: 1px solid #e7edf3; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: 1.8; letter-spacing: normal; color: var(--text-3); }
+  .type-meta em { display: block; font-family: var(--font); font-style: normal; font-size: 13px; font-weight: 700; letter-spacing: var(--ls-head); color: var(--text); }
+
+  /* AUDIT */
+  .audit { width: 100%; border-collapse: collapse; font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls-head); }
+  .audit th, .audit td { border: 1px solid #e7edf3; padding: 9px 12px; text-align: left; color: var(--text); }
+  .audit th { background: var(--surf-blue); font-weight: 700; }
+  .audit td.n { font-family: var(--font-mono); font-size: 12px; letter-spacing: normal; }
+  .audit tr.good td { background: #f0f7ff; }
+
+  /* em ladder */
+  .ladder { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap); }
+  .ls-item { border: 1px solid #e7edf3; border-radius: var(--r); padding: 18px 20px; background: var(--white); }
+  .ls-val { font-family: var(--font-mono); font-size: 11px; letter-spacing: normal; color: var(--text-4); }
+  .ls-sample { font-size: 16px; line-height: var(--lh-body); margin-top: 8px; color: var(--text); }
+  .ls-use { font-size: 12px; line-height: var(--lh-body); color: var(--text-3); margin-top: 8px; }
+
+  /* 継承 vs 宣言 */
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: 20px; }
+  .pair .box { border: 1px solid #e7edf3; border-radius: var(--r); padding: 22px 24px; background: var(--white); }
+  .pair h5 { font-size: 15px; font-weight: 700; line-height: var(--lh-body); color: var(--blue); margin-bottom: 12px; }
+  .pair .cap { font-family: var(--font-mono); font-size: 11px; letter-spacing: normal; color: var(--text-3); margin-top: 12px; }
+
+  /* BADGES / CARDS */
+  .badge { display: inline-block; border-radius: var(--r); padding: 4px 12px;
+           font-size: 12px; font-weight: 700; line-height: 1.5; letter-spacing: var(--ls-head);
+           background: var(--surf-dark); color: var(--white); }
+  .badge.rec { background: var(--magenta); }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .card { background: var(--white); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+  .card .thumb { height: 140px; background: linear-gradient(145deg, #e8f1fc, #a9cdf2); }
+  .card .body { padding: 20px 22px 24px; }
+  .card h4 { font-size: 20px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls-head); color: var(--blue); margin-top: 8px; }
+  .card p { font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls-head); color: var(--text); margin-top: 8px; }
+
+  /* 料金表 */
+  .price { width: 100%; border-collapse: collapse; border-radius: var(--r); overflow: hidden; }
+  .price th, .price td { border: 1px solid #e7edf3; padding: 14px 16px; text-align: left; }
+  .price thead th { background: var(--surf-blue); font-size: 14px; font-weight: 700; line-height: 1.57; letter-spacing: var(--ls-head); color: var(--text); }
+  .price tbody td { background: var(--surf); font-size: 14px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls-head); color: var(--text); }
+  .price .plan { font-size: 24px; font-weight: 700; line-height: var(--lh-flat); letter-spacing: 0.05em; color: var(--blue); }
+  .price .fee { font-size: 20px; font-weight: 500; letter-spacing: var(--ls-nav); }
+  .price .fee small { font-size: 10px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls-head); color: var(--text-4); }
+
+  /* 認証チップ */
+  .chips { display: flex; gap: 12px; flex-wrap: wrap; }
+  .chip { background: var(--surf-cool); border-radius: var(--r); padding: 10px 16px;
+          font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls-head); color: var(--text-3); }
+
+  /* LAYOUT */
+  .bars { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .bar { background: var(--surf-blue); color: var(--text); height: 38px; display: flex; align-items: center; justify-content: center;
+         font-family: var(--font-mono); font-size: 11px; letter-spacing: normal; border-radius: var(--r); }
+
+  /* ELEVATION */
+  .elevs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--gap); }
+  .elev { background: var(--white); border: 1px solid #e7edf3; border-radius: var(--r); padding: 26px; text-align: center; }
+  .elev.s1 { box-shadow: var(--shadow); border-color: transparent; }
+  .elev.s2 { box-shadow: var(--shadow-drop); border-color: transparent; }
+  .elev.s3 { box-shadow: var(--shadow-float); border-color: transparent; }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls-head); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; letter-spacing: normal; color: var(--text-3); margin-top: 8px; }
+
+  /* FORMS */
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+  .field label { display: block; font-size: 14px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls-head); margin-bottom: 8px; }
+  .field input { width: 100%; background: var(--white); color: var(--text); font-family: var(--font);
+                 border: 1px solid var(--text-6); border-radius: var(--r); padding: 12px 16px;
+                 font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls-base); }
+  .field.is-focus input { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .field-msg { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls-head); color: var(--text-3); margin-top: 7px; }
+
+  /* 下層の青帯 h1 */
+  .pagehead { background: var(--blue); }
+  .pagehead-in { max-width: var(--wide); margin: 0 auto; padding: 44px 32px; }
+  .pagehead h1 { font-size: 36px; font-weight: 700; line-height: var(--lh-flat); letter-spacing: var(--ls-xwide); color: var(--white); }
+
+  /* FOOTER */
+  .footer { background: var(--text); color: var(--text-5); padding: 48px 32px; }
+  .footer-in { max-width: var(--wide); margin: 0 auto; }
+  .footer .logo { color: var(--white); }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; margin-top: 26px; }
+  .footer-col a { display: block; font-size: 14px; line-height: 1.8; letter-spacing: var(--ls-head); color: var(--text-5); text-decoration: none; }
+  .footer-copy { font-size: 12px; line-height: 1.8; letter-spacing: var(--ls-head); color: var(--text-5); margin-top: 30px; }
+
+  @media (max-width: 766px) {
+    .section, .section-wide { padding: 44px 20px; }
+    h2.sec { font-size: 23px; }
+    .hero-in { grid-template-columns: 1fr; padding: 48px 20px 56px; }
+    .hero h1 { font-size: 42px; }
+    .hero .eyebrow { font-size: 20px; }
+    .cards, .pair, .fields { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .nav { display: none; }
+    body { font-size: 14px; }   /* ★375px で body が 14px に落ちる（字間も 1.4px に追従） */
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="band-in">
+    <p>これからの100年、新しい契約のかたち。</p>
+    <span class="spacer"></span>
+    <a href="#" class="on">ログイン</a>
+    <a href="#">ヘルプセンター</a>
+    <a href="#">お知らせ</a>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-in">
+    <span class="logo">CLOUDSIGN</span>
+    <nav class="nav">
+      <a href="#">クラウドサインについて</a><a href="#">料金</a><a href="#">導入事例</a><a href="#">業界別活用</a><a href="#">お役立ち情報</a><a href="#">サービス一覧</a>
+    </nav>
+    <span class="spacer"></span>
+    <a href="#" class="btn sm ghost">新規登録</a>
+    <a href="#" class="btn sm cta">資料・デモを見る（無料）</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow">取引プロセスはもっとシンプルにできる。</div>
+      <h1>電子契約から<br>気軽に始めるDX</h1>
+      <div class="sub">契約管理プラットフォーム クラウドサイン</div>
+      <div class="btns">
+        <a href="#" class="btn lg cta">資料ダウンロード（無料） ›</a>
+        <a href="#" class="btn lg ghost">プランや料金について相談する ›</a>
+      </div>
+    </div>
+    <div class="hero-art"></div>
+  </div>
+</section>
+
+<div class="logos">
+  <span>TOYOTA</span><span>Nestlé</span><span>JTB</span><span>MIZUHO</span><span>東京海上日動</span><span>Calbee</span><span>RECRUIT</span>
+</div>
+
+<section class="section-wide" id="colors">
+  <div class="kicker">01 / Colors</div>
+  <h2 class="sec">青は語り、<span class="hl">マゼンタが押す</span></h2>
+  <p class="lead"><b>ブランド色でボタンを塗らない。</b>マゼンタ <code>#f42859</code> は<b>資料ダウンロード系のボタン専用</b>（面 17 要素）で、青 <code>#0d64c9</code> は見出し・リンク・問い合わせ系の副次ボタンに回っている。<b>「一番目立つ色＝一番押させたい操作」を 1 対 1 にしている。3 つ目の CTA 色を足さない。</b></p>
+
+  <div class="swatches">
+    <div class="sw"><div class="sw-chip" style="background:#f42859"></div><div class="sw-body"><div class="sw-name">Magenta（主CTA）</div><div class="sw-hex">#f42859</div><div class="sw-use">★面 17 / 8 要素。資料ダウンロードのみ</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0d64c9"></div><div class="sw-body"><div class="sw-name">CloudSign Blue</div><div class="sw-hex">#0d64c9</div><div class="sw-use">★文字 26 / 44 要素。見出し・リンク・副次ボタン</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#30363e"></div><div class="sw-body"><div class="sw-name">Text Primary</div><div class="sw-hex">#30363e</div><div class="sw-use">★171 / 134 要素。純黒を使わない</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#495158"></div><div class="sw-body"><div class="sw-name">Text Secondary</div><div class="sw-hex">#495158</div><div class="sw-use">注釈（3 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#697482"></div><div class="sw-body"><div class="sw-name">Text Tertiary</div><div class="sw-hex">#697482</div><div class="sw-use">認証制度のラベル（19 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#8897a7"></div><div class="sw-body"><div class="sw-name">Text Muted</div><div class="sw-hex">#8897a7</div><div class="sw-use">※ の但し書き・連番（18 / 12 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#bcc8d6"></div><div class="sw-body"><div class="sw-name">Text on Dark</div><div class="sw-hex">#bcc8d6</div><div class="sw-use">フッターのリンク（12 / 13 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#49515a"></div><div class="sw-body"><div class="sw-name">Surface Dark</div><div class="sw-hex">#49515a</div><div class="sw-use">導入事例の業種バッジ（18 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#fafcfd"></div><div class="sw-body"><div class="sw-name">Surface</div><div class="sw-hex">#fafcfd</div><div class="sw-use">★最多 56 要素。機能一覧・料金表の地</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f4f7fa"></div><div class="sw-body"><div class="sw-name">Surface Cool</div><div class="sw-hex">#f4f7fa</div><div class="sw-use">認証チップ（24 / 11 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#eaf0f6"></div><div class="sw-body"><div class="sw-name">Surface Blue</div><div class="sw-hex">#eaf0f6</div><div class="sw-use">表のヘッダ行（30 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f2f8ff"></div><div class="sw-body"><div class="sw-name">Surface Accent</div><div class="sw-hex">#f2f8ff</div><div class="sw-use">キャッチの背面（2 要素）。最も青い面</div></div></div>
+  </div>
+
+  <p class="note"><b>青みを含んだ 6 段のグレースケール</b>（<code>#30363e</code> → <code>#495158</code> → <code>#697482</code> → <code>#8897a7</code> → <code>#bcc8d6</code> → <code>#dae3ed</code>）を持ち、純黒・純グレーを使わない。面も <code>#fafcfd</code> → <code>#f4f7fa</code> → <code>#eaf0f6</code> の 3 段。<br><b>自社トークンは 0 個。</b>検出した 60 個の CSS 変数はすべて WordPress / Gutenberg 由来。</p>
+</section>
+
+<section class="section-alt">
+<div class="section-wide" id="typography">
+  <div class="kicker">02 / Typography</div>
+  <h2 class="sec">丸数字のために <span class="hl">@font-face を 9 本</span></h2>
+  <p class="lead">本文スタックの先頭に <code>NotoSansJP-circled-1</code>〜<code>-9</code> が並ぶ。それぞれ <b><code>unicode-range</code> が ①〜⑨ の 1 文字ずつ</b>（<code>U+2460</code>〜<code>U+2468</code>）に絞られていて、該当文字が無いページでは<b>1 バイトも取りに行かない</b>。セルフホストしている <code>NotoSansJP-Regular.woff2</code> のサブセットに丸数字が入っていないための補填。</p>
+
+  <table class="audit">
+    <tr><th>Family</th><th>調達</th><th>document.fonts</th><th>実測のリクエスト</th><th>判定</th></tr>
+    <tr class="good"><td>Noto Sans JP</td><td class="n">セルフホスト（Regular / Medium / Bold）</td><td class="n">400 / 500 / 700 loaded</td><td class="n">3 本</td><td>★和文の本体</td></tr>
+    <tr class="good"><td>Inter</td><td class="n">セルフホスト（24pt R/B・18pt M）</td><td class="n">400 / 500 / 700 loaded</td><td class="n">3 本</td><td>★欧文・数字</td></tr>
+    <tr><td>NotoSansJP-circled-1 … -9</td><td class="n">Google Fonts のサブセット woff2 を直リンク</td><td class="n"><b>9 本とも unloaded</b></td><td class="n"><b>0 本</b></td><td><b>unloaded が正常</b>（unicode-range）</td></tr>
+    <tr><td>Font Awesome 5 Free</td><td class="n">CDN</td><td class="n">900 loaded / 400 unloaded</td><td class="n">1 本</td><td>アイコン</td></tr>
+    <tr><td>Font Awesome 5 Brands</td><td class="n">CDN</td><td class="n">unloaded</td><td class="n">0 本</td><td>未使用</td></tr>
+    <tr><td>slick</td><td class="n">テーマ同梱</td><td class="n">400 loaded</td><td class="n">1 本</td><td>カルーセルの矢印</td></tr>
+  </table>
+  <p class="note"><b><code>unloaded</code> を「読み込み失敗」と読み違えないこと。</b>丸数字が出るページでだけ 1 本ずつ落ちてくる。<b>本文フォントをサブセットしていて記号が欠けるケースの解法</b>として流用できる。<br>ウェイトは <b>400 / 500 / 700 の 3 本しか持っていない</b>。下層の h3 に当たっている <code>font-weight: 600</code>（34 要素）は実体が無く、<b>上方向の 700 で描画される</b>。<b>600 と書かず 700 と書くこと。</b></p>
+
+  <h3 class="sub">字間は em の段で刻む</h3>
+  <div class="ladder">
+    <div class="ls-item"><div class="ls-val">0.01em（0.13px @13px）</div><div class="ls-sample" style="letter-spacing:0.01em">クラウドサインについて</div><div class="ls-use">ヘッダーの第 1 階層ナビ</div></div>
+    <div class="ls-item"><div class="ls-val">0.02em（0.28px @14px）</div><div class="ls-sample" style="letter-spacing:0.02em">契約業務の点を線にして</div><div class="ls-use">タグライン</div></div>
+    <div class="ls-item"><div class="ls-val">★0.04em（1.6px @40px）</div><div class="ls-sample" style="letter-spacing:0.04em">見出し・表の既定</div><div class="ls-use">h2・th・td・カード見出し</div></div>
+    <div class="ls-item"><div class="ls-val">0.05em（1.2px @24px）</div><div class="ls-sample" style="letter-spacing:0.05em">Light / Standard</div><div class="ls-use">料金プラン名</div></div>
+    <div class="ls-item"><div class="ls-val">0.06em（1.92px @32px）</div><div class="ls-sample" style="letter-spacing:0.06em">契約のスピードアップ</div><div class="ls-use">ナビ・特徴見出し</div></div>
+    <div class="ls-item"><div class="ls-val">0.08em（1.12px @14px）</div><div class="ls-sample" style="letter-spacing:0.08em">下層の説明文</div><div class="ls-use">読ませる段落</div></div>
+    <div class="ls-item"><div class="ls-val">★0.1em（1.6px @16px）</div><div class="ls-sample" style="letter-spacing:0.1em">body の既定</div><div class="ls-use">本文・ボタン</div></div>
+    <div class="ls-item"><div class="ls-val">0.15em（1.8px @12px）</div><div class="ls-sample" style="letter-spacing:0.15em">これからの100年</div><div class="ls-use">最上部の細帯・バナー</div></div>
+    <div class="ls-item"><div class="ls-val">0.2em（7.2px @36px）</div><div class="ls-sample" style="letter-spacing:0.2em">クラウドサインとは</div><div class="ls-use">下層 h1（青帯の白文字）</div></div>
+  </div>
+
+  <h3 class="sub">継承か、自分で宣言か</h3>
+  <div class="pair">
+    <div class="box">
+      <h5>h1 は継承している</h5>
+      <div style="font-size:40px;font-weight:700;line-height:1.3;color:#0d64c9">電子契約から始めるDX</div>
+      <div class="cap">desktop 60px → ls 1.6px ／ 375px 42px → ls <b>1.4px</b><br>body の計算値（16px→1.6px / 14px→1.4px）と一致＝継承</div>
+    </div>
+    <div class="box">
+      <h5>h2 は 0.04em を持っている</h5>
+      <div style="font-size:40px;font-weight:700;line-height:1.6;letter-spacing:0.04em">紙と印鑑をクラウドに</div>
+      <div class="cap">desktop 40px → ls 1.6px ／ 375px 23px → ls <b>0.92px</b><br>サイズに比例して動く＝自分で em を宣言している</div>
+    </div>
+  </div>
+  <p class="note"><b><code>body</code> の <code>0.1em</code> は 16px に対して 1.6px と計算され、その px 値が子へ降りる。</b>だから <code>1.6px</code> という値は 2 通りの出方をする。<b>サイズが違う要素に同じ px が並んでいたら継承、サイズに比例して px が動いていたら em 宣言</b>、と読み分ける。</p>
+
+  <div class="scale" style="margin-top:34px">
+    <span style="font-size:10px">10</span><span style="font-size:12px">12</span><span style="font-size:14px">14</span>
+    <span style="font-size:16px">16</span><span style="font-size:18px">18</span><span style="font-size:20px">20</span>
+    <span style="font-size:24px">24</span><span style="font-size:28px">28</span><span style="font-size:32px">32</span>
+    <span style="font-size:40px">40</span><span style="font-size:60px">60</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><em>Hero H1</em>Noto Sans JP / 60px / 700<br>lh 1.30 / ls 継承 1.6px / #0d64c9</div><div style="font-size:60px;font-weight:700;line-height:1.3;color:#0d64c9">電子契約から</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 2 ★</em>Noto Sans JP / 40px / 700<br>lh 1.60（64px）／ ls 0.04em</div><div style="font-size:40px;font-weight:700;line-height:1.6;letter-spacing:0.04em">クラウドサインは「紙と印鑑」を「クラウド」に</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 3</em>Noto Sans JP / 32px / <b>600 → 700 で描画</b><br>lh 1.60 / ls 0.06em</div><div style="font-size:32px;font-weight:700;line-height:1.6;letter-spacing:0.06em">契約のスピードアップ</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 4</em>Noto Sans JP / 24px / 700<br>lh 1.60（38.4px）</div><div style="font-size:24px;font-weight:700;line-height:1.6">コスト削減</div></div>
+  <div class="type-row"><div class="type-meta"><em>Card Title</em>Noto Sans JP / 20px / 700<br>lh 1.60 / ls 0.04em / #0d64c9</div><div style="font-size:20px;font-weight:700;line-height:1.6;letter-spacing:0.04em;color:#0d64c9">契約業務効率化による出社不要の実現</div></div>
+  <div class="type-row"><div class="type-meta"><em>Long Body ★</em>Noto Sans JP / 18px / 400<br><b>lh 2.00（36px）</b>／ ls 0.08em</div><div class="long">契約交渉済の契約書をアップロードし、相手方が承認すれば契約締結が完了します。印刷・製本・郵送の手間がなくなります。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Body ★</em>Noto Sans JP / 16px / 400<br>lh 1.60（25.6px）／ ls 0.1em（最多 104 要素）</div><div style="font-size:16px;line-height:1.6">今まで数日かかっていた契約作業を、わずか数分で終えられます。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Sub Body</em>Noto Sans JP / 14px / 400<br>lh 1.60 / ls 0.04em（下層の最多 92 要素）</div><div style="font-size:14px;line-height:1.6;letter-spacing:0.04em">郵送代・紙代・インク代はもちろん、印紙代も削減することができます。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Nav / UI ★</em>Noto Sans JP / 12px / 400<br><b>lh 1.00</b>／ ls 0.06em（87 要素）</div><div style="font-size:12px;line-height:1;letter-spacing:0.06em">ログイン　ヘルプセンター　お知らせ</div></div>
+  <div class="type-row"><div class="type-meta"><em>Label (EN)</em>Inter / 14px / 700</div><div style="font-family:var(--font-en);font-size:14px;font-weight:700;color:#8897a7">REASON 01　POINT 01</div></div>
+  <div class="type-row"><div class="type-meta"><em>Caption</em>Noto Sans JP / 10px / 400<br>lh 1.40 / ls 0.04em / #8897a7</div><div style="font-size:10px;line-height:1.4;letter-spacing:0.04em;color:#8897a7">※1：契約期間は当初1年間、その後1年単位の自動更新となります。</div></div>
+
+  <p class="note"><b>行間は 1.6 が既定で、読ませる長い段落だけ 2.0 に開く</b>（下層の 18px 本文、27 要素）。詰めるのは <code>1.4</code>（Hero Lead）、<code>1.3</code>（Hero H1）、<code>1.1</code>（大見出し）、<code>1.0</code>（ナビ・青帯 h1）。<br><code>font-feature-settings: "palt"</code> が <b>1,070 / 684 要素</b>に効いている。<b>字間 em とセットなので、片方だけ真似ない。</b>欧文の合字を切る <code>"clig" 0, "liga" 0</code> も 30 要素にある。</p>
+</div>
+</section>
+
+<section class="section-wide" id="components">
+  <div class="kicker">03 / Components</div>
+  <h2 class="sec">radius は 4px 一択</h2>
+  <p class="lead">実測 50 要素。<b>カードもボタンも表も全部 4px。</b>pill も 0px も使わない。<code>4.8px</code> / <code>6.112px</code> は<b>外部のフローティングバナー</b>由来なので無視してよい。</p>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+    <a href="#" class="btn sm cta">資料・デモを見る（無料）</a>
+    <a href="#" class="btn sm ghost">新規登録</a>
+    <a href="#" class="btn lg cta">資料ダウンロード（無料） ›</a>
+    <a href="#" class="btn lg blue">見積もりを依頼する ›</a>
+    <a href="#" class="btn lg ghost">プランや料金について相談する ›</a>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:22px">
+    <span class="badge">サービス業</span><span class="badge">物流・陸運業</span><span class="badge">士業</span><span class="badge rec">おすすめ</span>
+  </div>
+
+  <h3 class="sub">カード（radius 4px・影は 0 3px 6px）</h3>
+  <div class="cards">
+    <div class="card"><div class="thumb"></div><div class="body"><span class="badge">サービス業</span><h4>契約業務効率化による出社不要の実現</h4><p>印刷・製本・郵送作業が不要になり、契約作業のための出社をなくせました。</p></div></div>
+    <div class="card"><div class="thumb"></div><div class="body"><span class="badge">物流・陸運業</span><h4>スピーディーな契約締結</h4><p>ワークフローとリマインド機能で、差し戻しの手間が減りました。</p></div></div>
+    <div class="card"><div class="thumb"></div><div class="body"><span class="badge">士業</span><h4>金額的コストの削減</h4><p>印刷代やレターパック代、印紙代をまとめて削減できました。</p></div></div>
+  </div>
+
+  <h3 class="sub">料金表</h3>
+  <table class="price">
+    <thead><tr><th>プラン</th><th>月額</th><th>送信件数ごとの費用</th><th>ユーザー数</th></tr></thead>
+    <tbody>
+      <tr><td class="plan">Light</td><td class="fee">11,000円<small>（税込12,100円）</small></td><td>220円<small>（税込242円）</small></td><td>無制限</td></tr>
+      <tr><td class="plan">Corporate</td><td class="fee">30,000円<small>（税込33,000円）</small></td><td>200円<small>（税込220円）</small></td><td>無制限</td></tr>
+      <tr><td class="plan">Enterprise</td><td class="fee">年額 <small>税込145,200円※1</small></td><td>個別見積もり</td><td>無制限</td></tr>
+    </tbody>
+  </table>
+  <p class="note">表ヘッダは面 <code>#eaf0f6</code> / 14px / 700 / <code>letter-spacing: 0.04em</code> / 行間 1.57。本体は面 <code>#fafcfd</code> / 14px / 400 / 行間 1.40。<b>罫線は淡いグレー、角丸は外周の 4px だけ。</b></p>
+
+  <h3 class="sub">認証チップ</h3>
+  <div class="chips">
+    <span class="chip">電子署名法2条1項法務省基準</span><span class="chip">SOC2 Type1</span><span class="chip">ISO27001（ISMS）</span><span class="chip">ISO27017</span>
+  </div>
+
+  <h3 class="sub">入力欄（実サイトに存在しないため DESIGN.md の推奨値）</h3>
+  <div class="fields">
+    <div class="field"><label for="f1">会社名</label><input id="f1" type="text" value="株式会社ムート"><div class="field-msg">既定の状態</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス</label><input id="f2" type="text" value="info@example.jp"><div class="field-msg">フォーカス（outline 2px solid #0d64c9）</div></div>
+  </div>
+  <p class="note"><b>実サイトは <code>outline: none</code> でフォーカスリングを消している。これは真似てはいけない実装。</b>キーボード操作でどこにいるか分からなくなる。<b>新規実装では <code>outline: 2px solid #0d64c9; outline-offset: 2px</code> を必ず明示すること。</b></p>
+</section>
+
+<div class="pagehead">
+  <div class="pagehead-in"><h1>クラウドサインとは</h1></div>
+</div>
+
+<section class="section-wide" id="layout">
+  <div class="kicker">04 / Layout &amp; Elevation</div>
+  <h2 class="sec">1000px の本文、影は 0 3px 6px に一本化</h2>
+
+  <div class="bars">
+    <div class="bar" style="width:100%">Full bleed — ヒーロー（1429px）</div>
+    <div class="bar" style="width:1200px;max-width:100%">Wide 1200px</div>
+    <div class="bar" style="width:1000px;max-width:100%">Container 1000px ★本文カラム</div>
+    <div class="bar" style="width:454px;max-width:100%">454px — ヒーローの 2 カラム</div>
+  </div>
+
+  <h3 class="sub">Depth &amp; Elevation</h3>
+  <div class="elevs">
+    <div class="elev"><div class="elev-name">Level 0（既定）</div><div class="elev-val">box-shadow: none</div></div>
+    <div class="elev s1"><div class="elev-name">Level 1 ★（21 / 12 要素）</div><div class="elev-val">0 3px 6px rgba(0,0,0,.1)</div></div>
+    <div class="elev s2"><div class="elev-name">ドロップダウン（1 要素）</div><div class="elev-val">0 2px 4px rgba(0,0,0,.1)</div></div>
+    <div class="elev s3"><div class="elev-name">フローティング（2 要素）</div><div class="elev-val">0 4px 20px rgba(48,54,62,.1)</div></div>
+  </div>
+  <p class="note"><b>階層 1 は <code>0 3px 6px rgba(0,0,0,.1)</code> に一本化されている。</b>カードは全部これ。<b>浮かせたいものだけ影の色を <code>rgba(48, 54, 62, 0.1)</code>（本文色の 10%）にして</b>、黒い影より面に馴染ませている。10 周年バナーは <code>0 1px 5px rgba(48,54,62,.1), 0 5px 9px rgba(13,100,201,.1)</code> と<b>青の影を重ねている</b>。<code>filter: drop-shadow()</code> / <code>text-shadow</code> は 0 件。</p>
+
+  <h3 class="sub">Responsive</h3>
+  <p class="lead"><b>ブレークポイントはすべて <code>min-width</code> で書かれたモバイルファースト。</b><code>max-width</code> は 1 件も無い。320 / 375 / 605 / 767 / 768 / 798 / 1230 / <b>1280</b> / 1325px。<code>screen and (min-width: 768px) and (min-width: 1280px)</code> という<b>入れ子のまま出ている指定</b>もある（実質 1280px）。</p>
+  <p class="note"><b><code>html</code> は 16px 固定、<code>body</code> は 1440 / 1200 / 834px で 16px、375px で 14px。</b>行間は 1.6 のまま（25.6px → 22.4px）、字間は <code>0.1em</code> なので <b>1.6px → 1.4px に自動追従</b>する。見出しも連動し、<b>h1 は 60px → 42px、h2 は 40px → 23px</b>（字間は 1.6px → 0.92px = 0.04em のまま）。<br><b><code>body</code> のサイズを落とすだけで、字間も行間も見出しも比率で追従する設計。px に読み替えると、この自動追従が全部壊れる。</b><br>ヘッダーの CTA は<b>高さ 38px で WCAG の 44px を下回る</b>ので、新規実装では 44px 以上を確保すること。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <span class="logo">CLOUDSIGN</span>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">クラウドサインとは</a><a href="#">機能一覧</a><a href="#">料金</a><a href="#">導入事例</a></div>
+      <div class="footer-col"><a href="#">運営会社</a><a href="#">規約・ポリシー一覧</a><a href="#">採用情報</a></div>
+      <div class="footer-col"><a href="#">お役立ち資料</a><a href="#">お問い合わせ</a><a href="#">お見積もり</a></div>
+    </div>
+    <div class="footer-copy">© Bengo4.com, Inc. All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

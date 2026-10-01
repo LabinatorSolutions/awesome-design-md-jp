@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ウェルスナビ（WealthNavi）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトは Google Fonts の旧 css?family= API で Noto Sans JP の 300/400/500/700/900 を
+     読み込んでいるが、document.fonts 上 loaded なのは 400/500/700 の 3 本だけで、
+     300 と 900 は可視 0 要素。このプレビューは実際に描画される 3 本だけを読む。
+     Roboto は数字専用（可視 8 要素）。 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトでは 0 個（total 0）。
+       以下は computed style の実測値。2026-10-01 */
+    --navy:       #004d94;  /* ★主CTA「口座開設」。面 8 / 文字 7 要素 */
+    --blue:       #0984e3;  /* ★副CTA「無料診断」・リンク。面 6 / 文字 5 要素 */
+    --sky:        #4eb0f7;  /* ヒーローの地色（高さ 476px） */
+    --sky-pale:   #8ed2ff;  /* ヒーロー inner の ::before */
+    --sky-head:   #93ddff;  /* 「選ばれる理由」の見出し帯 */
+
+    --text:       #333333;  /* ★本文。可視 92 / 78 要素 */
+    --text-strong:#282828;  /* カード見出し（14 / 10 要素） */
+    --text-sub:   #666666;  /* 注釈（32 / 15 要素） */
+    --text-muted: #888888;  /* 日付・但し書き（1 / 12 要素） */
+    --white:      #ffffff;
+
+    --danger:     #ee0f3e;  /* 詐欺注意の告知（2 要素）。帯にしない */
+    --accent-warm:#fb8600;  /* 属性バッジ「投資経験なし」 */
+    --accent-teal:#0cb7b7;  /* 属性バッジ「投資経験あり」 */
+    --accent-gold:#bca47a;  /* 実績ラベル（預かり資産・運用者数） */
+    --hero-yellow:#ffe81a;  /* ヒーローの 1 文字色替え（12 要素）。UI 色ではない */
+
+    --surf-blue:  #e2f2fd;  /* 下層の主要ブロック。可視面積が最大 */
+    --surf-blue-l:#dff1fc;
+    --surf-gray:  #f0f3f5;
+    --surf-cool:  #f1f5f9;
+    --surf-warm:  #ffeeda;
+    --surf-mint:  #cdefef;
+    --bg:         #ffffff;  /* pageBackground.resolved（根拠 body・4 幅同値） */
+
+    /* === Fonts ===
+       和文の具体名が 1 つも無いのが実サイトの実装。
+       このプレビューでは DESIGN.md の推奨どおりフォールバックを足してある。 */
+    --font-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+    --font-num: Roboto, sans-serif;   /* 数字だけ */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===
+       body は 1.15（= 10px/11.5px）だが、これは本文用ではなくリセット。
+       行間を書き忘れた要素に残り続ける（可視 70 / 81 要素）。 */
+    --lh-reset: 1.15;
+    --lh-body:  1.6;   /* ★本文 */
+    --lh-head:  1.4;   /* ★見出し */
+    --lh-btn:   1.0;   /* ヘッダーの pill */
+
+    /* === Letter spacing ===
+       normal が 191 要素中 173（トップ）/ 134 要素中 134（下層）。
+       palt も YakuHan も無い。字間に一切手を入れないのが設計。 */
+    --ls: normal;
+
+    --r-pill: 100px;  /* ★すべてのボタン（10 要素） */
+    --r-card: 24px;   /* カード（3 要素） */
+    --r-block:56px;   /* 下層の大型ブロック（4 要素） */
+    --r-badge:50px;   /* 属性バッジ */
+    --r-sm:   8px;    /* STEP カード */
+    --r-xs:   4px;    /* リスク許容度タブ */
+
+    --shadow: 0 5px 10px rgba(0, 0, 0, 0.13);  /* 実測で唯一の影（2 要素） */
+
+    --container: 1024px;  /* ★実測 10 要素で最多 */
+    --wide:      1440px;
+    --column:    872px;
+    --gap:       24px;    /* ★gap の最多（6 件） */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は実サイトで 0 件。palt を足さない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid #e6ecf2; background: var(--white); }
+  .header-in { display: flex; align-items: center; gap: 14px; max-width: var(--wide); margin: 0 auto; padding: 14px 32px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: var(--navy); line-height: var(--lh-head); }
+  .logo-mark { width: 28px; height: 28px; border-radius: 50%; background: var(--navy); }
+  .header-in .spacer { margin-left: auto; }
+  .nav { display: flex; gap: 30px; max-width: var(--wide); margin: 0 auto; padding: 0 32px 14px; flex-wrap: wrap; }
+  .nav a { font-size: 14px; font-weight: 700; line-height: var(--lh-reset); color: var(--navy); text-decoration: none; }
+
+  /* pill buttons — すべて radius 100px */
+  .pill { display: inline-flex; align-items: center; justify-content: center;
+          height: 36px; padding: 0 22px; border: none; border-radius: var(--r-pill);
+          font-family: var(--font-jp); font-size: 12px; line-height: var(--lh-btn);
+          letter-spacing: var(--ls); text-decoration: none; cursor: pointer; }
+  .pill.navy  { background: var(--navy); color: var(--white); font-weight: 400; }
+  .pill.blue  { background: var(--blue); color: var(--white); font-weight: 500; }
+  .pill.ghost { background: var(--white); color: var(--blue); font-weight: 500; border: 1px solid #cfdce8; }
+
+  /* HERO */
+  .hero { background: var(--sky); position: relative; overflow: hidden; }
+  .hero-in { max-width: var(--wide); margin: 0 auto; padding: 86px 32px; position: relative; }
+  .hero h1 { font-size: 48px; font-weight: 700; line-height: var(--lh-head); color: var(--white); }
+  .hero h1 .y { color: var(--hero-yellow); letter-spacing: 0.8px; }
+  .hero p { margin-top: 18px; font-size: 18px; line-height: var(--lh-body); color: var(--white); }
+
+  /* 注意喚起 */
+  .alert { max-width: var(--container); margin: 0 auto; padding: 26px 32px; text-align: center; }
+  .alert b { color: var(--danger); font-size: 16px; font-weight: 700; line-height: var(--lh-body); }
+  .alert a { color: var(--blue); text-decoration: underline; }
+
+  /* 本文中の大型 CTA（2 行組） */
+  .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); max-width: var(--container); margin: 0 auto; padding: 0 32px 54px; }
+  .cta { display: block; border-radius: var(--r-pill); padding: 20px 28px; text-decoration: none; text-align: center; color: var(--white); }
+  .cta.navy { background: var(--navy); }
+  .cta.blue { background: var(--blue); }
+  .cta .lab { display: block; font-size: 16px; font-weight: 700; line-height: var(--lh-body); }
+  .cta .big { display: block; margin-top: 4px; font-size: 28px; font-weight: 700; line-height: var(--lh-head); }
+
+  /* SECTIONS */
+  .section { max-width: var(--container); margin: 0 auto; padding: 68px 32px; }
+  .section-alt { background: var(--surf-blue); }
+  .section-alt .inner { max-width: var(--container); margin: 0 auto; padding: 68px 32px; }
+  .kicker { font-family: var(--font-mono); font-size: 12px; line-height: var(--lh-body); color: var(--text-sub); margin-bottom: 10px; }
+  h2.sec { font-size: 36px; font-weight: 700; line-height: var(--lh-head); color: var(--text); margin-bottom: 18px; }
+  h3.sub { font-size: 28px; font-weight: 700; line-height: var(--lh-head); color: var(--text-strong); margin: 48px 0 18px; }
+  .lead { font-size: 20px; line-height: var(--lh-body); max-width: var(--column); margin-bottom: 30px; }
+  .note { font-size: 14px; line-height: var(--lh-body); color: var(--text-sub); margin-top: 20px; max-width: var(--column); }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surf-gray); padding: 1px 5px; border-radius: var(--r-xs); }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+  .sw { border: 1px solid #e2e8ee; border-radius: var(--r-sm); overflow: hidden; background: var(--white); }
+  .sw-chip { height: 78px; }
+  .sw-body { padding: 13px 14px 16px; }
+  .sw-name { font-size: 15px; font-weight: 700; line-height: var(--lh-head); }
+  .sw-hex { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .sw-use { font-size: 12px; line-height: var(--lh-body); color: var(--text-sub); margin-top: 7px; }
+
+  /* TYPE */
+  .scale { display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale span { background: var(--surf-gray); padding: 7px 12px; line-height: 1; border-radius: var(--r-xs); }
+  .type-row { display: grid; grid-template-columns: 240px 1fr; gap: 26px; padding: 20px 0; border-bottom: 1px solid #e6ecf2; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: 1.8; color: var(--text-sub); }
+  .type-meta em { display: block; font-family: var(--font-jp); font-style: normal; font-size: 13px; font-weight: 700; color: var(--text); }
+
+  /* AUDIT TABLE */
+  .audit { width: 100%; border-collapse: collapse; font-size: 14px; line-height: var(--lh-body); }
+  .audit th, .audit td { border: 1px solid #e2e8ee; padding: 9px 12px; text-align: left; color: var(--text); }
+  .audit th { background: var(--surf-gray); font-weight: 700; }
+  .audit td.n { font-family: var(--font-mono); font-size: 12px; }
+  .audit tr.used td { background: var(--surf-blue-l); }
+
+  /* BADGES */
+  .badge { display: inline-block; border-radius: var(--r-badge); padding: 5px 14px;
+           font-size: 12px; font-weight: 700; line-height: 1; color: var(--white); }
+  .badge.warm { background: var(--accent-warm); }
+  .badge.teal { background: var(--accent-teal); }
+  .tabs { display: inline-flex; gap: 6px; margin-top: 16px; }
+  .tab { border-radius: var(--r-xs); padding: 6px 12px; font-size: 12px; font-weight: 500; line-height: 1;
+         background: var(--surf-cool); color: var(--text); }
+  .tab.on { background: var(--blue); color: var(--white); }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .card { border-radius: var(--r-card); overflow: hidden; background: var(--surf-blue-l); }
+  .card .thumb { height: 128px; background: linear-gradient(140deg, var(--sky-pale), var(--sky)); }
+  .card .body { padding: 22px 24px 26px; }
+  .card h4 { font-size: 28px; font-weight: 700; line-height: var(--lh-head); color: var(--text-strong); }
+  .card p { font-size: 16px; line-height: var(--lh-body); color: var(--text); margin-top: 10px; }
+
+  /* 体験談カード */
+  .voices { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .voice { border-radius: var(--r-card); overflow: hidden; }
+  .voice.a { background: var(--surf-warm); }
+  .voice.b { background: var(--surf-mint); }
+  .voice-head { padding: 20px 24px 0; }
+  .voice-body { padding: 14px 24px 26px; }
+  .voice-body p { font-size: 20px; font-weight: 700; line-height: var(--lh-head); color: var(--text-strong); }
+  .voice-meta { display: inline-block; margin-top: 14px; background: var(--surf-cool); border-radius: var(--r-xs);
+                padding: 5px 11px; font-size: 12px; line-height: 1.4; color: var(--text-sub); }
+
+  /* STEPS */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .step { background: var(--white); border: 1px solid #dce6f0; border-radius: var(--r-sm); padding: 26px 24px 30px; }
+  .step .n { font-family: var(--font-num); font-size: 45px; font-weight: 700; line-height: 1; color: var(--blue); letter-spacing: -1.42px; }
+  .step .t { font-size: 12px; font-weight: 500; line-height: 1.54; color: var(--blue); margin-top: 10px; }
+  .step h4 { font-size: 24px; font-weight: 700; line-height: var(--lh-head); margin-top: 8px; color: var(--text); }
+  .step p { font-size: 16px; line-height: var(--lh-body); color: var(--text-sub); margin-top: 10px; }
+
+  /* STAT */
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); max-width: 640px; }
+  .stat { background: var(--white); border-radius: var(--r-block); padding: 32px 36px; }
+  .stat .lab { font-size: 14px; font-weight: 700; line-height: var(--lh-body); color: var(--accent-gold); }
+  .stat .num { font-family: var(--font-num); font-size: 48px; font-weight: 700; line-height: 1.1; color: var(--navy); letter-spacing: -1.89px; margin-top: 6px; }
+  .stat .num .u { font-family: var(--font-jp); font-size: 18px; letter-spacing: var(--ls); }
+
+  /* FORMS */
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+  .field label { display: block; font-size: 14px; font-weight: 700; line-height: var(--lh-body); margin-bottom: 8px; }
+  .field input { width: 100%; background: var(--white); color: var(--text); font-family: var(--font-jp);
+                 border: 1px solid #ccd6e0; border-radius: var(--r-sm); padding: 12px 16px; font-size: 16px; line-height: var(--lh-body); }
+  .field.is-focus input { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .field.is-error input { border-color: var(--danger); }
+  .field-msg { font-size: 12px; line-height: var(--lh-body); color: var(--text-sub); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--danger); }
+
+  /* LAYOUT */
+  .bars { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .bar { background: var(--surf-gray); color: var(--text); height: 38px; display: flex; align-items: center; justify-content: center;
+         font-family: var(--font-mono); font-size: 11px; border-radius: var(--r-xs); }
+  .radii { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 30px; align-items: flex-end; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 56px; background: var(--surf-blue); border: 1px solid #b9dcf5; }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-sub); margin-top: 8px; }
+
+  /* ELEVATION */
+  .elevs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap); }
+  .elev { background: var(--white); border: 1px solid #e2e8ee; border-radius: var(--r-card); padding: 28px; text-align: center; }
+  .elev.on { box-shadow: var(--shadow); border-color: transparent; }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-body); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--text-sub); margin-top: 8px; }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: var(--white); padding: 48px 32px; }
+  .footer-in { max-width: var(--container); margin: 0 auto; }
+  .footer h4 { font-size: 20px; font-weight: 700; line-height: var(--lh-head); }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 24px; }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 12px; line-height: 2; margin-top: 30px; }
+
+  @media (max-width: 768px) {
+    .section, .section-alt .inner { padding: 44px 20px; }
+    h2.sec { font-size: 26px; }
+    h3.sub { font-size: 22px; }
+    .hero h1 { font-size: 30px; }
+    .hero-in { padding: 52px 20px; }
+    .cards, .voices, .steps, .stats, .cta-row { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-in">
+    <span class="logo"><span class="logo-mark"></span>ウェルスナビ</span>
+    <span class="spacer"></span>
+    <a href="#" class="pill navy">口座開設</a>
+    <a href="#" class="pill blue">無料診断</a>
+    <a href="#" class="pill ghost">ログイン</a>
+  </div>
+  <nav class="nav">
+    <a href="#">投資初心者の方</a><a href="#">サービス</a><a href="#">おまかせNISA</a><a href="#">運用実績</a><a href="#">手数料</a><a href="#">学び</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <h1>答えは、<br><span class="y">ウェルスナビ</span></h1>
+    <p>だれでも簡単。はじめやすく、続けやすい資産運用。</p>
+  </div>
+</section>
+
+<div class="alert">
+  <b>【重要】 ウェルスナビを装った詐欺やSNSでの勧誘にご注意ください。</b> <a href="#">詳しくはこちら</a>
+</div>
+
+<div class="cta-row">
+  <a href="#" class="cta navy"><span class="lab">お申し込みは最短3分</span><span class="big">口座開設</span></a>
+  <a href="#" class="cta blue"><span class="lab">あなたに合った資産運用は？</span><span class="big">無料診断</span></a>
+</div>
+
+<section class="section" id="colors">
+  <div class="kicker">01 / Colors</div>
+  <h2 class="sec">青が 2 色、それが導線の主従</h2>
+  <p class="lead"><b>濃紺 <code>#004d94</code> は「お金を預ける操作」、明るい青 <code>#0984e3</code> は「試す・見る操作」。</b>同じ 2 色の対がヘッダー・本文中・フッター前で 3 回繰り返される。<b>中間の青を足さない。</b></p>
+
+  <div class="swatches">
+    <div class="sw"><div class="sw-chip" style="background:#004d94"></div><div class="sw-body"><div class="sw-name">Navy（主CTA）</div><div class="sw-hex">#004d94</div><div class="sw-use">★面 8 / 文字 7 要素。口座開設・下層 h1</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0984e3"></div><div class="sw-body"><div class="sw-name">Blue（副CTA）</div><div class="sw-hex">#0984e3</div><div class="sw-use">★面 6 / 文字 5 要素。無料診断・リンク</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#4eb0f7"></div><div class="sw-body"><div class="sw-name">Sky（ヒーロー面）</div><div class="sw-hex">#4eb0f7</div><div class="sw-use">ヒーローの地色（高さ 476px）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#333333"></div><div class="sw-body"><div class="sw-name">Text Primary</div><div class="sw-hex">#333333</div><div class="sw-use">★可視 92 / 78 要素。純黒は使わない</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#282828"></div><div class="sw-body"><div class="sw-name">Text Strong</div><div class="sw-hex">#282828</div><div class="sw-use">カード見出し（14 / 10 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#666666"></div><div class="sw-body"><div class="sw-name">Text Secondary</div><div class="sw-hex">#666666</div><div class="sw-use">注釈・免責（32 / 15 要素）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#ee0f3e"></div><div class="sw-body"><div class="sw-name">Danger</div><div class="sw-hex">#ee0f3e</div><div class="sw-use">詐欺注意（2 要素）。帯にせず文字だけ赤</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#fb8600"></div><div class="sw-body"><div class="sw-name">Accent Warm</div><div class="sw-hex">#fb8600</div><div class="sw-use">属性バッジ「投資経験なし」</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0cb7b7"></div><div class="sw-body"><div class="sw-name">Accent Teal</div><div class="sw-hex">#0cb7b7</div><div class="sw-use">属性バッジ「投資経験あり」</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#bca47a"></div><div class="sw-body"><div class="sw-name">Accent Gold</div><div class="sw-hex">#bca47a</div><div class="sw-use">実績ラベル（預かり資産・運用者数）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#e2f2fd"></div><div class="sw-body"><div class="sw-name">Surface Blue</div><div class="sw-hex">#e2f2fd</div><div class="sw-use">下層の主要ブロック。可視面積が最大</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f0f3f5"></div><div class="sw-body"><div class="sw-name">Surface Gray</div><div class="sw-hex">#f0f3f5</div><div class="sw-use">おすすめコンテンツ・シミュレーション</div></div></div>
+  </div>
+
+  <p class="note"><b>CSS Custom Properties は 0 個。</b>トークンを持たず、値はすべて CSS に直接書かれている。<code>html</code> を <code>62.5%</code>（10px）に落としているが <code>rem</code> 設計も無い。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="inner">
+  <div class="kicker">02 / Typography</div>
+  <h2 class="sec">字間に一切手を入れない</h2>
+  <p class="lead"><code>letter-spacing: normal</code> がトップで可視 191 要素中 <b>173 要素</b>、下層（運用パフォーマンス）では <b>134 要素中 134 要素＝全部</b>。さらに <b><code>font-feature-settings</code> は 0 件</b>で <code>palt</code> を 1 要素も使っておらず、スタックに <code>YakuHanJP</code> のような約物サブセットも無い。<b>Noto Sans JP の既定の字送りをそのまま出す。</b></p>
+
+  <table class="audit">
+    <tr><th>Family</th><th>宣言ウェイト</th><th>document.fonts</th><th>可視要素</th><th>判定</th></tr>
+    <tr class="used"><td>Noto Sans JP</td><td class="n">300 / 400 / 500 / 700 / 900</td><td class="n">400 / 500 / 700 が loaded</td><td class="n">183</td><td>★和文の本体</td></tr>
+    <tr><td>Noto Sans JP (300)</td><td class="n">—</td><td class="n">unloaded</td><td class="n">0</td><td>URL に書いてあるが未使用</td></tr>
+    <tr><td>Noto Sans JP (900)</td><td class="n">—</td><td class="n">unloaded</td><td class="n">0</td><td>URL に書いてあるが未使用</td></tr>
+    <tr class="used"><td>Roboto</td><td class="n">500 / 700 / 700 italic</td><td class="n">500 / 700 が loaded</td><td class="n">8</td><td>★数字専用</td></tr>
+  </table>
+
+  <p class="note"><b>Google Fonts の旧 <code>css?family=</code> API で 5 ウェイトを読んでいる。</b>さらに <code>css?family=Noto+Sans+JP&amp;display=swap</code>（ウェイト指定なし）が<b>もう 1 本重複して読まれている</b>。実装の取りこぼしなので真似る必要はない。<b>新規実装は 400 / 500 / 700 の 3 本に絞ってよい。</b></p>
+
+  <div class="scale" style="margin-top:34px">
+    <span style="font-size:12px">12</span><span style="font-size:14px">14</span><span style="font-size:16px">16</span>
+    <span style="font-size:18px">18</span><span style="font-size:20px">20</span><span style="font-size:28px">28</span>
+    <span style="font-size:34px">34</span><span style="font-size:36px">36</span><span style="font-size:40px">40</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><em>Display（下層 h1）</em>Noto Sans JP / 40px / 700<br>lh 1.40 / ls normal / #004d94</div><div style="font-size:40px;font-weight:700;line-height:1.4;color:#004d94">ウェルスナビの運用パフォーマンス</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 1</em>Noto Sans JP / 36px / 700<br>lh 1.40（1.60 の箇所もある）</div><div style="font-size:36px;font-weight:700;line-height:1.4">ウェルスナビが選ばれる理由</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 2</em>Noto Sans JP / 34px / 700<br>lh 1.40</div><div style="font-size:34px;font-weight:700;line-height:1.4">5つの質問に答えるだけ</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 3</em>Noto Sans JP / 28px / 700<br>lh 1.40 / #282828</div><div style="font-size:28px;font-weight:700;line-height:1.4;color:#282828">リスクを抑えてリターンを最大化</div></div>
+  <div class="type-row"><div class="type-meta"><em>Lead</em>Noto Sans JP / 20px / 400<br>lh 1.60（32px）</div><div style="font-size:20px;line-height:1.6">手続きはスマホひとつで。簡単な診断をするだけで、あなたに合った運用プランが分かります。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Body ★</em>Noto Sans JP / 16px / 400<br>lh 1.60（25.6px）</div><div style="font-size:16px;line-height:1.6">資産運用の王道「長期・積立・分散」に基づいたサービス設計。相場の変動に一喜一憂せず、続けられます。</div></div>
+  <div class="type-row"><div class="type-meta"><em>UI / Nav ★</em>Noto Sans JP / 14px / 700<br>lh 1.15 / #004d94（最多 71 要素）</div><div style="font-size:14px;font-weight:700;line-height:1.15;color:#004d94">投資初心者の方　サービス　おまかせNISA　運用実績　手数料</div></div>
+  <div class="type-row"><div class="type-meta"><em>Caption</em>Noto Sans JP / 14px / 400<br>lh 1.60 / #888888</div><div style="font-size:14px;line-height:1.6;color:#888888">2016年1月19日〜2026年8月末（当初100万円、毎月3万円を積立）</div></div>
+  <div class="type-row"><div class="type-meta"><em>Small</em>Noto Sans JP / 12px / 400<br>lh 1.60 / #666666</div><div style="font-size:12px;line-height:1.6;color:#666666">※ 過去の運用実績であり、将来の運用成果を示唆・保証するものではありません。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Number</em>Roboto / 45px / 700<br>ls -1.42px（手詰め）</div><div style="font-family:var(--font-num);font-size:45px;font-weight:700;line-height:1;letter-spacing:-1.42px;color:#0984e3">01</div></div>
+
+  <p class="note"><b><code>body { line-height: 1.15 }</code> はリセットであって本文の行間ではない。</b>10px / 11.5px として書かれており、行間を書き忘れた要素（ナビ・ボタン・素のリスト）に<b>そのまま残る</b>（可視 70 / 81 要素）。<b>テキストブロックには必ず 1.6 か 1.4 を明示すること。</b></p>
+  <p class="note" style="margin-top:8px"><b>字間の例外は 2 種類だけ。</b>ヒーローの 1 文字色替え（<code>0.8px</code>・13 要素）と、Roboto の大きい数字の手詰め（<code>-1.42px</code> <code>-1.89px</code> <code>-9.94px</code> <code>0.63px</code>）。<b>この負の値は「設計」ではなく 1 文字ごとのカーニングで、再利用できる段ではない。</b></p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="kicker">03 / Components</div>
+  <h2 class="sec">ボタンは全部 pill</h2>
+  <p class="lead"><code>border-radius: 100px</code> が実測 10 要素。<b>枠線だけのボタン（outlined）は 1 件も無い。</b>面 2 色 × 寸法 2 種（36px のヘッダー pill / 2 行組の大型 pill）の 4 パターンしかない。</p>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+    <a href="#" class="pill navy">口座開設</a>
+    <a href="#" class="pill blue">無料診断</a>
+    <a href="#" class="pill ghost">ログイン</a>
+    <span class="badge warm">投資経験なし</span>
+    <span class="badge teal">投資経験あり</span>
+  </div>
+  <div class="tabs">
+    <span class="tab">リスク許容度1</span><span class="tab">リスク許容度2</span><span class="tab on">リスク許容度3</span>
+  </div>
+
+  <h3 class="sub">カード（radius 24px・影なし）</h3>
+  <div class="cards">
+    <div class="card"><div class="thumb"></div><div class="body"><h4>リスクを抑えて<br>リターンを最大化</h4><p>ノーベル賞受賞者が提唱する理論に基づき、世界約50カ国１万２千銘柄に分散します。</p></div></div>
+    <div class="card"><div class="thumb"></div><div class="body"><h4>2年以上の利用で<br>9割以上がプラス</h4><p>長く続けるほど、相場の変動の影響を受けにくくなります。</p></div></div>
+    <div class="card"><div class="thumb"></div><div class="body"><h4>はじめての方も<br>安心のMUFG</h4><p>三菱UFJフィナンシャル・グループの一員として運営しています。</p></div></div>
+  </div>
+
+  <h3 class="sub">体験談カード（radius 24px・バッジは 50px）</h3>
+  <div class="voices">
+    <div class="voice a"><div class="voice-head"><span class="badge warm">投資経験なし</span></div><div class="voice-body"><p>NISAを手間なくはじめられました。</p><span class="voice-meta">年収 300万円〜500万円 ／ 30代</span></div></div>
+    <div class="voice b"><div class="voice-head"><span class="badge teal">投資経験あり</span></div><div class="voice-body"><p>ポートフォリオの自動調整が助かります。</p><span class="voice-meta">年収 500万円〜1,000万円 ／ 40代</span></div></div>
+  </div>
+
+  <h3 class="sub">手順カード（radius 8px・数字は Roboto）</h3>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><div class="t">STEP 1</div><h4>5つの質問に答えるだけ</h4><p>かんたんな無料診断で、あなたに合った運用プランが分かります。</p></div>
+    <div class="step"><div class="n">02</div><div class="t">STEP 2</div><h4>面倒なことはぜんぶ自動</h4><p>商品選びから資産配分の見直しまで、すべて自動で行います。</p></div>
+    <div class="step"><div class="n">03</div><div class="t">STEP 3</div><h4>NISAももちろんおまかせ</h4><p>おトクなNISAの活用も自動。積立や難しい枠の使い方もおまかせ。</p></div>
+  </div>
+
+  <h3 class="sub">入力欄（実サイトに存在しないため DESIGN.md の推奨値）</h3>
+  <div class="fields">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" value="葛原 健太"><div class="field-msg">既定の状態</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス</label><input id="f2" type="text" value="info@example.jp"><div class="field-msg">フォーカス（outline 2px solid #0984e3）</div></div>
+    <div class="field is-error"><label for="f3">生年月日</label><input id="f3" type="text" value="1989/"><div class="field-msg">西暦8桁で入力してください</div></div>
+  </div>
+  <p class="note"><b>実サイトはフォーカスリングを設計していない。</b><code>a</code> にフォーカスを当てるとブラウザ既定の <code>rgb(0,95,204) auto 1px</code> が出る。<b>新規実装では <code>outline: 2px solid #0984e3; outline-offset: 2px</code> を明示すること。</b></p>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="inner">
+  <div class="kicker">04 / Layout &amp; Elevation</div>
+  <h2 class="sec">1024px のコンテナ、影は 1 種類</h2>
+
+  <div class="bars">
+    <div class="bar" style="width:100%">Full bleed — ヒーロー（高さ 476px / 地色 #4eb0f7）</div>
+    <div class="bar" style="width:1440px;max-width:100%">Wide 1440px（全幅セクションの上限）</div>
+    <div class="bar" style="width:1024px;max-width:100%">Container 1024px ★最多（10 要素）</div>
+    <div class="bar" style="width:872px;max-width:100%">Column 872px — 説明文のカラム</div>
+  </div>
+
+  <div class="radii">
+    <div class="radius-item"><div class="radius-box" style="border-radius:100px"></div><div class="radius-label">100px ★ボタン（10）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:56px"></div><div class="radius-label">56px 大型ブロック（4）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50px;width:56px;height:56px"></div><div class="radius-label">50px バッジ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">24px カード（3）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">8px STEP（3）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px タブ（2）</div></div>
+  </div>
+
+  <h3 class="sub">Depth &amp; Elevation</h3>
+  <div class="elevs">
+    <div class="elev"><div class="elev-name">Level 0（既定）</div><div class="elev-val">box-shadow: none</div></div>
+    <div class="elev on"><div class="elev-name">Level 1（唯一・2 要素）</div><div class="elev-val">0 5px 10px rgba(0,0,0,.13)</div></div>
+    <div class="elev" style="border-color:transparent;background:var(--surf-blue)"><div class="elev-name">階層は淡い青の面で</div><div class="elev-val">#e2f2fd / #dff1fc / #f0f3f5</div></div>
+  </div>
+  <p class="note"><b>影は 1 種類しか無い</b>（グローバルナビのドロップダウン 2 要素）。カードもセクションも影を持たず、階層は<b>淡い面色</b>で表す。<code>filter: drop-shadow()</code> / <code>text-shadow</code> は 0 件で、ヒーローの白文字も地色（<code>#4eb0f7</code>）とのコントラストだけで成立させている。</p>
+
+  <h3 class="sub">実績ブロック（radius 56px）</h3>
+  <div class="stats">
+    <div class="stat"><div class="lab">預かり資産</div><div class="num">1.4<span class="u">兆円</span></div></div>
+    <div class="stat"><div class="lab">運用者数</div><div class="num">42<span class="u">万人</span></div></div>
+  </div>
+
+  <h3 class="sub">Responsive</h3>
+  <p class="lead" style="font-size:16px"><b><code>html</code> / <code>body</code> は 4 幅（1440 / 1200 / 834 / 375px）すべてで 10px / <code>line-height: 11.5px</code> / <code>letter-spacing: normal</code> のまま。</b>流体（vw / clamp）も SP での縮小も無い。サイズの切り替えはセクションごとの CSS クラス側で行う。</p>
+  <p class="note">主分岐は <code>min-width: 1024px</code>（実測 98 件）でモバイルファースト。ほかに <code>max-width: 768px</code>（14 件）、<code>min-width: 828px</code>（13 件）、<code>min-width: 769px</code>（12 件）。<b><code>max-width: 343px</code> が 8 件</b>あり、小型端末でのはみ出しを個別に潰している。<br>ヘッダーの pill は<b>高さ 36px で WCAG の 44px を下回る</b>ので、新規実装では 44px 以上を確保すること。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <h4>ウェルスナビ</h4>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">サービス紹介</a><a href="#">運用実績</a><a href="#">手数料</a><a href="#">おまかせNISA</a></div>
+      <div class="footer-col"><a href="#">安心・安全への取り組み</a><a href="#">提携サービス一覧</a><a href="#">ウェルスナビ体験談</a></div>
+      <div class="footer-col"><a href="#">創業ストーリー</a><a href="#">よくあるご質問</a><a href="#">お問い合わせ</a></div>
+    </div>
+    <div class="footer-copy">© WealthNavi Inc. All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

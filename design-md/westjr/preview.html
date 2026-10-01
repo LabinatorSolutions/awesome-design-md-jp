@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: JR西日本（West Japan Railway）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトと同じ Google Fonts の可変フォント 2 本（Noto Sans JP / Inter）。
+     どちらも wght@100..900 で配信され、document.fonts 上 loaded。
+     実際に使っているウェイトは 400 / 500 / 700 の 3 つだけ。 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  /* 実サイトの CSS（assets/css/common.css）は @charset "UTF-8" と書いてあるのに、
+     和文のフォント名 "ヒラギノ角ゴ ProN" と "メイリオ" のバイト列だけ Shift_JIS のまま
+     配信されており、ブラウザには読めない名前として届く（computed style にもそのまま出る）。
+     直後に ASCII の別名（"Hiragino Kaku Gothic ProN" / Meiryo）があるので実害は無い。
+     このプレビューでは ASCII 名だけで書き直してある。 */
+
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトでは 0 個（トップ・下層とも total 0）。
+       以下は computed style の実測値。2026-10-01 */
+    --jr-blue:    #0065b1;  /* ★JRブルー。面 10 / 文字 10 要素。すべての塗りボタン */
+    --blue-head:  #0068b4;  /* 下層の見出し帯（可視面積 182,813px²） */
+    --blue-btn:   #0068b7;  /* 下層 button-grey の文字（4 要素） */
+    --blue-link:  #0075d3;  /* トップの地区リンク（1 要素） */
+    /* ↑ 4 つは目視で区別できない。2 世代の CSS が同居した結果で、新規は --jr-blue に統一する */
+
+    --text:       #111111;  /* ★本文。トップ 146 / 下層 45 要素 */
+    --text-legacy:#333333;  /* 下層のパンくずだけ（4 要素）。2018 年版の名残 */
+    --white:      #ffffff;
+
+    --badge-mgmt: #80c8f0;  /* 「経営関連」バッジ面 */
+    --badge-group:#8bdfea;  /* 「グループ会社」バッジ面 */
+    --warn-surf:  #fff7dd;  /* 重要なお知らせの帯 */
+
+    --surf-gray:  #f2f2f2;  /* 下層の定義表 th（16 要素） */
+    --surf-cool:  #f2f3f5;  /* 下層のパンくずバー（4 要素） */
+    --divider:    #d6d6d6;  /* グローバルナビの区切り（li::before） */
+    --bg:         #ffffff;  /* pageBackground.resolved（根拠 body） */
+
+    --focus:      #ff7600;  /* ★フォーカスリング。青いサイトなので青以外に逃がしている */
+
+    /* 運行状況のアイコン色（実サイトは SVG。ここでは CSS で再現） */
+    --st-stop:    #d2232a;
+    --st-delay:   #f0b500;
+    --st-ok:      #0065b1;
+
+    /* === Fonts ===
+       和文と欧文でファミリーを切り替える（1 つのスタックに混ぜない）。 */
+    --font-jp: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+    --font-en: Inter, "Helvetica Neue", Arial, Roboto, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: body に 1.7 を 1 回だけ === */
+    --lh-body:  1.7;    /* ★16px → 27.2px。可視 130 / 49 要素 */
+    --lh-desc:  1.6;    /* 事業領域の説明（16 要素） */
+    --lh-ui:    1.4;    /* 運行情報の補助リンク */
+    --lh-tight: 1.2;    /* 英字 Display */
+
+    /* === Letter spacing ===
+       body に 0.05em を 1 回だけ書く。16px に対して 0.8px と計算され、
+       その px 値が子へ降りる（サイズに比例しない）。可視 205 要素中 155 要素が 0.8px。 */
+    --ls: 0.05em;
+
+    --r-card:  24px;   /* ★本サイトで唯一の本物の角丸（17 要素） */
+    --r-pill:  9999px; /* ボタン・バッジは全部 pill（値は高さの半分） */
+
+    --shadow-up:   0 -10px 10px rgba(0, 0, 0, 0.16);  /* 下から重なるブロック（3 要素） */
+    --shadow-down: 0 10px 10px rgba(0, 0, 0, 0.16);   /* 上から降りる帯（1 要素） */
+
+    --container: 1500px;  /* ★実測 5 要素 */
+    --gap: 40px;          /* ★gap の最多 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ★実サイトの要（body に 3 つだけ書いて全部継承させる） */
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    font-feature-settings: "palt" 1;   /* ★可視 749 要素に効いている */
+    -webkit-font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid #e8e8e8; background: var(--white); }
+  .header-in { display: flex; align-items: center; gap: 24px; max-width: var(--container); margin: 0 auto; padding: 16px 32px; }
+  .logo { font-family: var(--font-en); font-size: 34px; font-weight: 700; line-height: var(--lh-tight); color: var(--jr-blue); letter-spacing: normal; }
+  .logo small { display: block; font-family: var(--font-jp); font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: var(--ls); }
+  .gnav { display: flex; gap: 0; flex-wrap: wrap; margin-left: 28px; }
+  .gnav a { font-size: 15px; line-height: var(--lh-body); color: var(--text); text-decoration: none;
+            letter-spacing: normal; padding: 0 18px; border-left: 1px solid var(--divider); }
+  .gnav a:first-child { border-left: none; }
+  .header-in .spacer { margin-left: auto; }
+
+  /* buttons — radius は要素の高さの半分 */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+         font-family: var(--font-jp); font-size: 16px; font-weight: 400; line-height: 1;
+         text-decoration: none; cursor: pointer; border: 1px solid transparent; border-radius: var(--r-pill); }
+  .btn.sm   { height: 28px; padding: 0 16px; }
+  .btn.md   { height: 36px; padding: 0 20px; }
+  .btn.lg   { height: 68px; padding: 0 34px; }
+  .btn.hero { height: 124px; width: 124px; padding: 0; text-align: center; font-size: 15px; line-height: 1.5; }
+  .btn.fill { background: var(--jr-blue); color: var(--white); }
+  .btn.inv-sm { background: var(--white); color: var(--jr-blue); border-color: var(--jr-blue); }
+  .btn.inv-lg { background: var(--white); color: var(--text); border-color: var(--divider); }
+
+  /* 運行情報 */
+  .ops { background: var(--white); border-bottom: 1px solid #e8e8e8; }
+  .ops-in { display: flex; align-items: center; gap: 20px; max-width: var(--container); margin: 0 auto; padding: 14px 32px; flex-wrap: wrap; }
+  .ops-title { font-size: 16px; font-weight: 700; letter-spacing: normal; }
+  .ops-links { display: flex; gap: 16px; flex-wrap: wrap; }
+  .ops-links a { font-size: 13px; line-height: var(--lh-ui); color: var(--jr-blue); text-decoration: underline; }
+  .ops-grid { display: flex; max-width: var(--container); margin: 0 auto; padding: 0 32px 16px; flex-wrap: wrap; }
+  .ops-cell { flex: 1 1 150px; text-align: center; padding: 8px 10px; border-left: 1px solid #e8e8e8; }
+  .ops-cell:first-child { border-left: none; }
+  .ops-mark { font-size: 30px; line-height: 1.1; font-weight: 700; }
+  .ops-mark.stop  { color: var(--st-stop); }
+  .ops-mark.delay { color: var(--st-delay); }
+  .ops-mark.ok    { color: var(--st-ok); }
+  .ops-label { font-size: 15px; line-height: var(--lh-body); letter-spacing: 0.75px; color: var(--text); margin-top: 2px; }
+  .ops-side { margin-left: auto; display: flex; gap: 10px; }
+
+  /* 重要なお知らせ */
+  .warn { background: var(--warn-surf); border-radius: 0 0 var(--r-card) var(--r-card); box-shadow: var(--shadow-down); }
+  .warn-in { display: flex; gap: 16px; align-items: baseline; max-width: var(--container); margin: 0 auto; padding: 18px 32px 22px; }
+  .warn b { font-size: 16px; font-weight: 700; color: var(--text); white-space: nowrap; }
+  .warn p { font-size: 16px; line-height: var(--lh-body); color: var(--text); }
+
+  /* HERO */
+  .hero { position: relative; background: linear-gradient(115deg, #0065b1 0%, #0065b1 36%, #4aa3d8 36%, #8fc9e6 64%, #cfe4ef 100%); }
+  .hero-in { max-width: var(--container); margin: 0 auto; padding: 96px 32px 110px; position: relative; }
+  .hero h1 { font-size: 47px; font-weight: 700; line-height: var(--lh-desc); color: var(--white); }
+  .hero .en { font-family: var(--font-en); font-size: 65px; font-weight: 700; line-height: var(--lh-tight);
+              color: var(--white); letter-spacing: normal; opacity: .85; margin-bottom: 10px; }
+  .hero .btn { position: absolute; right: 48px; bottom: 26px; z-index: 2; }
+
+  /* ステートメント（白いブロックが下から重なる） */
+  .stmt { max-width: var(--container); margin: -34px auto 0; background: var(--white);
+          border-radius: 28px 28px 0 0; box-shadow: var(--shadow-up); position: relative; }
+  .stmt-in { display: flex; gap: 40px; align-items: center; padding: 56px 48px; flex-wrap: wrap; }
+  .stmt p { flex: 1 1 420px; font-size: 18px; line-height: var(--lh-body); letter-spacing: 0.9px; color: var(--text); }
+  .stmt .btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* SECTIONS */
+  .section { max-width: var(--container); margin: 0 auto; padding: 72px 32px; }
+  .section-alt { background: #f6f8fa; }
+  .section-alt .inner { max-width: var(--container); margin: 0 auto; padding: 72px 32px; }
+  .kicker { font-family: var(--font-mono); font-size: 12px; line-height: var(--lh-desc); color: #5a5a5a; margin-bottom: 10px; letter-spacing: normal; }
+  h2.sec { font-size: 38px; font-weight: 700; line-height: var(--lh-desc); margin-bottom: 18px; }
+  h3.sub { font-size: 22px; font-weight: 700; line-height: var(--lh-body); margin: 48px 0 16px; }
+  .lead { font-size: 16px; line-height: var(--lh-body); max-width: 1000px; margin-bottom: 28px; }
+  .note { font-size: 14px; line-height: var(--lh-body); color: #4a4a4a; margin-top: 18px; max-width: 1000px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surf-gray); padding: 1px 5px; letter-spacing: normal; }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(208px, 1fr)); gap: 20px; }
+  .sw { border: 1px solid #e3e3e3; border-radius: 12px; overflow: hidden; background: var(--white); }
+  .sw-chip { height: 76px; }
+  .sw-body { padding: 13px 14px 16px; }
+  .sw-name { font-size: 15px; font-weight: 700; line-height: var(--lh-desc); }
+  .sw-hex { font-family: var(--font-mono); font-size: 11px; color: #5a5a5a; margin-top: 4px; letter-spacing: normal; }
+  .sw-use { font-size: 12px; line-height: var(--lh-desc); color: #4a4a4a; margin-top: 7px; }
+
+  /* TYPE */
+  .scale { display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale span { background: var(--surf-gray); padding: 7px 12px; line-height: 1; }
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 26px; padding: 20px 0; border-bottom: 1px solid #e3e3e3; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: 1.8; color: #5a5a5a; letter-spacing: normal; }
+  .type-meta em { display: block; font-family: var(--font-jp); font-style: normal; font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: var(--ls); }
+
+  /* AUDIT */
+  .audit { width: 100%; border-collapse: collapse; font-size: 14px; line-height: var(--lh-desc); }
+  .audit th, .audit td { border: 1px solid #e3e3e3; padding: 9px 12px; text-align: left; color: var(--text); }
+  .audit th { background: var(--surf-gray); font-weight: 700; }
+  .audit td.n { font-family: var(--font-mono); font-size: 12px; letter-spacing: normal; }
+  .audit tr.bad td { background: #fff3f3; }
+
+  /* 字間の継承デモ */
+  .inherit { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: 20px; }
+  .inherit .box { border: 1px solid #e3e3e3; border-radius: 12px; padding: 24px; }
+  .inherit .box h5 { font-size: 15px; font-weight: 700; line-height: var(--lh-desc); margin-bottom: 12px; }
+  .inherit .ok h5 { color: var(--jr-blue); }
+  .inherit .ng h5 { color: #b02a1e; }
+  .inherit .s1 { font-size: 13px; }
+  .inherit .s2 { font-size: 28px; font-weight: 700; margin-top: 6px; }
+  .inherit .s3 { font-size: 47px; font-weight: 700; margin-top: 6px; line-height: 1.3; }
+  .inherit .ng .s1 { letter-spacing: 0.05em; }
+  .inherit .ng .s2 { letter-spacing: 0.05em; }
+  .inherit .ng .s3 { letter-spacing: 0.05em; }
+  .inherit .cap { font-family: var(--font-mono); font-size: 11px; color: #5a5a5a; margin-top: 12px; letter-spacing: normal; }
+
+  /* BADGES / CARDS */
+  .badge { display: inline-block; border-radius: var(--r-pill); padding: 4px 13px;
+           font-size: 12px; font-weight: 500; line-height: 1.4; color: var(--text); }
+  .badge.mgmt  { background: var(--badge-mgmt); }
+  .badge.group { background: var(--badge-group); }
+  .tag { display: inline-block; border-radius: var(--r-pill); padding: 4px 14px; background: var(--surf-gray);
+         font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--text); }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .card { background: var(--white); border: 1px solid #e3e3e3; border-radius: var(--r-card); overflow: hidden; }
+  .card .thumb { height: 150px; background: linear-gradient(140deg, #9dc9e4, #0065b1); }
+  .card .body { padding: 24px 26px 28px; }
+  .card .en { font-family: var(--font-en); font-size: 17px; font-weight: 700; color: var(--jr-blue); letter-spacing: normal; }
+  .card h4 { font-size: 28px; font-weight: 700; line-height: var(--lh-desc); margin-top: 8px; }
+  .card p { font-size: 12px; line-height: var(--lh-body); color: #4a4a4a; margin-top: 10px; }
+
+  /* NEWS */
+  .news { border-top: 1px solid #e3e3e3; }
+  .news-item { display: flex; gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #e3e3e3; flex-wrap: wrap; }
+  .news-date { font-family: var(--font-en); font-size: 15px; color: #4a4a4a; letter-spacing: normal; min-width: 108px; }
+  .news-item a { font-size: 16px; line-height: var(--lh-body); color: var(--text); text-decoration: none; flex: 1 1 320px; }
+
+  /* 下層（2018 年版）のデモ */
+  .legacy { border: 1px solid #e3e3e3; border-radius: 12px; overflow: hidden; }
+  .legacy-crumb { background: var(--surf-cool); color: var(--text-legacy); font-size: 14.7692px; line-height: 1.5; padding: 10px 20px; }
+  .legacy-head { background: var(--blue-head); color: var(--white); font-size: 39.3846px; font-weight: 400; line-height: 1.5; padding: 26px 24px; }
+  .legacy table { width: 100%; border-collapse: collapse; }
+  .legacy th, .legacy td { border-bottom: 1px solid #e3e3e3; padding: 14px 20px; text-align: left;
+                           font-size: 17.2308px; font-weight: 400; line-height: 1.67; color: var(--text); }
+  .legacy th { background: var(--surf-gray); width: 220px; }
+
+  /* LAYOUT */
+  .bars { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .bar { background: var(--surf-gray); color: var(--text); height: 38px; display: flex; align-items: center; justify-content: center;
+         font-family: var(--font-mono); font-size: 11px; letter-spacing: normal; }
+  .radii { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 30px; align-items: flex-end; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 112px; height: 56px; background: #e3eff8; border: 1px solid #a7cfea; }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: #5a5a5a; margin-top: 8px; letter-spacing: normal; }
+
+  /* ELEVATION */
+  .elevs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--gap); }
+  .elev { background: var(--white); border: 1px solid #e3e3e3; border-radius: var(--r-card); padding: 28px; text-align: center; }
+  .elev.up   { box-shadow: var(--shadow-up); border-color: transparent; }
+  .elev.down { box-shadow: var(--shadow-down); border-color: transparent; }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-desc); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: #5a5a5a; margin-top: 8px; letter-spacing: normal; }
+
+  /* FORMS */
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+  .field label { display: block; font-size: 15px; font-weight: 700; line-height: var(--lh-desc); margin-bottom: 8px; }
+  .field input { width: 100%; background: var(--white); color: var(--text); font-family: var(--font-jp);
+                 border: 1px solid var(--divider); border-radius: var(--r-card); padding: 12px 20px;
+                 font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); }
+  .field.is-focus input { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .field-msg { font-size: 13px; line-height: var(--lh-ui); color: #4a4a4a; margin-top: 7px; }
+
+  /* FOOTER */
+  .footer { background: var(--jr-blue); color: var(--white); padding: 50px 32px; }
+  .footer-in { max-width: var(--container); margin: 0 auto; }
+  .footer .en { font-family: var(--font-en); font-size: 42px; font-weight: 700; line-height: var(--lh-tight); letter-spacing: normal; }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; margin-top: 26px; }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--white); text-decoration: none; }
+  .footer-copy { font-family: var(--font-en); font-size: 12px; line-height: 2.24; margin-top: 32px; letter-spacing: normal; }
+
+  @media (max-width: 767px) {
+    .section, .section-alt .inner { padding: 44px 20px; }
+    h2.sec { font-size: 24px; }
+    .hero h1 { font-size: 26px; }
+    .hero .en { font-size: 34px; }
+    .hero-in { padding: 56px 20px 70px; }
+    .cards, .inherit, .fields { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .gnav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-in">
+    <span class="logo">JR<small>西日本</small></span>
+    <nav class="gnav">
+      <a href="#">企業</a><a href="#">ニュース</a><a href="#">株主・投資家情報(IR)</a><a href="#">採用情報</a><a href="#">サステナビリティ</a>
+    </nav>
+    <span class="spacer"></span>
+    <a href="#" class="btn md fill">予約・IC・WESTER</a>
+  </div>
+</header>
+
+<section class="ops">
+  <div class="ops-in">
+    <span class="ops-title">列車運行状況</span>
+    <span class="ops-links"><a href="#">運行情報トップ</a><a href="#">主な輸送障害への対策と発生時の対応</a></span>
+    <span class="ops-side">
+      <a href="#" class="btn sm inv-sm">列車走行位置 ↗</a>
+      <a href="#" class="btn sm fill">遅延証明書 ↗</a>
+    </span>
+  </div>
+  <div class="ops-grid">
+    <div class="ops-cell"><div class="ops-mark stop">✕</div><div class="ops-label">北陸エリア</div></div>
+    <div class="ops-cell"><div class="ops-mark delay">△</div><div class="ops-label">近畿エリア</div></div>
+    <div class="ops-cell"><div class="ops-mark stop">✕</div><div class="ops-label">中国エリア</div></div>
+    <div class="ops-cell"><div class="ops-mark delay">！</div><div class="ops-label">山陽新幹線</div></div>
+    <div class="ops-cell"><div class="ops-mark ok">◯</div><div class="ops-label">北陸新幹線</div></div>
+    <div class="ops-cell"><div class="ops-mark stop">✕</div><div class="ops-label">特急列車</div></div>
+  </div>
+</section>
+
+<div class="warn">
+  <div class="warn-in">
+    <b>⚠ 重要なお知らせ</b>
+    <p>大雨の影響により、運転見合わせが発生していますので、以下の区間のご利用は見合わせていただきますようお願いいたします。</p>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="en">JR WEST</div>
+    <h1>もっとつながる。<br>未来が動き出す。</h1>
+    <a href="#" class="btn hero fill">私たちの志を<br>もっと知る →</a>
+  </div>
+</section>
+
+<div class="stmt">
+  <div class="stmt-in">
+    <p>私たちは、2005年4月25日に発生させた福知山線列車事故を決して忘れません。安全第一を積み重ね、安心、信頼していただける鉄道を築き上げます。</p>
+    <span class="btns">
+      <a href="#" class="btn lg fill">→ 福知山線列車事故について</a>
+      <a href="#" class="btn lg inv-lg">→ 安全の取り組み</a>
+    </span>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="kicker">01 / Colors</div>
+  <h2 class="sec">青 1 色と、その反転</h2>
+  <p class="lead">塗りは <b><code>#0065b1</code></b>（面 10 / 文字 10 要素）、それ以外は白地に <b><code>#111111</code></b>。装飾色を持たず、色が増えるのは<b>状態を示すとき</b>だけ。ただし実装には<b>見分けのつかない青が 4 つ</b>あり、これは 2 世代の CSS が同居した結果。<b>新規実装では <code>#0065b1</code> に統一すること。</b></p>
+
+  <div class="swatches">
+    <div class="sw"><div class="sw-chip" style="background:#0065b1"></div><div class="sw-body"><div class="sw-name">JR ブルー</div><div class="sw-hex">#0065b1</div><div class="sw-use">★面 10 / 文字 10 要素。全ての塗りボタン</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0068b4"></div><div class="sw-body"><div class="sw-name">見出し帯のブルー</div><div class="sw-hex">#0068b4</div><div class="sw-use">下層の h1 帯。<b>統一対象</b></div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0068b7"></div><div class="sw-body"><div class="sw-name">ボタン文字のブルー</div><div class="sw-hex">#0068b7</div><div class="sw-use">下層 button-grey の文字（4 要素）。<b>統一対象</b></div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0075d3"></div><div class="sw-body"><div class="sw-name">リンクのブルー</div><div class="sw-hex">#0075d3</div><div class="sw-use">トップの地区リンク（1 要素）。<b>統一対象</b></div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#111111"></div><div class="sw-body"><div class="sw-name">Text Primary</div><div class="sw-hex">#111111</div><div class="sw-use">★146 / 45 要素。#000 でも #333 でもない</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#ff7600"></div><div class="sw-body"><div class="sw-name">Focus Ring</div><div class="sw-hex">#ff7600</div><div class="sw-use">★青いサイトなのでフォーカスだけオレンジ</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#80c8f0"></div><div class="sw-body"><div class="sw-name">Badge（経営関連）</div><div class="sw-hex">#80c8f0</div><div class="sw-use">淡い面に #111 の文字。白抜きにしない</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#8bdfea"></div><div class="sw-body"><div class="sw-name">Badge（グループ会社）</div><div class="sw-hex">#8bdfea</div><div class="sw-use">同上</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#fff7dd"></div><div class="sw-body"><div class="sw-name">Warning Surface</div><div class="sw-hex">#fff7dd</div><div class="sw-use">重要なお知らせの帯。radius 0 0 24px 24px</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f2f2f2"></div><div class="sw-body"><div class="sw-name">Surface Gray</div><div class="sw-hex">#f2f2f2</div><div class="sw-use">下層の定義表 th（16 要素）</div></div></div>
+  </div>
+
+  <h3 class="sub">状態は色ではなく形で示す</h3>
+  <p class="lead">運行状況の記号は <b><code>&lt;img&gt;</code> の SVG</b>（<code>Ic_StatusStop.svg</code> / <code>Ic_StatusDelay.svg</code> / <code>Ic_StatusNotice.svg</code>）。テキストは区間名（15px / <code>letter-spacing: 0.75px</code> / <code>#111111</code>）だけで、<b>文字色は状態によって変わらない</b>。色覚に依存しない設計。<b>この構えをそのまま守ること。</b></p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="inner">
+  <div class="kicker">02 / Typography</div>
+  <h2 class="sec">body に 3 つ書いて、あとは全部継承</h2>
+  <p class="lead"><code>letter-spacing: 0.05em</code>（= <b>0.8px</b>）、<code>line-height: 1.7</code>、<code>font-feature-settings: "palt" 1</code> の 3 つを <code>body, html</code> に 1 回だけ書く。結果、<b>0.8px が可視 205 要素中 155 要素</b>、<b><code>palt</code> が 749 要素</b>に効く。<b>子要素で字間を再宣言しないのが実装の構え。</b></p>
+
+  <div class="inherit">
+    <div class="box ok">
+      <h5>DO — body に 0.05em を 1 回だけ</h5>
+      <div class="s1">運行情報トップ（13px）</div>
+      <div class="s2">モビリティ（28px）</div>
+      <div class="s3">もっとつながる。</div>
+      <div class="cap">すべて letter-spacing: 0.8px（body の計算値を継承）</div>
+    </div>
+    <div class="box ng">
+      <h5>DON'T — 各要素に 0.05em を書く</h5>
+      <div class="s1">運行情報トップ（13px）</div>
+      <div class="s2">モビリティ（28px）</div>
+      <div class="s3">もっとつながる。</div>
+      <div class="cap">0.65px / 1.4px / 2.35px とサイズに比例して開いてしまう</div>
+    </div>
+  </div>
+
+  <table class="audit" style="margin-top:34px">
+    <tr><th>Family</th><th>調達</th><th>宣言</th><th>document.fonts</th><th>可視要素</th></tr>
+    <tr><td>Noto Sans JP</td><td class="n">Google Fonts css2（可変）</td><td class="n">wght@100..900</td><td class="n">loaded</td><td class="n">186 / 90</td></tr>
+    <tr><td>Inter</td><td class="n">Google Fonts css2（可変）</td><td class="n">wght@100..900</td><td class="n">loaded</td><td class="n">19 / 1</td></tr>
+  </table>
+  <p class="note"><b>可変フォントなので任意のウェイトが出せるが、実際に使っているのは 400 / 500 / 700 の 3 つだけ</b>（可視 700:115 / 400:77 / 500:13）。<b>600 や 300 を使わないこと。</b></p>
+
+  <table class="audit" style="margin-top:20px">
+    <tr><th>CSS の宣言（assets/css/common.css）</th><th>実測</th><th>判定</th></tr>
+    <tr class="bad"><td class="n">body, html { font-size: 62.5% }</td><td class="n">html 10px / <b>body 16px</b></td><td>後続のルールが body を上書き</td></tr>
+    <tr class="bad"><td class="n">body, html { line-height: 1.6 }</td><td class="n"><b>1.7</b>（27.2px ÷ 16px）</td><td>同上</td></tr>
+    <tr class="bad"><td class="n">font-family: … "ヒラギノ角ゴ ProN" … "メイリオ" …</td><td class="n"><b>文字化け</b>（Shift_JIS のまま配信）</td><td>ASCII の別名が直後にあるので実害なし</td></tr>
+    <tr><td class="n">font-feature-settings: "palt" 1</td><td class="n">749 要素に適用</td><td>宣言どおり</td></tr>
+  </table>
+  <p class="note"><b>数値は宣言ではなく実測に従うこと。</b>フォント名は <code>"Hiragino Kaku Gothic ProN"</code> / <code>Meiryo</code> のように<b>ASCII 名だけで書く</b>のが安全。</p>
+
+  <div class="scale" style="margin-top:34px">
+    <span style="font-size:12px">12</span><span style="font-size:13px">13</span><span style="font-size:15px">15</span>
+    <span style="font-size:16px">16</span><span style="font-size:18px">18</span><span style="font-size:22px">22</span>
+    <span style="font-size:28px">28</span><span style="font-size:38px">38</span><span style="font-size:47px">47</span>
+    <span style="font-family:var(--font-en);font-size:65px;font-weight:700;letter-spacing:normal">65</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><em>Display (EN)</em>Inter / 65px / 700<br>lh 1.20 / ls normal</div><div style="font-family:var(--font-en);font-size:65px;font-weight:700;line-height:1.2;letter-spacing:normal;color:#0065b1">JR WEST</div></div>
+  <div class="type-row"><div class="type-meta"><em>Hero Copy</em>Noto Sans JP / 47px / 700<br>lh 1.60 / ls 0.8px（継承）</div><div style="font-size:47px;font-weight:700;line-height:1.6">心が動く未来をつくっていく</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 1</em>Noto Sans JP / 38px / 700<br>lh 1.60 / ls 0.8px</div><div style="font-size:38px;font-weight:700;line-height:1.6">JR西日本ニュース</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 2</em>Noto Sans JP / 28px / 700<br>lh 1.60 / ls 0.8px</div><div style="font-size:28px;font-weight:700;line-height:1.6">インフラソリューション</div></div>
+  <div class="type-row"><div class="type-meta"><em>Heading 3</em>Noto Sans JP / 22px / 700<br>lh 1.70 / ls 0.8px</div><div style="font-size:22px;font-weight:700;line-height:1.7">ニュースリリース</div></div>
+  <div class="type-row"><div class="type-meta"><em>Lead</em>Noto Sans JP / 18px / 400<br>lh 1.70 / <b>ls 0.9px（= 0.05em を再宣言）</b></div><div style="font-size:18px;line-height:1.7;letter-spacing:0.9px">私たちは、2005年4月25日に発生させた福知山線列車事故を決して忘れません。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Body ★</em>Noto Sans JP / 16px / 400<br>lh 1.70（27.2px）／ 最多 82 要素</div><div style="font-size:16px;line-height:1.7">「鉄道・交通」「技術開発」「運輸関連サービス」など、地域のくらしを支える事業を展開しています。</div></div>
+  <div class="type-row"><div class="type-meta"><em>Nav / UI</em>Noto Sans JP / 15px / 400<br>lh 1.70 / <b>ls normal（切っている）</b></div><div style="font-size:15px;line-height:1.7;letter-spacing:normal">企業　ニュース　株主・投資家情報(IR)　採用情報　サステナビリティ</div></div>
+  <div class="type-row"><div class="type-meta"><em>Status Label</em>Noto Sans JP / 15px / 400<br><b>ls 0.75px（= 0.05em を再宣言）</b></div><div style="font-size:15px;letter-spacing:0.75px">北陸エリア　近畿エリア　中国エリア　山陽新幹線</div></div>
+  <div class="type-row"><div class="type-meta"><em>Caption</em>Noto Sans JP / 13px / 700<br>lh 1.40 / ls 0.8px</div><div style="font-size:13px;font-weight:700;line-height:1.4">コーポレート　サステナビリティ　ライフスタイル　モビリティ</div></div>
+
+  <p class="note"><b>個別に字間を書いている例外は 3 つだけ</b>（<code>0.75px</code> @15px / <code>0.9px</code> @18px / <code>0.6px</code> @12px）。<b>どれも「そのサイズでの 0.05em」</b>で、px 継承だと揃わない箇所を書き直しているにすぎない。<b>比率は常に 0.05em</b> と覚えればよい。グローバルナビの第 1 階層だけ <code>normal</code> で字間を切っている（38 要素）。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="kicker">03 / Components</div>
+  <h2 class="sec">radius は 8 種類あるが、設計は 2 つ</h2>
+  <p class="lead"><code>14px / 18px / 20px / 34px / 62px / 13px / 12px / 9999px</code> は<b>すべて pill（要素の高さの半分）</b>で、値が違うのは高さが違うからにすぎない。本物の角丸は <b><code>24px</code> のカード</b>だけ。<b>値をコピーせず「ボタンは <code>calc(高さ / 2)</code>、カードは 24px」と覚える。</b></p>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+    <a href="#" class="btn sm fill">遅延証明書 ↗</a>
+    <a href="#" class="btn sm inv-sm">列車走行位置 ↗</a>
+    <a href="#" class="btn md fill">予約・IC・WESTER</a>
+    <a href="#" class="btn lg fill">→ 福知山線列車事故について</a>
+    <a href="#" class="btn lg inv-lg">→ 安全の取り組み</a>
+  </div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:22px">
+    <span class="badge mgmt">経営関連</span>
+    <span class="badge group">グループ会社</span>
+    <span class="tag">コーポレート</span>
+    <span class="tag">サステナビリティ</span>
+    <span class="tag">モビリティ</span>
+  </div>
+  <p class="note"><b>「塗りか反転か」の 2 択しかない。</b>文字だけのリンクボタンは無い。<b>反転の大サイズは文字が <code>#111111</code></b> で、青にしない（本文と同じ扱いにする）。</p>
+
+  <h3 class="sub">カード（radius 24px）</h3>
+  <div class="cards">
+    <div class="card"><div class="thumb"></div><div class="body"><div class="en">MOBILITY</div><h4>モビリティ</h4><p>「鉄道・交通」「技術開発」「運輸関連サービス」など</p></div></div>
+    <div class="card"><div class="thumb"></div><div class="body"><div class="en">LIFE SERVICE</div><h4>生活サービス</h4><p>「物販・飲食」「ホテル」「ショッピング」「住まい」など</p></div></div>
+    <div class="card"><div class="thumb"></div><div class="body"><div class="en">INFRASTRUCTURE</div><h4>インフラ<br>ソリューション</h4><p>「技術ソリューション」「JCLaaS（公共インフラ）」など</p></div></div>
+  </div>
+
+  <h3 class="sub">ニュース一覧</h3>
+  <div class="news">
+    <div class="news-item"><span class="news-date">2026.09.30</span><span class="badge mgmt">経営関連</span><a href="#">JR西日本グループ中期経営計画2030 の進捗についてお知らせします</a></div>
+    <div class="news-item"><span class="news-date">2026.09.26</span><span class="badge group">グループ会社</span><a href="#">グループ会社の組織再編に関するお知らせ</a></div>
+    <div class="news-item"><span class="news-date">2026.09.24</span><span class="badge mgmt">経営関連</span><a href="#">安全研究所の取り組みを公開しました</a></div>
+  </div>
+
+  <h3 class="sub">入力欄（実サイトに存在しないため DESIGN.md の推奨値）</h3>
+  <div class="fields">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" value="葛原 健太"><div class="field-msg">既定の状態</div></div>
+    <div class="field is-focus"><label for="f2">ご利用区間</label><input id="f2" type="text" value="大阪 → 広島"><div class="field-msg">フォーカス（outline 2px solid #ff7600）</div></div>
+  </div>
+  <p class="note"><b>フォーカスリングだけオレンジ <code>#ff7600</code> の 2px。</b>リンクもボタンも面も <code>#0065b1</code> で埋まっているサイトなので、フォーカスを青にすると見つからない。<b>青を主色にするサイトを作るときに真似る価値がある。</b></p>
+</section>
+
+<section class="section-alt" id="legacy">
+<div class="inner">
+  <div class="kicker">04 / 2 世代の同居</div>
+  <h2 class="sec">下層は 2018 年版で、サイズが 16/13 倍に膨らんでいる</h2>
+  <p class="lead"><code>/company/info/</code> 配下は <code>common.css?date=20180820</code> を読み、<code>body { font-size: 81.25% }</code>（= 13px）を基準にした <code>.text10</code>〜<code>.text19</code> という % スケールで組まれている。ところが<b>新デザインの CSS が <code>body</code> を 16px に差し替えた</b>ため、<code>p, li, dt, dd, th, td { font-size: 107.692% }</code> が <b>16 × 1.07692 = 17.2308px</b> で出る。<b>意図は 14px、実装は 17.23px。</b></p>
+
+  <div class="legacy">
+    <div class="legacy-crumb">JR西日本トップページ ＞ 企業・IR・採用・法人向け情報 ＞ 企業情報</div>
+    <div class="legacy-head">企業概要</div>
+    <table>
+      <tr><th>社名</th><td>西日本旅客鉄道株式会社<br>West Japan Railway Company</td></tr>
+      <tr><th>所在地</th><td>大阪市北区芝田二丁目4番24号</td></tr>
+      <tr><th>代表取締役社長</th><td>（氏名）</td></tr>
+    </table>
+  </div>
+  <p class="note"><b>この 17.2308px を「本文サイズ」として真似ないこと。</b>4 幅（1440 / 1200 / 834 / 375px）すべてで同値なので<b>流体ではない</b>。パンくずの <code>14.7692px</code>（= 16 × 12/13）、見出しの <code>39.3846px</code>（= 16 × 32/13）も同じ連鎖。<b>13 を分母にした端数が並んだら、この型を疑う。</b><br>下層のパンくずだけ文字色が <code>#333333</code>（4 要素）なのも 2018 年版の名残。</p>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="kicker">05 / Layout &amp; Elevation</div>
+  <h2 class="sec">1500px のコンテナ、影は 1 種類を向きで反転</h2>
+
+  <div class="bars">
+    <div class="bar" style="width:100%">Full bleed — ヒーロー</div>
+    <div class="bar" style="width:1500px;max-width:100%">Container 1500px ★実測 5 要素</div>
+    <div class="bar" style="width:1000px;max-width:100%">本文カラム（説明文）</div>
+  </div>
+
+  <div class="radii">
+    <div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">24px ★カード（17）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:28px 28px 0 0"></div><div class="radius-label">28px 28px 0 0（3）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0 0 24px 24px"></div><div class="radius-label">0 0 24px 24px（3）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px;height:28px"></div><div class="radius-label">pill 高さ28px → 14px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px;height:68px"></div><div class="radius-label">pill 高さ68px → 34px</div></div>
+  </div>
+
+  <h3 class="sub">Depth &amp; Elevation</h3>
+  <div class="elevs">
+    <div class="elev"><div class="elev-name">Level 0（既定）</div><div class="elev-val">box-shadow: none</div></div>
+    <div class="elev up"><div class="elev-name">上に重なる（3 要素）</div><div class="elev-val">0 -10px 10px rgba(0,0,0,.16)</div></div>
+    <div class="elev down"><div class="elev-name">上から降りる（1 要素）</div><div class="elev-val">0 10px 10px rgba(0,0,0,.16)</div></div>
+  </div>
+  <p class="note"><b>影は 1 種類の値（<code>10px 10px / 0.16</code>）を、向きだけ反転して使っている。</b>役割は「浮かせる」ではなく<b>「重なりの向きを示す」</b>。上に重なる要素は上向き、上から降りる帯は下向き。ぼかしと濃さは同じ。<code>filter: drop-shadow()</code> / <code>text-shadow</code> は 0 件。</p>
+
+  <h3 class="sub">Responsive</h3>
+  <p class="lead"><b><code>html</code> 10px / <code>body</code> 16px / <code>line-height</code> 27.2px / <code>letter-spacing</code> 0.8px は 4 幅すべてで同じ。</b>流体も SP 縮小も無い。モバイルで変わるのは見出しだけ（例: <code>列車運行状況</code> が 16px → 375px で 17px）。<b>下層の <code>p, li, th, td</code> は 4 幅すべて 17.2308px のまま。</b></p>
+  <p class="note">主分岐は <b>768px</b>。トップ（新デザイン）は <code>min-width: 1280px</code> でデスクトップを足し、下層（2018 年版）は <code>max-width: 767px</code>（154 件）でモバイルを削る、という<b>逆向きの書き方が同居している</b>。<br>下層の CSS は <code>print, screen and (min-width: 768px)</code>（62 件）のように<b>ほぼすべてのメディアクエリに <code>print</code> を併記</b>しており、印刷時にデスクトップ幅のレイアウトを使う。公共インフラらしい配慮。<br><code>c-button-small</code> は<b>高さ 28px で WCAG の 44px を下回る</b>ので、新規実装では 44px 以上を確保すること。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="en">JR WEST</div>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">企業情報</a><a href="#">組織</a><a href="#">沿革</a><a href="#">グループ会社</a></div>
+      <div class="footer-col"><a href="#">安全の取り組み</a><a href="#">安全管理体制</a><a href="#">鉄道安全報告書</a><a href="#">安全研究所</a></div>
+      <div class="footer-col"><a href="#">ニュースリリース</a><a href="#">株主・投資家情報(IR)</a><a href="#">採用情報</a><a href="#">サステナビリティ</a></div>
+    </div>
+    <div class="footer-copy">© WEST JAPAN RAILWAY COMPANY All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
