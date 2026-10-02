@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 世田谷文学館（SETABUN）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ===========================================================
+     世田谷文学館（SETABUN）— 実測 2026-10-02
+     https://www.setabun.or.jp/ , /exhibition/
+
+     このサイトは CSS Custom Properties を 0 個しか持たない。
+     以下は computed style と CSS 全文からの実測値を変数に起こしたもの。
+     =========================================================== */
+  :root {
+    /* === Colors（CSS 変数は実サイトに存在しない。すべて直書きされている） === */
+    --magenta:      #ff0066;  /* ★面。塗り面 5 要素 / CSS 6 回。開館日バッジ・本日開館の帯 */
+    --magenta-cta:  #e81a79;  /* 「詳しくはコチラ」ピル専用。CSS 3 回。面の #ff0066 とは別色 */
+    --cyan:         #00baec;  /* ★塗り面 4 要素 / CSS 11 回。TICKET・NEWS・休館日。文字色でも 37 要素 */
+    --yellow:       #ecb319;  /* 下層の「開催中の展覧会」見出し面 */
+    --beige:        #f0debe;  /* ライブラリー〈ほんとわ〉ブロック（3 要素） */
+    --ink:          #1a1a1a;  /* ★本文・見出し。可視 250 要素。html で宣言し全体へ継承 */
+    --ink-sub:      #333333;  /* TICKET / language（可視 8 要素） */
+    --muted:        #939393;  /* カレンダーの曜日ラベル（可視 42 要素） */
+    --black:        #000000;  /* 黒ピル・矩形 CTA・カレンダー日付の面 */
+    --white:        #ffffff;
+    --surface:      #ececec;  /* フッター周辺の面 */
+    --bg:           #ffffff;  /* pageBackground.resolved（根拠 viewportTopBySample 3/3） */
+
+    /* === Fonts ===
+       Adobe Fonts（Typekit）4 書体はドメインライセンスのためローカルでは表示できない。
+       実サイト → 代替:
+         a-otf-midashi-go-mb31-pr6n (A-OTF 見出ゴ MB31 Pr6N / モリサワ) → Zen Kaku Gothic New 700（同じモリサワ系）
+         toppan-bunkyu-midashi-go-std (凸版文久見出しゴシック)          → Noto Sans JP 900
+         rig-shaded-bold-face (Rig Shaded Bold Face / 欧文装飾)         → Archivo Black
+       本文のヒラギノ角ゴは macOS では実サイトと同一表示。
+       ※ 実サイトは総称ファミリを "sans-serif" と引用符で囲んでいる（＝機能しない）。
+         ここでは正しく引用符なしで書く。 */
+    --font-body:    "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, "Noto Sans JP", sans-serif;
+    --font-midashi: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;   /* 代替: 見出ゴ MB31 Pr6N */
+    --font-bunkyu:  "Noto Sans JP", "Hiragino Sans", sans-serif;          /* 代替: 凸版文久見出しゴシック */
+    --font-en:      "Archivo Black", "Hiragino Sans", sans-serif;          /* 代替: Rig Shaded Bold Face */
+    --font-maru:    "Zen Maru Gothic", "Hiragino Sans", sans-serif;        /* 会員制度の 2 要素のみ */
+    --font-mono:    SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Root: 14px。16px ではない === */
+    --root-size: 14px;
+
+    /* === Line height: 本文 1.5 / ラベル 1.0（可視 291 要素で最多） / 展覧会名 1.4 === */
+    --lh-body:  1.5;
+    --lh-flat:  1.0;
+    --lh-title: 1.4;
+
+    /* === Letter spacing: html に 0.08em を 1 回。14px で 1.12px に解決し可視 417 要素へ継承 === */
+    --ls: 0.08em;
+
+    --r:      4px;    /* 既定。可視 10 要素 */
+    --r-pill: 40px;   /* マゼンタのピル */
+    --r-pill-s: 30px; /* 黒のピル */
+
+    --container:  1450px;
+    --content:    1380px;
+    --article:    1060px;
+    --read:        860px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* 実サイトの html 宣言をそのまま再現（body ではなく html に書く） */
+  html {
+    font-family: var(--font-body);
+    font-size: var(--root-size);
+    color: var(--ink);
+    line-height: var(--lh-body);
+    font-feature-settings: "palt" 1;   /* 可視 1188 要素へ継承 */
+    letter-spacing: var(--ls);         /* 14px で 1.12px */
+    -webkit-font-smoothing: antialiased;
+  }
+  body { background: var(--bg); }
+
+  img { vertical-align: bottom; max-width: 100%; height: auto; }
+  a { text-decoration: none; color: inherit; transition: opacity .5s ease-in 0s; }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--surface); }
+  .header-inner { display: flex; align-items: center; gap: 24px; max-width: var(--content); margin: 0 auto; padding: 14px 20px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 44px; height: 44px; background: var(--magenta); color: var(--white); font-family: var(--font-en); font-size: 13px; display: flex; align-items: center; justify-content: center; }
+  .logo-text { font-family: var(--font-midashi); font-size: 26px; font-weight: 700; color: var(--magenta); line-height: var(--lh-flat); }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .ticket { background: var(--cyan); color: var(--ink-sub); font-family: var(--font-en); font-size: 18px; line-height: var(--lh-flat); padding: 10px 14px; }
+  .lang { font-family: var(--font-en); font-size: 13px; color: var(--ink-sub); }
+
+  .gnav { background: var(--ink); }
+  .gnav-inner { display: flex; gap: 26px; max-width: var(--content); margin: 0 auto; padding: 12px 20px; }
+  .gnav a { font-family: var(--font-midashi); font-weight: 700; font-size: 18px; line-height: 1.11; color: var(--white); }
+
+  /* SECTIONS */
+  .section { padding: 60px 20px; max-width: var(--content); margin: 0 auto; }
+  .section-alt { background: #fafafa; }
+  .section-alt .section-inner { padding: 60px 20px; max-width: var(--content); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 10px; letter-spacing: normal; }
+  .eyebrow { font-family: var(--font-en); font-size: 20px; line-height: var(--lh-flat); color: var(--ink); }
+  .section-title { font-family: var(--font-midashi); font-weight: 700; font-size: 24px; line-height: var(--lh-flat); background: var(--white); border: 2px solid var(--black); padding: 10px 15px; display: inline-block; margin: -14px 0 18px; }
+  .section-lead { font-size: 15px; line-height: var(--lh-body); margin-bottom: 30px; max-width: var(--read); }
+  .note { font-size: 14px; line-height: 1.9; color: #555; margin-top: 20px; max-width: var(--read); }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surface); padding: 1px 5px; letter-spacing: normal; }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--surface); background: var(--white); border-radius: var(--r); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-family: var(--font-midashi); font-weight: 700; font-size: 14px; line-height: 1.2; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: normal; }
+  .swatch-use { font-size: 12px; line-height: 1.6; color: #555; margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; align-items: baseline; }
+  .scale-bar span { background: var(--surface); padding: 8px 12px; line-height: var(--lh-flat); font-family: var(--font-en); }
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--surface); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.75; letter-spacing: normal; }
+  .type-meta b { display: block; font-family: var(--font-midashi); font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: var(--ls); }
+
+  /* BUTTONS / BADGES */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .btn { font-family: var(--font-body); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; border: none; letter-spacing: var(--ls); }
+  .btn-magenta { background: var(--magenta-cta); color: var(--white); font-size: 14px; font-weight: 700; padding: 5.6px 14px 4.2px; border-radius: var(--r-pill); }
+  .btn-black-pill { background: var(--black); color: var(--white); font-size: 18px; font-weight: 700; padding: 7.2px 18px 5.4px; border-radius: var(--r-pill-s); }
+  .btn-rect { background: var(--black); color: var(--white); font-family: var(--font-midashi); font-size: 19px; font-weight: 700; padding: 13.3px 57px 13.3px 19px; border-radius: 0; position: relative; }
+  .btn-rect::after { content: "→"; position: absolute; right: 19px; }
+  .btn-outline { background: var(--white); color: var(--ink); font-family: var(--font-midashi); font-size: 24px; font-weight: 700; line-height: var(--lh-flat); border: 2px solid var(--black); padding: 10px 15px; border-radius: 0; }
+  .badge-cyan { display: inline-block; background: var(--cyan); color: var(--white); font-size: 14.4px; padding: 7.2px 11.52px; border-radius: var(--r); line-height: var(--lh-flat); }
+  .badge-open { display: inline-block; background: var(--white); color: var(--magenta); font-family: var(--font-en); font-size: 18.144px; line-height: var(--lh-flat); letter-spacing: normal; padding: 5.4432px 7.2576px 1.8144px; }
+  .badge-date { display: inline-block; background: var(--black); color: #e2e4e2; font-family: var(--font-en); font-size: 18.72px; line-height: var(--lh-flat); padding: 3.744px 5.616px .936px; }
+
+  /* HERO（3 カラム） */
+  .hero { display: grid; grid-template-columns: 1fr 1fr 390px; gap: 0; max-width: var(--container); margin: 0 auto; }
+  .hero-card { background: #ded7e8; padding: 30px; display: flex; gap: 18px; min-height: 300px; }
+  .hero-vtext { writing-mode: vertical-rl; font-family: var(--font-midashi); font-weight: 700; font-size: 28px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 14px 0; align-self: flex-start; }
+  .hero-poster { flex: 1; background: linear-gradient(160deg, #cfc6de, #b6a9cc); display: flex; align-items: center; justify-content: center; font-family: var(--font-bunkyu); font-weight: 900; font-size: 22px; color: var(--white); line-height: var(--lh-title); text-align: center; padding: 18px; }
+  .hero-photo { background: linear-gradient(170deg, #bcd3e2, #8fb0c6); display: flex; align-items: flex-end; padding: 20px; color: var(--white); font-size: 13px; }
+  .hero-side { display: flex; flex-direction: column; }
+  .hero-open { background: var(--magenta); color: var(--white); padding: 24px; }
+  .hero-open .y { font-family: var(--font-en); font-size: 18.72px; line-height: var(--lh-flat); }
+  .hero-open .d { font-family: var(--font-en); font-size: 56px; line-height: var(--lh-flat); letter-spacing: -1.4px; }
+  .hero-open .t { font-family: var(--font-en); font-size: 24px; line-height: var(--lh-flat); margin-top: 10px; }
+  .hero-news { background: var(--cyan); color: var(--white); padding: 24px; flex: 1; }
+  .hero-news h3 { font-family: var(--font-en); font-size: 26px; line-height: var(--lh-flat); margin-bottom: 14px; }
+  .hero-news li { font-size: 15px; line-height: var(--lh-body); margin-bottom: 12px; }
+  .hero-news .date { font-family: var(--font-en); font-size: 11.52px; display: block; }
+
+  .emergency { background: var(--ink); color: var(--white); font-family: var(--font-bunkyu); font-weight: 900; font-size: 15px; line-height: var(--lh-title); text-align: center; padding: 18px 20px; word-break: break-all; }
+
+  /* CALENDAR */
+  .cal { border-collapse: collapse; }
+  .cal th { font-family: var(--font-en); font-size: 11.52px; line-height: var(--lh-flat); color: var(--muted); padding: 8px 10px; }
+  .cal td { font-family: var(--font-en); font-size: 18.72px; line-height: var(--lh-flat); padding: 8px 10px; text-align: center; color: var(--ink); }
+  .cal td.open { color: var(--cyan); }
+  .cal td.closed { color: var(--muted); }
+  .cal td.today { background: var(--black); color: #e2e4e2; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+  .card { border-radius: var(--r); overflow: hidden; background: var(--white); display: block; }
+  .card-img { height: 150px; background: linear-gradient(150deg, #d9d2e4, #b9adcd); display: flex; align-items: flex-end; padding: 14px; }
+  .card-img .ov { background: rgba(0,0,0,.6); color: var(--white); font-size: 13px; line-height: var(--lh-body); padding: 6px 10px; }
+  .card-body { padding: 14px 4px; }
+  .card-cat { font-family: var(--font-midashi); font-weight: 700; font-size: 12px; line-height: var(--lh-flat); }
+  .card-title { font-family: var(--font-bunkyu); font-weight: 900; font-size: 18.4px; line-height: var(--lh-title); margin-top: 8px; }
+  .card-date { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  /* FORMS（サイト側の意匠は無い。本文書体・14px・radius 4px に合わせる） */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+  .field label { display: block; font-family: var(--font-midashi); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .field input, .field select { width: 100%; background: var(--white); color: var(--ink); border: 1px solid #cccccc; border-radius: var(--r); padding: 10px 12px; height: 44px; font-size: 14px; font-family: var(--font-body); letter-spacing: var(--ls); }
+  .field.is-focus input { outline: 2px solid var(--cyan); }
+  .field.is-error input { border-color: #c0392b; }
+  .field-msg { font-size: 12px; line-height: 1.6; color: var(--muted); margin-top: 7px; }
+  .field.is-error .field-msg { color: #c0392b; }
+
+  /* ELEVATION / LAYOUT */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .elev { background: var(--white); border: 1px solid var(--surface); padding: 26px; text-align: center; border-radius: var(--r); }
+  .elev-name { font-family: var(--font-midashi); font-weight: 700; font-size: 16px; }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; letter-spacing: normal; }
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--surface); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: #555; letter-spacing: normal; }
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 28px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 66px; background: var(--surface); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 7px; letter-spacing: normal; }
+
+  /* FOOTER */
+  .footer { background: var(--ink); color: var(--white); padding: 40px 20px; }
+  .footer-inner { max-width: var(--content); margin: 0 auto; }
+  .footer-head { font-family: var(--font-midashi); font-weight: 700; font-size: 20px; }
+  .footer-cols { display: flex; gap: 48px; margin-top: 20px; flex-wrap: wrap; }
+  .footer-col a { display: block; font-size: 12px; line-height: var(--lh-body); color: var(--white); opacity: .85; margin-bottom: 6px; }
+  .footer-copy { font-size: 12px; margin-top: 28px; opacity: .7; }
+
+  @media screen and (max-width: 768px) {
+    .section, .section-alt .section-inner { padding: 40px 16px; }
+    .hero { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .gnav-inner { flex-wrap: wrap; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-mark">SB</span><span class="logo-text">世田谷文学館</span></a>
+    <div class="header-right">
+      <a href="#" class="ticket">TICKET</a>
+      <span class="lang">language</span>
+    </div>
+  </div>
+</header>
+<nav class="gnav">
+  <div class="gnav-inner">
+    <a href="#">ご利用案内</a><a href="#">展覧会情報</a><a href="#">イベント情報</a><a href="#">コレクション</a><a href="#">ライブラリー</a><a href="#">文学館について</a>
+  </div>
+</nav>
+
+<div class="emergency">【施設情報】駐車場の利用休止について<br>設備メンテナンスのため、現在、駐車場はご利用いただけません。</div>
+
+<div class="hero">
+  <div class="hero-card">
+    <div class="hero-vtext">企画展</div>
+    <div class="hero-poster">文学を体験する<br>空間へ</div>
+  </div>
+  <div class="hero-photo">世田谷文学館 外観</div>
+  <div class="hero-side">
+    <div class="hero-open">
+      <div class="y">2026</div>
+      <div class="d">10.2</div>
+      <div class="t">OPEN 10:00 - 18:00</div>
+    </div>
+    <div class="hero-news">
+      <h3>NEWS</h3>
+      <ul>
+        <li><span class="date">2026.09.25</span>【施設情報】駐車場の利用休止について</li>
+        <li><span class="date">2026.10.01</span>2026年度新世田谷文学賞　募集のおしらせ</li>
+        <li><span class="date">2026.09.25</span>【イベント情報更新】関連イベントを公開しました</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="eyebrow">COLOR</div>
+  <h2 class="section-title">マゼンタとシアンの2原色</h2>
+  <p class="section-lead"><b>CSS Custom Properties を 1 個も持たない。</b>色はセレクタ側に直書きされ、面に使うのはマゼンタ <code>#ff0066</code> とシアン <code>#00baec</code> の 2 色だけ。中間色を挟まず、ベタ面でブロックを分ける。<b>マゼンタが 2 つある</b>のは実装の実態で、ピル型 CTA だけ <code>#e81a79</code> を使う。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#ff0066"></div><div class="swatch-body"><div class="swatch-name">マゼンタ（面）</div><div class="swatch-hex">#ff0066</div><div class="swatch-use">★塗り面 5 要素 / CSS 6 回。開館日の帯・見出し面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e81a79"></div><div class="swatch-body"><div class="swatch-name">マゼンタ（CTA）</div><div class="swatch-hex">#e81a79</div><div class="swatch-use">「詳しくはコチラ」ピル専用（CSS 3 回）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#00baec"></div><div class="swatch-body"><div class="swatch-name">シアン</div><div class="swatch-hex">#00baec</div><div class="swatch-use">★塗り面 4 要素 / CSS 11 回。文字色でも 37 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ecb319"></div><div class="swatch-body"><div class="swatch-name">イエロー</div><div class="swatch-hex">#ecb319</div><div class="swatch-use">下層の「開催中の展覧会」見出し面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f0debe"></div><div class="swatch-body"><div class="swatch-name">ベージュ</div><div class="swatch-hex">#f0debe</div><div class="swatch-use">ライブラリー〈ほんとわ〉ブロック（3 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1a1a1a"></div><div class="swatch-body"><div class="swatch-name">Ink</div><div class="swatch-hex">#1a1a1a</div><div class="swatch-use">★本文・見出し。可視 250 要素。html で宣言し継承</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#939393"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#939393</div><div class="swatch-use">カレンダーの曜日ラベル（可視 42 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div><div class="swatch-use">黒ピル・矩形 CTA・カレンダー日付の面</div></div></div>
+  </div>
+
+  <p class="note"><b>本文の文字色は <code>#1a1a1a</code>。</b>純黒 <code>#000000</code> は面にだけ使い、文字には使わない。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">TYPE</div>
+  <h2 class="section-title">書体で階層をつくる</h2>
+  <p class="section-lead"><b>ルートは 14px。</b><code>html</code> に <code>font-size: 14px</code> / <code>letter-spacing: 0.08em</code> / <code>font-feature-settings: "palt" 1</code> / <code>line-height: 1.5</code> / <code>color: #1a1a1a</code> を <b>1 回だけ</b>書き、可視 448 要素中 417 要素が字間 1.12px を継承する。<b><code>h1</code>〜<code>h6</code> はリセットで 14px / weight 400 に潰してある</b>ので、見出しの大きさはクラスが決める。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:11.52px">11.5</span><span style="font-size:13px">13</span><span style="font-size:14px">14</span>
+    <span style="font-size:15px">15</span><span style="font-size:16px">16</span><span style="font-size:18px">18</span>
+    <span style="font-size:18.72px">18.7</span><span style="font-size:24px">24</span><span style="font-size:28.8px">28.8</span>
+    <span style="font-size:57px">57</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Page Title ★</b>見出ゴ MB31 / 57px / 600<br>lh 1.5 / ls 0.08em（4.56px）<br>代替: Zen Kaku Gothic New</div><div style="font-family:var(--font-midashi);font-weight:700;font-size:57px;line-height:1.5">展覧会情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>展覧会タイトル ★</b>凸版文久見出しゴ / 28.8px / 900<br>lh 1.4 / 可視 7 要素<br>代替: Noto Sans JP 900</div><div style="font-family:var(--font-bunkyu);font-weight:900;font-size:28.8px;line-height:1.4">ヤマザキマリの世界</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section (EN) ★</b>Rig Shaded / 26px / 700<br>lh 1.0 / 可視 293 要素で最多<br>代替: Archivo Black</div><div style="font-family:var(--font-en);font-size:26px;line-height:1">EXHIBITION</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section (JA)</b>見出ゴ MB31 / 24px / 600<br>lh 1.0 / 白地 + 2px solid #000<br>margin-top: -28px</div><div><span class="btn-outline">展覧会情報</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>Local Nav</b>見出ゴ MB31 / 20px / 600<br>lh 1.0</div><div style="font-family:var(--font-midashi);font-weight:700;font-size:20px;line-height:1">開催中の展覧会</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>見出ゴ MB31 / 19px / 600<br>lh 1.4</div><div style="font-family:var(--font-midashi);font-weight:700;font-size:19px;line-height:1.4">今この瞬間を生きる ―Carpe Diem―</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / CTA</b>見出ゴ MB31 / 18px / 600〜700<br>lh 1.11</div><div style="font-family:var(--font-midashi);font-weight:700;font-size:18px;line-height:1.11">ご利用案内　展覧会情報　イベント情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>Calendar Date ★</b>Rig Shaded / 18.72px / 700<br>lh 1.0 / 可視 186 要素</div><div><span class="badge-date">2</span> <span style="font-family:var(--font-en);font-size:18.72px;line-height:1;color:var(--cyan)">7</span> <span style="font-family:var(--font-en);font-size:18.72px;line-height:1;color:var(--muted)">14</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>ヒラギノ角ゴ / 14px / 400<br>lh 1.5（21px） / <b style="display:inline">ls 1.12px</b><br>可視 417 要素が継承</div><div style="font-size:14px;line-height:1.5">世田谷文学館は、世田谷ゆかりの文学者の資料を収集・保存・展示し、文学を体験する空間として、展覧会・イベント・ライブラリーを通じてことばの楽しさを届けています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>News</b>ヒラギノ角ゴ / 15px / 400<br>lh 1.5 / 可視 32 要素</div><div style="font-size:15px;line-height:1.5">2026年度新世田谷文学賞　募集のおしらせ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>ヒラギノ角ゴ / 13px / 400<br>lh 1.5 / 可視 39 要素</div><div style="font-size:13px;line-height:1.5">10:00 - 18:00（入館は17:30まで）</div></div>
+  <div class="type-row"><div class="type-meta"><b>Weekday</b>Rig Shaded / 11.52px / 700<br>lh 1.0 / color #939393</div><div style="font-family:var(--font-en);font-size:11.52px;line-height:1;color:#939393">MON　TUE　WED　THU　FRI　SAT　SUN</div></div>
+  <div class="type-row"><div class="type-meta"><b>Maru Gothic</b>Zen Maru Gothic / 700<br>可視 2 要素だけ</div><div style="font-family:var(--font-maru);font-weight:700;font-size:16px;line-height:1.5">世田谷文学館（セタブン）と、みなさまをつなぐ会員制度</div></div>
+
+  <p class="note"><b>ウェイトは「太さ」ではなく「書体の選択」。</b>Adobe Fonts の 3 書体はそれぞれ単一ウェイトで配信されている（見出ゴ MB31 = <code>600</code> / Rig Shaded = <code>700</code> / 凸版文久見出しゴ = <code>900</code>）。<b>見出ゴ MB31 に <code>700</code> を当てるとブラウザの合成太字になり字形が崩れる。</b></p>
+
+  <p class="note"><b>Rig Shaded は欧文専用。</b>スタックは <code>rig-shaded-bold-face, sans-serif</code> で和文グリフを持たないため、同じ要素に日本語が混ざると<b>和文だけ OS 既定に落ちる</b>。実サイトの <code>English</code> <code>簡体中文</code> がそれで、意図的に欧文だけ装飾している。</p>
+
+  <p class="note"><b>字間は <code>html</code> に 1 回だけ。</b>子要素で <code>letter-spacing</code> を再宣言しないこと。14px × 0.08em = 1.12px が px のまま降りるので、サイズの違う要素でも同じ 1.12px になる。それがこの設計の意図。</p>
+
+  <p class="note"><b>Adobe Fonts が揃うまでページ全体を隠す。</b>実サイトは <code>html { visibility: hidden }</code> ／ <code>html.wf-active { visibility: visible; animation: fadeIn 1s }</code>。Typekit が <code>wf-active</code> を付けるまで白紙になる。再現する場合は取得失敗時の保険を併せて実装すること。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <div class="eyebrow">PARTS</div>
+  <h2 class="section-title">ピルと矩形の二本立て</h2>
+  <p class="section-lead">CTA は<b>マゼンタのピル（radius 40px）</b>と<b>黒の矩形（radius 0）</b>の 2 系統。どちらも<b>下パディングを上より 1.4〜1.8px 削って</b>視覚中央に寄せている。バッジの既定 radius は 4px。</p>
+
+  <div class="btn-grid">
+    <button class="btn btn-magenta">詳しくはコチラ</button>
+    <button class="btn btn-black-pill">図録・グッズの販売はこちら</button>
+    <button class="btn btn-rect">オンラインチケットサイト</button>
+  </div>
+  <div class="btn-grid">
+    <span class="badge-cyan">休館日</span>
+    <span class="ticket">TICKET</span>
+    <span class="badge-open">OPEN</span>
+    <span class="badge-date">2</span>
+    <span class="btn-outline" style="font-size:18px">ムットーニのからくり劇場</span>
+  </div>
+
+  <h3 style="font-family:var(--font-midashi);font-weight:700;font-size:20px;margin:36px 0 14px">Cards</h3>
+  <div class="card-grid">
+    <a href="#" class="card"><div class="card-img"><span class="ov">企画展</span></div><div class="card-body"><div class="card-cat">企画展</div><div class="card-title">ヤマザキマリの世界</div><div class="card-date">2026.10.3 — 2027.2.7</div></div></a>
+    <a href="#" class="card"><div class="card-img"><span class="ov">コレクション展</span></div><div class="card-body"><div class="card-cat">コレクション展</div><div class="card-title">後期コレクション展</div><div class="card-date">2026.9.1 — 2026.12.20</div></div></a>
+    <a href="#" class="card"><div class="card-img"><span class="ov">イベント</span></div><div class="card-body"><div class="card-cat">イベント</div><div class="card-title">ムットーニのからくり劇場</div><div class="card-date">2026.11.15</div></div></a>
+  </div>
+
+  <h3 style="font-family:var(--font-midashi);font-weight:700;font-size:20px;margin:36px 0 14px">Calendar</h3>
+  <table class="cal">
+    <tr><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th><th>SUN</th></tr>
+    <tr><td class="closed">29</td><td class="open">30</td><td class="today">1</td><td class="open">2</td><td class="open">3</td><td class="open">4</td><td class="open">5</td></tr>
+    <tr><td class="closed">6</td><td class="open">7</td><td class="open">8</td><td class="open">9</td><td class="open">10</td><td class="open">11</td><td class="open">12</td></tr>
+  </table>
+
+  <h3 style="font-family:var(--font-midashi);font-weight:700;font-size:20px;margin:36px 0 14px">Forms</h3>
+  <p class="section-lead">実サイトは Google カスタム検索をそのまま使っており、<b>サイト側のフォーム意匠を持たない</b>。新規実装では本文書体・14px・<code>border-radius: 4px</code> に合わせる。</p>
+  <div class="form-grid">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" placeholder="世田谷 太郎"><div class="field-msg">全角でご記入ください</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス（フォーカス）</label><input id="f2" type="text" value="setabun@example.jp"><div class="field-msg">確認用のメールをお送りします</div></div>
+    <div class="field is-error"><label for="f3">電話番号（エラー）</label><input id="f3" type="text" value="03-"><div class="field-msg">市外局番から半角でご記入ください</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="section-inner">
+  <div class="section-label">04 / Layout &amp; Elevation</div>
+  <div class="eyebrow">LAYOUT</div>
+  <h2 class="section-title">影ゼロ、面で奥行きを出す</h2>
+  <p class="section-lead"><b>可視要素の <code>box-shadow</code> は 0 種。</b>CSS 全文でも 1 回（slick 由来で可視 0 要素）、<code>filter: drop-shadow()</code> も 0 件。<b>奥行きは色面の重なりと 2px の黒罫で作る。</b></p>
+
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">box-shadow: none</div><div style="font-size:13px;color:#555;margin-top:8px">サイトのすべて</div></div>
+    <div class="elev" style="border:2px solid #000000"><div class="elev-name">2px 黒罫</div><div class="elev-val">border: 2px solid #000000</div><div style="font-size:13px;color:#555;margin-top:8px">見出しの白地ボックス</div></div>
+    <div class="elev" style="background:#ff0066;border-color:#ff0066;color:#ffffff"><div class="elev-name" style="color:#ffffff">ベタ面</div><div class="elev-val" style="color:rgba(255,255,255,.85)">background: #ff0066</div><div style="font-size:13px;margin-top:8px">ブロックの区切りは面の色で</div></div>
+  </div>
+
+  <h3 style="font-family:var(--font-midashi);font-weight:700;font-size:20px;margin:36px 0 14px">Container</h3>
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">1450px — 最大外枠</div>
+    <div class="layout-bar" style="width:95%">1380px — 標準コンテンツ</div>
+    <div class="layout-bar" style="width:73%">1060px — 記事幅（下層の既定）</div>
+    <div class="layout-bar" style="width:59%">860px — 読み物幅</div>
+    <div class="layout-bar" style="width:36%">527px — カラム</div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0 — 矩形 CTA・見出し</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px — 既定（可視 10 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:30px"></div><div class="radius-label">30px — 黒ピル</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:40px"></div><div class="radius-label">40px — マゼンタのピル</div></div>
+  </div>
+
+  <p class="note"><b>ブレークポイントはすべて <code>max-width</code> のデスクトップファースト。</b>768px（CSS 内 7 回で最多）/ 640px / 480px / 950px / 1060px。<b><code>html</code> は 4 幅すべてで 14px 固定</b>で、字間・行間・<code>palt</code> もブレークポイントで変わらない。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">世田谷文学館</div>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">ご利用案内</a><a href="#">アクセス</a><a href="#">展覧会情報</a></div>
+      <div class="footer-col"><a href="#">イベント情報</a><a href="#">コレクション</a><a href="#">ライブラリー〈ほんとわ〉</a></div>
+      <div class="footer-col"><a href="#">文学館について</a><a href="#">出張展示（移動文学館）</a><a href="#">お問い合わせ</a></div>
+    </div>
+    <div class="footer-copy">〒157-0062 東京都世田谷区南烏山1-10-10 ／ Copyright Setagaya Literary Museum</div>
+  </div>
+</footer>
+
+</body>
+</html>

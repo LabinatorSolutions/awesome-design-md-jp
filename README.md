@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (541 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (544 sites)</a>
 </p>
 
 <table>
@@ -831,6 +831,11 @@
 </tr>
 <tr>
 <td align="center"><strong>クラウドサイン</strong><br><img src="design-md/cloudsign/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>世田谷文学館</strong><br><img src="design-md/setabun/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>南海電気鉄道</strong><br><img src="design-md/nankai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>オークラ東京</strong><br><img src="design-md/theokuratokyo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1433,11 +1438,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [WealthNavi (ウェルスナビ)](https://www.wealthnavi.com/) | Robo-advisor / Fintech | [DESIGN.md](design-md/wealthnavi/DESIGN.md) | [preview.html](design-md/wealthnavi/preview.html) |
 | [JR West (JR西日本)](https://www.westjr.co.jp/) | Railway / Transit | [DESIGN.md](design-md/westjr/DESIGN.md) | [preview.html](design-md/westjr/preview.html) |
 | [CloudSign (クラウドサイン)](https://www.cloudsign.jp/) | e-Signature / SaaS | [DESIGN.md](design-md/cloudsign/DESIGN.md) | [preview.html](design-md/cloudsign/preview.html) |
+| [世田谷文学館 (SETABUN)](https://www.setabun.or.jp/) | Museum / Literature | [DESIGN.md](design-md/setabun/DESIGN.md) | [preview.html](design-md/setabun/preview.html) |
+| [南海電気鉄道 (NANKAI)](https://www.nankai.co.jp/) | Railway / Transportation | [DESIGN.md](design-md/nankai/DESIGN.md) | [preview.html](design-md/nankai/preview.html) |
+| [オークラ東京 (The Okura Tokyo)](https://theokuratokyo.jp/) | Hotel / Hospitality | [DESIGN.md](design-md/theokuratokyo/DESIGN.md) | [preview.html](design-md/theokuratokyo/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (541 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (544 sites)</a>
 </p>
 
 <table>
@@ -2234,6 +2242,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>クラウドサイン</strong><br><img src="design-md/cloudsign/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>世田谷文学館</strong><br><img src="design-md/setabun/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>南海電気鉄道</strong><br><img src="design-md/nankai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>オークラ東京</strong><br><img src="design-md/theokuratokyo/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

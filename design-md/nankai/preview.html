@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 南海電気鉄道（NANKAI）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ===========================================================
+     南海電気鉄道（NANKAI）— 実測 2026-10-02
+     https://www.nankai.co.jp/ , /company/about_us/index.html
+
+     実サイトは自社 CSS Custom Properties を 89 個持つ。
+     以下は実サイトの変数名と値をそのまま写したもの（プラットフォーム由来の
+     --swiper-theme-color は除外）。
+     =========================================================== */
+  :root {
+    /* === Root: 0.625rem = 10px。以降の rem はすべて「px の 1/10」 === */
+    font-size: 0.625rem;
+
+    /* === Font === */
+    --font-family:        "Noto Sans JP", sans-serif;
+    --line-height--root:  1.5;
+    --font-mono:          SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Brand === */
+    --primary-color:        #e94e00;   /* ★南海オレンジ。塗り面 52 要素 */
+    --primary-color-hover:  #ff691d;
+    --accent-color:         #ffb700;   /* 「電車に乗る」ボタン */
+    --accent-color-hover:   #fad697;
+    --gr-color--orange:     linear-gradient(135deg, #f3b238 0%, #e66c33 100%);
+
+    /* === 路線カラー（6 本。変数名が意味を持つ） === */
+    --nankai-line:   #0077ce;   /* 南海本線 */
+    --kouya-line:    #04873e;   /* 高野線 */
+    --airport-line:  #594bac;   /* 空港線 */
+    --semboku-line:  #b1bc3a;   /* 泉北線 */
+    --kada-line:     #727878;   /* 加太線 */
+    --gran-tenku:    #96191e;   /* 天空（観光列車） */
+
+    /* === ラベルカラー（沿線情報のタグ。7 色） === */
+    --label-color--purple:     #b178ff;   /* カルチャー（可視 8 要素） */
+    --label-color--green:      #5cbb28;   /* ハイキング（可視 5 要素） */
+    --label-color--blue:       #5286ff;   /* 海（可視 3 要素） */
+    --label-color--yellow:     #fcc100;   /* 寺社仏閣 */
+    --label-color--orange:     #ed5d00;   /* グルメ */
+    --label-color--light-blue: #1cb7ff;
+    --label-color--red:        #ea3f70;
+
+    /* === 装飾色 === */
+    --decoration-color--red:    #ff3838;   /* NEW バッジ（可視 6 要素） */
+    --decoration-color--green:  #04873e;
+    --decoration-color--orange: #f15930;
+    --decoration-color--gray:   #94a3a6;
+    --decoration-color--brown:  #a5760c;
+
+    /* === Text === */
+    --txt-color--default:      #333333;   /* ★本文。可視 135 要素 */
+    --txt-color--red:          #dd0000;
+    --txt-color--green:        #1fa45d;
+    --txt-color--orange:       #e8761e;
+    --txt-color--dark-gray:    #757575;
+    --txt-color--light-gray:   #989898;
+    --txt-color--lighter-gray: #b9b9b9;
+    --txt-color--placeholder:  #c5c5c5;
+
+    /* === Border / Surface === */
+    --border-color--gray:       #dadce0;
+    --border-color-light-gray:  #e1e1e1;
+    --border-color--input-gray: #cbd5e0;
+    --bg-color--gray:           #ececec;   /* 運行情報の帯（可視 65 要素） */
+    --bg-color--btn-blue:       #0083e3;
+    --bg-color--section-yellow: #fff8e5;
+    --bg-color--section-orange: #fef6f2;
+    --bg-color--section-red:    #fef2f2;
+    --bg-color--input-text:     #f7fafc;
+    --bg-color--input-error:    #ffcccc;
+    --surface:                  #f9f9f9;   /* カードの面。可視 155 要素で最多 */
+    --white:                    #ffffff;
+    --black:                    #000000;   /* カード見出し・ナビ第一階層（可視 66 要素） */
+
+    /* === Layout === */
+    --contents-width:                  1080px;
+    --contents-width--narrow:           812px;
+    --contents-width--wide:            1280px;
+    --padding-contents-wrapper--t:     3rem;    /* 30px */
+    --padding-contents-wrapper--b:     6rem;    /* 60px */
+    --padding-contents-wrapper--lr:    1.8rem;  /* 18px */
+
+    /* === z-index（17 段を名前で管理） === */
+    --z-popup: 6; --z-site-header: 14; --z-modal: 16;
+
+    /* === Radius / Shadow（すべて rem 宣言。10px 基準） === */
+    --r-sm:  .2rem;   /* 2px — outlined ボタン */
+    --r:     .4rem;   /* ★4px — 既定。CSS 37 回 */
+    --r-pill: 1.6rem; /* 16px — タグ */
+    --shadow-head: 0 .2rem .2rem rgba(0,0,0,.24);   /* 0 2px 2px */
+    --shadow-card: 0 .3rem .6rem rgba(0,0,0,.16);   /* ★0 3px 6px。可視 65 要素 */
+    --shadow-cta:  0 .3rem .9rem rgba(0,0,0,.2);    /* ★0 3px 9px。可視 19 要素 */
+    --shadow-sm:   0 .1rem .3rem rgba(0,0,0,.2);    /* 0 1px 3px */
+
+    /* 実サイトの :root 宣言をそのまま */
+    font-family: var(--font-family);
+    font-feature-settings: "pkna";          /* ★palt ではない。可視 1765 要素へ継承 */
+    line-height: var(--line-height--root);  /* 1.5。可視 255 要素 */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  * , *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-size: 1.4rem;                      /* 14px。可視 126 要素で最多 */
+    color: var(--txt-color--default);
+    line-height: inherit;
+    background: var(--white);
+    overflow-wrap: break-word;
+    min-width: 320px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* letter-spacing は宣言しない。実サイトは可視 258 要素が normal */
+  }
+  img { max-width: 100%; height: auto; vertical-align: bottom; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-weight: 700; }
+
+  /* HEADER */
+  .header { box-shadow: var(--shadow-card); position: relative; z-index: var(--z-site-header); background: var(--white); }
+  .header-inner { display: flex; align-items: center; gap: 2.4rem; max-width: var(--contents-width--wide); margin: 0 auto; padding: 1.4rem var(--padding-contents-wrapper--lr); }
+  .logo { display: flex; align-items: center; gap: 1rem; }
+  .logo-mark { width: 3.4rem; height: 3.4rem; background: var(--gr-color--orange); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .logo-text { font-size: 2.6rem; font-weight: 700; font-style: italic; line-height: 1; color: var(--black); }
+  .logo-tag { font-size: 1.1rem; color: var(--txt-color--dark-gray); line-height: 1; margin-bottom: .4rem; }
+  .header-nav { display: flex; gap: 2rem; margin-left: auto; }
+  .header-nav a { font-size: 1.4rem; line-height: 1.5; }
+  .header-cta { display: flex; }
+  .btn-accent { background: var(--accent-color); color: var(--white); font-size: 1.4rem; font-weight: 700; line-height: 1.5; padding: 1.4rem 3rem; border: 0; cursor: pointer; font-family: var(--font-family); font-feature-settings: "pkna"; }
+  .btn-primary-head { background: var(--primary-color); color: var(--white); font-size: 1.4rem; font-weight: 700; line-height: 1.5; padding: 1.4rem 3rem; border: 0; cursor: pointer; font-family: var(--font-family); font-feature-settings: "pkna"; }
+
+  /* 運行情報の帯 */
+  .status-band { background: var(--bg-color--gray); padding: 2rem var(--padding-contents-wrapper--lr); }
+  .status-inner { max-width: var(--contents-width); margin: 0 auto; }
+  .status-row { display: flex; align-items: center; gap: 1.8rem; background: var(--white); border-radius: var(--r); padding: 1.4rem 1.8rem; box-shadow: var(--shadow-card); }
+  .status-title { font-size: 1.6rem; font-weight: 700; white-space: nowrap; }
+  .status-time { font-size: 1.2rem; color: var(--txt-color--dark-gray); }
+  .status-text { font-size: 1.6rem; }
+  .status-btns { display: flex; gap: 1.8rem; margin-top: 1.8rem; }
+
+  /* SECTIONS */
+  .section { max-width: var(--contents-width); margin: 0 auto; padding: var(--padding-contents-wrapper--t) var(--padding-contents-wrapper--lr) var(--padding-contents-wrapper--b); }
+  .section-alt { background: var(--bg-color--gray); }
+  .section-alt .section-inner { max-width: var(--contents-width); margin: 0 auto; padding: var(--padding-contents-wrapper--t) var(--padding-contents-wrapper--lr) var(--padding-contents-wrapper--b); }
+  .section-label { font-family: var(--font-mono); font-size: 1.2rem; color: var(--txt-color--light-gray); margin-bottom: 1rem; }
+  .section-title { font-size: 3.2rem; line-height: 1.5; color: var(--black); margin-bottom: 1.2rem; }
+  .section-lead { font-size: 1.6rem; line-height: 1.5; margin-bottom: 3rem; max-width: 81.2rem; }
+  .note { font-size: 1.4rem; line-height: 1.9; color: #555; margin-top: 2rem; max-width: 81.2rem; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--bg-color--gray); padding: .1rem .5rem; }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); gap: 1.2rem; }
+  .swatch { border: 1px solid var(--border-color--gray); border-radius: var(--r); overflow: hidden; background: var(--white); }
+  .swatch-chip { height: 7.2rem; }
+  .swatch-body { padding: 1.2rem; }
+  .swatch-name { font-size: 1.4rem; font-weight: 700; line-height: 1.5; }
+  .swatch-var { font-family: var(--font-mono); font-size: 1rem; color: var(--txt-color--dark-gray); margin-top: .3rem; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-color--light-gray); margin-top: .2rem; }
+  .swatch-use { font-size: 1.2rem; line-height: 1.6; color: #555; margin-top: .6rem; }
+
+  /* TYPOGRAPHY */
+  .scale-bar { display: flex; gap: .8rem; flex-wrap: wrap; margin-bottom: 3rem; align-items: baseline; }
+  .scale-bar span { background: var(--bg-color--gray); padding: .8rem 1.4rem; line-height: 1.5; border-radius: var(--r); }
+  .type-row { display: grid; grid-template-columns: 24rem 1fr; gap: 2.4rem; padding: 2rem 0; border-bottom: 1px solid var(--border-color--gray); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-color--light-gray); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-family); font-size: 1.3rem; font-weight: 700; color: var(--txt-color--default); }
+
+  /* BUTTONS / TAGS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 1.6rem; align-items: center; margin-bottom: 2.6rem; }
+  .btn { font-family: var(--font-family); font-feature-settings: "pkna"; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-primary { background: var(--primary-color); color: var(--white); border: 0; border-radius: var(--r); box-shadow: var(--shadow-cta); font-size: 1.6rem; font-weight: 700; line-height: 1.5; padding: 1.2rem 2.4rem; }
+  .btn-accent-l { background: var(--accent-color); color: var(--white); border: 0; border-radius: var(--r); box-shadow: var(--shadow-cta); font-size: 1.4rem; font-weight: 700; line-height: 1.5; padding: 1.2rem 2.4rem; }
+  .btn-outline { background: var(--white); color: var(--txt-color--default); border: 1px solid var(--border-color--gray); border-radius: var(--r-sm); box-shadow: var(--shadow-head); font-size: 1.4rem; font-weight: 500; line-height: 1.5; padding: 1.1rem 2.4rem; }
+  .btn-blue { background: #3860be; color: var(--white); border: 1px solid #bbbbbb; border-radius: 1.7rem; font-size: 1.2rem; font-weight: 700; line-height: 1.2; padding: .8rem 1.8rem; }
+  .tag { display: inline-block; color: var(--white); font-size: 1.2rem; font-weight: 400; line-height: 1.5; padding: .5rem 1.6rem; border-radius: var(--r-pill); }
+  .badge-new { display: inline-block; background: var(--decoration-color--red); color: var(--white); font-size: 1.2rem; line-height: 1.5; padding: .2rem 1rem; border-radius: var(--r-sm); }
+
+  /* LINE CHIPS */
+  .line-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); gap: 1.2rem; }
+  .line-chip { display: flex; align-items: center; gap: 1.2rem; background: var(--white); border: 1px solid var(--border-color--gray); border-radius: var(--r); padding: 1.4rem 1.6rem; }
+  .line-dot { width: 1.6rem; height: 1.6rem; border-radius: 50%; flex-shrink: 0; }
+  .line-name { font-size: 1.6rem; font-weight: 700; line-height: 1.5; }
+  .line-hex { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-color--light-gray); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); gap: 1.8rem; }
+  .card { background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow-card); overflow: hidden; display: block; }
+  .card-img { height: 14rem; background: linear-gradient(150deg, #cfd8dd, #9fb3bd); }
+  .card-body { padding: 1.6rem; }
+  .card-title { font-size: 1.638rem; font-weight: 700; line-height: 1.5; color: var(--txt-color--default); }
+  .card-date { font-size: 1.2rem; color: var(--txt-color--dark-gray); margin-top: 1rem; }
+  .card-tags { display: flex; gap: .6rem; margin-top: 1.2rem; flex-wrap: wrap; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr)); gap: 2.6rem; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 700; line-height: 1.5; margin-bottom: .8rem; }
+  .field input, .field select { width: 100%; background: var(--bg-color--input-text); color: var(--black); border: 1px solid var(--border-color--input-gray); border-radius: var(--r); padding: 1rem 1.2rem; height: 4.6rem; font-size: 1.4rem; line-height: 1.5; font-family: var(--font-family); }
+  .field input::placeholder { color: var(--txt-color--placeholder); }
+  .field.is-focus input { outline: 2px solid var(--primary-color); }
+  .field.is-error input { background: var(--bg-color--input-error); border-color: var(--border-color--red, #d34040); }
+  .field-msg { font-size: 1.2rem; line-height: 1.6; color: var(--txt-color--dark-gray); margin-top: .7rem; }
+  .field.is-error .field-msg { color: var(--txt-color--red); }
+
+  /* ELEVATION / LAYOUT */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr)); gap: 3rem; }
+  .elev { background: var(--white); padding: 2.8rem; text-align: center; border-radius: var(--r); }
+  .elev.e0 { border: 1px solid var(--border-color--gray); }
+  .elev.e1 { box-shadow: var(--shadow-sm); }
+  .elev.e2 { box-shadow: var(--shadow-card); }
+  .elev.e3 { box-shadow: var(--shadow-cta); }
+  .elev.e4 { box-shadow: var(--shadow-head); }
+  .elev-name { font-size: 1.6rem; font-weight: 700; line-height: 1.5; }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-color--light-gray); margin-top: .8rem; }
+  .layout-demo { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+  .layout-bar { background: var(--white); border: 1px solid var(--border-color--gray); border-radius: var(--r); height: 3.6rem; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1rem; color: #555; }
+  .radius-row { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 3rem; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 11rem; height: 6.8rem; background: var(--surface); border: 1px solid var(--border-color--gray); }
+  .radius-label { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-color--light-gray); margin-top: .7rem; }
+
+  /* FOOTER */
+  .footer { background: var(--txt-color--default); color: var(--white); padding: 4rem var(--padding-contents-wrapper--lr); }
+  .footer-inner { max-width: var(--contents-width); margin: 0 auto; }
+  .footer-head { font-size: 2rem; font-weight: 700; line-height: 1.5; }
+  .footer-cols { display: flex; gap: 4.8rem; margin-top: 2rem; flex-wrap: wrap; }
+  .footer-col a { display: block; font-size: 1.4rem; line-height: 1.8; color: var(--white); opacity: .85; }
+  .footer-copy { font-size: 1.2rem; margin-top: 3rem; opacity: .7; }
+
+  @media print, screen and (max-width: 768px) {
+    .header-nav { display: none; }
+    .type-row { grid-template-columns: 1fr; gap: .8rem; }
+    .status-row { flex-direction: column; align-items: flex-start; }
+    .section-title { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      <span><span class="logo-tag">&lsquo;なんかいいね&rsquo;があふれてる</span><br><span class="logo-text">NANKAI</span></span>
+    </a>
+    <nav class="header-nav">
+      <a href="#">企業情報</a><a href="#">IR情報</a><a href="#">採用情報</a><a href="#">よくあるご質問</a>
+    </nav>
+    <div class="header-cta">
+      <button class="btn-accent">電車に乗る</button>
+      <button class="btn-primary-head">まちとつながる</button>
+    </div>
+  </div>
+</header>
+
+<div class="status-band">
+  <div class="status-inner">
+    <div class="status-row">
+      <span class="status-title">運行情報</span>
+      <span class="status-time">10月2日9時6分</span>
+      <span class="status-text">只今、20分以上の列車の遅れはございません。</span>
+    </div>
+    <div class="status-btns">
+      <button class="btn btn-outline">運行状況詳細</button>
+      <button class="btn btn-outline">遅延証明</button>
+      <button class="btn btn-primary">南海アプリ</button>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">色を「分類の道具」として持つ</h2>
+  <p class="section-lead">自社の CSS Custom Properties <b>89 個</b>のうち 40 個以上が色。接頭辞は <code>--primary-</code> <code>--txt-color--</code> <code>--label-color--</code> <code>--decoration-color--</code> <code>--border-color--</code> <code>--bg-color--</code> と役割別に揃い、<b>ライブラリ由来ではなく自社設計のトークン</b>（プラットフォーム由来は Swiper の 1 個だけ）。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#e94e00"></div><div class="swatch-body"><div class="swatch-name">南海オレンジ</div><div class="swatch-var">--primary-color</div><div class="swatch-hex">#e94e00</div><div class="swatch-use">★塗り面 52 要素。CTA・見出しの強調文字</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ff691d"></div><div class="swatch-body"><div class="swatch-name">Primary Hover</div><div class="swatch-var">--primary-color-hover</div><div class="swatch-hex">#ff691d</div><div class="swatch-use">ホバー時</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffb700"></div><div class="swatch-body"><div class="swatch-name">アクセント</div><div class="swatch-var">--accent-color</div><div class="swatch-hex">#ffb700</div><div class="swatch-use">「電車に乗る」ボタン</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:linear-gradient(135deg,#f3b238 0%,#e66c33 100%)"></div><div class="swatch-body"><div class="swatch-name">Orange Gradient</div><div class="swatch-var">--gr-color--orange</div><div class="swatch-hex">#f3b238 → #e66c33 / 135deg</div><div class="swatch-use">帯・カード見出し</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-var">--txt-color--default</div><div class="swatch-hex">#333333</div><div class="swatch-use">★本文。可視 135 要素。body に変数で指定</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f9f9f9;border-bottom:1px solid #dadce0"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-var">（カードの面）</div><div class="swatch-hex">#f9f9f9</div><div class="swatch-use">★可視 155 要素でサイト最多</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ececec"></div><div class="swatch-body"><div class="swatch-name">Surface Band</div><div class="swatch-var">--bg-color--gray</div><div class="swatch-hex">#ececec</div><div class="swatch-use">運行情報・検索の帯（可視 65 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#dadce0"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-var">--border-color--gray</div><div class="swatch-hex">#dadce0</div><div class="swatch-use">カード・入力欄の枠</div></div></div>
+  </div>
+
+  <p class="note"><b>トップページの <code>pageBackground.resolved</code> は <code>#ececec</code> だが、これは運行情報帯の面色。</b>下層ページは <code>#ffffff</code>。<b>地色は白、<code>#ececec</code> はセクション帯</b>と読む。</p>
+
+  <h3 class="section-title" style="font-size:2.4rem;margin-top:4rem">路線カラー（6 本）</h3>
+  <p class="section-lead"><b>変数名で意味が確定している。</b>路線名と色を自前で決め直さず、必ずこの 6 個を使う。</p>
+  <div class="line-grid">
+    <div class="line-chip"><span class="line-dot" style="background:#0077ce"></span><span><span class="line-name">南海本線</span><br><span class="line-hex">--nankai-line / #0077ce</span></span></div>
+    <div class="line-chip"><span class="line-dot" style="background:#04873e"></span><span><span class="line-name">高野線</span><br><span class="line-hex">--kouya-line / #04873e</span></span></div>
+    <div class="line-chip"><span class="line-dot" style="background:#594bac"></span><span><span class="line-name">空港線</span><br><span class="line-hex">--airport-line / #594bac</span></span></div>
+    <div class="line-chip"><span class="line-dot" style="background:#b1bc3a"></span><span><span class="line-name">泉北線</span><br><span class="line-hex">--semboku-line / #b1bc3a</span></span></div>
+    <div class="line-chip"><span class="line-dot" style="background:#727878"></span><span><span class="line-name">加太線</span><br><span class="line-hex">--kada-line / #727878</span></span></div>
+    <div class="line-chip"><span class="line-dot" style="background:#96191e"></span><span><span class="line-name">天空</span><br><span class="line-hex">--gran-tenku / #96191e</span></span></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:2.4rem;margin-top:4rem">ラベルカラー（沿線情報のタグ）</h3>
+  <div class="btn-grid">
+    <span class="tag" style="background:#5286ff">海</span>
+    <span class="tag" style="background:#5cbb28">ハイキング</span>
+    <span class="tag" style="background:#b178ff">カルチャー</span>
+    <span class="tag" style="background:#fcc100">寺社仏閣</span>
+    <span class="tag" style="background:#ed5d00">グルメ</span>
+    <span class="tag" style="background:#1cb7ff">海水浴</span>
+    <span class="tag" style="background:#ea3f70">まつり</span>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">ルート 10px、字間は触らない</h2>
+  <p class="section-lead"><code>:root { font-size: 0.625rem }</code> で<b>ルートが 10px</b>。<code>rem</code> はすべて「px の 1/10」になる（<code>1.4rem</code> = 14px / <code>.4rem</code> = 4px / <code>0 .3rem .9rem</code> = 0 3px 9px）。<b><code>letter-spacing</code> は可視 258 要素が <code>normal</code></b>で、CSS 全文の宣言は 5 回すべて <code>0%</code>。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:1rem">10</span><span style="font-size:1.2rem">12</span><span style="font-size:1.4rem">14</span>
+    <span style="font-size:1.6rem">16</span><span style="font-size:1.8rem">18</span><span style="font-size:2.1rem">21</span>
+    <span style="font-size:2.4rem">24</span><span style="font-size:2.8rem">28</span><span style="font-size:3.2rem">32</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Section (h2) ★</b>Noto Sans JP / 32px (3.2rem) / 700<br>lh 1.5 / ls normal</div><div style="font-size:3.2rem;font-weight:700;line-height:1.5;color:#000000">まちとつながる</div></div>
+  <div class="type-row"><div class="type-meta"><b>Page Title (h1)</b>28px (2.8rem) / 700<br>lh 1.5（42px）</div><div style="font-size:2.8rem;font-weight:700;line-height:1.5">私たちについて</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Mid (h2)</b>24px / 700<br>lh 1.5</div><div style="font-size:2.4rem;font-weight:700;line-height:1.5;color:#000000">ショッピング・グルメ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub (h2)</b>21px / 700<br>lh 1.5（31.5px）</div><div style="font-size:2.1rem;font-weight:700;line-height:1.5">最新情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub (h3)</b>18px / 500 または 700<br>lh 1.5</div><div><span style="font-size:1.8rem;font-weight:500;line-height:1.5">運輸業</span>　<span style="font-size:1.8rem;font-weight:700;line-height:1.5">バリアフリー施設</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>16px (1.6rem) / 400〜500<br>lh 1.5 / 可視 58 要素</div><div style="font-size:1.6rem;line-height:1.5">沿線エリアの人々の暮らしを豊かにしながら地域とともに成長する。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>14px (1.4rem) / 400<br>lh 1.5（21px） / ls normal<br>可視 126 要素で最多</div><div style="font-size:1.4rem;line-height:1.5">南海電鉄は大阪・和歌山を結ぶ鉄道事業を軸に、不動産・流通・レジャーの各事業で沿線のまちづくりに取り組んでいます。駅・時刻表・運賃の検索から、沿線のおでかけ情報までご案内します。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>12px (1.2rem) / 400<br>lh 1.5 / 可視 34 要素</div><div style="font-size:1.2rem;line-height:1.5;color:#757575">2026年10月2日　お知らせ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Icon Label</b>10px (1rem) / 400<br>lh 1.5（15px）</div><div style="font-size:1rem;line-height:1.5">検索　更新</div></div>
+  <div class="type-row"><div class="type-meta"><b>Accent Text</b>16px / 400<br>color #e94e00（可視 4 要素）</div><div style="font-size:1.6rem;line-height:1.5;color:#e94e00">未来を見据え、挑戦を続けるNANKAI</div></div>
+
+  <p class="note"><b>ウェイトは 400 / 500 / 700 の 3 段だけ。</b>Google Fonts の要求は <code>wght@400;500;700</code> で、実測の分布も 400（154）/ 700（71）/ 500（35）。<b>600 や 300 を当てると合成になる。</b></p>
+
+  <p class="note"><b><code>font-feature-settings: "pkna"</code> を <code>:root</code> に 1 回だけ</b>書いて可視 1765 要素へ継承させている。<code>palt</code> ではない。<b><code>pkna</code> はかな（ひらがな・カタカナ）だけ</b>をプロポーショナル字形にし、約物・漢字・欧文の幅は動かさない。<code>palt</code> より詰まり方が穏やかで、読み違いが許されない案内文に向く。</p>
+
+  <p class="note"><b>行間は 1.5 の一本。</b><code>--line-height--root: 1.5</code> を <code>body { line-height: inherit }</code> で受け、可視 255 要素が 1.5。<b>見出しで詰めない。</b>見出しの締まりは <code>font-size</code> と余白で作る。</p>
+
+  <p class="note"><b>フォールバックは <code>sans-serif</code> だけ。</b>実サイトは <code>"Noto Sans JP", sans-serif</code> しか書いておらず、OS 書体への保険が無い。新規実装では <code>"Noto Sans JP", "Hiragino Sans", "Yu Gothic Medium", sans-serif</code> のように挟むとよい（<b>実サイトはそうしていない</b>）。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <h2 class="section-title">面＋4px＋影の 3 点セット</h2>
+  <p class="section-lead">CTA は <code>#e94e00</code> の面に <code>border-radius: .4rem</code>（4px）と <code>0 .3rem .9rem rgba(0,0,0,.2)</code>。カードは <code>#f9f9f9</code> の面に <code>0 .3rem .6rem rgba(0,0,0,.16)</code>。<b>角丸も影もすべて <code>rem</code> で宣言されている</b>ので、10px 基準で読むこと。</p>
+
+  <div class="btn-grid">
+    <button class="btn btn-primary">南海アプリ</button>
+    <button class="btn btn-accent-l">電車に乗る</button>
+    <button class="btn btn-outline">運行状況詳細</button>
+    <button class="btn btn-blue">絞り込み</button>
+    <span class="badge-new">NEW</span>
+  </div>
+
+  <h3 class="section-title" style="font-size:2rem;margin-top:3.6rem">Cards</h3>
+  <div class="card-grid">
+    <a href="#" class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">「第14回深日漁港ふれあいフェスタ」開催</div><div class="card-date">2026.10.02</div><div class="card-tags"><span class="tag" style="background:#5286ff">海</span><span class="tag" style="background:#ed5d00">グルメ</span></div></div></a>
+    <a href="#" class="card"><div class="card-img" style="background:linear-gradient(150deg,#d6dfc9,#a9bd8a)"></div><div class="card-body"><div class="card-title">高野山の秋を歩く　参詣道ハイキング</div><div class="card-date">2026.09.28</div><div class="card-tags"><span class="tag" style="background:#5cbb28">ハイキング</span><span class="tag" style="background:#fcc100">寺社仏閣</span></div></div></a>
+    <a href="#" class="card"><div class="card-img" style="background:linear-gradient(150deg,#ded3ea,#b9a6d4)"></div><div class="card-body"><div class="card-title">なんばパークスで秋のアートウィーク</div><div class="card-date">2026.09.20</div><div class="card-tags"><span class="tag" style="background:#b178ff">カルチャー</span></div></div></a>
+  </div>
+
+  <h3 class="section-title" style="font-size:2rem;margin-top:3.6rem">Forms</h3>
+  <div class="form-grid">
+    <div class="field"><label for="f1">出発駅</label><input id="f1" type="text" placeholder="なんば"><div class="field-msg">駅名を入力してください</div></div>
+    <div class="field is-focus"><label for="f2">到着駅（フォーカス）</label><input id="f2" type="text" value="関西空港"><div class="field-msg">候補から選べます</div></div>
+    <div class="field is-error"><label for="f3">乗車日（エラー）</label><input id="f3" type="text" value="2026/13/01"><div class="field-msg">日付の形式が正しくありません</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="section-inner">
+  <div class="section-label">04 / Layout &amp; Elevation</div>
+  <h2 class="section-title">1080px と 4 段の影</h2>
+  <p class="section-lead">コンテナは <code>--contents-width: 1080px</code>（可視 26 要素／下層 31 要素）。影は黒のアルファのみで、<b>濃いものほどぼかしが小さい</b>（ヘッダー 2px / カード 6px / CTA 9px）。</p>
+
+  <div class="elev-grid">
+    <div class="elev e0"><div class="elev-name">Level 0</div><div class="elev-val">none</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">0 .1rem .3rem rgba(0,0,0,.2)</div></div>
+    <div class="elev e2"><div class="elev-name">Level 2 ★</div><div class="elev-val">0 .3rem .6rem rgba(0,0,0,.16)</div></div>
+    <div class="elev e3"><div class="elev-name">Level 3 ★</div><div class="elev-val">0 .3rem .9rem rgba(0,0,0,.2)</div></div>
+    <div class="elev e4"><div class="elev-name">Level 4</div><div class="elev-val">0 .2rem .2rem rgba(0,0,0,.24)</div></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:2rem;margin-top:3.6rem">Container</h3>
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">--contents-width--wide / 1280px</div>
+    <div class="layout-bar" style="width:84%">--contents-width / 1080px ★既定</div>
+    <div class="layout-bar" style="width:63%">--contents-width--narrow / 812px</div>
+  </div>
+  <p class="note">左右パディングは <code>--padding-contents-wrapper--lr: 1.8rem</code>（18px）、上 <code>3rem</code>（30px）／下 <code>6rem</code>（60px）。実測で多い <code>gap</code> は <b>6px</b>（32 件）。</p>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:.2rem"></div><div class="radius-label">.2rem = 2px — outlined</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:.4rem"></div><div class="radius-label">.4rem = 4px ★既定 / CSS 37 回</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:1.6rem"></div><div class="radius-label">1.6rem = 16px — タグ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50%"></div><div class="radius-label">50% — アイコン（可視 44 要素）</div></div>
+  </div>
+
+  <p class="note"><b>ブレークポイントは <code>min-width: 769px</code> が主軸</b>（CSS 内 7 回で最多）。569 / 1025 / 1281 / 1600px が続く。<code>@media print, screen and (min-width: 769px)</code> の形が多く、<b>印刷にもデスクトップレイアウトを当てている</b>。<code>@media (prefers-reduced-motion: reduce)</code> も実装済み。<b><code>html</code> は 4 幅すべてで 10px 固定</b>で、本文のタイポグラフィはブレークポイントをまたいで同一。</p>
+
+  <p class="note"><b>z-index は 17 段すべてが変数。</b><code>--z-popup: 6</code> / <code>--z-site-header: 14</code> / <code>--z-modal: 16</code> のように名前で管理されている。新しい重なりを足すときは生の数値を書かず、変数を追加すること。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">南海電気鉄道株式会社</div>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">電車に乗る</a><a href="#">駅・時刻表</a><a href="#">路線図</a><a href="#">運賃検索</a></div>
+      <div class="footer-col"><a href="#">まちとつながる</a><a href="#">沿線のまち</a><a href="#">ショッピング・グルメ</a></div>
+      <div class="footer-col"><a href="#">企業情報</a><a href="#">IR情報</a><a href="#">採用情報</a><a href="#">よくあるご質問</a></div>
+    </div>
+    <div class="footer-copy">&copy; NANKAI ELECTRIC RAILWAY Co.,Ltd.</div>
+  </div>
+</footer>
+
+</body>
+</html>
