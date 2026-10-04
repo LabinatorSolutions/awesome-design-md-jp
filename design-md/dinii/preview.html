@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ダイニー（dinii）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400..700&family=Noto+Sans:wght@400..700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 83 個あるが、自社トークンは 23 個だけ。
+       残り 60 個は WordPress / Gutenberg（49）と WordPress admin（11）の既定値で、
+       --wp--preset--* を自社の色として採用しないこと。実測 2026-10-04 */
+    --color-orange:     #FF7500;  /* ★ブランド色。面 10 要素 / 文字 19 要素 */
+    --color-orange-lt:  #FF8C00;  /* 下層の見出し面（8 要素）・番号 */
+    --color-attention:  #FF0046;  /* NEW ラベルの文字・注意喚起 */
+
+    --color-black:      #282828;  /* ★本文・見出し。可視 139 要素 */
+    --color-white:      #FFFFFF;
+    --color-s9:         #3F4042;  /* ★面として 52 要素（最多）。事例カードの帯 */
+    --color-s8:         #57595C;
+    --color-s7:         #6F7175;  /* ★文字色として 163 要素（最多）。補助テキスト */
+    --color-s6:         #888A8F;
+    --color-s5:         #A0A3A8;
+    --color-s4:         #B8BBC2;
+    --color-s3:         #D0D4DB;  /* 罫線 */
+    --color-s2:         #E9EDF5;  /* 淡い罫線・面 */
+    --color-s1:         #F2F7FF;  /* ★ヒーローの地色（15 要素） */
+    --color-s0:         #F7FAFC;  /* ★セクションの地色 */
+    --color-bluegray:   #56698F;  /* リンク色・NEW ラベルの面（26 要素） */
+    --color-q:          #172D57;  /* Q&A の Q. ラベル */
+
+    /* サービス別の識別色。アイコンとラベルだけに使い、面積は小さい */
+    --color-yellow:     #F9AA00;
+    --color-green:      #00BE1E;
+    --color-purple:     #9600D2;
+    --color-blue:       #0019EB;
+    --color-emerald:    #008200;
+    --color-management: #2E8BFF;
+    --color-shukyaku:   #E93D80;
+    --color-system:     #245EF2;
+
+    /* CTA はベタ塗りではなくグラデーション（実測） */
+    --grad-cta: linear-gradient(#F15D96, #FF3D70 23.56%, #FF0047 42.31%, #D70228);
+    --grad-cta-orange: linear-gradient(181deg, #FBA75C 0%, #FF841B 37%, #FF7500 68%, #E9730F 100%);
+
+    /* === Fonts ===
+       欧文先頭の二層。Noto Sans（欧文）→ Noto Sans JP（和文）。
+       Web フォントが落ちたときのために ヒラギノ → メイリオ まで積んである。
+       Poppins は 500 と 700 のみ（600 は @font-face が unloaded のまま）。 */
+    --font-body: "Noto Sans", "Noto Sans JP", "Helvetica Neue", Helvetica, Arial,
+                 "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, sans-serif;
+    --font-en:   Poppins, sans-serif;
+
+    /* === Line height: 1.50 の一本槍 ===
+       トップ 420/511・下層 336/414 要素が 1.50 */
+    --lh:       1.5;
+    --lh-head:  1.4;    /* 見出し */
+    --lh-long:  1.8;    /* 長文の説明だけ広げる（12 要素） */
+    --lh-hero:  1.25;   /* ヒーロー見出し */
+    --lh-1:     1.0;    /* 1行で収まるラベル */
+
+    /* === Letter spacing: 0.04em を「要素ごとに」当てる ===
+       body は normal。サイズに比例して px が変わる（継承ではない）。
+       唯一の例外がヒーロー見出しの 0.03em */
+    --ls:       0.04em;
+    --ls-hero:  0.03em;
+
+    --r:       4px;    /* ★既定。実測 165 要素 */
+    --r-card:  8px;    /* カード（29 要素） */
+    --r-tag:   2px;    /* タグ（24 要素） */
+
+    /* 影は実質ゼロ。トップで 1 要素だけ、下層は 0 種 */
+    --sh-1: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    --container: 1152px;   /* 実測で最多（下層 15 回） */
+    --container-sm: 1000px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    /* 実サイトの body は font-family が未指定で、computed は "Hiragino Kaku Gothic ProN" 単独に
+       見える（＝ブラウザ既定）。実体は下のスタックが 483 要素に当たっている。 */
+    background: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh);
+    letter-spacing: normal;   /* ★body には字間を書かない。要素ごとに 0.04em を当てる */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { background: var(--color-white); border-bottom: 1px solid var(--color-s2); }
+  .header-inner { display: flex; align-items: center; gap: 24px; max-width: 1360px; margin: 0 auto; padding: 0 0 0 20px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--color-black); padding: 14px 0; }
+  .logo-mark { display: flex; gap: 2px; }
+  .logo-mark i { width: 9px; height: 20px; background: var(--color-black); display: block; }
+  .logo-text { font-size: 20px; font-weight: 700; letter-spacing: var(--ls); }
+  .logo-sub { font-size: 11px; font-weight: 400; letter-spacing: var(--ls); color: var(--color-s7); line-height: 1.4; }
+  .header-nav { display: flex; gap: 22px; margin-left: auto; }
+  .header-nav a { font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-black); text-decoration: none; }
+  .header-cta { display: flex; }
+  .header-cta a { padding: 26px 22px; font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); text-decoration: none; }
+  .hc-ghost { background: var(--color-white); color: var(--color-black); border: 1px solid var(--color-s3); margin: 14px 8px 14px 0; padding: 12px 20px !important; border-radius: var(--r); }
+  .hc-dark { background: var(--color-black); color: var(--color-white); }
+
+  /* HERO */
+  .hero { background: var(--color-s1); padding: 56px 20px 48px; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; }
+  .hero-title { font-size: 70px; font-weight: 900; line-height: var(--lh-hero); letter-spacing: var(--ls-hero); color: var(--color-black); }
+  .hero-sub { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+  .hero-dakara { background: var(--color-black); color: var(--color-white); border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; letter-spacing: var(--ls); flex: none; }
+  .hero-sub-text { font-size: 20px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .hero-notes { font-size: 9px; font-weight: 400; line-height: 1.4; letter-spacing: var(--ls); color: #666666; margin-top: 18px; }
+
+  /* SECTIONS */
+  .section, .section-alt { padding: 56px 20px; }
+  .section-alt { background: var(--color-s0); }
+  .section-inner, .section > * { max-width: var(--container); margin-left: auto; margin-right: auto; }
+  .section-label { font-size: 12px; font-weight: 400; letter-spacing: var(--ls); color: var(--color-s7); margin-bottom: 6px; }
+  .eyebrow { font-family: var(--font-en); font-size: 20px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-bluegray); margin-bottom: 6px; }
+  .section-title { font-size: 32px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); margin-bottom: 12px; }
+  .section-lead { font-size: 16px; line-height: var(--lh); letter-spacing: var(--ls); max-width: 820px; margin-bottom: 28px; }
+  .note { background: var(--color-white); border: 1px solid var(--color-s3); border-left: 4px solid var(--color-orange); border-radius: var(--r); padding: 14px 18px; font-size: 14px; line-height: var(--lh-long); letter-spacing: var(--ls); margin-top: 20px; }
+  code { font-family: SFMono-Regular, Consolas, Menlo, monospace; font-size: 0.92em; background: var(--color-s2); border-radius: var(--r-tag); padding: 1px 5px; letter-spacing: normal; }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; font-family: var(--font-body); border: none; }
+  .btn-cta { background: var(--grad-cta); color: var(--color-white); border-radius: var(--r); padding: 14px 32px; font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .btn-cta-orange { background: var(--grad-cta-orange); color: var(--color-white); border-radius: var(--r); padding: 14px 32px; font-size: 16px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .btn-flat { background: var(--color-orange); color: var(--color-white); border-radius: var(--r); padding: 14px 32px; font-size: 16px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .btn-dark { background: var(--color-black); color: var(--color-white); border-radius: var(--r); padding: 14px 32px; font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .btn-ghost { background: var(--color-white); color: var(--color-attention); border: 1px solid var(--color-attention); border-radius: var(--r); padding: 13px 31px; font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .btn-link { background: var(--color-white); color: var(--color-bluegray); border: 1px solid var(--color-s3); border-radius: var(--r); padding: 13px 31px; font-size: 16px; font-weight: 400; line-height: var(--lh); letter-spacing: var(--ls); }
+
+  .tag-new { display: inline-block; background: var(--color-bluegray); color: var(--color-white); border-radius: 2.71px; padding: 2px 8px; font-size: 11px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .tag { display: inline-block; background: var(--color-s2); color: var(--color-s7); border-radius: var(--r-tag); padding: 3px 9px; font-size: 12px; font-weight: 400; line-height: var(--lh); letter-spacing: var(--ls); }
+
+  /* SWATCHES */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .swatch { display: flex; gap: 12px; align-items: flex-start; background: var(--color-white); border: 1px solid var(--color-s3); border-radius: var(--r-card); padding: 12px; }
+  .swatch-chip { width: 44px; height: 44px; border-radius: var(--r); flex: none; border: 1px solid var(--color-s3); }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .swatch-hex { font-family: SFMono-Regular, Consolas, Menlo, monospace; font-size: 12px; color: var(--color-s7); }
+  .swatch-use { font-size: 12px; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-s7); margin-top: 4px; }
+
+  /* TYPE */
+  .scale-bar { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--color-s3); padding-bottom: 18px; margin-bottom: 22px; color: var(--color-orange); font-weight: 700; letter-spacing: var(--ls); }
+  .type-row { display: grid; grid-template-columns: 230px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--color-s2); }
+  .type-meta { font-size: 12px; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-s7); }
+  .type-meta b { display: block; color: var(--color-black); font-size: 13px; }
+
+  .ls-table { width: 100%; border-collapse: collapse; font-size: 13px; letter-spacing: var(--ls); }
+  .ls-table th, .ls-table td { border: 1px solid var(--color-s3); padding: 8px 12px; text-align: left; line-height: var(--lh); }
+  .ls-table th { background: var(--color-s2); font-weight: 700; }
+  .ls-table td:last-child { font-family: SFMono-Regular, Consolas, Menlo, monospace; letter-spacing: normal; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(312px, 1fr)); gap: 12px; }
+  .card { background: var(--color-white); border-radius: var(--r-card); overflow: hidden; text-decoration: none; color: var(--color-black); display: block; border: 1px solid var(--color-s2); }
+  .card-head { background: var(--color-s9); color: var(--color-white); font-size: 12px; font-weight: 400; line-height: var(--lh); letter-spacing: var(--ls); padding: 8px 14px; }
+  .card-body { padding: 16px; }
+  .card-title { font-size: 18px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); margin-bottom: 8px; }
+  .card-text { font-size: 12px; font-weight: 400; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-s7); }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+
+  /* TROUBLE */
+  .trouble-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(312px, 1fr)); gap: 12px; }
+  .trouble { background: var(--color-white); border-radius: var(--r-card); padding: 22px; border: 1px solid var(--color-s2); }
+  .trouble h3 { font-size: 24px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-orange); margin-bottom: 8px; }
+  .trouble p { font-size: 16px; font-weight: 400; line-height: var(--lh); letter-spacing: var(--ls); }
+
+  /* SERVICE */
+  .svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+  .svc { background: var(--color-white); border: 1px solid var(--color-s3); border-radius: var(--r); padding: 14px; }
+  .svc-dot { width: 26px; height: 26px; border-radius: 50%; margin-bottom: 8px; }
+  .svc-name { font-size: 15px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .svc-sub { font-size: 11px; font-weight: 400; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-s7); }
+
+  /* STATS */
+  .stat-row { display: flex; gap: 40px; flex-wrap: wrap; }
+  .stat-label { font-size: 30px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); }
+  .stat-num { font-family: var(--font-en); font-size: 60px; font-weight: 700; line-height: var(--lh-1); color: var(--color-orange); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .elev { background: var(--color-white); border: 1px solid var(--color-s3); border-radius: var(--r-card); padding: 20px; }
+  .elev.e1 { box-shadow: var(--sh-1); border-color: transparent; }
+  .elev-name { font-size: 14px; font-weight: 700; letter-spacing: var(--ls); margin-bottom: 4px; }
+  .elev-val { font-family: SFMono-Regular, Consolas, Menlo, monospace; font-size: 11px; color: var(--color-s7); line-height: 1.6; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .layout-bar { background: var(--color-s2); border: 1px solid var(--color-s3); border-radius: var(--r); padding: 10px 14px; font-size: 13px; letter-spacing: var(--ls); color: var(--color-s7); }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 68px; height: 68px; background: var(--color-orange); }
+  .radius-label { font-size: 12px; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-s7); margin-top: 6px; }
+
+  /* FOOTER */
+  .footer { background: var(--color-s0); border-top: 1px solid var(--color-s2); padding: 40px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 24px; margin-bottom: 24px; }
+  .footer-col-title { font-size: 14px; font-weight: 700; line-height: var(--lh); letter-spacing: var(--ls); margin-bottom: 8px; }
+  .footer-col a { display: block; font-size: 12px; font-weight: 400; line-height: 1.9; letter-spacing: var(--ls); color: var(--color-s7); text-decoration: none; }
+  .footer-copy { font-size: 12px; line-height: var(--lh); letter-spacing: var(--ls); color: var(--color-s7); }
+
+  @media screen and (max-width: 1024px) { .type-row { grid-template-columns: 1fr; } }
+  @media screen and (max-width: 768px) {
+    .hero-title { font-size: 36px; font-weight: 700; letter-spacing: var(--ls); }
+    .section-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"><i></i><i></i><i></i></span>
+      <span><span class="logo-text">Dinii</span><br><span class="logo-sub">ダイニー サービス紹介サイト</span></span>
+    </a>
+    <nav class="header-nav">
+      <a href="#">サービスのご紹介</a><a href="#">導入事例</a><a href="#">ニュース</a><a href="#">お役立ち情報</a><a href="#">よくある質問</a>
+    </nav>
+    <div class="header-cta">
+      <a href="#" class="hc-ghost">資料ダウンロード</a>
+      <a href="#" class="hc-dark">お問い合わせ</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1 class="hero-title">店舗が増えても、<br>経営の目が届く。</h1>
+    <div class="hero-sub">
+      <span class="hero-dakara">だから</span>
+      <span class="hero-sub-text">売上が上がり、コストが下がり、利益が残る。</span>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:26px">
+      <a href="#" class="btn btn-cta">お問い合わせ</a>
+      <a href="#" class="btn btn-ghost">資料ダウンロード</a>
+    </div>
+    <p class="hero-notes">※本キャンペーンは予告なく変更、または終了することがあります。あらかじめご了承ください。※新規でお取引を開始いただく法人様・個人事業主様が対象です。</p>
+    <p class="note"><b>ヒーロー見出しだけ <code>letter-spacing: 0.03em</code>。</b>実サイトは 70px に対して 2.1px（PC）で、他の全要素が 0.04em なのに対してここだけ詰めている。375px では別要素（36px / weight 700 / 0.04em）に差し替わる。</p>
+  </div>
+</section>
+
+<section class="section-alt" id="colors">
+<div class="section-inner">
+  <div class="section-label">01 / Color</div>
+  <div class="eyebrow">Color</div>
+  <h2 class="section-title">オレンジ1色と9段のグレースケール</h2>
+  <p class="section-lead">ブランド色は <code>#FF7500</code>。グレーは <code>--color-s0</code> 〜 <code>--color-s9</code> の9段で、<b>文字は <code>#6F7175</code>（163 要素）、面は <code>#3F4042</code>（52 要素）が最多</b>。</p>
+
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#FF7500"></div><div class="swatch-body"><div class="swatch-name">dinii Orange ★</div><div class="swatch-hex">#FF7500</div><div class="swatch-use">面 10 要素 / 文字 19 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#FF8C00"></div><div class="swatch-body"><div class="swatch-name">Orange Light</div><div class="swatch-hex">#FF8C00</div><div class="swatch-use">下層の見出し面（8 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#FF0046"></div><div class="swatch-body"><div class="swatch-name">Attention</div><div class="swatch-hex">#FF0046</div><div class="swatch-use">NEW ラベルの文字・注意喚起</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#282828"></div><div class="swatch-body"><div class="swatch-name">Black ★</div><div class="swatch-hex">#282828</div><div class="swatch-use">本文・見出し（139 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#3F4042"></div><div class="swatch-body"><div class="swatch-name">s9 ★</div><div class="swatch-hex">#3F4042</div><div class="swatch-use">面として 52 要素（最多）。事例カードの帯</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#6F7175"></div><div class="swatch-body"><div class="swatch-name">s7 ★</div><div class="swatch-hex">#6F7175</div><div class="swatch-use">文字色として 163 要素（最多）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#D0D4DB"></div><div class="swatch-body"><div class="swatch-name">s3</div><div class="swatch-hex">#D0D4DB</div><div class="swatch-use">罫線</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#E9EDF5"></div><div class="swatch-body"><div class="swatch-name">s2</div><div class="swatch-hex">#E9EDF5</div><div class="swatch-use">淡い罫線・面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F2F7FF"></div><div class="swatch-body"><div class="swatch-name">s1 ★</div><div class="swatch-hex">#F2F7FF</div><div class="swatch-use">ヒーローの地色（15 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F7FAFC"></div><div class="swatch-body"><div class="swatch-name">s0 ★</div><div class="swatch-hex">#F7FAFC</div><div class="swatch-use">セクションの地色</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#56698F"></div><div class="swatch-body"><div class="swatch-name">Bluegray</div><div class="swatch-hex">#56698F</div><div class="swatch-use">リンク色・NEW の面（26 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#172D57"></div><div class="swatch-body"><div class="swatch-name">Q Label</div><div class="swatch-hex">#172D57</div><div class="swatch-use">Q&amp;A の「Q.」（8 要素）</div></div></div>
+  </div>
+
+  <h3 style="font-size:20px;font-weight:700;line-height:1.5;letter-spacing:0.04em;margin:30px 0 14px">サービス別の識別色</h3>
+  <div class="svc-grid">
+    <div class="svc"><div class="svc-dot" style="background:#FF7500"></div><div class="svc-name">POSレジ</div><div class="svc-sub">ダイニー POSレジ</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#F9AA00"></div><div class="svc-name">モバイルオーダー</div><div class="svc-sub">ダイニー モバイルオーダー</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#00BE1E"></div><div class="svc-name">顧客管理</div><div class="svc-sub">ダイニー 顧客管理</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#9600D2"></div><div class="svc-name">予約台帳</div><div class="svc-sub">ダイニー予約台帳</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#E93D80"></div><div class="svc-name">集客</div><div class="svc-sub">ダイニー集客</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#0019EB"></div><div class="svc-name">キャッシュレス</div><div class="svc-sub">ダイニー キャッシュレス</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#008200"></div><div class="svc-name">勤怠</div><div class="svc-sub">ダイニー勤怠</div></div>
+    <div class="svc"><div class="svc-dot" style="background:#2E8BFF"></div><div class="svc-name">経営管理</div><div class="svc-sub">ダイニー経営管理</div></div>
+  </div>
+
+  <p class="note"><b>CSS 変数 83 個のうち 60 個は WordPress / Gutenberg 由来。</b><code>--wp--preset--color--*</code>（<code>#cf2e2e</code> <code>#ff6900</code> 等）を自社の色として採用しないこと。<b>自社トークンは 23 個。</b></p>
+</div>
+</section>
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">Typography</div>
+  <h2 class="section-title">0.04em を要素ごとに書く</h2>
+  <p class="section-lead"><code>body</code> の <code>letter-spacing</code> は <code>normal</code> なのに、実測の字間は<b>すべて font-size の 4%</b>。サイズに比例して px が変わる＝<b>継承ではなく各要素が <code>em</code> を持っている</b>。</p>
+
+  <table class="ls-table" style="margin-bottom:24px">
+    <tr><th>font-size</th><th>letter-spacing</th><th>件数（トップ）</th><th>見え方</th></tr>
+    <tr><td>11px</td><td>0.44px</td><td>52</td><td style="font-size:11px;letter-spacing:0.44px">ダイニー POSレジ</td></tr>
+    <tr><td><b>12px</b></td><td><b>0.48px</b></td><td><b>112（最多）</b></td><td style="font-size:12px;letter-spacing:0.48px">顧客インタビュー</td></tr>
+    <tr><td>14px</td><td>0.56px</td><td>84</td><td style="font-size:14px;letter-spacing:0.56px">サービスのご紹介</td></tr>
+    <tr><td>16px</td><td>0.64px</td><td>35</td><td style="font-size:16px;letter-spacing:0.64px">各店舗の状態が正しく把握できない</td></tr>
+    <tr><td>18px</td><td>0.72px</td><td>60</td><td style="font-size:18px;letter-spacing:0.72px">オペレーションの標準化</td></tr>
+    <tr><td>20px</td><td>0.8px</td><td>59</td><td style="font-size:20px;letter-spacing:0.8px">コストを下げる</td></tr>
+    <tr><td>24px</td><td>0.96px</td><td>30</td><td style="font-size:24px;letter-spacing:0.96px">導入事例</td></tr>
+    <tr><td><b>70px（ヒーロー）</b></td><td><b>2.1px ＝ 0.03em</b></td><td>1</td><td style="font-size:20px;letter-spacing:0.03em">※ここだけ 0.03em</td></tr>
+  </table>
+
+  <div class="scale-bar">
+    <span style="font-size:11px">11</span><span style="font-size:12px">12</span><span style="font-size:14px">14</span>
+    <span style="font-size:15px">15</span><span style="font-size:16px">16</span><span style="font-size:18px">18</span>
+    <span style="font-size:20px">20</span><span style="font-size:24px">24</span><span style="font-size:32px">32</span>
+    <span style="font-size:40px">40</span><span style="font-size:60px">60</span><span style="font-size:70px">70</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Hero Heading（PC）★</b>Noto Sans JP / 70px / 900<br>lh 1.25 / <b style="display:inline">ls 0.03em</b></div><div style="font-size:70px;font-weight:900;line-height:1.25;letter-spacing:0.03em">経営の目が届く。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Hero Heading（SP）</b>36px / 700<br>lh 1.25 / ls 0.04em</div><div style="font-size:36px;font-weight:700;line-height:1.25;letter-spacing:0.04em">店舗が増えても、経営の目が届く。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>32px / 700<br>lh 1.40 / ls 0.04em</div><div style="font-size:32px;font-weight:700;line-height:1.4;letter-spacing:0.04em">店舗数が増えるたびに、こんな”壁”にぶつかっていませんか？</div></div>
+  <div class="type-row"><div class="type-meta"><b>Card Heading</b>24px / 700<br>lh 1.50 / 色 #FF7500</div><div style="font-size:24px;font-weight:700;line-height:1.5;letter-spacing:0.04em;color:#FF7500">1. 見えない</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>20px / 700<br>lh 1.50 / ls 0.8px</div><div style="font-size:20px;font-weight:700;line-height:1.5;letter-spacing:0.8px">コストを下げる／コストを見える化する</div></div>
+  <div class="type-row"><div class="type-meta"><b>Eyebrow（EN）</b>Poppins / 20px / 700<br>lh 1.50 / 色 #56698F</div><div style="font-family:Poppins,sans-serif;font-size:20px;font-weight:700;line-height:1.5;letter-spacing:0.8px;color:#56698F">Benefits</div></div>
+  <div class="type-row"><div class="type-meta"><b>Item Heading</b>18px / 700<br>lh 1.40 / ls 0.72px</div><div style="font-size:18px;font-weight:700;line-height:1.4;letter-spacing:0.72px">追加注文を促進する滞在時間アラート機能</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>16px / 400<br>lh <b style="display:inline">1.50</b> / ls 0.64px</div><div style="font-size:16px;line-height:1.5;letter-spacing:0.64px">レジを起点に売上を最大化する、飲食店特化型のPOSシステムです。注文内容はリアルタイムでキッチンディスプレイに表示されます。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body Long</b>16px / 400<br>lh <b style="display:inline">1.80</b>（12 要素）</div><div style="font-size:16px;line-height:1.8;letter-spacing:0.64px">全店舗の売上・QSC・利益を、いつでも・どこでも把握できます。「店長の力量に依存しない“仕組み”化」により、オペレーションを標準化します。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / Button</b>14px / 700<br>lh 1.50 / ls 0.56px</div><div style="font-size:14px;font-weight:700;line-height:1.5;letter-spacing:0.56px">サービスのご紹介</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption ★</b>12px / 400<br>lh 1.50 / ls 0.48px（最多 114）</div><div style="font-size:12px;line-height:1.5;letter-spacing:0.48px;color:#6F7175">※条件・注意事項詳細はこちら</div></div>
+  <div class="type-row"><div class="type-meta"><b>Micro</b>11px / 400<br>lh 1.50 / ls 0.44px</div><div style="font-size:11px;line-height:1.5;letter-spacing:0.44px;color:#6F7175">ダイニー モバイルオーダー</div></div>
+
+  <p class="note"><b><code>body</code> に <code>letter-spacing: 0.04em</code> を書き直してはいけない。</b><code>em</code> を <code>body</code> に書くと <b>16px × 0.04 = 0.64px が全サイズに固定継承</b>され、12px の注記（実サイトは 0.48px）が相対的に空きすぎる。<b>実サイトはサイズに比例させている。</b>例外は数字（<code>3,000</code> <code>2,000</code>）の <code>normal</code>（13 要素）。</p>
+
+  <p class="note"><b><code>font-weight: 800</code> / <code>900</code> を書かない。</b>読み込んでいる Noto Sans JP / Noto Sans は<b>可変フォントの <code>wght@400..700</code></b>で、レンジ外は 700 にクランプされる。実サイトのヒーロー見出し（900）とキャンペーン帯（900・9 要素の 800）がそれ。<b>Poppins の 600 も <code>unloaded</code> なので使わない。</b></p>
+
+  <p class="note"><b><code>palt</code> は 1 要素も無く、CSS 全文にも 0 回。</b>字詰めは <code>letter-spacing</code> だけで作る。<code>word-break</code> の宣言も CSS 全文で <b>1 回</b>だけで、改行位置は HTML 側の <code>&lt;br&gt;</code> で決めている。</p>
+</section>
+
+<section class="section-alt" id="buttons">
+<div class="section-inner">
+  <div class="section-label">03 / Buttons</div>
+  <div class="eyebrow">Buttons</div>
+  <h2 class="section-title">CTA はベタ塗りではなくグラデーション</h2>
+  <p class="section-lead">面を <code>#FF7500</code> のベタで塗るのは<b>セクション帯</b>で、<b>「お問い合わせ」ボタンは4段のグラデーション</b>。角丸は <b>4px</b>（実測 165 要素）。</p>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:20px">
+    <a href="#" class="btn btn-cta">お問い合わせ</a>
+    <a href="#" class="btn btn-cta-orange">お問い合わせ</a>
+    <a href="#" class="btn btn-flat">ダイニーの解決策</a>
+    <a href="#" class="btn btn-dark">お問い合わせ</a>
+    <a href="#" class="btn btn-ghost">資料ダウンロード</a>
+    <a href="#" class="btn btn-link">導入事例一覧を見る</a>
+    <span class="tag-new">NEW</span>
+    <span class="tag">#居酒屋</span>
+    <span class="tag">#1~5店舗</span>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">既定（165 要素）<br>4px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">カード（29）<br>8px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:2px"></div><div class="radius-label">タグ（24）<br>2px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50%"></div><div class="radius-label">円（26）<br>50%</div></div>
+  </div>
+
+  <p class="note"><b>角丸は 4px が圧倒的。</b>迷ったら 4px。カードだけ 8px に上げる。</p>
+</div>
+</section>
+
+<section class="section" id="cards">
+  <div class="section-label">04 / Cards</div>
+  <div class="eyebrow">Cards</div>
+  <h2 class="section-title">影を使わず、地色で段を作る</h2>
+  <p class="section-lead">実測の影はトップで <b>1 要素だけ</b>、下層は <b>0 種</b>。段差は <code>#F7FAFC</code> ↔ <code>#FFFFFF</code> ↔ <code>#F2F7FF</code> の地色と、<code>#D0D4DB</code> / <code>#E9EDF5</code> の罫線で作る。</p>
+
+  <div class="card-grid">
+    <a href="#" class="card">
+      <div class="card-head">顧客インタビュー</div>
+      <div class="card-body">
+        <div class="card-title">店長の力量に依存しない仕組みへ</div>
+        <div class="card-text">オペレーションを標準化し、新店の立ち上げ期間を半分に短縮した事例。</div>
+        <div class="card-tags"><span class="tag">#居酒屋</span><span class="tag">#11~30店舗</span></div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-head">顧客インタビュー</div>
+      <div class="card-body">
+        <div class="card-title">モバイルオーダーでクチコミを増やす</div>
+        <div class="card-text">注文画面からクチコミ投稿を依頼し、返信文を AI が自動で作成する運用。</div>
+        <div class="card-tags"><span class="tag">#カフェ</span><span class="tag">#1~5店舗</span></div>
+      </div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-head">顧客インタビュー</div>
+      <div class="card-body">
+        <div class="card-title">全店舗の利益を一画面で把握する</div>
+        <div class="card-text">売上・原価率・人件費率を店舗別に並べ、異常値をその日のうちに拾う。</div>
+        <div class="card-tags"><span class="tag">#焼肉</span><span class="tag">#31店舗~</span></div>
+      </div>
+    </a>
+  </div>
+
+  <h3 style="font-size:24px;font-weight:700;line-height:1.5;letter-spacing:0.04em;margin:36px 0 16px">壁は3つある</h3>
+  <div class="trouble-grid">
+    <div class="trouble"><h3>1. 見えない</h3><p>各店舗の状態が正しく把握できない</p></div>
+    <div class="trouble"><h3>2. 育成できない</h3><p>店舗は増やせても任せられる人が育たない</p></div>
+    <div class="trouble"><h3>3. 利益が残らない</h3><p>売上は伸びてもコストが見えず利益が残らない</p></div>
+  </div>
+
+  <div class="stat-row" style="margin-top:36px">
+    <div><div class="stat-label">導入店舗</div><div class="stat-num">3,000</div></div>
+    <div><div class="stat-label">利用会員数</div><div class="stat-num">2,000</div></div>
+  </div>
+  <p class="note"><b>数字だけ <code>letter-spacing: normal</code>。</b>実測 13 要素。価格・店舗数には字間を足さない。</p>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">05 / Elevation</div>
+  <div class="eyebrow">Elevation</div>
+  <h2 class="section-title">影はサイト全体で 1 要素だけ</h2>
+  <p class="section-lead">トップの 511 要素のうち影を持つのは 1 つ。下層の 414 要素は 0。<b>影を足すと別物になる。</b></p>
+
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">none — 既定。トップ 510/511、下層 414/414</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">0 4px 12px rgba(0,0,0,0.05)<br>キャンペーン帯（1 要素のみ）</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">06 / Layout</div>
+  <div class="eyebrow">Layout</div>
+  <h2 class="section-title">コンテナ 1152px / gap は 10・12 と狭い</h2>
+  <p class="section-lead">ブレークポイントは <code>max-width</code> の宣言が圧倒的（768px が 213 / 255 件、1024px が 90 / 110 件）。<b>デスクトップ基準で下へ上書きする設計</b>で、モバイルファーストではない。</p>
+
+  <div class="layout-demo">
+    <div class="layout-bar" style="max-width:1152px">--container: 1152px（下層 15 回で最多）</div>
+    <div class="layout-bar" style="width:1000px;max-width:100%">1000px（トップ 7 回）</div>
+    <div class="layout-bar" style="width:312px;max-width:100%">312px（カード）</div>
+  </div>
+
+  <p class="note"><b><code>html</code> / <code>body</code> は 4 幅（1440 / 1200 / 834 / 375px）すべて 16px 固定。</b><code>rem</code> 換算は常に 16px 基準でよい。見出しだけメディアクエリで切り替わり、<b>字間は 0.04em のまま追従する</b>（32px → 1.28px、24px → 0.96px）。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">サービス</div><a href="#">POSレジ</a><a href="#">モバイルオーダー</a><a href="#">顧客管理</a><a href="#">予約台帳</a></div>
+      <div class="footer-col"><div class="footer-col-title">活用する</div><a href="#">集客</a><a href="#">モバイル決済</a><a href="#">キャッシュレス</a><a href="#">勤怠</a></div>
+      <div class="footer-col"><div class="footer-col-title">知る</div><a href="#">導入事例</a><a href="#">ニュース</a><a href="#">お役立ち情報</a><a href="#">よくある質問</a></div>
+      <div class="footer-col"><div class="footer-col-title">会社情報</div><a href="#">会社概要</a><a href="#">採用情報</a><a href="#">利用規約</a><a href="#">プライバシーポリシー</a></div>
+    </div>
+    <p class="footer-copy">これは DESIGN.md の再現用サンプルです。株式会社ダイニーの実サイトではありません。書体は実サイトと同じ Google Fonts（Noto Sans / Noto Sans JP / Poppins）を読み込んでいます。</p>
+  </div>
+</footer>
+
+</body>
+</html>

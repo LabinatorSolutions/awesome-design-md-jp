@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: みすず書房（MISUZU SHOBO）</title>
+<style>
+  /* 実サイトは Web フォントを 1 本も読み込まない（@font-face はアイコンの icomoon のみ・
+     フォントファイルのリクエストは実測 0 件）。このプレビューも Google Fonts を読み込まず、
+     游ゴシック・游明朝・メイリオの OS ローカル書体だけで組んでいる。
+     macOS では実サイトとほぼ同一の表示になる。 */
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 35 個あるが、意味を持つのは 6 個だけ。
+       残りは Bootstrap 4 の既定変数がそのまま残っている。実測 2026-10-04 */
+    --primary:    #734b28;  /* ★みすず茶。文字 27 要素（下層）/ フッターの帯 */
+    --brown-lt:   #8e6746;  /* 右サイド縦ナビの面（5–6 要素） */
+    --sub:        #b99d67;  /* 右サイドナビの下敷き（1 要素） */
+    --paper:      #f5f1e8;  /* 「この一冊」の地（--light3） */
+    --accent:     #09488f;  /* 宣言あり・可視 0 要素 */
+    --dark:       #231815;  /* 墨。宣言あり */
+
+    --cat-event:  #4876d0;  /* イベント（3 要素）。Bootstrap の --info */
+    --cat-news:   #dd6d5e;  /* お知らせ（1 要素）。Bootstrap の --danger */
+    --cat-topic:  #00904b;  /* 話題の本（2 要素） */
+    --ebook:      #17a2b8;
+
+    --text:       #000000;  /* ★本文。可視 100 要素（下層） */
+    --text-ui:    #212529;  /* ナビ（6 要素） */
+    --muted:      #909090;  /* ★著者・価格・ISBN。可視 154 要素（下層） */
+    --sub-text:   #5c5c5c;  /* 補足・ページ番号の面 */
+    --white:      #ffffff;
+    --surface:    #f4f4f4;  /* ニュース行・書影の下敷き（40 要素） */
+    --border:     #ececec;  /* 区切り線（--light2） */
+    --bg:         #ffffff;  /* pageBackground.resolved / 根拠 body */
+
+    /* === Fonts === 3 つのスタックを使い分ける */
+    --font-ui:     "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    --font-list:   Meiryo, "Yu Gothic", YuGothic, sans-serif;   /* ★書籍一覧。メイリオ先頭（170 要素） */
+    --font-mincho: "Yu Mincho", YuMincho, "Hiragino Mincho ProN", "Hiragino Mincho Pro", serif;
+    --font-mono:   SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* === Line height: 読み物 1.875 / 目録 1.10 の二重構造 === */
+    --lh-body:  1.875;  /* body の既定（16px / 30px） */
+    --lh-read:  1.88;   /* 記事の説明文 */
+    --lh-list:  1.10;   /* ★書籍一覧（下層 160 要素で最多） */
+    --lh-mid:   1.4;    /* 日付・書誌の補足 */
+    --lh-title: 1.6;    /* 書名・ニュース見出し */
+    --lh-head:  1.2;    /* 大きな見出し */
+
+    /* === Letter spacing: normal が既定（下層 303 要素）。要所だけ正負に振る === */
+    --ls:        normal;
+    --ls-nav:   -0.05em;  /* グローバルナビだけ詰める（-0.7px / 14px） */
+    --ls-date:   0.1em;   /* 日付（1.3008px / 13.008px） */
+    --ls-catch:  0.07em;  /* 明朝の惹句（1.68px / 24px） */
+    --ls-genre:  0.2em;   /* 「ジャンルで探す」（4.8px / 24px）。最大 */
+
+    --r-label:  0px;    /* カテゴリラベル */
+    --r-book:   2px;    /* 書影の下敷き（30 要素） */
+    --r-tag:    7px;    /* ジャンルのタグ（13 要素） */
+    --r-btn:   28px;    /* 「詳細はこちら」 */
+    --r-btn-l: 48px;    /* 「ニュースレター登録」 */
+
+    --sh-book: 0 0 3.2px rgba(0, 0, 0, 0.2);   /* 書影の縁（30 要素） */
+    --sh-panel: 0 0 20px rgba(0, 0, 0, 0.16);  /* 特集パネル（20 要素） */
+
+    --container: 1366px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);   /* 無単位。992px 未満ではルートが 13px になるが比率は保たれる */
+    letter-spacing: var(--ls);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); background: var(--white); }
+  .header-inner { display: flex; align-items: center; gap: 28px; max-width: var(--container); margin: 0 auto; padding: 18px 20px; }
+  .logo { font-family: var(--font-mincho); font-size: 26px; font-weight: 600; line-height: var(--lh-head); color: var(--text); text-decoration: none; letter-spacing: 0.04em; }
+  .header-nav { display: flex; gap: 22px; margin-left: auto; }
+  .header-nav a { font-size: 14px; font-weight: 400; line-height: 1; letter-spacing: var(--ls-nav); color: var(--text-ui); text-decoration: none; }
+
+  /* SIDE NAV（右の茶色い縦列） */
+  .sidenav { display: flex; gap: 2px; background: var(--sub); padding: 2px; border-radius: var(--r-label); flex-wrap: wrap; }
+  .sidenav a { background: var(--brown-lt); color: var(--white); font-size: 14px; font-weight: 700; line-height: var(--lh-list); letter-spacing: var(--ls); padding: 12px 18px; text-decoration: none; }
+
+  /* SECTIONS */
+  .section, .section-alt { padding: 52px 20px; }
+  .section-alt { background: var(--surface); }
+  .section-inner, .section > * { max-width: var(--container); margin-left: auto; margin-right: auto; }
+  .section-label { font-size: 13.008px; font-weight: 400; line-height: var(--lh-list); letter-spacing: var(--ls-date); color: var(--muted); margin-bottom: 8px; }
+  .eyebrow { font-family: var(--font-mincho); font-size: 24px; font-weight: 600; line-height: var(--lh-head); letter-spacing: var(--ls-genre); color: var(--primary); margin-bottom: 10px; }
+  .section-title { font-family: var(--font-mincho); font-size: 30px; font-weight: 600; line-height: var(--lh-head); margin-bottom: 14px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); max-width: 860px; margin-bottom: 26px; }
+  .note { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 14px 18px; font-size: 14px; line-height: var(--lh-read); margin-top: 20px; }
+  code { font-family: var(--font-mono); font-size: 0.92em; background: var(--surface); padding: 1px 5px; }
+  .section-alt code { background: var(--white); }
+
+  /* HERO */
+  .hero { background: linear-gradient(0deg, var(--paper) 62%, var(--white) 38%); padding: 48px 20px 56px; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; display: flex; gap: 32px; align-items: flex-start; }
+  .hero-vert { writing-mode: vertical-rl; font-family: var(--font-mincho); font-size: 19.2px; font-weight: 300; line-height: var(--lh-head); letter-spacing: 0.01em; color: var(--text); height: 220px; border-right: 1px solid var(--primary); padding-right: 14px; }
+  .hero-cover { width: 240px; height: 330px; background: var(--surface); border-radius: var(--r-book); box-shadow: var(--sh-book); display: flex; align-items: center; justify-content: center; font-family: var(--font-mincho); font-size: 22px; line-height: var(--lh-title); text-align: center; padding: 20px; flex: none; }
+  .hero-body { padding-top: 10px; }
+  .hero-catch { font-family: var(--font-mincho); font-size: 24px; font-weight: 600; line-height: var(--lh-head); letter-spacing: var(--ls-catch); margin-bottom: 14px; }
+  .hero-text { font-size: 16px; line-height: var(--lh-body); margin-bottom: 20px; }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; }
+  .btn-outline { font-family: var(--font-mincho); background: transparent; color: var(--primary); border: 1px solid var(--primary); border-radius: var(--r-btn); padding: 9px 26px; font-size: 14px; font-weight: 400; line-height: var(--lh-mid); letter-spacing: 0.025em; }
+  .btn-outline-l { font-family: var(--font-ui); background: transparent; color: var(--primary); border: 1px solid var(--primary); border-radius: var(--r-btn-l); padding: 12px 32px; font-size: 18px; font-weight: 400; line-height: var(--lh-list); letter-spacing: 0.025em; }
+  .btn-brown { background: var(--brown-lt); color: var(--white); border: none; border-radius: var(--r-tag); padding: 10px 22px; font-size: 14px; font-weight: 400; line-height: 1; letter-spacing: var(--ls); font-family: var(--font-ui); }
+  .cat { display: inline-block; color: var(--white); border: 1px solid var(--surface); border-radius: var(--r-label); padding: 4px 12px; font-family: var(--font-list); font-size: 12px; font-weight: 400; line-height: var(--lh-list); }
+  .cat-event { background: var(--cat-event); }
+  .cat-news { background: var(--cat-news); }
+  .cat-topic { background: var(--cat-topic); }
+  .link-u { color: var(--text); text-decoration: none; background: linear-gradient(to left, rgba(0,0,0,0) 50%, rgba(115,75,40,0.4) 50%); background-size: 200% 1px; background-position: 100% 100%; background-repeat: no-repeat; padding-bottom: 2px; }
+
+  /* SWATCHES */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .swatch { display: flex; gap: 12px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); padding: 12px; }
+  .swatch-chip { width: 44px; height: 44px; flex: none; border: 1px solid var(--border); border-radius: var(--r-book); }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: var(--lh-mid); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .swatch-use { font-family: var(--font-list); font-size: 12px; line-height: var(--lh-mid); color: var(--sub-text); margin-top: 4px; }
+
+  /* TYPE */
+  .scale-bar { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 22px; color: var(--primary); font-family: var(--font-mincho); font-weight: 600; }
+  .type-row { display: grid; grid-template-columns: 230px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .type-meta { font-family: var(--font-list); font-size: 12px; line-height: var(--lh-mid); color: var(--sub-text); }
+  .type-meta b { display: block; font-family: var(--font-ui); color: var(--text); font-size: 13px; }
+
+  /* BOOK GRID（25% の 4 列） */
+  .book-grid { display: flex; flex-wrap: wrap; margin: 0 -6.4px; }
+  .book-cell { width: 25%; padding: 0 6.4px 28px; }
+  .book-cover { width: 100%; aspect-ratio: 3 / 4.3; background: var(--surface); border-radius: var(--r-book); box-shadow: var(--sh-book); display: flex; align-items: center; justify-content: center; font-family: var(--font-mincho); font-size: 16px; line-height: var(--lh-title); text-align: center; padding: 16px; margin-bottom: 10px; }
+  .book-title { font-family: var(--font-list); font-size: 16px; font-weight: 600; line-height: var(--lh-title); color: var(--text); }
+  .book-sub { font-family: var(--font-list); font-size: 12px; font-weight: 400; line-height: var(--lh-list); color: var(--muted); margin-top: 6px; }
+
+  /* NEWS LIST */
+  .news-row { display: flex; gap: 16px; align-items: baseline; background: var(--surface); padding: 12px 16px; margin-bottom: 6px; }
+  .news-date { font-size: 13.008px; line-height: var(--lh-mid); letter-spacing: var(--ls-date); color: var(--muted); flex: none; }
+  .news-title { font-family: var(--font-list); font-size: 16px; font-weight: 600; line-height: var(--lh-title); }
+
+  /* PAGER */
+  .pager { display: flex; gap: 8px; align-items: center; }
+  .pager span, .pager a { width: 34px; height: 34px; border-radius: 100%; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1.25; text-decoration: none; }
+  .pager .is-current { background: var(--sub-text); color: var(--white); }
+  .pager a { color: var(--primary); border: 1px solid var(--border); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+  .elev { background: var(--white); border: 1px solid var(--border); padding: 20px; }
+  .elev.e1 { box-shadow: var(--sh-book); border-color: transparent; }
+  .elev.e2 { box-shadow: var(--sh-panel); border-color: transparent; }
+  .elev-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--sub-text); line-height: 1.6; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .layout-bar { background: var(--surface); border: 1px solid var(--border); padding: 10px 14px; font-size: 13px; color: var(--sub-text); line-height: var(--lh-mid); }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 68px; height: 68px; background: var(--brown-lt); }
+  .radius-label { font-size: 12px; line-height: var(--lh-mid); color: var(--sub-text); margin-top: 6px; }
+
+  .root-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .root-table th, .root-table td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; line-height: var(--lh-mid); }
+  .root-table th { background: var(--surface); font-weight: 700; }
+  .section-alt .root-table th { background: var(--white); }
+
+  /* FOOTER */
+  .footer { background: var(--primary); color: var(--white); padding: 36px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 24px; margin-bottom: 22px; }
+  .footer-col-title { font-family: var(--font-mincho); font-size: 18px; font-weight: 400; line-height: var(--lh-list); letter-spacing: 0.025em; margin-bottom: 8px; }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 12px; line-height: var(--lh-mid); }
+
+  @media (max-width: 1199.98px) { .book-cell { width: 33.3333%; } }
+  @media (max-width: 991.98px) {
+    html { font-size: 13px; }   /* ★実サイトと同じ：992px 未満でルートが 13px に落ちる */
+    .book-cell { width: 50%; }
+    .type-row { grid-template-columns: 1fr; }
+    .hero-inner { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">みすず書房</a>
+    <nav class="header-nav">
+      <a href="#">WEBみすず</a><a href="#">NEWS</a><a href="#">特集</a><a href="#">会社案内</a><a href="#">お問い合わせ</a><a href="#">English</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-vert">この一冊</div>
+    <div class="hero-cover">トランジション</div>
+    <div class="hero-body">
+      <p class="hero-catch">トランジション（転換）という神話を解体するエネルギー史</p>
+      <p class="hero-text">木から石炭、石炭から石油、石油から次のステージへ──エネルギーは置き換わってきたのではなく、積み重なってきた。その蓄積の歴史をたどる。</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <a href="#" class="btn btn-outline">詳細はこちら</a>
+        <span class="cat cat-topic">話題の本</span>
+      </div>
+      <p class="note"><b>縦組みは実サイトに 1 要素だけ実在する</b>（<code>&lt;em&gt;</code> タグ、游明朝 19.2px / weight 300 / <code>writing-mode: vertical-rl</code>）。<b>画像ではなく CSS で組まれている。</b>下層ページには縦組みは無い。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Color</div>
+  <div class="eyebrow">Color</div>
+  <h2 class="section-title">茶と白、それと Bootstrap の残骸</h2>
+  <p class="section-lead">文字と帯は <code>#734b28</code>、右サイドナビの面だけ明るい <code>#8e6746</code>。カテゴリラベルは<b>色だけで分け、形は全部同じ</b>（12px・白文字・角丸 0・<code>#f4f4f4</code> の枠）。</p>
+
+  <div class="swatch-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#734b28"></div><div class="swatch-body"><div class="swatch-name">みすず茶 ★</div><div class="swatch-hex">#734b28</div><div class="swatch-use">文字 27 要素（下層）/ フッターの帯。--primary</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#8e6746"></div><div class="swatch-body"><div class="swatch-name">Brown Light ★</div><div class="swatch-hex">#8e6746</div><div class="swatch-use">右サイド縦ナビの面（5–6 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#b99d67"></div><div class="swatch-body"><div class="swatch-name">Gold</div><div class="swatch-hex">#b99d67</div><div class="swatch-use">右サイドナビの下敷き（1 要素）。--sub</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f5f1e8"></div><div class="swatch-body"><div class="swatch-name">Paper</div><div class="swatch-hex">#f5f1e8</div><div class="swatch-use">「この一冊」の地。下 62% だけ敷く</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text Primary ★</div><div class="swatch-hex">#000000</div><div class="swatch-use">本文に純黒を使う（可視 100 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#909090"></div><div class="swatch-body"><div class="swatch-name">Muted ★</div><div class="swatch-hex">#909090</div><div class="swatch-use">著者・価格・ISBN（可視 154 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#5c5c5c"></div><div class="swatch-body"><div class="swatch-name">Sub Text</div><div class="swatch-hex">#5c5c5c</div><div class="swatch-use">補足・ページ番号の面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f4f4f4"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#f4f4f4</div><div class="swatch-use">ニュース行（16）/ 書影の下敷き（40 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#4876d0"></div><div class="swatch-body"><div class="swatch-name">イベント</div><div class="swatch-hex">#4876d0</div><div class="swatch-use">3 要素。Bootstrap の --info をそのまま使用</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#dd6d5e"></div><div class="swatch-body"><div class="swatch-name">お知らせ</div><div class="swatch-hex">#dd6d5e</div><div class="swatch-use">1 要素。Bootstrap の --danger を上書き</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#00904b"></div><div class="swatch-body"><div class="swatch-name">話題の本</div><div class="swatch-hex">#00904b</div><div class="swatch-use">2 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#231815"></div><div class="swatch-body"><div class="swatch-name">墨（宣言のみ）</div><div class="swatch-hex">#231815</div><div class="swatch-use">--dark。可視 0 要素</div></div></div>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+    <span class="cat cat-event">イベント</span><span class="cat cat-news">お知らせ</span><span class="cat cat-topic">話題の本</span>
+  </div>
+
+  <p class="note"><b>Bootstrap 4 の既定変数が 35 個中 29 個残っている</b>（<code>--blue: #007bff</code> <code>--indigo: #6610f2</code> <code>--purple: #6f42c1</code> <code>--breakpoint-*</code> …）。実際に塗られているのは <code>--info</code>（<code>#4876d0</code>）と <code>--danger</code>（<code>#dd6d5e</code>）だけで、<b>他は 1 要素も使っていない。これらを「このサイトの色」として採用しないこと。</b></p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">Typography</div>
+  <h2 class="section-title">Web フォント 0 本、ローカル書体 3 スタック</h2>
+  <p class="section-lead"><code>@font-face</code> は<b>アイコンの <code>icomoon</code> 1 件だけ</b>で、<b>フォントファイルのリクエストは実測 0 件</b>。和文はすべて OS のローカル書体で、<b>①游ゴシック先頭（UI）②メイリオ先頭（書籍一覧）③游明朝（見出し）</b>の 3 スタックを使い分ける。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:12px">12</span><span style="font-size:13px">13</span><span style="font-size:14px">14</span>
+    <span style="font-size:16px">16</span><span style="font-size:18px">18</span><span style="font-size:22px">22</span>
+    <span style="font-size:24px">24</span><span style="font-size:30px">30</span><span style="font-size:40px">40</span>
+    <span style="font-size:52px">52</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Display ★</b>游ゴシック / 52px / <b style="display:inline">300</b><br>lh 1.20 / ls -0.01em</div><div style="font-size:52px;font-weight:300;line-height:1.2;letter-spacing:-0.01em">最新 NEWS</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>游ゴシック / 40px / 400<br>lh 1.20 / ls -0.01em</div><div style="font-size:40px;line-height:1.2;letter-spacing:-0.01em">新刊紹介 / 話題の本 / コラム</div></div>
+  <div class="type-row"><div class="type-meta"><b>Page Heading</b>游明朝 / 30px / 600<br>lh 1.20 / ls normal</div><div style="font-family:var(--font-mincho);font-size:30px;font-weight:600;line-height:1.2">哲学・思想・宗教</div></div>
+  <div class="type-row"><div class="type-meta"><b>Catch Copy ★</b>游明朝 / 24px / 600<br>lh 1.20 / <b style="display:inline">ls 0.07em</b></div><div style="font-family:var(--font-mincho);font-size:24px;font-weight:600;line-height:1.2;letter-spacing:0.07em">トランジション（転換）という神話を解体するエネルギー史</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav Heading</b>游明朝 / 24px / 600<br>lh 1.20 / <b style="display:inline">ls 0.2em（最大）</b></div><div style="font-family:var(--font-mincho);font-size:24px;font-weight:600;line-height:1.2;letter-spacing:0.2em">ジャンルで探す</div></div>
+  <div class="type-row"><div class="type-meta"><b>Vertical Label</b>游明朝 / 19.2px / 300<br>writing-mode: vertical-rl</div><div><span style="writing-mode:vertical-rl;display:inline-block;font-family:var(--font-mincho);font-size:19.2px;font-weight:300;line-height:1.2;letter-spacing:0.01em;height:90px">最新</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>CTA / Footer</b>游ゴシック / 18px / 400<br>lh 1.10 / ls 0.025em</div><div><a href="#" class="btn btn-outline-l">ニュースレター登録</a></div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>游ゴシック / 16px / 400<br>lh <b style="display:inline">1.875</b> / ls normal</div><div style="font-size:16px;line-height:1.875">木から石炭、石炭から石油、石油から次のステージへ──エネルギーは置き換わってきたのではなく、積み重なってきた。その蓄積の歴史をたどる一冊。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Book Title</b><b style="display:inline;color:#734b28">メイリオ</b> / 16px / 600<br>lh 1.60 / ls normal</div><div style="font-family:var(--font-list);font-size:16px;font-weight:600;line-height:1.6">手すりなき思考　1</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav Label</b>游ゴシック / 14px / 400<br>lh 1.00 / <b style="display:inline">ls -0.05em</b></div><div style="font-size:14px;line-height:1;letter-spacing:-0.05em">WEBみすず　NEWS　特集　会社案内</div></div>
+  <div class="type-row"><div class="type-meta"><b>Side Nav</b>游ゴシック / 14px / 700<br>lh 1.10 / ls normal</div><div class="sidenav" style="max-width:420px"><a href="#">近刊</a><a href="#">復刊</a><a href="#">電子書籍</a></div></div>
+  <div class="type-row"><div class="type-meta"><b>Date</b>游ゴシック / 13.008px / 400<br>lh 1.40 / <b style="display:inline">ls 0.1em</b></div><div style="font-size:13.008px;line-height:1.4;letter-spacing:0.1em;color:#909090">2026.10.02</div></div>
+  <div class="type-row"><div class="type-meta"><b>Spec / Author ★</b><b style="display:inline;color:#734b28">メイリオ</b> / 12px / 400<br>lh <b style="display:inline">1.10</b>（下層 151 要素）</div><div style="font-family:var(--font-list);font-size:12px;line-height:1.1;color:#909090">著者：ハンナ・アーレント<br>編：ジェローム・コーン<br>訳：山田正行／大島かおり<br>定価：本体5,000円＋税<br>ISBN 978-4-622-09872-0</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>游ゴシック / 12px / 400<br>lh 1.88</div><div style="font-size:12px;line-height:1.88">9月の新刊／8月の新刊／7月の新刊</div></div>
+
+  <p class="note"><b>行間が「密」と「疎」で二重化している。</b>読み物の本文は <code>line-height: 1.875</code>（<code>body</code> の既定）、<b>書籍一覧（著者・価格・ISBN）は 1.10</b>（下層 160 要素で最多）。<b>1.10 は「読む文」ではなく「引く情報」にだけ使う。</b></p>
+
+  <p class="note"><b>書籍一覧だけメイリオ先頭のスタックを使うのは意図的。</b>12px という小さい級数で著者名・価格・ISBN を並べるため、ヒンティングが効いて潰れにくいメイリオを優先している（游ゴシックは小級数で細くなる）。<b>「游ゴシックに統一」と直さないこと。</b></p>
+
+  <p class="note"><b>字間は <code>normal</code> が既定</b>（下層 303 要素）。<b>グローバルナビだけ <code>-0.05em</code> と詰め、日付（0.1em）・明朝の惹句（0.07em）・ジャンル見出し（0.2em）は逆に空ける。</b>明朝＋字空けがこのサイトの「読ませる」合図。<code>palt</code> はトップ 28 / 下層 23 要素に効いているが、<b>書籍一覧の 12px には効いていない</b>（目録はベタ組み）。</p>
+
+  <p class="note"><b>游ゴシックの Windows Medium 対策は入っていない</b>（<code>"Yu Gothic Medium"</code> 等をチェーンに持たない）。Windows では Light 寄りに出ることを前提に、太さが要る箇所は <code>font-weight: 600</code> を当てている。</p>
+</div>
+</section>
+
+<section class="section" id="books">
+  <div class="section-label">03 / Book Grid</div>
+  <div class="eyebrow">Books</div>
+  <h2 class="section-title">25% の 4 列。書影には縁の影</h2>
+  <p class="section-lead">Bootstrap のグリッドをそのまま使い、ガターは <b>12.8px</b>（片側 6.4px）。<code>gap</code> の宣言は <b>0 件</b>で、padding ベースで組んでいる。</p>
+
+  <div class="book-grid">
+    <div class="book-cell">
+      <div class="book-cover">手すりなき思考 1</div>
+      <a href="#" class="book-title link-u">手すりなき思考　1</a>
+      <div class="book-sub">理解のための試論集1953-1975<br>著者：ハンナ・アーレント<br>定価：本体5,000円＋税<br>ISBN 978-4-622-09872-0</div>
+    </div>
+    <div class="book-cell">
+      <div class="book-cover">手すりなき思考 2</div>
+      <a href="#" class="book-title link-u">手すりなき思考　2</a>
+      <div class="book-sub">理解のための試論集1953-1975<br>著者：ハンナ・アーレント<br>定価：本体5,400円＋税<br>ISBN 978-4-622-09873-7</div>
+    </div>
+    <div class="book-cell">
+      <div class="book-cover">デリダの文学的想像力</div>
+      <a href="#" class="book-title link-u">デリダの文学的想像力</a>
+      <div class="book-sub">著者：宮﨑裕助<br>定価：本体4,200円＋税<br>ISBN 978-4-622-09612-2</div>
+    </div>
+    <div class="book-cell">
+      <div class="book-cover">ゆれる水脈</div>
+      <a href="#" class="book-title link-u">ゆれる水脈</a>
+      <div class="book-sub">著者：中井業央<br>定価：本体3,600円＋税<br>ISBN 978-4-622-09711-2</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px">
+    <span style="font-size:16px;line-height:1.88">485件中・1-20件 を表示</span>
+    <div class="pager"><span class="is-current">1</span><a href="#">2</a><a href="#">3</a><a href="#">…</a></div>
+    <a href="#" class="btn btn-brown">哲学・思想・宗教 485</a>
+    <a href="#" class="btn btn-brown">言語学 6</a>
+  </div>
+
+  <p class="note"><b>リンクの下線は <code>border-bottom</code> ではなくグラデーション。</b><code>linear-gradient(to left, transparent 50%, rgba(115,75,40,0.4) 50%)</code>（可視 19 / 17 要素）で、ホバー時に左から下線が伸びる演出の静止状態になっている。</p>
+</section>
+
+<section class="section-alt" id="news">
+<div class="section-inner">
+  <div class="section-label">04 / News</div>
+  <div class="eyebrow">News</div>
+  <h2 class="section-title">日付だけ 0.1em 空ける</h2>
+  <p class="section-lead">行の地は <code>#f4f4f4</code>。日付は <code>13.008px</code>（Bootstrap の <code>.small</code> 相当）で <code>letter-spacing: 0.1em</code>、見出しはメイリオ 16px / weight 600。</p>
+
+  <div class="news-row"><span class="cat cat-event">イベント</span><span class="news-date">2026.03.02</span><span class="news-title link-u">みすず書房 80周年フェアのお知らせ</span></div>
+  <div class="news-row"><span class="cat cat-news">お知らせ</span><span class="news-date">2026.10.02</span><span class="news-title link-u">「みすず美術カレンダー 2027」のご案内</span></div>
+  <div class="news-row"><span class="cat cat-event">イベント</span><span class="news-date">2026.09.29</span><span class="news-title link-u">新宿歴史博物館「松本竣介と『雜記帳』」展</span></div>
+  <div class="news-row"><span class="cat cat-topic">話題の本</span><span class="news-date">2026.09.07</span><span class="news-title link-u">特集「東勝吉　木こりの唄う四季」</span></div>
+
+  <div style="margin-top:22px"><a href="#" class="btn btn-outline">詳細はこちら</a></div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="section-label">05 / Elevation</div>
+  <div class="eyebrow">Elevation</div>
+  <h2 class="section-title">影は「オフセット 0・ぼかしのみ」</h2>
+  <p class="section-lead">本の表紙を紙として見せるための縁取りで、UI の浮き上がりには使っていない。</p>
+
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">none — 既定</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1 ★</div><div class="elev-val">0 0 3.2px rgba(0,0,0,0.2)<br>書影の縁（30 要素）</div></div>
+    <div class="elev e2"><div class="elev-name">Level 2</div><div class="elev-val">0 0 20px rgba(0,0,0,0.16)<br>特集パネル・大きい書影（20 要素）</div></div>
+  </div>
+
+  <div class="radius-row" style="margin-top:26px">
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">カテゴリラベル<br>0px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:2px"></div><div class="radius-label">書影（30 要素）<br>2px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:7px"></div><div class="radius-label">ジャンルタグ<br>7px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:28px"></div><div class="radius-label">ボタン<br>28px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:100%"></div><div class="radius-label">ページ番号<br>100%</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="section-inner">
+  <div class="section-label">06 / Layout</div>
+  <div class="eyebrow">Layout</div>
+  <h2 class="section-title">992px でルートが 16px → 13px に落ちる</h2>
+  <p class="section-lead">これがこのサイトで最も重要な実測値。<code>rem</code> 由来の値はすべて <b>0.8125 倍</b>になる。<b><code>rem</code> の px 換算を 16px 基準で固定しないこと。</b></p>
+
+  <table class="root-table" style="margin-bottom:24px">
+    <tr><th>幅</th><th>html font-size</th><th>body font-size</th><th>body line-height</th><th>h2（24px 基準）</th></tr>
+    <tr><td>1440px</td><td><b>16px</b></td><td>16px</td><td>30px（1.875）</td><td>24px / ls 1.68px</td></tr>
+    <tr><td>1200px</td><td><b>16px</b></td><td>16px</td><td>30px（1.875）</td><td>24px / ls 1.68px</td></tr>
+    <tr><td>834px</td><td><b>13px</b></td><td>13px</td><td>24.375px（1.875）</td><td>19.077px / ls 1.335px</td></tr>
+    <tr><td>375px</td><td><b>13px</b></td><td>13px</td><td>24.375px（1.875）</td><td>17.7px / ls 1.239px</td></tr>
+  </table>
+
+  <p style="font-size:16px;line-height:1.875;margin-bottom:20px"><b><code>line-height</code> は無単位（1.875）で宣言されているので比率は保たれる。</b>px に読み替えないこと。<code>letter-spacing</code> も <code>0.07em</code> 宣言なので、サイズに比例して追従する。</p>
+
+  <div class="layout-demo">
+    <div class="layout-bar" style="max-width:1366px">--container: 1366px（トップ 7 / 下層 4 回）</div>
+    <div class="layout-bar" style="width:66.6667%;max-width:100%">66.6667%（記事カラム）</div>
+    <div class="layout-bar" style="width:25%;max-width:100%">25%（書籍グリッド・下層 20 回）</div>
+  </div>
+
+  <p class="note">ブレークポイントは <b>Bootstrap 4 の 575.98 / 767.98 / 991.98 / 1199.98px</b>。<code>(min-width: 992px)</code> の宣言が <b>129 件</b>と最多で、<b>992px を境にデザインが切り替わる</b>設計。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">みすず書房の本</div><a href="#">近刊</a><a href="#">復刊</a><a href="#">電子書籍</a><a href="#">シリーズ・著作集</a></div>
+      <div class="footer-col"><div class="footer-col-title">さがす</div><a href="#">ジャンルで探す</a><a href="#">書名で探す</a><a href="#">著者・訳者から探す</a><a href="#">発行年から探す</a></div>
+      <div class="footer-col"><div class="footer-col-title">読む</div><a href="#">WEBみすず</a><a href="#">特集</a><a href="#">NEWS</a></div>
+      <div class="footer-col"><div class="footer-col-title">会社案内</div><a href="#">会社概要</a><a href="#">採用情報</a><a href="#">お問い合わせ</a></div>
+    </div>
+    <p class="footer-copy">これは DESIGN.md の再現用サンプルです。株式会社みすず書房の実サイトではありません。実サイトと同じく Web フォントを一切読み込まず、OS のローカル書体（游ゴシック・游明朝・メイリオ）だけで組んでいます。</p>
+  </div>
+</footer>
+
+</body>
+</html>

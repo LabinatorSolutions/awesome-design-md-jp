@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (544 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (547 sites)</a>
 </p>
 
 <table>
@@ -836,6 +836,11 @@
 </tr>
 <tr>
 <td align="center"><strong>オークラ東京</strong><br><img src="design-md/theokuratokyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Autify</strong><br><img src="design-md/autify/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ダイニー</strong><br><img src="design-md/dinii/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>みすず書房</strong><br><img src="design-md/msz/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1441,11 +1446,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [世田谷文学館 (SETABUN)](https://www.setabun.or.jp/) | Museum / Literature | [DESIGN.md](design-md/setabun/DESIGN.md) | [preview.html](design-md/setabun/preview.html) |
 | [南海電気鉄道 (NANKAI)](https://www.nankai.co.jp/) | Railway / Transportation | [DESIGN.md](design-md/nankai/DESIGN.md) | [preview.html](design-md/nankai/preview.html) |
 | [オークラ東京 (The Okura Tokyo)](https://theokuratokyo.jp/) | Hotel / Hospitality | [DESIGN.md](design-md/theokuratokyo/DESIGN.md) | [preview.html](design-md/theokuratokyo/preview.html) |
+| [Autify (オーティファイ)](https://autify.jp/) | SaaS / Software Testing | [DESIGN.md](design-md/autify/DESIGN.md) | [preview.html](design-md/autify/preview.html) |
+| [ダイニー (dinii)](https://dinii.jp/) | SaaS / Restaurant POS | [DESIGN.md](design-md/dinii/DESIGN.md) | [preview.html](design-md/dinii/preview.html) |
+| [みすず書房 (MISUZU SHOBO)](https://www.msz.co.jp/) | Publishing / Humanities | [DESIGN.md](design-md/msz/DESIGN.md) | [preview.html](design-md/msz/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (544 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (547 sites)</a>
 </p>
 
 <table>
@@ -2247,6 +2255,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>オークラ東京</strong><br><img src="design-md/theokuratokyo/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>Autify</strong><br><img src="design-md/autify/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ダイニー</strong><br><img src="design-md/dinii/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>みすず書房</strong><br><img src="design-md/msz/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
