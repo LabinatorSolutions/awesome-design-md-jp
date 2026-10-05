@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 高橋工芸（Takahashikougei）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Halant:wght@600&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 53 個あるが、--main-text / --header-* / --footer-* /
+       --box-*-padding / --button-size という Shopify テーマの語彙。
+       値はブランドに合わせて設定されているが、自社で設計したトークン体系ではない。
+       ★--footer-text / --footer-background / --footer-borders は空文字（未入力）。
+       2026-10-05 実測 */
+    --main-text:   #635f4e;   /* ★オリーブグレー。本文かつ面。可視 31〜33 要素 ＋ 面 26 要素 */
+    --mint:        #34e2ac;   /* ★唯一の高彩度。コレクション名（4 要素）＋ヒーローの面（8 要素） */
+    --heading:     #262627;   /* ヒーローの大見出し（可視 3 要素）。本文より暗い別色 */
+    --surface-dark:#313739;   /* フッター・言語切替の面（3 要素） */
+    --announce:    #1c1c1c;   /* 最上部の送料無料バー（1 要素） */
+    --announce-tx: #d2d2d2;
+    --white:       #ffffff;
+    --bg:          #ffffff;   /* pageBackground.resolved / 根拠 body */
+
+    /* ★グレーを別色として持たず、--main-text の alpha だけで階調を作る */
+    --main-text-hover:        rgba(99, 95, 78, 0.82);
+    --main-background-2nd:    rgba(99, 95, 78, 0.18);
+    --main-background-3rd:    rgba(99, 95, 78, 0.03);
+    --main-borders:           rgba(99, 95, 78, 0.08);
+    --grid-borders:           rgba(99, 95, 78, 0.10);
+    --alternate-opacity:      .58;
+
+    /* === Fonts ===
+       ★実サイトは和文を 1 文字も指定しない。--font-stack-body は欧文セリフだけで、
+         日本語は末尾の serif（macOS: ヒラギノ明朝 / Windows: 游明朝）に落ちて描画される。
+         見出しの Halant も和文グリフを持たないので、和文は同じく serif。
+         読み込む Web フォントは Halant 600 の 1 本のみ（フォントファイルのリクエスト 1 件）。
+
+       ここでは DESIGN.md の「再現するならこう」に従い、和文明朝を明示して環境差を潰す。
+       Shippori Mincho は Google Fonts の和文明朝（ローカルに明朝が無い環境のための保険）。 */
+    --font-body: "New York", "Iowan Old Style", "Apple Garamond", Baskerville,
+                 "Times New Roman", "Droid Serif", Times, "Source Serif Pro",
+                 "Hiragino Mincho ProN", "ヒラギノ明朝 ProN W3",
+                 "Yu Mincho", 游明朝, YuMincho, "MS PMincho", "Shippori Mincho", serif;
+    --font-heading: "Halant", "Hiragino Mincho ProN", "Yu Mincho", "Shippori Mincho", serif;
+
+    /* === Line height ===
+       ★見出しは全階層 1.1（60 / 40 / 30 / 20px すべて）。本文は 1.6。この落差が紙面の印象を作る */
+    --lh-head: 1.1;    /* --base-headings-line */
+    --lh-body: 1.6;    /* --base-body-line */
+    --lh-title: 1.3;   /* 商品名（24px / 31.2px） */
+
+    /* === Letter spacing: normal のみ。実測 90/90・51/51 要素、例外ゼロ === */
+    --ls: normal;
+
+    --r: 0px;          /* --buttons-radius: 0px。サイト全体で角丸ゼロ */
+    /* box-shadow は 0 種。drop-shadow も使わない */
+
+    /* === Spacing（テーマ変数がそのまま余白スケール） === */
+    --site-pad:    40px;   /* --site-horizontal-padding */
+    --box-small:   40px;
+    --box-smaller: 80px;
+    --box-big:     9vw;    /* 唯一の可変余白 */
+    --text-spacing:30px;
+    --button-size: 54px;
+    --button-pad:  30px;
+    --header-size: 85px;
+    --header-pad:  20px;
+    --header-logo: 40px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; }   /* 固定 */
+
+  body {
+    background: var(--bg);
+    color: var(--main-text);
+    font-family: var(--font-body);
+    font-size: 16px;            /* ★834px で 15px、375px で 14px に落ちる（下の @media） */
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);  /* normal。実サイトは 1 要素の例外もない */
+    -webkit-font-smoothing: antialiased;
+  }
+  /* ★body のフォントサイズが幅で切り替わる（html は 16px 固定のまま）。
+       line-height は比率 1.6 を保ったまま追従する */
+  @media screen and (max-width: 1024px) { body { font-size: 15px; } }
+  @media screen and (max-width: 480px)  { body { font-size: 14px; } }
+
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: var(--lh-head); letter-spacing: var(--ls); }
+
+  /* ===== ANNOUNCE BAR ===== */
+  .announce { background: var(--announce); color: var(--announce-tx); text-align: center; padding: 8px 16px; font-size: 12px; line-height: 1.1; }
+
+  /* ===== HEADER ===== */
+  .header { height: var(--header-size); display: flex; align-items: center; gap: 36px; padding: 0 var(--site-pad); border-bottom: 1px solid var(--main-borders); }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: var(--header-logo); height: var(--header-logo); background: var(--main-text); position: relative; }
+  .logo-mark::after { content: ""; position: absolute; left: 50%; top: 55%; transform: translate(-50%, -50%); width: 60%; height: 3px; background: var(--white); }
+  .logo-ja { font-size: 20px; letter-spacing: 0.22em; }
+  .nav { display: flex; }
+  .nav a { font-size: 14px; line-height: 1; padding: 15px 20px; }   /* 高さ 44px */
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .cart { border: 1px solid var(--main-borders); padding: 6px 12px; }
+
+  /* ===== HERO（50 / 50 の 2 分割） ===== */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+  .hero-copy { background: var(--mint); display: flex; flex-direction: column; justify-content: center; padding: var(--box-big); }
+  .hero-copy h1 { font-size: 60px; color: var(--heading); }   /* --base-headings-size: 60 */
+  .hero-copy .subtitle { margin-top: var(--text-spacing); font-size: 16px; line-height: var(--lh-body); color: var(--heading); }
+  .hero-copy .en { margin-top: 8px; font-family: var(--font-heading); font-size: 60px; color: var(--heading); line-height: var(--lh-head); }
+  .hero-photo { background: linear-gradient(150deg, #e8d7ac 0%, #d9c08a 45%, #c9ab72 100%); }
+
+  /* ===== SECTION ===== */
+  .section { padding: var(--box-smaller) var(--site-pad) 0; }
+  .section h2 { font-size: 40px; }
+  .section .lead { margin-top: var(--text-spacing); max-width: 760px; font-size: 16px; line-height: var(--lh-body); }
+
+  /* ===== COLLECTIONS ===== */
+  .collections { margin-top: var(--box-small); display: flex; gap: 48px; flex-wrap: wrap; }
+  .collection h4 { font-size: 20px; color: var(--mint); padding-bottom: 3px; border-bottom: 1px solid var(--mint); }
+
+  /* ===== PRODUCT GRID ===== */
+  .products { margin-top: var(--box-small); display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--grid-borders); border-left: 1px solid var(--grid-borders); }
+  .product { border-right: 1px solid var(--grid-borders); border-bottom: 1px solid var(--grid-borders); }
+  .product .img { height: 260px; background: linear-gradient(160deg, #e9ddc5, #cdb68f); }  /* --grid-image-padding: 0% */
+  .product .meta { padding: 24px var(--text-spacing) var(--box-small); }
+  .product .name { display: block; font-size: 24px; font-weight: 700; line-height: var(--lh-title); }  /* ★Halant ではなく本文スタック。和文は合成太字 */
+  .product .price { display: block; margin-top: 12px; font-size: 16px; font-weight: 700; line-height: 1.2; }
+  .product .note { display: block; margin-top: 8px; font-size: 14px; line-height: var(--lh-body); opacity: var(--alternate-opacity); }
+
+  /* ===== BUTTONS =====
+     ★高さは padding ではなく line-height で作る（52px ＋ border 2px × 2 ＝ --button-size: 54px） */
+  .btn {
+    display: inline-block; font-family: var(--font-body);
+    font-size: 13px; font-weight: 700; line-height: 52px;
+    padding: 0 var(--button-pad); border-radius: var(--r); cursor: pointer;
+  }
+  .btn--solid   { background: var(--main-text); color: var(--white); border: 2px solid transparent; }
+  .btn--outline { background: transparent; color: var(--main-text); border: 2px solid var(--main-text); }
+  .btn--on-photo{ background: transparent; color: var(--white); border: 2px solid var(--white); }
+  .btn-row { margin-top: var(--box-small); display: flex; gap: 16px; }
+
+  /* ===== SPLIT（写真の上の白文字 ＋ outline ボタン） ===== */
+  .split { margin-top: var(--box-smaller); display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+  .split .photo { background: linear-gradient(140deg, #6f6a56 0%, #4a4738 100%); display: flex; flex-direction: column; justify-content: center; padding: var(--box-small); }
+  .split .photo h3 { font-size: 30px; color: var(--white); }
+  .split .photo p { margin-top: var(--text-spacing); font-size: 16px; line-height: var(--lh-body); color: var(--white); max-width: 420px; }
+  .split .photo .btn-row { margin-top: var(--box-small); }
+  .split .plain { background: var(--main-background-3rd); display: flex; flex-direction: column; justify-content: center; padding: var(--box-small); }
+  .split .plain h3 { font-size: 30px; }
+  .split .plain p { margin-top: var(--text-spacing); font-size: 16px; line-height: var(--lh-body); }
+
+  /* ===== TABLE ===== */
+  .table-wrap { margin-top: var(--box-smaller); padding: 0 var(--site-pad); }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; line-height: var(--lh-body); }
+  th, td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--grid-borders); }
+  th { width: 220px; font-weight: 400; background: var(--main-background-3rd); }
+
+  /* ===== FORM ===== */
+  .form { margin-top: var(--box-small); padding: 0 var(--site-pad); display: grid; grid-template-columns: repeat(2, minmax(0, 420px)); gap: 24px; }
+  .field label { display: block; font-size: 14px; line-height: var(--lh-body); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; height: var(--button-size); padding: 0 16px;
+    background: var(--bg); color: var(--main-text);
+    border: 1px solid var(--main-text); border-radius: var(--r);
+    font-family: var(--font-body); font-size: 16px; line-height: var(--lh-body);
+  }
+  .field input.is-focus { border-width: 2px; outline: none; }
+  .field .hint { margin-top: 6px; font-size: 14px; line-height: var(--lh-body); opacity: var(--alternate-opacity); }
+
+  /* ===== FOOTER ===== */
+  .footer { margin-top: var(--box-smaller); background: var(--surface-dark); color: var(--white); padding: var(--box-small) var(--site-pad); }
+  .footer h3 { font-size: 40px; color: var(--white); }
+  .footer .links { margin-top: var(--text-spacing); display: flex; gap: 24px; }
+  .footer .links a { font-size: 14px; line-height: 1; padding-bottom: 3px; border-bottom: 1px solid rgba(255,255,255,.4); }
+  .footer .lang { margin-top: var(--box-small); display: inline-flex; }
+  .footer .lang button { background: var(--surface-dark); color: var(--white); border: 1px solid rgba(255,255,255,.18); border-radius: var(--r);
+    padding: 11px 12px 9px; font-family: var(--font-body); font-size: 14px; line-height: 1.6; cursor: pointer; }
+  .footer .lang button.is-active { font-weight: 700; }
+  .copyright { margin-top: var(--text-spacing); font-size: 14px; line-height: var(--lh-body); opacity: var(--alternate-opacity); }
+</style>
+</head>
+<body>
+
+<div class="announce">10,000円以上購入で送料無料！</div>
+
+<header class="header">
+  <a class="logo" href="#"><span class="logo-mark"></span><span class="logo-ja">高橋工芸</span></a>
+  <nav class="nav">
+    <a href="#">Home</a><a href="#">Products</a><a href="#">History</a><a href="#">About</a><a href="#">News</a><a href="#">Stockist</a>
+  </nav>
+  <div class="header-right">
+    <a href="#">日本語</a>
+    <span class="cart">0</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <h1>手仕事が生む木のうつわ</h1>
+    <span class="subtitle">木の器と、木の小物</span>
+    <span class="en">Made in Asahikawa, Japan</span>
+  </div>
+  <div class="hero-photo"></div>
+</section>
+
+<section class="section">
+  <h2>お知らせ</h2>
+  <p class="lead">高橋工芸の定番製品「Kami グラス」が誕生したのは 2005 年。木を削り出してつくる薄いうつわは、手に取ったときの軽さで驚かれます。</p>
+
+  <div class="collections">
+    <div class="collection"><h4>Enn</h4></div>
+    <div class="collection"><h4>Kami</h4></div>
+    <div class="collection"><h4>Cara</h4></div>
+    <div class="collection"><h4>Kakudo</h4></div>
+  </div>
+
+  <div class="products">
+    <article class="product">
+      <div class="img"></div>
+      <div class="meta"><span class="name">Enn ビアカップ</span><span class="price">¥11,000</span><span class="note">メープル／高さ 125mm</span></div>
+    </article>
+    <article class="product">
+      <div class="img"></div>
+      <div class="meta"><span class="name">Enn フルートカップ</span><span class="price">¥9,900</span><span class="note">メープル／高さ 150mm</span></div>
+    </article>
+    <article class="product">
+      <div class="img"></div>
+      <div class="meta"><span class="name">Kami グラス ワイド</span><span class="price">¥5,500</span><span class="note">桜／直径 85mm</span></div>
+    </article>
+    <article class="product">
+      <div class="img"></div>
+      <div class="meta"><span class="name">Kami マグ</span><span class="price">¥6,600</span><span class="note">桜／容量 200ml</span></div>
+    </article>
+  </div>
+
+  <div class="btn-row">
+    <a class="btn btn--solid" href="#">もっと見る</a>
+    <a class="btn btn--outline" href="#">カートの表示</a>
+  </div>
+</section>
+
+<section class="split">
+  <div class="photo">
+    <h3>Kamiシリーズ</h3>
+    <p>紙のように薄く削り出したうつわ。旭川の職人が 1 点ずつ轆轤で挽き、口当たりを確かめながら仕上げます。</p>
+    <div class="btn-row"><a class="btn btn--on-photo" href="#">対談を読む</a></div>
+  </div>
+  <div class="plain">
+    <h3>History</h3>
+    <p>1960 年代、旭川の木工産地で創業。家具の端材を活かすところから、木のうつわづくりが始まりました。</p>
+    <div class="btn-row"><a class="btn btn--outline" href="#">詳しく見る</a></div>
+  </div>
+</section>
+
+<div class="table-wrap">
+  <table>
+    <tr><th>素材</th><td>メープル／桜／胡桃</td></tr>
+    <tr><th>仕上げ</th><td>ウレタン塗装（食洗機対応）</td></tr>
+    <tr><th>生産地</th><td>北海道旭川市</td></tr>
+    <tr><th>お届け</th><td>ご注文から 3〜5 営業日</td></tr>
+  </table>
+</div>
+
+<div class="form">
+  <div class="field">
+    <label for="f1">お名前</label>
+    <input id="f1" type="text" value="葛原 健太" class="is-focus">
+    <span class="hint">フォーカス時は枠線を 2px に太らせる（角丸は 0 のまま）</span>
+  </div>
+  <div class="field">
+    <label for="f2">ご希望の素材</label>
+    <select id="f2"><option>メープル</option><option>桜</option><option>胡桃</option></select>
+    <span class="hint">入力欄の高さは --button-size の 54px に揃える</span>
+  </div>
+</div>
+
+<footer class="footer">
+  <h3>TAKAHASHI KOUGEI JAPAN</h3>
+  <div class="links"><a href="#">YouTube</a><a href="#">Instagram</a><a href="#">Stockist</a><a href="#">Catalogue</a></div>
+  <div class="lang">
+    <button class="is-active">日本語</button>
+    <button>English</button>
+  </div>
+  <p class="copyright">© Takahashikougei（このページは DESIGN.md の再現用プレビューです）</p>
+</footer>
+
+</body>
+</html>

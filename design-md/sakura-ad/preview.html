@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: さくらインターネット（SAKURA internet）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は自社分が 2 個だけ（--shadow / --arrow-chevron）。
+       以下は computed style の実測値。2026-10-05 */
+    --pink:        #ff5577;   /* ★さくらピンク。可視テキスト 7 要素 ＋ 面 1 要素 */
+    --crimson:     #e11c45;   /* 告知・警告専用（可視 1 要素）。ブランド色ではない */
+    --text:        #1d1d1d;   /* ★本文・見出し。可視 66 要素で最多。純黒ではない */
+    --muted:       #808080;   /* リード文・非選択タブ（可視 7 要素） */
+    --muted-2:     #6d6d75;   /* カード説明文（可視 5 要素）。わずかに紫を含む */
+    --date:        #56565b;   /* 日付（可視 1 要素） */
+    --on-dark:     #f1f1f1;   /* オーバーレイ上のテキスト（可視 19 要素） */
+    --white:       #ffffff;
+    --border:      #d4d4da;   /* 会員ログインの 1px 枠 */
+    --bg:          #f4f4fa;   /* ★ページ背景。pageBackground.resolved / 根拠 viewportTopBySample (9/12) */
+    --surface:     #ffffff;   /* カード・パネルの面 */
+    --overlay-9:   rgba(75, 75, 79, 0.9);   /* 画像の上の帯（可視 3 要素） */
+    --overlay-7:   rgba(75, 75, 79, 0.7);   /* 同、薄いほう（可視 1 要素） */
+    --drawer:      #5f5f64;                  /* グローバルナビのドロワー面 */
+
+    /* === Fonts ===
+       和文は Noto Sans JP の可変フォント 1 本だけ（自社ホスティング、@font-face の weight は 100 900）。
+       読み込むフォントファイルは実測 1 件。
+       欧文エイブロウの Futura は OS ローカルで Windows には無いため、
+       ここでは Google Fonts の Jost で代替する（ジオメトリックサンセリフで字形が近い）。 */
+    --font-body:  "Noto Sans JP", sans-serif;
+    --font-label: Futura, "Century Gothic", "Jost", sans-serif;   /* 代替: Jost */
+
+    /* === Line height: 1.20 / 1.50 / 1.70〜1.75 の三段。中間値を作らない === */
+    --lh-body:  1.75;   /* 本文（16px / 28px）。body に書いて継承 */
+    --lh-card:  1.70;   /* カード説明文（実測 39 要素で最多） */
+    --lh-head:  1.50;   /* 32px 見出し（48px） */
+    --lh-label: 1.20;   /* 日付・ラベル（実測 30 要素） */
+
+    /* === Letter spacing: normal のみ。実測 117/117 要素、例外ゼロ === */
+    --ls: normal;
+
+    /* === Radius: 3 / 8 / 22 / 36 / 46 の 5 値。中間値は使わない === */
+    --r-tag:    3px;
+    --r-card:   8px;
+    --r-login: 22px;    /* 高さ 39px のピル */
+    --r-btn:   36px;    /* 枠線型 CTA */
+    --r-tab:   46px;    /* 高さ 60px のピル */
+
+    /* === Shadow: 2 種、alpha はどちらも .15 === */
+    --shadow:   0 2px 1px rgba(0, 0, 0, 0.15);    /* カード（実測 21 要素）。--shadow 変数の正体 */
+    --shadow-2: 0 21px 42px rgba(0, 0, 0, 0.15);  /* ドロワー・追従パネル（実測 3 要素） */
+
+    --container: 1200px;
+    --card:      384px;   /* 1200 ÷ 3 − gap 32 */
+    --gap:       32px;    /* 実測 12 件で最多 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);   /* normal。実サイトは 1 要素の例外もない */
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+
+  /* ===== HEADER ===== */
+  .header { background: var(--surface); }
+  .header-inner { max-width: 1264px; margin: 0 auto; display: flex; align-items: center; gap: 36px; padding: 0 20px; }
+  .logo { display: flex; align-items: center; gap: 9px; height: 56px; }
+  .logo-mark { width: 22px; height: 22px; border-radius: 50% 50% 50% 0; background: var(--pink); }
+  .logo-text { font-family: var(--font-label); font-size: 19px; font-weight: 500; letter-spacing: 0.02em; color: #5c5c62; }
+  .gnav { display: flex; gap: 2px; }
+  .gnav a { font-size: 15px; line-height: 1.75; padding: 15.49px 10px; height: 52px; display: inline-flex; align-items: center; }
+  .gnav a::after { content: ""; }
+  .login {
+    margin-left: auto; background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: var(--r-login);
+    padding: 7px 17px 6px; font-size: 14px; font-weight: 500; line-height: 1.7;
+  }
+
+  /* ===== HERO ===== */
+  .hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #ececf4 0%, #f4f4fa 100%); }
+  .hero-inner { max-width: var(--container); margin: 0 auto; padding: 72px 20px 56px; position: relative; z-index: 2; }
+  .hero h2 { font-size: 40px; font-weight: 700; line-height: 1.5; letter-spacing: var(--ls); }
+  .hero p { margin-top: 20px; font-size: 16px; font-weight: 500; line-height: var(--lh-body); color: var(--muted); max-width: 540px; }
+  .ribbon { position: absolute; inset: 0; z-index: 1; }
+  .ribbon span { position: absolute; display: block; background: linear-gradient(90deg, #ff6b89, #ff5577); }
+  .ribbon .a { right: -60px; top: -40px; width: 300px; height: 56px; transform: rotate(58deg); }
+  .ribbon .b { right: 60px; top: 150px; width: 420px; height: 56px; transform: rotate(-26deg); }
+  .ribbon .c { right: -120px; top: 290px; width: 480px; height: 56px; transform: rotate(14deg); }
+
+  /* ===== ALERT ===== */
+  .alert {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); color: var(--crimson);
+    border: 2px solid var(--crimson); border-radius: var(--r-card);
+    padding: 30px 61px 30px 30px; font-size: 18px; font-weight: 500; line-height: 1.5;
+    margin: -32px auto 0; max-width: var(--container); position: relative; z-index: 3;
+  }
+  .alert .date { display: block; font-size: 14px; font-weight: 400; line-height: var(--lh-label); color: var(--date); margin-top: 8px; }
+
+  /* ===== SECTION ===== */
+  .section { padding: 72px 0 0; }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px; }
+  .section-head h3 { font-size: 28px; font-weight: 600; line-height: 1.3; }
+  .eyebrow { font-family: var(--font-label); font-size: 16px; font-weight: 500; color: var(--pink); line-height: var(--lh-label); }
+
+  /* ===== TABS ===== */
+  .tabs { display: flex; gap: 16px; margin-bottom: 32px; }
+  .tab {
+    border: 1px solid transparent; border-radius: var(--r-tab);
+    padding: 6px 31px 7px; font-family: var(--font-body);
+    font-size: 16px; font-weight: 700; line-height: var(--lh-body);
+    background: transparent; color: var(--muted); cursor: pointer;
+  }
+  .tab.is-active { background: var(--pink); color: var(--white); }
+
+  /* ===== CARDS ===== */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .card {
+    background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+    padding: 36px 32px 32px;
+  }
+  .card h4 { font-size: 18px; font-weight: 500; line-height: 1.5; }
+  .card p { margin-top: 12px; font-size: 16px; font-weight: 500; line-height: var(--lh-card); color: var(--muted-2); }
+  .card .date { margin-top: 20px; font-size: 14px; font-weight: 400; line-height: var(--lh-label); color: var(--date); }
+  .tagrow { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; }
+  .tag { background: var(--bg); color: var(--text); border-radius: var(--r-tag); padding: 8px 24px; font-size: 14px; font-weight: 500; line-height: var(--lh-label); }
+
+  .news-panel {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+    padding: 32px 63.04px 32px 32px; margin-bottom: 16px;
+  }
+  .news-panel h4 { font-size: 18px; font-weight: 500; line-height: 1.5; }
+  .news-panel .date { font-size: 14px; font-weight: 400; line-height: var(--lh-label); color: var(--date); margin-bottom: 8px; }
+  .chevron { width: 10px; height: 15px; flex: none; }
+  .chevron path { stroke: #262629; stroke-width: 2; fill: none; }
+
+  /* ===== SERVICE BLOCK（halt が付く 32px 見出し） ===== */
+  .service { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); align-items: center; }
+  .service-copy h3.headline {
+    font-size: 32px; font-weight: 600; line-height: var(--lh-head); letter-spacing: var(--ls);
+    font-feature-settings: "halt";   /* ★ palt ではなく halt。実測 4〜16 要素、すべて h3.headline */
+  }
+  .service-copy p { margin-top: 20px; font-size: 16px; font-weight: 500; line-height: var(--lh-card); color: var(--muted-2); }
+  .btn-outline {
+    display: inline-block; margin-top: 32px;
+    background: var(--surface); color: var(--text);
+    border: 2px solid var(--pink); border-radius: var(--r-btn);
+    padding: 18px 17px; font-size: 18px; font-weight: 500; line-height: 1.4; min-width: 280px; text-align: center;
+  }
+  .service-visual { border-radius: var(--r-card); overflow: hidden; position: relative; min-height: 260px;
+    background: linear-gradient(135deg, #8d8d97 0%, #5f5f64 100%); }
+  .service-visual .band { position: absolute; left: 0; right: 0; bottom: 0; background: var(--overlay-9); padding: 24px 32px; }
+  .service-visual .band strong { display: block; color: var(--on-dark); font-size: 18px; font-weight: 500; line-height: 1.5; }
+  .service-visual .band span { display: block; margin-top: 6px; color: var(--on-dark); font-size: 14px; font-weight: 400; line-height: var(--lh-label); opacity: .85; }
+  .service-visual .band.thin { background: var(--overlay-7); }
+
+  /* ===== DRAWER（ドロワーの面と影） ===== */
+  .drawer { margin-top: 40px; background: var(--drawer); color: var(--on-dark); border-radius: var(--r-card); box-shadow: var(--shadow-2); padding: 32px; }
+  .drawer h4 { font-size: 18px; font-weight: 500; line-height: 1.5; color: var(--on-dark); }
+  .drawer ul { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 32px; list-style: none; }
+  .drawer li { font-size: 16px; font-weight: 400; line-height: var(--lh-body); color: var(--on-dark); }
+
+  /* ===== SPEC TABLE ===== */
+  .spec { margin-top: 72px; background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow); padding: 32px; }
+  .spec h4 { font-size: 18px; font-weight: 500; line-height: 1.5; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: var(--lh-body); }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  th { font-weight: 600; width: 220px; color: var(--muted-2); }
+
+  /* ===== FORM ===== */
+  .form { margin-top: 32px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .field label { display: block; font-size: 14px; font-weight: 500; line-height: var(--lh-label); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; height: 48px; padding: 0 16px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: var(--r-card);
+    font-family: var(--font-body); font-size: 16px; line-height: var(--lh-body);
+  }
+  .field input.is-focus { border-color: var(--pink); box-shadow: 0 0 0 2px rgba(255, 85, 119, .25); outline: none; }
+  .field .hint { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+  /* ===== FOOTER ===== */
+  .footer { margin-top: 72px; background: var(--surface); padding: 40px 0; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; padding: 0 20px; display: flex; gap: 40px; flex-wrap: wrap; }
+  .footer a { font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--muted-2); }
+  .copyright { max-width: var(--container); margin: 24px auto 0; padding: 0 20px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#"><span class="logo-mark"></span><span class="logo-text">SAKURA internet</span></a>
+    <nav class="gnav">
+      <a href="#">サービス</a><a href="#">サポート</a><a href="#">企業情報</a><a href="#">IR情報</a>
+    </nav>
+    <a class="login" href="#">会員ログイン</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="ribbon"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+  <div class="hero-inner">
+    <h2>ビジネスの成長を支える<br>インフラサービス</h2>
+    <p>クラウドや GPU サーバー、レンタルサーバーから専用サーバーまで、あらゆるニーズに応える環境を提供します。</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <a class="alert" href="#">
+    <span>
+      重要なお知らせとよくあるご質問（FAQ）はこちらをご確認ください
+      <span class="date">2026年 8月 26日</span>
+    </span>
+    <svg class="chevron" viewBox="0 0 10 15" aria-hidden="true"><path d="M1 1L8 7.5L1 14"/></svg>
+  </a>
+
+  <!-- NEWS -->
+  <section class="section">
+    <div class="section-head">
+      <h3>ニュース</h3>
+      <span class="eyebrow">NEWS</span>
+    </div>
+    <div class="tabs">
+      <button class="tab is-active">ニュースリリース</button>
+      <button class="tab">お知らせ</button>
+      <button class="tab">アライアンス</button>
+    </div>
+
+    <a class="news-panel" href="#">
+      <span>
+        <span class="date">2026年9月29日</span>
+        <h4>24時間365日対応の有償「プレミアムサポート」に専用サーバの新プランを追加</h4>
+      </span>
+      <svg class="chevron" viewBox="0 0 10 15" aria-hidden="true"><path d="M1 1L8 7.5L1 14"/></svg>
+    </a>
+    <a class="news-panel" href="#">
+      <span>
+        <span class="date">2026年9月24日</span>
+        <h4>医療特化型 LLM の提供を開始し、研究機関向けの実証環境を拡充</h4>
+      </span>
+      <svg class="chevron" viewBox="0 0 10 15" aria-hidden="true"><path d="M1 1L8 7.5L1 14"/></svg>
+    </a>
+  </section>
+
+  <!-- SERVICE -->
+  <section class="section">
+    <div class="section-head">
+      <h3>サービス</h3>
+      <span class="eyebrow">SERVICE</span>
+    </div>
+
+    <div class="service">
+      <div class="service-copy">
+        <h3 class="headline">ビジネス規模や成長にフィットするクラウド</h3>
+        <p>秒単位の利用から専有しての大規模処理まで、豊富なラインアップで最適なインフラを組み立てられます。物理サーバーとの併用にも対応します。</p>
+        <a class="btn-outline" href="#">クラウドサイトを見る</a>
+      </div>
+      <div class="service-visual">
+        <div class="band"><strong>ガバメント向け問い合わせ窓口</strong><span>政府機関・地方自治体・外郭団体でのご利用、協業のご相談</span></div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:40px">
+      <a class="card" href="#">
+        <h4>レンタルサーバ</h4>
+        <p>WordPress サイトが速い、国内最速級のレンタルサーバー。</p>
+        <div class="tagrow"><span class="tag">ホスティング</span></div>
+      </a>
+      <a class="card" href="#">
+        <h4>VPS</h4>
+        <p>レンタルサーバーより高い自由度。初めて使う root 権限のある 1 台目に。</p>
+        <div class="tagrow"><span class="tag">仮想サーバー</span></div>
+      </a>
+      <a class="card" href="#">
+        <h4>専用サーバ PHY</h4>
+        <p>自由度の高い物理専有型のベアメタルクラウド。オンプレミスからの移行にも。</p>
+        <div class="tagrow"><span class="tag">GPUサーバーサービス</span></div>
+      </a>
+    </div>
+
+    <div class="drawer">
+      <h4>すべてのサービス</h4>
+      <ul>
+        <li>クラウド</li><li>高火力（GPUクラウド）</li><li>AI プラットフォーム</li>
+        <li>レンタルサーバ</li><li>VPS</li><li>専用サーバ PHY</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SPEC -->
+  <section class="spec">
+    <h4>プラン仕様</h4>
+    <table>
+      <tr><th>CPU</th><td>仮想 6 コア（物理 3 コア相当）</td></tr>
+      <tr><th>メモリ</th><td>12GB</td></tr>
+      <tr><th>ストレージ</th><td>SSD 400GB（NVMe）</td></tr>
+      <tr><th>転送量</th><td>無制限（上り・下りとも従量課金なし）</td></tr>
+      <tr><th>データセンター</th><td>石狩 / 東京 第 1・第 2</td></tr>
+    </table>
+
+    <div class="form">
+      <div class="field">
+        <label for="f1">お名前</label>
+        <input id="f1" type="text" value="葛原 健太" class="is-focus">
+        <span class="hint">フォーカス時は 2px solid #ff5577 の枠が付く</span>
+      </div>
+      <div class="field">
+        <label for="f2">ご利用予定のサービス</label>
+        <select id="f2"><option>クラウド</option><option>高火力（GPUクラウド）</option><option>専用サーバ PHY</option></select>
+        <span class="hint">入力欄の角丸は 8px（カードと同じ）</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="#">利用者情報の外部送信について</a>
+    <a href="#">個人情報保護ポリシー</a>
+    <a href="#">情報セキュリティ基本方針</a>
+    <a href="#">サービス約款</a>
+    <a href="#">ブランドガイドライン</a>
+  </div>
+  <p class="copyright">© SAKURA internet Inc.（このページは DESIGN.md の再現用プレビューです）</p>
+</footer>
+
+</body>
+</html>

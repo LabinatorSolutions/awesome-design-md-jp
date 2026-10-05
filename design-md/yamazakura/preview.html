@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 山櫻（YAMAZAKURA）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Mulish:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       自社の CSS Custom Properties は 4 個だけ（--border / --text / --muted / --head-bg）。
+       19 個の --vc-* は vue3-carousel、--hacobune-* は動画プレイヤーのライブラリ由来。
+       ★宣言 ≠ 実装: --text は #222 と宣言されているが、実装は #111111（可視 111 要素）。
+                     --muted は #757575 だが実装は #808080。変数の値をそのまま使わない。
+       2026-10-05 実測 */
+    --text:      #111111;   /* ★本文・見出し・ナビ。可視 72〜111 要素で最多 */
+    --white:     #ffffff;
+    --muted:     #808080;   /* リード・パンくず・コピーライト（可視 3〜11 要素） */
+    --line:      #212121;   /* ★ボタンの 1px 枠。#111111 ではない */
+    --border:    #e5e5e5;   /* --border 変数の値（罫線） */
+    --head-bg:   #f6f6f6;   /* --head-bg 変数の値（表ヘッダー） */
+    --bg:        #ffffff;   /* pageBackground.resolved / 根拠 viewportTopBySample (9/11) */
+
+    /* バッジ 3 色。このサイトに「ブランドカラー」は無く、彩度はここにしか現れない */
+    --tag-env:    #94c727;   /* 環境（可視 2 要素） */
+    --tag-social: #dbaa80;   /* 社会貢献（可視 1 要素） */
+    --alert:      #f44343;   /* 重要なお知らせ（可視 1 要素） */
+
+    /* === Fonts ===
+       実サイトは Adobe Fonts（キット ldp8tix）で源ノ角ゴシック 3 ウェイト ＋ 源ノ明朝 2 ウェイト、
+       Google Fonts で Muli を読み込む。ただし★源ノ明朝は可視 0 要素（読み込まれているだけ）。
+       Adobe Fonts はドメインライセンスのためローカルでは表示できないので、
+       源ノ角ゴシックは同一設計の Noto Sans JP、Muli は後継の Mulish で代替する。
+
+       ★実サイトの宣言はスタックの 3 番目に sans-serif が入っているため、
+         4 番目以降（ヒラギノ・游ゴシック・メイリオ）に到達しない。
+         ここでは DESIGN.md の「修正版」どおり sans-serif を末尾に置く。 */
+    --font-body: "Mulish", "Noto Sans JP",
+                 "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN W3",
+                 "Yu Gothic M", "游ゴシック Medium", "Yu Gothic Medium",
+                 游ゴシック体, YuGothic, メイリオ, Meiryo, sans-serif;
+
+    /* === Line height === */
+    --lh-body:  1.60;   /* 本文。body に書いて継承（実測 97〜111 要素で最多） */
+    --lh-read:  2.00;   /* 読ませる本文（理念ページ。実測 48 要素） */
+    --lh-lead:  2.10;   /* トップのリード（4 要素） */
+    --lh-wide:  1.80;   /* 事業紹介（9 要素） */
+    --lh-en:    1.40;   /* 欧文ラベル */
+
+    /* === Letter spacing ===
+       ★body に 0.06em を 1 回だけ書き、px（0.96px）のまま全要素へ継承させる。
+         13 / 14 / 16 / 18px のどのサイズでも 0.96px（実測 140/153 要素）。
+         子要素で em を再宣言しないこと。em を当てているのは下の 4 系統だけ。 */
+    --ls:        0.06em;   /* = 16px のとき 0.96px */
+    --ls-lead:   0.09em;   /* トップのリード（1.44px） */
+    --ls-en:     0.10em;   /* 欧文ラベル・UI ボタン（4px / 1.4px / 1.2px） */
+    --ls-sub:    0.12em;   /* 小見出し（2.4px） */
+    --ls-vert:   0.58em;   /* ★縦組みタグライン（17.4px）。横組みに流用しない */
+
+    --r: 0px;   /* 既定。例外は SNS アイコンの 50% と追従ボタンの 64px だけ */
+    --shadow-float: 0 8px 16px rgba(0, 0, 0, 0.22);   /* 追従ボタン。サイト全体で 1 要素のみ */
+
+    --header-h: 80px;
+    --card-w:   239px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 10px; }   /* ★62.5%。rem は 1rem = 10px で計算する */
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;            /* html とは別に 16px。流体ではない（4 幅で実測） */
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);  /* ★ここに 1 回だけ。子で再宣言しない */
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ===== HEADER ===== */
+  .header { display: flex; align-items: center; gap: 36px; padding: 0 40px; height: var(--header-h); background: var(--bg); }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-ja { font-size: 24px; font-weight: 400; letter-spacing: 0.18em; }
+  .logo-sq { width: 28px; height: 28px; background: #f3b2c2; }
+  .gnav { display: flex; gap: 28px; }
+  .gnav a { font-size: 18px; line-height: 1.6; letter-spacing: 0.1067em; height: var(--header-h); display: inline-flex; align-items: center; }
+  .header-actions { margin-left: auto; display: flex; gap: 12px; }
+  .btn-sm {
+    width: 249px; height: 48px; display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r);
+    font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: var(--ls-en);
+  }
+
+  /* ===== HERO（縦組みタグライン） ===== */
+  .hero { position: relative; display: grid; grid-template-columns: 1fr 240px; min-height: 560px; }
+  .hero-media { background: linear-gradient(135deg, #cfd6d2 0%, #eae6df 55%, #d8cfc4 100%); }
+  .hero-side { display: flex; align-items: center; justify-content: center; }
+  .vertical-txt {
+    writing-mode: vertical-rl;
+    font-size: 30px;
+    line-height: 48px;              /* 縦組みでは行の左右間隔 */
+    letter-spacing: var(--ls-vert); /* ★0.58em。横組みではありえない値 */
+    font-weight: 400;
+    color: var(--text);
+  }
+  .alert-bar { display: flex; align-items: center; gap: 24px; padding: 18px 40px; border-bottom: 1px solid var(--border); }
+  .alert-bar .label { color: var(--alert); font-size: 14px; line-height: 1.6; }
+  .alert-bar .body { font-size: 14px; line-height: 1.6; }
+
+  /* ===== SECTION ===== */
+  .section { padding: 96px 40px 0; }
+  .en-label { font-family: "Mulish", sans-serif; font-size: 40px; font-weight: 400; line-height: var(--lh-en); letter-spacing: var(--ls-en); }
+  .lead { margin-top: 24px; max-width: 760px; font-size: 16px; line-height: var(--lh-lead); letter-spacing: var(--ls-lead); }
+
+  /* ===== CARDS ===== */
+  .cards { margin-top: 48px; display: flex; gap: 40px; flex-wrap: wrap; }
+  .card { width: var(--card-w); padding-bottom: 42px; border-radius: var(--r); }
+  .card .thumb { height: 160px; background: linear-gradient(160deg, #e3ded5, #c9c2b6); }
+  .card h3 { margin-top: 20px; font-size: 18px; font-weight: 400; line-height: 1.6; }
+  .card p { margin-top: 12px; font-size: 14px; line-height: var(--lh-wide); color: var(--muted); }
+
+  /* ===== BUTTON ===== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 280px; height: 64px;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r);
+    font-size: 16px; font-weight: 400; line-height: 1.6;
+    /* letter-spacing は body から継承（0.96px）。再宣言しない */
+  }
+  .btn-row { margin-top: 48px; display: flex; gap: 24px; }
+
+  /* ===== NEWS ===== */
+  .news { margin-top: 48px; border-top: 1px solid var(--border); }
+  .news-item { display: flex; align-items: baseline; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .news-item .date { font-size: 13px; line-height: 1.54; color: var(--muted); width: 110px; flex: none; }
+  .news-item .cat { font-size: 13px; line-height: 1.54; width: 90px; flex: none; }
+  .news-item .cat.env { color: var(--tag-env); }
+  .news-item .cat.social { color: var(--tag-social); }
+  .news-item h4 { font-size: 16px; font-weight: 400; line-height: 1.6; }
+
+  /* ===== READ BLOCK（理念ページの行間 2.00） ===== */
+  .read { margin-top: 96px; padding: 0 40px; }
+  .read h2 { font-size: 20px; font-weight: 400; line-height: 1.6; letter-spacing: var(--ls-sub); }
+  .read h3 { margin-top: 40px; font-size: 24px; font-weight: 700; line-height: var(--lh-read); }
+  .read p { margin-top: 16px; max-width: 820px; font-size: 16px; line-height: var(--lh-read); }
+
+  /* ===== TABLE ===== */
+  .table-wrap { margin-top: 48px; padding: 0 40px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; }
+  th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  th { background: var(--head-bg); font-weight: 400; width: 220px; }
+
+  /* ===== FORM ===== */
+  .form { margin-top: 48px; padding: 0 40px; display: grid; grid-template-columns: repeat(2, minmax(0, 420px)); gap: 24px; }
+  .field label { display: block; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; height: 48px; padding: 0 16px;
+    background: var(--bg); color: var(--text);
+    border: 1px solid var(--line); border-radius: var(--r);
+    font-family: var(--font-body); font-size: 16px; line-height: 1.6; letter-spacing: inherit;
+  }
+  .field input.is-focus { border-width: 2px; outline: none; }
+  .field .hint { margin-top: 6px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+
+  /* ===== FLOATING ===== */
+  .floating { margin: 64px 40px 0; width: 180px; height: 56px; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 64px; box-shadow: var(--shadow-float);
+    font-size: 14px; line-height: 1.6; letter-spacing: var(--ls-en); }
+
+  /* ===== FOOTER ===== */
+  .footer { margin-top: 96px; padding: 48px 40px; border-top: 1px solid var(--border); }
+  .sns { display: flex; gap: 16px; }
+  .sns span { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: var(--ls-en); }
+  .copyright { margin-top: 24px; font-size: 10px; line-height: 1.6; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="#"><span class="logo-ja">山櫻</span><span class="logo-sq"></span></a>
+  <nav class="gnav">
+    <a href="#">事業案内</a><a href="#">会社情報</a><a href="#">CSV活動</a><a href="#">採用情報</a><a href="#">ニュース</a>
+  </nav>
+  <div class="header-actions">
+    <a class="btn-sm" href="#">印刷会社様向け</a>
+    <a class="btn-sm" href="#">ONLINE SHOP</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-media"></div>
+  <div class="hero-side">
+    <div class="vertical-txt">出逢ふをカタチに</div>
+  </div>
+</section>
+
+<div class="alert-bar">
+  <span class="label">重要なお知らせ</span>
+  <span class="body">当社を騙った偽サイトにご注意ください</span>
+</div>
+
+<section class="section">
+  <p class="en-label">SERVICE</p>
+  <p class="lead">山櫻は創業当時から続く、名刺・封筒・挨拶状などオリジナルの紙製品づくりを軸に、人と人とが出逢う場面を支えてきました。</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="thumb"></div>
+      <h3>紙製品事業</h3>
+      <p>世の中の多様なニーズに応える、名刺・封筒・挨拶状の企画と製造。</p>
+    </div>
+    <div class="card">
+      <div class="thumb"></div>
+      <h3>Webサービス事業</h3>
+      <p>2001 年より始めた法人向けの Web 名刺発注システム。</p>
+    </div>
+    <div class="card">
+      <div class="thumb"></div>
+      <h3>プリンター事業</h3>
+      <p>名刺・封筒専用プリンターの取り扱いと保守。</p>
+    </div>
+    <div class="card">
+      <div class="thumb"></div>
+      <h3>フルフィルメント事業</h3>
+      <p>受注から在庫・出荷までを一括して引き受ける。</p>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <a class="btn" href="#">more</a>
+    <a class="btn" href="#">事業案内を見る</a>
+  </div>
+
+  <div class="news">
+    <div class="news-item"><span class="date">2026.10.01</span><span class="cat env">環境</span><h4>再生紙を使った封筒シリーズの取り扱いを開始しました</h4></div>
+    <div class="news-item"><span class="date">2026.09.18</span><span class="cat social">社会貢献</span><h4>地域の小学校で「名刺をつくるワークショップ」を実施しました</h4></div>
+    <div class="news-item"><span class="date">2026.09.04</span><span class="cat">お知らせ</span><h4>秋季休業期間のご案内</h4></div>
+  </div>
+</section>
+
+<section class="read">
+  <h2>山櫻のものづくりの考え方</h2>
+  <h3>PEOPLE（人間）</h3>
+  <p>当社は、企業理念を基に持続可能な社会の創出に貢献することを目指しています。誰一人取り残さない社会をつくることに貢献する製品を、紙という身近な素材から考え続けてきました。</p>
+  <h3>PLANET（地球）</h3>
+  <p>「選択してもエシカル」「選択しなくてもエシカル」の両方を成り立たせること。お客様や社会と共有できる意味や価値をカタチにしていきます。</p>
+</section>
+
+<div class="table-wrap">
+  <table>
+    <tr><th>設立</th><td>1931年</td></tr>
+    <tr><th>事業内容</th><td>名刺・封筒・挨拶状の企画製造販売／Webサービス／プリンター／フルフィルメント</td></tr>
+    <tr><th>本社</th><td>東京都中央区</td></tr>
+    <tr><th>事業所</th><td>全国 11 拠点</td></tr>
+  </table>
+</div>
+
+<div class="form">
+  <div class="field">
+    <label for="f1">会社名</label>
+    <input id="f1" type="text" value="株式会社ムート" class="is-focus">
+    <span class="hint">フォーカス時は枠線を 2px に太らせる（色は変えない）</span>
+  </div>
+  <div class="field">
+    <label for="f2">お問い合わせ種別</label>
+    <select id="f2"><option>紙製品について</option><option>Webサービスについて</option><option>採用について</option></select>
+    <span class="hint">入力欄の角丸は 0px（サイト全体の既定）</span>
+  </div>
+</div>
+
+<div class="floating">PAGE TOP</div>
+
+<footer class="footer">
+  <div class="sns"><span>X</span><span>IG</span><span>YT</span></div>
+  <p class="copyright">© 2019-2026 YAMAZAKURA CO.,LTD.（このページは DESIGN.md の再現用プレビューです）</p>
+</footer>
+
+</body>
+</html>
