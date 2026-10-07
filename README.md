@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (550 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (553 sites)</a>
 </p>
 
 <table>
@@ -846,6 +846,11 @@
 </tr>
 <tr>
 <td align="center"><strong>高橋工芸</strong><br><img src="design-md/takahashikougei/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>愛知県美術館</strong><br><img src="design-md/apmoa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ユーグレナ</strong><br><img src="design-md/euglena/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>共同印刷</strong><br><img src="design-md/kyodoprinting/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1457,11 +1462,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [さくらインターネット (SAKURA internet)](https://www.sakura.ad.jp/) | Cloud Infrastructure / Corporate | [DESIGN.md](design-md/sakura-ad/DESIGN.md) | [preview.html](design-md/sakura-ad/preview.html) |
 | [山櫻 (YAMAZAKURA)](https://www.yamazakura.co.jp/) | Paper Products / Corporate | [DESIGN.md](design-md/yamazakura/DESIGN.md) | [preview.html](design-md/yamazakura/preview.html) |
 | [高橋工芸 (Takahashikougei)](https://www.takahashikougei.com/) | Craft / Woodware | [DESIGN.md](design-md/takahashikougei/DESIGN.md) | [preview.html](design-md/takahashikougei/preview.html) |
+| [愛知県美術館 (Aichi Prefectural Museum of Art)](https://apmoa.museum/) | Museum / Art | [DESIGN.md](design-md/apmoa/DESIGN.md) | [preview.html](design-md/apmoa/preview.html) |
+| [ユーグレナ (euglena)](https://euglena.jp/) | Biotech / Corporate | [DESIGN.md](design-md/euglena/DESIGN.md) | [preview.html](design-md/euglena/preview.html) |
+| [共同印刷 / TOMOWEL (Kyodo Printing)](https://www.kyodoprinting.co.jp/) | Printing / Corporate | [DESIGN.md](design-md/kyodoprinting/DESIGN.md) | [preview.html](design-md/kyodoprinting/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (550 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (553 sites)</a>
 </p>
 
 <table>
@@ -2273,6 +2281,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>高橋工芸</strong><br><img src="design-md/takahashikougei/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>愛知県美術館</strong><br><img src="design-md/apmoa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ユーグレナ</strong><br><img src="design-md/euglena/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>共同印刷</strong><br><img src="design-md/kyodoprinting/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 愛知県美術館（Aichi Prefectural Museum of Art）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties をそのまま使う（56 個すべて自社トークン・
+       プラットフォーム由来 0）。実測日 2026-10-07 */
+    --color-blue:          #009FE8;   /* ★唯一のアクセント。可視 3 要素の面 ＋ 文字 3〜4 要素 */
+    --color-black:         #1A1A1A;   /* ★本文。可視 82 要素。純黒ではない */
+    --color-text:          #1A1A1A;
+    --color-white:         #FFFFFF;
+    --color-gray:          #707070;   /* 補助テキスト（可視 4 要素） */
+    --color-darkgray:      #404040;   /* お知らせタグの面（可視 6 要素） */
+    --color-lightgray:     #D6D6D6;   /* タグの面・罫線（可視 4 要素） */
+    --color-bg-image:      #EDEDED;   /* 画像プレースホルダ。実測で最多（可視 14 要素） */
+    --color-bg-slider:     #FAF9ED;   /* ★ヒーローの地色。606,893 px² */
+    --color-beige:         #F6F5F1;   /* お知らせセクションの面 */
+    --color-lightblue:     #E8F2F5;   /* イベント／下層ページヘッダー */
+    --color-gradient-blue: linear-gradient(180deg, #EBEFF1 0%, #D8E9EF 100%);
+    --bg:                  #FFFFFF;   /* pageBackground.resolved（根拠 viewportTopBySample 3/9） */
+    /* --color-red: #FF2800 は宣言のみ・可視 0 要素。使わない */
+
+    /* === Fonts ===
+       Noto Sans JP の可変フォント（100 900）1 本だけ。Google Fonts から配信され、
+       実測でフォントファイル要求 45 件（日本語サブセット分割）。
+       明朝体も専用の欧文書体も持たない。ローカルでも実サイトと同一表示になる。 */
+    --font-body: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: body に単位なしの 2.2 を書いて比率で継承させる === */
+    --lh-body:    2.2;    /* ★既定。16px→35.2px / 14px→30.8px / 18px→39.6px */
+    --lh-title:   1.5;    /* 展覧会タイトル（24px→36px） */
+    --lh-section: 0.75;   /* ★セクション見出し（32px→24px）。文字サイズより小さい */
+    --lh-tag:     1;      /* タグ（line-height: 16px 固定） */
+    --lh-post:    1.7;    /* ★CMS 記事本文（--post-line-height）。body の 2.2 ではない */
+
+    /* === Letter spacing: body に 0.05em を 1 回だけ。子へは px で降りる === */
+    --ls:         0.05em; /* ★= 0.8px。可視 113 要素中 90 要素 */
+    --ls-tag:     0.1em;  /* タグ（16px→1.6px / 14px→1.4px） */
+    --ls-section: 0.2em;  /* ★セクション見出し（32px→6.4px） */
+
+    /* === Radius: トークンは 3 段あるが、実装は 0px と 3px だけ === */
+    --border-radius-lg: 10px;  /* 宣言のみ */
+    --border-radius:    6px;   /* 宣言のみ */
+    --border-radius-sm: 3px;   /* ★枠線 CTA。実装されている唯一の角丸 */
+
+    --shadow-menu: 0 2px 8px rgba(0, 0, 0, 0.06);  /* サイト全体で 1 要素のみ */
+
+    --container: 1232px;  /* 実測 5 要素で最多 */
+    --column:    700px;   /* 下層の読み物 */
+    --animation-transition: 0.2s;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ★このサイトの核心。組版の指定を body に 1 回だけ書いて全部継承させる */
+  body {
+    background: var(--bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);          /* 単位なし → 比率で継承 */
+    letter-spacing: var(--ls);            /* 0.05em → 0.8px として px で継承 */
+    font-feature-settings: "palt";        /* 可視 337 要素に効く */
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-break: strict;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--color-lightgray); background: var(--bg); }
+  .header-inner { display: flex; align-items: center; max-width: var(--container); margin: 0 auto; padding: 18px 20px; gap: 28px; }
+  .logo { display: flex; flex-direction: column; gap: 2px; text-decoration: none; color: var(--color-text); }
+  .logo-en { font-size: 22px; font-weight: 600; letter-spacing: 0.08em; color: var(--color-blue); line-height: 1.2; }
+  .logo-jp { font-size: 17px; font-weight: 500; letter-spacing: 0.3em; line-height: 1.2; }
+  .header-nav { display: flex; gap: 26px; margin-left: auto; }
+  .header-nav a { font-size: 14px; color: var(--color-text); text-decoration: none; }
+  .header-sub { display: flex; gap: 20px; }
+  .header-sub a { font-size: 14px; color: var(--color-blue); text-decoration: none; }
+  .hours { border: 1px solid var(--color-lightgray); display: flex; align-items: center; }
+  .hours-date { padding: 6px 14px; border-right: 1px solid var(--color-lightgray); font-size: 16px; line-height: 1; }
+  .hours-body { padding: 6px 14px; font-size: 14px; line-height: 1.7; }
+  .hours-open { color: var(--color-blue); font-weight: 600; }
+  .hours-closed { color: var(--color-gray); }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--color-beige); }
+  .section-blue { background: var(--color-lightblue); }
+  .section-cream { background: var(--color-bg-slider); }
+  .section-inner { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--color-gray); margin-bottom: 14px; letter-spacing: normal; }
+  /* ★セクション見出し: 32px / 600 / letter-spacing 0.2em / line-height 24px */
+  .section-title { font-size: 32px; font-weight: 600; line-height: var(--lh-section); letter-spacing: var(--ls-section); padding-bottom: 20px; }
+  .section-lead { font-size: 16px; font-weight: 400; margin: 10px 0 36px; max-width: 880px; }
+  .note { font-size: 16px; font-weight: 400; color: var(--color-gray); margin-top: 26px; max-width: 880px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--color-bg-image); padding: 2px 6px; letter-spacing: normal; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--color-lightgray); background: var(--color-white); }
+  .swatch-chip { height: 80px; }
+  .swatch-body { padding: 14px 16px 18px; }
+  .swatch-name { font-size: 16px; font-weight: 600; line-height: 1.5; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-top: 4px; letter-spacing: normal; }
+  .swatch-use { font-size: 14px; line-height: 1.7; color: var(--color-gray); margin-top: 8px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 268px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--color-lightgray); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); line-height: 1.8; letter-spacing: normal; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--color-text); letter-spacing: var(--ls); }
+  .scale-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; align-items: baseline; }
+  .scale-bar span { background: var(--color-white); border: 1px solid var(--color-lightgray); padding: 8px 14px; line-height: 1; }
+  .inherit-demo { background: var(--color-white); border: 1px solid var(--color-lightgray); padding: 26px 30px; margin-top: 10px; }
+  .inherit-demo > div { border-bottom: 1px dashed var(--color-lightgray); padding: 8px 0; }
+  .inherit-demo > div:last-child { border-bottom: none; }
+  .inherit-note { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); letter-spacing: normal; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; max-width: var(--container); margin: 0 auto; }
+  .hero-img { background: var(--color-bg-image); aspect-ratio: 3 / 4; display: flex; align-items: center; justify-content: center; color: var(--color-gray); font-size: 14px; }
+  .hero-body { background: var(--color-bg-slider); padding: 48px 56px; }
+  .hero-tags { display: flex; gap: 10px; margin-bottom: 26px; }
+  .hero-eyebrow { font-size: 16px; font-weight: 600; color: var(--color-gray); }
+  .hero-title { font-size: 24px; font-weight: 700; line-height: var(--lh-title); letter-spacing: 0.05em; margin-top: 8px; }
+  .hero-en { font-size: 16px; font-weight: 600; color: var(--color-gray); margin-top: 18px; }
+  .hero-date { font-size: 18px; font-weight: 700; margin-top: 14px; }
+
+  /* TAGS */
+  .tag { display: inline-block; font-size: 16px; font-weight: 400; line-height: var(--lh-tag); letter-spacing: var(--ls-tag); padding: 8px; border-radius: 0; }
+  .tag-gray { background: var(--color-lightgray); color: var(--color-text); }
+  .tag-outline { background: var(--color-white); color: var(--color-text); border: 1px solid var(--color-lightgray); }
+  .tag-news { background: var(--color-darkgray); color: var(--color-white); font-size: 14px; letter-spacing: 0.1em; padding: 8px 12px; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin-bottom: 28px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: space-between; }
+  .btn-outline { background: transparent; color: var(--color-text); border: 1px solid var(--color-lightgray); border-radius: var(--border-radius-sm); padding: 16px 24px; font-size: 16px; font-weight: 400; min-width: 300px; gap: 20px; }
+  .btn-outline .arw { color: var(--color-blue); }
+  .btn-close { background: var(--color-white); color: var(--color-text); border: 1px solid var(--color-gray); border-radius: 0; padding: 16px 24px; font-size: 18px; font-weight: 500; letter-spacing: normal; justify-content: center; min-width: 200px; }
+  .btn-link { background: transparent; color: var(--color-blue); border: none; font-size: 16px; font-weight: 500; padding: 0; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 16px 32px; }
+  .card { text-decoration: none; color: var(--color-text); display: block; }
+  .card-img { background: var(--color-bg-image); aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; color: var(--color-gray); font-size: 14px; }
+  .card-meta { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .card-date { font-size: 16px; color: var(--color-gray); }
+  .card-title { font-size: 16px; font-weight: 600; line-height: 1.4; margin-top: 10px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+  .field label { display: block; font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+  .field input, .field select {
+    width: 100%; background: var(--color-white); color: var(--color-text);
+    border: 1px solid var(--color-lightgray); border-radius: var(--border-radius-sm);
+    padding: 16px; font-size: 16px; line-height: 1.4;
+    font-family: var(--font-body); letter-spacing: var(--ls); font-feature-settings: "palt";
+  }
+  .field.is-focus input { outline: 2px solid var(--color-blue); outline-offset: 1px; }
+  .field.is-error input { border-color: #c0392b; }
+  .field-msg { font-size: 14px; line-height: 1.7; color: var(--color-gray); margin-top: 8px; }
+  .field.is-error .field-msg { color: #c0392b; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+  .elev { background: var(--color-white); border: 1px solid var(--color-lightgray); padding: 30px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow-menu); border-color: transparent; }
+  .elev-name { font-size: 16px; font-weight: 600; line-height: 1.5; }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-top: 10px; letter-spacing: normal; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--color-white); border: 1px solid var(--color-lightgray); height: 40px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); letter-spacing: normal; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 32px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 112px; height: 70px; background: var(--color-white); border: 1px solid var(--color-lightgray); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-top: 8px; letter-spacing: normal; }
+
+  /* POST（CMS 記事） */
+  .post { background: var(--color-white); border: 1px solid var(--color-lightgray); padding: 36px 40px; max-width: var(--column); }
+  .post p { font-size: 16px; font-weight: 400; line-height: var(--lh-post); letter-spacing: 0.05em; font-feature-settings: "palt"; }
+  .post p + p { margin-top: 1em; }
+  .post-btn { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; background: var(--color-white); color: var(--color-text); border: 1px solid var(--color-gray); border-radius: 0; padding: 16px 52px 16px 24px; font-size: 16px; font-weight: 500; text-decoration: none; }
+
+  /* GRADIENT BAND */
+  .band { background: var(--color-gradient-blue); padding: 52px 20px; }
+  .band-inner { max-width: var(--container); margin: 0 auto; display: flex; gap: 20px; flex-wrap: wrap; }
+
+  /* FOOTER */
+  .footer { background: var(--color-darkgray); color: var(--color-white); padding: 48px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-size: 18px; font-weight: 600; letter-spacing: 0.2em; }
+  .footer-cols { display: flex; gap: 56px; margin-top: 26px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 16px; font-weight: 600; color: var(--color-white); }
+  .footer-col a { display: block; font-size: 14px; color: var(--color-white); text-decoration: none; opacity: .82; }
+  .footer-copy { font-size: 14px; margin-top: 34px; opacity: .7; }
+
+  @media (max-width: 1047.98px) {
+    .hero { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 767.98px) {
+    .section, .section-inner { padding: 44px 16px; }
+    .section-title { font-size: 24px; letter-spacing: 0.15em; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav, .header-sub { display: none; }
+    .hero-body { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-en">apmoa</span><span class="logo-jp">愛知県美術館</span></a>
+    <div class="header-sub"><a href="#">チケット購入</a><a href="#">メンバーシップ</a></div>
+    <nav class="header-nav">
+      <a href="#">展覧会・イベント</a><a href="#">コレクション</a><a href="#">エデュケーション</a><a href="#">調査研究</a><a href="#">来館案内</a>
+    </nav>
+    <div class="hours">
+      <div class="hours-date">10/7</div>
+      <div class="hours-body">
+        <div>10F 愛知県美術館　<span class="hours-closed">Closed</span></div>
+        <div>8F ギャラリー　<span class="hours-open">Open</span> 10:00 – 18:00</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-img">展覧会ポスター（画像）</div>
+  <div class="hero-body">
+    <div class="hero-tags"><span class="tag tag-gray">開催予定</span><span class="tag tag-outline">企画展</span></div>
+    <div class="hero-eyebrow">没後100年記念</div>
+    <h2 class="hero-title">ビゲロー　幻のコレクションと近代日本画の夜明け──日本美術に魅せられたボストン人──</h2>
+    <div class="hero-en">Allure of Japan and the Dawn of Modern Japanese Painting: 100 Years After William Bigelow's Death</div>
+    <div class="hero-date">2026年10月30日（金） - 12月13日（日）</div>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">アクセントは空色ひとつ</h2>
+  <p class="section-lead">ブランド色は <b>#009FE8</b> だけ。面の切り替えは <code>#FAF9ED</code>（ヒーロー）、<code>#F6F5F1</code>（お知らせ）、<code>#E8F2F5</code>（イベント）という 3 つの地色で行う。<b>CSS Custom Properties は 56 個すべて自社トークン</b>で、プラットフォーム由来はゼロ。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#009FE8"></div><div class="swatch-body"><div class="swatch-name">Sky Blue</div><div class="swatch-hex">#009FE8</div><div class="swatch-use">★唯一のアクセント。可視 3 要素の面 ＋ 文字 3〜4 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1A1A1A"></div><div class="swatch-body"><div class="swatch-name">Ink</div><div class="swatch-hex">#1A1A1A</div><div class="swatch-use">★本文。可視 82 要素。純黒は使わない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#404040"></div><div class="swatch-body"><div class="swatch-name">Dark Gray</div><div class="swatch-hex">#404040</div><div class="swatch-use">お知らせタグの面（可視 6 要素・白抜き文字）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#707070"></div><div class="swatch-body"><div class="swatch-name">Gray</div><div class="swatch-hex">#707070</div><div class="swatch-use">補助テキスト・欧文サブタイトル（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#D6D6D6"></div><div class="swatch-body"><div class="swatch-name">Light Gray</div><div class="swatch-hex">#D6D6D6</div><div class="swatch-use">タグの面・枠線 CTA の罫線（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EDEDED"></div><div class="swatch-body"><div class="swatch-name">Image BG</div><div class="swatch-hex">#EDEDED</div><div class="swatch-use">★画像プレースホルダ。実測で最多（可視 14 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#FAF9ED"></div><div class="swatch-body"><div class="swatch-name">Slider Cream</div><div class="swatch-hex">#FAF9ED</div><div class="swatch-use">★ヒーローの地色（606,893 px²）。heroCover が true を返す面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F6F5F1"></div><div class="swatch-body"><div class="swatch-name">Beige</div><div class="swatch-hex">#F6F5F1</div><div class="swatch-use">お知らせセクションの面（602,708 px²）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#E8F2F5"></div><div class="swatch-body"><div class="swatch-name">Pale Blue</div><div class="swatch-hex">#E8F2F5</div><div class="swatch-use">イベントセクション／下層のページヘッダー</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:linear-gradient(180deg,#EBEFF1 0%,#D8E9EF 100%)"></div><div class="swatch-body"><div class="swatch-name">Gradient Blue</div><div class="swatch-hex">#EBEFF1 → #D8E9EF</div><div class="swatch-use">フッター直前のリンク帯</div></div></div>
+  </div>
+
+  <p class="note"><b>赤（<code>#FF2800</code>）はトークンに宣言があるが、DOM 全走査で可視 0 要素。</b>カレンダー用の <code>--sun-color</code> / <code>--sat-color</code> も同様。「宣言されている ＝ 使ってよい」ではない。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">body の 1 行で全部決める</h2>
+  <p class="section-lead">このサイトの組版はこの 1 宣言がすべて。<code>palt</code> / <code>letter-spacing: 0.05em</code> / <code>line-height: 2.2</code> / <code>line-break: strict</code> を <b>body に 1 回だけ</b>書き、子要素では原則上書きしない。結果、<b>palt が可視 337 要素、字間 0.8px が 113 要素中 90 要素、行間比 2.20 が 48 要素</b>に効いている。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:13.2px">13.2</span><span style="font-size:14px">14</span><span style="font-size:16px">16</span>
+    <span style="font-size:18px">18</span><span style="font-size:20px">20</span><span style="font-size:24px;font-weight:700">24</span>
+    <span style="font-size:32px;font-weight:600;letter-spacing:0.2em">32</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Section Heading ★</b>32px / 600<br>lh 24px（比率 0.75）/ ls 0.2em</div><div style="font-size:32px;font-weight:600;line-height:0.75;letter-spacing:0.2em">お知らせ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Exhibition Title</b>24px / 700<br>lh 36px（1.50）/ ls 0.05em</div><div style="font-size:24px;font-weight:700;line-height:1.5;letter-spacing:0.05em">ビゲロー　幻のコレクションと近代日本画の夜明け</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / Card Title</b>18px / 600〜700<br>lh 39.6px（2.20・継承）</div><div style="font-size:18px;font-weight:600;">開催中・開催予定の展覧会</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>16px / 400<br>lh 35.2px（2.20）/ ls 0.8px<br>※ body から降りてくる値そのまま</div><div style="font-size:16px">愛知県美術館は、1992年に愛知芸術文化センター内に開館しました。20世紀以降の国内外の美術作品を中心に収集し、企画展とコレクション展の二本立てで紹介しています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav Link</b>14px / 400<br>lh 30.8px（2.20・継承）</div><div style="font-size:14px">チケット購入　メンバーシップ　English</div></div>
+  <div class="type-row"><div class="type-meta"><b>Submenu</b>13.2px / 400<br>lh 29.04px（2.20・継承）</div><div style="font-size:13.2px">先生のためのプログラム／鑑賞学習ワーキンググループ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Light Heading</b>18〜20px / <b>300</b><br>下層のナビ見出し（可視 16 要素）</div><div style="font-size:20px;font-weight:300">美術館について　館長メッセージ　ビジョン</div></div>
+  <div class="type-row"><div class="type-meta"><b>Tag ★</b>16px / 400 / lh 1.00<br>ls 0.1em（= 1.6px）</div><div><span class="tag tag-gray">開催予定</span>　<span class="tag tag-outline">企画展</span>　<span class="tag tag-news">お知らせ</span></div></div>
+
+  <h3 style="font-size:20px;font-weight:600;margin:46px 0 6px">字間は px で継承され、行間は比率で継承される</h3>
+  <p class="section-lead" style="margin-bottom:10px"><code>letter-spacing: 0.05em</code> は body の 16px で <b>0.8px という絶対値</b>になり、サイズの違う子にもそのまま降りる。一方 <code>line-height: 2.2</code> は単位なしなので各要素が自分のサイズで再計算する。<b>同じ 1 行に書いてあるのに、継承のしかたが正反対。</b></p>
+  <div class="inherit-demo">
+    <div style="font-size:14px">14px の行 — <span class="inherit-note">lh 30.8px（= 14 × 2.2）/ ls 0.8px（親の px 値）</span></div>
+    <div style="font-size:16px">16px の行 — <span class="inherit-note">lh 35.2px（= 16 × 2.2）/ ls 0.8px</span></div>
+    <div style="font-size:18px">18px の行 — <span class="inherit-note">lh 39.6px（= 18 × 2.2）/ ls 0.8px</span></div>
+    <div style="font-size:24px">24px の行 — <span class="inherit-note">lh 52.8px（= 24 × 2.2）/ ls 0.8px</span></div>
+  </div>
+
+  <p class="note"><b>Web フォントは Noto Sans JP の可変フォント（100 900）1 本だけ。</b>Google Fonts から配信され、実測でフォントファイル要求 45 件（日本語サブセット分割）。明朝体もブランド欧文も持たず、英語のサブタイトルも日付も Noto Sans JP の欧文グリフで組む。<br><b>font-feature-settings に出てくる <code>"liga"</code>（11 要素）は Material Symbols のリガチャ</b>で、和文組版とは無関係。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <h2 class="section-title">角丸はほぼゼロ</h2>
+  <p class="section-lead">トークンには <code>10px</code> / <code>6px</code> / <code>3px</code> の 3 段があるが、<b>実装に出ているのは枠線 CTA の 3px だけ</b>。タグもカードもヒーローも <code>border-radius: 0</code>。</p>
+
+  <div class="btn-grid">
+    <a href="#" class="btn btn-outline"><span>開催中・開催予定の展覧会</span><span class="arw">→</span></a>
+    <a href="#" class="btn btn-outline"><span>年間スケジュール</span><span class="arw">→</span></a>
+    <button class="btn btn-close">閉じる</button>
+    <a href="#" class="btn btn-link">お知らせ一覧を見る →</a>
+  </div>
+
+  <div class="btn-grid">
+    <span class="tag tag-gray">開催予定</span>
+    <span class="tag tag-outline">企画展</span>
+    <span class="tag tag-outline">移動美術館</span>
+    <span class="tag tag-news">お知らせ</span>
+  </div>
+
+  <div class="card-grid" style="margin-top:40px">
+    <a href="#" class="card">
+      <div class="card-img">展覧会画像</div>
+      <div class="card-meta"><span class="tag tag-gray">開催予定</span><span class="card-date">2026.10.30</span></div>
+      <div class="card-title">ビゲロー　幻のコレクションと近代日本画の夜明け</div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img">イベント画像</div>
+      <div class="card-meta"><span class="tag tag-outline">イベント</span><span class="card-date">2026.10.24</span></div>
+      <div class="card-title">移動美術館　花の時間：ちいさきうつくしきもの</div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img">コレクション画像</div>
+      <div class="card-meta"><span class="tag tag-news">お知らせ</span><span class="card-date">2026.10.01</span></div>
+      <div class="card-title">コレクション展 2026年度 第3期のご案内</div>
+    </a>
+  </div>
+
+  <p class="note"><b>タグの行間は <code>line-height: 16px</code> 固定</b>（16px の文字で比率 1.00、14px で 1.14）。帯の高さを文字サイズで決めている。</p>
+</section>
+
+<section class="section-blue" id="forms">
+<div class="section-inner">
+  <div class="section-label">04 / Forms</div>
+  <h2 class="section-title">入力欄も palt を継承する</h2>
+  <p class="section-lead"><code>input</code> / <code>select</code> はフォント継承が効かないので、<b><code>font-family</code> / <code>letter-spacing</code> / <code>font-feature-settings</code> を明示的に当て直す</b>。body の 1 行だけでは入力欄まで届かない。</p>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="f1">お名前</label>
+      <input id="f1" type="text" placeholder="愛知　花子">
+      <div class="field-msg">全角でご入力ください</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f2">メールアドレス（フォーカス時）</label>
+      <input id="f2" type="text" value="hanako@example.jp">
+      <div class="field-msg">フォーカスリングは #009FE8</div>
+    </div>
+    <div class="field is-error">
+      <label for="f3">団体名（エラー時）</label>
+      <input id="f3" type="text" value="">
+      <div class="field-msg">団体観覧には団体名の入力が必要です</div>
+    </div>
+    <div class="field">
+      <label for="f4">観覧希望日</label>
+      <select id="f4"><option>2026年10月30日（金）</option><option>2026年10月31日（土）</option><option>2026年11月1日（日）</option></select>
+      <div class="field-msg">休館日は選択できません</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="post">
+  <div class="section-label">05 / Article</div>
+  <h2 class="section-title">記事本文だけ行間が 1.7</h2>
+  <p class="section-lead"><code>--post-*</code> という 20 個のトークンが CMS 記事のタイポグラフィを別建てで持っている。<b>字間（0.05em）と palt は body と同じだが、行間だけ 2.2 → 1.7 に落ちる。</b>サイト UI の 2.2 をそのまま記事に当てないこと。</p>
+
+  <div class="post">
+    <p>愛知県美術館では、20世紀初頭から現代までの国内外の美術作品を収集しています。クリムト《人生は戦いなり（黄金の騎士）》をはじめとする代表的な所蔵品は、年に数回のコレクション展で順次公開されます。</p>
+    <p>所蔵作品の画像利用をご希望の方は、プレスルームの「所蔵作品画像利用方法」をご確認のうえ、所定の手続きをお願いいたします。</p>
+    <a href="#" class="post-btn"><span>所蔵作品画像利用方法</span><span style="color:#009FE8">→</span></a>
+  </div>
+
+  <p class="note">記事本文のボタンは <code>--post-button-*</code> の指定どおり <b>左寄せ・両端揃え・角丸 0・枠線 <code>1px solid #707070</code>・右だけ 52px のアキ</b>（アイコン分）。</p>
+</section>
+
+<section class="section-cream" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation</div>
+  <h2 class="section-title">影で階層を作らない</h2>
+  <p class="section-lead">サイト本体の <code>box-shadow</code> は <b>メガメニューの 1 要素だけ</b>。カード・ボタン・タグはすべてフラットで、面の区別は地色の塗り分けで行う。</p>
+
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0（既定）</div><div class="elev-val">none</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">0 2px 8px rgba(0,0,0,0.06)</div></div>
+  </div>
+
+  <p class="note">抽出でもう 1 つ検出される <code>rgba(0,0,0,0.3) 0 4px 12px</code> は <b>Cookie 同意バー（CMP）のもの</b>で、サイト本体の語彙ではない。</p>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <h2 class="section-title">コンテナは 1232px</h2>
+  <p class="section-lead">実測で最多の幅は <b>1232px</b>（5 要素）。全幅寄りのブロックは 1338px / 1306px / 1296px、下層の読み物は 700px。グリッドの <code>gap</code> は <b>16px</b> が最多で、カード列は 30px、行 16 / 列 32 の組み合わせも使う。</p>
+
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">1338px — 全幅寄りのブロック</div>
+    <div class="layout-bar" style="width:92%">1232px — ★コンテナ（実測 5 要素で最多）</div>
+    <div class="layout-bar" style="width:52%">700px — 下層の読み物カラム</div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0px ★既定</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:3px"></div><div class="radius-label">3px ★枠線 CTA</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">6px（宣言のみ）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px（宣言のみ）</div></div>
+  </div>
+
+  <p class="note"><b>文字サイズはブレークポイントをまたいで固定。</b>1440 / 1200 / 834 / 375px の 4 幅で測って、<code>html</code> も <code>body</code> も 16px / lh 35.2px / ls 0.8px のまま動かなかった。流体タイポグラフィ（<code>vw</code> / <code>clamp</code>）は使っていない。</p>
+</section>
+
+<div class="band">
+  <div class="band-inner">
+    <a href="#" class="btn btn-outline" style="background:#fff"><span>学校鑑賞のお申し込み</span><span class="arw">→</span></a>
+    <a href="#" class="btn btn-outline" style="background:#fff"><span>刊行物</span><span class="arw">→</span></a>
+    <a href="#" class="btn btn-outline" style="background:#fff"><span>ショップ・図録販売・レストラン</span><span class="arw">→</span></a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">愛知県美術館</div>
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">展覧会・イベント</div><a href="#">開催中・開催予定</a><a href="#">年間スケジュール</a><a href="#">過去の展覧会</a></div>
+      <div class="footer-col"><div class="footer-col-title">コレクション</div><a href="#">コレクションについて</a><a href="#">作品の保存について</a></div>
+      <div class="footer-col"><div class="footer-col-title">来館案内</div><a href="#">開館時間・休館日</a><a href="#">アクセス</a><a href="#">観覧料</a><a href="#">フロアマップ</a></div>
+      <div class="footer-col"><div class="footer-col-title">FOLLOW US</div><a href="#">X</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
+    </div>
+    <div class="footer-copy">© 2026 Aichi Prefectural Museum of Art</div>
+  </div>
+</footer>
+
+</body>
+</html>

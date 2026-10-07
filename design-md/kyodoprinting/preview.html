@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 共同印刷 / TOMOWEL（Kyodo Printing）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Lato:wght@400;700&family=Roboto:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* === 実サイトの CSS Custom Properties（234 個・すべて自社トークン）から、
+         実装で使われているものだけを写した。実測日 2026-10-07 === */
+  :root {
+    /* --- Fonts：和文・欧文・数字の 3 本立て --- */
+    --font-sans-serif: "Noto Sans JP", sans-serif;   /* ★既定。可視 160 要素 */
+    --font-en:         "Lato", sans-serif;            /* 欧文見出し。可視 7 要素 */
+    --font-num:        "Roboto", sans-serif;          /* ★数値専用。可視 6 要素 */
+    /* --font-serif（游明朝のスタック）は宣言のみで可視 0 要素。使わない */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    --font-normal: 400;
+    --font-medium: 500;   /* ★body の既定ウェイト。可視 133 要素 */
+    --font-bold:   700;
+
+    /* --- Font size：全段が clamp() の流体。html は 16px 固定だが body が動く --- */
+    --text-2xs: clamp(0.625rem, 0.568rem + 0.24vw, 0.75rem);   /* 1440px:12 → 375px:10 */
+    --text-xs:  clamp(0.75rem,  0.693rem + 0.24vw, 0.875rem);  /* 14 → 12 */
+    --text-sm:  clamp(0.813rem, 0.756rem + 0.24vw, 0.938rem);  /* 15.01 → 13.01 */
+    --text-md:  clamp(0.875rem, 0.818rem + 0.24vw, 1rem);      /* ★本文 16 → 14 */
+    --text-lg:  clamp(1rem,     0.943rem + 0.24vw, 1.125rem);  /* 18 → 16 */
+    --text-xl:  clamp(1.063rem, 0.977rem + 0.36vw, 1.25rem);   /* 20 → 17.01 */
+    --text-2xl: clamp(1.125rem, 0.955rem + 0.73vw, 1.5rem);    /* 24 → 18.02 */
+    --text-3xl: clamp(1.25rem,  0.966rem + 1.21vw, 1.875rem);  /* ★見出し 30 → 20 */
+    --text-4xl: clamp(1.375rem, 0.977rem + 1.7vw,  2.25rem);   /* 36 → 22.01 */
+    --text-5xl: clamp(1.625rem, 1.17rem  + 1.94vw, 2.625rem);  /* 42 → 26 */
+
+    /* --- Line height：5 段。xl（2.2）は宣言のみで実装 0 要素 --- */
+    --line-height-xs: 1.4;   /* ナビ・UI（28 要素） */
+    --line-height-sm: 1.5;   /* カードのタイトル（16 要素） */
+    --line-height-md: 1.6;   /* ★既定。本文・セクション見出し（56 要素・最多） */
+    --line-height-lg: 1.8;   /* 読み物の本文（40 要素） */
+    --line-height-xl: 2.2;   /* 宣言のみ・実測 0 要素。使わない */
+
+    /* --- Colors：9 段スケール（-10 が最淡 → -90 が最濃） --- */
+    --color-main-10: #ffeaef; --color-main-20: #fbcfda; --color-main-30: #f494ac;
+    --color-main-40: #f1547d; --color-main-50: #df003a; --color-main-60: #b2002e;
+    --color-main-70: #8e0025; --color-main-80: #580017; --color-main-90: #37000e;
+    --color-main: #df003a;            /* ★ブランド色。可視 21 要素 */
+    --color-link: #df003a;            /* リンク色＝ブランド色 */
+    --color-danger: #b00000;
+    --color-danger-light: #f4d7d7;
+
+    --color-white: #fff;
+    --color-gray-10: #f6f6f6;  --color-gray-20: #d9d9d9;  --color-gray-70: #595757;
+    --color-gray-80: #4d4d4d;  --color-gray-90: #333;
+    --color-gray:   #595757;
+    --color-type:   #333;             /* ★本文。可視 97 要素 */
+    --color-border: #d9d9d9;
+    --color-border-light: #f6f6f6;
+    --color-bg:      #f6f6f6;         /* 下層のページ背景 */
+    --color-bg-news: #f8f6f1;         /* ★トップのページ背景（クリーム） */
+    --color-bg-service: #f9e9e9;      /* ナビの「製品・サービス」の面 */
+
+    /* ESG：テキストは -80、地色は -10 */
+    --color-green-10: #f3f9e4;  --color-green-80: #57730a;
+    --color-pink-10:  #fceef6;  --color-pink-70:  #af4783;
+    --color-blue-10:  #d8e9f5;  --color-blue-80:  #1a6394;
+    /* 事業部門の色 */
+    --color-information_communication-pink: #dc81b6;
+    --color-information_security-blue:      #5da9dd;
+    --color-landi-green:                    #a7ce38;
+    --color-others-yellow:                  #f9a51b;
+
+    /* --- Radius --- */
+    --r-s: 3px;    /* タグ */
+    --r-m: 6px;    /* 宣言のみ・実測 0 要素 */
+    --r-l: 10px;   /* ★カード（34 要素） */
+
+    /* --- Shadow：3 段。--shadow-l だけ y に 4px 落ちる --- */
+    --shadow-s: 0 0 6px rgba(0,0,0,.12);
+    --shadow-m: 0 0 8px rgba(0,0,0,.16);
+    --shadow-l: 0 4px 24px rgba(0,0,0,.12);   /* ★カード（11 要素） */
+
+    /* --- Spacing：Tailwind 風。値は常に「トークン番号 × 4px」 --- */
+    --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+    --space-5: 20px;  --space-6: 24px;  --space-8: 32px;  --space-10: 40px;
+    --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+    --ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+    --opacity: 0.75;
+    --scale: 1.03;
+    --move: 4px;
+    --header-height: 80px;
+    --container: 1200px;   /* 実測 3 要素で最多 */
+    --column: 782px;       /* 本文カラム */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 100%; line-break: normal; scroll-behavior: smooth; text-underline-offset: 0.07em; }
+
+  /* ★body 自体が clamp 流体。font-size を px で直書きしない */
+  body {
+    background: var(--color-bg-news);
+    color: var(--color-type);
+    font-family: var(--font-sans-serif);
+    font-size: var(--text-md);
+    font-weight: var(--font-medium);      /* ★既定は 500（Medium） */
+    line-height: var(--line-height-md);
+    -webkit-font-smoothing: antialiased;
+    /* letter-spacing は書かない（既定 normal・可視 170/173 要素） */
+    /* font-feature-settings も使わない（実測 0 要素） */
+  }
+
+  /* HEADER */
+  .header { background: var(--color-white); box-shadow: var(--shadow-s); position: relative; z-index: 2; }
+  .header-inner { display: flex; align-items: center; max-width: var(--container); margin: 0 auto; padding: 18px 20px; gap: 26px; }
+  .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--color-type); }
+  .logo-mark { font-family: var(--font-en); font-size: 26px; font-weight: 700; line-height: 1; color: var(--color-main); letter-spacing: -0.01em; }
+  .logo-bar { width: 1px; height: 24px; background: var(--color-border); }
+  .logo-jp { font-size: var(--text-md); font-weight: var(--font-medium); line-height: 1; }
+  .header-nav { display: flex; gap: 22px; align-items: center; margin-left: auto; }
+  .header-nav a:not(.nav-pill) { font-size: var(--text-xs); font-weight: var(--font-medium); line-height: var(--line-height-xs); color: var(--color-type); text-decoration: none; }
+  .nav-pill { background: var(--color-bg-service); color: var(--color-main); border: 2px solid var(--color-bg-service); border-radius: 40px; padding: 4px 14px; font-size: var(--text-xs); font-weight: var(--font-medium); line-height: var(--line-height-xs); text-decoration: none; }
+  .icon-btn { width: 38px; height: 38px; border: 1px solid var(--color-border); border-radius: 50%; background: transparent; color: var(--color-main); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: var(--text-md); }
+
+  /* SECTIONS */
+  .section { padding: var(--space-16) 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--color-gray-10); }
+  .section-white { background: var(--color-white); }
+  .section-inner { padding: var(--space-16) 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--color-gray); margin-bottom: var(--space-3); line-height: var(--line-height-xs); }
+  /* ★セクション見出し: --text-3xl / 700 / lh 1.6 / letter-spacing は書かない */
+  .heading-top { font-family: var(--font-en); font-size: var(--text-3xl); font-weight: var(--font-bold); line-height: var(--line-height-md); }
+  .heading-jp { font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-md); color: var(--color-main); }
+  .section-lead { font-size: var(--text-md); font-weight: var(--font-medium); line-height: var(--line-height-lg); margin: var(--space-3) 0 var(--space-10); max-width: 880px; }
+  .note { font-size: var(--text-md); line-height: var(--line-height-lg); color: var(--color-gray-70); margin-top: var(--space-6); max-width: 880px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--color-gray-10); padding: 2px 6px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: var(--space-4); }
+  .swatch { background: var(--color-white); border-radius: var(--r-l); box-shadow: var(--shadow-l); overflow: hidden; }
+  .swatch-chip { height: 80px; }
+  .swatch-body { padding: 14px 16px 18px; }
+  .swatch-name { font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-sm); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-top: 4px; line-height: var(--line-height-xs); }
+  .swatch-use { font-size: var(--text-xs); line-height: var(--line-height-sm); color: var(--color-gray-70); margin-top: 8px; }
+  .scale-strip { display: flex; margin-bottom: var(--space-6); border-radius: var(--r-s); overflow: hidden; }
+  .scale-strip div { flex: 1; height: 64px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; font-family: var(--font-mono); font-size: 10px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 274px 1fr; gap: var(--space-6); padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font-sans-serif); font-size: var(--text-xs); font-weight: var(--font-bold); color: var(--color-type); }
+  .clamp-table { width: 100%; border-collapse: collapse; background: var(--color-white); border-radius: var(--r-l); overflow: hidden; box-shadow: var(--shadow-l); }
+  .clamp-table th, .clamp-table td { padding: 10px 14px; text-align: left; font-size: var(--text-xs); line-height: var(--line-height-xs); border-bottom: 1px solid var(--color-border-light); }
+  .clamp-table th { background: var(--color-gray-10); font-weight: var(--font-bold); }
+  .clamp-table td.mono { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); }
+  .clamp-table td.num { font-family: var(--font-num); font-weight: 500; }
+  .lh-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--space-6); background: var(--color-white); border-radius: var(--r-l); box-shadow: var(--shadow-l); padding: var(--space-6) var(--space-8); margin-top: var(--space-3); }
+  .lh-demo .box { border-left: 3px solid var(--color-main); padding-left: 14px; }
+  .lh-demo .box b { display: block; font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-bottom: 8px; line-height: var(--line-height-xs); }
+
+  /* STATS */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); }
+  .stat { background: var(--color-white); border-radius: var(--r-l); box-shadow: var(--shadow-l); padding: var(--space-6); text-align: center; }
+  .stat-label { font-size: var(--text-xs); font-weight: var(--font-medium); line-height: var(--line-height-xs); }
+  .stat-num { font-family: var(--font-num); font-size: 54px; font-weight: 500; line-height: 1.2; margin-top: 10px; }
+  .stat-unit { font-family: var(--font-num); font-size: 24px; font-weight: 500; }
+
+  /* ESG */
+  .esg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--space-6); }
+  .esg { border-radius: var(--r-l); padding: var(--space-6); }
+  .esg-en { font-family: var(--font-en); font-size: var(--text-xl); font-weight: var(--font-bold); line-height: var(--line-height-md); }
+  .esg-jp { font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-md); margin-top: 4px; }
+  .esg-body { font-size: var(--text-xs); line-height: var(--line-height-lg); color: var(--color-type); margin-top: 10px; }
+  .esg-e { background: var(--color-green-10); } .esg-e .esg-en, .esg-e .esg-jp { color: var(--color-green-80); }
+  .esg-s { background: var(--color-pink-10); }  .esg-s .esg-en, .esg-s .esg-jp { color: var(--color-pink-70); }
+  .esg-g { background: var(--color-blue-10); }  .esg-g .esg-en, .esg-g .esg-jp { color: var(--color-blue-80); }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; margin-bottom: var(--space-6); }
+  .btn { font-family: var(--font-sans-serif); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn-main { background: var(--color-white); color: var(--color-type); border: 1px solid var(--color-border); border-radius: 40px; padding: 14px 20px; font-size: var(--text-md); font-weight: var(--font-medium); line-height: var(--line-height-md); }
+  .btn-main.u-shadow-m { box-shadow: var(--shadow-m); border-color: transparent; }
+  .btn-main .arw { color: var(--color-main); }
+  .tab { border-radius: 60px; padding: 7px 18px; font-size: var(--text-xs); font-weight: var(--font-medium); line-height: var(--line-height-xs); background: var(--color-white); color: var(--color-main); border: 1px solid var(--color-border); cursor: pointer; font-family: var(--font-sans-serif); }
+  .tab.is-active { background: var(--color-main); color: var(--color-white); border-color: var(--color-main); }
+  .arrow-btn { width: 44px; height: 44px; border: 2px solid var(--color-main); border-radius: 50%; background: transparent; color: var(--color-main); cursor: pointer; font-size: var(--text-2xs); display: inline-flex; align-items: center; justify-content: center; }
+  .contact-btn { background: var(--color-bg-news); color: var(--color-type); border: none; border-radius: 0 0 10px; padding: 14px 17px; font-size: var(--text-md); font-weight: var(--font-medium); line-height: var(--line-height-md); text-decoration: none; }
+  .pagetop { width: 48px; height: 48px; background: var(--color-gray-90); color: var(--color-white); border-radius: 50%; box-shadow: var(--shadow-s); display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-xs); text-decoration: none; }
+
+  /* TAGS */
+  .tag { display: inline-block; background: var(--color-gray-80); color: var(--color-white); font-size: var(--text-2xs); font-weight: var(--font-medium); line-height: var(--line-height-xs); padding: 3px 8px; border-radius: var(--r-s); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: var(--space-10); }
+  .card { background: var(--color-white); border-radius: var(--r-l); box-shadow: var(--shadow-l); overflow: hidden; text-decoration: none; color: var(--color-type); display: block; }
+  .card-img { background: linear-gradient(140deg,#f6dde4,#e7c3cf); aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; color: #8e0025; font-size: var(--text-xs); font-weight: var(--font-bold); line-height: var(--line-height-sm); }
+  .card-body { padding: 18px 20px 22px; }
+  .card-meta { display: flex; align-items: center; gap: 10px; }
+  .card-date { font-family: var(--font-num); font-size: var(--text-xs); font-weight: 500; color: var(--color-gray-70); }
+  .card-title { font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-md); margin-top: 10px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); }
+  .field label { display: block; font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-sm); margin-bottom: var(--space-2); }
+  .field input, .field select {
+    width: 100%; background: var(--color-white); color: var(--color-type);
+    border: 1px solid #676767; border-radius: var(--r-s);
+    padding: 14px; font-size: var(--text-md); line-height: var(--line-height-sm);
+    font-family: var(--font-sans-serif); font-weight: var(--font-medium);
+  }
+  .field.is-focus input { border-color: #4d4d4d; outline: 2px solid var(--color-main); outline-offset: 1px; }
+  .field.is-error input { border-color: var(--color-danger); background: var(--color-danger-light); }
+  .field-msg { font-size: var(--text-xs); line-height: var(--line-height-sm); color: var(--color-gray); margin-top: var(--space-2); }
+  .field.is-error .field-msg { color: var(--color-danger); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-8); }
+  .elev { background: var(--color-white); border-radius: var(--r-l); padding: var(--space-8); text-align: center; }
+  .elev.e0 { border: 1px solid var(--color-border); }
+  .elev.e1 { box-shadow: var(--shadow-s); }
+  .elev.e2 { box-shadow: var(--shadow-m); }
+  .elev.e3 { box-shadow: var(--shadow-l); }
+  .elev-name { font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-sm); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-top: 10px; line-height: var(--line-height-xs); }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--color-white); box-shadow: var(--shadow-l); border-radius: var(--r-s); height: 40px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); }
+  .space-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-top: var(--space-6); }
+  .space-item { text-align: center; }
+  .space-bar { background: var(--color-main-30); border-radius: var(--r-s); }
+  .space-label { font-family: var(--font-mono); font-size: 10px; color: var(--color-gray); margin-top: 6px; line-height: var(--line-height-xs); }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: var(--space-8); justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 112px; height: 70px; background: var(--color-white); box-shadow: var(--shadow-l); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--color-gray); margin-top: 10px; line-height: var(--line-height-xs); }
+
+  /* FOOTER */
+  .footer { background: var(--color-gray-90); color: var(--color-white); padding: var(--space-12) 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-family: var(--font-en); font-size: var(--text-xl); font-weight: var(--font-bold); line-height: var(--line-height-md); }
+  .footer-cols { display: flex; gap: var(--space-12); margin-top: var(--space-6); flex-wrap: wrap; }
+  .footer-col-title { font-size: var(--text-md); font-weight: var(--font-bold); line-height: var(--line-height-sm); color: var(--color-white); }
+  .footer-col a { display: block; font-size: var(--text-xs); font-weight: var(--font-normal); line-height: 2; color: var(--color-white); text-decoration: none; opacity: .85; }
+  .footer-copy { font-family: var(--font-en); font-size: var(--text-2xs); line-height: var(--line-height-sm); margin-top: var(--space-8); opacity: .75; }
+
+  @media only screen and (max-width: 1023px) {
+    .type-row { grid-template-columns: 1fr; gap: var(--space-2); }
+  }
+  @media only screen and (max-width: 767px) {
+    .section, .section-inner { padding: var(--space-12) 16px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-mark">TOMOWEL</span><span class="logo-bar"></span><span class="logo-jp">共同印刷株式会社</span></a>
+    <nav class="header-nav">
+      <a href="#">企業情報</a><a href="#">IR情報</a><a href="#">ニュースリリース</a><a href="#">サステナビリティ</a><a href="#">採用情報</a>
+      <a href="#" class="nav-pill">製品・サービス →</a>
+      <button class="icon-btn" aria-label="検索ボックスを開く">⌕</button>
+      <a href="#" class="contact-btn">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="heading-top">Color Palette</div>
+  <div class="heading-jp">9 段スケールで持つ</div>
+  <p class="section-lead">色は <b>すべて 9 段（<code>-10</code> が最淡 → <code>-90</code> が最濃）</b>で定義されている。実装に出ているのはマゼンタ <b>#df003a</b> と ESG・事業部門の色だけで、<b><code>--color-sub-red</code> / <code>-cream</code> / <code>-blue</code> / <code>-yellow</code> の 4 系統（各 10 段・計 40 個）はクリームの <code>-20</code> を除いて可視 0 要素</b>。「サブカラーが 4 色ある」と読まないこと。</p>
+
+  <div class="scale-strip">
+    <div style="background:#ffeaef">10</div><div style="background:#fbcfda">20</div><div style="background:#f494ac">30</div>
+    <div style="background:#f1547d;color:#fff">40</div><div style="background:#df003a;color:#fff">★50</div><div style="background:#b2002e;color:#fff">60</div>
+    <div style="background:#8e0025;color:#fff">70</div><div style="background:#580017;color:#fff">80</div><div style="background:#37000e;color:#fff">90</div>
+  </div>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#df003a"></div><div class="swatch-body"><div class="swatch-name">TOMOWEL Magenta</div><div class="swatch-hex">#df003a（--color-main / --color-link）</div><div class="swatch-use">★可視 21 要素。ロゴ・タブ選択・リンク・矢印・現在地</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text</div><div class="swatch-hex">#333333（--color-type / --color-gray-90）</div><div class="swatch-use">★本文。可視 97 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#4d4d4d"></div><div class="swatch-body"><div class="swatch-name">Tag BG</div><div class="swatch-hex">#4d4d4d（--color-gray-80）</div><div class="swatch-use">★ニュースのカテゴリタグ。可視 41 要素の面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d9d9d9"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#d9d9d9（--color-border / --color-gray-20）</div><div class="swatch-use">ボタン・タブの枠（可視 7 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f8f6f1"></div><div class="swatch-body"><div class="swatch-name">News Cream</div><div class="swatch-hex">#f8f6f1（--color-bg-news）</div><div class="swatch-use">★トップのページ背景</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f6f6f6"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#f6f6f6（--color-bg / --color-gray-10）</div><div class="swatch-use">★下層のページ背景</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f9e9e9"></div><div class="swatch-body"><div class="swatch-name">Service BG</div><div class="swatch-hex">#f9e9e9（--color-bg-service）</div><div class="swatch-use">ナビの「製品・サービス」の面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#b00000"></div><div class="swatch-body"><div class="swatch-name">Danger</div><div class="swatch-hex">#b00000（--color-danger）</div><div class="swatch-use">エラー表示。薄い側は #f4d7d7</div></div></div>
+  </div>
+
+  <p class="note"><b>トップと下層で地色が違う。</b>トップは <code>#f8f6f1</code>（クリーム）、下層は <code>#f6f6f6</code>（グレー）。どちらもトークン化されている。</p>
+
+  <h3 class="heading-jp" style="margin-top:var(--space-12)">ESG はテキスト -80 ／ 地色 -10 の組で分ける</h3>
+  <div class="esg-grid" style="margin-top:var(--space-4)">
+    <div class="esg esg-e"><div class="esg-en">Environment</div><div class="esg-jp">環境</div><div class="esg-body">テキスト #57730a（--color-green-80）／ 地色 #f3f9e4（--color-green-10）</div></div>
+    <div class="esg esg-s"><div class="esg-en">Social</div><div class="esg-jp">社会</div><div class="esg-body">テキスト #af4783（--color-pink-70）／ 地色 #fceef6（--color-pink-10）</div></div>
+    <div class="esg esg-g"><div class="esg-en">Governance</div><div class="esg-jp">ガバナンス</div><div class="esg-body">テキスト #1a6394（--color-blue-80）／ 地色 #d8e9f5（--color-blue-10）</div></div>
+  </div>
+</section>
+
+<section class="section-white" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="heading-top">Typography</div>
+  <div class="heading-jp">字間を一切触らない</div>
+  <p class="section-lead">可視 173 要素中 <b>170 要素が <code>letter-spacing: normal</code></b>（下層は 55/55 ＝ 全部）。CSS 全文でも宣言は <code>0.1em</code> / <code>0.2em</code> / <code>0.01em</code> / <code>0.4em</code> の 4 つしかなく、<b>本文には 1 つも当たっていない</b>。例外は部門名の 3 要素（24px に <code>0.1em</code> ＝ 2.4px）だけ。<b><code>font-feature-settings</code> も 0 要素</b>で、Noto Sans JP の既定の字送りのまま組む。</p>
+
+  <h3 class="heading-jp">文字サイズが全段 clamp() の流体</h3>
+  <p class="section-lead" style="margin:var(--space-3) 0 var(--space-4)"><code>html</code> は 16px 固定だが <b><code>body</code> 自体が <code>--text-md</code></b>。4 幅で測ると 1440px → 16px / 1200px → 15.968px / 834px → 15.0896px / 375px → 14px と連続的に動く。<b>px で書き写すとブレークポイント間で別物になる。</b></p>
+  <table class="clamp-table">
+    <thead><tr><th>Token</th><th>clamp 式</th><th>1440px</th><th>1200px</th><th>834px</th><th>375px</th></tr></thead>
+    <tbody>
+      <tr><td><code>--text-2xs</code></td><td class="mono">0.625rem, 0.568rem + 0.24vw, 0.75rem</td><td class="num">12</td><td class="num">11.97</td><td class="num">11.09</td><td class="num">10</td></tr>
+      <tr><td><code>--text-xs</code></td><td class="mono">0.75rem, 0.693rem + 0.24vw, 0.875rem</td><td class="num">14</td><td class="num">13.97</td><td class="num">13.09</td><td class="num">12</td></tr>
+      <tr><td><code>--text-sm</code></td><td class="mono">0.813rem, 0.756rem + 0.24vw, 0.938rem</td><td class="num">15.01</td><td class="num">14.98</td><td class="num">14.10</td><td class="num">13.01</td></tr>
+      <tr><td><b><code>--text-md</code></b> ★本文</td><td class="mono">0.875rem, 0.818rem + 0.24vw, 1rem</td><td class="num"><b>16</b></td><td class="num"><b>15.97</b></td><td class="num"><b>15.09</b></td><td class="num"><b>14</b></td></tr>
+      <tr><td><code>--text-lg</code></td><td class="mono">1rem, 0.943rem + 0.24vw, 1.125rem</td><td class="num">18</td><td class="num">17.97</td><td class="num">17.09</td><td class="num">16</td></tr>
+      <tr><td><code>--text-xl</code></td><td class="mono">1.063rem, 0.977rem + 0.36vw, 1.25rem</td><td class="num">20</td><td class="num">19.95</td><td class="num">18.63</td><td class="num">17.01</td></tr>
+      <tr><td><code>--text-2xl</code></td><td class="mono">1.125rem, 0.955rem + 0.73vw, 1.5rem</td><td class="num">24</td><td class="num">24</td><td class="num">21.37</td><td class="num">18.02</td></tr>
+      <tr><td><b><code>--text-3xl</code></b> ★見出し</td><td class="mono">1.25rem, 0.966rem + 1.21vw, 1.875rem</td><td class="num"><b>30</b></td><td class="num">29.98</td><td class="num">25.55</td><td class="num">20</td></tr>
+      <tr><td><code>--text-4xl</code></td><td class="mono">1.375rem, 0.977rem + 1.7vw, 2.25rem</td><td class="num">36</td><td class="num">36</td><td class="num">29.81</td><td class="num">22.01</td></tr>
+      <tr><td><code>--text-5xl</code></td><td class="mono">1.625rem, 1.17rem + 1.94vw, 2.625rem</td><td class="num">42</td><td class="num">42</td><td class="num">34.90</td><td class="num">26</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="heading-jp" style="margin-top:var(--space-12)">行間も 5 段のトークン</h3>
+  <div class="lh-demo">
+    <div class="box"><b>--line-height-xs: 1.4 — ナビ・UI（28 要素）</b><div style="font-size:var(--text-xs);line-height:1.4">企業情報／IR情報／ニュースリリース／サステナビリティ／採用情報</div></div>
+    <div class="box"><b>--line-height-sm: 1.5 — カードのタイトル（16 要素）</b><div style="font-size:var(--text-md);line-height:1.5">分別可能なラミネートチューブ容器を開発</div></div>
+    <div class="box"><b>--line-height-md: 1.6 ★既定（56 要素・最多）</b><div style="font-size:var(--text-md);line-height:1.6">本文もセクション見出しもこの値。見出しだけ詰める設計ではない。</div></div>
+    <div class="box"><b>--line-height-lg: 1.8 — 読み物（40 要素）</b><div style="font-size:var(--text-md);line-height:1.8">お客さま、お取引先、社会、そして地球。関わるすべてと共に歩む。</div></div>
+  </div>
+  <p class="note"><b><code>--line-height-xl: 2.2</code> は宣言のみで実装 0 要素。</b>「このサイトは行間 2.2 を使う」と読まないこと。</p>
+
+  <div class="type-row" style="margin-top:var(--space-10)"><div class="type-meta"><b>Section Heading ★</b>--text-3xl（30px）/ 700<br>lh 1.60 / ls normal / Lato</div><div style="font-family:var(--font-en);font-size:var(--text-3xl);font-weight:700;line-height:1.6">News Release</div></div>
+  <div class="type-row"><div class="type-meta"><b>Page Title（下層）</b>--text-4xl（42px）/ 700<br>lh 1.60 / ls normal</div><div style="font-size:var(--text-4xl);font-weight:700;line-height:1.6">企業情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>Stat Number ★</b>54px / 500 / lh 1.20<br><b>Roboto（数値専用）</b></div><div style="font-family:var(--font-num);font-size:54px;font-weight:500;line-height:1.2">99.9<span style="font-size:24px">%</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>Department Name</b>24px / 500<br>ls <b>0.1em</b>（= 2.4px）<br>※字間を空ける唯一の箇所</div><div style="font-size:24px;font-weight:500;letter-spacing:0.1em;line-height:1.6">情報コミュニケーション部門</div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub Heading</b>--text-lg（18px）/ 500〜700<br>lh 1.60</div><div style="font-size:var(--text-lg);font-weight:700;line-height:1.6">非財務ハイライト</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>--text-md（16px）/ <b>500</b><br>lh 1.60 / ls normal</div><div style="font-size:var(--text-md);font-weight:500;line-height:1.6">共同印刷グループは、情報コミュニケーション・情報セキュリティ・生活産業資材の三つの事業を軸に、印刷技術を応用したソリューションを提供しています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>UI / Nav</b>--text-xs（14px）/ 500<br>lh 1.40</div><div style="font-size:var(--text-xs);font-weight:500;line-height:1.4">企業情報　IR情報　ニュースリリース　サステナビリティ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Tag</b>--text-2xs（12px）/ 500<br>ls normal</div><div><span class="tag">ニュースリリース</span>　<span class="tag">製品・サービス</span>　<span class="tag">イベント・セミナー</span></div></div>
+
+  <p class="note"><b>本文の既定ウェイトは 500（Medium）。</b>実測で可視 133 要素が 500、400 はフッターのリンク 6 要素だけ。Noto Sans JP の 400 / 500 / 700 を Google Fonts から読み込んでいるので 500 は合成ではなく実体。<b>600 は存在しない</b>（トークンにも無い）。<br><b><code>--font-serif</code>（游明朝のスタック）と <code>koharu</code> の <code>@font-face</code> は、どちらも可視 0 要素。</b>宣言はあるが使われていない。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <div class="heading-top">Components</div>
+  <div class="heading-jp">ピルと角丸 10px のカード</div>
+  <p class="section-lead">CTA は <b>白地 ＋ 1px の枠 ＋ <code>border-radius: 40px</code></b>、タブは <b>60px</b>、カードは <b><code>--r-l</code>（10px）＋ <code>--shadow-l</code></b>。タグだけ <code>--r-s</code>（3px）。<b><code>--r-m</code>（6px）は実測 0 要素。</b></p>
+
+  <div class="btn-grid">
+    <a href="#" class="btn btn-main u-shadow-m"><span>すべての製品・サービスを見る</span><span class="arw">→</span></a>
+    <a href="#" class="btn btn-main"><span>PDF版</span><span class="arw">→</span></a>
+    <a href="#" class="btn btn-main"><span>動画版</span><span class="arw">→</span></a>
+  </div>
+  <div class="btn-grid">
+    <button class="tab is-active">すべて</button>
+    <button class="tab">IR情報</button>
+    <button class="tab">製品・サービス</button>
+    <button class="tab">サステナビリティ</button>
+    <button class="arrow-btn" aria-label="Prev">◀</button>
+    <button class="arrow-btn" aria-label="Next">▶</button>
+    <a href="#" class="pagetop">↑</a>
+  </div>
+
+  <div class="stat-grid" style="margin-top:var(--space-10)">
+    <div class="stat"><div class="stat-label">リサイクル率</div><div class="stat-num">99.9<span class="stat-unit">%</span></div></div>
+    <div class="stat"><div class="stat-label">男性の育児休業取得率</div><div class="stat-num">100.0<span class="stat-unit">%</span></div></div>
+    <div class="stat"><div class="stat-label">女性役員比率</div><div class="stat-num">27.3<span class="stat-unit">%</span></div></div>
+  </div>
+
+  <div class="card-grid" style="margin-top:var(--space-10)">
+    <a href="#" class="card">
+      <div class="card-img">ニュース画像</div>
+      <div class="card-body"><div class="card-meta"><span class="card-date">2026.10.02</span><span class="tag">製品・サービス</span></div><div class="card-title">分別可能なラミネートチューブ容器を開発</div></div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img">イベント画像</div>
+      <div class="card-body"><div class="card-meta"><span class="card-date">2026.09.28</span><span class="tag">イベント・セミナー</span></div><div class="card-title">「TOKYO PACK 2026」に出展します</div></div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img">サステナビリティ画像</div>
+      <div class="card-body"><div class="card-meta"><span class="card-date">2026.09.14</span><span class="tag">サステナビリティ</span></div><div class="card-title">共同印刷グループのミライに向けた取り組みをご紹介</div></div>
+    </a>
+  </div>
+
+  <p class="note">数字（日付・業績）は <b><code>--font-num</code>（Roboto）</b>で組む。和文と欧文と数字で書体を分ける 3 本立ての設計。</p>
+</section>
+
+<section class="section-alt" id="forms">
+<div class="section-inner">
+  <div class="section-label">04 / Forms</div>
+  <div class="heading-top">Forms</div>
+  <div class="heading-jp">入力欄も既定ウェイトは 500</div>
+  <p class="section-lead"><code>input</code> / <code>select</code> はフォント継承が効かないので、<b><code>font-family</code> と <code>font-weight: 500</code> を明示的に当て直す</b>。枠は <code>--color-input-border</code>（#676767）、ホバーで #4d4d4d。</p>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="f1">会社名</label>
+      <input id="f1" type="text" placeholder="株式会社○○">
+      <div class="field-msg">法人格を含めてご入力ください</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f2">メールアドレス（フォーカス時）</label>
+      <input id="f2" type="text" value="info@example.co.jp">
+      <div class="field-msg">フォーカスリングは #df003a</div>
+    </div>
+    <div class="field is-error">
+      <label for="f3">お問い合わせ内容（エラー時）</label>
+      <input id="f3" type="text" value="">
+      <div class="field-msg">お問い合わせ内容を入力してください</div>
+    </div>
+    <div class="field">
+      <label for="f4">ご希望の事業部門</label>
+      <select id="f4"><option>情報コミュニケーション部門</option><option>情報セキュリティ部門</option><option>生活・産業資材部門</option></select>
+      <div class="field-msg">該当する部門をお選びください</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="section-label">05 / Elevation</div>
+  <div class="heading-top">Depth &amp; Elevation</div>
+  <div class="heading-jp">影は 3 段のトークン</div>
+  <p class="section-lead"><code>--shadow-s</code> と <code>--shadow-m</code> は <b>y オフセット 0 の全方向の影</b>、<b><code>--shadow-l</code> だけ y に 4px 落ちる</b>。カードを浮かせるのが <code>--shadow-l</code>、ボタンの縁取りが <code>--shadow-s</code> / <code>--shadow-m</code> という使い分け。</p>
+
+  <div class="elev-grid">
+    <div class="elev e0"><div class="elev-name">Level 0</div><div class="elev-val">none（枠線で分ける）</div></div>
+    <div class="elev e1"><div class="elev-name">--shadow-s</div><div class="elev-val">0 0 6px rgba(0,0,0,.12)<br>ページトップボタン（1 要素）</div></div>
+    <div class="elev e2"><div class="elev-name">--shadow-m</div><div class="elev-val">0 0 8px rgba(0,0,0,.16)<br>CTA ボタン（1 要素）</div></div>
+    <div class="elev e3"><div class="elev-name">--shadow-l ★</div><div class="elev-val">0 4px 24px rgba(0,0,0,.12)<br>カード（11 要素）</div></div>
+  </div>
+
+  <p class="note">抽出でもう 1 つ検出される <code>rgba(0,0,0,0.15) 0 0 2px, rgba(0,0,0,0.3) 0 2px 10px</code> は <b>Cookie 同意バー（trust360）のもの</b>で、サイト本体の語彙ではない。</p>
+</section>
+
+<section class="section-white" id="layout">
+<div class="section-inner">
+  <div class="section-label">06 / Layout</div>
+  <div class="heading-top">Layout</div>
+  <div class="heading-jp">余白は N × 4px</div>
+  <p class="section-lead"><code>--space-*</code> が 34 段。<b>値は常に「トークン番号 × 4px」</b>（<code>--space-6</code> = 24px）。別に <code>--10px</code> 〜 <code>--60px</code> という <b><code>rem</code> を px の名前で引くためのトークン</b>も 22 段ある。</p>
+
+  <div class="space-row">
+    <div class="space-item"><div class="space-bar" style="width:4px;height:4px"></div><div class="space-label">1<br>4px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:8px;height:8px"></div><div class="space-label">2<br>8px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:16px;height:16px"></div><div class="space-label">4<br>16px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:24px;height:24px"></div><div class="space-label">6<br>24px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:32px;height:32px"></div><div class="space-label">8<br>32px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:40px;height:40px"></div><div class="space-label">10<br>40px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:64px;height:64px"></div><div class="space-label">16<br>64px</div></div>
+    <div class="space-item"><div class="space-bar" style="width:96px;height:96px"></div><div class="space-label">24<br>96px</div></div>
+  </div>
+
+  <div class="layout-demo" style="margin-top:var(--space-10)">
+    <div class="layout-bar" style="width:100%">1280px — 全幅寄りのブロック</div>
+    <div class="layout-bar" style="width:94%">1200px — ★コンテナ（実測 3 要素で最多）</div>
+    <div class="layout-bar" style="width:61%">782px — 本文カラム</div>
+    <div class="layout-bar" style="width:32%">412px — カード</div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:3px"></div><div class="radius-label">--r-s 3px ★タグ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">--r-m 6px（実測 0）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">--r-l 10px ★カード</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:40px"></div><div class="radius-label">40px ★CTA ピル</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:60px"></div><div class="radius-label">60px ★タブ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0 0 10px"></div><div class="radius-label">0 0 10px（お問い合わせ）</div></div>
+  </div>
+
+  <p class="note"><b>文字サイズはメディアクエリで上書きする必要がない。</b>全段が <code>clamp()</code> の <code>vw</code> 連動なので、ブレークポイントをまたいで連続的に動く。行間は比率トークンなのでサイズに追従して自動で広がる。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">TOMOWEL</div>
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">企業情報</div><a href="#">ごあいさつ</a><a href="#">経営理念</a><a href="#">会社概要</a><a href="#">沿革</a><a href="#">事業拠点</a></div>
+      <div class="footer-col"><div class="footer-col-title">IR情報</div><a href="#">中期経営計画</a><a href="#">財務情報</a><a href="#">IR資料室</a><a href="#">株式・社債情報</a></div>
+      <div class="footer-col"><div class="footer-col-title">サステナビリティ</div><a href="#">マテリアリティ</a><a href="#">環境（E）</a><a href="#">社会（S）</a><a href="#">ガバナンス（G）</a></div>
+      <div class="footer-col"><div class="footer-col-title">その他</div><a href="#">サイトマップ</a><a href="#">個人情報保護方針</a><a href="#">個人情報の取り扱いについて</a></div>
+    </div>
+    <div class="footer-copy">© 1997-2026 Kyodo Printing Co., Ltd. All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

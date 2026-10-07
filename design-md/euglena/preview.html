@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ユーグレナ（euglena）</title>
+<style>
+  :root {
+    /* === Colors ===
+       実サイトは CSS Custom Properties を実質 1 つも持たない（トップ 0 個 /
+       下層 2 個は Swiper の既定値）。以下は computed style と CSS 全文の実測値。2026-10-07 */
+    --green:        #009E8A;   /* ★ターコイズ。コーポレート導線。可視 34 要素 */
+    --green-consent:#009279;   /* Cookie 同意バーのみ */
+    --pink:         #EE8AAA;   /* ★ピンク。EC（通販）導線専用 */
+    --black:        #000000;   /* ★本文。可視 143 要素。純黒を使う */
+    --white:        #FFFFFF;
+    --muted:        #929292;   /* パンくずの TOP（下層 2 要素） */
+    --hero-tint:    #BCDAD2;   /* ヒーローの波形マスク越しの面（794,453 px²） */
+    --bg:           #FFFFFF;   /* pageBackground.resolved（根拠 body） */
+
+    /* === Fonts ===
+       ★Web フォントを 1 本も読み込まない。実測でフォントファイル要求 0 件。
+       游ゴシック／ヒラギノ／Segoe UI といった OS ローカル書体だけで組む。
+       Windows の游ゴシック問題は @font-face ではなくスタック順で解いている：
+       游ゴシック体 / YuGothic（macOS が当たる）の直後に
+       "游ゴシック Medium" / "Yu Gothic Medium"（Windows が当たる）を置く。
+       実サイトは "Noto Sans CJK" と書いているが実在しないファミリー名なので、
+       ここでは正しい "Noto Sans JP" に直してある。 */
+    --font-body: -apple-system, BlinkMacSystemFont, Roboto,
+                 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+                 游ゴシック, "Yu Gothic",
+                 "Noto Sans JP", "Hiragino Sans", "Segoe UI", sans-serif;
+    --font-jp:   游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+                 游ゴシック, "Yu Gothic",
+                 "Noto Sans JP", "Hiragino Sans", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: body が 1。行間はブロックごとに明示的に与える === */
+    --lh-base:  1;      /* ★body の既定。実測 85 要素（最多） */
+    --lh-card:  1.42;   /* カード見出し（46 要素） */
+    --lh-sub:   1.5;    /* 小見出し・キャプション（9 要素） */
+    --lh-mid:   1.6;    /* 下層の見出し（16 要素） */
+    --lh-body:  1.75;   /* ★本文（23 要素） */
+    --lh-lead:  1.8;    /* リード（3 要素） */
+    --lh-wide:  2;      /* Euglena Philosophy 周辺（7 要素） */
+
+    /* === Letter spacing: body に 0.03em を 1 回だけ（= 0.48px として px 継承） === */
+    --ls: 0.03em;   /* ★可視 170 要素中 170 要素がこの値 */
+
+    /* === Radius: トークンが無く値が揃っていない。実測を素直に写す === */
+    --r-btn:   6px;    /* ヘッダーの solid ボタン */
+    --r-card:  10px;   /* カード（24 要素） */
+    --r-card2: 13px;   /* 下層のカード（14 要素） */
+    --r-box:   20px;   /* 大きめのブロック（18 要素） */
+    --r-pill:  24px;   /* ★本文中の CTA（枠線ピル） */
+
+    --shadow-card:   1px 3px 6px rgba(0, 0, 0, 0.1);   /* ★x に 1px ずれる（33 要素） */
+    --shadow-header: 0 3px 6px rgba(0, 0, 0, 0.1);
+
+    --container: 1140px;   /* 実測 8 要素。サイト全体でこの 1 値のみ */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ★html が 62.5% ＝ 10px。rem は「px の 1/10」として読む */
+  html { font-size: 62.5%; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 1.6rem;              /* = 16px */
+    font-weight: 400;
+    line-height: var(--lh-base);    /* ★1。テキストブロックには必ず行間を与える */
+    letter-spacing: var(--ls);      /* 0.03em → 0.48px として px で継承 */
+    -webkit-font-smoothing: antialiased;
+    /* font-feature-settings は実サイトで 0 要素。palt を足さない */
+  }
+
+  /* HEADER */
+  .topbar { height: 5px; background: var(--pink); }
+  .header { background: rgba(255,255,255,.95); box-shadow: var(--shadow-header); position: relative; }
+  .header-inner { display: flex; align-items: center; max-width: var(--container); margin: 0 auto; padding: 16px 20px; gap: 24px; }
+  .logo { display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--black); }
+  .logo-mark { font-size: 24px; font-weight: 700; line-height: 1; letter-spacing: 0.06em; }
+  .logo-tag { font-size: 11px; line-height: 1; color: var(--black); }
+  .header-right { margin-left: auto; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+  .header-sub { display: flex; gap: 18px; align-items: center; }
+  .header-sub a:not(.btn) { font-size: 14px; font-weight: 700; line-height: 1; color: var(--green); text-decoration: none; }
+  .header-nav { display: flex; gap: 24px; align-items: center; }
+  .header-nav a:not(.btn) { font-size: 18px; font-weight: 400; line-height: 1; color: var(--black); text-decoration: none; }
+
+  /* HERO */
+  .hero { position: relative; background: var(--hero-tint); min-height: 320px; display: flex; align-items: center; overflow: hidden; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; padding: 56px 20px; width: 100%; }
+  .hero-img-note { display: inline-block; background: var(--white); padding: 28px 40px; }
+  .hero-img-note .ttl { font-size: 42px; font-weight: 400; line-height: 1.1; font-family: Georgia, "Times New Roman", serif; }
+  .hero-img-note .cap { font-family: var(--font-mono); font-size: 11px; color: #555; margin-top: 14px; line-height: 1.6; letter-spacing: normal; }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: #f5faf9; }
+  .section-inner { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: #666; margin-bottom: 14px; line-height: 1.6; letter-spacing: normal; }
+  .section-title { font-size: 28px; font-weight: 700; line-height: var(--lh-base); color: var(--green); }
+  .section-sub { font-size: 16px; font-weight: 700; line-height: var(--lh-base); color: var(--green); margin-top: 10px; }
+  .section-lead { font-size: 16px; font-weight: 400; line-height: var(--lh-body); margin: 18px 0 36px; max-width: 880px; }
+  .note { font-size: 16px; line-height: var(--lh-body); color: #444; margin-top: 26px; max-width: 880px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: #eef4f3; padding: 2px 6px; letter-spacing: normal; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 16px; }
+  .swatch { background: var(--white); border-radius: var(--r-card); box-shadow: var(--shadow-card); overflow: hidden; }
+  .swatch-chip { height: 80px; }
+  .swatch-body { padding: 14px 16px 18px; }
+  .swatch-name { font-size: 16px; font-weight: 700; line-height: var(--lh-sub); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: #666; margin-top: 4px; line-height: 1.6; letter-spacing: normal; }
+  .swatch-use { font-size: 14px; line-height: var(--lh-sub); color: #444; margin-top: 8px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 262px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid #dfe8e6; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: #666; line-height: 1.8; letter-spacing: normal; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: var(--ls); }
+  .scale-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; align-items: baseline; }
+  .scale-bar span { background: var(--white); box-shadow: var(--shadow-card); border-radius: var(--r-btn); padding: 8px 14px; line-height: 1; }
+  .stack-demo { background: var(--white); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 26px 30px; margin-top: 12px; }
+  .stack-demo .row { padding: 10px 0; border-bottom: 1px dashed #dfe8e6; }
+  .stack-demo .row:last-child { border-bottom: none; }
+  .stack-demo .lbl { font-family: var(--font-mono); font-size: 11px; color: #666; line-height: 1.7; letter-spacing: normal; }
+  .lh-demo { background: var(--white); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 26px 30px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .lh-demo .box { border-left: 3px solid var(--green); padding-left: 14px; }
+  .lh-demo .box b { display: block; font-family: var(--font-mono); font-size: 11px; color: #666; margin-bottom: 8px; line-height: 1.6; letter-spacing: normal; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin-bottom: 28px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-shop  { background: var(--pink);  color: var(--white); border: none; border-radius: var(--r-btn); padding: 12px 34px 12px 10px; font-size: 16px; font-weight: 700; line-height: 1; }
+  .btn-contact { background: var(--green); color: var(--white); border: none; border-radius: var(--r-btn); padding: 12px 14px; font-size: 14px; font-weight: 700; line-height: 1; }
+  .btn-pill  { background: transparent; color: var(--green); border: 1px solid var(--green); border-radius: var(--r-pill); padding: 14px 40px; font-size: 16px; font-weight: 700; line-height: 1; letter-spacing: normal; }
+  .btn-pill-pink { background: transparent; color: var(--pink); border: 1px solid var(--pink); border-radius: var(--r-pill); padding: 14px 40px; font-size: 16px; font-weight: 700; line-height: 1; letter-spacing: normal; }
+  .dots { display: flex; gap: 10px; align-items: center; }
+  .dot { width: 30px; height: 30px; border: 1px solid var(--green); border-radius: 100%; background: transparent; color: var(--black); font-family: Arial, sans-serif; font-size: 13.3333px; line-height: 1; cursor: pointer; letter-spacing: normal; }
+  .dot.is-active { background: var(--green); color: var(--white); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 24px; }
+  .card { background: var(--white); border-radius: var(--r-card); box-shadow: var(--shadow-card); overflow: hidden; text-decoration: none; color: var(--black); display: block; }
+  .card-img { background: linear-gradient(140deg,#cfe7e1,#a9d3c9); aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; color: #2b6a5e; font-size: 14px; font-weight: 700; line-height: 1.5; }
+  .card-body { padding: 18px 20px 22px; }
+  .card-title { font-size: 18px; font-weight: 400; line-height: var(--lh-card); }
+  .card-cap { font-size: 14px; font-weight: 700; line-height: var(--lh-sub); margin-top: 12px; color: var(--green); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+  .field label { display: block; font-size: 16px; font-weight: 700; line-height: var(--lh-sub); margin-bottom: 10px; }
+  .field input, .field select {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid #cfdbd9; border-radius: var(--r-btn);
+    padding: 14px; font-size: 16px; line-height: var(--lh-sub);
+    font-family: var(--font-body); letter-spacing: var(--ls);
+  }
+  .field.is-focus input { outline: 2px solid var(--green); outline-offset: 1px; }
+  .field.is-error input { border-color: #c0392b; }
+  .field-msg { font-size: 14px; line-height: var(--lh-sub); color: #666; margin-top: 8px; }
+  .field.is-error .field-msg { color: #c0392b; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+  .elev { background: var(--white); border-radius: var(--r-card); padding: 30px; text-align: center; }
+  .elev.e0 { border: 1px solid #dfe8e6; }
+  .elev.e1 { box-shadow: var(--shadow-card); }
+  .elev.e2 { box-shadow: var(--shadow-header); }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-sub); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: #666; margin-top: 10px; line-height: 1.6; letter-spacing: normal; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--white); box-shadow: var(--shadow-card); border-radius: var(--r-btn); height: 40px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: #555; line-height: 1.6; letter-spacing: normal; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 32px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 112px; height: 70px; background: var(--white); box-shadow: var(--shadow-card); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: #666; margin-top: 10px; line-height: 1.6; letter-spacing: normal; }
+
+  /* FOOTER */
+  .footer { background: var(--green); color: var(--white); padding: 48px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-size: 22px; font-weight: 700; line-height: var(--lh-base); }
+  .footer-cols { display: flex; gap: 56px; margin-top: 28px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 16px; font-weight: 700; line-height: var(--lh-sub); color: var(--white); }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--white); text-decoration: none; opacity: .85; }
+  .footer-copy { font-size: 12px; line-height: var(--lh-sub); margin-top: 34px; opacity: .8; }
+
+  @media screen and (max-width: 1140px) { .section, .section-inner { padding: 56px 20px; } }
+  @media screen and (max-width: 767px) {
+    .section, .section-inner { padding: 44px 16px; }
+    .section-title { font-size: 22px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav, .header-sub { display: none; }
+    .hero-img-note .ttl { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-mark">ユーグレナ</span><span class="logo-tag">いきる、たのしむ、サステナブる。</span></a>
+    <div class="header-right">
+      <div class="header-sub">
+        <a href="#">ユーグレナって？</a><a href="#">サステナビリティ</a><a href="#">JP / EN</a>
+        <a href="#" class="btn btn-shop">公式通販</a>
+      </div>
+      <nav class="header-nav">
+        <a href="#">事業</a><a href="#">研究</a><a href="#">企業</a><a href="#">ニュース</a><a href="#">IR情報</a><a href="#">採用</a>
+        <a href="#" class="btn btn-contact">お問い合わせ</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-img-note">
+      <div class="ttl">Sustainability<br>First</div>
+      <div class="cap">★実サイトではこの欧文ロックアップは<b>画像</b>。<br>DOM 上にテキストとして存在せず、distributions.fontFamily に<br>セリフ体が 1 要素も出ない。Web フォントで実装しないこと。</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">ターコイズとピンクを役割で分ける</h2>
+  <div class="section-sub">Color Palette</div>
+  <p class="section-lead">ピンク <b>#EE8AAA</b> は<b>通販（EC）導線にだけ</b>使い、コーポレート側の導線はすべてターコイズ <b>#009E8A</b>。色が役割を持っているので、ピンクを汎用のアクセントに流用しない。<b>CSS Custom Properties は実質ゼロ</b>（トップ 0 個 / 下層 2 個は Swiper の既定値）で、デザイントークンという層を持たない。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#009E8A"></div><div class="swatch-body"><div class="swatch-name">Euglena Green</div><div class="swatch-hex">#009E8A</div><div class="swatch-use">★可視 34 要素。リンク・問い合わせボタン・見出し・枠線ピル</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EE8AAA"></div><div class="swatch-body"><div class="swatch-name">Euglena Pink</div><div class="swatch-hex">#EE8AAA</div><div class="swatch-use">★EC 導線専用。公式通販ボタン・ヘッダー最上部の帯</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#009279"></div><div class="swatch-body"><div class="swatch-name">Consent Green</div><div class="swatch-hex">#009279</div><div class="swatch-use">Cookie 同意バーのみ。#009E8A よりわずかに暗い</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div><div class="swatch-use">★本文。可視 143 要素。このサイトは純黒を使う</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#929292"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#929292</div><div class="swatch-use">パンくずの TOP（下層 2 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#BCDAD2"></div><div class="swatch-body"><div class="swatch-name">Hero Tint</div><div class="swatch-hex">#BCDAD2</div><div class="swatch-use">波形マスク越しの面（794,453 px²）。トークン化されていない</div></div></div>
+  </div>
+
+  <p class="note">本文色は <b>純黒 <code>#000000</code></b>（可視 143 要素）。「日本語本文に純黒は避ける」定石とは逆で、<code>#333333</code> に置き換えないこと。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Web フォントを 1 本も読み込まない</h2>
+  <div class="section-sub">Typography</div>
+  <p class="section-lead">実測で<b>フォントファイルの要求が 0 件</b>。<code>@font-face</code> もトップには 1 つも無い。游ゴシック／ヒラギノ／Segoe UI という OS ローカル書体だけで組むこと自体が設計で、画になる部分（ヒーローの欧文ロックアップ・波形のマスク）は画像に逃がしている。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:12px">12</span><span style="font-size:13px">13</span><span style="font-size:14px">14</span>
+    <span style="font-size:16px">16</span><span style="font-size:18px">18</span><span style="font-size:22px;font-weight:700">22</span>
+    <span style="font-size:28px;font-weight:700">28</span><span style="font-size:46px">46</span>
+  </div>
+
+  <h3 style="font-size:22px;font-weight:700;line-height:1.6;margin-bottom:6px">Windows の游ゴシック問題を「スタック順」だけで解く</h3>
+  <p class="section-lead" style="margin:10px 0 0"><code>@font-face</code> による別名定義も上書きもせず、<b><code>游ゴシック体, YuGothic</code> の次に <code>"游ゴシック Medium", "Yu Gothic Medium"</code> を置く</b>。Windows には <code>游ゴシック体</code> も（スペース無しの）<code>YuGothic</code> も存在しないので 3〜4 番目が当たる。<b>副作用として macOS は Regular、Windows は Medium になり太さが揃わない</b>ので、厳密に揃えたい案件では <code>src: local("Yu Gothic Medium")</code> の別名方式を使うこと。</p>
+  <div class="stack-demo">
+    <div class="row">
+      <div class="lbl">① 既定（body）— 欧文を OS システム書体に寄せる</div>
+      <div style="font-family:var(--font-body);font-size:18px;line-height:1.75">-apple-system, BlinkMacSystemFont, Roboto, 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック, "Yu Gothic", "Noto Sans JP", "Hiragino Sans", "Segoe UI", sans-serif</div>
+    </div>
+    <div class="row">
+      <div class="lbl">② 和文優先（.def-jpfont）— 欧文も游ゴシックのグリフで統一する</div>
+      <div style="font-family:var(--font-jp);font-size:18px;line-height:1.75">游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック, "Yu Gothic", "Noto Sans JP", "Hiragino Sans", sans-serif</div>
+    </div>
+    <div class="row">
+      <div class="lbl">※ 実サイトは <code>"Noto Sans CJK"</code> と書いているが、これは実在しないファミリー名（正しくは <code>"Noto Sans CJK JP"</code> / <code>"Noto Sans JP"</code>）。上は直してある</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:22px;font-weight:700;line-height:1.6;margin:46px 0 6px">body の line-height が 1</h3>
+  <p class="section-lead" style="margin:10px 0 0">行間はブロックごとに明示的に与える設計。<b>「何も指定しない要素は行間ゼロ詰め」</b>という前提で組まれているので、テキストを持つブロックには必ず <code>line-height</code> を書く。</p>
+  <div class="lh-demo">
+    <div class="box"><b>1.00 — ナビ・ボタン（85 要素・最多）</b><div style="font-size:16px;line-height:1">ユーグレナって？ サステナビリティ 公式通販 お問い合わせ</div></div>
+    <div class="box"><b>1.42 — カード見出し（46 要素）</b><div style="font-size:18px;line-height:1.42">ヘルスケア事業／バイオ燃料事業／サステナブルアグリテック事業</div></div>
+    <div class="box"><b>1.75 — 本文（23 要素）</b><div style="font-size:16px;line-height:1.75">ユーグレナ社は、バングラデシュの栄養問題の解決を目指して創業し、微細藻類ユーグレナの食用屋外大量培養に成功しました。</div></div>
+    <div class="box"><b>2.00 — リード（7 要素）</b><div style="font-size:16px;line-height:2">Euglena Philosophy／サステナビリティが当たり前となる社会をつくる。</div></div>
+  </div>
+
+  <div class="type-row" style="margin-top:40px"><div class="type-meta"><b>Section Label</b>46px / 400<br>欧文のセクション名</div><div style="font-size:46px;font-weight:400;line-height:1.1">Business</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading ★</b>28px / 700<br>lh 1.00 / color #009E8A</div><div style="font-size:28px;font-weight:700;line-height:1;color:#009E8A">Sustainability First サステナビリティ・ファースト</div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub Heading</b>22px / 700<br>lh 1.60</div><div style="font-size:22px;font-weight:700;line-height:1.6">ユーグレナが描く未来予想図</div></div>
+  <div class="type-row"><div class="type-meta"><b>Brand Label</b>18.72px / 700<br>lh 1.00 / color #009E8A</div><div style="font-size:18.72px;font-weight:700;line-height:1;color:#009E8A">ヘルスケア商品ブランド</div></div>
+  <div class="type-row"><div class="type-meta"><b>Card Title</b>18px / 400<br>lh 1.50</div><div style="font-size:18px;font-weight:400;line-height:1.5">サステナブルアグリテック事業</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>16px / 400<br>lh 1.75 / ls 0.48px</div><div style="font-size:16px;line-height:1.75">からだにユーグレナは、59 種類もの栄養素を含む微細藻類ユーグレナを原料にした、毎日の栄養補給のための商品ブランドです。</div></div>
+  <div class="type-row"><div class="type-meta"><b>UI / Nav ★</b>14px / 700<br>lh 1.00。最多（83 要素）</div><div style="font-size:14px;font-weight:700;line-height:1">ユーグレナって？　サステナビリティ　公式通販</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>14px / 700<br>lh 1.50</div><div style="font-size:14px;font-weight:700;line-height:1.5">ユーグレナ社、政府専用機に国産SAF「サステオ」を初給油</div></div>
+
+  <p class="note"><b><code>font-weight</code> は 400 と 700 の 2 段だけ</b>（実測 400 が 97 要素 / 700 が 85 要素）。游ゴシックは Regular と Bold の 2 本しか無いので、<b>500 や 600 を指定すると Windows で合成太字になる</b>。<br><b><code>font-feature-settings</code> は 1 要素も使っていない。</b><code>palt</code> を足さず、素の字送りに <code>letter-spacing: 0.03em</code>（= 0.48px）を足すだけ、というのがこのサイトの字詰め。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <h2 class="section-title">CTA は角丸 24px のピル</h2>
+  <div class="section-sub">Components</div>
+  <p class="section-lead">本文中の CTA は <b>透明地 ＋ 1px の枠 ＋ <code>border-radius: 24px</code></b>。コーポレート導線はターコイズ、EC 導線はピンクで同じ形を塗り分ける。ヘッダーの solid ボタンだけ角丸 6px。</p>
+
+  <div class="btn-grid">
+    <a href="#" class="btn btn-pill">企業情報をみる</a>
+    <a href="#" class="btn btn-pill">OEM・原料販売について詳しくみる</a>
+    <a href="#" class="btn btn-pill-pink">公式オンラインショップへ</a>
+  </div>
+  <div class="btn-grid">
+    <a href="#" class="btn btn-shop">公式通販</a>
+    <a href="#" class="btn btn-contact">お問い合わせ</a>
+    <div class="dots"><button class="dot is-active">1</button><button class="dot">2</button><button class="dot">3</button><button class="dot">4</button></div>
+  </div>
+
+  <div class="card-grid" style="margin-top:40px">
+    <a href="#" class="card">
+      <div class="card-img">ヘルスケア</div>
+      <div class="card-body"><div class="card-title">ヘルスケア事業</div><div class="card-cap">Sustainability × Health care</div></div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img">バイオ燃料</div>
+      <div class="card-body"><div class="card-title">バイオ燃料事業</div><div class="card-cap">Sustainability × Biofuel</div></div>
+    </a>
+    <a href="#" class="card">
+      <div class="card-img">バングラデシュ</div>
+      <div class="card-body"><div class="card-title">バングラデシュ事業</div><div class="card-cap">Sustainability × Bangladesh</div></div>
+    </a>
+  </div>
+
+  <p class="note"><b>カルーセルのドットだけ <code>font-family: Arial</code> の直指定。</b>サイト全体で唯一、body のスタックから外れている要素。</p>
+</section>
+
+<section class="section-alt" id="forms">
+<div class="section-inner">
+  <div class="section-label">04 / Forms</div>
+  <h2 class="section-title">入力欄には字間を当て直す</h2>
+  <div class="section-sub">Forms</div>
+  <p class="section-lead"><code>input</code> / <code>select</code> はフォント継承が効かないので、<b><code>font-family</code> と <code>letter-spacing</code> を明示的に当て直す</b>。body の 1 行だけでは入力欄まで届かない。</p>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="f1">お名前</label>
+      <input id="f1" type="text" placeholder="緑川　藻子">
+      <div class="field-msg">全角でご入力ください</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f2">メールアドレス（フォーカス時）</label>
+      <input id="f2" type="text" value="moko@example.jp">
+      <div class="field-msg">フォーカスリングは #009E8A</div>
+    </div>
+    <div class="field is-error">
+      <label for="f3">お問い合わせ種別（エラー時）</label>
+      <input id="f3" type="text" value="">
+      <div class="field-msg">お問い合わせ種別を選択してください</div>
+    </div>
+    <div class="field">
+      <label for="f4">ご所属</label>
+      <select id="f4"><option>法人・団体</option><option>報道関係</option><option>個人</option></select>
+      <div class="field-msg">該当するものをお選びください</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="section-label">05 / Elevation</div>
+  <h2 class="section-title">カードの影は x に 1px ずれる</h2>
+  <div class="section-sub">Depth &amp; Elevation</div>
+  <p class="section-lead">カードの影は <b><code>1px 3px 6px rgba(0,0,0,0.1)</code></b>（33 要素）。<b>x に 1px のオフセットがある</b>のが特徴で、<code>0 3px 6px</code> に丸めると印象が変わる。ヘッダーだけ x ずれなしの <code>0 3px 6px</code>。CTA には影を落とさない。</p>
+
+  <div class="elev-grid">
+    <div class="elev e0"><div class="elev-name">Level 0（ボタン・ピル）</div><div class="elev-val">none</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1 ★（カード）</div><div class="elev-val">1px 3px 6px rgba(0,0,0,0.1)</div></div>
+    <div class="elev e2"><div class="elev-name">Level 2（ヘッダー）</div><div class="elev-val">0 3px 6px rgba(0,0,0,0.1)</div></div>
+  </div>
+
+  <p class="note">抽出でもう 1 つ検出される <code>rgba(0,0,0,0.3) 0 -4px 10px</code> は <b>Cookie 同意バー（CMP）のもの</b>で、サイト本体の語彙ではない。</p>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="section-inner">
+  <div class="section-label">06 / Layout</div>
+  <h2 class="section-title">コンテナは 1140px の 1 値だけ</h2>
+  <div class="section-sub">Layout</div>
+  <p class="section-lead">実測で検出されたコンテナ幅は <b>1140px（8 要素）のみ</b>。余白のスケールも宣言されておらず、<code>gap</code> は <code>0px 2.645%</code> という % 指定。<b><code>html</code> が 62.5% ＝ 10px 基準</b>なので、<code>rem</code> は「px の 1/10」として読む（<code>2.8rem</code> = 28px）。</p>
+
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">100vw</div>
+    <div class="layout-bar" style="width:85%">1140px — ★コンテナ（実測 8 要素。サイト全体でこの 1 値のみ）</div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">6px — solid ボタン</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px — カード（24 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:13px"></div><div class="radius-label">13px — 下層カード（14 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:20px"></div><div class="radius-label">20px — ブロック（18 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">24px ★CTA ピル</div></div>
+  </div>
+
+  <p class="note"><b>角丸の値が揃っていない</b>（6 / 10 / 13 / 20 / 24 / 100%）。トークンを持たないサイトなので、新規実装では <b>10px（カード）と 24px（ピル）の 2 段に整理してよい</b>。<br><b>文字サイズは 4 幅で不変。</b>1440 / 1200 / 834 / 375px で測って <code>html</code> 10px / <code>body</code> 16px / <code>letter-spacing</code> 0.48px はすべて同じだった。流体タイポグラフィは使っていない。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">株式会社ユーグレナ</div>
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">事業</div><a href="#">ヘルスケア事業</a><a href="#">バイオ燃料事業</a><a href="#">サステナブルアグリテック事業</a><a href="#">バングラデシュ事業</a></div>
+      <div class="footer-col"><div class="footer-col-title">研究</div><a href="#">中央研究所</a><a href="#">生産技術研究所</a><a href="#">熱帯バイオマス技術研究所</a></div>
+      <div class="footer-col"><div class="footer-col-title">企業</div><a href="#">ユーグレナ・フィロソフィー</a><a href="#">企業概要</a><a href="#">役員紹介</a><a href="#">アクセスマップ</a></div>
+      <div class="footer-col"><div class="footer-col-title">FOLLOW US</div><a href="#">X</a><a href="#">Facebook</a><a href="#">Youtube</a></div>
+    </div>
+    <div class="footer-copy">COPYRIGHT © Euglena Co., Ltd. ALL RIGHTS RESERVED.</div>
+  </div>
+</footer>
+
+</body>
+</html>
