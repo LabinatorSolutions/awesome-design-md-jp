@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 長崎県美術館（Nagasaki Prefectural Art Museum）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;500&family=Raleway:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は total 132 個あるが、自社のものは 6 個だけ。
+       残りは WordPress / Gutenberg 49・WordPress admin 11・Swiper 2・
+       VK Blocks（--vk-*）39・intl-tel-input（--iti-*）25。実測 2026-10-08 */
+    --base-color:  #ff000f;   /* ★--base_color。ロゴの縦線・見出しの左罫。可視 2 要素 */
+    --hover-color: #777777;   /* --hover_color。リンクのホバー */
+    --room-blue:   #0065b2;   /* 展示室バッジ。可視 5 要素 */
+    --gallery-mint:#c8f1e9;   /* 県民ギャラリーのバッジ。可視 3 要素 */
+    --text:        #101010;   /* ★本文・見出し。可視 21 要素。純黒ではない */
+    --text-link:   #333333;   /* ★ナビ・フッター・日付。可視 106 要素で最多 */
+    --text-alt:    #2b2b2b;   /* カレンダー・お知らせ本文。可視 46 要素 */
+    --muted:       #999999;   /* ボタンの枠線 */
+    --field:       #555555;   /* 検索欄のプレースホルダ */
+    --surface-label:#d9dbdd;  /* 「お知らせ」ラベルの面。可視 10 要素 */
+    --surface-cal: #dee3e9;   /* カレンダーの日付丸 */
+    --surface-menu:#f3f3f3;   /* メガメニューの地 */
+    --white:       #ffffff;
+    --bg:          #ffffff;   /* ★html/body に宣言が無く UA 既定。明示すること */
+
+    /* === Fonts ===
+       本番は TypeSquare（モリサワ）配信の「あおとゴシック L / DB」。
+       ドメインライセンスのためローカルでは表示できないので、軽さの近い
+       Zen Kaku Gothic New の 300（=L 相当）/ 500（=DB 相当）で代替する。
+       ★実サイトの font-weight は 400 だが、代替書体の 400 は あおとゴシック L より
+         明らかに太いため、このプレビューだけ 300 を当てている。
+         type-meta に書いてある「400」は実サイトの値。
+       カレンダーの数字は実サイトと同じ Raleway。 */
+    --font-l:  "Zen Kaku Gothic New", "あおとゴシック L",
+               "Hiragino Sans", "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN",
+               "Yu Gothic Medium", "游ゴシック Medium", YuGothic, sans-serif;
+    --font-db: "Zen Kaku Gothic New", "あおとゴシック DB",
+               "Hiragino Sans", "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN",
+               "Yu Gothic Medium", "游ゴシック Medium", YuGothic, sans-serif;
+    --font-num: Raleway, HelveticaNeue, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Metrics ===
+       line-height は em 単位で宣言されている。16px の親に 1.7em と書くと
+       27.2px という絶対値が子へ降り、12px のリンクでは実測比 2.27 になる。
+       letter-spacing は normal が既定（可視 185 要素中 177 要素）。 */
+    --lh-body: 1.8em;    /* = 28.8px @16px */
+    --lh-nav:  1.7em;    /* = 27.2px @16px。子の 12px リンクに絶対値で降りる */
+    --lh-item: 1.4em;
+    --ls:      normal;   /* ★本文に字間を足さない */
+    --ls-head: .1em;     /* セクション見出しだけ */
+    --ls-front:.12em;    /* front_title */
+
+    --r-pill: 900px;     /* ピルボタン・バッジ */
+    --r-dot:  20px;      /* スライダーのドット */
+    --shadow: 0 0 8px 0 rgba(0, 0, 0, .3);   /* ★サイト唯一の影（可視 2 要素） */
+
+    --content: 1280px;   /* --content_width */
+    --column:  780px;    /* 本文カラム（35 要素で最多） */
+    --gutter:  28px;     /* --gb_lr_margin */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-l);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    font-feature-settings: "palt";   /* 実サイトはトップで可視 3309 要素 */
+    word-break: normal;              /* CSS に「/* 単語分割 */」のコメント付きで明示 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid #e5e5e5; }
+  .header-inner { display: grid; grid-template-columns: 300px 1fr; gap: 24px; max-width: var(--content); margin: 0 auto; padding: 18px var(--gutter) 10px; align-items: start; }
+  .logo-ja { font-family: var(--font-l); font-size: 26px; font-weight: 300; line-height: 1.4em; letter-spacing: .14em; color: var(--text); }
+  .logo-bars { display: flex; gap: 4px; align-items: flex-end; height: 56px; margin: 10px 0 6px; }
+  .logo-bars i { display: block; width: 2px; background: var(--base-color); }
+  .logo-en { font-family: var(--font-num); font-size: 12px; font-weight: 300; color: var(--text-link); letter-spacing: .02em; }
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+  .header-meta { display: flex; align-items: center; gap: 14px; font-size: 14px; line-height: 1.4em; color: var(--text); }
+  .open-badge { border: 1px solid var(--text); padding: 2px 10px; font-size: 13px; line-height: 1.4em; }
+  .subnav { display: flex; gap: 0; }
+  .subnav a { font-size: 15px; line-height: 1.4em; color: var(--text-link); text-decoration: none; padding: 0 16px; border-right: 1px solid #ddd; }
+  .subnav a:last-child { border-right: none; padding-right: 0; }
+  .gnav { display: flex; gap: 40px; margin-top: 10px; }
+  .gnav a { font-size: 18.992px; line-height: 1.4em; color: var(--text-link); text-decoration: none; }
+
+  /* SECTIONS */
+  .section { padding: 64px var(--gutter); max-width: var(--content); margin: 0 auto; }
+  .section-alt { background: var(--surface-menu); }
+  .section-alt .section-inner { padding: 64px var(--gutter); max-width: var(--content); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: #666; line-height: 1.6; }
+  .section-title { font-family: var(--font-l); font-size: 30px; font-weight: 300; line-height: 1.4em; margin: 8px 0 18px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); max-width: var(--column); margin-bottom: 32px; }
+  .note { font-size: 14px; line-height: 1.9em; color: #333; margin-top: 20px; max-width: var(--column); }
+  code { font-family: var(--font-mono); font-size: 12px; background: #ececec; padding: 1px 5px; }
+
+  /* PAGE HEAD（下層の中央寄せ見出し） */
+  .pagehead { text-align: center; padding: 56px var(--gutter) 40px; }
+  .pagehead h1 { font-family: var(--font-l); font-size: 44px; font-weight: 300; line-height: normal; }
+  .pagehead .rule-v { width: 1px; height: 48px; background: #bbb; margin: 28px auto; }
+  .pagehead h2 { font-family: var(--font-l); font-size: 30px; font-weight: 300; line-height: normal; padding-bottom: 18px; }
+  .pagehead .rule-h { width: 200px; height: 1px; background: #ccc; margin: 0 auto; }
+  .heading-red { font-size: 22.992px; font-weight: 300; line-height: 1.4em; border-left: 5px solid var(--base-color); padding-left: 18px; margin-bottom: 14px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .swatch { border: 1px solid #e5e5e5; background: var(--white); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-family: var(--font-db); font-size: 14px; font-weight: 500; line-height: 1.5em; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: #666; margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: 1.7em; color: #333; margin-top: 6px; }
+
+  /* TYPE */
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale-bar span { background: var(--surface-menu); padding: 8px 14px; line-height: 1.4em; }
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid #e5e5e5; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: #666; line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font-db); font-size: 13px; font-weight: 500; color: var(--text); }
+
+  /* BUTTONS */
+  .btn-pill { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; background: transparent; color: var(--text-link); font-size: 12px; line-height: 1.4em; text-decoration: none; border: 1px solid var(--muted); border-radius: var(--r-pill); padding: 6px 18px; }
+  .btn-pill:hover { color: var(--hover-color); }
+  .btn-more { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; background: var(--white); color: var(--text-link); font-size: 14px; line-height: 1.4em; text-decoration: none; border-radius: var(--r-pill); padding: 8px 26px; box-shadow: var(--shadow); }
+  .badge-room { display: inline-flex; align-items: center; justify-content: center; background: var(--room-blue); color: var(--white); font-size: 14px; line-height: 1.4em; border-radius: var(--r-pill); padding: 4px 18px; }
+  .badge-gallery { display: inline-flex; align-items: center; justify-content: center; background: var(--gallery-mint); color: var(--text); font-size: 14px; line-height: 1.4em; border-radius: var(--r-pill); padding: 4px 18px; }
+  .badge-label { display: inline-block; background: var(--surface-label); color: var(--text-alt); font-size: 10px; line-height: 1.6em; padding: 2px 10px; }
+  .btn-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; }
+  .card-img { aspect-ratio: 3 / 2; background: linear-gradient(150deg, #dfe4ea, #c3ccd6); }
+  .card-title { font-family: var(--font-db); font-size: 18px; font-weight: 500; line-height: 1.4em; color: var(--text-link); margin-top: 14px; }
+  .card-date { font-size: 14.992px; line-height: 1.6em; color: var(--text-link); margin-top: 8px; }
+
+  /* CALENDAR */
+  .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 420px; font-family: var(--font-num); }
+  .cal div { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1.25em; color: var(--text-alt); }
+  .cal .head { background: var(--surface-menu); border-radius: 8px 8px 0 0; font-size: 13px; }
+  .cal .day { border-radius: 50%; background: var(--surface-cal); }
+  .cal .off { color: #aaa; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-family: var(--font-db); font-size: 14px; font-weight: 500; line-height: 1.5em; margin-bottom: 8px; }
+  .field input, .field select { width: 100%; background: var(--white); color: var(--field); border: 1px solid var(--muted); border-radius: 4px; padding: 10px 12px; height: 48px; font-family: var(--font-l); font-size: 14.4px; line-height: 1.5em; }
+  .field.is-focus input { border: 1px solid var(--base-color); }
+  .field-msg { font-size: 12px; line-height: 1.8em; color: #666; margin-top: 7px; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
+  .elev { background: var(--white); border: 1px solid #e5e5e5; padding: 26px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow); border-color: transparent; }
+  .elev-name { font-family: var(--font-db); font-size: 16px; font-weight: 500; line-height: 1.5em; }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: #666; margin-top: 8px; line-height: 1.7; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 30px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 56px; background: var(--surface-menu); border: 1px solid #ddd; }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: #666; margin-top: 7px; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--surface-menu); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: #333; }
+
+  /* FOOTER */
+  .footer { border-top: 1px solid #e5e5e5; padding: 48px var(--gutter); }
+  .footer-inner { max-width: var(--content); margin: 0 auto; display: flex; gap: 64px; flex-wrap: wrap; line-height: var(--lh-nav); }
+  .footer-col-title { font-family: var(--font-db); font-size: 14px; font-weight: 500; line-height: 1.5em; margin-bottom: 6px; }
+  .footer-col a { display: block; font-size: 12px; color: var(--text-link); text-decoration: none; }
+  .footer-copy { max-width: var(--content); margin: 28px auto 0; font-family: Arial, Helvetica, sans-serif; font-size: 12.96px; line-height: 1.6em; color: var(--text-link); letter-spacing: .15em; }
+
+  @media (max-width: 880px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .header-right { align-items: flex-start; }
+    .gnav { display: none; }
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .pagehead h1 { font-size: 28px; }
+    .pagehead h2 { font-size: 22px; }
+    .section-title { font-size: 24px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo-ja">長崎県美術館</div>
+      <div class="logo-bars">
+        <i style="height:30%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:100%"></i>
+        <i style="height:70%"></i><i style="height:45%"></i><i style="height:92%"></i><i style="height:60%"></i>
+        <i style="height:38%"></i><i style="height:85%"></i><i style="height:52%"></i><i style="height:74%"></i>
+      </div>
+      <div class="logo-en">Nagasaki Prefectural Art Museum</div>
+    </div>
+    <div class="header-right">
+      <div class="header-meta">
+        <span>10月8日（木）</span>
+        <span class="open-badge">本日開館</span>
+        <span>開館時間 10:00〜20:00</span>
+      </div>
+      <nav class="subnav">
+        <a href="#">貸施設</a><a href="#">年間会員・寄附</a><a href="#">各種申込</a><a href="#">プレス関係</a><a href="#">採用情報</a>
+      </nav>
+      <nav class="gnav">
+        <a href="#">来館案内</a><a href="#">展覧会</a><a href="#">イベント</a><a href="#">収蔵作品</a><a href="#">学び・体験</a><a href="#">美術館について</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="pagehead">
+  <h1>コンセプト</h1>
+  <div class="rule-v"></div>
+  <h2>呼吸する美術館</h2>
+  <div class="rule-h"></div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">赤は 1 点、あとはグレー階調</h2>
+  <p class="section-lead">自社の CSS 変数は <b>6 個だけ</b>（<code>--base_color</code> <code>--hover_color</code> <code>--content_width</code> <code>--chg_width_cmn</code> <code>--chg_width_hdr</code> <code>--gb_lr_margin</code>）。<b>赤 <code>#ff000f</code> はロゴの縦線と見出しの左罫にしか出てこない。</b></p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#ff000f"></div><div class="swatch-body"><div class="swatch-name">Base Red</div><div class="swatch-hex">#ff000f</div><div class="swatch-use">★--base_color。ロゴの縦線・見出しの左 5px 罫。可視 2 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#0065b2"></div><div class="swatch-body"><div class="swatch-name">Room Blue</div><div class="swatch-hex">#0065b2</div><div class="swatch-use">「第1室」バッジ。可視 5 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#c8f1e9"></div><div class="swatch-body"><div class="swatch-name">Gallery Mint</div><div class="swatch-hex">#c8f1e9</div><div class="swatch-use">県民ギャラリーのバッジ。可視 3 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#101010"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#101010</div><div class="swatch-use">★本文・見出し。純黒ではなく少し持ち上げている</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text Link</div><div class="swatch-hex">#333333</div><div class="swatch-use">★ナビ・フッター・日付。可視 106 要素で最多</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#999999"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#999999</div><div class="swatch-use">ピルボタンの枠線（1px solid）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d9dbdd"></div><div class="swatch-body"><div class="swatch-name">Label Surface</div><div class="swatch-hex">#d9dbdd</div><div class="swatch-use">「お知らせ」ラベルの面。可視 10 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f3f3f3"></div><div class="swatch-body"><div class="swatch-name">Mega Menu</div><div class="swatch-hex">#f3f3f3</div><div class="swatch-use">グローバルナビのメガメニューの地</div></div></div>
+  </div>
+
+  <p class="note"><b>トップで最も多い塗り色 <code>#80b538</code>（可視 178 要素）はブランド色ではない。</b>イベントカレンダーの Events Manager プラグイン既定色なので採用しない。同じく <code>--vk-color-background-red: #dc3545</code> などは VK Blocks の既定で<b>可視 0 要素</b>。</p>
+
+  <p class="note"><b><code>html</code> / <code>body</code> に背景色の宣言が無い</b>（<code>canvasUnpainted: true</code>）。白は UA 既定であって指定ではないので、<b>新規実装では <code>background: #ffffff</code> を明示する。</b></p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">字間は normal、詰めるのは palt だけ</h2>
+  <p class="section-lead">和文は TypeSquare（モリサワ）配信の <b>あおとゴシック L</b>（可視 131 要素）と <b>DB</b>（可視 11 要素）の 2 段だけ。<b><code>font-weight</code> は 400 が 184 要素</b>で、700 はトップの <code>News</code> 1 要素のみ。<b>太さは書体名で切り替える。</b></p>
+
+  <div class="scale-bar">
+    <span style="font-size:10px">10</span><span style="font-size:12px">12</span><span style="font-size:13.6px">13.6</span>
+    <span style="font-size:14px">14</span><span style="font-size:14.992px">15.0</span><span style="font-size:16px">16</span>
+    <span style="font-size:18px">18</span><span style="font-size:18.992px">19.0</span><span style="font-size:21.6px">21.6</span>
+    <span style="font-size:22.992px">23.0</span><span style="font-size:24px">24</span><span style="font-size:30px">30</span>
+    <span style="font-size:44px">44</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Page Title</b>あおとゴシック L / 44px / 400<br>lh <b style="display:inline">normal</b> / ls normal</div><div style="font-size:44px;font-weight:300;line-height:normal">コンセプト</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead Heading</b>あおとゴシック L / 30px / 400<br>lh normal / ls normal</div><div style="font-size:30px;font-weight:300;line-height:normal">呼吸する美術館</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>あおとゴシック L / 24px / 400<br>lh normal / <b style="display:inline">ls .1em</b></div><div style="font-size:24px;font-weight:300;line-height:normal;letter-spacing:.1em">コレクション展（常設展示室）</div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub Heading ★</b>あおとゴシック L / 22.992px (1.437rem)<br>lh 1.40 / 左に赤 5px 罫</div><div><div class="heading-red">基本理念</div></div></div>
+  <div class="type-row"><div class="type-meta"><b>Front Title</b>あおとゴシック L / 21.6px / 400<br>lh 1.00 / <b style="display:inline">ls .12em</b></div><div style="font-size:21.6px;font-weight:300;line-height:1;letter-spacing:.12em">本日の展示・イベント</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav</b>あおとゴシック L / 18.992px (1.187rem)<br>lh normal / ls normal</div><div style="font-size:18.992px;font-weight:300;line-height:normal">来館案内　展覧会　イベント　収蔵作品</div></div>
+  <div class="type-row"><div class="type-meta"><b>Item Title</b><b style="display:inline">あおとゴシック DB</b> / 18px / 400<br>lh 1.40 / color #333333</div><div style="font-family:var(--font-db);font-weight:500;font-size:18px;line-height:1.4em;color:var(--text-link)">収蔵名品展―新収蔵作品とともに</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>あおとゴシック L / 16px / 400<br>lh <b style="display:inline">1.8em</b>（=28.8px）/ <b style="display:inline">ls normal</b></div><div style="font-size:16px;font-weight:300;line-height:1.8em">長崎県美術館は「呼吸する美術館」をコンセプトに2005年4月に開館しました。生き物が呼吸をするように、美術館の外にあるさまざまな情報や刺激を吸い込み、それを新しい形の刺激として再び外に放出しながら周囲の人や環境とともに成長を続けてゆく――。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Date</b>あおとゴシック L / 14.992px (0.937rem)<br>lh normal</div><div style="font-size:14.992px;line-height:normal;color:var(--text-link)">2026年5月15日（金）〜10月18日（日）</div></div>
+  <div class="type-row"><div class="type-meta"><b>Breadcrumb</b>あおとゴシック L / 13.6px<br>lh normal</div><div style="font-size:13.6px;line-height:normal;color:var(--text-link)">ホーム ＞ 美術館について ＞ コンセプト</div></div>
+  <div class="type-row"><div class="type-meta"><b>Footer Link ★</b>あおとゴシック L / 12px / 400<br>lh <b style="display:inline">27.2px</b>（親の 1.7em を継承 = 比 2.27）</div><div style="font-size:12px;line-height:27.2px;color:var(--text-link)">利用案内　交通アクセス　施設案内　ミュージアムショップ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Label</b>あおとゴシック L / 10px / 400<br>面 #d9dbdd</div><div><span class="badge-label">お知らせ</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>Calendar</b>Raleway / 15px / 400<br>lh 1.25em</div><div style="font-family:var(--font-num);font-size:15px;line-height:1.25em">Sun Mon Tue Wed Thu Fri Sat　27 28 29 30 1 2 3</div></div>
+
+  <p class="note"><b>このプレビューの代替書体について。</b>本番の あおとゴシック L / DB はドメインライセンスのためローカルで表示できないので <b>Zen Kaku Gothic New</b> で代替している。実サイトの <code>font-weight</code> は 400 だが、代替書体の 400 は あおとゴシック L より明らかに太いため、<b>このプレビューだけ 300 を当てている</b>（左側の表記「400」は実サイトの値）。</p>
+
+  <p class="note"><b><code>letter-spacing</code> は <code>normal</code> が既定</b>（トップ可視 185 要素中 177 要素、下層 76 要素中 75 要素）。<b>それでいて <code>font-feature-settings: "palt"</code> がトップで 3309 要素に効いている。</b>「字間は足さないが、約物の空きは詰める」。<b>どちらか片方だけ真似しないこと。</b></p>
+
+  <p class="note"><b><code>line-height</code> が <code>em</code> 単位で宣言されている。</b>16px の親に <code>1.7em</code> と書くと <b>27.2px という絶対値</b>が降り、12px のフッターリンクでは実測比 <b>2.27</b> になる。<b>単位なしの <code>1.7</code> に書き換えると別物になる。</b></p>
+
+  <p class="note"><b>見出しに <code>line-height</code> を指定していない。</b><code>h1</code> 44px・<code>h2</code> 30px・ナビ 18.99px はすべて <code>normal</code> で、書体のメトリクスに任せている。</p>
+
+  <p class="note"><b>実サイトの <code>font-family</code> は <code>"あおとゴシック L"</code> 1 つだけでフォールバックが無い。</b>TypeSquare が落ちると UA 既定（多くの環境で明朝）になる。<b>新規実装ではヒラギノ → 游ゴシック Medium → <code>sans-serif</code> を続けること。</b>CSS にある <code>"あおとゴシック B"</code> / <code>"あおとゴシック R"</code> は<b>配信されておらず可視 0 要素</b>なので書かない。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <h2 class="section-title">ピルと細い罫</h2>
+  <p class="section-lead">ボタンは <code>border-radius: 900px</code> の完全なピル。バッジも同じ。<b>カードと画像には角丸を付けない。</b></p>
+
+  <div class="btn-row">
+    <a href="#" class="btn-pill">お問い合わせ</a>
+    <a href="#" class="btn-more">もっと見る</a>
+    <span class="badge-room">第1室</span>
+    <span class="badge-room">第2室</span>
+    <span class="badge-gallery">A室</span>
+    <span class="badge-label">お知らせ</span>
+  </div>
+
+  <p class="note"><b>実サイトのピルボタンは高さ 31px でタッチ基準（44px）に届いていない。</b>このプレビューでは <code>min-height: 44px</code> を足している。<b>新規実装でも足すこと。</b></p>
+
+  <div class="btn-row" style="margin-top:36px;align-items:flex-start">
+    <div>
+      <div class="type-meta" style="margin-bottom:10px"><b>Calendar</b>Raleway / gap 5px<br>日付 radius 50% / 見出し 8px 8px 0 0</div>
+      <div class="cal">
+        <div class="head">Sun</div><div class="head">Mon</div><div class="head">Tue</div><div class="head">Wed</div><div class="head">Thu</div><div class="head">Fri</div><div class="head">Sat</div>
+        <div class="off">28</div><div class="off">29</div><div class="off">30</div><div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div>
+        <div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards</div>
+  <h2 class="section-title">枠も影も無いカード</h2>
+  <p class="section-lead">サムネイルとテキストの縦積み。タイトルだけ <b>あおとゴシック DB</b> に切り替えて、<code>font-weight</code> は 400 のまま。</p>
+
+  <div class="card-grid">
+    <div><div class="card-img"></div><div class="card-title">収蔵名品展―新収蔵作品とともに</div><div class="card-date">2026年5月15日（金）〜10月18日（日）</div></div>
+    <div><div class="card-img"></div><div class="card-title">長崎の工芸・デザイン―暮らしの器・道具</div><div class="card-date">2026年7月30日（木）〜10月18日（日）</div></div>
+    <div><div class="card-img"></div><div class="card-title">須磨コレクション1</div><div class="card-date">2026年6月9日（火）〜11月8日（日）</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">検索欄と入力</h2>
+  <p class="section-lead">検索欄は <b>あおとゴシック L / 14.4px / color <code>#555555</code></b>。<b>実サイトの送信ボタンだけ書体が Arial 13.33px のまま残っている</b>ので、実装時は揃えること。</p>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="f-q">サイト内検索</label>
+      <input id="f-q" type="text" placeholder="キーワードを入力">
+      <div class="field-msg">radius 4px / 1px solid #999999</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f-mail">メールアドレス（フォーカス）</label>
+      <input id="f-mail" type="text" value="info@example.jp">
+      <div class="field-msg">枠を #ff000f に切り替える</div>
+    </div>
+    <div class="field">
+      <label for="f-kind">お問い合わせの種類</label>
+      <select id="f-kind"><option>展覧会について</option><option>貸施設について</option><option>学校向けプログラム</option></select>
+      <div class="field-msg">書体は本文と揃える（Arial を残さない）</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation &amp; Layout</div>
+  <h2 class="section-title">影はひとつ、角丸は用途で 5 種</h2>
+
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">none<br>既定。カード・ヘッダー・バッジすべて</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">0 0 8px 0 rgba(0,0,0,.3)<br>「もっと見る」のみ（可視 2 要素）</div></div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:900px"></div><div class="radius-label">900px / ピル・バッジ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50%;width:56px"></div><div class="radius-label">50% / カレンダー（38 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:20px"></div><div class="radius-label">20px / スライダーのドット</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px / 検索窓</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px 8px 0 0"></div><div class="radius-label">8px 8px 0 0 / カレンダー見出し</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0 / カード・画像</div></div>
+  </div>
+
+  <div class="layout-demo" style="margin-top:44px">
+    <div class="layout-bar" style="width:100%;max-width:1280px">1280px — --content_width</div>
+    <div class="layout-bar" style="width:100%;max-width:780px">780px — 本文カラム（35 要素で最多）</div>
+  </div>
+
+  <p class="note"><code>gap</code> は <b>5px（カレンダー 181 要素）/ 40px / 64px の 3 値だけ</b>。左右の外側余白は <code>--gb_lr_margin: 28px</code>。</p>
+</div>
+</section>
+
+<section class="section" id="responsive">
+  <div class="section-label">07 / Responsive</div>
+  <h2 class="section-title">本文は 4 幅すべて 16px</h2>
+  <p class="section-lead">主ブレークポイントは <code>max-width: 880px</code>（<code>--chg_width_hdr</code>、実測 60 回）。<b>1440 / 1200 / 834 / 375px のいずれでも <code>body</code> は 16px / lh normal / ls normal</b> で、流体ルートもサイズ切替も無い。縮むのは見出しとレイアウトだけ。</p>
+  <p class="note">Bootstrap 系の <code>575.98 / 767.98 / 991.98 / 1199.98px</code> は <b>VK Blocks 由来で自社の設計ではない</b>。設計として追うのは <code>880px</code> と <code>769px</code>（<code>--chg_width_cmn</code>）と <code>480px</code> の 3 つ。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-col-title">来館案内</div>
+      <a href="#">利用案内</a><a href="#">交通アクセス</a><a href="#">施設案内</a><a href="#">ミュージアムショップ</a><a href="#">カフェ</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">展覧会</div>
+      <a href="#">開催中の展覧会</a><a href="#">県民ギャラリー</a><a href="#">収蔵作品</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">美術館について</div>
+      <a href="#">館長あいさつ</a><a href="#">コンセプト</a><a href="#">シンボルマーク・ロゴ</a><a href="#">沿革・建設概要</a>
+    </div>
+  </div>
+  <p class="footer-copy">Copyright© Nagasaki Prefectural Art Museum. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: HOTEL THE MITSUI KYOTO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=EB+Garamond:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個（total: 0）。
+       以下は computed style と CSS 全文の実測値。2026-10-08 */
+    --brown:       #190e0a;   /* ★ブランド色。ボタンの面・見出し・枠線。可視 18 要素 */
+    --brown-hero:  #1c0b06;   /* トップの body 背景（pageBackground.resolved / 根拠 body） */
+    --chip:        rgba(25, 14, 10, .06);   /* ニュースのカテゴリチップ */
+    --overlay:     rgba(25, 14, 10, .9);    /* 予約パネルのオーバーレイ */
+    --black:       #000000;   /* ★本文。可視 63 要素（トップ）/ 89 要素（下層） */
+    --white:       #ffffff;
+    --muted:       #666666;   /* ニュースの日付 */
+    --soft:        #2d2d2d;   /* 「お問い合わせ」 */
+    --select:      #363636;   /* 予約パネルの select。可視 11 要素 */
+    --card:        #f1f1f1;   /* トップのカード面。可視 4 要素 */
+    --band:        #4f4f4f;   /* ヘッダー最上部の帯 */
+    --rule:        #cccccc;   /* 予約カレンダーの罫 */
+    --dot:         #c4c4c4;   /* スライダーの非アクティブドット */
+    --sunday:      #ff4d4d;   /* カレンダーの日曜 */
+    --bg:          #ffffff;   /* 下層ページの地色 */
+
+    /* 宣言はあるが可視 0 要素（採用しない） */
+    --unused-olive: #536b2b;
+    --unused-gold:  #a4904c;
+
+    /* === Fonts ===
+       本番は Morisawa Fonts Web 配信の「本明朝 Pro Medium」（MFW-RoHMinchoPro-Md）。
+       ドメインライセンスのためローカルでは表示できないので Shippori Mincho で代替する。
+       欧文セリフの VanDijckRoman（セルフホスト）は EB Garamond で代替。
+       ボタンの游ゴシック体は OS フォントなので macOS では実サイトと同じ表示。 */
+    --font-mincho: "Shippori Mincho", MFW-RoHMinchoPro-Md, 游明朝体, "Yu Mincho", YuMincho,
+                   "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", serif;
+    --font-gothic: "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック体, YuGothic,
+                   "Zen Kaku Gothic New", "ヒラギノ角ゴ ProN", sans-serif;
+    --font-serif-en: "EB Garamond", VanDijckRoman, serif;   /* 代替: VanDijckRoman */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Metrics ===
+       line-height は単位なし（本文 1.8 / 見出し 1.5 / ナビ・ボタン 1.0）。
+       letter-spacing は body に .03em を 1 回（子へは 0.48px として継承）。
+       12px 以下だけ .02em に落とす。 */
+    --lh-body: 1.8;
+    --lh-head: 1.5;
+    --lh-lead: 1.6;
+    --lh-flat: 1;
+    --ls:       .03em;   /* = 0.48px @16px。可視 63 / 69 要素 */
+    --ls-small: .02em;   /* = 0.24px @12px。可視 22 要素 */
+    --ls-wide:  .04em;   /* 一部の見出し */
+
+    --r: 3px;        /* ★ボタンのみ。サイト唯一の角丸 */
+    /* box-shadow はサイト全体で 0 種。変数も置かない */
+
+    --container: 1240px;
+    --column:    996px;
+    --body-col:  792px;   /* 2 カラムの本文側 */
+    --head-col:  384px;   /* 2 カラムの見出し側 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-mincho);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は書かない（実サイトは palt を 1 要素も使っていない） */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HEADER */
+  .topband { background: var(--band); color: var(--white); font-size: 12px; line-height: 1.7; letter-spacing: var(--ls-small); text-align: center; padding: 6px 16px; }
+  .header { display: flex; align-items: stretch; border-bottom: 1px solid #e8e8e8; }
+  .header-left { display: flex; align-items: center; gap: 36px; padding: 0 24px; flex: 1; }
+  .brand { font-family: var(--font-serif-en); font-size: 19px; letter-spacing: .14em; line-height: 1.6; padding: 18px 0 14px; }
+  .brand small { display: block; font-size: 11px; letter-spacing: .4em; text-align: center; margin-top: 4px; }
+  .nav-global { display: flex; gap: 26px; }
+  .nav-global a { font-size: 16px; line-height: var(--lh-flat); letter-spacing: var(--ls); color: var(--black); text-decoration: none; }
+  .nav-utility { display: flex; }
+  .nav-utility button { width: 145px; height: 96px; background: var(--brown); color: var(--white); font-family: var(--font-mincho); font-size: 16px; font-weight: 400; line-height: 1.15; letter-spacing: var(--ls); border: none; border-radius: 0; cursor: pointer; }
+  .nav-utility button + button { border-left: 1px solid rgba(255,255,255,.25); }
+
+  /* HERO */
+  .hero { background: var(--brown-hero); color: var(--white); min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 64px 24px; text-align: center; }
+  .hero h1 { font-family: var(--font-serif-en); font-size: 38px; font-weight: 400; line-height: 1.2; letter-spacing: .12em; }
+  .hero .rule { width: 460px; max-width: 80%; height: 1px; background: rgba(255,255,255,.7); }
+  .hero .sub { font-family: var(--font-serif-en); font-size: 22px; letter-spacing: .5em; line-height: 1.4; }
+  .hero .btn-ghost { display: inline-flex; align-items: center; justify-content: center; min-width: 180px; height: 44px; border: 1px solid rgba(255,255,255,.8); border-radius: var(--r); color: var(--white); font-family: var(--font-gothic); font-size: 13px; font-weight: 500; line-height: var(--lh-flat); letter-spacing: var(--ls); text-decoration: none; padding: 13px 20px; }
+
+  /* SECTIONS */
+  .section { padding: 72px 24px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--card); }
+  .section-alt .section-inner { padding: 72px 24px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0; color: var(--muted); line-height: 1.6; }
+  .section-title { font-size: 26px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls-wide); color: var(--brown); margin: 8px 0 20px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); max-width: var(--body-col); margin-bottom: 32px; }
+  .note { font-size: 14px; line-height: 1.9; color: #333; margin-top: 20px; max-width: var(--body-col); }
+  code { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0; background: #eeeaE8; background: #efebe9; padding: 1px 5px; }
+
+  /* 2 カラム */
+  .twocol { display: grid; grid-template-columns: var(--head-col) 1fr; gap: 0 26px; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+  .twocol h2 { font-size: 26px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls-wide); }
+  .twocol p { font-size: 16px; line-height: var(--lh-body); }
+
+  /* PAGE TITLE */
+  .pagehead { max-width: var(--container); margin: 0 auto; padding: 56px 24px 24px; }
+  .pagehead .crumb { font-size: 12px; line-height: 1.8; letter-spacing: var(--ls-small); color: var(--muted); }
+  .pagehead h1 { font-size: 34px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls); padding-bottom: 10px; margin-top: 10px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .swatch { border: 1px solid #e3e3e3; background: var(--white); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: var(--ls); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--muted); margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: 1.8; letter-spacing: var(--ls-small); color: #333; margin-top: 6px; }
+  .swatch.is-unused { opacity: .55; border-style: dashed; }
+
+  /* TYPE */
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale-bar span { background: var(--card); padding: 8px 14px; line-height: var(--lh-head); }
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid #e3e3e3; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--muted); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font-mincho); font-size: 13px; font-weight: 500; color: var(--black); letter-spacing: var(--ls); }
+
+  /* BUTTONS */
+  .Button { display: inline-flex; align-items: center; justify-content: center; width: 180px; height: 44px; padding: 13px 20px; background: transparent; color: var(--brown); border: 1px solid var(--brown); border-radius: var(--r); font-family: var(--font-gothic); font-size: 16px; font-weight: 500; line-height: var(--lh-flat); letter-spacing: var(--ls); text-decoration: none; cursor: pointer; }
+  .Button--fill { background: var(--brown); color: var(--white); }
+  .btn-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 6px; background: var(--chip); color: var(--brown); font-size: 12px; line-height: 1.8; letter-spacing: var(--ls); }
+  .btn-ua { background: #efefef; border: 2px outset #000000; color: #000000; padding: 1px 6px; font-size: 16px; font-family: var(--font-mincho); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card { background: var(--card); border-radius: 0; }
+  .card-img { aspect-ratio: 16 / 10; background: linear-gradient(145deg, #3c2f26, #6b5a4a); }
+  .card-body { padding: 24px; }
+  .card-title { font-size: 26px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls-wide); color: var(--brown); }
+  .card-text { font-size: 16px; line-height: var(--lh-body); margin-top: 12px; }
+
+  /* TABLE */
+  .spec { width: 100%; border-collapse: collapse; max-width: var(--body-col); }
+  .spec th { font-size: 12px; font-weight: 400; line-height: 1.8; letter-spacing: var(--ls); text-align: left; padding: 14px 1px 2px; color: var(--muted); }
+  .spec td { font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: var(--ls); padding: 0 1px 14px; border-bottom: 1px solid #e3e3e3; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 12px; line-height: 1.8; letter-spacing: var(--ls-small); color: var(--muted); margin-bottom: 6px; }
+  .field input { width: 100%; background: var(--white); color: var(--black); border: 1px solid var(--brown); border-radius: var(--r); padding: 12px 14px; height: 48px; font-family: var(--font-mincho); font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); }
+  .field select { width: 100%; background: var(--select); color: var(--white); border: none; border-radius: 0; padding: 12px 14px; height: 48px; font-family: var(--font-mincho); font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); }
+  .field.is-focus input { border: 1px solid var(--brown); outline: 2px solid var(--brown); outline-offset: 1px; }
+  .field-msg { font-size: 12px; line-height: 1.8; letter-spacing: var(--ls-small); color: var(--muted); margin-top: 7px; }
+
+  /* ELEVATION / LAYOUT */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .elev { background: var(--white); border: 1px solid #e3e3e3; padding: 26px; text-align: center; }
+  .elev-name { font-size: 16px; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--muted); margin-top: 8px; line-height: 1.7; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 28px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 56px; background: var(--card); border: 1px solid var(--brown); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--muted); margin-top: 7px; }
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--card); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: #333; }
+
+  /* FOOTER */
+  .footer { background: var(--brown); color: var(--white); padding: 56px 24px 32px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-brand { font-family: var(--font-serif-en); font-size: 22px; letter-spacing: .14em; line-height: 1.6; }
+  .footer-nav { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+  .footer-nav a { font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--white); text-decoration: none; opacity: .85; }
+  .footer-copy { font-family: var(--font-serif-en); font-size: 14px; line-height: var(--lh-lead); letter-spacing: .08em; opacity: .7; margin-top: 32px; }
+
+  @media (max-width: 768px) {
+    .header { flex-direction: column; }
+    .nav-global { display: none; }
+    .nav-utility button { flex: 1; height: 64px; }
+    .section, .section-alt .section-inner { padding: 48px 16px; }
+    .twocol { grid-template-columns: 1fr; gap: 16px; }
+    .pagehead h1 { font-size: 26px; }
+    .hero h1 { font-size: 26px; }
+    .section-title, .card-title { font-size: 21px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topband">京都市宿泊税に関するご案内</div>
+
+<header class="header">
+  <div class="header-left">
+    <div class="brand">HOTEL THE MITSUI<small>KYOTO</small></div>
+    <nav class="nav-global">
+      <a href="#">客室</a><a href="#">レストラン＆バー</a><a href="#">温泉＆スパ</a><a href="#">エクスペリエンス</a><a href="#">ホテルについて</a>
+    </nav>
+  </div>
+  <div class="nav-utility">
+    <button type="button">宿泊予約</button>
+    <button type="button">レストラン予約</button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>HOTEL THE MITSUI</h1>
+  <div class="rule"></div>
+  <div class="sub">KYOTO</div>
+  <a href="#" class="btn-ghost">WATCH THE MOVIE</a>
+</div>
+
+<div class="pagehead">
+  <div class="crumb">ホーム ＞ ホテルについて</div>
+  <h1>ホテルについて</h1>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">焦茶と白の 2 色</h2>
+  <p class="section-lead">彩度のあるものは写真だけ。UI は <b><code>#190e0a</code></b> と白で組む。<b>トップの <code>body</code> 背景だけ <code>#1c0b06</code> という別値</b>だが、肉眼では区別できない。<b>下層ページの地色は白。</b></p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#190e0a"></div><div class="swatch-body"><div class="swatch-name">Brand Dark Brown</div><div class="swatch-hex">#190e0a</div><div class="swatch-use">★ボタンの面（145×96px）・見出し・枠線。可視 18 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1c0b06"></div><div class="swatch-body"><div class="swatch-name">Hero Brown</div><div class="swatch-hex">#1c0b06</div><div class="swatch-use">トップの body 背景（根拠 body）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#000000</div><div class="swatch-use">★本文。可視 63 / 89 要素。純黒を使う</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#666666"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#666666</div><div class="swatch-use">ニュースの日付（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#363636"></div><div class="swatch-body"><div class="swatch-name">Select Surface</div><div class="swatch-hex">#363636</div><div class="swatch-use">予約パネルの select。可視 11 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f1f1f1"></div><div class="swatch-body"><div class="swatch-name">Card Surface</div><div class="swatch-hex">#f1f1f1</div><div class="swatch-use">トップのカード面。可視 4 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#4f4f4f"></div><div class="swatch-body"><div class="swatch-name">Header Band</div><div class="swatch-hex">#4f4f4f</div><div class="swatch-use">ヘッダー最上部の細い帯</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#cccccc"></div><div class="swatch-body"><div class="swatch-name">Rule</div><div class="swatch-hex">#cccccc</div><div class="swatch-use">予約カレンダーの罫</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#536b2b"></div><div class="swatch-body"><div class="swatch-name">Olive（未使用）</div><div class="swatch-hex">#536b2b</div><div class="swatch-use">CSS にはあるが<b>可視 0 要素</b>。採用しない</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#a4904c"></div><div class="swatch-body"><div class="swatch-name">Gold（未使用）</div><div class="swatch-hex">#a4904c</div><div class="swatch-use">CSS にはあるが<b>可視 0 要素</b>。採用しない</div></div></div>
+  </div>
+
+  <p class="note"><b>CSS Custom Properties は 0 個。</b>設計トークンは存在しない。<b>トップは <code>heroCover: true</code>（<code>span.TopKeyVisual__bg</code> が <code>#190e0a</code> で 1440×900 を覆う）だが、下層ページの地色は白</b>。トップの背景色をサイト全体の背景として写さないこと。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">本文から表組みまで明朝 1 本</h2>
+  <p class="section-lead">和文は Morisawa Fonts Web 配信の <b>本明朝 Pro Medium</b>（<code>MFW-RoHMinchoPro-Md</code>）。可視 75 要素（トップ）/ 91 要素（下層）。<b>ゴシックが出るのはボタンのラベルだけ</b>（15 / 7 要素）。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:10px">10</span><span style="font-size:12px">12</span><span style="font-size:13px">13</span>
+    <span style="font-size:14px">14</span><span style="font-size:16px">16</span><span style="font-size:19px">19</span>
+    <span style="font-size:22px;font-family:var(--font-serif-en)">22</span><span style="font-size:26px">26</span>
+    <span style="font-size:32px">32</span><span style="font-size:34px">34</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Page Title</b>本明朝 Pro Md / 34px / 400<br>lh 1.50 (51px) / ls 0.48px（継承）</div><div style="font-size:34px;font-weight:400;line-height:1.5">ホテルについて</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading ★</b>本明朝 Pro Md / 26px / 400<br>lh 1.50 (39px) / 可視 9 / 7 要素</div><div style="font-size:26px;font-weight:400;line-height:1.5;color:var(--brown)">日本の美しさと</div></div>
+  <div class="type-row"><div class="type-meta"><b>English Lead</b><b style="display:inline">VanDijckRoman</b> / 22px / 400<br>lh 1.40（代替: EB Garamond）</div><div style="font-family:var(--font-serif-en);font-size:22px;line-height:1.4;letter-spacing:.06em">－EMBRACING JAPAN’S BEAUTY－</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>本明朝 Pro Md / 19px / 400<br>lh 1.60</div><div style="font-size:19px;line-height:1.6">古来より、日本に暮らす人々は四季とともに移ろう自然に心を寄せてきました。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>本明朝 Pro Md / 16px / 400<br>lh <b style="display:inline">1.80</b> (28.8px) / <b style="display:inline">ls .03em</b></div><div style="font-size:16px;line-height:1.8">日本の伝統的な美意識にも通じるその想いを、私たちは「おもてなし」として受け継いでまいります。梶井宮門をくぐり、庭園を抜けた先に、京都の時間が流れています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Table Cell</b>本明朝 Pro Md / 16px / 400<br>lh 1.60 (25.6px)</div><div style="font-size:16px;line-height:1.6">HOTEL THE MITSUI KYOTO（ホテル ザ 三井 京都）</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav</b>本明朝 Pro Md / 16px / 400<br>lh <b style="display:inline">1.00</b></div><div style="font-size:16px;line-height:1">客室　レストラン＆バー　温泉＆スパ　エクスペリエンス</div></div>
+  <div class="type-row"><div class="type-meta"><b>Button ★</b><b style="display:inline">游ゴシック体</b> / 16px / 500<br>lh 1.00 / ls 0.48px</div><div style="font-family:var(--font-gothic);font-size:16px;font-weight:500;line-height:1;letter-spacing:.03em;color:var(--brown)">詳しくはこちら</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>本明朝 Pro Md / 13px / 400<br>lh 1.23 (16px)</div><div style="font-size:13px;line-height:1.23">※表示料金は予約できる 1室1名1泊目 の最安値です</div></div>
+  <div class="type-row"><div class="type-meta"><b>Label ★</b>本明朝 Pro Md / 12px / 400<br>lh 1.80 (21.6px) / <b style="display:inline">ls .02em</b></div><div style="font-size:12px;line-height:1.8;letter-spacing:.02em">2026.10.01　ホテル名称　ホーム ＞ ホテルについて</div></div>
+  <div class="type-row"><div class="type-meta"><b>Price</b>本明朝 Pro Md / 10px / 400<br>lh 1.80 (18px)</div><div style="font-size:10px;line-height:1.8">158,125 円〜</div></div>
+
+  <p class="note"><b><code>font-feature-settings</code> は 1 要素も使っていない</b>（実測 0 件）。<b>明朝で <code>palt</code> を効かせると括弧や句読点が詰まりすぎて間が消える。</b>字間 <code>.03em</code> の浅さと「詰めない」がセットになっている。<b><code>palt</code> を足さないこと。</b></p>
+
+  <p class="note"><b><code>letter-spacing: .03em</code> は <code>body</code> に 1 回だけ。</b>computed は <code>0.48px</code> で、サイズの違う要素すべてが 0.48px（可視 63 / 69 要素）＝<b>絶対値の継承</b>。<b>12px 以下の要素だけ <code>.02em</code>（0.24px）を自分で宣言</b>している。</p>
+
+  <p class="note"><b><code>@font-face</code> が <code>font-weight: 1 1000</code> を宣言している。</b>400 でも 700 でも同じファイルが返り、合成太字も起きない。<b>太さを変えたいなら <code>MFW-RoHMinchoStd-Bd</code> を読み込んでファミリーを切り替える</b>（実サイトは宣言のみで <code>unloaded</code>）。</p>
+
+  <p class="note"><b>実サイトの font-family には 3 つの引っかかりがある。</b>① <code>Roboto, Yu Gotich, sans-serif</code> という<b>タイプミス</b>（正しくは <code>"Yu Gothic"</code>）。② 游ゴシックの Medium を Regular より<b>後ろ</b>に置いており、Windows で細く出る。③ <code>"Noto Sans JP"</code> をスタック先頭に書いているが <code>@font-face</code> もフォント要求も無い。<b>いずれも真似しないこと。</b></p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <h2 class="section-title">ボタンだけゴシックになる</h2>
+  <p class="section-lead">本文が全部明朝なので、<b>ボタンのラベルが明朝だと押せるように見えない</b>という判断。<code>border-radius: 3px</code> は<b>サイト唯一の角丸</b>で、ボタン 13 要素だけに付く。</p>
+
+  <div class="btn-row">
+    <a href="#" class="Button">詳しくはこちら</a>
+    <a href="#" class="Button Button--fill">ニュース一覧</a>
+    <span class="chip">Information</span>
+    <span class="chip">Rooms and Suites</span>
+  </div>
+
+  <div class="btn-row" style="margin-top:32px">
+    <div>
+      <div class="type-meta" style="margin-bottom:10px"><b>未スタイルの button（実サイトのバグ）</b>#efefef / 2px outset / padding 1px 6px</div>
+      <button type="button" class="btn-ua">Menu</button>
+      <button type="button" class="btn-ua">開閉</button>
+      <button type="button" class="btn-ua">閉じる</button>
+    </div>
+  </div>
+
+  <p class="note"><b>実サイトの <code>Menu</code> <code>開閉</code> <code>閉じる</code> はブラウザ既定のまま</b>（<code>background: #efefef</code> / <code>border: 2px outset</code>）。CSS を当て忘れている。<b>実装時は必ずリセットすること。</b></p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards</div>
+  <h2 class="section-title">面の明暗だけで奥行きを作る</h2>
+  <p class="section-lead"><b><code>box-shadow</code> はサイト全体で 0 種。</b>カードは <code>#f1f1f1</code> の面と写真だけ。角丸も付けない。</p>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">客室</div><p class="card-text">京都の街と庭を望む 161 室。数寄屋の設えと現代の快適さを重ねた空間。</p></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">レストラン＆バー</div><p class="card-text">長い歴史と美しい自然の中で豊かな食文化が育まれた京都。</p></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">温泉＆スパ</div><p class="card-text">山紫水明の都、京都。当ホテルの敷地に湧く天然温泉。</p></div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="table">
+  <div class="section-label">05 / Table</div>
+  <h2 class="section-title">罫線なし、サイズ差で分ける</h2>
+  <p class="section-lead"><code>th</code> は 12px、<code>td</code> は 16px。<b>背景色も縦罫も使わず、サイズ差だけで見出しと値を分ける。</b></p>
+
+  <table class="spec">
+    <tr><th>ホテル名称</th></tr>
+    <tr><td>HOTEL THE MITSUI KYOTO（ホテル ザ 三井 京都）</td></tr>
+    <tr><th>開業</th></tr>
+    <tr><td>2020年11月3日</td></tr>
+    <tr><th>所在地</th></tr>
+    <tr><td>京都市中京区油小路通二条下る二条油小路町284</td></tr>
+  </table>
+</section>
+
+<section class="section-alt" id="twocol">
+<div class="section-inner" style="padding-left:0;padding-right:0">
+  <div class="section-label" style="padding:0 24px">06 / Layout</div>
+  <h2 class="section-title" style="padding:0 24px">384px ＋ 792px の 2 カラム</h2>
+  <div class="twocol">
+    <h2>ホテル名称について</h2>
+    <p>三井家が 1703 年より 250 年以上にわたり伝えてきた地に建つホテル。梶井宮門をくぐり、庭園を抜けた先に客室がある。見出しは左 384px に固定し、本文は 792px を取る。<br><br>コンテナは 1240px、本文だけのページでは 996px に絞る。<code>gap</code> は <code>24px</code>（カード）と <code>0 26px</code>（2 カラム）の 2 値だけ。</p>
+  </div>
+
+  <div class="layout-demo" style="margin-top:44px;padding:0 24px">
+    <div class="layout-bar" style="width:100%;max-width:1240px">1240px — 標準コンテナ</div>
+    <div class="layout-bar" style="width:100%;max-width:996px">996px — 本文コンテナ</div>
+    <div class="layout-bar" style="width:100%;max-width:792px">792px — 2 カラムの本文側</div>
+    <div class="layout-bar" style="width:100%;max-width:384px">384px — 2 カラムの見出し側</div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms</div>
+  <h2 class="section-title">select は濃いグレーの面</h2>
+  <p class="section-lead">予約パネルの <code>select</code> は <code>#363636</code> の面に白文字で、<b>角丸なし</b>。テキスト入力は実測できなかったので、ボタンに合わせて <code>radius 3px</code> / <code>1px solid #190e0a</code> を推奨する。</p>
+
+  <div class="form-grid">
+    <div class="field">
+      <label for="f-nights">泊数</label>
+      <select id="f-nights"><option>1泊</option><option>2泊</option><option>3泊</option></select>
+      <div class="field-msg">#363636 / 白文字 / radius 0</div>
+    </div>
+    <div class="field">
+      <label for="f-name">お名前</label>
+      <input id="f-name" type="text" placeholder="三井 花子">
+      <div class="field-msg">radius 3px / 1px solid #190e0a</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f-mail">メールアドレス（フォーカス）</label>
+      <input id="f-mail" type="text" value="guest@example.jp">
+      <div class="field-msg">枠を 2px の outline で強調する</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">08 / Elevation &amp; Responsive</div>
+  <h2 class="section-title">影ゼロ、角丸は 3px だけ</h2>
+
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">none<br>★全要素。boxShadow は 0 種</div></div>
+    <div class="elev" style="background:var(--brown);color:var(--white);border-color:var(--brown)"><div class="elev-name">面で分ける</div><div class="elev-val" style="color:rgba(255,255,255,.75)">#ffffff / #f1f1f1 / #190e0a<br>オーバーレイ rgba(25,14,10,.9)</div></div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:3px"></div><div class="radius-label">3px / ボタン（13 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50%;width:56px"></div><div class="radius-label">50% / ドット（5 要素）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0 / それ以外すべて</div></div>
+  </div>
+
+  <p class="note"><b>主ブレークポイントは <code>max-width: 768px</code>（実測 522 回）。</b>1440 / 1200 / 834 / 375px のいずれでも <code>body</code> は <b>16px / 28.8px / 0.48px</b> で変わらない。縮むのは見出しとレイアウトだけ。</p>
+  <p class="note"><code>(min-width: 1025px) and (max-width: 768px)</code> のように<b>常に false になる組み合わせが 2 件ある</b>（ビルド時のネスト崩れ）。写さないこと。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">HOTEL THE MITSUI KYOTO</div>
+    <nav class="footer-nav">
+      <a href="#">客室</a><a href="#">レストラン＆バー</a><a href="#">温泉＆スパ</a><a href="#">エクスペリエンス</a><a href="#">ホテルについて</a><a href="#">アクセス</a>
+    </nav>
+    <p class="footer-copy">© 2021 Mitsui Fudosan Resort Management Co., Ltd.</p>
+  </div>
+</footer>
+
+</body>
+</html>

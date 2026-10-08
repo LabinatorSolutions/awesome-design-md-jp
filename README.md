@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (553 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (556 sites)</a>
 </p>
 
 <table>
@@ -851,6 +851,11 @@
 </tr>
 <tr>
 <td align="center"><strong>共同印刷</strong><br><img src="design-md/kyodoprinting/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大橋量器</strong><br><img src="design-md/masukoubou/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>長崎県美術館</strong><br><img src="design-md/nagasaki-museum/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>ホテル ザ 三井 京都</strong><br><img src="design-md/mitsui-kyoto/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1465,11 +1470,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [愛知県美術館 (Aichi Prefectural Museum of Art)](https://apmoa.museum/) | Museum / Art | [DESIGN.md](design-md/apmoa/DESIGN.md) | [preview.html](design-md/apmoa/preview.html) |
 | [ユーグレナ (euglena)](https://euglena.jp/) | Biotech / Corporate | [DESIGN.md](design-md/euglena/DESIGN.md) | [preview.html](design-md/euglena/preview.html) |
 | [共同印刷 / TOMOWEL (Kyodo Printing)](https://www.kyodoprinting.co.jp/) | Printing / Corporate | [DESIGN.md](design-md/kyodoprinting/DESIGN.md) | [preview.html](design-md/kyodoprinting/preview.html) |
+| [大橋量器 (MASU KOUBOU)](https://www.masukoubou.jp/) | Manufacturing / Craft | [DESIGN.md](design-md/masukoubou/DESIGN.md) | [preview.html](design-md/masukoubou/preview.html) |
+| [長崎県美術館 (Nagasaki Prefectural Art Museum)](https://www.nagasaki-museum.jp/) | Museum / Public | [DESIGN.md](design-md/nagasaki-museum/DESIGN.md) | [preview.html](design-md/nagasaki-museum/preview.html) |
+| [HOTEL THE MITSUI KYOTO (ホテル ザ 三井 京都)](https://www.hotelthemitsui.com/ja/kyoto/) | Hotel / Hospitality | [DESIGN.md](design-md/mitsui-kyoto/DESIGN.md) | [preview.html](design-md/mitsui-kyoto/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (553 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (556 sites)</a>
 </p>
 
 <table>
@@ -2286,6 +2294,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>共同印刷</strong><br><img src="design-md/kyodoprinting/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大橋量器</strong><br><img src="design-md/masukoubou/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>長崎県美術館</strong><br><img src="design-md/nagasaki-museum/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>ホテル ザ 三井 京都</strong><br><img src="design-md/mitsui-kyoto/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
