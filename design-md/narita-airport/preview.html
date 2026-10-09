@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 成田国際空港</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 1 個だけ（--roboto-font）。
+       以下は computed style の実測値。2026-10-09 */
+    --navy:     #033b7d;   /* ★ブランド色。ヘッダー帯・フッター・リンク。可視 10 要素 */
+    --action:   #0058aa;   /* ★押せるものだけ。フライト検索の選択タブ。可視 1 要素 */
+    --ink:      #081018;   /* ★本文。可視 16 / 22 要素。純黒ではない */
+    --ink-70:   rgba(8, 16, 24, .698);   /* 補足。可視 14 要素。別 hex ではなく 70% 不透明度 */
+    --white:    #ffffff;
+    --white-70: rgba(255, 255, 255, .698);   /* 紺面の上の補助。可視 7 要素 */
+    --bg:       #f6f8fb;   /* ページ背景。pageBackground.resolved（viewportTopBySample 7/12） */
+    --surface:  #ffffff;   /* カードの面 */
+    --border:   rgba(8, 16, 24, .16);   /* カード・セカンダリボタンの枠（1px solid） */
+
+    /* === Fonts ===
+       実サイトは next/font がセルフホストする Noto Sans JP（400 / 700）1 本。
+       スタックに出る "Noto Sans JP Fallback" は next/font が生成する
+       size-adjust 付きの代替フェイス名なので、手書きの CSS には転記しない。
+       Zen Kaku Gothic New / Noto Sans KR / SC / TC は @font-face の宣言だけで
+       日本語ページでは全部 unloaded（＝描画されない）。 */
+    --font: "Noto Sans JP", sans-serif;
+    --font-en: "Roboto", sans-serif;   /* 実サイトの --roboto-font に相当 */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Metrics ===
+       line-height は単位なしの 2 値だけ（本文 1.8 / 見出し・ボタン 1.4）。
+       letter-spacing は .012em を「各要素が自分で」宣言する。body は normal。
+       32px→.384px / 16px→.192px / 14px→.168px / 12px→.144px / 10px→.12px（可視 58 要素）。 */
+    --lh-body: 1.8;
+    --lh-head: 1.4;
+    --ls: .012em;
+
+    /* === Radius ===  実測 5 / 10 / 20px の 3 段。影は 0 種なので変数も置かない */
+    --r-s:  5px;
+    --r-m:  10px;
+    --r-l:  20px;
+
+    --container: 1132px;   /* 実測 4 要素・両ページ共通 */
+    --gap:       20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は書かない（実サイトは palt を 1 要素も使っていない） */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HEADER */
+  .utility { background: var(--navy); color: var(--white); }
+  .utility-inner { max-width: var(--container); margin: 0 auto; padding: 8px 20px; display: flex; gap: 24px; justify-content: flex-end; align-items: center; }
+  .utility span, .utility a { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--white-70); text-decoration: none; }
+  .utility .temp { color: var(--white); }
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); }
+  .header-inner { max-width: var(--container); margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 40px; }
+  .brand { font-family: var(--font-en); font-size: 20px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); color: var(--navy); white-space: nowrap; }
+  .brand small { display: block; font-family: var(--font); font-size: 10px; font-weight: 400; letter-spacing: var(--ls); color: var(--ink-70); }
+  .nav-global { display: flex; gap: 28px; flex: 1; }
+  .nav-global a { font-size: 14px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink); text-decoration: none; }
+
+  /* HERO */
+  .hero { background: var(--navy); color: var(--white); }
+  .hero-inner { max-width: var(--container); margin: 0 auto; padding: 72px 20px; display: grid; grid-template-columns: 1fr 420px; gap: 48px; align-items: center; }
+  .hero h1 { font-size: 60px; font-weight: 400; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .hero .lead { font-size: 14px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--white-70); margin-top: 20px; }
+  .panel { background: var(--surface); color: var(--ink); border-radius: var(--r-l); padding: 32px; }
+  .panel h2 { font-size: 32px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .tabs { display: flex; gap: 8px; margin-top: 24px; }
+  .tab { flex: 1; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: var(--r-m); background: transparent; color: var(--ink-70); font-family: var(--font); font-size: 16px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); cursor: pointer; }
+  .tab.is-active { background: var(--action); color: var(--white); }
+  .panel .link { display: block; text-align: center; margin-top: 20px; font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--navy); }
+
+  /* SECTIONS */
+  .section { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface); }
+  .section-alt .section-inner { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0; color: var(--ink-70); line-height: var(--lh-body); }
+  .section-title { font-size: 32px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); color: var(--navy); margin: 8px 0 20px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); max-width: 760px; margin-bottom: 32px; }
+  .note { font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); margin-top: 20px; max-width: 760px; }
+  code { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0; background: #e8edf5; padding: 1px 5px; border-radius: 3px; }
+
+  /* PAGE TITLE */
+  .pagehead { max-width: var(--container); margin: 0 auto; padding: 40px 20px 0; }
+  .pagehead .crumb { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); }
+  .pagehead h1 { font-size: 32px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); margin-top: 10px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--gap); }
+  .swatch { border: 1px solid var(--border); border-radius: var(--r-m); background: var(--surface); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 14px; }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--ink-70); margin-top: 4px; }
+  .swatch-use { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); margin-top: 6px; }
+
+  /* TYPE */
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale-bar span { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-s); padding: 8px 14px; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .section-alt .scale-bar span { background: var(--bg); }
+  .type-row { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--ink-70); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font); font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: var(--ls); }
+
+  /* LS DEMO */
+  .ls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gap); }
+  .ls-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-m); padding: 22px; }
+  .section-alt .ls-card { background: var(--bg); }
+  .ls-card h3 { font-size: 16px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); margin-bottom: 12px; }
+  .ls-card p { font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); }
+  .ls-sample { margin-top: 14px; font-size: 32px; font-weight: 700; line-height: var(--lh-head); color: var(--ink); }
+  .ls-good { letter-spacing: .012em; }        /* 各要素が自分で em を持つ＝正 */
+  .ls-bad  { letter-spacing: 0.192px; }       /* body から px で降りてきた場合＝誤 */
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .Button { display: inline-flex; align-items: center; justify-content: center; min-width: 200px; height: 48px; padding: 12px 24px; background: var(--action); color: var(--white); border: 0; border-radius: var(--r-m); font-family: var(--font); font-size: 16px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); text-decoration: none; cursor: pointer; }
+  .Button--ghost { background: transparent; color: var(--ink-70); border: 1px solid var(--border); }
+  .Button--navy { background: var(--navy); color: var(--white); }
+  .chip { display: inline-flex; align-items: center; height: 40px; padding: 0 16px; background: var(--surface); color: var(--ink); border: 1px solid var(--border); border-radius: var(--r-s); font-size: 16px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls); }
+  .section-alt .chip { background: var(--bg); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-m); overflow: hidden; }
+  .card-img { aspect-ratio: 16 / 10; background: linear-gradient(145deg, #033b7d, #0058aa); }
+  .card-body { padding: 20px; }
+  .card-title { font-size: 20px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); color: var(--navy); }
+  .card-text { font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); margin-top: 10px; }
+
+  /* TABLE */
+  .spec { width: 100%; border-collapse: collapse; max-width: 760px; }
+  .spec th { font-size: 12px; font-weight: 700; line-height: var(--lh-body); letter-spacing: var(--ls); text-align: left; padding: 14px 8px 8px 0; color: var(--ink-70); border-bottom: 1px solid var(--border); }
+  .spec td { font-size: 16px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls); padding: 12px 8px 12px 0; border-bottom: 1px solid var(--border); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+  .field label { display: block; font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); margin-bottom: 6px; }
+  .field input { width: 100%; background: var(--surface); color: var(--ink); border: 1px solid var(--border); border-radius: var(--r-s); padding: 12px 14px; height: 48px; font-family: var(--font); font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls); }
+  .field input::placeholder { color: var(--ink-70); }
+  .field.is-focus input { border-color: var(--action); outline: 2px solid var(--action); outline-offset: 1px; }
+  .field-msg { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--ink-70); margin-top: 7px; }
+
+  /* ELEVATION / LAYOUT */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap); }
+  .elev { background: var(--surface); border: 1px solid var(--border); padding: 26px; text-align: center; }
+  .elev--s { border-radius: var(--r-s); }
+  .elev--m { border-radius: var(--r-m); }
+  .elev--l { border-radius: var(--r-l); }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--ink-70); margin-top: 8px; line-height: 1.7; }
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-s); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; color: var(--ink-70); }
+  .section-alt .layout-bar { background: var(--bg); }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: var(--white); padding: 56px 20px 32px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-brand { font-family: var(--font-en); font-size: 20px; font-weight: 700; letter-spacing: var(--ls); line-height: var(--lh-head); }
+  .footer-nav { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+  .footer-nav a { font-size: 14px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 12px; line-height: var(--lh-body); letter-spacing: var(--ls); color: var(--white-70); margin-top: 32px; }
+
+  @media (max-width: 960px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 768px) {
+    .header-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .nav-global { display: none; }
+    .section, .section-alt .section-inner { padding: 48px 16px; }
+    .hero h1 { font-size: 40px; }
+    .hero-inner { padding: 48px 16px; }
+    .section-title, .pagehead h1 { font-size: 24px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    body { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <div class="utility-inner">
+    <span>成田</span><span class="temp">21℃/69.8°F</span>
+    <a href="#">お手伝いの必要なお客様</a><a href="#">よくあるご質問</a><a href="#">Language: JA</a>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">Narita Airport<small>成田国際空港</small></div>
+    <nav class="nav-global">
+      <a href="#">フライト</a><a href="#">レストラン・ショップ</a><a href="#">サービス・施設</a><a href="#">交通アクセス</a><a href="#">楽しむ・知る</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>想いをつなぐ。</h1>
+      <p class="lead">日本と世界、街、人、モノ、想い、<br>「つなぐ」成田空港。</p>
+    </div>
+    <div class="panel">
+      <h2>本日のフライトを探す</h2>
+      <div class="tabs">
+        <button type="button" class="tab is-active">出発フライト</button>
+        <button type="button" class="tab">到着フライト</button>
+      </div>
+      <a href="#" class="link">すべての出発フライトを見る</a>
+    </div>
+  </div>
+</div>
+
+<div class="pagehead">
+  <div class="crumb">ホーム ＞ 交通アクセス</div>
+  <h1>交通アクセストップ</h1>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">紺が 2 つ、文字は不透明度で弱める</h2>
+  <p class="section-lead"><b><code>#033b7d</code> は「面と文字の地の色」、<code>#0058aa</code> は「いま押せるもの」</b>で役割が違う。補足テキストは別の hex を作らず、<b>本文色 <code>#081018</code> の 70% 不透明度</b>で作る。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#033b7d"></div><div class="swatch-body"><div class="swatch-name">Narita Navy</div><div class="swatch-hex">#033b7d</div><div class="swatch-use">ヘッダー帯・フッター・リンク。可視 10 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#0058aa"></div><div class="swatch-body"><div class="swatch-name">Action Blue</div><div class="swatch-hex">#0058aa</div><div class="swatch-use">フライト検索の選択タブ専用</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#081018"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#081018</div><div class="swatch-use">本文。可視 16 / 22 要素。純黒は使わない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:rgba(8,16,24,.698)"></div><div class="swatch-body"><div class="swatch-name">Text Muted</div><div class="swatch-hex">rgba(8,16,24,.698)</div><div class="swatch-use">気温・時刻・補足。可視 14 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f6f8fb;border-bottom:1px solid rgba(8,16,24,.16)"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#f6f8fb</div><div class="swatch-use">ページ背景（根拠 viewportTopBySample 7/12）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border-bottom:1px solid rgba(8,16,24,.16)"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">カード・検索パネルの面</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Noto Sans JP 1 本、400 と 700 だけ</h2>
+  <p class="section-lead">可視テキスト <b>62 / 66 要素のすべて</b>が同じスタック。<b><code>500</code> と <code>600</code> は 1 要素もない</b>（読み込んでいるのも 400 と 700 の 2 ウェイトだけ）。サイズは <b>10 / 12 / 14 / 16 / 20 / 32 / 60</b> の 7 段で、端数が出ない。</p>
+  <div class="scale-bar">
+    <span style="font-size:10px">10</span><span style="font-size:12px">12</span><span style="font-size:14px">14</span><span style="font-size:16px">16</span><span style="font-size:20px">20</span><span style="font-size:32px">32</span><span style="font-size:60px">60</span>
+  </div>
+  <div class="type-row"><div class="type-meta"><b>Display</b>60px / 400 / lh 1.4<br>ls .012em = 0.72px</div><div style="font-size:60px;font-weight:400;line-height:1.4;letter-spacing:.012em">想いをつなぐ。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading 1</b>32px / 700 / lh 1.4<br>ls .012em = 0.384px</div><div style="font-size:32px;font-weight:700;line-height:1.4;letter-spacing:.012em">移動手段別ご案内</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading 2</b>20px / 700 / lh 1.4<br>ls .012em = 0.24px</div><div style="font-size:20px;font-weight:700;line-height:1.4;letter-spacing:.012em">電車・バス・車でのアクセス</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body</b>16px / 400 / lh 1.8<br>ls .012em = 0.192px</div><div style="font-size:16px;font-weight:400;line-height:1.8;letter-spacing:.012em">成田空港へは、電車・バス・車・レンタカーでお越しいただけます。所要時間はいずれも目安です。最新の運行状況は各公共交通機関にお問い合わせください。</div></div>
+  <div class="type-row"><div class="type-meta"><b>UI / Nav</b>14px / 400 / lh 1.8<br>ls .012em = 0.168px<br>最多 21〜27 要素</div><div style="font-size:14px;font-weight:400;line-height:1.8;letter-spacing:.012em">フライト ／ レストラン・ショップ ／ サービス・施設 ／ 交通アクセス</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>12px / 400 / lh 1.8<br>ls .012em = 0.144px</div><div style="font-size:12px;font-weight:400;line-height:1.8;letter-spacing:.012em;color:rgba(8,16,24,.698)">成田 21℃/69.8°F ／ 2026年10月9日 09:00 現在</div></div>
+</div>
+</section>
+
+<section class="section" id="letterspacing">
+  <div class="section-label">03 / Letter Spacing</div>
+  <h2 class="section-title">字間は「各要素が自分で」持つ</h2>
+  <p class="section-lead"><code>body</code> は <code>letter-spacing: normal</code> のまま。<b>ほぼすべての要素が <code>.012em</code> を個別に宣言している。</b>実測の px がサイズに正比例するのがその証拠で、<code>body</code> に 1 回書いて継承させた設計ではない。</p>
+  <div class="ls-grid">
+    <div class="ls-card">
+      <h3>正：要素ごとに <code>.012em</code></h3>
+      <p>32px の見出しは <code>0.384px</code>、12px の注記は <code>0.144px</code>。サイズが変わると字間も比例して変わる。375px に縮んでも関係が崩れない。</p>
+      <div class="ls-sample ls-good">成田国際空港</div>
+      <div class="ls-sample ls-good" style="font-size:12px">成田国際空港 ／ 気温 21℃</div>
+    </div>
+    <div class="ls-card">
+      <h3>誤：<code>body</code> に <code>em</code> を 1 回</h3>
+      <p><code>body</code> に <code>.012em</code> と書くと <b>16px × .012 = 0.192px という絶対値</b>が全子孫に降りる。12px の注記も 60px の見出しも同じ 0.192px になり、小さい字が広く、大きい字が詰まって見える。</p>
+      <div class="ls-sample ls-bad">成田国際空港</div>
+      <div class="ls-sample ls-bad" style="font-size:12px">成田国際空港 ／ 気温 21℃</div>
+    </div>
+  </div>
+  <p class="note">左右の 12px の行（<code>成田国際空港 ／ 気温 21℃</code>）を見比べると、右（誤）のほうが字間が広い。<b>縮小したスクリーンショットでは差が見えないので、等倍で確認すること。</b></p>
+</section>
+
+<section class="section-alt" id="components">
+<div class="section-inner">
+  <div class="section-label">04 / Components</div>
+  <h2 class="section-title">面で塗るのは「いま押せるもの」だけ</h2>
+  <p class="section-lead">主ボタンは <code>#0058aa</code> の面。それ以外は<b>枠線だけ</b>で作り、角丸の大きさ（<code>5px</code> / <code>10px</code>）で性格を分ける。</p>
+  <div class="btn-row">
+    <button type="button" class="Button">出発フライト</button>
+    <button type="button" class="Button Button--ghost">到着フライト</button>
+    <button type="button" class="Button Button--navy">すべてのフライトを見る</button>
+    <span class="chip">液体物の持ち込み</span>
+    <span class="chip">手荷物</span>
+    <span class="chip">駐車場</span>
+  </div>
+  <p class="note"><b>ボタンの <code>line-height</code> は <code>1.4</code>、本文は <code>1.8</code>。</b>中間の値を作らない。</p>
+</div>
+</section>
+
+<section class="section" id="cards">
+  <div class="section-label">05 / Cards</div>
+  <h2 class="section-title">影ゼロ。枠と角丸だけで立てる</h2>
+  <p class="section-lead"><b><code>box-shadow</code> はサイト全体で 0 種。</b>地（<code>#f6f8fb</code>）の上に面（<code>#ffffff</code>）を置き、<code>1px solid</code> の枠と <code>10px</code> の角丸で浮かせる。</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">電車</div><p class="card-text">成田エクスプレス・京成スカイライナーで都心から最短 36 分。</p></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">バス</div><p class="card-text">東京駅・新宿駅から高速バスが運行しています。</p></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">車・レンタカー</div><p class="card-text">駐車場は第1・第2・第3ターミナルにご用意しています。</p></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="table">
+<div class="section-inner">
+  <div class="section-label">06 / Table</div>
+  <h2 class="section-title">横罫だけ、縦罫は引かない</h2>
+  <p class="section-lead"><code>th</code> は 12px / 700、<code>td</code> は 16px / 400。<b>背景色も縦罫も使わず、サイズとウェイトの差だけで見出しと値を分ける。</b></p>
+  <table class="spec">
+    <tr><th>駅名</th><th>所要時間</th><th>電話番号</th></tr>
+    <tr><td>東京駅</td><td>約 53 分</td><td>050-3772-3910</td></tr>
+    <tr><td>新宿駅</td><td>約 81 分</td><td>050-3772-3910</td></tr>
+    <tr><td>横浜駅</td><td>約 85 分</td><td>050-3772-3910</td></tr>
+  </table>
+  <p class="note">所要時間は目安です。詳しくは各公共交通機関にお問い合わせください。</p>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms</div>
+  <h2 class="section-title">入力欄は最小の角丸 5px</h2>
+  <p class="section-lead">フォーカスは <code>#0058aa</code> の <code>outline: 2px</code>。プレースホルダは <b>別のグレーを作らず <code>rgba(8,16,24,.698)</code></b>。</p>
+  <div class="form-grid">
+    <div class="field">
+      <label for="f1">航空会社/都市/フライト番号</label>
+      <input id="f1" type="text" placeholder="例: NH806 / ソウル">
+      <div class="field-msg">半角・全角どちらでも検索できます</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f2">出発日（フォーカス状態）</label>
+      <input id="f2" type="text" value="2026年10月9日">
+      <div class="field-msg">本日から 7 日先まで指定できます</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">08 / Elevation &amp; Layout</div>
+  <h2 class="section-title">奥行きは角丸の大小で表す</h2>
+  <p class="section-lead">影が無いので、<b><code>5px</code>（チップ・入力欄）→ <code>10px</code>（カード・ボタン）→ <code>20px</code>（大きな区画）</b>の 3 段で層を作る。</p>
+  <div class="elev-grid">
+    <div class="elev elev--s"><div class="elev-name">Radius S</div><div class="elev-val">5px<br>チップ・入力欄</div></div>
+    <div class="elev elev--m"><div class="elev-name">Radius M</div><div class="elev-val">10px<br>カード・ボタン</div></div>
+    <div class="elev elev--l"><div class="elev-name">Radius L</div><div class="elev-val">20px<br>検索パネル・大区画</div></div>
+  </div>
+  <div class="layout-demo" style="margin-top:36px">
+    <div class="layout-bar" style="width:100%">viewport</div>
+    <div class="layout-bar" style="width:1132px;max-width:100%">container 1132px（実測 4 要素）</div>
+    <div class="layout-bar" style="width:364px">card ／ gap 20px</div>
+  </div>
+  <p class="note">ブレークポイントは <code>min-width: 768px</code>（実測 89 箇所）と <code>min-width: 960px</code>（20 箇所）。<b>834px まで値が動かず、768px を割ってから本文 16px → 12px、惹句 60px → 40px に落ちる。</b>字間は <code>.012em</code> のまま比例して縮む。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Narita Airport</div>
+    <nav class="footer-nav">
+      <a href="#">フライト</a><a href="#">レストラン・ショップ</a><a href="#">サービス・施設</a><a href="#">交通アクセス</a><a href="#">楽しむ・知る</a>
+    </nav>
+    <div class="footer-copy">Design System Preview — 実測 2026-10-09 / narita-airport.jp</div>
+  </div>
+</footer>
+
+</body>
+</html>

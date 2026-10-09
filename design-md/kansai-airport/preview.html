@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 関西国際空港 KIX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトは Tailwind v4 の @theme で :root に 150 個（自社トークン 148 / Swiper 2）。
+       以下は実際に描画されている値だけを抜いたもの。2026-10-09 */
+    --navy:        #07185c;   /* ★--color-blue-500。文字・面・影の基準色。可視 30 / 31 要素 */
+    --cyan:        #00bff2;   /* ★--color-sky-blue-500。可視 71 要素 */
+    --cyan-100:    #bdf1ff;   /* --color-sky-blue-100 */
+    --cyan-50:     #f0fcff;   /* --color-sky-blue-50 */
+
+    --ink:         #101114;   /* --color-grey-600。本文。可視 23 / 44 要素。純黒ではない */
+    --ink-sub:     #3e414c;   /* --color-grey-500 */
+    --muted:       #6e7281;   /* --color-grey-400。更新時刻・注記。可視 10 / 20 要素 */
+    --divider:     #a6a8b0;   /* --color-grey-300 */
+    --border:      #dddddf;   /* --color-grey-200 */
+    --bg:          #f7f7f8;   /* --color-grey-100。セクションの地 */
+    --white:       #ffffff;
+
+    /* Semantic は「濃い文字色＋淡い面色」の対で持つ */
+    --error:       #cc1000;  --error-bg:   #ffe3e0;
+    --warning:     #6e4005;  --warning-bg: #fff1d6;
+    --success:     #006936;  --success-bg: #e2efda;
+    --info:        #084285;  --info-bg:    #d9eaff;
+
+    /* 宣言はあるが可視 0 要素（採用しない）
+       --color-red-500: #eb008b。ヒーローのマゼンタは hero-kix-2-bg.png という画像の中の色で、
+       CSS からは一度も描画されていない。 */
+    --unused-magenta: #eb008b;
+
+    /* === Fonts ===
+       本番はセルフホストの notosansjp / notosans（Regular・Medium 500・Bold 700 の実ファイル 3 本ずつ）。
+       ここでは Google Fonts の Noto Sans JP / Noto Sans で代替する（同じ書体）。
+       ★実サイトの日本語スタックは
+         notosansjp, notosans, "PingFang SC", "Microsoft YaHei", sans-serif
+       とフォールバックが簡体字中国語になっている（誤り）。正しくはヒラギノ角ゴ ProN / メイリオ。
+       下のスタックは正した版。 */
+    --font: "Noto Sans JP", "Noto Sans", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN", Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Metrics ===
+       line-height は単位なしの 1.4（本文・可視 41〜67 要素）/ 1.2（見出し・23〜42 要素）。
+       letter-spacing は全要素 normal。1 箇所も触らない。 */
+    --lh-body: 1.4;
+    --lh-head: 1.2;
+    --lh-long: 1.75;
+
+    /* === Radius ===  16px（可視 21〜37 要素）と全丸の二択。8px / 12px が少数 */
+    --r:      16px;
+    --r-s:    8px;
+    --r-m:    12px;
+    --r-full: 9999px;   /* 実サイトは Tailwind v4 の calc(infinity * 1px) = 3.35544e+07px */
+
+    /* === Shadow ===  黒を使わない。ブランド色 12% を近い影＋遠い影の 2 本重ね */
+    --shadow-cyan: rgba(0, 191, 242, .12) 0 1px 3px 0, rgba(0, 191, 242, .12) 0 4px 8px 3px;
+    --shadow-navy: rgba(7, 24, 92, .12) 0 1px 4px 0, rgba(7, 24, 92, .12) 0 4px 8px 3px;
+
+    --ease: cubic-bezier(.25, 1, .5, 1);   /* --ease-kix-outside */
+    --container: 1280px;   /* 実測 17 / 21 要素 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    /* letter-spacing は書かない（実サイトは可視 134 要素すべて normal） */
+    /* font-feature-settings も書かない（palt は 0 件） */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HEADER */
+  .alertbar { background: var(--white); border-bottom: 1px solid var(--border); }
+  .alertbar-inner { max-width: var(--container); margin: 0 auto; padding: 10px 20px; display: flex; flex-direction: column; gap: 4px; }
+  .alertbar a { font-size: 14px; line-height: var(--lh-body); color: var(--navy); text-decoration: none; }
+  .header { background: var(--white); border-bottom: 1px solid var(--border); }
+  .header-inner { max-width: var(--container); margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 40px; }
+  .brand { display: inline-flex; align-items: center; gap: 8px; font-size: 24px; font-weight: 700; line-height: var(--lh-head); color: var(--navy); }
+  .brand .mark { width: 26px; height: 26px; border-radius: var(--r-full); background: linear-gradient(135deg, var(--cyan), var(--navy)); }
+  .nav-global { display: flex; gap: 26px; flex: 1; }
+  .nav-global a { font-size: 14px; font-weight: 500; line-height: var(--lh-body); color: var(--ink); text-decoration: none; }
+
+  /* HERO */
+  .hero { background: linear-gradient(170deg, var(--cyan-50) 0%, var(--cyan-100) 55%, var(--navy) 55%, var(--navy) 100%); }
+  .hero-inner { max-width: var(--container); margin: 0 auto; padding: 72px 20px 96px; }
+  .hero h1 { font-size: 50px; font-weight: 700; line-height: var(--lh-head); color: var(--navy); }
+  .searchbar { display: flex; gap: 8px; margin-top: 40px; max-width: 800px; }
+  .searchbar input { flex: 1; height: 56px; background: var(--white); color: var(--ink); border: 1px solid var(--border); border-radius: var(--r-full); padding: 0 24px; font-family: var(--font); font-size: 16px; line-height: var(--lh-body); }
+  .searchbar input::placeholder { color: var(--muted); }
+  .searchbar button { height: 56px; min-width: 120px; background: var(--navy); color: var(--white); border: 0; border-radius: var(--r-full); font-family: var(--font); font-size: 16px; font-weight: 500; line-height: var(--lh-body); cursor: pointer; }
+
+  /* SECTIONS */
+  .section { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--bg); }
+  .section-alt .section-inner { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); line-height: var(--lh-body); }
+  .section-title { font-size: 32px; font-weight: 700; line-height: var(--lh-head); color: var(--navy); margin: 8px 0 20px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); max-width: 820px; margin-bottom: 32px; }
+  .note { font-size: 14px; line-height: var(--lh-long); color: var(--ink-sub); margin-top: 20px; max-width: 820px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--cyan-50); padding: 1px 5px; border-radius: 4px; }
+
+  /* PAGE TITLE */
+  .pagehead { max-width: var(--container); margin: 0 auto; padding: 40px 20px 0; }
+  .pagehead .crumb { font-size: 14px; line-height: var(--lh-body); color: var(--muted); }
+  .pagehead h1 { font-size: 32px; font-weight: 700; line-height: var(--lh-head); color: var(--navy); margin-top: 10px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+  .swatch { border: 1px solid var(--border); border-radius: var(--r-m); background: var(--white); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 14px; }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: var(--lh-head); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .swatch-use { font-size: 12px; line-height: var(--lh-body); color: var(--ink-sub); margin-top: 6px; }
+  .swatch.is-unused { opacity: .55; border-style: dashed; }
+
+  /* SEMANTIC */
+  .sem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .sem { border-radius: var(--r-m); padding: 18px 20px; }
+  .sem b { display: block; font-size: 16px; font-weight: 700; line-height: var(--lh-head); }
+  .sem span { display: block; font-family: var(--font-mono); font-size: 11px; margin-top: 6px; }
+
+  /* TYPE */
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; margin-bottom: 30px; }
+  .scale-bar span { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-s); padding: 8px 14px; line-height: var(--lh-head); }
+  .type-row { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font); font-size: 13px; font-weight: 700; color: var(--ink); }
+
+  /* GRADIENT TEXT BUTTON */
+  .btn-kix {
+    display: inline-block;
+    font-size: 16px; font-weight: 700; line-height: var(--lh-body);
+    text-decoration: none;
+    background-image: linear-gradient(to right, #00bff2 0%, #00bff2 50%, #07185c 50%, #07185c 100%);
+    background-size: 200% 100%;
+    background-position: 100% 0;          /* 既定は右半分＝紺が文字に出る */
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background-position .4s var(--ease);
+  }
+  .btn-kix:hover,
+  .btn-kix.is-hover { background-position: 0 0; }   /* ホバーでシアンへ拭き変わる */
+  .btn-row { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+
+  .Button { display: inline-flex; align-items: center; justify-content: center; min-width: 200px; height: 48px; padding: 12px 24px; background: var(--navy); color: var(--white); border: 0; border-radius: var(--r-full); font-family: var(--font); font-size: 16px; font-weight: 500; line-height: var(--lh-body); text-decoration: none; cursor: pointer; }
+  .Button--accent { background: var(--cyan); color: var(--white); font-size: 20px; font-weight: 700; }
+  .Button--ghost { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+  .chip { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border-radius: var(--r-full); font-size: 14px; font-weight: 500; line-height: var(--lh-body); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .card { background: var(--white); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow-navy); }
+  .card--cyan { box-shadow: var(--shadow-cyan); }
+  .card-img { aspect-ratio: 16 / 10; background: linear-gradient(145deg, var(--cyan), var(--navy)); }
+  .card-body { padding: 20px; }
+  .card-title { font-size: 20px; font-weight: 700; line-height: var(--lh-head); color: var(--navy); }
+  .card-text { font-size: 16px; line-height: var(--lh-body); margin-top: 10px; }
+  .card-meta { font-size: 14px; line-height: var(--lh-body); color: var(--muted); margin-top: 12px; }
+
+  /* TABLE */
+  .spec { width: 100%; border-collapse: collapse; max-width: 820px; }
+  .spec th { font-size: 14px; font-weight: 700; line-height: var(--lh-body); text-align: left; padding: 14px 8px 8px 0; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .spec td { font-size: 16px; font-weight: 400; line-height: var(--lh-body); padding: 12px 8px; border-bottom: 1px solid var(--border); }
+  .spec td:first-child { padding-left: 0; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .field label { display: block; font-size: 14px; font-weight: 500; line-height: var(--lh-body); color: var(--ink-sub); margin-bottom: 6px; }
+  .field input, .field select { width: 100%; background: var(--white); color: var(--ink); border: 1px solid var(--border); border-radius: var(--r-s); padding: 12px 16px; height: 48px; font-family: var(--font); font-size: 16px; line-height: var(--lh-body); }
+  .field input::placeholder { color: var(--muted); }
+  .field.is-focus input { border-color: var(--cyan); outline: 2px solid var(--cyan); outline-offset: 1px; }
+  .field-msg { font-size: 14px; line-height: var(--lh-body); color: var(--muted); margin-top: 7px; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .elev { background: var(--white); border-radius: var(--r); padding: 26px; text-align: center; }
+  .elev--0 { border: 1px solid var(--border); }
+  .elev--cyan { box-shadow: var(--shadow-cyan); }
+  .elev--navy { box-shadow: var(--shadow-navy); }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-head); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.7; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 28px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 56px; background: var(--cyan-50); border: 1px solid var(--cyan); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 7px; }
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-s); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: var(--white); padding: 56px 20px 32px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-brand { font-size: 24px; font-weight: 700; line-height: var(--lh-head); }
+  .footer-nav { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+  .footer-nav a { font-size: 14px; font-weight: 500; line-height: var(--lh-body); color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 14px; line-height: var(--lh-body); color: var(--cyan-100); margin-top: 32px; }
+
+  @media (max-width: 768px) {
+    .header-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .nav-global { display: none; }
+    .section, .section-alt .section-inner { padding: 48px 16px; }
+    .hero-inner { padding: 48px 16px 64px; }
+    .hero h1 { font-size: 32px; }
+    .searchbar { flex-direction: column; }
+    .section-title, .pagehead h1 { font-size: 24px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="alertbar">
+  <div class="alertbar-inner">
+    <a href="#">モバイルバッテリーの機内持ち込みについて（2026年4月24日以降）</a>
+    <a href="#">T1 1F送迎レーン（一般車レーン）運用再開と利用時の新ルールについて</a>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand"><span class="mark"></span>KIX</div>
+    <nav class="nav-global">
+      <a href="#">フライト</a><a href="#">空港で過ごす</a><a href="#">アクセス</a><a href="#">関西からの旅</a><a href="#">お困りですか？</a><a href="#">各種会員プログラム</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>こんにちは！</h1>
+    <div class="searchbar">
+      <input type="text" placeholder="お店、レストラン">
+      <button type="button">検索</button>
+    </div>
+  </div>
+</div>
+
+<div class="pagehead">
+  <div class="crumb">ホーム ／ アクセス</div>
+  <h1>アクセス方法を調べる</h1>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">紺とシアン。マゼンタは画像の中にしかない</h2>
+  <p class="section-lead">UI は <code>#07185c</code> と <code>#00bff2</code> の 2 色で組む。トップのヒーローに見える鮮やかなマゼンタは <b><code>hero-kix-2-bg.png</code> という画像に焼き込まれた色</b>で、<code>--color-red-500: #eb008b</code> という変数はあるのに<b>可視 0 要素</b>。UI の色として実装しない。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#07185c"></div><div class="swatch-body"><div class="swatch-name">KIX Navy</div><div class="swatch-hex">#07185c / --color-blue-500</div><div class="swatch-use">文字・面・影の基準色。可視 30 / 31 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#00bff2"></div><div class="swatch-body"><div class="swatch-name">KIX Cyan</div><div class="swatch-hex">#00bff2 / --color-sky-blue-500</div><div class="swatch-use">アクセント・影の色。可視 71 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#101114"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#101114 / --color-grey-600</div><div class="swatch-use">本文。可視 23 / 44 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#6e7281"></div><div class="swatch-body"><div class="swatch-name">Text Muted</div><div class="swatch-hex">#6e7281 / --color-grey-400</div><div class="swatch-use">更新時刻・注記。可視 10 / 20 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f7f7f8;border-bottom:1px solid #dddddf"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#f7f7f8 / --color-grey-100</div><div class="swatch-use">セクションの地。ページの地色は白</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#eb008b"></div><div class="swatch-body"><div class="swatch-name">Magenta（採用しない）</div><div class="swatch-hex">#eb008b / --color-red-500</div><div class="swatch-use">宣言あり・可視 0 要素。画像の中の色</div></div></div>
+  </div>
+  <h3 style="font-size:20px;font-weight:700;line-height:1.2;margin:40px 0 16px;color:#07185c">Semantic は「濃い文字＋淡い面」の対で使う</h3>
+  <div class="sem-grid">
+    <div class="sem" style="background:#e2efda;color:#006936"><b>空いています</b><span>text #006936 / bg #e2efda</span></div>
+    <div class="sem" style="background:#fff1d6;color:#6e4005"><b>やや混雑</b><span>text #6e4005 / bg #fff1d6</span></div>
+    <div class="sem" style="background:#ffe3e0;color:#cc1000"><b>大変混雑</b><span>text #cc1000 / bg #ffe3e0</span></div>
+    <div class="sem" style="background:#d9eaff;color:#084285"><b>お知らせ</b><span>text #084285 / bg #d9eaff</span></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Noto Sans を 4 言語ぶん自前で持つ</h2>
+  <p class="section-lead"><code>notosansjp</code> / <code>notosanstc</code> / <code>notosanssc</code> / <code>notosanskr</code> をセルフホストし、<code>html[lang]</code> でスタックごと切り替える。<b>日本語ページで <code>loaded</code> なのは JP の 3 本だけ</b>で、TC / SC / KR は 1 バイトも落ちない。ウェイトは <b>400 / 500 / 700 の 3 段</b>で、すべて実ファイルがある。</p>
+  <div class="scale-bar">
+    <span style="font-size:14px">14</span><span style="font-size:16px">16</span><span style="font-size:18px">18</span><span style="font-size:20px">20</span><span style="font-size:32px">32</span><span style="font-size:40px">40</span><span style="font-size:50px">50</span>
+  </div>
+  <div class="type-row"><div class="type-meta"><b>Display</b>50px / 700 / lh 1.2<br>ls normal</div><div style="font-size:50px;font-weight:700;line-height:1.2;color:#07185c">こんにちは！</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading 2</b>32px / 700 / lh 1.2<br>可視 4〜7 要素</div><div style="font-size:32px;font-weight:700;line-height:1.2;color:#07185c">空港のご利用目的は？</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading 3</b>20px / 700 / lh 1.2<br>可視 15 要素</div><div style="font-size:20px;font-weight:700;line-height:1.2">保安検査 ／ 交通機関 ／ 駐車場</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>18px / 500 / lh 1.4</div><div style="font-size:18px;font-weight:500;line-height:1.4">保安検査・出国・税関申告などをご案内します。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body</b>16px / 400 / lh 1.4<br>最多 31〜55 要素</div><div style="font-size:16px;font-weight:400;line-height:1.4">関西国際空港は、24 時間運用の国際拠点空港です。第 1 ターミナルと第 2 ターミナルのあいだは無料のシャトルバスで移動できます。所要時間は約 7 分です。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>14px / 400 / lh 1.4<br>可視 28〜37 要素</div><div style="font-size:14px;font-weight:400;line-height:1.4;color:#6e7281">10/09 09:10 現在 ／ ※待ち時間は目安です。</div></div>
+  <p class="note"><b><code>letter-spacing</code> は可視 134 要素すべて <code>normal</code>。</b>日本語を完全なベタ組みで流す。<code>palt</code> も使っていない。本文の <code>line-height: 1.4</code> は「短い行を速く読む」空港の案内に合わせた値で、長文の記事には流用しない。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="section-label">03 / Components</div>
+  <h2 class="section-title">主ボタンは面ではなく「文字」を塗る</h2>
+  <p class="section-lead"><code>linear-gradient(to right, #00bff2 0 50%, #07185c 50% 100%)</code> を <code>background-size: 200% 100%</code> で持ち、<code>-webkit-text-fill-color: transparent</code> で文字に抜く。<b>既定は右半分（紺）が見えていて、ホバーで位置が動くと文字色がシアンへ拭き変わる</b>（実測 27 要素）。</p>
+  <div class="btn-row">
+    <a href="#" class="btn-kix">早朝営業の飲食店一覧へ</a>
+    <a href="#" class="btn-kix is-hover">免税品の予約サイトへ（ホバー状態）</a>
+  </div>
+  <div class="btn-row" style="margin-top:32px">
+    <button type="button" class="Button">アクセス方法を調べる</button>
+    <button type="button" class="Button Button--accent">出発便を見る</button>
+    <button type="button" class="Button Button--ghost">フロアマップ</button>
+    <span class="chip" style="background:#e2efda;color:#006936">空いています</span>
+    <span class="chip" style="background:#fff1d6;color:#6e4005">やや混雑</span>
+  </div>
+  <p class="note">面で塗るボタンの角丸は<b>全丸</b>。実サイトは Tailwind v4 の <code>rounded-full</code> で <code>calc(infinity * 1px)</code>（実測 <code>3.35544e+07px</code>）になるが、<b>手で書くときは <code>9999px</code> でよい</b>。</p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards &amp; Elevation</div>
+  <h2 class="section-title">影に黒を使わない</h2>
+  <p class="section-lead">影は <code>rgba(0,191,242,.12)</code>（シアン）と <code>rgba(7,24,92,.12)</code>（紺）の 2 種だけ。<b>近い影と遠い影を必ず 2 本重ねる。</b>角丸は <code>16px</code> が既定（可視 21〜37 要素）。</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">電車でお越しの方</div><p class="card-text">JR・南海電鉄が関西空港駅に乗り入れています。</p><div class="card-meta">10/09 09:10 現在</div></div></div>
+    <div class="card card--cyan"><div class="card-img"></div><div class="card-body"><div class="card-title">リムジンバス</div><p class="card-text">大阪・京都・神戸の主要駅から直通便があります。</p><div class="card-meta">10/09 09:10 現在</div></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">車・駐車場</div><p class="card-text">P1〜P4 の駐車場をご利用いただけます。</p><div class="card-meta">10/09 09:10 現在</div></div></div>
+  </div>
+  <div class="elev-grid" style="margin-top:36px">
+    <div class="elev elev--0"><div class="elev-name">Level 0</div><div class="elev-val">none<br>枠線だけ</div></div>
+    <div class="elev elev--cyan"><div class="elev-name">Level 1 — cyan</div><div class="elev-val">rgba(0,191,242,.12) 0 1px 3px 0,<br>rgba(0,191,242,.12) 0 4px 8px 3px</div></div>
+    <div class="elev elev--navy"><div class="elev-name">Level 1 — navy</div><div class="elev-val">rgba(7,24,92,.12) 0 1px 4px 0,<br>rgba(7,24,92,.12) 0 4px 8px 3px</div></div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">8px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">12px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">16px（既定）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">9999px（ボタン・入力欄）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0 0 16px 16px"></div><div class="radius-label">0 0 16px 16px</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="table">
+  <div class="section-label">05 / Table</div>
+  <h2 class="section-title">横罫だけ。<code>th</code> は 14px のグレー</h2>
+  <p class="section-lead">罫は <code>#dddddf</code> の <code>1px</code>。縦罫を引かず、<code>th</code> の色（<code>#6e7281</code>）とサイズ差で見出しを分ける。</p>
+  <table class="spec">
+    <tr><th>交通機関</th><th>所要時間</th><th>運賃</th></tr>
+    <tr><td>JR 関空快速（大阪駅）</td><td>約 70 分</td><td>1,210 円</td></tr>
+    <tr><td>南海ラピート（難波駅）</td><td>約 38 分</td><td>1,490 円</td></tr>
+    <tr><td>リムジンバス（京都駅）</td><td>約 95 分</td><td>2,800 円</td></tr>
+  </table>
+</section>
+
+<section class="section-alt" id="forms">
+<div class="section-inner">
+  <div class="section-label">06 / Forms &amp; Layout</div>
+  <h2 class="section-title">入力欄は全丸か 8px</h2>
+  <p class="section-lead">フォーカスは <code>#00bff2</code> の <code>outline: 2px</code>。ラベルは <code>14px / 500</code>。</p>
+  <div class="form-grid">
+    <div class="field">
+      <label for="k1">目的地</label>
+      <select id="k1"><option>- 選択 -</option><option>関西国際空港</option><option>大阪国際空港（伊丹空港）</option></select>
+      <div class="field-msg">出発地から検索することもできます</div>
+    </div>
+    <div class="field is-focus">
+      <label for="k2">お店・レストラン（フォーカス状態）</label>
+      <input id="k2" type="text" value="免税店">
+      <div class="field-msg">ターミナル・エリアで絞り込めます</div>
+    </div>
+  </div>
+  <div class="layout-demo" style="margin-top:36px">
+    <div class="layout-bar" style="width:100%">viewport</div>
+    <div class="layout-bar" style="width:1280px;max-width:100%">container 1280px（実測 17 / 21 要素）</div>
+    <div class="layout-bar" style="width:410px">card ／ gap 16px・24px</div>
+  </div>
+  <p class="note">余白は <b>8 の倍数</b>（8 / 16 / 24 / 32 / 56 / 64）。ブレークポイントは Tailwind 既定（768 / 1024 / 1280px）。<b>834px まで値が動かず、375px で見出しだけ 50px → 32px に縮む。本文 14px は全幅で変わらない。</b></p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">KIX 関西国際空港</div>
+    <nav class="footer-nav">
+      <a href="#">フライト</a><a href="#">空港で過ごす</a><a href="#">アクセス</a><a href="#">関西からの旅</a><a href="#">各種会員プログラム</a>
+    </nav>
+    <div class="footer-copy">Design System Preview — 実測 2026-10-09 / kansai-airport.or.jp</div>
+  </div>
+</footer>
+
+</body>
+</html>

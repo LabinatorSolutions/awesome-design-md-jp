@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (556 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (559 sites)</a>
 </p>
 
 <table>
@@ -856,6 +856,11 @@
 </tr>
 <tr>
 <td align="center"><strong>ホテル ザ 三井 京都</strong><br><img src="design-md/mitsui-kyoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>成田国際空港</strong><br><img src="design-md/narita-airport/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>関西国際空港</strong><br><img src="design-md/kansai-airport/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>静岡県立美術館</strong><br><img src="design-md/spmoa/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1473,11 +1478,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [大橋量器 (MASU KOUBOU)](https://www.masukoubou.jp/) | Manufacturing / Craft | [DESIGN.md](design-md/masukoubou/DESIGN.md) | [preview.html](design-md/masukoubou/preview.html) |
 | [長崎県美術館 (Nagasaki Prefectural Art Museum)](https://www.nagasaki-museum.jp/) | Museum / Public | [DESIGN.md](design-md/nagasaki-museum/DESIGN.md) | [preview.html](design-md/nagasaki-museum/preview.html) |
 | [HOTEL THE MITSUI KYOTO (ホテル ザ 三井 京都)](https://www.hotelthemitsui.com/ja/kyoto/) | Hotel / Hospitality | [DESIGN.md](design-md/mitsui-kyoto/DESIGN.md) | [preview.html](design-md/mitsui-kyoto/preview.html) |
+| [成田国際空港 (Narita International Airport)](https://www.narita-airport.jp/ja/) | Airport / Transportation | [DESIGN.md](design-md/narita-airport/DESIGN.md) | [preview.html](design-md/narita-airport/preview.html) |
+| [関西国際空港 (KIX)](https://www.kansai-airport.or.jp/) | Airport / Transportation | [DESIGN.md](design-md/kansai-airport/DESIGN.md) | [preview.html](design-md/kansai-airport/preview.html) |
+| [静岡県立美術館 (Shizuoka Prefectural Museum of Art)](https://spmoa.shizuoka.shizuoka.jp/) | Museum / Public | [DESIGN.md](design-md/spmoa/DESIGN.md) | [preview.html](design-md/spmoa/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (556 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (559 sites)</a>
 </p>
 
 <table>
@@ -2299,6 +2307,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>ホテル ザ 三井 京都</strong><br><img src="design-md/mitsui-kyoto/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>成田国際空港</strong><br><img src="design-md/narita-airport/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>関西国際空港</strong><br><img src="design-md/kansai-airport/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>静岡県立美術館</strong><br><img src="design-md/spmoa/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

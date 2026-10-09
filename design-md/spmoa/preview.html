@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 静岡県立美術館</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個。以下は CSS 全文と computed style の実測値。2026-10-09 */
+    --navy:      #0e1b3f;   /* ★ブランド色。ヘッダー帯・ナビ・フッター・主ボタン。可視 62 / 69 要素 */
+    --navy-sub:  #455788;   /* サブ見出しの帯。可視 2 要素 */
+    --navy-pale: #dce0ea;   /* 淡い区切り面。可視 4 要素 */
+    --crumb:     #565f78;   /* パンくずの帯。可視 1 要素 */
+
+    --ink:       #323232;   /* ★本文。body に直接。可視 115 / 132 要素。純黒は使わない */
+    --ink-head:  #212121;   /* ナビ・見出し。可視 40 要素 */
+    --ink-mute:  #666666;   /* カテゴリラベル。可視 9 要素 */
+    --white:     #ffffff;
+    --link:      #032bc1;   /* 本文中のリンク。可視 3 / 8 要素 */
+
+    --rule:      #c9c9c9;   /* 見出しの下線・画像の枠 */
+    --card:      #a0a0a0;   /* 展覧会カードの地。可視 114 要素 */
+    --surface:   #f6f6f6;   /* ニュース欄の面 */
+
+    --warn:      #dc0101;   /* .rule（注意書き）の枠と文字 */
+    --today:     #ed6400;   /* 「本日」バッジ */
+    --sun:       #e40000;   /* カレンダーの日曜。可視 5 要素 */
+    --sat:       #1e3a87;   /* カレンダーの土曜。可視 5 要素 */
+    --ev-a:      #b7e3f8;   /* イベント分類 A。可視 16 要素 */
+    --ev-b:      #cef49b;   /* イベント分類 B。可視 6 要素 */
+    --open:      #22ac38;   /* 開催中マーク */
+
+    /* 配色切り替えの 4 つ（body.color01〜04） */
+    --c01: #ffffff;   /* 白 */
+    --c02: #0000b3;   /* 青 */
+    --c03: #f39700;   /* 黄（実際は橙） */
+    --c04: #000000;   /* 黒 */
+
+    /* === Fonts ===
+       本番は Fontworks の FOT-UD角ゴ_ラージ Pr6 を FontPlus（webfont.fontplus.jp）が動的注入する。
+       document.fonts には 1 件も載らず、@font-face の有無では判定できない。
+       ★太さは font-weight ではなく「書体名」で切り替える（R / M / B）。
+       ドメインライセンスなのでローカルでは出ない。UD 書体として最も近い
+       BIZ UDPGothic（モリサワ・Google Fonts）で代替する。
+       BIZ UDPGothic は Regular と Bold の 2 本しかないので、
+       M の位置には Noto Sans JP 500 を当てて 3 段を再現する。 */
+    --font-r: "BIZ UDPGothic", "FOT-UD角ゴ_ラージ Pr6 R", sans-serif;
+    --font-m: "Noto Sans JP", "FOT-UD角ゴ_ラージ Pr6 M", sans-serif;
+    --font-b: "BIZ UDPGothic", "FOT-UD角ゴ_ラージ Pr6 B", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Radius ===  3px が既定（可視 34 要素）。ボタンだけ 30px。影は 0 種 */
+    --r:      3px;
+    --r-btn:  30px;
+    --r-page: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: none; }   /* 実サイトの宣言 */
+
+  body {
+    background: var(--white);     /* 既定では body にクラスが付かない＝地色は白 */
+    font-family: var(--font-r);
+    color: var(--ink);
+    font-size: 62.5%;             /* ★ 16px → 10px。以降のサイズはすべてこの 10px に対する em */
+    line-height: 1.0em;           /* ★ em なので 10px という絶対値が全子孫に降りる */
+    /* letter-spacing は書かない（実サイトは可視 284 要素すべて normal） */
+    /* font-feature-settings も書かない（palt / halt ともに 0 件） */
+    /* font-weight も書かない（太さは書体名で切り替える） */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HEADER */
+  .header { background: var(--navy); color: var(--white); }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 1.6em 1.5em; display: flex; align-items: center; gap: 2.4em; flex-wrap: wrap; }
+  .logo { font-family: var(--font-b); font-size: 2.2em; line-height: 1.3em; color: var(--white); white-space: nowrap; }
+  .logo small { display: block; font-family: var(--font-r); font-size: .5em; line-height: 1.4em; }
+  .tagline { font-size: 1.4em; line-height: 1.4em; color: var(--white); }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 1.6em; }
+  .language { display: flex; gap: 1.2em; list-style: none; }
+  .language a { font-size: 1.4em; line-height: 1.4em; color: var(--white); text-decoration: none; }
+  .language .active a { border-bottom: 2px solid var(--white); }
+
+  /* COLOR SWITCHER */
+  .selectColor { display: flex; gap: .8em; }
+  .selectColor .label { display: inline-flex; align-items: center; justify-content: center; width: 3.6em; height: 2.4em; border: 1px solid var(--white); font-size: 1.6em; line-height: 1.0em; cursor: pointer; }
+  .selectColor .color01 { background: var(--c01); color: var(--ink); }
+  .selectColor .color02 { background: var(--c02); color: var(--white); }
+  .selectColor .color03 { background: var(--c03); color: var(--ink); }
+  .selectColor .color04 { background: var(--c04); color: var(--white); }
+  .selectColor input { display: none; }
+
+  .nav-global { background: var(--navy); border-top: 1px solid rgba(255,255,255,.25); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5em; display: flex; gap: 2.8em; flex-wrap: wrap; }
+  .nav-inner a { font-size: 1.7em; line-height: 1.0em; color: var(--white); text-decoration: none; padding: 1.1em 0; }
+
+  /* SECTIONS */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5em; }
+  .section { padding: 5.0em 0; }
+  .section-alt { background: var(--surface); }
+  .section-label { font-family: var(--font-mono); font-size: 1.2em; line-height: 1.6em; color: var(--ink-mute); }
+  .section-title { font-family: var(--font-r); font-size: 2.4em; line-height: 1.2em; color: var(--navy); margin: .3em 0 .6em; }
+  .section-lead { font-size: 1.4em; line-height: 1.6em; max-width: 56em; margin-bottom: 2.2em; }
+  .note { font-size: 1.4em; line-height: 1.6em; color: var(--ink); margin-top: 1.5em; max-width: 56em; }
+  code { font-family: var(--font-mono); font-size: .92em; background: var(--navy-pale); padding: .1em .4em; }
+  a { color: var(--link); }
+
+  /* TITLES（実サイトのクラス名をそのまま） */
+  #pageTitle { font-size: 2.4em; line-height: 1.2em; margin-bottom: 3.0em; }
+  .solidTitle { padding-bottom: .3em; border-bottom: 3px solid var(--rule); font-size: 2.0em; line-height: 1.3em; margin-bottom: .75em; }
+  .dotedTitle { padding-bottom: .375em; border-bottom: 1px dotted var(--rule); font-size: 1.6em; line-height: 1.3em; margin-bottom: .94em; }
+  .sideIconTitle { padding-left: .57em; border-left: 10px solid var(--navy); font-family: var(--font-m); font-size: 1.4em; line-height: 1.4em; margin-bottom: 1.07em; }
+  .strongTitle { font-family: var(--font-m); font-size: 1.4em; line-height: 1.4em; margin-bottom: 1.07em; }
+  .rule-box { padding: 1.07em; border: 1px solid var(--warn); text-align: center; color: var(--warn); font-family: var(--font-b); font-size: 1.4em; line-height: 1.4em; }
+  .txtTitle { font-size: 1.8em; line-height: 1.4em; margin-bottom: 1.1em; }
+  .bodytext { font-size: 1.4em; line-height: 1.6em; margin-bottom: 1.07em; }
+  .longtext { font-size: 1.4em; line-height: 1.8em; }
+
+  /* LINE HEIGHT DEMO */
+  .lh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(30em, 1fr)); gap: 2.0em; }
+  .lh-card { border: 1px solid var(--rule); border-radius: var(--r); padding: 2.0em; }
+  .lh-card h3 { font-family: var(--font-m); font-size: 1.4em; line-height: 1.4em; margin-bottom: 1.07em; }
+  .lh-card .bad  { font-size: 1.4em; /* line-height を書かない＝body の 10px が降りてくる */ background: #fff1f1; padding: .7em; }
+  .lh-card .good { font-size: 1.4em; line-height: 1.6em; background: #f1f7ff; padding: .7em; }
+  .lh-card p.exp { font-size: 1.2em; line-height: 1.6em; color: var(--ink-mute); margin-top: 1.25em; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(21em, 1fr)); gap: 1.5em; }
+  .swatch { border: 1px solid var(--rule); border-radius: var(--r); background: var(--white); overflow: hidden; }
+  .swatch-chip { height: 7.6em; }
+  .swatch-body { padding: 1.2em; }
+  .swatch-name { font-family: var(--font-m); font-size: 1.4em; line-height: 1.4em; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1em; line-height: 1.5em; color: var(--ink-mute); margin-top: .4em; }
+  .swatch-use { font-size: 1.2em; line-height: 1.6em; color: var(--ink); margin-top: .6em; }
+
+  /* THEME DEMO — 実サイトの .color0* 規則をそのまま再現 */
+  .theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(26em, 1fr)); gap: 2.0em; }
+  .theme { border: 1px solid var(--rule); padding: 2.0em; }
+  .theme .t-name { font-family: var(--font-m); font-size: 1.4em; line-height: 1.4em; margin-bottom: 1.07em; }
+  .theme .t-title { padding-bottom: .3em; border-bottom: 3px solid var(--rule); font-size: 1.8em; line-height: 1.3em; margin-bottom: .83em; }
+  .theme .t-text { font-size: 1.4em; line-height: 1.6em; margin-bottom: 1.07em; }
+  .theme .t-link { font-size: 1.4em; line-height: 1.6em; display: block; margin-bottom: 1.07em; }
+  .theme .t-rule { padding: .8em; border: 1px solid var(--warn); text-align: center; color: var(--warn); font-family: var(--font-b); font-size: 1.3em; line-height: 1.4em; margin-bottom: 1.15em; }
+  .theme .t-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 14em; height: 3.0em; background: var(--navy); color: var(--white); border-radius: var(--r-btn); font-size: 1.4em; line-height: 1.0em; text-decoration: none; }
+
+  /* 白（既定） */
+  .theme.color01 { background: var(--c01); color: var(--ink); }
+  /* 青 */
+  .theme.color02 { background: var(--c02); color: var(--white); }
+  .theme.color02 .t-link, .theme.color02 .t-name { color: var(--white); }
+  .theme.color02 .t-rule { border-color: var(--white); color: var(--white); }
+  /* 黄 */
+  .theme.color03 { background: var(--c03); color: var(--ink); }
+  .theme.color03 .t-title { border-bottom-color: var(--navy); }
+  .theme.color03 .t-link, .theme.color03 .t-name { color: var(--ink); }
+  .theme.color03 .t-rule { border-color: var(--ink); color: var(--ink); }
+  /* 黒 */
+  .theme.color04 { background: var(--c04); color: var(--white); }
+  .theme.color04 .t-link, .theme.color04 .t-name { color: var(--white); }
+  .theme.color04 .t-rule { border-color: var(--white); color: var(--white); }
+
+  /* TYPE */
+  .type-row { display: grid; grid-template-columns: 26em 1fr; gap: 2.4em; padding: 1.8em 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1em; line-height: 1.8em; color: var(--ink-mute); }
+  .type-meta b { display: block; font-family: var(--font-m); font-size: 1.2em; line-height: 1.5em; color: var(--ink); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 2.2em; flex-wrap: wrap; align-items: center; }
+  .btnMore { display: inline-flex; align-items: center; justify-content: center; min-width: 20em; height: 3.2em; background: var(--navy); color: var(--white); border-radius: var(--r-btn); font-size: 1.6em; line-height: 1.0em; text-decoration: none; }
+  .btnPager { display: inline-flex; align-items: center; justify-content: center; width: 2.4em; height: 2.4em; background: var(--white); color: var(--link); border: 1px solid var(--rule); border-radius: var(--r-page); font-size: 1.6em; line-height: 1.0em; text-decoration: none; }
+  .badge { display: inline-flex; align-items: center; height: 2.0em; padding: 0 .8em; background: var(--today); color: var(--white); font-size: 1.4em; line-height: 1.0em; border-radius: var(--r); }
+  .ev-chip { display: inline-flex; align-items: center; height: 2.2em; padding: 0 .9em; font-size: 1.3em; line-height: 1.0em; color: var(--ink); border-radius: var(--r); }
+
+  /* TABLE */
+  .tbrNormal { width: 100%; border-collapse: collapse; border-top: 1px solid var(--rule); max-width: 56em; }
+  .tbrNormal th { font-family: var(--font-m); font-size: 1.4em; line-height: 1.6em; text-align: left; padding: .9em .8em; border-bottom: 1px solid var(--rule); width: 12em; }
+  .tbrNormal td { font-size: 1.4em; line-height: 1.6em; padding: .9em .8em; border-bottom: 1px solid var(--rule); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(24em, 1fr)); gap: 2.0em; }
+  .card { background: var(--card); border-radius: var(--r); overflow: hidden; }
+  .card-img { aspect-ratio: 16 / 10; background: linear-gradient(145deg, #5a6b8f, #0e1b3f); }
+  .card-body { padding: 1.5em; background: var(--white); }
+  .card-title { font-family: var(--font-m); font-size: 1.6em; line-height: 1.4em; color: var(--navy); }
+  .card-date { font-size: 1.3em; line-height: 1.6em; color: var(--ink-mute); margin-top: .6em; }
+
+  /* CALENDAR */
+  .cal { display: flex; gap: .6em; flex-wrap: wrap; }
+  .cal-day { width: 5.4em; border: 1px solid var(--rule); border-radius: var(--r); padding: .8em .4em; text-align: center; }
+  .cal-date { font-family: var(--font-b); font-size: 2.1em; line-height: 1.2em; }
+  .cal-wd { font-family: var(--font-b); font-size: 1.4em; line-height: 1.4em; }
+  .cal-wd.sun { color: var(--sun); }
+  .cal-wd.sat { color: var(--sat); }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 1.0em; align-items: center; }
+  .layout-bar { background: var(--surface); border: 1px solid var(--rule); height: 3.6em; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1em; line-height: 1.6em; color: var(--ink-mute); }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: var(--white); padding: 5.0em 0 3.0em; }
+  .footer-brand { font-family: var(--font-b); font-size: 2.0em; line-height: 1.3em; }
+  .footer-nav { display: flex; gap: 2.8em; flex-wrap: wrap; margin-top: 2.0em; }
+  .footer-nav a { font-size: 1.4em; line-height: 1.6em; color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 1.2em; line-height: 1.6em; color: var(--navy-pale); margin-top: 3.0em; }
+
+  @media only screen and (max-width: 860px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .header-right { margin-left: 0; }
+    .nav-inner { gap: 1.6em; }
+    .section { padding: 3.5em 0; }
+    .section-title, #pageTitle { font-size: 2.0em; }
+    .type-row { grid-template-columns: 1fr; gap: .8em; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">静岡県立美術館<small>Shizuoka Prefectural Museum of Art</small></div>
+    <p class="tagline">日本平のふもと、緑に囲まれた美術館</p>
+    <div class="header-right">
+      <ul class="language">
+        <li class="active"><a href="#">日本語</a></li><li><a href="#">English</a></li><li><a href="#">中文</a></li><li><a href="#">한국어</a></li>
+      </ul>
+      <div class="selectColor">
+        <span><label class="label color01"><input type="radio" name="c" class="change-color">白</label></span>
+        <span><label class="label color02"><input type="radio" name="c" class="change-color">青</label></span>
+        <span><label class="label color03"><input type="radio" name="c" class="change-color">黄</label></span>
+        <span><label class="label color04"><input type="radio" name="c" class="change-color">黒</label></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-global">
+  <div class="nav-inner">
+    <a href="#">来館案内</a><a href="#">展覧会</a><a href="#">アートを学ぶ・体験する</a><a href="#">デジタルアーカイブ</a><a href="#">美術館について</a><a href="#">コミュニティ</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:3.0em">
+  <h1 id="pageTitle">来館案内</h1>
+</div>
+
+<section class="section">
+<div class="container">
+  <div class="section-label">01 / Weight</div>
+  <h2 class="section-title">太さは <code>font-weight</code> ではなく書体名で切り替える</h2>
+  <p class="section-lead"><code>FOT-UD角ゴ_ラージ Pr6 <b>R</b></code> / <code><b>M</b></code> / <code><b>B</b></code> の 3 ファミリーを使い分ける。CSS に <code>font-weight</code> の宣言がなく、<b>実測でも可視 284 要素のうち 280 要素が <code>400</code></b>。<b><code>font-weight: 700</code> を当てても太くならない</b>（R のファミリーに太字の実体がない）。</p>
+  <div class="type-row"><div class="type-meta"><b>Pr6 R（本文・UI）</b>可視 207 要素<br>font-weight は書かない</div><div style="font-family:var(--font-r);font-size:2.0em;line-height:1.4em">開館時間・観覧料のご案内</div></div>
+  <div class="type-row"><div class="type-meta"><b>Pr6 M（小見出し）</b>可視 7 要素<br>.sideIconTitle / .strongTitle</div><div style="font-family:var(--font-m);font-size:2.0em;line-height:1.4em">開館時間・観覧料のご案内</div></div>
+  <div class="type-row"><div class="type-meta"><b>Pr6 B（注意書き・日付）</b>可視 70 要素<br>.rule / カレンダー</div><div style="font-family:var(--font-b);font-size:2.0em;line-height:1.4em">開館時間・観覧料のご案内</div></div>
+  <p class="note">ローカルでは FontPlus のドメインライセンスが効かないため、<b>UD 書体として最も近い BIZ UDPGothic（モリサワ・Google Fonts）で代替</b>している。BIZ UDPGothic は Regular と Bold の 2 本しかないので、M の位置には Noto Sans JP 500 を当てて 3 段を作った。</p>
+</div>
+</section>
+
+<section class="section section-alt">
+<div class="container">
+  <div class="section-label">02 / Root &amp; Line Height</div>
+  <h2 class="section-title">ルートは 10px、<code>line-height</code> は 10px の絶対値</h2>
+  <p class="section-lead"><code>body { font-size: 62.5% }</code> で 16px → <b>10px</b>。サイズはすべて <code>em</code> で書かれ、<code>1.4em</code> = 14px として読む。さらに <code>body</code> の <b><code>line-height: 1.0em</code> は <code>em</code> なので 10px という絶対値になり、全子孫に降りる。</b></p>
+  <div class="lh-grid">
+    <div class="lh-card">
+      <h3>誤：<code>line-height</code> を書き忘れる</h3>
+      <div class="bad">14px の文字に body の 10px の行送りが降りてくる。行が重なって読めない。実測でも行間比 <code>0.71</code> の要素が 33 個ある（14.04px の文字に 10px の行送り）。</div>
+      <p class="exp">新規に組む要素には必ず <code>line-height</code> を書く。</p>
+    </div>
+    <div class="lh-card">
+      <h3>正：各要素が <code>em</code> で宣言し直す</h3>
+      <div class="good">14px の文字に <code>1.6em</code> = 22.4px の行送り。本文はこれが既定（実測 75〜81 要素）。見出しは <code>1.2em</code>〜<code>1.4em</code>、長い説明文は <code>1.8em</code>（19 要素）。</div>
+      <p class="exp"><code>line-height</code> を単位なしの比率に書き換えない。<code>em</code> の絶対値継承がこのサイトの前提。</p>
+    </div>
+  </div>
+  <p class="note"><code>html</code> は 1440 / 1200 / 834 / 375px のいずれでも <b>16px 固定</b>、<code>body</code> の <code>62.5%</code>（= 10px）も全幅で動かない。<b>流体ルートではない。</b>縮むのは見出しだけで、<code>em</code> の宣言値を 834px / 375px で書き換えている。</p>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+  <div class="section-label">03 / Color Scheme Switcher</div>
+  <h2 class="section-title">閲覧者が配色を 4 つから選べる</h2>
+  <p class="section-lead">ヘッダーの <code>白 / 青 / 黄 / 黒</code> のラジオで <code>body</code> に <code>.color01</code>〜<code>.color04</code> が付き、<b>背景・文字・リンク・罫・ボタンがまとめて入れ替わる</b>（実測 <code>.color0*</code> を含む規則が 33 本）。<b>既定では <code>body</code> にクラスが付かず、地色はブラウザ既定の白。</b></p>
+  <div class="theme-grid">
+    <div class="theme color01">
+      <div class="t-name">白（.color01 / #ffffff）</div>
+      <div class="t-title">開館時間・観覧料</div>
+      <div class="t-text">10：00〜17：30（展示室への入室は17：00まで）</div>
+      <a href="#" class="t-link">各企画展のページ</a>
+      <div class="t-rule">月曜日は休館です</div>
+      <a href="#" class="t-btn">すべてのイベントを見る</a>
+    </div>
+    <div class="theme color02">
+      <div class="t-name">青（.color02 / #0000b3）</div>
+      <div class="t-title">開館時間・観覧料</div>
+      <div class="t-text">10：00〜17：30（展示室への入室は17：00まで）</div>
+      <a href="#" class="t-link">各企画展のページ</a>
+      <div class="t-rule">月曜日は休館です</div>
+      <a href="#" class="t-btn">すべてのイベントを見る</a>
+    </div>
+    <div class="theme color03">
+      <div class="t-name">黄（.color03 / #f39700）</div>
+      <div class="t-title">開館時間・観覧料</div>
+      <div class="t-text">10：00〜17：30（展示室への入室は17：00まで）</div>
+      <a href="#" class="t-link">各企画展のページ</a>
+      <div class="t-rule">月曜日は休館です</div>
+      <a href="#" class="t-btn">すべてのイベントを見る</a>
+    </div>
+    <div class="theme color04">
+      <div class="t-name">黒（.color04 / #000000）</div>
+      <div class="t-title">開館時間・観覧料</div>
+      <div class="t-text">10：00〜17：30（展示室への入室は17：00まで）</div>
+      <a href="#" class="t-link">各企画展のページ</a>
+      <div class="t-rule">月曜日は休館です</div>
+      <a href="#" class="t-btn">すべてのイベントを見る</a>
+    </div>
+  </div>
+  <p class="note"><b>考え方は 2 つだけ。</b>青・黒（暗い地）では<b>文字・リンク・罫を白に倒す</b>。黄（明るい地）では<b>紺か <code>#323232</code> に倒す</b>。面で塗っていたボタンは、暗い地では <code>background-color: inherit</code> ＋ <code>1px solid</code> の<b>枠線だけのボタンに変える</b>（<code>.btnDownload</code>）。<b>色を足したら 4 つすべてで見え方を確認すること。</b></p>
+</div>
+</section>
+
+<section class="section section-alt">
+<div class="container">
+  <div class="section-label">04 / Colors</div>
+  <h2 class="section-title">紺 1 色。ページの地色は白</h2>
+  <p class="section-lead"><code>pageBackground.resolved</code> は <code>rgb(14,27,63)</code> と出るが、<b>これはヘッダーの紺</b>。<code>html</code> / <code>body</code> に塗りの指定がなく、コンテンツ領域は UA 既定の白。<b>紺をページ背景にしない。</b></p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#0e1b3f"></div><div class="swatch-body"><div class="swatch-name">SPMOA Navy</div><div class="swatch-hex">#0e1b3f</div><div class="swatch-use">ヘッダー・ナビ・フッター・主ボタン。可視 62 / 69 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#323232"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#323232</div><div class="swatch-use">本文。body に直接。可視 115 / 132 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#666666"></div><div class="swatch-body"><div class="swatch-name">Text Muted</div><div class="swatch-hex">#666666</div><div class="swatch-use">カテゴリラベル。可視 9 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#032bc1"></div><div class="swatch-body"><div class="swatch-name">Link</div><div class="swatch-hex">#032bc1</div><div class="swatch-use">本文中のリンク。可視 3 / 8 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#c9c9c9"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#c9c9c9</div><div class="swatch-use">見出しの下線・画像の枠</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#dc0101"></div><div class="swatch-body"><div class="swatch-name">Warning</div><div class="swatch-hex">#dc0101</div><div class="swatch-use">注意書きの囲み（.rule）の枠と文字</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ed6400"></div><div class="swatch-body"><div class="swatch-name">Today</div><div class="swatch-hex">#ed6400</div><div class="swatch-use">「本日」バッジ</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#b7e3f8"></div><div class="swatch-body"><div class="swatch-name">Event A</div><div class="swatch-hex">#b7e3f8</div><div class="swatch-use">ギャラリーツアー等。可視 16 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#cef49b"></div><div class="swatch-body"><div class="swatch-name">Event B</div><div class="swatch-hex">#cef49b</div><div class="swatch-use">創作週間等。可視 6 要素</div></div></div>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+  <div class="section-label">05 / Typography Scale</div>
+  <h2 class="section-title">10px を 1em として読む</h2>
+  <p class="section-lead"><code>1.2em</code> = 12px、<code>1.4em</code> = 14px、<code>2.4em</code> = 24px。<b><code>letter-spacing</code> は可視 284 要素すべて <code>normal</code>。</b>UD 書体は字面が大きく設計されているので、ベタ組みで詰まって見えない。</p>
+  <div class="type-row"><div class="type-meta"><b>Page Title</b>2.4em = 24px<br>lh 1.2em / #pageTitle</div><div style="font-size:2.4em;line-height:1.2em">来館案内</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading 1</b>2.0em = 20px<br>lh 1.3em / .solidTitle<br>下線 3px solid #c9c9c9</div><div><div class="solidTitle" style="margin-bottom:0">開館時間・観覧料</div></div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading 3</b>1.6em = 16px<br>lh 1.3em / .dotedTitle<br>下線 1px dotted</div><div><div class="dotedTitle" style="margin-bottom:0">団体でご利用の方へ</div></div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub Heading</b>1.4em = 14px / Pr6 M<br>lh 1.4em / .sideIconTitle<br>左に 10px の紺の棒</div><div><div class="sideIconTitle" style="margin-bottom:0">年間パスポート</div></div></div>
+  <div class="type-row"><div class="type-meta"><b>Notice</b>1.4em = 14px / Pr6 B<br>lh 1.4em / .rule<br>1px solid #dc0101</div><div><div class="rule-box">2026年度の夜間開館の予定はございません。</div></div></div>
+  <div class="type-row"><div class="type-meta"><b>Body</b>1.4em = 14px<br>lh 1.6em<br>最多 96 / 99 要素</div><div class="bodytext" style="margin-bottom:0">収蔵品展は、ロダン館もあわせてご覧いただけます。開館時間は 10：00〜17：30（展示室への入室は 17：00 まで）です。休館日は毎週月曜日（祝日の場合は翌平日）です。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Long text</b>1.4em = 14px<br>lh 1.8em / 可視 19 要素</div><div class="longtext">団体（20 名以上）でご利用の場合は、事前にお申し込みください。引率の方は無料です。駐車場は大型バス 10 台ぶんをご用意しています。</div></div>
+</div>
+</section>
+
+<section class="section section-alt">
+<div class="container">
+  <div class="section-label">06 / Components</div>
+  <h2 class="section-title">角丸は 3px。ボタンだけ 30px</h2>
+  <p class="section-lead">既定の角丸は <code>3px</code>（可視 34 要素）。主ボタン <code>.btnMore</code> だけ <code>30px</code> で全丸に近く、ページャは <code>20px</code>。</p>
+  <div class="btn-row">
+    <a href="#" class="btnMore">すべてのイベントを見る</a>
+    <a href="#" class="btnPager">1</a><a href="#" class="btnPager">2</a><a href="#" class="btnPager">3</a>
+    <span class="badge">本日</span>
+    <span class="ev-chip" style="background:#b7e3f8">ギャラリーツアー</span>
+    <span class="ev-chip" style="background:#cef49b">創作週間</span>
+  </div>
+
+  <h3 class="solidTitle" style="margin-top:2.5em">横罫だけの表</h3>
+  <table class="tbrNormal">
+    <tr><th>開館時間</th><td>10：00〜17：30（展示室への入室は17：00まで）</td></tr>
+    <tr><th>休館日</th><td>毎週月曜日（祝日の場合は翌平日）</td></tr>
+    <tr><th>観覧料（大人）</th><td>500円（団体400円）／ 年間パスポート 900円</td></tr>
+    <tr><th>70歳以上・大学生以下</th><td>無料</td></tr>
+  </table>
+  <p class="note">罫は<b>上辺と各行の下辺だけ。縦罫を引かない。</b>既定の罫色は <code>#c9c9c9</code>、黄の配色では <code>#323232</code> に倒す。</p>
+
+  <h3 class="solidTitle" style="margin-top:2.5em">カレンダー（日曜と土曜だけ色を変える）</h3>
+  <div class="cal">
+    <div class="cal-day"><div class="cal-date">9</div><div class="cal-wd">金</div></div>
+    <div class="cal-day"><div class="cal-date">10</div><div class="cal-wd sat">土</div></div>
+    <div class="cal-day"><div class="cal-date">11</div><div class="cal-wd sun">日</div></div>
+    <div class="cal-day"><div class="cal-date">12</div><div class="cal-wd">月</div></div>
+    <div class="cal-day"><div class="cal-date">13</div><div class="cal-wd">火</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+  <div class="section-label">07 / Cards &amp; Elevation</div>
+  <h2 class="section-title">影ゼロ。帯と罫と面のグレーだけ</h2>
+  <p class="section-lead"><b><code>box-shadow</code> はサイト全体で 0 種。</b>影を足すと、配色を切り替えたときに暗い地で破綻する（影は 4 配色ぶん定義されていない）。</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">ゴールドマン コレクション　河鍋暁斎の世界</div><div class="card-date">2026.10.10 — 2026.12.06</div></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">山水画の名品</div><div class="card-date">2026.10.10 — 2026.12.06</div></div></div>
+    <div class="card"><div class="card-img"></div><div class="card-body"><div class="card-title">開館40周年記念展　おかげさまで展</div><div class="card-date">2027.01.23 — 2027.03.28</div></div></div>
+  </div>
+  <div class="layout-demo" style="margin-top:3.6em">
+    <div class="layout-bar" style="width:100%">viewport</div>
+    <div class="layout-bar" style="width:1200px;max-width:100%">.container（max-width は 100%・padding 0 15px）</div>
+    <div class="layout-bar" style="width:380px">card</div>
+  </div>
+  <p class="note">余白は <b>5 の倍数</b>（10 / 15 / 20 / 25 / 35 / 50 / 60px）。8 の倍数ではない。ブレークポイントは <code>max-width: 860px</code> / <code>min-width: 768px</code> / <code>1024px</code> / <code>1366px</code> / <code>1367px</code> の 5 つ。<b><code>1366px</code> と <code>1367px</code> が隣り合っているのは実サイトの作りで、新規実装では真似しない。</b></p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">静岡県立美術館</div>
+    <nav class="footer-nav">
+      <a href="#">来館案内</a><a href="#">展覧会</a><a href="#">アートを学ぶ・体験する</a><a href="#">デジタルアーカイブ</a><a href="#">美術館について</a>
+    </nav>
+    <div class="footer-copy">Design System Preview — 実測 2026-10-09 / spmoa.shizuoka.shizuoka.jp</div>
+  </div>
+</footer>
+
+</body>
+</html>
