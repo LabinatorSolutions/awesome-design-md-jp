@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 中外製薬（Chugai Pharmaceutical）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  /* === 実サイトの :root にある --ist-* 20 個をそのまま写した。実測日 2026-10-11 ===
+         プラットフォーム由来は 0 個。すべて自社トークン。 */
+  :root {
+    --ist-main:        #0b41cd;  /* ★ブランド青。var() 参照 240 回・可視 93 要素・塗り面 14 要素 */
+    --ist-base:        #f5f5f0;  /* 生成りの面。var() 42 回・塗り面 52 要素 */
+    --ist-submin:      #f3f5fc;  /* IR の数値ボックス。var() 参照 0 回（hex 直書き）・塗り面 4 要素 */
+    --ist-black:       #222;     /* 見出し・本文。可視 103 要素 */
+    --ist-white:       #fff;
+    --ist-linegrey:    #dfdfdf;  /* 罫線。var() 15 回 */
+    --ist-lgray:       #c8c8c8;  /* ★var() 参照 0 回・可視 0 要素。宣言だけの死に変数。使わない */
+    --ist-dgray:       #767676;  /* 日付・注記。可視 29 要素 */
+    --ist-red:         #e62300;
+    --ist-purple:      #910faf;  /* var() 9 回・可視 0 要素 */
+    --ist-blue:        #197dfa;  /* 単独では使わない。グラデの片端のみ */
+    --ist-cyan:        #64d2ff;  /* var() 2 回・可視 0 要素 */
+    --ist-green:       #00be8c;  /* 塗り面 3 要素 */
+    --ist-orange:      #ffa532;  /* 実体はグラデの 5% だけ */
+    --ist-red02:       #ff2800;
+    --ist-gradient:    linear-gradient(180deg, #f5f5f0, #fff);
+    --ist-defaultText: #1f1f1f;  /* ★body の color。#222 とほぼ同じ黒が2つ併存している */
+
+    /* 以下は JS が実行時に書き換える。固定値としてハードコードしない */
+    --ist-headerHeight: 155.7969px;
+    --ist-headerHeightSp: 0px;
+    --ist-headerMegaMenuHeader: 73px;
+
+    /* --- 以下はこのプレビュー用の補助（実サイトには無い） --- */
+    --font: "Noto Sans JP", sans-serif;   /* ★CSS 全文で font-family の宣言はこの1種類だけ */
+    --mono: SFMono-Regular, Consolas, Menlo, monospace;
+    --container: 1366px;                  /* 実測コンテナ最大幅 */
+    --r-btn: 3px;                         /* ボタン・タグ */
+    --r-card: 16px;                       /* カード */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { color-scheme: light; }
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: 16px; }   /* ★4 幅すべて 16px 固定。流体ルートではない */
+
+  /* ★実サイトの body。旧シート由来の line-height: 1.8 が今も生きている */
+  body {
+    margin: 0;
+    background: var(--ist-white);
+    color: var(--ist-defaultText);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;                       /* 28.8px */
+    letter-spacing: .05em;                  /* ★実際は要素ごとに書く（CSS 全文 454 回） */
+    font-feature-settings: "palt";          /* ★実測 1073 要素。ほぼ全要素 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--ist-linegrey); background: var(--ist-white); }
+  .header-in { max-width: var(--container); margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; gap: 28px; }
+  .logo { display: flex; align-items: baseline; gap: 12px; text-decoration: none; color: var(--ist-black); }
+  .logo-mark { font-size: 22px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; color: var(--ist-main); }
+  .logo-jp { font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: .05em; color: var(--ist-dgray); }
+  .hnav { margin-left: auto; display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+  .hnav a { font-size: 16px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; color: var(--ist-black); text-decoration: none; }
+  .hnav a.sub { font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: .05em; }
+  .hnav a.lv2 { font-size: 16px; font-weight: 300; line-height: 1.4; letter-spacing: .05em; }  /* ★300 はメガメニュー第2階層だけ */
+
+  /* SECTIONS */
+  .section { max-width: var(--container); margin: 0 auto; padding: 72px 24px; }
+  .section-alt { background: var(--ist-base); }
+  .section-alt > .inner { max-width: var(--container); margin: 0 auto; padding: 72px 24px; }
+  .label { font-family: var(--mono); font-size: 12px; letter-spacing: .05em; color: var(--ist-dgray); line-height: 1.4; }
+  h2.sec { font-size: 42px; font-weight: 400; line-height: 1.4; letter-spacing: .05em; color: var(--ist-black); margin: 10px 0 0; }   /* ★大見出しは 400 */
+  h3.sub { font-size: 24px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; color: var(--ist-black); margin: 48px 0 14px; } /* ★600 は 24px から */
+  .lead { font-size: 16px; font-weight: 400; line-height: 1.8; letter-spacing: .05em; color: var(--ist-defaultText); max-width: 872px; margin: 16px 0 34px; }
+  .note { font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: .05em; color: var(--ist-dgray); max-width: 872px; margin-top: 20px; }
+  code { font-family: var(--mono); font-size: 12px; letter-spacing: 0; background: var(--ist-base); padding: 2px 6px; border-radius: var(--r-btn); }
+  b { font-weight: 600; }
+
+  /* COLORS */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(214px, 1fr)); gap: 16px; }
+  .sw { background: var(--ist-base); border-radius: var(--r-card); overflow: hidden; }
+  .sw-chip { height: 78px; }
+  .sw-b { padding: 14px 16px 18px; background: var(--ist-white); }
+  .sw-n { font-size: 16px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; }
+  .sw-h { font-family: var(--mono); font-size: 11px; letter-spacing: 0; color: var(--ist-dgray); margin-top: 4px; }
+  .sw-u { font-size: 12px; font-weight: 400; line-height: 1.4; letter-spacing: .05em; color: var(--ist-dgray); margin-top: 8px; }
+  .sw.dead .sw-b { background: var(--ist-base); }
+  .sw.dead .sw-n { color: var(--ist-dgray); }
+
+  /* TYPE TABLE */
+  .ttable { width: 100%; border-collapse: collapse; }
+  .ttable th, .ttable td { padding: 11px 14px; text-align: left; font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: .05em; border-bottom: 1px solid var(--ist-linegrey); }
+  .ttable th { font-weight: 600; background: var(--ist-base); }
+  .ttable td.m { font-family: var(--mono); font-size: 11px; letter-spacing: 0; color: var(--ist-dgray); }
+
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--ist-linegrey); align-items: baseline; }
+  .type-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0; color: var(--ist-dgray); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font); font-size: 14px; font-weight: 600; letter-spacing: .05em; color: var(--ist-black); }
+
+  .t-title64 { font-size: 64px; font-weight: 400; line-height: 1.2;  letter-spacing: .05em; color: var(--ist-black); }
+  .t-state50 { font-size: 50px; font-weight: 400; line-height: 1.4;  letter-spacing: .05em; color: var(--ist-black); }
+  .t-sec42   { font-size: 42px; font-weight: 400; line-height: 1.4;  letter-spacing: .05em; color: var(--ist-black); }
+  .t-h24     { font-size: 24px; font-weight: 600; line-height: 1.4;  letter-spacing: .05em; color: var(--ist-black); }
+  .t-lead20  { font-size: 20px; font-weight: 600; line-height: 1.4;  letter-spacing: .05em; color: var(--ist-main); }
+  .t-body16  { font-size: 16px; font-weight: 400; line-height: 1.8;  letter-spacing: .05em; color: var(--ist-defaultText); }
+  .t-ui14    { font-size: 14px; font-weight: 400; line-height: 1.6;  letter-spacing: .05em; color: var(--ist-black); }
+  .t-cap12   { font-size: 12px; font-weight: 400; line-height: 1.4;  letter-spacing: .05em; color: var(--ist-dgray); }
+
+  /* 字間の比較 */
+  .ls-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; background: var(--ist-base); border-radius: var(--r-card); padding: 28px 30px; margin-top: 14px; }
+  .ls-demo .box b { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0; color: var(--ist-dgray); margin-bottom: 8px; }
+  .ls-demo p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.8; color: var(--ist-defaultText); }
+  .ls-0  { letter-spacing: normal; }
+  .ls-05 { letter-spacing: .05em; }
+  .nopalt { font-feature-settings: normal; }
+
+  /* 数字 */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .stat { background: var(--ist-submin); border-radius: var(--r-card); padding: 28px 26px 30px; }
+  .stat-l { font-size: 14px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; color: var(--ist-black); }
+  .stat-n { font-size: 68px; font-weight: 400; line-height: 1; letter-spacing: .03em; color: var(--ist-main); margin-top: 10px; }  /* ★大きな数字だけ 0.03em */
+  .stat-u { font-size: 24px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; color: var(--ist-black); }
+
+  /* BUTTONS */
+  .btns { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn { font-family: var(--font); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; position: relative; border-radius: var(--r-btn); font-size: 16px; font-weight: 400; line-height: 1.8; letter-spacing: .05em; padding: 4px 52px 4px 20px; }
+  .btn::after { content: "→"; position: absolute; right: 20px; }
+  .btn-primary { background: var(--ist-main); color: var(--ist-white); border: 0; }
+  .btn-outline { background: var(--ist-white); color: var(--ist-main); border: 1px solid var(--ist-main); }
+  .btn.is-focus { outline: 2px solid var(--ist-main); outline-offset: 3px; }   /* ★autofocus は使わない。状態はクラスで見せる */
+  .tag { display: inline-block; background: var(--ist-base); color: var(--ist-black); font-size: 12px; font-weight: 600; line-height: 1.8; letter-spacing: .05em; padding: 0 10px; border-radius: var(--r-btn); }
+  .hashtag { font-size: 13px; font-weight: 600; line-height: 1.69; letter-spacing: .05em; color: var(--ist-main); margin-right: 14px; }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { display: block; text-decoration: none; color: inherit; }            /* ★影を使わない */
+  .card-img { border-radius: 16px 16px 0 0; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #197dfa, #0b41cd); display: flex; align-items: center; justify-content: center; color: var(--ist-white); font-size: 14px; font-weight: 600; letter-spacing: .05em; }
+  .card-body { border-radius: 0 0 16px 16px; background: var(--ist-base); padding: 20px 22px 24px; }
+  .card-date { font-size: 12px; font-weight: 400; line-height: 1.4; letter-spacing: .05em; color: var(--ist-dgray); }
+  .card-title { font-size: 20px; font-weight: 600; line-height: 1.4; letter-spacing: .05em; color: var(--ist-main); margin: 8px 0 10px; }
+  .card-text { font-size: 14px; font-weight: 400; line-height: 1.6; letter-spacing: .05em; color: var(--ist-black); margin: 0; }
+
+  /* INPUT */
+  .field { max-width: 520px; }
+  .field label { display: block; font-size: 14px; font-weight: 600; line-height: 1.6; letter-spacing: .05em; color: var(--ist-black); margin-bottom: 8px; }
+  .field input { width: 100%; font-family: var(--font); font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: .05em; color: var(--ist-black); background: var(--ist-white); border: 0; border-bottom: 1px solid var(--ist-linegrey); border-radius: 0; padding: 10px 2px; }
+  .field input::placeholder { color: var(--ist-dgray); }
+  .field .is-focus { border-bottom: 2px solid var(--ist-main); }
+
+  /* LAYOUT */
+  .gaps { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+  .gapbox { background: var(--ist-base); border-radius: var(--r-card); padding: 20px 22px; }
+  .gapbox b { display: block; font-family: var(--mono); font-size: 18px; letter-spacing: 0; color: var(--ist-main); }
+  .gapbox span { font-size: 12px; font-weight: 400; line-height: 1.4; letter-spacing: .05em; color: var(--ist-dgray); }
+
+  /* FOOTER */
+  .footer { background: var(--ist-base); margin-top: 20px; }
+  .footer-in { max-width: var(--container); margin: 0 auto; padding: 44px 24px 54px; }
+  .footer h2 { font-size: 10px; font-weight: 600; line-height: 1.8; letter-spacing: .05em; color: var(--ist-dgray); margin: 0 0 10px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+  .footer-links a { font-size: 11px; font-weight: 400; line-height: 1.4; letter-spacing: .05em; color: var(--ist-black); text-decoration: none; }
+  .copy { font-size: 10px; font-weight: 400; line-height: 1.8; letter-spacing: .05em; color: var(--ist-dgray); margin-top: 26px; }
+
+  @media screen and (max-width: 960px) {   /* ★実サイトで最多のブレークポイント（466 回） */
+    .section, .section-alt > .inner, .header-in, .footer-in { padding-left: 20px; padding-right: 20px; }
+    h2.sec { font-size: 32px; }
+    .t-title64 { font-size: 40px; }
+    .t-state50 { font-size: 32px; }
+    .t-sec42 { font-size: 28px; }
+    .stat-n { font-size: 48px; }
+  }
+  @media screen and (max-width: 767px) {
+    .type-row { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-in">
+    <a class="logo" href="#">
+      <span class="logo-mark">CHUGAI</span>
+      <span class="logo-jp">中外製薬株式会社</span>
+    </a>
+    <nav class="hnav">
+      <a href="#">中外製薬について</a>
+      <a href="#">イノベーション</a>
+      <a href="#">サステナビリティ</a>
+      <a class="sub" href="#">IR情報</a>
+      <a class="sub" href="#">ニュースルーム</a>
+      <a class="lv2" href="#">採用情報</a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" id="colors">
+  <div class="label">01 / Colors</div>
+  <h2 class="sec">青ひとつと、生成りの面</h2>
+  <p class="lead">自社トークンは <b><code>--ist-*</code> の 20 個</b>（プラットフォーム由来は 0 個）。うち実装を支えているのは <b><code>--ist-main</code>（<code>var()</code> 参照 240 回）</b>と <b><code>--ist-base</code>（42 回）</b>の2つで、残りの色はカテゴリ用・グラフ用に待機している。<b><code>--ist-lgray</code> は <code>var()</code> 参照 0 回・可視 0 要素</b>で、宣言だけが残った死に変数。</p>
+
+  <div class="swatches">
+    <div class="sw"><div class="sw-chip" style="background:#0b41cd"></div><div class="sw-b"><div class="sw-n">--ist-main</div><div class="sw-h">#0b41cd</div><div class="sw-u">ブランド青。var() 240 回／可視 93 要素・塗り面 14 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f5f5f0"></div><div class="sw-b"><div class="sw-n">--ist-base</div><div class="sw-h">#f5f5f0</div><div class="sw-u">生成りの面。塗り面 52 要素。カードとタグの地色</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f3f5fc"></div><div class="sw-b"><div class="sw-n">--ist-submin</div><div class="sw-h">#f3f5fc</div><div class="sw-u">IR の数値ボックス。var() は 0 回で hex 直書き</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#222"></div><div class="sw-b"><div class="sw-n">--ist-black</div><div class="sw-h">#222222</div><div class="sw-u">見出し・本文。可視 103 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#1f1f1f"></div><div class="sw-b"><div class="sw-n">--ist-defaultText</div><div class="sw-h">#1f1f1f</div><div class="sw-u">body の color。可視 56 要素。#222 とほぼ同じ黒が併存</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#767676"></div><div class="sw-b"><div class="sw-n">--ist-dgray</div><div class="sw-h">#767676</div><div class="sw-u">日付・注記。可視 29 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#dfdfdf"></div><div class="sw-b"><div class="sw-n">--ist-linegrey</div><div class="sw-h">#dfdfdf</div><div class="sw-u">罫線。var() 15 回</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#00be8c"></div><div class="sw-b"><div class="sw-n">--ist-green</div><div class="sw-h">#00be8c</div><div class="sw-u">塗り面 3 要素（グラフの凡例）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#e62300"></div><div class="sw-b"><div class="sw-n">--ist-red</div><div class="sw-h">#e62300</div><div class="sw-u">注意・必須表記。var() 10 回</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#910faf"></div><div class="sw-b"><div class="sw-n">--ist-purple</div><div class="sw-h">#910faf</div><div class="sw-u">var() 9 回・可視 0 要素（カテゴリ色）</div></div></div>
+    <div class="sw dead"><div class="sw-chip" style="background:#c8c8c8"></div><div class="sw-b"><div class="sw-n">--ist-lgray（未使用）</div><div class="sw-h">#c8c8c8</div><div class="sw-u">var() 0 回・可視 0 要素。使わない</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:linear-gradient(135deg,#197dfa,#0b41cd)"></div><div class="sw-b"><div class="sw-n">数字のグラデ</div><div class="sw-h">135deg, #197dfa → #0b41cd</div><div class="sw-u">IR の数値の文字グラデ。可視 8 要素</div></div></div>
+  </div>
+
+  <p class="note">グラデーションの宣言だけ <code>linear-gradient(90deg, #f5f5f0, #0b41cc 62%)</code> と <b><code>#0b41cc</code>（1 低い値）を直書き</b>している箇所がある。実装のゆらぎなので、新規実装では <code>#0b41cd</code> に統一してよい。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="inner">
+  <div class="label">02 / Typography</div>
+  <h2 class="sec">Noto Sans JP 1 本で、palt と 0.05em だけ</h2>
+  <p class="lead">可視テキスト <b>296 / 253 要素すべてが <code>"Noto Sans JP", sans-serif</code></b>。CSS 全文の <code>font-family</code> 宣言もこの 1 種類だけで、明朝も欧文専用書体も存在しない。<b><code>font-feature-settings: "palt"</code> が 1073 要素</b>、<b><code>letter-spacing: .05em</code> が CSS 全文で 454 回</b>。</p>
+
+  <h3 class="sub">字間は body 継承ではなく、要素ごとに 0.05em を書く</h3>
+  <p class="lead" style="margin-bottom:14px">サイズに比例して px が変わる（12px→0.6px / 16px→0.8px / 42px→2.1px）＝ <b>各要素が <code>em</code> を持っている</b>証拠。<b>例外は 68px・82px の大きな数字だけで、そこは 0.03em に落としている。</b></p>
+  <div class="ls-demo">
+    <div class="box"><b>letter-spacing: normal ／ palt なし</b><p class="ls-0 nopalt">創造で、想像を超える。革新的な医薬品とサービスの提供を通じて新しい価値を創造する。</p></div>
+    <div class="box"><b>letter-spacing: normal ／ palt あり</b><p class="ls-0">創造で、想像を超える。革新的な医薬品とサービスの提供を通じて新しい価値を創造する。</p></div>
+    <div class="box"><b>★実装：letter-spacing: .05em ／ palt あり</b><p class="ls-05">創造で、想像を超える。革新的な医薬品とサービスの提供を通じて新しい価値を創造する。</p></div>
+  </div>
+
+  <h3 class="sub">大見出しほど細い（42px / 50px / 64px は weight 400）</h3>
+  <div class="type-row"><div class="type-meta"><b>Page Title</b>64px / 400 / lh 1.20<br>letter-spacing .05em = 3.2px</div><div class="t-title64">中外製薬について</div></div>
+  <div class="type-row"><div class="type-meta"><b>Statement</b>50px / 400 / lh 1.40<br>.05em = 2.5px ／ 可視 5 要素</div><div class="t-state50">革新的な医薬品とサービスの提供を通じて新しい価値を創造する</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>42px / 400 / lh 1.40<br>.05em = 2.1px ／ 可視 5 要素</div><div class="t-sec42">私たちは病気より先に未来へ行く</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading S</b>24px / <b>600</b> / lh 1.40<br>.05em = 1.2px ／ ★太くするのはここから</div><div class="t-h24">中外製薬の強み</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>20px / 600 / lh 1.40<br>.05em = 1px ／ 可視 53 要素</div><div class="t-lead20">独自の技術とサイエンスを強みとする研究開発型製薬企業</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body</b>16px / 400 / lh <b>1.80</b><br>.05em = 0.8px ／ 可視 48 要素</div><div class="t-body16">中外製薬は、抗体エンジニアリング技術をはじめとする独自の創薬技術で、他社にはつくれない医薬品を生み出してきました。患者さんの生き方や価値観、求める治療法や優先度はそれぞれ異なります。</div></div>
+  <div class="type-row"><div class="type-meta"><b>UI</b>14px / 400 / lh 1.60<br>.05em = 0.7px ／ 可視 46 要素</div><div class="t-ui14">医療関係者の皆さま　／　株主・投資家の皆さま</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>12px / 400 / lh 1.40<br>.05em = 0.6px ／ 可視 60 要素（最多）</div><div class="t-cap12">2026/09/09　*1 Copyright © 2026 IQVIA. 医療用医薬品市場統計</div></div>
+  <div class="type-row"><div class="type-meta"><b>Weight 300</b>16px / 300 / lh 1.40<br>★メガメニュー第2階層のみ</div><div style="font-size:16px;font-weight:300;line-height:1.4;letter-spacing:.05em">CEOメッセージ　／　企業理念 / 行動規準　／　スローガン</div></div>
+
+  <h3 class="sub">ウェイトは 300 / 400 / 600 の 3 段しかない</h3>
+  <table class="ttable">
+    <tr><th>Weight</th><th>Google Fonts の配信</th><th>実測（トップ / 下層）</th><th>用途</th></tr>
+    <tr><td class="m">300</td><td>あり</td><td class="m">少数</td><td>メガメニューの第2階層リンク</td></tr>
+    <tr><td class="m">400</td><td>あり</td><td class="m">85 / 94 要素</td><td>本文、および 42px 以上の大見出し</td></tr>
+    <tr><td class="m">600</td><td>あり</td><td class="m"><b>210 / 158 要素（最多）</b></td><td>24px 以下の見出し・ナビ・カード見出し</td></tr>
+    <tr><td class="m">700</td><td><b>無い</b></td><td class="m">1 要素（Cookie バナー）</td><td><b>当てると合成太字になる。使わない</b></td></tr>
+  </table>
+  <p class="note">Web フォントは Google Fonts から <code>wght@300;400;600</code> を <b>unicode-range で分割配信</b>（フォント要求 46 件）。<code>document.fonts</code> に <code>unloaded</code> が多いのは異常ではなく、そのページに出てこない文字のサブセットを読んでいないだけ。</p>
+
+  <h3 class="sub">行間は 3 段（1.8 / 1.6 / 1.4）</h3>
+  <table class="ttable">
+    <tr><th>line-height</th><th>実測（トップ / 下層）</th><th>用途</th></tr>
+    <tr><td class="m">1.80</td><td class="m">47 / 35 要素</td><td><b>本文（<code>body</code> の既定。28.8px ÷ 16px）</b></td></tr>
+    <tr><td class="m">1.60</td><td class="m">71 / 65 要素</td><td>読み物の段落</td></tr>
+    <tr><td class="m">1.40</td><td class="m"><b>103 / 85 要素（最多）</b></td><td>見出し・ナビ・カード</td></tr>
+    <tr><td class="m">1.00</td><td class="m">26 / 20 要素</td><td>大きな数字・1 行で収めるラベル</td></tr>
+  </table>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="label">03 / Components</div>
+  <h2 class="sec">角丸は 3px と 16px の 2 つだけ</h2>
+  <p class="lead"><b><code>border-radius: 3px</code> はボタンとタグ、<code>16px</code> はカード</b>と用途が完全に分かれている。ボタンの文字は <b>太らせない（weight 400）</b>。右パディングが 52px と大きいのは矢印のぶん。</p>
+
+  <div class="btns">
+    <a class="btn btn-primary" href="#">中外製薬ってどんな会社？</a>
+    <a class="btn btn-outline" href="#">企業広告・TVCM</a>
+    <a class="btn btn-primary is-focus" href="#">フォーカス状態</a>
+    <span class="tag">ニュースリリース</span>
+    <span class="tag">IR</span>
+  </div>
+  <p class="note" style="margin-top:18px"><span class="hashtag">#患者中心</span><span class="hashtag">#技術・サイエンス</span><span class="hashtag">#人財</span>ハッシュタグは面を持たず、13px / 600 / <code>#0b41cd</code> の文字だけ（可視 51 要素）。</p>
+
+  <h3 class="sub">カードは上下で角丸を分けて書く</h3>
+  <div class="cards">
+    <a class="card" href="#">
+      <div class="card-img">border-radius: 16px 16px 0 0</div>
+      <div class="card-body">
+        <div class="card-date">2026/09/09</div>
+        <div class="card-title">「中分子医薬品」が広げる治療の可能性</div>
+        <p class="card-text">まだ治療法がない病に、抗体でも低分子でも届かなかった標的へ。中分子というアプローチを解説します。</p>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="card-img">border-radius: 0 0 16px 16px</div>
+      <div class="card-body">
+        <div class="card-date">2026/09/07</div>
+        <div class="card-title">がん治療は「個別化」の時代へ</div>
+        <p class="card-text">一人ひとりの病態に合わせて治療を選ぶ。ゲノム医療がもたらした変化を研究者が語ります。</p>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="card-img">box-shadow は使わない</div>
+      <div class="card-body">
+        <div class="card-date">2026/07/29</div>
+        <div class="card-title">独創的な研究は、どのように生まれたのか</div>
+        <p class="card-text">浮きは影ではなく、角丸 16px と地色 #f5f5f0 だけで作る。実サイトに自前の box-shadow は 1 つも無い。</p>
+      </div>
+    </a>
+  </div>
+
+  <h3 class="sub">数字だけ 0.03em に詰める</h3>
+  <div class="stats">
+    <div class="stat"><div class="stat-l">抗体医薬品売上</div><div class="stat-n">No.1</div><div class="stat-u">国内</div></div>
+    <div class="stat"><div class="stat-l">Breakthrough Therapy</div><div class="stat-n">9</div><div class="stat-u">指定 回</div></div>
+    <div class="stat"><div class="stat-l">自社創製品のグローバル承認国数</div><div class="stat-n">110</div><div class="stat-u">カ国以上</div></div>
+  </div>
+  <p class="note">68px / 82px の数字は <code>letter-spacing: .03em</code>、それ以外はすべて <code>.05em</code>。地色は <code>--ist-submin</code>（#f3f5fc）。</p>
+</section>
+
+<section class="section-alt" id="forms">
+<div class="inner">
+  <div class="label">04 / Forms</div>
+  <h2 class="sec">入力は下線だけ</h2>
+  <p class="lead">サイト内検索のみ。枠線も角丸も持たず、下線とアイコンで構成する。<code>input</code> はフォント継承が効かないので <b><code>font-family</code> を明示的に当て直す</b>。</p>
+  <div class="field">
+    <label for="q">サイト内検索</label>
+    <input id="q" type="text" placeholder="キーワードを入力">
+  </div>
+  <div class="field" style="margin-top:26px">
+    <label for="q2">フォーカス状態（下線が #0b41cd の 2px に変わる）</label>
+    <input id="q2" class="is-focus" type="text" value="抗体エンジニアリング">
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="label">05 / Elevation</div>
+  <h2 class="sec">影が 1 つも無い</h2>
+  <p class="lead">実測された <code>box-shadow</code> は <code>rgba(0,0,0,.2) 0 0 18px 0</code> の <b>1 件だけ</b>で、それも OneTrust の Cookie 同意バナーのもの。<b>サイト本体に自前の影は存在しない。</b></p>
+  <table class="ttable">
+    <tr><th>Level</th><th>Shadow</th><th>用途</th></tr>
+    <tr><td class="m">0</td><td class="m">none</td><td><b>このサイトのすべての要素</b></td></tr>
+  </table>
+  <p class="note">浮きは <b>角丸 16px ＋ 地色 <code>#f5f5f0</code></b> で作る。新規実装で影を足すと、サイトのフラットさが失われる。</p>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="inner">
+  <div class="label">06 / Layout</div>
+  <h2 class="sec">コンテナ 1366px、gap は 16px</h2>
+  <div class="gaps">
+    <div class="gapbox"><b>1366px</b><span>コンテナ最大幅（実測 15 / 12 要素）</span></div>
+    <div class="gapbox"><b>872px</b><span>読み物の段落幅</span></div>
+    <div class="gapbox"><b>351px</b><span>カード幅（実測 44 件）</span></div>
+    <div class="gapbox"><b>16px</b><span>gap の既定（実測 45 件・最多）</span></div>
+    <div class="gapbox"><b>960px</b><span>主ブレークポイント（宣言 466 回）</span></div>
+    <div class="gapbox"><b>767px</b><span>その下の微調整（144 回）</span></div>
+  </div>
+  <p class="note"><code>html</code> も <code>body</code> も <b>4 幅（1440 / 1200 / 834 / 375px）すべてで 16px / 28.8px のまま</b>。流体ルートではないので、<code>rem</code> → px の換算は素直に 16 倍でよい。<code>(prefers-reduced-motion: reduce)</code> を 133 回宣言しており、アニメーションは必ず止められる。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <h2>公式アカウント</h2>
+    <div class="footer-links">
+      <a href="#">サイトマップ</a>
+      <a href="#">ウェブサイト利用規定</a>
+      <a href="#">個人情報の取扱いのご案内</a>
+      <a href="#">ソーシャルメディアポリシー</a>
+    </div>
+    <p class="copy">Copyright © Chugai Pharmaceutical Co., Ltd. All rights reserved.<br>
+    ※ このページは awesome-design-md-jp の DESIGN.md 検証用プレビューであり、中外製薬株式会社の公式サイトではありません。</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 特種東海製紙（Tokushu Tokai Paper）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+<style>
+  /* === 実サイトの :root は 2 個だけで、どちらも色でもサイズでもない。
+         JS に現在のブレークポイントを伝えるための「文字列」。実測日 2026-10-11 ===
+
+         :root { --breakpoint: "pc"; }
+         @media all and (min-width:860px) and (max-width:1079px) {
+           :root { --breakpoint: "tab"; --breakpoint-width: "1080px"; } }
+         @media all and (max-width:859px) {
+           :root { --breakpoint: "sp";  --breakpoint-width: "860px"; } }
+         :root { interpolate-size: allow-keywords; }
+
+         デザイントークンの層は存在せず、色は hex・サイズは rem の直書き。
+         下の色変数はこのプレビューのためにこちらで立てたもの。 */
+  :root {
+    --breakpoint: "pc";
+    interpolate-size: allow-keywords;
+
+    /* --- Colors（実サイトは hex 直書き） --- */
+    --navy:    #253957;  /* ★body の color。可視 68 / 21 要素・塗り面 8 要素。黒を使わない */
+    --navy-2:  #516179;  /* 補助テキスト。可視 11 / 2 要素 */
+    --paper:   #0071c1;  /* 「製紙事業」の色・リンク */
+    --eco:     #06ad51;  /* 「環境関連事業」の色 */
+    --surface: #eeeff2;  /* タグの地色・薄い枠。塗り面 7 要素 */
+    --surface-2: #f8f9fa;
+    --border:  #dee1e6;
+    --divider: #bec4cd;
+    --white:   #fff;
+    --overlay: rgba(37, 57, 87, .4);
+    --ring:    rgba(37, 57, 87, .3) 0 0 0 8px;   /* 実測された唯一の box-shadow。ぼかし 0 のリング */
+
+    /* --- Fonts --- */
+    /* ★実サイトは "Local BIZ UDPGothic", "BIZ UDPGothic", sans-serif と書いているが、
+         CSS 全文の @font-face は webicon の 1 件だけで、Local BIZ UDPGothic の定義はどこにも無い。
+         先頭名は必ずマッチせず、2 番目の BIZ UDPGothic（Google Fonts 配信）に落ちている。
+         ここでは正しい書き方だけを置く。 */
+    --font: "BIZ UDPGothic", sans-serif;
+    --font-en: Poppins, sans-serif;   /* ★実サイトは "Poppins, serif" と書いている。serif は誤り */
+    --mono: SFMono-Regular, Consolas, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { color-scheme: light; }
+  }
+  @media all and (min-width: 860px) and (max-width: 1079px) { :root { --breakpoint: "tab"; --breakpoint-width: "1080px"; } }
+  @media all and (max-width: 859px)                          { :root { --breakpoint: "sp";  --breakpoint-width: "860px";  } }
+
+  * { box-sizing: border-box; }
+
+  /* ★html が vw の流体。設計幅は 1080 / 860 / 390px の 3 つで、
+       各レンジの中はレイアウト全体が viewport 幅に比例して伸縮する。 */
+  html { font-size: 62.5%; }                                   /* ≥1080px → 10px */
+  @media all and (min-width: 860px) and (max-width: 1079px) {
+    html { font-size: 1.1627906977vw; }                        /* = 100vw / 86 → 860px で 10px */
+  }
+  @media all and (max-width: 859px) {
+    html { font-size: 2.5641025641vw; }                        /* = 100vw / 39 → 390px で 10px */
+  }
+
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--navy);
+    font-family: var(--font);
+    font-size: 1.6rem;                  /* = 16px at 1080px+ */
+    font-weight: 400;
+    line-height: 1.5;                   /* ★比率で書く。px 固定にしない */
+    letter-spacing: .06em;              /* ★body に 1 回だけ。em は px に解決されて子へ降りる */
+    font-feature-settings: "palt";      /* ★body に 1 回。実測 853 / 498 要素 */
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-break: strict;                 /* ★厳格な禁則処理 */
+    -webkit-font-smoothing: antialiased;
+  }
+  @media all and (max-width: 1079px) { body { font-size: 1.5rem; } }
+  @media all and (max-width: 859px)  { body { font-size: 1.4rem; } }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); }
+  .header-in { max-width: 120rem; margin: 0 auto; padding: 1.8rem 2.4rem; display: flex; align-items: center; gap: 2.4rem; flex-wrap: wrap; }
+  .logo { display: flex; align-items: baseline; gap: 1.2rem; text-decoration: none; }
+  .logo b { font-size: 2rem; font-weight: 700; line-height: 1.5; color: var(--paper); }
+  .logo span { font-size: 1.4rem; font-weight: 700; line-height: 1.5; color: var(--navy); }
+  .hnav { margin-left: auto; display: flex; gap: 2.2rem; flex-wrap: wrap; }
+  .hnav a { font-size: 1.6rem; font-weight: 700; line-height: 1.5; color: var(--navy); text-decoration: none; }
+  .hnav a.sub { font-size: 1.4rem; font-weight: 400; }
+
+  /* SECTIONS */
+  .section { max-width: 120rem; margin: 0 auto; padding: 7rem 2.4rem; }
+  .section-alt { background: var(--surface-2); }
+  .section-alt > .inner { max-width: 120rem; margin: 0 auto; padding: 7rem 2.4rem; }
+  .label { font-family: var(--mono); font-size: 1.2rem; letter-spacing: 0; color: var(--navy-2); line-height: 1.5; }
+  h2.sec { font-size: 4rem; font-weight: 700; line-height: 1.2; letter-spacing: .15em; color: var(--navy); margin: 1rem 0 0; }  /* ★見出しだけ .15em */
+  h3.sub { font-size: 2.2rem; font-weight: 700; line-height: 1.5; color: var(--navy); margin: 4.6rem 0 1.4rem; }
+  .lead { font-size: 1.6rem; font-weight: 400; line-height: 1.68; color: var(--navy); max-width: 86rem; margin: 2.4rem 0 3.2rem; }
+  .note { font-size: 1.4rem; font-weight: 400; line-height: 1.5; color: var(--navy-2); max-width: 86rem; margin-top: 2rem; }
+  code { font-family: var(--mono); font-size: 1.2rem; letter-spacing: 0; background: var(--surface); padding: .2rem .6rem; border-radius: .6rem; }
+  b { font-weight: 700; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0071c1, #06ad51); position: relative; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: var(--overlay); }
+  .hero-in { position: relative; z-index: 1; max-width: 120rem; margin: 0 auto; padding: 8rem 2.4rem 9rem; }
+  .hero h1 { margin: 0; font-size: 3.2rem; font-weight: 700; line-height: 1.5; letter-spacing: .16em; color: var(--white); }
+  .hero p { margin: 1.6rem 0 0; font-size: 2.4rem; font-weight: 700; line-height: 1.5; letter-spacing: .15em; color: var(--white); }
+  .hero small { display: block; margin-top: 2.4rem; font-size: 1.92rem; font-weight: 400; line-height: 1.8; color: var(--white); }
+
+  /* COLORS */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr)); gap: 1.6rem; }
+  .sw { background: var(--white); border: 1px solid var(--border); border-radius: 1rem; overflow: hidden; }
+  .sw-chip { height: 7.8rem; }
+  .sw-b { padding: 1.4rem 1.6rem 1.8rem; }
+  .sw-n { font-size: 1.6rem; font-weight: 700; line-height: 1.5; }
+  .sw-h { font-family: var(--mono); font-size: 1.1rem; letter-spacing: 0; color: var(--navy-2); margin-top: .4rem; }
+  .sw-u { font-size: 1.3rem; font-weight: 400; line-height: 1.5; color: var(--navy-2); margin-top: .8rem; }
+
+  /* TYPE */
+  .type-row { display: grid; grid-template-columns: 25rem 1fr; gap: 2.4rem; padding: 2rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--mono); font-size: 1.1rem; letter-spacing: 0; color: var(--navy-2); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font); font-size: 1.4rem; font-weight: 700; letter-spacing: .06em; color: var(--navy); }
+  .t-h42 { font-size: 4.2rem; font-weight: 700; line-height: 1.5; }
+  .t-h40 { font-size: 4rem;   font-weight: 700; line-height: 1.2; letter-spacing: .15em; }
+  .t-s32 { font-size: 3.2rem; font-weight: 700; line-height: 1.5; letter-spacing: .16em; color: var(--paper); }
+  .t-h22 { font-size: 2.2rem; font-weight: 700; line-height: 1.5; }
+  .t-h20 { font-size: 2rem;   font-weight: 700; line-height: 1.5; }
+  .t-l18 { font-size: 1.8rem; font-weight: 700; line-height: 1.5; }
+  .t-b16 { font-size: 1.6rem; font-weight: 400; line-height: 1.5; }
+  .t-n16 { font-size: 1.6rem; font-weight: 700; line-height: 1.5; }
+  .t-u14 { font-size: 1.4rem; font-weight: 400; line-height: 1.5; color: var(--navy-2); }
+  .t-t13 { font-size: 1.3rem; font-weight: 700; line-height: 1.5; }
+
+  .ttable { width: 100%; border-collapse: collapse; }
+  .ttable th, .ttable td { padding: 1.1rem 1.4rem; text-align: left; font-size: 1.4rem; font-weight: 400; line-height: 1.5; border-bottom: 1px solid var(--border); }
+  .ttable th { font-weight: 700; background: var(--surface); }
+  .ttable td.m { font-family: var(--mono); font-size: 1.1rem; letter-spacing: 0; color: var(--navy-2); }
+
+  .ls-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr)); gap: 2.4rem; background: var(--surface); border-radius: 1rem; padding: 2.8rem 3rem; margin-top: 1.4rem; }
+  .ls-demo em { display: block; font-family: var(--mono); font-size: 1.1rem; font-style: normal; letter-spacing: 0; color: var(--navy-2); margin-bottom: .8rem; }
+  .ls-demo p { margin: 0; font-size: 1.6rem; font-weight: 400; line-height: 1.5; }
+  .nopalt { font-feature-settings: normal; }
+  .ls-0 { letter-spacing: normal; }
+  .ls-15 { letter-spacing: .15em; }
+
+  /* BUTTONS */
+  .btns { display: flex; flex-wrap: wrap; gap: 1.6rem; align-items: stretch; }
+  .btn { font-family: var(--font); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: space-between; gap: 1.6rem;
+         border-radius: .6rem; font-size: 1.6rem; font-weight: 700; line-height: 1.5; letter-spacing: .06em; }
+  .btn-primary { background: var(--navy); color: var(--white); border: 0; padding: 1.92rem 1.28rem 1.92rem 1.92rem; }
+  .btn-outline { background: var(--white); color: var(--navy); border: 1px solid var(--border); padding: 1.92rem .8rem 1.92rem 1.6rem; }
+  .btn-ghost   { background: var(--white); color: var(--navy); border: 0; padding: 1.6rem 1.28rem 1.6rem 1.92rem; }
+  .btn-lg      { font-size: 1.8rem; padding: 2.7rem 1.8rem 2.7rem 2.7rem; }
+  .btn.is-focus { outline: .2rem solid var(--paper); outline-offset: .3rem; }
+  .tag { display: inline-block; background: var(--surface); color: var(--navy); font-size: 1.3rem; font-weight: 700; line-height: 1.5; padding: .26rem 1.3rem; border-radius: 2.6rem; }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr)); gap: 4rem 1.6rem; }
+  .card { display: block; text-decoration: none; color: var(--paper); background: var(--white); border: 1px solid var(--surface); border-radius: 1rem; padding: 2.2rem 2.4rem 2.6rem; }
+  .card-meta { display: flex; gap: 1.3rem; align-items: center; }
+  .card-date { font-size: 1.5rem; font-weight: 400; line-height: 1.5; color: var(--navy-2); }
+  .card-title { font-size: 1.6rem; font-weight: 700; line-height: 1.5; color: var(--navy); margin: 1.3rem 0 0; }
+  .card-note { font-size: 1.28rem; font-weight: 400; line-height: 1.5; color: var(--navy-2); margin: 1.3rem 0 0; }
+
+  .biz { display: grid; grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr)); gap: 1.6rem; }
+  .biz-box { border-radius: 1rem; padding: 2.8rem 3rem 3.2rem; border: 1px solid var(--border); }
+  .biz-box h4 { margin: 0; font-size: 3.2rem; font-weight: 700; line-height: 1.5; letter-spacing: .16em; }
+  .biz-box p { margin: 1.3rem 0 0; font-size: 1.6rem; font-weight: 400; line-height: 1.5; color: var(--navy); }
+
+  .ringbox { display: inline-flex; align-items: center; justify-content: center; width: 16rem; height: 16rem; border-radius: 50%;
+             background: var(--white); border: 1px solid var(--border); box-shadow: var(--ring); font-size: 1.4rem; font-weight: 700; line-height: 1.5; color: var(--navy); text-align: center; margin: 1.2rem 0 0 1.2rem; }
+
+  /* INPUT */
+  .field { max-width: 52rem; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 700; line-height: 1.5; color: var(--navy); margin-bottom: .8rem; }
+  .field input { width: 100%; font-family: var(--font); font-size: 1.6rem; font-weight: 400; line-height: 1.5; letter-spacing: .06em;
+                 color: var(--navy); background: var(--white); border: 1px solid var(--border); border-radius: .6rem; padding: 1.2rem 1.6rem; }
+  .field input::placeholder { color: var(--navy-2); }
+  .field .is-focus { border-color: var(--paper); box-shadow: rgba(0,113,193,.3) 0 0 0 .4rem; }
+
+  /* LAYOUT */
+  .gaps { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.6rem; }
+  .gapbox { background: var(--surface); border-radius: 1rem; padding: 2rem 2.2rem; }
+  .gapbox b { display: block; font-family: var(--mono); font-size: 1.8rem; letter-spacing: 0; color: var(--paper); }
+  .gapbox span { font-size: 1.3rem; font-weight: 400; line-height: 1.5; color: var(--navy-2); }
+
+  /* FOOTER */
+  .footer { background: var(--navy); margin-top: 2.4rem; }
+  .footer-in { max-width: 120rem; margin: 0 auto; padding: 4.4rem 2.4rem 5.4rem; color: var(--white); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 2.4rem; }
+  .footer-links a { font-size: 1.5rem; font-weight: 400; line-height: 1.5; color: var(--white); text-decoration: none; }
+  .copy { font-family: var(--font-en); font-weight: 600; font-size: 1.28rem; line-height: 1.5; letter-spacing: normal; color: var(--white); margin-top: 2.6rem; }
+  .copy em { display: block; font-family: var(--font); font-weight: 400; font-style: normal; letter-spacing: .06em; margin-top: .8rem; }
+
+  @media all and (max-width: 859px) {
+    .type-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-in">
+    <a class="logo" href="#"><b>TECHNOLOGY &amp; TRUST</b><span>特種東海製紙グループ</span></a>
+    <nav class="hnav">
+      <a href="#">企業情報</a>
+      <a href="#">事業紹介</a>
+      <a href="#">株主・投資家情報</a>
+      <a href="#">サステナビリティ</a>
+      <a class="sub" href="#">お知らせ</a>
+      <a class="sub" href="#">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-in">
+    <h1>製紙×環境</h1>
+    <p>技術と信頼で顧客と共に未来をひらく</p>
+    <small>トクシュな技術で素材を作る、課題に応じたソリューションを届ける。</small>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="label">01 / Colors</div>
+  <h2 class="sec">紺ひとつ</h2>
+  <p class="lead"><code>body { color: #253957 }</code>。<b>このサイトは黒を使わない。</b>本文も見出しもボタンの面もすべてこの紺で、補助テキストの <code>#516179</code> も紺を薄めたトーン。装飾色は <b><code>#0071c1</code>（製紙事業）と <code>#06ad51</code>（環境関連事業）の 2 つだけ</b>で、これは「製紙×環境」という 2 事業の対を表すための色。並べて初めて意味が立つ。</p>
+
+  <div class="swatches">
+    <div class="sw"><div class="sw-chip" style="background:#253957"></div><div class="sw-b"><div class="sw-n">Corporate Navy</div><div class="sw-h">#253957</div><div class="sw-u">body の color。可視 68 / 21 要素・塗り面 8 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#516179"></div><div class="sw-b"><div class="sw-n">Text Secondary</div><div class="sw-h">#516179</div><div class="sw-u">日付・カテゴリ・注記。可視 11 / 2 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#0071c1"></div><div class="sw-b"><div class="sw-n">Paper Blue</div><div class="sw-h">#0071c1</div><div class="sw-u">製紙事業・リンク</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#06ad51"></div><div class="sw-b"><div class="sw-n">Eco Green</div><div class="sw-h">#06ad51</div><div class="sw-u">環境関連事業</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#eeeff2"></div><div class="sw-b"><div class="sw-n">Surface</div><div class="sw-h">#eeeff2</div><div class="sw-u">タグの地色・薄い枠。塗り面 7 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#dee1e6"></div><div class="sw-b"><div class="sw-n">Border</div><div class="sw-h">#dee1e6</div><div class="sw-u">カード・ボタンの枠（1px solid）</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#bec4cd"></div><div class="sw-b"><div class="sw-n">Divider</div><div class="sw-h">#bec4cd</div><div class="sw-u">区切り。塗り面 2 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#f8f9fa"></div><div class="sw-b"><div class="sw-n">Surface Light</div><div class="sw-h">#f8f9fa</div><div class="sw-u">下層のヘッダー帯</div></div></div>
+  </div>
+
+  <h3 class="sub">2 事業の対</h3>
+  <div class="biz">
+    <div class="biz-box"><h4 style="color:var(--paper)">製紙事業</h4><p>特殊紙・産業素材。技術で素材をつくる側を <code>#0071c1</code> で指す。</p></div>
+    <div class="biz-box"><h4 style="color:var(--eco)">環境関連事業</h4><p>リサイクル・環境ソリューション。<code>#06ad51</code> で指す。</p></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="inner">
+  <div class="label">02 / Typography</div>
+  <h2 class="sec">UD 書体 1 本</h2>
+  <p class="lead">和文は <b>BIZ UDPGothic</b>（モリサワの UD 書体・プロポーショナル版）のみ。可視 155 / 79 要素のうち <b>155 / 79 要素がこれ</b>で、残り 1 要素だけが欧文の Poppins。Google Fonts から <code>wght@400;700</code> の 2 ウェイトを配信している（フォント要求 60 件）。<b>UD 書体は字面が大きく、濁点・半濁点が離れていて、<code>1</code> <code>7</code> <code>l</code> の判別が付きやすい。</b></p>
+
+  <h3 class="sub" style="margin-top:0">"Local BIZ UDPGothic" は実体が無い</h3>
+  <p class="lead" style="margin-bottom:1.4rem">実サイトは <code>font-family: "Local BIZ UDPGothic", "BIZ UDPGothic", sans-serif</code> と書いているが、<b>CSS 全文の <code>@font-face</code> は <code>webicon</code> の 1 件だけ</b>で、<code>Local BIZ UDPGothic</code> を定義するものはどこにも無い。<code>document.fonts</code> にも載らない。<b>先頭名は必ず外れ、2 番目の Google Fonts 配信に落ちている。</b>OS 同梱の BIZ UDPGothic を優先してダウンロードを省く意図だったと思われるが、効いていない（フォント要求は 60 件発生する）。</p>
+  <table class="ttable">
+    <tr><th>書き方</th><th>結果</th></tr>
+    <tr><td class="m">font-family: "Local BIZ UDPGothic", "BIZ UDPGothic", sans-serif;</td><td><b>実サイト。</b>先頭は外れ、Google Fonts の BIZ UDPGothic が当たる</td></tr>
+    <tr><td class="m">@font-face { font-family: "Local BIZ UDPGothic"; src: local("BIZ UDPGothic") }</td><td>本来必要だった宣言（実サイトには無い）</td></tr>
+    <tr><td class="m">font-family: "BIZ UDPGothic", sans-serif;</td><td><b>★新規実装はこれだけでよい</b></td></tr>
+  </table>
+  <p class="note">欧文の <code>Poppins</code> はフッターのコピーライト 1 要素だけに使われている。実サイトの宣言は <b><code>Poppins, serif</code> で、サンセリフなのにフォールバックが serif</b>（正しくは <code>sans-serif</code>）。さらにその要素の <code>font-weight</code> は 400 だが、<b>Google Fonts からは <code>Poppins:wght@600</code> しか配信していない</b>ので、ファミリーに 1 本しか無い 600 が出る。</p>
+
+  <h3 class="sub">字間は body に 1 回。見出しだけ上書きする</h3>
+  <p class="lead" style="margin-bottom:1.4rem"><code>body { letter-spacing: .06em }</code> と <code>font-feature-settings: "palt"</code> を 1 回書いて継承させる。<code>em</code> 宣言は <b>絶対値 px に解決されて子へ降りる</b>ので、サイズの違う要素でも同じ <code>0.96px</code> が付く（可視 118 / 74 要素）。見出しだけ <code>.15em</code> 前後に上書きする。</p>
+  <div class="ls-demo">
+    <div class="box"><em>letter-spacing: normal ／ palt なし</em><p class="ls-0 nopalt">技術と信頼で顧客と共に未来をひらく。トクシュな技術で素材を作る。</p></div>
+    <div class="box"><em>★実装：letter-spacing: .06em ／ palt あり（= 0.96px）</em><p>技術と信頼で顧客と共に未来をひらく。トクシュな技術で素材を作る。</p></div>
+    <div class="box"><em>★見出しだけ letter-spacing: .15em</em><p class="ls-15">技術と信頼で顧客と共に未来をひらく。</p></div>
+  </div>
+
+  <h3 class="sub">階層（html = 10px のとき）</h3>
+  <div class="type-row"><div class="type-meta"><b>Page Title</b>4.2rem / 700 / lh 1.50<br>字間は継承（0.96px）</div><div class="t-h42">企業情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>4rem / 700 / lh 1.20<br>★letter-spacing .15em = 6px</div><div class="t-h40">経営情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>Statement</b>3.2rem / 700 / lh 1.50<br>★.16em = 5.12px</div><div class="t-s32">製紙事業</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading M</b>2.2rem / 700 / lh 1.50</div><div class="t-h22">トピックス</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading S</b>2rem / 700 / lh 1.50</div><div class="t-h20">環境　社会　ガバナンス</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>1.8rem / 700 / lh 1.50</div><div class="t-l18">ユニークなビジネスモデルで、持続可能な社会の実現に貢献します</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body</b>1.6rem / 400 / lh <b>1.50</b><br>可視 55 / 15 要素</div><div class="t-b16">特種東海製紙グループは製造業とリサイクルの 2 つの事業を併せ持ち、2 人の創業者の志である「技術 “Technology”」と「信頼 “Trust”」を受け継いでいます。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / Body Strong</b>1.6rem / <b>700</b> / lh 1.50<br>★可視 88 / 27 要素が 700</div><div class="t-n16">企業情報　事業紹介　株主・投資家情報　サステナビリティ</div></div>
+  <div class="type-row"><div class="type-meta"><b>UI</b>1.4rem / 400 / lh 1.50<br>可視 31 / 35 要素</div><div class="t-u14">お知らせ　お問い合わせ　検索　Language</div></div>
+  <div class="type-row"><div class="type-meta"><b>Tag</b>1.3rem / 700 / lh 1.50<br>可視 21 / 15 要素</div><div><span class="tag">ニュースリリース</span> <span class="tag">IR</span> <span class="tag">製品</span></div></div>
+
+  <h3 class="sub">ウェイトは 400 と 700 の 2 段だけ</h3>
+  <table class="ttable">
+    <tr><th>Weight</th><th>Google Fonts の配信</th><th>実測（トップ / 下層）</th><th>用途</th></tr>
+    <tr><td class="m">400</td><td>あり</td><td class="m">68 / 53 要素</td><td>本文・UI</td></tr>
+    <tr><td class="m">700</td><td>あり</td><td class="m"><b>88 / 27 要素</b></td><td>見出し・ナビ・タグ・ボタン</td></tr>
+    <tr><td class="m">500 / 600</td><td><b>無い</b></td><td class="m">0 要素</td><td><b>当てると 400 か 700 に丸められる</b></td></tr>
+  </table>
+  <p class="note">トップでは 700 の方が多い（88 対 68）。UD 書体は Regular でも十分に強いが、このサイトは見出し・ナビ・タグをすべて Bold で立てている。</p>
+
+  <h3 class="sub">禁則処理を明示している</h3>
+  <p class="lead" style="margin-bottom:0"><code>body</code> に <code>overflow-wrap: anywhere</code> / <code>word-break: normal</code> / <b><code>line-break: strict</code></b> の 3 行が書かれている。<code>line-break: strict</code> は小書き仮名（ゃゅょっ）や長音符も行頭に来ないようにする厳格な禁則。<code>word-break: auto-phrase</code> は使っていない。</p>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="label">03 / Components</div>
+  <h2 class="sec">角丸は 3 段</h2>
+  <p class="lead"><b>6px がボタン、10px がリンクカード、26px がタグ。</b>padding は <code>rem</code> で、左右が非対称（右に矢印アイコンが入る）。ラベルはすべて <b>weight 700</b>。</p>
+
+  <div class="btns">
+    <a class="btn btn-primary" href="#">お知らせ一覧<span>→</span></a>
+    <a class="btn btn-outline" href="#">株主・投資家情報TOP<span>→</span></a>
+    <a class="btn btn-outline btn-lg" href="#">サステナビリティTOP<span>→</span></a>
+    <a class="btn btn-ghost" href="#">産業素材<span>→</span></a>
+    <a class="btn btn-primary is-focus" href="#">フォーカス状態<span>→</span></a>
+  </div>
+
+  <h3 class="sub">リンクカード（border-radius: 10px / 枠 1px solid #eeeff2）</h3>
+  <div class="cards">
+    <a class="card" href="#">
+      <div class="card-meta"><span class="tag">ニュースリリース</span><span class="card-date">2026年9月30日</span></div>
+      <div class="card-title">「統合報告書2026」発行に関するお知らせ</div>
+      <p class="card-note">（PDF:426KB）</p>
+    </a>
+    <a class="card" href="#">
+      <div class="card-meta"><span class="tag">IR</span><span class="card-date">2026年10月1日</span></div>
+      <div class="card-title">2027年3月期 第2四半期決算説明会の開催について</div>
+      <p class="card-note">（PDF:111KB）</p>
+    </a>
+    <a class="card" href="#">
+      <div class="card-meta"><span class="tag">製品</span><span class="card-date">2026年9月30日</span></div>
+      <div class="card-title">つくる、ふたたび。未来へ ― リサイクル素材の新ライン</div>
+      <p class="card-note">（PDF:320KB）</p>
+    </a>
+  </div>
+</section>
+
+<section class="section-alt" id="forms">
+<div class="inner">
+  <div class="label">04 / Forms</div>
+  <h2 class="sec">入力も角丸 6px</h2>
+  <p class="lead"><code>input</code> はフォント継承が効かないので、<b><code>font-family</code> と <code>letter-spacing: .06em</code> を明示的に当て直す</b>。枠は <code>1px solid #dee1e6</code>。</p>
+  <div class="field">
+    <label for="q">サイト内検索</label>
+    <input id="q" type="text" placeholder="キーワードを入力">
+  </div>
+  <div class="field" style="margin-top:2.6rem">
+    <label for="q2">フォーカス状態</label>
+    <input id="q2" class="is-focus" type="text" value="特殊紙">
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="label">05 / Elevation</div>
+  <h2 class="sec">落ち影がない。あるのはリング</h2>
+  <p class="lead">実測された <code>box-shadow</code> は <b><code>rgba(37,57,87,.3) 0 0 0 8px</code> の 1 件だけ</b>。オフセット 0・ぼかし 0・広がり 8px なので、<b>これは影ではなくブランド紺の輪</b>。下層ページは <code>box-shadow</code> が 0 種。</p>
+  <div class="ringbox">rgba(37,57,87,.3)<br>0 0 0 8px</div>
+  <p class="note">浮きは <code>1px solid #dee1e6</code> の枠と <code>#eeeff2</code> の地色で作る。新規実装で落ち影を足すと、このサイトの平らさが失われる。</p>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="inner">
+  <div class="label">06 / Layout</div>
+  <h2 class="sec">html が vw で動く</h2>
+  <p class="lead">設計幅は <b>1080 / 860 / 390px の 3 つ</b>で、各レンジの中は <b>レイアウト全体が viewport 幅に比例して伸縮する</b>。どのレンジでも、その設計幅ちょうどで <code>html</code> が 10px に着地する。</p>
+  <table class="ttable">
+    <tr><th>レンジ</th><th>html の宣言</th><th>意味</th></tr>
+    <tr><td class="m">≥ 1080px（pc）</td><td class="m">font-size: 62.5%</td><td><b>10px 固定</b></td></tr>
+    <tr><td class="m">860–1079px（tab）</td><td class="m">font-size: 1.1627906977vw</td><td>= 100vw / 86 → <b>860px で 10px</b></td></tr>
+    <tr><td class="m">≤ 859px（sp）</td><td class="m">font-size: 2.5641025641vw</td><td>= 100vw / 39 → <b>390px で 10px</b></td></tr>
+  </table>
+
+  <h3 class="sub">実測値（4 幅＋境界）</h3>
+  <table class="ttable">
+    <tr><th>画面幅</th><th>html</th><th>body</th><th>line-height</th><th>letter-spacing</th></tr>
+    <tr><td class="m">1440px</td><td class="m"><b>10px</b></td><td class="m">16px</td><td class="m">24px</td><td class="m">0.96px</td></tr>
+    <tr><td class="m">1080px</td><td class="m"><b>10px</b></td><td class="m">16px</td><td class="m">24px</td><td class="m">0.96px</td></tr>
+    <tr><td class="m">1079px</td><td class="m">12.547px</td><td class="m">18.82px</td><td class="m">28.23px</td><td class="m">1.129px</td></tr>
+    <tr><td class="m">1000px</td><td class="m">11.628px</td><td class="m">17.44px</td><td class="m">26.16px</td><td class="m">1.047px</td></tr>
+    <tr><td class="m">860px</td><td class="m"><b>10px</b></td><td class="m">15px</td><td class="m">22.5px</td><td class="m">0.9px</td></tr>
+    <tr><td class="m">859px</td><td class="m">22.026px</td><td class="m">30.84px</td><td class="m">46.25px</td><td class="m">1.850px</td></tr>
+    <tr><td class="m">834px</td><td class="m">21.385px</td><td class="m">29.94px</td><td class="m">44.91px</td><td class="m">1.796px</td></tr>
+    <tr><td class="m">390px</td><td class="m"><b>10px</b></td><td class="m">14px</td><td class="m">21px</td><td class="m">0.84px</td></tr>
+    <tr><td class="m">375px</td><td class="m">9.615px</td><td class="m">13.46px</td><td class="m">20.19px</td><td class="m">0.808px</td></tr>
+    <tr><td class="m">320px</td><td class="m">8.205px</td><td class="m">11.49px</td><td class="m">17.23px</td><td class="m">0.689px</td></tr>
+  </table>
+  <p class="note"><b><code>9.615px</code> / <code>21.385px</code> / <code>12.547px</code> のような半端な値が出たら、<code>html</code> が <code>vw</code> で動いている合図。</b>1 幅だけ測って「このサイトの本文は 16px」と書かない。<code>rem</code> 指定は維持し、px へ読み替えない（読み替えると 390px 以外の全幅で崩れる）。<br>
+  なお <b>≤859px の規則が 859px まで効くため、タブレット縦（768〜859px）で本文が 27〜31px まで巨大化する</b>。390px 設計のモバイルレイアウトをそのまま引き伸ばしているため。新規実装では <code>clamp()</code> で上限を切るか、タブレット用の規格幅をもう 1 段挟む。</p>
+
+  <h3 class="sub">gap</h3>
+  <div class="gaps">
+    <div class="gapbox"><b>1.3rem</b><span>カード内の要素間（実測 26 件・最多）</span></div>
+    <div class="gapbox"><b>4rem 1.6rem</b><span>カードグリッド（行 40 / 列 16px）</span></div>
+    <div class="gapbox"><b>2rem 3.2rem</b><span>2 カラム</span></div>
+    <div class="gapbox"><b>5.6rem</b><span>下層の大きな区切り</span></div>
+  </div>
+  <p class="note"><code>:root</code> にある CSS 変数は <code>--breakpoint</code> と <code>--breakpoint-width</code> の 2 個だけで、<b>どちらも JS に現在のブレークポイントを伝えるための文字列</b>（<code>"pc"</code> / <code>"tab"</code> / <code>"sp"</code>）。デザイントークンの層は存在しない。ほかに <code>interpolate-size: allow-keywords</code> を宣言している（<code>height: auto</code> へのアニメーションを有効にする新しい CSS）。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-links">
+      <a href="#">個人情報保護方針</a>
+      <a href="#">サイトのご利用にあたって</a>
+      <a href="#">サイトマップ</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+    <p class="copy">© Tokushu Tokai Paper Co., Ltd.
+      <em>※ このページは awesome-design-md-jp の DESIGN.md 検証用プレビューであり、特種東海製紙株式会社の公式サイトではありません。このコピーライト行だけ Poppins で組んでいる（実サイトも同じ 1 要素だけ）。</em>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

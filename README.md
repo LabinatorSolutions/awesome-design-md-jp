@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (559 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (562 sites)</a>
 </p>
 
 <table>
@@ -861,6 +861,11 @@
 </tr>
 <tr>
 <td align="center"><strong>静岡県立美術館</strong><br><img src="design-md/spmoa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>中外製薬</strong><br><img src="design-md/chugai-pharm/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>第一三共</strong><br><img src="design-md/daiichisankyo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>特種東海製紙</strong><br><img src="design-md/tt-paper/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1481,11 +1486,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [成田国際空港 (Narita International Airport)](https://www.narita-airport.jp/ja/) | Airport / Transportation | [DESIGN.md](design-md/narita-airport/DESIGN.md) | [preview.html](design-md/narita-airport/preview.html) |
 | [関西国際空港 (KIX)](https://www.kansai-airport.or.jp/) | Airport / Transportation | [DESIGN.md](design-md/kansai-airport/DESIGN.md) | [preview.html](design-md/kansai-airport/preview.html) |
 | [静岡県立美術館 (Shizuoka Prefectural Museum of Art)](https://spmoa.shizuoka.shizuoka.jp/) | Museum / Public | [DESIGN.md](design-md/spmoa/DESIGN.md) | [preview.html](design-md/spmoa/preview.html) |
+| [中外製薬 (Chugai Pharmaceutical)](https://www.chugai-pharm.co.jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/chugai-pharm/DESIGN.md) | [preview.html](design-md/chugai-pharm/preview.html) |
+| [第一三共 (Daiichi Sankyo)](https://www.daiichisankyo.co.jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/daiichisankyo/DESIGN.md) | [preview.html](design-md/daiichisankyo/preview.html) |
+| [特種東海製紙 (Tokushu Tokai Paper)](https://www.tt-paper.co.jp/) | Paper / Corporate | [DESIGN.md](design-md/tt-paper/DESIGN.md) | [preview.html](design-md/tt-paper/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (559 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (562 sites)</a>
 </p>
 
 <table>
@@ -2312,6 +2320,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>静岡県立美術館</strong><br><img src="design-md/spmoa/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>中外製薬</strong><br><img src="design-md/chugai-pharm/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>第一三共</strong><br><img src="design-md/daiichisankyo/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>特種東海製紙</strong><br><img src="design-md/tt-paper/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 第一三共（Daiichi Sankyo）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* === 実サイトに CSS Custom Properties は 0 個（DNN 基盤に素の CSS）。
+         下の :root はこのプレビューのためにこちらで立てたもので、実サイトには存在しない。
+         実測日 2026-10-11 === */
+  :root {
+    /* --- 書体 ---
+       実サイトは モリサワ「新ゴ」を TypeSquare（wf.typesquare.com）で配信している。
+       ドメインライセンスのためローカルでは再現できないので、
+       同じモリサワ系で字面が近い Zen Kaku Gothic New（Google Fonts）で代替した。
+
+       ★実サイトの @font-face は 4 本とも font-weight: bold で宣言されており、
+         太さは font-weight ではなく「ファミリー名」で切り替える。
+         新ゴ R  → 本文     （可視 84 / 77 要素）
+         新ゴ DB → 見出し   （可視 49 / 54 要素）
+         新ゴ R に 700 を当てても太くならない（合成太字も起きない）。 */
+    --font-r:  "Zen Kaku Gothic New", "新ゴ R", "Shin Go Regular", HelveticaNeueeTextPro-Roman,
+               "Helvetica Neue", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    --font-db: "Zen Kaku Gothic New", "新ゴ DB", "Shin Go DeBold", HelveticaNeueeTextPro-Md,
+               YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    --mono: SFMono-Regular, Consolas, Menlo, monospace;
+
+    /* --- Colors（実サイトは hex 直書き。トークン層は無い） --- */
+    --brand:   #005baa;   /* コーポレートブルー。文字・アイコン・リンク（可視 18 要素） */
+    --cta:     #116dc9;   /* ★CTA 専用の青。塗り面 13 要素。ブランド青とは別物 */
+    --link2:   #0075c0;   /* 実装のゆらぎ。新規では --brand に寄せる */
+    --heading: #000000;   /* 見出しは純黒（可視 49 要素） */
+    --body:    #4d4f53;   /* 本文（可視 39 要素） */
+    --stat:    #232526;
+    --border:  #dddddd;
+    --border2: #bbbbbb;
+    --surface: #f6f6f6;
+    --surface2:#ececea;
+    --white:   #ffffff;
+    --overlay: rgba(0,0,0,.1);   /* 画像の上の膜（26 要素） */
+
+    /* コーポレートグラデーション：4 ストップ・42% / 86% の偏った位置が特徴 */
+    --grad: linear-gradient(to right, #005baa 0%, #00acea 42%, #89ba17 86%, #cfd300 100%);
+
+    /* カテゴリ色 */
+    --cat-sus:  #1d8922;  /* サステナビリティ / 研究開発情報 */
+    --cat-etc:  #6e7311;  /* その他 */
+    --cat-prod: #bf4c00;  /* 製品情報 */
+    --cat-dx:   #057f89;  /* DX */
+    --cat-sci:  #71757a;  /* サイエンス＆テクノロジー */
+
+    /* ESG トピックのピル（淡い面＋濃い文字の対） */
+    --pill-s-bg: #f7eea5; --pill-s-fg: #524901;
+    --pill-e-bg: #d3ef88; --pill-e-fg: #405800;
+
+    --shadow-1: rgba(0,0,0,.07) 0 3px 60px 0;   /* 実測された唯一の影。blur 60px / alpha .07 */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { color-scheme: light; }
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: 10px; }   /* ★実サイトは 4 幅すべて 10px 固定（62.5% 相当） */
+
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--body);
+    font-family: var(--font-r);
+    font-size: 15px;            /* ★デスクトップ（1000px 以上）の値。下は §8 の流体 */
+    font-weight: 400;
+    line-height: 1.8;           /* = 27px */
+    /* letter-spacing は書かない。可視 121 / 137 要素が normal */
+    /* font-feature-settings も書かない。実測 0 要素（palt を使わない） */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .topbar { height: 6px; background: var(--grad); }
+  .header { border-bottom: 1px solid var(--border); }
+  .header-in { max-width: 1240px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+  .logo { font-family: var(--font-db); font-weight: 700; font-size: 22px; line-height: 1.3; color: var(--brand); text-decoration: none; }
+  .logo span { font-family: var(--font-r); font-weight: 400; font-size: 13px; color: var(--body); margin-left: 12px; }
+  .hnav { margin-left: auto; display: flex; gap: 22px; flex-wrap: wrap; }
+  .hnav a { font-family: var(--font-db); font-weight: 700; font-size: 16px; line-height: 1.3; letter-spacing: .018em; color: var(--heading); text-decoration: none; }
+  .hnav a.sub { font-family: var(--font-r); font-weight: 400; font-size: 13px; line-height: 1; letter-spacing: normal; color: var(--link2); }
+
+  /* SECTIONS */
+  .section { max-width: 1240px; margin: 0 auto; padding: 70px 24px; }
+  .section-alt { background: var(--surface); }
+  .section-alt > .inner { max-width: 1240px; margin: 0 auto; padding: 70px 24px; }
+  .narrow { max-width: 1000px; }   /* 下層の本文カラム */
+  .label { font-family: var(--mono); font-size: 12px; color: var(--body); line-height: 1.38; }
+  h2.sec { font-family: var(--font-db); font-weight: 700; font-size: 38px; line-height: 1.3; color: var(--heading); margin: 10px 0 0; }
+  h3.sub { font-family: var(--font-db); font-weight: 700; font-size: 26px; line-height: 1.5; color: var(--heading); margin: 46px 0 14px; }
+  .lead { font-size: 15px; line-height: 1.8; color: var(--body); max-width: 1000px; margin: 16px 0 32px; }
+  .note { font-size: 12px; line-height: 1.38; color: var(--body); max-width: 1000px; margin-top: 20px; }
+  code { font-family: var(--mono); font-size: 12px; background: var(--surface2); padding: 2px 6px; }
+  b { font-family: var(--font-db); font-weight: 700; color: var(--heading); }
+
+  /* ページタイトル帯（コーポレートグラデーション） */
+  .pagetitle { background: var(--grad); }
+  .pagetitle .in { max-width: 1240px; margin: 0 auto; padding: 38px 24px; }
+  .pagetitle h1 { font-family: var(--font-db); font-weight: 700; font-size: 36px; line-height: 1.3; color: var(--white); margin: 0; }
+
+  /* COLORS */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 24px; }
+  .sw { background: var(--white); border: 1px solid var(--border); }
+  .sw-chip { height: 78px; }
+  .sw-b { padding: 14px 16px 18px; }
+  .sw-n { font-family: var(--font-db); font-weight: 700; font-size: 16px; line-height: 1.3; color: var(--heading); }
+  .sw-h { font-family: var(--mono); font-size: 11px; color: var(--body); margin-top: 4px; }
+  .sw-u { font-size: 12px; line-height: 1.38; color: var(--body); margin-top: 8px; }
+  .gradbar { height: 60px; background: var(--grad); margin-bottom: 14px; }
+  .gradstops { display: flex; font-family: var(--mono); font-size: 11px; color: var(--body); }
+  .gradstops span { flex: 1; }
+  .gradstops span:nth-child(2) { flex: 0 0 42%; }
+
+  /* TYPE */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--mono); font-size: 11px; color: var(--body); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font-db); font-weight: 700; font-size: 14px; color: var(--heading); }
+  .t-h36 { font-family: var(--font-db); font-weight: 700; font-size: 36px; line-height: 1.3; color: var(--heading); }
+  .t-h38 { font-family: var(--font-db); font-weight: 700; font-size: 38px; line-height: 1.3; color: var(--heading); }
+  .t-h26 { font-family: var(--font-db); font-weight: 700; font-size: 26px; line-height: 1.5; color: var(--heading); }
+  .t-st24{ font-family: var(--font-r); font-weight: 400; font-size: 24px; line-height: 1.7; letter-spacing: .02em; color: var(--heading); }
+  .t-l20 { font-family: var(--font-r); font-weight: 400; font-size: 20px; line-height: 1.8; color: var(--body); }
+  .t-a19 { font-family: var(--font-r); font-weight: 400; font-size: 19px; line-height: 1.38; color: var(--brand); }
+  .t-n16 { font-family: var(--font-db); font-weight: 700; font-size: 16px; line-height: 1.3; letter-spacing: .018em; color: var(--heading); }
+  .t-b15 { font-family: var(--font-r); font-weight: 400; font-size: 15px; line-height: 1.8; color: var(--body); }
+  .t-c12 { font-family: var(--font-r); font-weight: 400; font-size: 12px; line-height: 1.38; color: var(--body); }
+  .t-f12 { font-family: var(--font-r); font-weight: 400; font-size: 12px; line-height: 1.38; letter-spacing: 1px; color: var(--body); }
+
+  .ttable { width: 100%; border-collapse: collapse; }
+  .ttable th, .ttable td { padding: 11px 14px; text-align: left; font-size: 14px; line-height: 1.5; border-bottom: 1px solid var(--border); }
+  .ttable th { font-family: var(--font-db); font-weight: 700; background: var(--surface2); color: var(--heading); }
+  .ttable td.m { font-family: var(--mono); font-size: 11px; color: var(--body); }
+
+  .ls-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; background: var(--surface); padding: 28px 30px; margin-top: 14px; }
+  .ls-demo .box em { display: block; font-family: var(--mono); font-size: 11px; font-style: normal; color: var(--body); margin-bottom: 8px; }
+  .ls-demo p { margin: 0; font-size: 15px; line-height: 1.8; color: var(--body); }
+
+  /* BUTTONS */
+  .btns { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+  .btn-pill { position: relative; display: inline-flex; align-items: center; background: var(--cta); color: var(--white);
+              font-family: var(--font-r); font-weight: 400; font-size: 14px; line-height: 1.5; letter-spacing: normal;
+              border-radius: 50px; padding: 13px 68px 14px 44px; text-decoration: none; border: 0; cursor: pointer; }
+  .btn-pill::after { content: "→"; position: absolute; right: 36px; }
+  .btn-pill.is-focus { outline: 2px solid var(--brand); outline-offset: 3px; }
+  .btn-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--white); border: 1px solid var(--border);
+                color: var(--brand); font-size: 15px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-family: var(--font-r); }
+
+  .cat-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .cat { font-family: var(--font-db); font-weight: 700; font-size: 16.875px; line-height: 1.2; color: var(--white);
+         border-radius: 20px 0 0; padding: 20px 30px; }
+  .pill { display: inline-block; border-radius: 96px; padding: 3px 12px; font-family: var(--font-r); font-weight: 400; font-size: 12px; line-height: 1.38; }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 60px 24px; }
+  .card { text-decoration: none; color: inherit; display: block; }
+  .card-img { aspect-ratio: 16 / 9; background: linear-gradient(135deg, #005baa, #00acea); position: relative; display: flex; align-items: center; justify-content: center; }
+  .card-img::after { content: ""; position: absolute; inset: 0; background: var(--overlay); }
+  .card-img span { position: relative; z-index: 1; color: var(--white); font-family: var(--font-db); font-weight: 700; font-size: 14px; }
+  .card-meta { display: flex; gap: 12px; align-items: center; margin-top: 14px; }
+  .card-date { font-size: 12px; line-height: 1.38; color: var(--body); }
+  .card-title { font-family: var(--font-r); font-weight: 400; font-size: 19px; line-height: 1.38; color: var(--brand); margin: 8px 0 0; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 24px; }
+  .stat { border: 1px solid var(--border); padding: 26px 24px 28px; }
+  .stat-l { font-family: var(--font-r); font-weight: 400; font-size: 20px; line-height: 1.1; color: var(--stat); }
+  .stat-n { font-family: var(--font-db); font-weight: 700; font-size: 38px; line-height: 1.1; color: var(--heading); margin-top: 12px; }
+  .stat-u { font-family: var(--font-r); font-weight: 400; font-size: 18px; color: var(--body); }
+
+  /* INPUT */
+  .field { max-width: 520px; }
+  .field label { display: block; font-family: var(--font-db); font-weight: 700; font-size: 14px; line-height: 1.5; color: var(--heading); margin-bottom: 8px; }
+  .field input { width: 100%; font-family: var(--font-r); font-size: 15px; line-height: 1.8; color: var(--heading);
+                 background: var(--white); border: 1px solid var(--border2); border-radius: 0; padding: 9px 15px; }
+  .field input::placeholder { color: var(--body); }
+  .field .is-focus { border-color: var(--brand); outline: 2px solid var(--brand); outline-offset: 1px; }
+
+  .shadowbox { box-shadow: var(--shadow-1); background: var(--white); padding: 34px 32px; max-width: 760px; }
+
+  /* FOOTER */
+  .footer { background: var(--surface2); margin-top: 24px; }
+  .footer-in { max-width: 1240px; margin: 0 auto; padding: 44px 24px 54px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
+  .footer-links a { font-size: 12px; letter-spacing: 1px; color: var(--body); text-decoration: none; }  /* ★ここだけ字間を開ける */
+  .copy { font-size: 12px; line-height: 1.38; color: var(--body); margin-top: 26px; }
+
+  @media screen and (max-width: 1050px) {
+    .section, .section-alt > .inner, .header-in, .footer-in, .pagetitle .in { padding-left: 20px; padding-right: 20px; }
+    h2.sec, .t-h38 { font-size: 30px; }
+    .pagetitle h1, .t-h36 { font-size: 28px; }
+  }
+  @media screen and (max-width: 750px) {
+    .type-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+<header class="header">
+  <div class="header-in">
+    <a class="logo" href="#">DAIICHI SANKYO<span>第一三共株式会社</span></a>
+    <nav class="hnav">
+      <a href="#">第一三共について</a>
+      <a href="#">Our Stories</a>
+      <a href="#">サステナビリティ</a>
+      <a href="#">研究開発</a>
+      <a class="sub" href="#">一般・患者の皆さま</a>
+      <a class="sub" href="#">医療関係者の皆さま</a>
+    </nav>
+  </div>
+</header>
+
+<div class="pagetitle"><div class="in"><h1>第一三共について</h1></div></div>
+
+<section class="section" id="colors">
+  <div class="label">01 / Colors</div>
+  <h2 class="sec">4 ストップのグラデーションと、青が 4 つ</h2>
+  <p class="lead">実サイトに <b>CSS Custom Properties は 0 個</b>。DNN（<code>Portals/</code> <code>Skins/DAS/</code>）の上に素の CSS が書かれていて、色はすべて hex の直書き。結果として <b>ブランド青 <code>#005baa</code> と CTA 青 <code>#116dc9</code> が別物として併存</b>し、さらに <code>#0075c0</code> / <code>#0070c0</code> という 5 違いのゆらぎがある。</p>
+
+  <h3 class="sub" style="margin-top:0">コーポレートグラデーション</h3>
+  <div class="gradbar"></div>
+  <div class="gradstops"><span>#005baa 0%</span><span>#00acea 42%</span><span>#89ba17 86%</span><span style="text-align:right">#cfd300 100%</span></div>
+  <p class="note"><b>42% / 86% という偏ったストップ位置</b>が特徴。等間隔にすると別物になる。ロゴ下の帯と下層ページの見出し帯に使う。</p>
+
+  <h3 class="sub">Primary / Neutral</h3>
+  <div class="swatches">
+    <div class="sw"><div class="sw-chip" style="background:#005baa"></div><div class="sw-b"><div class="sw-n">Corporate Blue</div><div class="sw-h">#005baa</div><div class="sw-u">文字・アイコン・リンク。可視 18 / 7 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#116dc9"></div><div class="sw-b"><div class="sw-n">CTA Blue</div><div class="sw-h">#116dc9</div><div class="sw-u">★ボタンの面専用。塗り面 13 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#000"></div><div class="sw-b"><div class="sw-n">Heading</div><div class="sw-h">#000000</div><div class="sw-u">見出しは純黒。可視 49 / 48 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#4d4f53"></div><div class="sw-b"><div class="sw-n">Body</div><div class="sw-h">#4d4f53</div><div class="sw-u">本文・リスト。可視 39 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#232526"></div><div class="sw-b"><div class="sw-n">Stat</div><div class="sw-h">#232526</div><div class="sw-u">数値のラベル。可視 9 要素</div></div></div>
+    <div class="sw"><div class="sw-chip" style="background:#dddddd"></div><div class="sw-b"><div class="sw-n">Border</div><div class="sw-h">#dddddd</div><div class="sw-u">カードの枠・丸ボタンの枠</div></div></div>
+  </div>
+
+  <h3 class="sub">ニュースのカテゴリ色（角 1 つだけ丸める）</h3>
+  <div class="cat-row">
+    <div class="cat" style="background:var(--cat-sus)">サステナビリティ</div>
+    <div class="cat" style="background:var(--cat-prod)">製品情報</div>
+    <div class="cat" style="background:var(--cat-dx)">DX</div>
+    <div class="cat" style="background:var(--cat-etc)">その他</div>
+    <div class="cat" style="background:var(--cat-sci)">サイエンス＆テクノロジー</div>
+  </div>
+  <p class="note"><code>border-radius: 20px 0 0</code>。対になる要素は <code>0 20px 0 0</code> で反転させる。文字は白・16.875px・新ゴ DB。</p>
+
+  <h3 class="sub">ESG トピックのピル（淡い面＋濃い文字の対）</h3>
+  <p>
+    <span class="pill" style="background:var(--pill-s-bg);color:var(--pill-s-fg)">Social</span>
+    <span class="pill" style="background:var(--pill-e-bg);color:var(--pill-e-fg)">Environment</span>
+  </p>
+  <p class="note"><code>border-radius: 96px</code> / 12px / weight 400 / padding <code>3px 12px</code>。面と文字は必ず対で使う。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="inner">
+  <div class="label">02 / Typography</div>
+  <h2 class="sec">太さはファミリー名で切り替える</h2>
+  <p class="lead">和文はモリサワ「新ゴ」の 2 ウェイトを <b>TypeSquare（<code>wf.typesquare.com</code>）</b>で配信している。注入される <code>@font-face</code> は <b>4 本すべて <code>font-weight: bold</code></b>（<code>新ゴ R</code> / <code>Shin Go Regular</code> / <code>新ゴ DB</code> / <code>Shin Go DeBold</code>、いずれも <code>loaded</code>・<code>unicodeRange: U+0-10FFFF</code>）。<b>ファミリーに実体が 1 本しか無いので、CSS が 400 でも 700 でも同じファイルが返る。</b></p>
+  <p class="note" style="margin:0 0 30px"><b>このプレビューでは</b> Adobe / モリサワのドメインライセンスのため新ゴを表示できない。同じモリサワ系で字面の近い <b>Zen Kaku Gothic New</b>（Google Fonts）で代替し、<code>--font-r</code> / <code>--font-db</code> という 2 つの変数に分けて「ファミリー名で切り替える」構造だけを再現している。</p>
+
+  <table class="ttable">
+    <tr><th>CSS の書き方</th><th>実サイトの挙動</th></tr>
+    <tr><td class="m">font-family: "新ゴ R"; font-weight: 400;</td><td>新ゴ Regular が出る（正しい）</td></tr>
+    <tr><td class="m">font-family: "新ゴ DB"; font-weight: 700;</td><td>新ゴ DeBold が出る（正しい）</td></tr>
+    <tr><td class="m">font-family: "新ゴ R"; <b>font-weight: 700;</b></td><td><b>新ゴ Regular のまま。太くならず、合成太字も起きない</b></td></tr>
+    <tr><td class="m">font-family: "新ゴ DB"; font-weight: 400;</td><td>新ゴ DeBold のまま。細くならない</td></tr>
+  </table>
+  <p class="note">目印は <b>フォント要求の <code>typesquare.com</code> / <code>wf.typesquare.com</code></b> と <code>typesquare.js</code> の読み込み（実測 5 件）。欧文の <code>HelveticaNeueeTextPro-*</code> は Web フォント配信されておらず、実機に無ければ <code>Helvetica Neue</code> 以降へ落ちる。</p>
+
+  <h3 class="sub">字間を設計に入れていない</h3>
+  <p class="lead" style="margin-bottom:14px">可視 137 要素中 <b>121 要素が <code>letter-spacing: normal</code></b>（下層は 133 中 114）。<b><code>font-feature-settings</code> も 0 要素</b>で、約物も詰めない。開けるのはフッターリンク（<code>1px</code>）とグローバルナビ（<code>0.288px</code> ＝ 16px × 0.018em）だけ。</p>
+  <div class="ls-demo">
+    <div class="box"><em>★実装：letter-spacing: normal ／ palt なし</em><p>病気と生きる誰かを思う。それが、より良い医療を実現するすべての原動力になる。</p></div>
+    <div class="box"><em>参考：letter-spacing: .05em を足した場合（このサイトの設計ではない）</em><p style="letter-spacing:.05em">病気と生きる誰かを思う。それが、より良い医療を実現するすべての原動力になる。</p></div>
+    <div class="box"><em>フッターリンクだけ letter-spacing: 1px</em><p class="t-f12">第一三共個人情報保護方針　クッキーポリシー　ソーシャルメディアコミュニティガイドライン</p></div>
+  </div>
+
+  <h3 class="sub">階層（デスクトップ：body 15px のとき）</h3>
+  <div class="type-row"><div class="type-meta"><b>Page Title</b>新ゴ DB / 36px / lh 1.30<br>letter-spacing normal</div><div class="t-h36">第一三共について</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>新ゴ DB / 38px / lh 1.30</div><div class="t-h38">サイエンス＆テクノロジーでイノベーションを起こす</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading M</b>新ゴ DB / 26px / lh 1.50</div><div class="t-h26">私たちの企業理念</div></div>
+  <div class="type-row"><div class="type-meta"><b>Statement</b>新ゴ R / 24px / lh 1.70<br>★ここだけ 0.48px（0.02em）</div><div class="t-st24">私たちは、「イノベーションに情熱を。ひとに思いやりを。」を企業理念に掲げています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>新ゴ R / 20px / lh 1.80<br>可視 15 / 16 要素</div><div class="t-l20">医療技術の進歩や人類が生み出してきた医薬品は、多くの人の人生を支えてきました。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Article Title</b>新ゴ R / 19px / lh 1.38<br>color #005baa ／ 可視 14 要素</div><div class="t-a19">患者さんに安全な医薬品を届け続けるために。品質試験の現場から</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav</b>新ゴ DB / 16px / lh 1.30<br>★0.288px（0.018em）</div><div class="t-n16">第一三共について　Our Stories　サステナビリティ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body</b>新ゴ R / <b>15px</b> / lh <b>1.80</b><br>letter-spacing normal</div><div class="t-b15">第一三共グループは「革新的医薬品を継続的に創出し、多様な医療ニーズに応える製品を提供することで、人々の健康で豊かな生活に貢献する」ことを使命としています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>新ゴ R / 12px / lh 1.38<br>可視 50 / 44 要素（最多）</div><div class="t-c12">2026年10月05日　ホーム ＞ 第一三共について</div></div>
+
+  <h3 class="sub">行間は 4 段</h3>
+  <table class="ttable">
+    <tr><th>line-height</th><th>実測（トップ / 下層）</th><th>用途</th></tr>
+    <tr><td class="m">1.80</td><td class="m"><b>52 / 45 要素（最多）</b></td><td><b>本文（<code>body</code> の既定。27px ÷ 15px）</b></td></tr>
+    <tr><td class="m">1.50</td><td class="m">28 / 4 要素</td><td>ボタンラベル・中見出し</td></tr>
+    <tr><td class="m">1.30</td><td class="m">6 / 21 要素</td><td>見出し</td></tr>
+    <tr><td class="m">1.20</td><td class="m">14 / 17 要素</td><td>ナビ・小見出し</td></tr>
+    <tr><td class="m">1.00</td><td class="m">19 / 31 要素</td><td>1 行で収める UI ラベル</td></tr>
+  </table>
+</div>
+</section>
+
+<section class="section" id="components">
+  <div class="label">03 / Components</div>
+  <h2 class="sec">ピル型の CTA と、角 1 つだけのタブ</h2>
+  <p class="lead">CTA は <b><code>#116dc9</code> ＋ <code>border-radius: 50px</code></b>、padding は <b><code>13px 68px 14px 44px</code></b> と左右で大きく違う（右に矢印が入る）。<b>ラベルは太らせない（weight 400）。</b></p>
+
+  <div class="btns">
+    <a class="btn-pill" href="#">詳しく見る</a>
+    <a class="btn-pill is-focus" href="#">フォーカス状態</a>
+    <button class="btn-circle" type="button" aria-label="前へ">‹</button>
+    <button class="btn-circle" type="button" aria-label="次へ">›</button>
+  </div>
+
+  <h3 class="sub">カード（角丸なし・画像に 10% の膜）</h3>
+  <div class="cards">
+    <a class="card" href="#">
+      <div class="card-img"><span>border-radius: 0</span></div>
+      <div class="card-meta"><span class="cat" style="background:var(--cat-sci);padding:6px 14px;font-size:12px;border-radius:20px 0 0">サイエンス＆テクノロジー</span></div>
+      <div class="card-title">「当たり前」の裏側にある想い─現場での対話が照らすもの</div>
+      <div class="card-date" style="margin-top:8px">2026年09月17日</div>
+    </a>
+    <a class="card" href="#">
+      <div class="card-img"><span>rgba(0,0,0,.1) の膜（26 要素）</span></div>
+      <div class="card-meta"><span class="cat" style="background:var(--cat-sus);padding:6px 14px;font-size:12px;border-radius:20px 0 0">サステナビリティ</span></div>
+      <div class="card-title">「誰かの力になりたい」を原動力に。営業職から人事への挑戦</div>
+      <div class="card-date" style="margin-top:8px">2026年09月02日</div>
+    </a>
+    <a class="card" href="#">
+      <div class="card-img"><span>影を使わない</span></div>
+      <div class="card-meta"><span class="cat" style="background:var(--cat-prod);padding:6px 14px;font-size:12px;border-radius:20px 0 0">製品情報</span></div>
+      <div class="card-title">CM制作の裏側にある熱い想い。たった30秒に込めたこと</div>
+      <div class="card-date" style="margin-top:8px">2026年07月22日</div>
+    </a>
+  </div>
+
+  <h3 class="sub">数値</h3>
+  <div class="stats">
+    <div class="stat"><div class="stat-l">従業員数</div><div class="stat-n">20,171<span class="stat-u"> 名</span></div></div>
+    <div class="stat"><div class="stat-l">グループ企業数</div><div class="stat-n">45<span class="stat-u"> 社</span></div></div>
+    <div class="stat"><div class="stat-l">法人を有する国・地域</div><div class="stat-n">29</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="forms">
+<div class="inner">
+  <div class="label">04 / Forms</div>
+  <h2 class="sec">入力は角丸なし</h2>
+  <p class="lead"><code>border-radius: 0</code> / <code>1px solid #bbbbbb</code> / <code>padding: 0 15px</code> / 15px。<code>input</code> はフォント継承が効かないので <b><code>font-family</code> を明示的に当て直す</b>。</p>
+  <div class="field">
+    <label for="q">サイト内検索</label>
+    <input id="q" type="text" placeholder="キーワードを入力">
+  </div>
+  <div class="field" style="margin-top:26px">
+    <label for="q2">フォーカス状態</label>
+    <input id="q2" class="is-focus" type="text" value="新薬開発パイプライン">
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="label">05 / Elevation</div>
+  <h2 class="sec">影は 1 種類、しかも輪郭が見えない</h2>
+  <p class="lead">実測された自前の <code>box-shadow</code> は <b><code>rgba(0,0,0,.07) 0 3px 60px 0</code> の 1 件だけ</b>。<code>blur: 60px</code> / <code>alpha: 0.07</code> と極端に広く薄いので、落ち影というより面の下の空気のように見える。</p>
+  <div class="shadowbox">
+    <b style="display:block;margin-bottom:10px">rgba(0,0,0,.07) 0 3px 60px 0</b>
+    トップのカルーセル枠にだけ使われている。ほかの要素はすべて <code>none</code> で、区切りは <code>1px solid #dddddd</code> の枠が担当する。
+  </div>
+  <p class="note">もう 1 件測れる <code>rgba(0,0,0,.2) 0 0 18px</code> は OneTrust の Cookie バナーのもので、サイトの設計ではない。</p>
+</section>
+
+<section class="section-alt" id="layout">
+<div class="inner">
+  <div class="label">06 / Layout</div>
+  <h2 class="sec">html は 10px 固定、body だけが 2 段で流体</h2>
+  <p class="lead"><code>html</code> は 4 幅すべて <b>10px 固定</b>（<code>62.5%</code> 相当）。動くのは <code>body</code> の方で、<b>タブレット域とスマートフォン域で別々の <code>vw</code> 式</b>が当たっている。</p>
+  <table class="ttable">
+    <tr><th>画面幅</th><th>body font-size</th><th>式</th></tr>
+    <tr><td class="m">≥ 1000px</td><td class="m"><b>15px</b>（lh 27px）</td><td>固定</td></tr>
+    <tr><td class="m">999px</td><td class="m">14.985px</td><td class="m"><b>1.5vw</b></td></tr>
+    <tr><td class="m">860px</td><td class="m">12.9px</td><td class="m">1.5vw</td></tr>
+    <tr><td class="m">768px</td><td class="m"><b>11.52px ← 最小</b></td><td class="m">1.5vw</td></tr>
+    <tr><td class="m"><b>767px</b></td><td class="m"><b>26.5894px ← 2.3 倍に跳ぶ</b></td><td class="m"><b>3.46667vw</b>（750px で 26px）</td></tr>
+    <tr><td class="m">550px</td><td class="m">19.0667px</td><td class="m">3.46667vw</td></tr>
+    <tr><td class="m">375px</td><td class="m">13px</td><td class="m">3.46667vw</td></tr>
+    <tr><td class="m">320px</td><td class="m">11.0933px</td><td class="m">3.46667vw</td></tr>
+  </table>
+  <p class="note"><b>1 幅だけ測って「このサイトの本文は 15px」と書かない。</b><code>rem</code> は <code>html</code> 固定なので素直に 10 倍でよいが、<code>body</code> 基準の相対指定は幅で変わる。なお <b>768px の 11.52px は日本語本文として小さすぎる</b>ので、新規実装では下限を 14px 程度で止める。</p>
+
+  <h3 class="sub">コンテナ</h3>
+  <table class="ttable">
+    <tr><th>幅</th><th>実測</th><th>用途</th></tr>
+    <tr><td class="m">1000px</td><td class="m">12 件（下層で最多）</td><td><b>下層の本文カラム</b></td></tr>
+    <tr><td class="m">1240px</td><td class="m">11 / 2 件</td><td>トップのセクション</td></tr>
+    <tr><td class="m">1600px / 1920px</td><td class="m">2 / 1 件</td><td>ヒーロー・ワイド帯</td></tr>
+    <tr><td class="m">560px / 456px</td><td class="m">14 / 2 件</td><td>カード</td></tr>
+  </table>
+  <p class="note"><code>gap</code> の宣言は <code>60px</code> の 1 件のみ。グリッドではなく <code>float</code> / <code>margin</code> 主体の旧来のレイアウト。メディアクエリは <code>print, screen and (…)</code> の形で書かれていて、<b>印刷にも同じレイアウトが当たる</b>。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-links">
+      <a href="#">第一三共個人情報保護方針</a>
+      <a href="#">クッキーポリシー</a>
+      <a href="#">ソーシャルメディアコミュニティガイドライン</a>
+      <a href="#">サイトマップ</a>
+    </div>
+    <p class="copy">Copyright © DAIICHI SANKYO COMPANY, LIMITED. All Rights Reserved.<br>
+    ※ このページは awesome-design-md-jp の DESIGN.md 検証用プレビューであり、第一三共株式会社の公式サイトではありません。和文は新ゴの代替として Zen Kaku Gothic New で表示しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>
