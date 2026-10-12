@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 阪急阪神不動産（Hankyu Hanshin Properties）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500&family=Inter:wght@400&family=Cormorant+Infant:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個（own: 0 / platform: 0）。
+       以下は computed style の実測値。2026-10-12 */
+    --purple:   #7f0073;   /* ★Hankyu Purple。面 7 / 文字 8 要素 */
+    --pink:     #c32381;   /* グラデーションの終端。単色使用なし */
+    --grad:     linear-gradient(90deg, #7f0073 0%, #c32381 100%);   /* ★ヒーローパネル専用（6 要素） */
+
+    /* 事業カテゴリ 6 色（11px / radius 2px のバッジ。6 色で 1 セット） */
+    --cat-sustain: #4ea075;
+    --cat-logi:    #347885;
+    --cat-dev:     #8ca546;
+    --cat-dx:      #6da5ad;
+    --cat-area:    #c76fa3;
+    --cat-other:   #868e98;
+
+    --text:      #333333;   /* ★本文。トップ 65 / 下層 48 要素で最多 */
+    --text-sub:  #3f464e;   /* セクション見出し・欧文ラベル（21 / 11 要素） */
+    --muted:     #868e98;   /* パンくず。バッジ「その他」と同値 */
+    --text-light:#555555;
+    --dark:      #27455c;   /* フッター（可視 6 面） */
+    --divider:   #d0d5dd;   /* ページャ（6 要素） */
+    --surface:   #f8f8f8;
+    --surface-2: #f3f3f3;
+    --surface-3: #f2f2f2;
+    --grad-sub:  linear-gradient(#f6f4f1 0%, #d3d0c9 100%);  /* 下層ヒーロー（589,995px²） */
+    --bg:        #ffffff;   /* pageBackground.resolved / 根拠 body */
+
+    /* === Fonts ===
+       和文は Noto Sans JP（本文）と Noto Serif JP（見出しのみ・loaded は 500 の 1 本）。
+       欧文は Inter 400 と Cormorant Infant 300。すべて Google Fonts なのでローカルでも同一表示。
+       ★游ゴシックのスタック順は実サイトを修正してある（下記コメント参照）。 */
+    --font-jp: "Noto Sans JP", "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック体, YuGothic,
+               "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
+    /* 実サイトの宣言は 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium" の順で、
+       Windows では 2 番目の YuGothic（Regular）に当たり Medium に到達しない＝細く出る。
+       Noto Sans JP が先頭で loaded しているため実害は出ていないが、落ちた瞬間に崩れる。 */
+    --font-mincho: "Noto Serif JP", serif;   /* 実サイトは , serif が無い 1 語だけ */
+    --font-en:     Inter, sans-serif;
+    --font-en-serif: "Cormorant Infant", serif;
+
+    /* === Letter spacing: palt の上に 3 段だけ重ねる（em で各要素に宣言） === */
+    --ls-body: normal;   /* ★既定。トップ 76 / 下層 49 要素で最多 */
+    --ls-02:   0.02em;   /* キャプション 13px→0.26px / 日付 14px→0.28px */
+    --ls-04:   0.04em;   /* ナビ 15px→0.6px / 事業名 12px→0.48px */
+    --ls-06:   0.06em;   /* 明朝見出し 30px→1.8px・42px→2.52px / リンク 14px→0.84px */
+
+    /* === Line height === */
+    --lh-body: 1.5;    /* body 既定（15px / 22.5px）。トップ 65 / 下層 39 要素 */
+    --lh-hero: 1.6;    /* ヒーロー見出し・下層リンク */
+    --lh-nav:  1.47;   /* グローバルナビ */
+    --lh-lead: 1.86;   /* 下層のリード（2 要素） */
+    --lh-badge:1.55;   /* 事業バッジ */
+    --lh-en:   1.2;    /* Cormorant Infant 60px / ページタイトル */
+
+    --r-1:  1px;
+    --r-2:  2px;    /* 事業バッジ */
+    --r-3:  3px;
+    --r-5:  5px;    /* ★標準のカード（10 要素） */
+    --r-7:  7px;    /* ヒーローパネル */
+    --r-10: 10px;   /* ページャ */
+    --r-pill: 100px; /* テキストリンクのピル */
+
+    --shadow: rgba(0, 0, 0, 0.1) 0 3px 30px 0;   /* ★サイト全体で 1 種・6 要素のみ */
+
+    --container: 1160px;   /* ★標準。トップ 6 / 下層 5 要素で最多 */
+    --container-w: 1240px;
+    --card: 470px;
+    --side: 300px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ★実サイトは html 10px（62.5%）/ body 15px。1440 / 1200 / 834 / 768 / 767 / 375px すべてで固定。
+     流体ルートの崖は無い。rem は 1rem = 10px で換算する。 */
+  html { font-size: 62.5%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 1.5rem;          /* = 15px */
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-body);
+    /* ★このサイトの字詰めの本体。body に 1 行で 1175 要素へ継承される。html は normal のまま。 */
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 40px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--surface-3); }
+  section:last-child { border-bottom: 0; }
+
+  .sec-head { margin-bottom: 32px; }
+  .sec-head .en {
+    font-family: var(--font-en-serif); font-size: 6rem; font-weight: 300;
+    line-height: var(--lh-en); letter-spacing: var(--ls-body); color: var(--text-sub);
+  }
+  .sec-head .jp {
+    font-size: 1.8rem; font-weight: 500; line-height: var(--lh-body);
+    letter-spacing: var(--ls-body); color: var(--text); margin-top: 4px;
+  }
+  .note { font-size: 1.2rem; line-height: var(--lh-body); color: var(--muted); margin-top: 10px; }
+
+  /* ---- ヒーロー ---- */
+  .hero { position: relative; min-height: 420px; display: flex; align-items: center; background: #e9eef2; overflow: hidden; }
+  .hero-photo {
+    position: absolute; inset: 0 0 0 20%;
+    background: linear-gradient(160deg, #9fc3dd 0%, #cfd9e2 40%, #e3dcd8 100%);
+  }
+  .hero-panel {
+    position: relative; margin-left: 40px; max-width: var(--card);
+    background: var(--grad); border-radius: var(--r-7); box-shadow: var(--shadow);
+    padding: 40px 36px; color: #ffffff;
+  }
+  .hero-panel h2 {
+    font-family: var(--font-mincho); font-size: 3rem; font-weight: 400;
+    line-height: var(--lh-hero); letter-spacing: var(--ls-06);
+  }
+  .hero-panel .more {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 24px;
+    font-size: 1.3rem; line-height: var(--lh-hero); letter-spacing: var(--ls-02); color: #ffffff;
+  }
+  .hero-panel .more i {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.8);
+    display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 1.1rem;
+  }
+
+  /* ---- palt の比較 ---- */
+  .palt-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .palt-card { background: var(--surface); padding: 24px; border-radius: var(--r-5); }
+  .palt-card h4 { font-size: 1.2rem; font-weight: 500; color: var(--muted); line-height: var(--lh-body); margin-bottom: 12px; }
+  .palt-card .s {
+    font-family: var(--font-mincho); font-size: 2.4rem; font-weight: 400;
+    line-height: var(--lh-hero); letter-spacing: var(--ls-06); color: var(--text);
+  }
+  .palt-off { font-feature-settings: normal; }
+  .palt-on  { font-feature-settings: "palt"; }
+
+  /* ---- タイポ見本 ---- */
+  .type-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--surface-3); align-items: baseline; }
+  .type-row:first-child { border-top: 0; }
+  .type-label { font-size: 1.2rem; line-height: var(--lh-body); color: var(--muted); }
+  .t-display { font-family: var(--font-en-serif); font-size: 6rem; font-weight: 300; line-height: var(--lh-en); color: var(--text-sub); }
+  .t-title { font-family: var(--font-mincho); font-size: 4.2rem; font-weight: 400; line-height: var(--lh-en); letter-spacing: var(--ls-06); color: var(--text); }
+  .t-hero { font-family: var(--font-mincho); font-size: 3rem; font-weight: 400; line-height: var(--lh-hero); letter-spacing: var(--ls-06); color: var(--text); }
+  .t-h2 { font-size: 1.8rem; font-weight: 500; line-height: var(--lh-body); color: var(--text); }
+  .t-nav { font-size: 1.5rem; font-weight: 500; line-height: var(--lh-nav); letter-spacing: var(--ls-04); color: var(--text); }
+  .t-body { font-size: 1.5rem; font-weight: 400; line-height: var(--lh-body); color: var(--text); max-width: 760px; }
+  .t-lead { font-size: 1.6rem; font-weight: 400; line-height: var(--lh-lead); letter-spacing: 0.02em; color: var(--text); max-width: 760px; }
+  .t-link { font-size: 1.4rem; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-06); color: var(--purple); }
+  .t-cap { font-size: 1.3rem; font-weight: 400; line-height: var(--lh-hero); letter-spacing: var(--ls-02); color: var(--text); }
+  .t-date { font-family: var(--font-en); font-size: 1.4rem; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-02); color: var(--text-sub); }
+  .t-menu { font-size: 1.2rem; font-weight: 400; line-height: var(--lh-body); color: var(--text); }
+
+  /* ---- ボタン・バッジ ---- */
+  .btns { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-link {
+    background: transparent; color: var(--purple); font-family: var(--font-jp);
+    font-size: 1.4rem; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-06);
+    padding: 12px 28px; border: 1px solid var(--purple); border-radius: var(--r-pill); cursor: pointer;
+    font-feature-settings: "palt";
+  }
+  .btn-link.is-focus { outline: 2px solid var(--purple); outline-offset: 2px; }
+  .pager { display: inline-flex; gap: 8px; }
+  .pager span {
+    width: 36px; height: 36px; border-radius: var(--r-10); background: var(--divider);
+    color: var(--text); font-size: 1.3rem; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .pager span.on { background: var(--purple); color: #ffffff; }
+
+  .cats { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cat {
+    display: inline-block; color: #ffffff; font-family: "Noto Sans JP", sans-serif;
+    font-size: 1.1rem; font-weight: 400; line-height: var(--lh-badge);
+    padding: 4px 12px; border-radius: var(--r-2);
+  }
+  .recruit {
+    display: inline-block; border: 1px solid var(--divider); color: var(--text);
+    font-size: 1.2rem; line-height: var(--lh-body); letter-spacing: 0.064em;
+    padding: 6px 14px; border-radius: var(--r-5);
+  }
+
+  /* ---- ニュース ---- */
+  .news-row { display: grid; grid-template-columns: 120px auto 1fr; gap: 20px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--surface-3); }
+  .news-title { font-size: 1.4rem; line-height: var(--lh-body); color: var(--text); }
+
+  /* ---- カード ---- */
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .card { background: #ffffff; border-radius: var(--r-5); box-shadow: var(--shadow); padding: 28px 32px; }
+  .card h3 { font-size: 1.8rem; font-weight: 500; line-height: var(--lh-body); color: var(--text); margin-bottom: 8px; }
+  .card p { font-size: 1.4rem; line-height: var(--lh-body); color: var(--text-light); }
+
+  /* ---- 下層ヒーロー ---- */
+  .sub-hero { background: var(--grad-sub); padding: 56px 40px; border-radius: var(--r-5); }
+  .sub-hero .en { font-family: var(--font-en); font-size: 1.4rem; letter-spacing: var(--ls-02); color: var(--text-sub); }
+  .sub-hero h2 { font-family: var(--font-mincho); font-size: 4.2rem; font-weight: 400; line-height: var(--lh-en); letter-spacing: var(--ls-06); color: var(--text); margin-top: 8px; }
+
+  /* ---- スウォッチ ---- */
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .sw > div { border: 1px solid var(--surface-3); border-radius: var(--r-3); overflow: hidden; }
+  .sw .chip { height: 64px; }
+  .sw .lbl { padding: 8px 10px; font-size: 1.2rem; line-height: 1.5; color: var(--text); background: #ffffff; }
+  .sw .lbl b { display: block; font-weight: 500; }
+  .sw .lbl span { color: var(--muted); }
+
+  footer { background: var(--dark); color: #ffffff; padding: 40px; }
+  footer p { font-size: 1.3rem; line-height: var(--lh-body); letter-spacing: var(--ls-02); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-panel">
+    <h2>商業施設やオフィスなど<br>魅力あふれるまちづくり</h2>
+    <span class="more">詳しく見る <i>›</i></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="sec-head"><div class="en">Palt</div><div class="jp">字詰めは body の 1 行で作る</div></div>
+    <div class="palt-demo">
+      <div class="palt-card">
+        <h4>font-feature-settings: normal（palt なし）</h4>
+        <div class="s palt-off">「変革」と、まちづくり。</div>
+      </div>
+      <div class="palt-card">
+        <h4>font-feature-settings: "palt"（実サイト）</h4>
+        <div class="s palt-on">「変革」と、まちづくり。</div>
+      </div>
+    </div>
+    <p class="note">実サイトは <code>body { font-feature-settings: "palt" }</code> の 1 行だけ（<code>html</code> は <code>normal</code>）。DOM 全走査で <strong>1175 要素</strong>に継承されている。括弧と読点の前後が詰まるのが <code>palt</code> の効き目。<strong>その上から <code>letter-spacing</code> を 0.02 / 0.04 / 0.06em で空け直す二段構え。</strong></p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">Type</div><div class="jp">文字サイズ・ウェイト階層</div></div>
+    <div class="type-row"><div class="type-label">Display EN / Cormorant Infant 60px / <strong>300</strong> / 1.2</div><div class="t-display">News</div></div>
+    <div class="type-row"><div class="type-label">Page Title / Noto Serif JP 42px / 400 / 1.2 / 0.06em</div><div class="t-title">トップメッセージ</div></div>
+    <div class="type-row"><div class="type-label">Hero Headline / Noto Serif JP 30px / 400 / 1.6 / 0.06em</div><div class="t-hero">ひと、つながりの街へ。</div></div>
+    <div class="type-row"><div class="type-label">Heading 2 / 18px / 500 / 1.5</div><div class="t-h2">新着情報</div></div>
+    <div class="type-row"><div class="type-label">Nav / 15px / 500 / 1.47 / 0.04em</div><div class="t-nav">サステナビリティ</div></div>
+    <div class="type-row"><div class="type-label">Body / 15px / 400 / 1.5（body 既定）</div><div class="t-body">阪急阪神ホールディングスグループでは、西日本最大級の規模で、沿線のまちづくりを進めています。</div></div>
+    <div class="type-row"><div class="type-label">Lead / 16px / 400 / <strong>1.86</strong> / 0.02em</div><div class="t-lead">これからの100年間も「顧客から真っ先に選ばれる企業」であり続けるために、安心・快適、そして夢・感動をお届けします。</div></div>
+    <div class="type-row"><div class="type-label">Link / 14px / 400 / 1.5 / 0.06em / #7f0073</div><div class="t-link">ニュースリリース一覧を見る</div></div>
+    <div class="type-row"><div class="type-label">Caption / 13px / 400 / 1.6 / 0.02em</div><div class="t-cap">阪急阪神不動産株式会社代表取締役社長</div></div>
+    <div class="type-row"><div class="type-label">Date / Inter 14px / 400 / 0.02em</div><div class="t-date">2026.10.07</div></div>
+    <div class="type-row"><div class="type-label">Menu / 12px / 400 / 1.5（最多サイズ・37 要素）</div><div class="t-menu">企業概要・アクセス</div></div>
+    <p class="note"><strong>weight は 300 / 400 / 500 の 3 段だけ。</strong> 実サイトで 700 なのは OneTrust（CMP）の UI だけで、下層ページには 1 要素も無い。300 を使うのは Cormorant Infant の欧文見出しのみ。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">Business</div><div class="jp">事業カテゴリ 6 色</div></div>
+    <div class="cats">
+      <span class="cat" style="background:#4ea075">サステナビリティ</span>
+      <span class="cat" style="background:#347885">ロジスティクス</span>
+      <span class="cat" style="background:#8ca546">開発事業</span>
+      <span class="cat" style="background:#6da5ad">DX</span>
+      <span class="cat" style="background:#c76fa3">エリアマネジメント</span>
+      <span class="cat" style="background:#868e98">その他</span>
+    </div>
+    <p class="note">いずれも 11px / 白 / <code>border-radius: 2px</code> / weight 400 / line-height 1.55。<strong>6 色で 1 つの体系</strong>なので足し引きしない。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">Components</div><div class="jp">ボタンとバッジ</div></div>
+    <div class="btns">
+      <button class="btn-link">ニュースリリース一覧を見る</button>
+      <button class="btn-link is-focus">事業紹介一覧を見る</button>
+      <span class="recruit">新卒</span>
+      <span class="recruit">キャリア</span>
+      <span class="recruit">契約従業員(職種・職域限定)</span>
+      <span class="pager"><span class="on">1</span><span>2</span><span>3</span></span>
+    </div>
+    <p class="note">角丸は 1 / 2 / 3 / 5 / 7 / 10 / 100px の 7 種あるが、中心は <code>5px</code>（10 要素）。<code>100px</code> はテキストリンクのピルだけ。<code>.is-focus</code> はフォーカス状態の見本（autofocus は使わない）。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">News</div><div class="jp">ニュース行</div></div>
+    <div class="news-row"><span class="t-date">2026.10.07</span><span class="cat" style="background:#4ea075">サステナビリティ</span><span class="news-title">環境長期ビジョンの進捗を公開しました</span></div>
+    <div class="news-row"><span class="t-date">2026.10.01</span><span class="cat" style="background:#347885">ロジスティクス</span><span class="news-title">物流施設の新規開発に着手します</span></div>
+    <div class="news-row"><span class="t-date">2026.09.29</span><span class="cat" style="background:#8ca546">開発事業</span><span class="news-title">再開発エリアのまちびらきについて</span></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">Cards</div><div class="jp">カードと影</div></div>
+    <div class="cards">
+      <div class="card"><h3>住宅関連事業</h3><p>分譲・賃貸マンション、分譲戸建、不動産仲介、リフォーム、土地活用・賃貸管理。</p></div>
+      <div class="card"><h3>不動産賃貸</h3><p>オフィス、商業施設、物流施設、飲食・その他サービス。</p></div>
+    </div>
+    <p class="note">影は <code>rgba(0, 0, 0, 0.1) 0 3px 30px 0</code> の<strong>1 種類だけ</strong>（6 要素）。blur 30px / offset 3px の<strong>広く薄く落とす影</strong>で、<code>0 2px 4px</code> のような値に置き換えない。下層ページは影 0 種。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">Sub page</div><div class="jp">下層ヒーローは別系統のグラデーション</div></div>
+    <div class="sub-hero">
+      <div class="en">Top message</div>
+      <h2>トップメッセージ</h2>
+    </div>
+    <p class="note">トップの紫→ピンクに対し、下層は <code>linear-gradient(#f6f4f1 0%, #d3d0c9 100%)</code> のベージュ〜グレーの<strong>縦</strong>グラデーション（589,995px²）。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">Colors</div><div class="jp">カラーパレット</div></div>
+    <div class="sw">
+      <div><div class="chip" style="background:#7f0073"></div><div class="lbl"><b>Hankyu Purple</b><span>#7f0073</span></div></div>
+      <div><div class="chip" style="background:#c32381"></div><div class="lbl"><b>Pink</b><span>#c32381 / グラデ終端</span></div></div>
+      <div><div class="chip" style="background:linear-gradient(90deg,#7f0073 0%,#c32381 100%)"></div><div class="lbl"><b>Brand Gradient</b><span>90deg / 0% → 100%</span></div></div>
+      <div><div class="chip" style="background:#4ea075"></div><div class="lbl"><b>サステナビリティ</b><span>#4ea075</span></div></div>
+      <div><div class="chip" style="background:#347885"></div><div class="lbl"><b>ロジスティクス</b><span>#347885</span></div></div>
+      <div><div class="chip" style="background:#8ca546"></div><div class="lbl"><b>開発事業</b><span>#8ca546</span></div></div>
+      <div><div class="chip" style="background:#6da5ad"></div><div class="lbl"><b>DX</b><span>#6da5ad</span></div></div>
+      <div><div class="chip" style="background:#c76fa3"></div><div class="lbl"><b>エリアマネジメント</b><span>#c76fa3</span></div></div>
+      <div><div class="chip" style="background:#868e98"></div><div class="lbl"><b>その他 / Muted</b><span>#868e98</span></div></div>
+      <div><div class="chip" style="background:#333333"></div><div class="lbl"><b>Text</b><span>#333333 / 最多</span></div></div>
+      <div><div class="chip" style="background:#3f464e"></div><div class="lbl"><b>Text Sub</b><span>#3f464e</span></div></div>
+      <div><div class="chip" style="background:#27455c"></div><div class="lbl"><b>Dark</b><span>#27455c / フッター</span></div></div>
+      <div><div class="chip" style="background:#d0d5dd"></div><div class="lbl"><b>Divider</b><span>#d0d5dd</span></div></div>
+      <div><div class="chip" style="background:#f8f8f8"></div><div class="lbl"><b>Surface</b><span>#f8f8f8</span></div></div>
+      <div><div class="chip" style="background:#f3f3f3"></div><div class="lbl"><b>Surface 2</b><span>#f3f3f3</span></div></div>
+      <div><div class="chip" style="background:linear-gradient(#f6f4f1 0%,#d3d0c9 100%)"></div><div class="lbl"><b>Sub Hero</b><span>#f6f4f1 → #d3d0c9</span></div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>html 10px（62.5%）/ body 15px・line-height 1.5 固定。1440 / 1200 / 834 / 768 / 767 / 375px すべてで変化しない。<br>ブレークポイントの主軸は 1024 / 768 / 480px。</p>
+</footer>
+
+</body>
+</html>

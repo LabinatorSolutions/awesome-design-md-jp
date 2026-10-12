@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 界（星野リゾート KAI）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Klee+One:wght@400&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 124 個すべて自社（platform 0）。変数名は実サイトのもの。
+       ただし宣言だけで可視 0 要素の変数があるので注意（下記コメント）。2026-10-12 */
+    --color-primary:      #00a0cb;   /* 予約 CTA。星野リゾート共通の予約色 */
+    --kai-navy:           #334b5c;   /* グラデ始端。単色でも文字に使う（5 要素） */
+    --kai-blue:           #638fb6;   /* グラデ終端。単色使用なし */
+    --kai-gradient:       linear-gradient(94.07deg, #334b5c 2.85%, #638fb6 70%);
+    --kai-gradient-h1:    linear-gradient(94.07deg, #334b5c 2.85%, #638fb6 80%);
+    --kai-tint:           #d4e4f2;   /* 温泉文化体験セクションの地（2 要素） */
+    --facility-beige:     #f5efe9;   /* --theme-facility-foundation-background。施設ページの地色 */
+
+    --color-text-base:    #3c4043;   /* 本文。施設ページで 76 要素 */
+    --color-text-sub:     #555555;   /* カテゴリの説明文（5 要素） */
+    --color-bg-invert:    #1a1a1a;   /* ポータルヘッダー / --main-navi-bg-color */
+    --color-text-invert:  #ffffff;   /* 写真の上（トップ 161 要素で最多） */
+    --on-photo-dim:       rgba(255, 255, 255, 0.5);  /* 地域フィルタの | とラベル（82 要素） */
+    --color-button-plain: #e6e6e6;
+    --disabled-gray:      #cccccc;   /* ポータルナビの非選択（12 要素） */
+    --color-plain:        #f8f8f8;
+    --scrim:              rgba(0, 0, 0, 0.4);
+    --color-bg-base:      #ffffff;
+
+    /* 宣言はあるが 2 ページとも可視 0 要素。「使われている色」として扱わない */
+    --color-text-muted:   #999999;
+    --color-text-link:    #006a86;
+    --color-success:      #00b391;
+    --color-warn:         #ffa000;
+    --color-text-strong:  #d50000;
+
+    /* フォーム（変数は揃っているが可視 0 要素） */
+    --color-control-bg-color:         #fafafa;
+    --color-control-bg-focused-color: #f5fdff;
+    --color-control-border:           #979797;
+    --color-control-disabled:         #b1b1b1;
+    --color-control-error:            #cb0000;
+
+    /* === Fonts ===
+       HEmoji は書体ではなく ©® と絵文字だけを拾う local() のみの受け皿。
+       ローカルでは再現しないのでスタックから外し、Noto Sans JP を先頭に置く。
+       HNumber（GFNumber）は星野リゾート自社配信のため代替できない。数字は Noto Sans JP で表示。 */
+    --base-font:      "Noto Sans JP", sans-serif;              /* 実サイト: HEmoji, "Noto Sans JP", sans-serif */
+    --number-font:    "Noto Sans JP", sans-serif;              /* 実サイト: HNumber, HEmoji, "Noto Sans JP", sans-serif */
+    --font-mincho:    "Shippori Mincho", serif;                /* ★ブランドトップの明朝（59 要素） */
+    --font-mincho-fc: "Klee One", serif;                       /* ★施設ページの明朝（29 要素）。--theme-secondary-font-ja */
+    --font-label:     "Zen Kaku Gothic New", sans-serif;       /* カテゴリラベル（47 要素） */
+
+    /* === Font weight: 宣言は 3 つしかない。600・700 は設計に存在しない === */
+    --font-weight-light:   300;
+    --font-weight-regular: 400;
+    --font-weight-medium:  500;
+
+    /* === Font size tokens（1rem = 14px） === */
+    --font-size-xxxl: 32px;
+    --font-size-xxl:  21px;
+    --font-size-xl:   18px;
+    --font-size-lg:   16px;
+    --font-size-md:   14px;
+    --font-size-sm:   12px;
+    --font-size-xs:   10px;
+
+    /* === Line height tokens。実測の最多 1.10 はトークンに無くカード側の独自宣言 === */
+    --line-height-xs: 1;
+    --line-height-sm: 1.25;
+    --line-height-md: 1.5;
+    --line-height-lg: 1.71;
+    --line-height-xl: 1.8;
+    --lh-card:        1.10;   /* ★実測最多（118 要素）。施設名カードの 2 行組み */
+    --lh-mincho:      2.00;   /* 明朝のリード（4 要素）。トークンの 1.8 より広い */
+
+    /* === Letter spacing: 正の値のみ。負の値は 1 要素も無い === */
+    --ls-base:  normal;   /* ★既定（229 要素） */
+    --ls-01:    0.1em;    /* ★基準。カードタイトル 16px→1.6px / 明朝リード 18px→1.8px / 縦組み 50px→5px */
+    --ls-02:    0.2em;    /* カテゴリラベル 12px→2.4px。最も強い字空け率 */
+    --ls-018:   0.18em;   /* 施設ページの明朝 30px→5.4px */
+
+    --button-radius:  2px;    /* ★面の基準（トップ 20 / 施設 31 要素） */
+    --border-radius:  4px;    /* 変数は 4px だが実装の中心は 2px */
+    --r-chip:        20px;    /* 地域チップのピル（21 要素） */
+
+    --button-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.30196);   /* alpha 0.3 / blur 1px の「縁取り」に近い影 */
+    --base-shadow:   0 0 5px 0 rgba(0, 0, 0, 0.3);
+
+    --header-height: 72px;
+    --cover-height-wide: 578px;
+    --card-w:   432px;   /* トップ 12 要素で最多 */
+    --col-w:    604px;   /* トップ 9 要素 */
+    --max-w:   1920px;
+    --gap:      40px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* ★実サイトは html / body ともに 14px 固定（1440 / 1200 / 834 / 768 / 767 / 375px すべて）。
+     1rem = 14px。16px ではない。流体ルートの崖は無い。 */
+  html { font-size: 14px; }
+
+  body {
+    background: var(--color-bg-base);
+    color: var(--color-text-base);
+    font-family: var(--base-font);
+    font-size: var(--font-size-md);         /* 14px */
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-md);     /* 1.5 = 21px */
+    letter-spacing: var(--ls-base);
+    /* font-feature-settings は実サイトで 0 件。詰めるのではなく空ける設計なので palt を使わない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 64px 0; border-bottom: 1px solid #ececec; }
+  section:last-child { border-bottom: 0; }
+
+  .sec-head { margin-bottom: 32px; }
+  .sec-head .jp {
+    font-family: var(--font-mincho); font-size: 24px; font-weight: 400;
+    line-height: var(--line-height-sm); letter-spacing: var(--ls-01); color: var(--kai-navy);
+  }
+  .sec-head .en {
+    font-size: var(--font-size-sm); letter-spacing: var(--ls-02);
+    color: var(--color-text-sub); font-family: var(--font-label); margin-top: 6px;
+  }
+  .note { font-size: var(--font-size-sm); line-height: var(--line-height-md); color: var(--color-text-sub); margin-top: 12px; }
+
+  /* ---- ヘッダー（ポータル） ---- */
+  .portal {
+    background: var(--color-bg-invert); color: var(--color-text-invert);
+    height: var(--header-height); display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .portal .logo { font-family: var(--font-mincho); font-size: var(--font-size-xl); letter-spacing: var(--ls-01); }
+  .portal .right { display: flex; align-items: center; gap: 20px; }
+  .portal .price { text-align: right; line-height: var(--line-height-xs); }
+  .portal .price .lab { font-size: var(--font-size-xs); display: block; margin-bottom: 4px; }
+  .portal .price .num { font-family: var(--number-font); font-size: var(--font-size-xl); }
+
+  /* ---- ヒーロー ---- */
+  .hero {
+    min-height: 480px; display: flex; align-items: center; justify-content: center; text-align: center;
+    background: linear-gradient(150deg, #2f6fa8 0%, #5e93c2 35%, #9bbedd 70%, #cfe0ef 100%);
+    color: var(--color-text-invert); padding: 40px;
+  }
+  .hero .lead {
+    font-family: var(--font-mincho); font-size: var(--font-size-lg);
+    letter-spacing: var(--ls-01); line-height: var(--line-height-md);
+  }
+  .hero .big {
+    font-family: var(--font-mincho); font-size: 72px; font-weight: 400;
+    line-height: 1.3; letter-spacing: var(--ls-01); margin-top: 24px;
+  }
+
+  /* ---- 文字グラデーション ＋ 縦組み ---- */
+  .feature { background: var(--kai-tint); padding: 56px 40px; }
+  .feature__h1 {
+    font-family: var(--font-mincho); font-size: 32px; font-weight: 400;
+    line-height: var(--line-height-sm); letter-spacing: var(--ls-01);
+    background: var(--kai-gradient-h1);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-align: center;
+  }
+  .feature__titles {
+    /* 縦組みは右から左へ読む。DOM 順（味わう→浸かる）のまま row-reverse で右端が先頭になる */
+    display: flex; flex-direction: row-reverse; justify-content: center; gap: var(--gap);
+    margin-top: 40px; height: 340px;
+  }
+  .feature__title {
+    writing-mode: vertical-rl;         /* ★27 要素。自社クラス由来の本物の縦組み（画像ではない） */
+    font-family: var(--font-mincho);
+    font-size: 50px; font-weight: 400;
+    line-height: var(--line-height-md); /* 1.5 = 75px */
+    letter-spacing: var(--ls-01);       /* 5px */
+    background: var(--kai-gradient);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  @media (max-width: 767px) {
+    /* ★実サイトはモバイルで横組みに戻す。letter-spacing は 0.1em のままなので 3.5px に比例する */
+    .feature__title { writing-mode: horizontal-tb; font-size: 35px; }
+    .feature__titles { height: auto; flex-wrap: wrap; flex-direction: row; }
+  }
+
+  /* ---- 字空けの比較 ---- */
+  .ls-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .ls-card { background: var(--color-plain); padding: 24px; border-radius: var(--button-radius); }
+  .ls-card h4 { font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-sub); line-height: var(--line-height-md); margin-bottom: 14px; }
+  .ls-card .s { font-family: var(--font-mincho); font-size: 20px; line-height: var(--line-height-lg); color: var(--kai-navy); }
+  .ls-0  { letter-spacing: normal; }
+  .ls-1  { letter-spacing: 0.1em; }
+  .ls-2  { letter-spacing: 0.2em; font-family: var(--font-label); font-size: 14px; }
+
+  /* ---- タイポ見本 ---- */
+  .type-row { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid #ececec; align-items: baseline; }
+  .type-row:first-child { border-top: 0; }
+  .type-label { font-size: var(--font-size-sm); line-height: var(--line-height-md); color: var(--color-text-sub); }
+  .t-lead-m { font-family: var(--font-mincho); font-size: var(--font-size-xl); line-height: var(--lh-mincho); letter-spacing: var(--ls-01); color: var(--color-text-base); max-width: 720px; }
+  .t-sub { font-size: var(--font-size-lg); font-weight: 700; line-height: 1.14; letter-spacing: var(--ls-01); color: var(--color-text-base); }
+  .t-cardtitle { font-size: var(--font-size-lg); line-height: 1.14; letter-spacing: var(--ls-01); color: var(--color-text-base); }
+  .t-label { font-family: var(--font-label); font-size: var(--font-size-sm); line-height: 1.4; letter-spacing: var(--ls-02); color: var(--color-text-sub); }
+  .t-body { font-size: var(--font-size-md); line-height: var(--line-height-md); color: var(--color-text-base); max-width: 720px; }
+  .t-price { font-family: var(--number-font); font-size: var(--font-size-xl); line-height: var(--line-height-xs); color: #000000; }
+  .t-ui { font-size: var(--font-size-xs); line-height: var(--line-height-md); color: var(--color-text-base); }
+  .t-fc { font-family: var(--font-mincho-fc); font-size: 30px; line-height: 1.4; letter-spacing: var(--ls-018); color: var(--color-text-base); }
+
+  /* ---- ボタン ---- */
+  .btns { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-res {
+    background: var(--color-primary); color: var(--color-text-invert);
+    font-family: var(--base-font); font-size: var(--font-size-md); font-weight: var(--font-weight-medium);
+    line-height: 1.143; padding: 14px 28px; border: 1px solid var(--color-primary);
+    border-radius: var(--button-radius); box-shadow: var(--button-shadow); cursor: pointer;
+  }
+  .btn-plain {
+    background: var(--color-button-plain); color: var(--color-bg-invert);
+    font-family: var(--base-font); font-size: var(--font-size-md); font-weight: 400;
+    line-height: 1.143; padding: 14px 28px; border: 1px solid var(--color-button-plain);
+    border-radius: var(--button-radius); cursor: pointer;
+  }
+  .btn-res.is-focus { outline: 2px solid var(--kai-navy); outline-offset: 2px; }
+
+  /* ---- 写真上のチップ ---- */
+  .photo-band {
+    background: linear-gradient(135deg, #3d6b8f 0%, #6f98b8 60%, #a9c4d8 100%);
+    padding: 40px; border-radius: var(--button-radius);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  .chip-o {
+    background: transparent; color: var(--color-text-invert); font-family: var(--font-label);
+    font-size: 10.37px; line-height: var(--line-height-xs); padding: 10px 20px;
+    border: 1px solid var(--color-text-invert); border-radius: var(--r-chip);
+  }
+  .chip-o.lg { font-size: 14.52px; }
+  .chip-glass {
+    background: rgba(255, 255, 255, 0.1); color: var(--color-text-invert);
+    font-size: var(--font-size-md); line-height: 1.143; padding: 10px 18px;
+    border-radius: var(--button-radius);
+  }
+  .dim { color: var(--on-photo-dim); font-size: var(--font-size-md); margin-top: 20px; line-height: var(--line-height-md); }
+
+  /* ---- 施設カード ---- */
+  .facilities { display: grid; grid-template-columns: repeat(2, minmax(0, var(--card-w))); gap: var(--gap); }
+  .fcard { }
+  .fcard .ph { height: 200px; border-radius: var(--button-radius); background: linear-gradient(140deg, #6b8ba4 0%, #b6c8d6 100%); }
+  .fcard .nm { font-family: var(--font-mincho); font-size: 25.85px; line-height: var(--lh-card); letter-spacing: var(--ls-01); color: var(--kai-navy); margin-top: 16px; }
+  .fcard .pf { font-size: var(--font-size-sm); line-height: var(--lh-card); color: var(--color-text-sub); margin-top: 8px; }
+
+  /* ---- 施設ページの地色 ---- */
+  .fc-page { background: var(--facility-beige); padding: 48px 40px; border-radius: var(--button-radius); }
+
+  /* ---- スウォッチ ---- */
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 12px; }
+  .sw > div { border: 1px solid #ececec; border-radius: var(--button-radius); overflow: hidden; }
+  .sw .chip { height: 64px; }
+  .sw .lbl { padding: 8px 10px; font-size: var(--font-size-sm); line-height: 1.5; color: var(--color-text-base); background: #ffffff; }
+  .sw .lbl b { display: block; font-weight: 500; }
+  .sw .lbl span { color: var(--color-text-sub); }
+  .sw .unused .lbl b::after { content: " ・可視0"; color: #b1b1b1; font-weight: 400; }
+</style>
+</head>
+<body>
+
+<div class="portal">
+  <span class="logo">星野リゾート</span>
+  <div class="right">
+    <div class="price"><span class="lab">1泊1名</span><span class="num">17,000円〜</span></div>
+    <button class="btn-res">空室検索</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div>
+    <p class="lead">全国に展開する温泉旅館ブランド</p>
+    <p class="big">30の温泉宿<br>30の温泉文化</p>
+  </div>
+</div>
+
+<div class="feature">
+  <div class="feature__h1">界がもてなす 温泉文化体験</div>
+  <div class="feature__titles">
+    <div class="feature__title">味わう</div>
+    <div class="feature__title">感じる</div>
+    <div class="feature__title">学ぶ</div>
+    <div class="feature__title">触れる</div>
+    <div class="feature__title">浸かる</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="sec-head"><div class="jp">縦組みと文字グラデーション</div><div class="en">VERTICAL &amp; GRADIENT TEXT</div></div>
+    <p class="t-body">上の 5 つの見出しが実サイトの中核。<strong>Shippori Mincho 50px / line-height 1.5（75px）/ letter-spacing 0.1em（5px）/ <code>writing-mode: vertical-rl</code></strong> で <strong>27 要素</strong>。画像ではなく CSS で組んでいるので文字は選択・検索できる。さらに <code>linear-gradient(94.07deg, #334b5c 2.85%, #638fb6 70%)</code> を <code>background-clip: text</code> で文字そのものに流している。</p>
+    <p class="note"><strong>縦組みはデスクトップだけ。</strong> 実サイトは 767px 以下で <code>horizontal-tb</code> に戻し、font-size を 50px → 35px にする。<code>letter-spacing</code> は 0.1em のままなので 5px → 3.5px に比例する。このプレビューもブラウザ幅を 767px 以下にすると切り替わる。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="jp">字間は空ける一方向</div><div class="en">LETTER SPACING</div></div>
+    <div class="ls-demo">
+      <div class="ls-card"><h4>normal（既定・229 要素）</h4><div class="s ls-0">その土地を、味わい尽くす。</div></div>
+      <div class="ls-card"><h4>0.1em（基準）</h4><div class="s ls-1">その土地を、味わい尽くす。</div></div>
+      <div class="ls-card"><h4>0.2em（カテゴリラベル）</h4><div class="s ls-2">その土地を、味わい尽くす。</div></div>
+    </div>
+    <p class="note"><strong>負の <code>letter-spacing</code> は 1 要素も無い。</strong> 16px→1.6px / 18px→1.8px / 50px→5px がすべて 0.1em で揃う＝<code>em</code> で各要素が宣言している（body からの px 継承ではない）。<strong><code>palt</code> も 0 件</strong>。詰めるのではなく空ける設計なので、<code>palt</code> を足すと約物だけ詰まってちぐはぐになる。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="jp">文字サイズ・ウェイト階層</div><div class="en">TYPE SCALE</div></div>
+    <div class="type-row"><div class="type-label">Lead 明朝 / Shippori Mincho 18px / 400 / <strong>2.00</strong> / 0.1em</div><div class="t-lead-m">温泉が湧く。そこに人が集い、宿が建ち、食が育つ。日本に根づいてきた、温泉を中心としたひとつの文化。</div></div>
+    <div class="type-row"><div class="type-label">Sub Headline / 16px / <strong>700</strong> / 1.14 / 0.1em（サイト唯一の 700）</div><div class="t-sub">何につかる？</div></div>
+    <div class="type-row"><div class="type-label">Card Title / 16px / 400 / 1.14 / 0.1em（22 要素）</div><div class="t-cardtitle">彩りの渓流で<br>伊達なひととき</div></div>
+    <div class="type-row"><div class="type-label">Category Label / Zen Kaku Gothic New 12px / 400 / 1.4 / <strong>0.2em</strong></div><div class="t-label">その土地を、味わい尽くす。</div></div>
+    <div class="type-row"><div class="type-label">Body / 14px / 400 / 1.5（body 既定）</div><div class="t-body">鬼怒川の渓流に面した小高い丘の上に佇む温泉旅館。関東を代表する名湯鬼怒川温泉を、ご当地部屋で愉しむ。</div></div>
+    <div class="type-row"><div class="type-label">Price / HNumber 18px / 400 / 1.0（数字専用スタック）</div><div class="t-price">17,000円〜</div></div>
+    <div class="type-row"><div class="type-label">UI Small / 10px / 400–500 / 1.5（最多サイズ・88 要素）</div><div class="t-ui">1泊1名　当サイトが最もお得</div></div>
+    <div class="type-row"><div class="type-label">施設ページの明朝 / <strong>Klee One</strong> 30px / 400 / 1.4 / 0.18em</div><div class="t-fc">モダンなとちぎ民藝と<br>木漏れ日の中庭</div></div>
+    <p class="note"><strong>ブランドトップと施設ページで明朝が違う。</strong> トップは Shippori Mincho（59 要素）、施設ページは Klee One（29 要素）。CSS 変数 <code>--theme-secondary-font-ja</code> は <code>"Klee One", serif</code> を指しており、<strong>トップの Shippori Mincho は変数を経由せずハードコードされている</strong>。<br><strong>weight は 400 が既定、強調が 500。</strong> <code>--font-weight-*</code> は 300 / 400 / 500 の 3 つしか宣言が無く、600 も 700 も設計に存在しない（<code>何につかる？</code> の 700 は 1 要素だけの例外）。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="jp">ボタンとチップ</div><div class="en">COMPONENTS</div></div>
+    <div class="btns">
+      <button class="btn-res">空室検索</button>
+      <button class="btn-res is-focus">予約する</button>
+      <button class="btn-plain">ログイン・予約確認</button>
+    </div>
+    <div class="photo-band" style="margin-top:28px">
+      <div class="chips">
+        <span class="chip-o">宮城</span><span class="chip-o">神奈川</span><span class="chip-o">長野</span>
+        <span class="chip-o lg">群馬</span><span class="chip-o lg">広島</span>
+        <span class="chip-glass">全 10 施設</span><span class="chip-glass">全 24 施設</span>
+      </div>
+      <p class="dim">地域からみつける ｜ 北海道 ｜ 東北 ｜ 北陸・甲信越 ｜ 関東 — rgba(255,255,255,0.5)（82 要素）</p>
+    </div>
+    <p class="note">予約 CTA は <code>#00a0cb</code> / <code>border-radius: 2px</code> / <code>box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3)</code>。<strong>alpha 0.3 と濃いのに blur が 1px</strong> なので、見た目は影というより縁取り。<code>0 2px 8px rgba(0,0,0,0.1)</code> のような値に置き換えない。地域チップだけ <code>border-radius: 20px</code> のピル（21 要素）。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="jp">施設カード</div><div class="en">FACILITY CARDS</div></div>
+    <div class="facilities">
+      <div class="fcard"><div class="ph"></div><div class="nm">界 鬼怒川</div><div class="pf">栃木　鬼怒川温泉</div></div>
+      <div class="fcard"><div class="ph"></div><div class="nm">界 箱根</div><div class="pf">神奈川　箱根湯本温泉</div></div>
+    </div>
+    <p class="note">カード幅 <strong>432px</strong>（トップ 12 要素で最多）、<code>gap: 40px</code>。施設名の <code>line-height</code> は <strong>1.10</strong> で、<strong>実測の最多（118 要素）だがトークン（1 / 1.25 / 1.5 / 1.71 / 1.8）には無い値</strong>。カード側が独自に宣言している。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="jp">施設ページは地色が変わる</div><div class="en">FACILITY PAGE</div></div>
+    <div class="fc-page">
+      <div class="t-fc">【期間限定】いちごで潤う温泉滞在</div>
+      <p class="t-body" style="margin-top:16px">施設ページの地色は <code>--theme-facility-foundation-background: #f5efe9</code>（ベージュ）。ブランドトップは白地。明朝も Klee One に切り替わる。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="jp">カラーパレット</div><div class="en">COLORS</div></div>
+    <div class="sw">
+      <div><div class="chip" style="background:#00a0cb"></div><div class="lbl"><b>Reservation Cyan</b><span>#00a0cb / --color-primary</span></div></div>
+      <div><div class="chip" style="background:linear-gradient(94.07deg,#334b5c 2.85%,#638fb6 70%)"></div><div class="lbl"><b>Kai Gradient</b><span>文字に流す（6 要素）</span></div></div>
+      <div><div class="chip" style="background:#334b5c"></div><div class="lbl"><b>Kai Navy</b><span>#334b5c / 始端・単色 5 要素</span></div></div>
+      <div><div class="chip" style="background:#638fb6"></div><div class="lbl"><b>Kai Blue</b><span>#638fb6 / 終端のみ</span></div></div>
+      <div><div class="chip" style="background:#d4e4f2"></div><div class="lbl"><b>Kai Tint</b><span>#d4e4f2</span></div></div>
+      <div><div class="chip" style="background:#f5efe9"></div><div class="lbl"><b>Facility Beige</b><span>#f5efe9 / 施設ページ</span></div></div>
+      <div><div class="chip" style="background:#3c4043"></div><div class="lbl"><b>Text Base</b><span>#3c4043 / 76 要素</span></div></div>
+      <div><div class="chip" style="background:#555555"></div><div class="lbl"><b>Text Sub</b><span>#555555</span></div></div>
+      <div><div class="chip" style="background:#1a1a1a"></div><div class="lbl"><b>Bg Invert</b><span>#1a1a1a / ナビ地</span></div></div>
+      <div><div class="chip" style="background:#e6e6e6"></div><div class="lbl"><b>Button Plain</b><span>#e6e6e6</span></div></div>
+      <div><div class="chip" style="background:#cccccc"></div><div class="lbl"><b>Disabled</b><span>#cccccc / 12 要素</span></div></div>
+      <div><div class="chip" style="background:#f8f8f8"></div><div class="lbl"><b>Plain</b><span>#f8f8f8</span></div></div>
+      <div class="unused"><div class="chip" style="background:#999999"></div><div class="lbl"><b>Text Muted</b><span>#999999</span></div></div>
+      <div class="unused"><div class="chip" style="background:#006a86"></div><div class="lbl"><b>Text Link</b><span>#006a86</span></div></div>
+      <div class="unused"><div class="chip" style="background:#00b391"></div><div class="lbl"><b>Success</b><span>#00b391</span></div></div>
+      <div class="unused"><div class="chip" style="background:#ffa000"></div><div class="lbl"><b>Warn</b><span>#ffa000</span></div></div>
+      <div class="unused"><div class="chip" style="background:#d50000"></div><div class="lbl"><b>Strong</b><span>#d50000</span></div></div>
+    </div>
+    <p class="note">「可視0」と付いた 5 色は <strong>124 個の自社変数に宣言はあるが、2 ページとも 1 要素も描画されていない</strong>。<code>own</code> の数は設計の厚みであって実装ではない。</p>
+  </section>
+
+</div>
+</body>
+</html>

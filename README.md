@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (562 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (565 sites)</a>
 </p>
 
 <table>
@@ -866,6 +866,11 @@
 </tr>
 <tr>
 <td align="center"><strong>特種東海製紙</strong><br><img src="design-md/tt-paper/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ヒューリック</strong><br><img src="design-md/hulic/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>阪急阪神不動産</strong><br><img src="design-md/hhp/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>界</strong><br><img src="design-md/kai-ryokan/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1489,11 +1494,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [中外製薬 (Chugai Pharmaceutical)](https://www.chugai-pharm.co.jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/chugai-pharm/DESIGN.md) | [preview.html](design-md/chugai-pharm/preview.html) |
 | [第一三共 (Daiichi Sankyo)](https://www.daiichisankyo.co.jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/daiichisankyo/DESIGN.md) | [preview.html](design-md/daiichisankyo/preview.html) |
 | [特種東海製紙 (Tokushu Tokai Paper)](https://www.tt-paper.co.jp/) | Paper / Corporate | [DESIGN.md](design-md/tt-paper/DESIGN.md) | [preview.html](design-md/tt-paper/preview.html) |
+| [ヒューリック (HULIC)](https://www.hulic.co.jp/) | Real Estate / Corporate | [DESIGN.md](design-md/hulic/DESIGN.md) | [preview.html](design-md/hulic/preview.html) |
+| [阪急阪神不動産 (Hankyu Hanshin Properties)](https://www.hhp.co.jp/) | Real Estate / Corporate | [DESIGN.md](design-md/hhp/DESIGN.md) | [preview.html](design-md/hhp/preview.html) |
+| [界 (星野リゾート KAI)](https://hoshinoresorts.com/ja/brands/kai/) | Hospitality / Ryokan | [DESIGN.md](design-md/kai-ryokan/DESIGN.md) | [preview.html](design-md/kai-ryokan/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (562 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (565 sites)</a>
 </p>
 
 <table>
@@ -2325,6 +2333,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>特種東海製紙</strong><br><img src="design-md/tt-paper/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ヒューリック</strong><br><img src="design-md/hulic/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>阪急阪神不動産</strong><br><img src="design-md/hhp/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>界</strong><br><img src="design-md/kai-ryokan/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

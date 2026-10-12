@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ヒューリック（HULIC）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Forum&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個（own: 0 / platform: 0）。
+       以下は computed style の実測値。2026-10-12 */
+    --blue:        #006aac;   /* ★Hulic Blue。ヘッダーCTAの面（可視 2 要素） */
+    --blue-link:   #005caa;   /* アウトライン文字・リンク。#006aac とは別値 */
+    --navy:        #003f76;   /* 見出し。トップ 21 / 下層 36 要素 */
+    --sky:         #81b3d5;   /* カルーセル矢印の円（可視 6 要素） */
+    --magenta:     #d1277c;   /* ★NEW バッジ専用（可視 10 要素） */
+    --slate:       #385a70;   /* カテゴリタグ（可視 5 要素） */
+    --cyan:        #01b4cd;   /* 連番 01/02/03（可視 4 要素・Forum 48px） */
+
+    --text:        #333333;   /* ★本文。トップ 109 / 下層 105 要素で最多 */
+    --text-strong: #222222;   /* ヒーロー脇のリード（4 要素） */
+    --text-sub:    #444444;   /* カードの小見出し（4 要素） */
+    --muted:       #777777;   /* PDF 容量表記（8 要素） */
+    --muted-2:     #888888;   /* IR のカテゴリ行（3 要素） */
+
+    --surface:      #f4f7fb;  /* ニュース行の面（トップ 6 / 下層 3 要素） */
+    --surface-blue: #e4ebf4;
+    --surface-blue2:#d6e4f0;
+    --surface-blue3:#e5f0f7;  /* 下層の実績ブロック（4 要素） */
+    --surface-gray: #f7f7f7;  /* 下層のカード面（4 要素） */
+    --fill-on:      #3079a7;  /* 下層「取り組む領域」 */
+    --fill-off:     #dae6f1;  /* 下層「非注力分野」 */
+    --hero-tint:    rgba(186, 221, 242, 0.8);   /* 下層ヘッダーの覆い（518,400px²） */
+    --header-veil:  rgba(255, 255, 255, 0.85);  /* 固定ヘッダー */
+    --bg:           #ffffff;  /* html / body とも背景指定なし＝UA 既定の白 */
+
+    /* === Fonts ===
+       和文は Noto Sans JP 1 本だけ（トップ 168 / 下層 152 要素）。明朝は可視 0 要素。
+       欧文は Forum（weight 400 のみ）。どちらも Google Fonts なのでローカルでも実サイトと同一。 */
+    --font-jp: "Noto Sans JP", sans-serif;
+    --font-en: Forum, serif;
+
+    /* === Letter spacing: 和文は詰め、欧文は空ける（em で各要素に宣言） === */
+    --ls-body:  normal;    /* ★既定。トップ 168 要素 / 下層 165 = 100% */
+    --ls-jp:    -0.05em;   /* 和文の見出し・リード（32px→-1.6px / 18px→-0.9px） */
+    --ls-en:    0.025em;   /* 欧文 Forum（16px→0.4px / 60px→1.5px / 116px→2.9px） */
+    --ls-en-tight: -0.025em; /* PICK UP / NEWS の 96px だけ詰める */
+    --ls-num:   0.05em;    /* 連番 01/02/03（48px→2.4px） */
+
+    /* === Line height: 既定は無単位 1。本文ブロックは必ず上書きする === */
+    --lh-root:  1;      /* ★body の既定。比率 1.00 がトップ 59 / 下層 32 要素 */
+    --lh-body:  1.8;    /* 本文（下層 38 要素） */
+    --lh-lead:  1.6;    /* リード・下層見出し */
+    --lh-news:  1.5;    /* ニュース行 */
+    --lh-ui:    1.4;    /* ナビ・見出し（トップ 55 / 下層 61 要素で最多） */
+    --lh-en:    1.1;    /* 欧文 Display */
+
+    --r-0:    0px;      /* CTA・タグ */
+    --r-pill: 9999px;   /* VIEW MORE（実測 3.35544e+07px） */
+    --r-30:   30px;     /* Outlined Pill */
+    --r-14:   14px;     /* NEW バッジ */
+
+    --shadow-sub: rgba(17, 88, 132, 0.1) 0 3px 6px 0;  /* ★下層。青みの影（6 要素） */
+    --shadow-top: rgba(0, 0, 0, 0.2) 0 0 8px 0;        /* トップのニュースカード（3 要素） */
+
+    --container: 1320px;   /* トップ 5 / 下層 2 要素 */
+    --container-n: 1280px;
+    --column: 960px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; }
+  /* 実サイト: 768px 以上で 16px 固定、767px 以下で 4.267vw（375px 設計でちょうど 16px）。
+     768 → 767px の 1px でルートが 16 → 32.73px へ 2.05 倍に跳ぶ。 */
+  @media (max-width: 767px) { html { font-size: 4.267vw; } }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh-root);   /* ★実サイトの既定は 1。本文は各自で上書きする */
+    letter-spacing: var(--ls-body);
+    /* font-feature-settings は実サイトで 0 件。palt を使っていない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 40px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--surface-blue); }
+  section:last-child { border-bottom: 0; }
+
+  .sec-head { margin-bottom: 32px; }
+  .sec-head .en {
+    font-family: var(--font-en); font-size: 116px; line-height: var(--lh-en);
+    letter-spacing: var(--ls-en); color: rgba(184, 205, 221, 0.6);
+  }
+  .sec-head .jp {
+    font-size: 32px; font-weight: 600; line-height: var(--lh-ui);
+    letter-spacing: var(--ls-jp); color: var(--navy); margin-top: -24px;
+  }
+  .note { font-size: 12px; line-height: var(--lh-news); color: var(--muted); margin-top: 8px; }
+
+  /* ---- ヒーロー ---- */
+  .hero {
+    position: relative; min-height: 460px; display: flex; align-items: center;
+    background: linear-gradient(120deg, #0a4f85 0%, #1b74ad 55%, #4e9fd0 100%);
+    padding: 0 40px;
+  }
+  .hero-inner { max-width: var(--container); margin: 0 auto; width: 100%; }
+  .hero-note {
+    display: table; background: var(--header-veil); color: var(--navy);
+    font-size: 12px; line-height: var(--lh-news); padding: 6px 12px; margin-bottom: 24px;
+  }
+  /* 実サイトのヒーロー見出しは txt_main01.png（焼き込み画像）。
+     ここでは「画像である」ことを示すため、ダッシュ枠で囲んだプレースホルダとして描く。 */
+  .hero-img-slot {
+    display: table; border: 2px dashed rgba(255, 255, 255, 0.55);
+    padding: 24px 32px; color: #ffffff;
+  }
+  .hero-img-slot .big { font-size: 56px; line-height: 1.3; letter-spacing: var(--ls-jp); font-weight: 400; }
+  .hero-img-slot .cap {
+    font-family: var(--font-en); font-size: 14px; letter-spacing: var(--ls-en);
+    color: rgba(255, 255, 255, 0.85); margin-top: 12px; line-height: var(--lh-news);
+  }
+  .hero-lead {
+    color: #ffffff; font-size: 18px; line-height: var(--lh-lead);
+    letter-spacing: var(--ls-jp); margin-top: 24px; max-width: 640px;
+  }
+
+  /* ---- タイポ見本 ---- */
+  .type-row { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 20px 0; border-top: 1px solid var(--surface-blue); align-items: baseline; }
+  .type-row:first-child { border-top: 0; }
+  .type-label { font-size: 12px; line-height: var(--lh-news); color: var(--muted); letter-spacing: var(--ls-body); }
+  .t-display-en { font-family: var(--font-en); font-size: 116px; line-height: var(--lh-en); letter-spacing: var(--ls-en); color: var(--navy); }
+  .t-display-en2 { font-family: var(--font-en); font-size: 96px; line-height: var(--lh-en); letter-spacing: var(--ls-en-tight); color: var(--navy); }
+  .t-sub-en { font-family: var(--font-en); font-size: 60px; line-height: var(--lh-en); letter-spacing: var(--ls-en); color: var(--navy); }
+  .t-num { font-family: var(--font-en); font-size: 48px; line-height: 1.3; letter-spacing: var(--ls-num); color: var(--cyan); }
+  .t-h1 { font-size: 32px; font-weight: 600; line-height: var(--lh-ui); letter-spacing: var(--ls-jp); color: var(--navy); }
+  .t-h2 { font-size: 28px; font-weight: 500; line-height: var(--lh-lead); letter-spacing: var(--ls-jp); color: var(--navy); }
+  .t-lead { font-size: 18px; line-height: var(--lh-lead); letter-spacing: var(--ls-jp); color: var(--text-strong); }
+  .t-body { font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls-body); color: var(--text); max-width: 760px; }
+  .t-nav { font-size: 15px; font-weight: 600; line-height: var(--lh-ui); letter-spacing: var(--ls-body); color: var(--text); }
+  .t-caption { font-size: 14px; line-height: var(--lh-news); letter-spacing: var(--ls-body); color: var(--text); }
+  .t-small { font-size: 12px; line-height: var(--lh-news); letter-spacing: var(--ls-body); color: var(--muted); }
+
+  /* ---- 字送りの比較 ---- */
+  .ls-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .ls-card { background: var(--surface); padding: 24px; }
+  .ls-card h4 { font-size: 12px; font-weight: 600; color: var(--muted); line-height: var(--lh-news); letter-spacing: var(--ls-body); margin-bottom: 12px; }
+  .ls-card .sample { font-size: 28px; font-weight: 600; line-height: var(--lh-ui); color: var(--navy); }
+  .ls-a { letter-spacing: -0.05em; }
+  .ls-b { letter-spacing: normal; }
+  .ls-c { letter-spacing: 0.025em; font-family: var(--font-en); font-weight: 400; }
+
+  /* ---- ボタン ---- */
+  .btns { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-primary {
+    background: var(--blue); color: #ffffff; font-size: 13px; font-weight: 600;
+    line-height: var(--lh-root); letter-spacing: var(--ls-body);
+    padding: 16px 24px; border: 0; border-radius: var(--r-0); cursor: pointer;
+    font-family: var(--font-jp);
+  }
+  .btn-outline {
+    background: transparent; color: var(--blue-link); font-family: var(--font-en);
+    font-size: 18px; line-height: var(--lh-root); letter-spacing: var(--ls-en);
+    padding: 14px 32px; border: 1px solid #6ea9cf; border-radius: var(--r-30); cursor: pointer;
+  }
+  .btn-viewmore {
+    background: transparent; color: var(--blue-link); font-family: var(--font-en);
+    font-size: 16px; line-height: var(--lh-root); letter-spacing: var(--ls-en);
+    padding: 12px 28px; border: 1px solid rgba(0, 106, 172, 0.5); border-radius: var(--r-pill); cursor: pointer;
+  }
+  .btn-outline.is-focus { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .arrow {
+    width: 48px; height: 48px; border-radius: 24px; background: var(--sky); color: var(--text);
+    font-family: var(--font-en); font-size: 12px; letter-spacing: var(--ls-en);
+    display: inline-flex; align-items: center; justify-content: center; border: 0; cursor: pointer;
+  }
+
+  .badge-new {
+    display: inline-block; background: var(--magenta); color: #ffffff;
+    font-family: var(--font-en); font-size: 14px; line-height: 1.5;
+    letter-spacing: var(--ls-en); padding: 2px 14px; border-radius: var(--r-14);
+  }
+  .tag-cat {
+    display: inline-block; background: var(--slate); color: #ffffff;
+    font-size: 12px; font-weight: 600; line-height: var(--lh-news);
+    letter-spacing: var(--ls-body); padding: 4px 12px; border-radius: var(--r-0);
+  }
+
+  /* ---- ニュース行 ---- */
+  .news { background: var(--surface); }
+  .news-row { display: grid; grid-template-columns: 120px 120px 1fr auto; gap: 20px; align-items: center; padding: 20px 24px; border-bottom: 1px solid #ffffff; }
+  .news-row:last-child { border-bottom: 0; }
+  .news-date { font-size: 14px; line-height: var(--lh-news); color: var(--muted-2); }
+  .news-title { font-size: 14px; line-height: var(--lh-news); color: var(--text); }
+  .news-size { font-size: 12px; line-height: var(--lh-news); color: var(--muted); }
+
+  /* ---- カード（下層・青い影） ---- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    background: #ffffff; border-radius: var(--r-pill);
+    box-shadow: var(--shadow-sub); padding: 28px 32px;
+  }
+  .card .k { font-family: var(--font-en); font-size: 48px; line-height: 1.3; letter-spacing: var(--ls-num); color: var(--cyan); }
+  .card .t { font-size: 18px; font-weight: 700; line-height: var(--lh-ui); letter-spacing: var(--ls-jp); color: var(--navy); margin-top: 4px; }
+  .card .d { font-size: 14px; line-height: var(--lh-news); color: var(--text); margin-top: 8px; }
+
+  .card-top {
+    background: #ffffff; box-shadow: var(--shadow-top); padding: 24px; border-radius: var(--r-0);
+  }
+
+  /* ---- 面の対比（下層） ---- */
+  .fills { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .fill-on { background: var(--fill-on); color: #ffffff; padding: 24px; font-size: 16px; line-height: var(--lh-body); }
+  .fill-off { background: var(--fill-off); color: var(--navy); padding: 24px; font-size: 16px; line-height: var(--lh-body); }
+
+  /* ---- スウォッチ ---- */
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .sw div { border: 1px solid var(--surface-blue); }
+  .sw .chip { height: 64px; }
+  .sw .lbl { padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text); background: #ffffff; }
+  .sw .lbl b { display: block; font-weight: 600; }
+  .sw .lbl span { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-note">実サイトのヒーロー見出しは <code>txt_main01.png</code>（文字を焼き込んだ画像）。明朝は可視 0 要素</div>
+    <div class="hero-img-slot">
+      <div class="big">駅と未来に近いビル。</div>
+      <div class="cap">IMAGE — txt_main01.png / 1600×920 の写真に重ねる</div>
+    </div>
+    <p class="hero-lead">「変革」と「スピード」により更なる成長を実現。圧倒的なスピードによるダイナミックな転換を図り、安心と信頼に満ちた社会の実現をめざします。<br>— 18px / line-height 1.6 / letter-spacing −0.05em</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="sec-head">
+      <div class="en">ABOUT US</div>
+      <div class="jp">会社情報</div>
+    </div>
+    <p class="t-body">セクション見出しは <strong>欧文 Forum 116px（letter-spacing +0.025em）</strong> と <strong>和文 32px / weight 600（−0.05em）</strong> の二段。欧文は空け、和文は詰める。本文はこの段落のとおり 16px / line-height 1.8 / letter-spacing normal。</p>
+    <p class="note">実測: letter-spacing normal がトップ 168 要素 / 下層 165 要素（＝100%）。字間を動かすのは見出しだけ。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">LETTER SPACING</div><div class="jp">字送りは和欧で逆向き</div></div>
+    <div class="ls-demo">
+      <div class="ls-card">
+        <h4>和文の見出し　letter-spacing: -0.05em</h4>
+        <div class="sample ls-a">都心駅近の好立地物件</div>
+      </div>
+      <div class="ls-card">
+        <h4>本文・ナビ　letter-spacing: normal</h4>
+        <div class="sample ls-b">都心駅近の好立地物件</div>
+      </div>
+      <div class="ls-card">
+        <h4>欧文 Forum　letter-spacing: +0.025em</h4>
+        <div class="sample ls-c">BRAND SITE</div>
+      </div>
+    </div>
+    <p class="note">32px → −1.6px、18px → −0.9px がどちらも −0.05em。サイズに比例する＝ <code>em</code> で各要素に宣言している（body からの継承ではない）。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">TYPE SCALE</div><div class="jp">文字サイズ・ウェイト階層</div></div>
+    <div class="type-row"><div class="type-label">Display EN / Forum 116px / +0.025em</div><div class="t-display-en">ABOUT US</div></div>
+    <div class="type-row"><div class="type-label">Display EN 2 / 96px / −0.025em</div><div class="t-display-en2">PICK UP</div></div>
+    <div class="type-row"><div class="type-label">Sub Display / Forum 60px / +0.025em</div><div class="t-sub-en">BRAND SITE</div></div>
+    <div class="type-row"><div class="type-label">Numeral / Forum 48px / +0.05em / #01b4cd</div><div class="t-num">01</div></div>
+    <div class="type-row"><div class="type-label">Heading 1 / 32px / 600 / 1.4 / −0.05em</div><div class="t-h1">中長期経営計画</div></div>
+    <div class="type-row"><div class="type-label">Heading 2 / 28px / 500 / 1.6 / −0.05em</div><div class="t-h2">不動産事業戦略「選択と集中」</div></div>
+    <div class="type-row"><div class="type-label">Lead / 18px / 400 / 1.6 / −0.05em</div><div class="t-lead">将来の変化を予測し、都心駅近のオフィス、商業施設を厳選する。</div></div>
+    <div class="type-row"><div class="type-label">Body / 16px / 400 / 1.8 / normal</div><div class="t-body">60年以上の歴史の中で、不動産会社として実績のある物件を厳選して保有し、少数精鋭のプロフェッショナル集団として賃貸事業を展開しています。</div></div>
+    <div class="type-row"><div class="type-label">Nav / 15px / 600 / 1.4</div><div class="t-nav">株主・投資家情報</div></div>
+    <div class="type-row"><div class="type-label">Caption / 14px / 400 / 1.5（最多サイズ・60 要素）</div><div class="t-caption">公募型プロポーザル 宮崎県東京ビル再整備事業完成</div></div>
+    <div class="type-row"><div class="type-label">Small / 12px / 400 / 1.5 / #777777</div><div class="t-small">※2025年12月末現在、除く住宅等（406KB）</div></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">COMPONENTS</div><div class="jp">ボタンとバッジ</div></div>
+    <div class="btns">
+      <button class="btn-primary">物件を探す</button>
+      <button class="btn-primary">お問い合わせ</button>
+      <button class="btn-outline">ABOUT US</button>
+      <button class="btn-outline is-focus">MANAGEMENT PLAN</button>
+      <button class="btn-viewmore">VIEW MORE</button>
+      <button class="arrow">PREV</button>
+      <button class="arrow">NEXT</button>
+      <span class="badge-new">NEW</span>
+      <span class="tag-cat">IR資料</span>
+      <span class="tag-cat">ニュース</span>
+    </div>
+    <p class="note">角丸は <code>0px</code>（CTA・タグ）か <code>9999px</code>（VIEW MORE）の二択。<code>.is-focus</code> はフォーカス状態の見本（autofocus は使わない）。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">NEWS</div><div class="jp">ニュース行</div></div>
+    <div class="news">
+      <div class="news-row"><span class="news-date">2026年09月29日</span><span class="tag-cat">IR資料</span><span class="news-title">統合報告書2026を掲載しました</span><span class="news-size">（864KB）</span></div>
+      <div class="news-row"><span class="news-date">2026年09月25日</span><span class="tag-cat">ニュース</span><span class="news-title">代表取締役会長 西浦三郎の書籍『ヒューリック、変革の軌跡』を発刊</span><span class="badge-new">NEW</span></div>
+      <div class="news-row"><span class="news-date">2026年09月24日</span><span class="tag-cat">ニュース</span><span class="news-title">公募型プロポーザル 宮崎県東京ビル再整備事業完成のお知らせ</span><span class="news-size">（406KB）</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">CARDS</div><div class="jp">カードと影</div></div>
+    <div class="cards">
+      <div class="card"><div class="k">01</div><div class="t">成長性</div><div class="d">上場来毎期増益を継続</div></div>
+      <div class="card"><div class="t">安全性</div><div class="d">外部格付 AA−（安定的）を獲得</div></div>
+      <div class="card"><div class="t">収益性</div><div class="d">同業他社対比、高い利益率を継続</div></div>
+    </div>
+    <p class="note">下層のカードの影は <code>rgba(17, 88, 132, 0.1) 0 3px 6px 0</code> ＝ <strong>黒ではなく青み</strong>（6 要素）。トップのカードは <code>rgba(0, 0, 0, 0.2) 0 0 8px 0</code>（3 要素）。サイト全体で影はこの 2 種だけ。</p>
+    <div style="margin-top:24px"><div class="card-top"><div class="t-caption">トップのニュースカード — rgba(0, 0, 0, 0.2) 0 0 8px 0 / border-radius 0px</div></div></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">FILLS</div><div class="jp">面の対比（下層）</div></div>
+    <div class="fills">
+      <div class="fill-on">取り組む領域 — <code>#3079a7</code></div>
+      <div class="fill-off">非注力分野 — <code>#dae6f1</code></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">COLORS</div><div class="jp">カラーパレット</div></div>
+    <div class="sw">
+      <div><div class="chip" style="background:#006aac"></div><div class="lbl"><b>Hulic Blue</b><span>#006aac / 面・CTA</span></div></div>
+      <div><div class="chip" style="background:#005caa"></div><div class="lbl"><b>Link Blue</b><span>#005caa / リンク文字</span></div></div>
+      <div><div class="chip" style="background:#003f76"></div><div class="lbl"><b>Navy</b><span>#003f76 / 見出し 36 要素</span></div></div>
+      <div><div class="chip" style="background:#81b3d5"></div><div class="lbl"><b>Sky</b><span>#81b3d5 / 矢印</span></div></div>
+      <div><div class="chip" style="background:#d1277c"></div><div class="lbl"><b>Magenta</b><span>#d1277c / NEW のみ</span></div></div>
+      <div><div class="chip" style="background:#385a70"></div><div class="lbl"><b>Slate</b><span>#385a70 / タグ</span></div></div>
+      <div><div class="chip" style="background:#01b4cd"></div><div class="lbl"><b>Cyan</b><span>#01b4cd / 連番</span></div></div>
+      <div><div class="chip" style="background:#333333"></div><div class="lbl"><b>Text</b><span>#333333 / 最多</span></div></div>
+      <div><div class="chip" style="background:#222222"></div><div class="lbl"><b>Text Strong</b><span>#222222 / リード</span></div></div>
+      <div><div class="chip" style="background:#777777"></div><div class="lbl"><b>Muted</b><span>#777777</span></div></div>
+      <div><div class="chip" style="background:#f4f7fb"></div><div class="lbl"><b>Surface</b><span>#f4f7fb</span></div></div>
+      <div><div class="chip" style="background:#e4ebf4"></div><div class="lbl"><b>Surface Blue</b><span>#e4ebf4</span></div></div>
+      <div><div class="chip" style="background:#d6e4f0"></div><div class="lbl"><b>Surface Blue 2</b><span>#d6e4f0</span></div></div>
+      <div><div class="chip" style="background:#e5f0f7"></div><div class="lbl"><b>Surface Blue 3</b><span>#e5f0f7 / 下層</span></div></div>
+      <div><div class="chip" style="background:#f7f7f7"></div><div class="lbl"><b>Surface Gray</b><span>#f7f7f7</span></div></div>
+      <div><div class="chip" style="background:#3079a7"></div><div class="lbl"><b>Fill On</b><span>#3079a7</span></div></div>
+      <div><div class="chip" style="background:#dae6f1"></div><div class="lbl"><b>Fill Off</b><span>#dae6f1</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="en">LINE HEIGHT</div><div class="jp">既定は無単位 1</div></div>
+    <div style="background:var(--surface);padding:24px">
+      <p style="font-size:24px;line-height:1;letter-spacing:var(--ls-jp);color:var(--navy)">line-height: 1（既定のまま）<br>宣言しないとこうなる。行が密着する</p>
+      <p style="font-size:24px;line-height:1.8;letter-spacing:var(--ls-jp);color:var(--navy);margin-top:24px">line-height: 1.8（本文の指定）<br>本文ブロックは必ず上書きする</p>
+    </div>
+    <p class="note">実サイトは <code>body</code> の <code>line-height</code> が無単位 1。比率 1.00 の要素がトップ 59 / 下層 32 ある。無単位なので子は自分の font-size で再計算する。</p>
+  </section>
+
+</div>
+</body>
+</html>
