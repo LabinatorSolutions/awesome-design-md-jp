@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: NIPPONIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@300;400;500&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       自社トークンは 8 個だけ（残り 60 個は WordPress / Gutenberg の preset）。
+       うち色の 4 個（--rte-gold / --rte-gold-hover / --rte-line / --rte-wash）は
+       トップ・ブログ記事の両方で可視 0 要素だったので、下では「未使用」として分けて置く。
+       以下は computed style と CSS 全文の実測値。2026-10-13 */
+    --navy:        #080822;   /* ★トップの地色。body.home にだけ当たる。可視 47 要素 */
+    --crimson:     #8a001a;   /* ★CTA「お問い合わせ」専用。トップ・下層とも 1 要素 */
+    --tag:         rgba(153,153,153,.6);  /* 分類タグ。半透明（可視 43 要素） */
+    --ink:         #111111;   /* 見出し・リンク（可視 59 要素） */
+    --body:        #333333;   /* 本文（下層 39 要素） */
+    --white:       #ffffff;
+    --muted:       #aaaaaa;   /* 日付・カテゴリ（可視 46 要素）。PAGE TOP の面色でもある */
+    --muted2:      #999999;   /* サブメニュー（可視 20 要素） */
+    --caption:     #666666;   /* 人物の肩書き（可視 6 要素） */
+    --card:        #eceef1;   /* メディア掲載カードの面（可視 40 要素） */
+    --surface:     #f6f6f6;
+    --surface2:    #e6e6e6;
+    --cream:       #fbf8f1;   /* 下層の告知バナーの面 */
+    --cream-line:  #d9d0bd;   /* 同バナーの枠 */
+    --card-text:   #7c828c;
+
+    /* 宣言はあるが実測 2 ページとも可視 0 要素。参考として残すだけで使わない */
+    --rte-gold:      #9a6412;
+    --rte-gold-hover:#c8892f;
+    --rte-line:      #e8e0d2;
+    --rte-wash:      #faf5ec;
+
+    /* === Fonts ===
+       約物詰めは YakuHanJP / YakuHanMP（約物だけのサブセットフォント）をスタック先頭に
+       置くことで実現している。ローカルでは配信されないため下のスタックからは外してあるが、
+       実装では必ず先頭に置くこと。palt は 1 要素も使っていない（実測 0 件）。
+       欧文見出しの CarreNoirPro-Medium は MyFonts のドメインライセンスでローカルに出ないため、
+       同系のクラシックなローマン体 EB Garamond で代替する。 */
+    --font-gothic: "Noto Sans JP", "Helvetica Neue", Helvetica, Arial,
+                   游ゴシック体, "Yu Gothic", YuGothic,
+                   "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",
+                   メイリオ, Meiryo, sans-serif;
+    --font-mincho: "Noto Serif JP", Georgia, 游明朝, "Yu Mincho", YuMincho,
+                   "Hiragino Mincho ProN", serif;
+    --font-latin:  "EB Garamond", Georgia, serif;   /* 代替: CarreNoirPro-Medium */
+    --font-mono:   SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===
+       html { line-height: 1 }（無単位）が全要素に降りる。
+       宣言し忘れた要素は行が潰れるので、必ず要素ごとに書く。実測 比率 1.00 が 107 要素。 */
+    --lh-body:  1.75;   /* 本文 14px / 24.5px */
+    --lh-read:  1.65;   /* 下層の長文 16px */
+    --lh-head:  1.40;   /* 36px の明朝見出し */
+    --lh-sub:   1.45;   /* 20px */
+    --lh-card:  1.30;   /* カード（実測 36 要素） */
+
+    /* === Letter spacing ===
+       normal が既定。トップ 205/208 要素、下層 170/173 要素。
+       CSS 全文でも letter-spacing の宣言は 9 件しかない。 */
+    --ls:        normal;
+    --ls-eyebrow:0.22em;  /* バナーのアイキャッチのみ */
+    --ls-cta:    0.08em;
+
+    /* === Radius: 3px(カード) / 9px(タグ) / 12px(ボタン) / 14px(バナー) の 4 値 === */
+    --r-card:   3px;
+    --r-tag:    9px;
+    --r-btn:    12px;
+    --r-banner: 14px;
+
+    /* === Shadow: 実測 1 種類 1 要素のみ === */
+    --shadow: rgba(0,0,0,.42) 0 14px 36px;
+
+    --container: 1440px;
+    --gutter:    80px;
+    --content:   1280px;   /* 1440 - 80*2 */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 62.5%; }   /* = 10px。実サイトと同じ */
+
+  body {
+    background: var(--white);
+    color: var(--body);
+    font-family: var(--font-gothic);
+    font-size: 1.4rem;         /* = 14px */
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は実サイトで 1 要素も使われていない（実測 0 件）。
+       約物詰めは YakuHanJP / YakuHanMP が担当する。palt を足さないこと。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER（トップは紺地） */
+  .header { background: var(--navy); color: var(--white); }
+  .header-inner { display: flex; align-items: center; gap: 36px; max-width: var(--container); margin: 0 auto; padding: 24px var(--gutter); }
+  .logo { font-family: var(--font-latin); font-size: 2.6rem; letter-spacing: .12em; color: var(--white); text-decoration: none; }
+  .header-nav { display: flex; gap: 26px; }
+  .header-nav a { font-size: 1.6rem; font-weight: 700; line-height: 1.65; color: var(--white); text-decoration: none; }
+  .header-sub { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+  .header-sub a { font-size: 1.2rem; font-weight: 700; line-height: 1.3; color: var(--white); text-decoration: none; }
+
+  /* SECTIONS */
+  .section { padding: 72px var(--gutter); max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface); }
+  .section-alt .section-inner { padding: 72px var(--gutter); max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 1.2rem; line-height: 1.5; color: var(--muted); margin-bottom: 10px; }
+  .eyebrow { font-family: var(--font-latin); font-size: 3.2rem; line-height: 1.2; color: var(--ink); }
+  .section-title { font-family: var(--font-mincho); font-size: 3.6rem; font-weight: 300; line-height: var(--lh-head); color: var(--ink); margin: 10px 0 18px; }
+  .section-lead { font-size: 1.6rem; line-height: var(--lh-read); color: var(--body); max-width: 900px; margin-bottom: 34px; }
+  .note { font-size: 1.4rem; line-height: 1.9; color: #555; margin-top: 22px; max-width: 900px; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--card); padding: 1px 5px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--surface2); background: var(--white); border-radius: var(--r-card); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-size: 1.4rem; font-weight: 700; line-height: 1.5; color: var(--ink); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; line-height: 1.5; color: var(--muted); margin-top: 3px; }
+  .swatch-use { font-size: 1.2rem; line-height: var(--lh-card); color: var(--caption); margin-top: 6px; }
+  .swatch.is-unused { opacity: .55; border-style: dashed; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--surface2); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; line-height: 1.75; color: var(--muted); }
+  .type-meta b { font-weight: 700; color: var(--ink); }
+  .type-meta > b:first-child { display: block; font-family: var(--font-gothic); font-size: 1.3rem; font-weight: 700; line-height: 1.5; color: var(--ink); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; align-items: baseline; }
+  .scale-bar span { background: var(--card); padding: 8px 14px; line-height: 1.5; border-radius: var(--r-card); }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-gothic); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-primary { background: var(--crimson); color: var(--white); font-size: 1.2rem; font-weight: 400; line-height: 24px; padding: 0 14px; border: 0; border-radius: var(--r-btn); }
+  .btn-secondary { background: var(--cream); color: #000; border: 1px solid var(--cream-line); border-radius: 0; font-size: 1.4rem; font-weight: 400; line-height: 1.5; padding: 26px 40px; }
+  .btn-pagetop { background: var(--muted); color: #000; font-family: Arial, sans-serif; font-size: 1.3rem; line-height: 1.5; border: 0; border-radius: 0; padding: 10px 18px; }
+  .tag { display: inline-block; background: var(--tag); color: var(--white); font-size: 1rem; font-weight: 400; line-height: 17px; padding: 0 7px; border-radius: var(--r-tag); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border-radius: var(--r-card); padding: 20px; text-decoration: none; display: block; }
+  .card-title { font-size: 1.35rem; line-height: var(--lh-card); color: var(--card-text); }
+  .card-date { font-size: 1.2rem; line-height: var(--lh-card); color: var(--muted); margin-top: 12px; }
+
+  /* FLOATING BANNER（サイト唯一の影） */
+  .akari { display: inline-flex; align-items: center; gap: 14px; background: rgba(17,16,22,.62); border: 1px solid rgba(255,255,255,.16); border-radius: var(--r-banner); box-shadow: var(--shadow); padding: 16px 22px; text-decoration: none; }
+  .akari-thumb { width: 54px; height: 62px; border-radius: 2px; background: linear-gradient(160deg,#2b3a4a,#12202c); flex-shrink: 0; }
+  .akari-eyebrow { font-size: 1rem; font-weight: 500; line-height: 1.6; letter-spacing: var(--ls-eyebrow); color: var(--muted); }
+  .akari-copy { font-family: var(--font-mincho); font-size: 1.6rem; font-weight: 400; line-height: var(--lh-card); color: var(--white); margin-top: 5px; }
+  .akari-cta { font-size: 1.1rem; line-height: 1.6; letter-spacing: var(--ls-cta); color: var(--white); margin-top: 7px; }
+
+  /* VERTICAL TAB（本物の縦組みはここだけ） */
+  .vtab-demo { display: flex; flex-direction: row-reverse; justify-content: flex-start; gap: 26px; align-items: flex-start; }
+  .vtab { writing-mode: vertical-rl; background: var(--navy); color: var(--white); line-height: 40px; padding: 22px 0; width: 40px; text-align: center; border-radius: 20px 0 0 20px; text-decoration: none; }
+  .vtab-primary { font-size: 1.4rem; }
+  .vtab-secondary { font-size: 1rem; color: var(--muted); }
+  .vtab-note { font-size: 1.3rem; line-height: 1.9; color: var(--caption); max-width: 640px; }
+
+  /* FAKE-VERTICAL（実サイトは SVG スプライト） */
+  .svgcopy { display: inline-block; background: var(--navy); padding: 30px 46px; border-radius: var(--r-card); }
+  .svgcopy svg { display: block; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 700; line-height: 1.5; color: var(--ink); margin-bottom: 8px; }
+  .field input, .field select { width: 100%; background: var(--white); color: var(--ink); border: 1px solid var(--surface2); border-radius: var(--r-card); padding: 12px 14px; height: 48px; font-size: 1.4rem; line-height: 1.5; font-family: var(--font-gothic); }
+  .field.is-focus input { outline: 2px solid var(--crimson); }
+  .field.is-error input { outline: 2px solid var(--crimson); }
+  .field-msg { font-size: 1.2rem; line-height: 1.6; color: var(--caption); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--crimson); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+  .elev { background: var(--white); border: 1px solid var(--surface2); border-radius: var(--r-card); padding: 28px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow); border-color: transparent; }
+  .elev-name { font-size: 1.6rem; font-weight: 700; line-height: 1.5; color: var(--ink); }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; line-height: 1.6; color: var(--muted); margin-top: 8px; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--card); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1rem; line-height: 1.5; color: var(--caption); border-radius: var(--r-card); }
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 108px; height: 68px; background: var(--card); }
+  .radius-label { font-family: var(--font-mono); font-size: 1.1rem; line-height: 1.6; color: var(--muted); margin-top: 7px; }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: var(--white); padding: 48px var(--gutter); }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-family: var(--font-latin); font-size: 3.2rem; line-height: 1.2; }
+  .footer-cols { display: flex; gap: 48px; margin-top: 24px; flex-wrap: wrap; }
+  .footer-col-title { font-family: var(--font-mincho); font-size: 2.2rem; font-weight: 400; line-height: 1.5; }
+  .footer-col a { display: block; font-size: 1.4rem; line-height: 2; color: var(--white); text-decoration: none; opacity: .8; }
+  .footer-copy { font-size: 1.2rem; line-height: 1.5; margin-top: 32px; opacity: .7; }
+
+  @media (max-width: 800px) {
+    :root { --gutter: 20px; }
+    .section, .section-alt .section-inner, .footer { padding-left: 20px; padding-right: 20px; }
+    .section { padding-top: 48px; padding-bottom: 48px; }
+    .section-title { font-size: 2.6rem; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">NIPPONIA</a>
+    <nav class="header-nav">
+      <a href="#">NIPPONIAとは</a><a href="#">全国のプロジェクト</a><a href="#">ブログ</a><a href="#">参加・応援する</a>
+    </nav>
+    <div class="header-sub"><a href="#">ニュースリリース</a><a href="#" class="btn btn-primary">お問い合わせ</a></div>
+  </div>
+</header>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="eyebrow">Colors</div>
+  <h2 class="section-title">紺地の面と、ひとつだけの CTA</h2>
+  <p class="section-lead">面色は <b>紺 <code>#080822</code></b>（可視 47 要素）ひとつ。彩度のある色は <b>CTA の <code>#8a001a</code></b> だけで、トップ・下層とも <b>1 要素</b>しか無い。<b>トップは紺地、下層は白地。</b><code>body.home</code> にだけ背景色が当たる設計で、<code>/about/</code> 以下は <code>#ffffff</code> になる。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#080822"></div><div class="swatch-body"><div class="swatch-name">Navy</div><div class="swatch-hex">#080822</div><div class="swatch-use">★トップの地色。body.home 限定。可視 47 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#8a001a"></div><div class="swatch-body"><div class="swatch-name">Crimson</div><div class="swatch-hex">#8a001a</div><div class="swatch-use">★CTA「お問い合わせ」専用。各ページ 1 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eceef1"></div><div class="swatch-body"><div class="swatch-name">Card</div><div class="swatch-hex">#eceef1</div><div class="swatch-use">メディア掲載カードの面（可視 40 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#111111"></div><div class="swatch-body"><div class="swatch-name">Ink</div><div class="swatch-hex">#111111</div><div class="swatch-use">見出し・リンク（可視 59 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Body</div><div class="swatch-hex">#333333</div><div class="swatch-use">本文（下層 39 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#aaaaaa"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#aaaaaa</div><div class="swatch-use">日付・カテゴリ（可視 46 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#fbf8f1;border-bottom:1px solid #d9d0bd"></div><div class="swatch-body"><div class="swatch-name">Cream / Line</div><div class="swatch-hex">#fbf8f1 / #d9d0bd</div><div class="swatch-use">下層の告知バナーの面と枠</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:rgba(153,153,153,.6)"></div><div class="swatch-body"><div class="swatch-name">Tag（半透明）</div><div class="swatch-hex">rgba(153,153,153,.6)</div><div class="swatch-use">分類タグ（可視 43 要素）。写真に重ねる前提</div></div></div>
+  </div>
+
+  <p class="note"><b>自社トークンは 8 個だけ</b>（残り 60 個は WordPress / Gutenberg の preset）。<b>うち色の 4 個はトップ・ブログ記事の両方で可視 0 要素。</b>宣言はあるが描画されていないので、ブランドカラーとして実装しない。</p>
+
+  <div class="color-grid" style="margin-top:16px">
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#9a6412"></div><div class="swatch-body"><div class="swatch-name">--rte-gold</div><div class="swatch-hex">#9a6412</div><div class="swatch-use">宣言のみ。実測 2 ページとも可視 0 要素</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#c8892f"></div><div class="swatch-body"><div class="swatch-name">--rte-gold-hover</div><div class="swatch-hex">#c8892f</div><div class="swatch-use">宣言のみ。可視 0 要素</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#e8e0d2"></div><div class="swatch-body"><div class="swatch-name">--rte-line</div><div class="swatch-hex">#e8e0d2</div><div class="swatch-use">宣言のみ。可視 0 要素</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#faf5ec"></div><div class="swatch-body"><div class="swatch-name">--rte-wash</div><div class="swatch-hex">#faf5ec</div><div class="swatch-use">宣言のみ。可視 0 要素</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">Typography</div>
+  <h2 class="section-title">約物だけを詰める</h2>
+  <p class="section-lead"><b><code>letter-spacing</code> はトップ 205/208 要素、下層 170/173 要素が <code>normal</code>。</b><code>font-feature-settings: "palt"</code> も <b>1 要素も使っていない</b>。代わりに <b><code>YakuHanJP</code> / <code>YakuHanMP</code></b>（約物だけを収録したサブセットフォント）をスタックの<b>先頭</b>に置き、句読点・括弧だけを半角幅に詰めている。<b>仮名漢字の字送りは一切変わらない。</b></p>
+
+  <div class="scale-bar">
+    <span style="font-size:1rem">10</span><span style="font-size:1.2rem">12</span><span style="font-size:1.4rem">14</span>
+    <span style="font-size:1.6rem">16</span><span style="font-size:2rem">20</span><span style="font-size:2.2rem">22</span>
+    <span style="font-size:2.4rem">24</span><span style="font-size:2.6rem">26</span>
+    <span style="font-size:3.2rem;font-family:var(--font-latin)">32</span>
+    <span style="font-size:3.6rem;font-family:var(--font-mincho);font-weight:300">36</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Display (EN)</b>CarreNoirPro-Medium / 56px<br>代替: EB Garamond</div><div style="font-family:var(--font-latin);font-size:5.6rem;line-height:1.2;color:var(--ink)">NIPPONIAとは</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead（明朝）★</b>Noto Serif JP / 36px / <b>300</b><br>lh 1.40 / ls normal</div><div style="font-family:var(--font-mincho);font-size:3.6rem;font-weight:300;line-height:1.40;color:var(--ink)">なつかしくて、あたらしい、<br>日本の暮らしをつくる。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section (EN)</b>CarreNoirPro-Medium / 32px<br>代替: EB Garamond</div><div style="font-family:var(--font-latin);font-size:3.2rem;line-height:1.2;color:var(--ink)">NIPPONIA Sites</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead Text（明朝）</b>Noto Serif JP / 26px / 500<br>lh 1.60</div><div style="font-family:var(--font-mincho);font-size:2.6rem;font-weight:500;line-height:1.6;color:#000">私たちは、古民家等の歴史文化資産の活用・再生を起点にしています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Sub Heading（明朝）</b>Noto Serif JP / 20px / 500<br>lh 1.45</div><div style="font-family:var(--font-mincho);font-size:2rem;font-weight:500;line-height:1.45;color:var(--ink)">NIPPONIAのVision</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / Heading</b>Noto Sans JP / 16px / <b>700</b><br>lh 1.65</div><div style="font-size:1.6rem;font-weight:700;line-height:1.65;color:var(--ink)">全国のプロジェクト</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>Noto Sans JP / 14px / 400<br>lh <b>1.75</b> / ls normal</div><div style="font-size:1.4rem;line-height:1.75">NIPPONIAからの最新情報と、その土地で暮らす人びとの声をお届けします。歴史的建築物の保存・活用について、その理念や手法を広くお伝えしています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body（長文）</b>Noto Sans JP / 16px / 400<br>lh 1.65</div><div style="font-size:1.6rem;line-height:1.65">羅針盤なき時代。本当の豊かさとは何か。豊かに生きる、豊かに暮らすとはどういうことか、そのことを誰も知りません。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>Noto Sans JP / 12px / 400<br>lh 1.30（可視 81 要素で最多）</div><div style="font-size:1.2rem;line-height:1.3;color:var(--muted2)">私たちの想い ／ 私たちの約束 ／ 私たちのブランド</div></div>
+  <div class="type-row"><div class="type-meta"><b>Tag</b>Noto Sans JP / 10px / 400<br>lh 17px / radius 9px</div><div><span class="tag">城下町</span> <span class="tag">港町</span> <span class="tag">花街</span></div></div>
+
+  <p class="note"><b><code>html { font-size: 62.5%; line-height: 1 }</code>。</b>無単位の <code>1</code> が全要素に降りるため、<b>行間を宣言し忘れた要素は行が潰れる</b>（実測 比率 <code>1.00</code> が 107 要素）。本文ブロックは必ず <code>line-height</code> を書き、<b>無単位で</b>指定すること。<code>1.0em</code> のような絶対値にすると子要素まで巻き込む。</p>
+
+  <p class="note"><b>明朝に <code>700</code> は存在しない。</b><code>Noto Serif JP</code> の宣言は <code>300 500</code>、<code>YakuHanMP 700</code> は <code>unloaded</code>。<b>明朝へ <code>font-weight: 700</code> を当てるとブラウザの合成太字になる。</b>ウェイトは <b>300 / 400 / 500</b> まで。</p>
+</div>
+</section>
+
+<section class="section" id="vertical">
+  <div class="section-label">03 / Vertical</div>
+  <div class="eyebrow">Vertical</div>
+  <h2 class="section-title">縦組みは、右端のタブだけ</h2>
+  <p class="section-lead">実サイトで <code>writing-mode: vertical-rl</code> が当たっているのは <b>6 要素</b>（うち 2 件はアイコンの <code>&lt;svg&gt;</code> / <code>&lt;use&gt;</code>）。右端の固定タブと、サブメニューの「私たちの想い」だけだ。<b>ヒーローの大きな縦組みコピーは実装ではない。</b></p>
+
+  <div class="vtab-demo">
+    <a href="#" class="vtab"><span class="vtab-primary">お問い合わせ</span><br><span class="vtab-secondary">視察・求人・物件</span></a>
+    <div class="vtab-note"><b>本物の縦組み。</b>幅 40px・<code>line-height: 40px</code> の絶対値・<code>letter-spacing: normal</code>。主ラベルが 14px、副ラベルが 10px。<br><br><b>複数の縦組みを横に並べるときは <code>flex-direction: row-reverse</code> にする。</b>素の <code>display: flex</code> だと DOM 順に左→右へ置かれ、日本語の縦組みとして読む向き（右→左）と逆になる。</div>
+  </div>
+
+  <p class="note" style="margin-top:34px"><b>ヒーローのコピーは SVG スプライト。</b><code>.TopSlideCopy__inner &gt; svg &gt; use[xlink:href="#icon-top-copy"]</code>（154×490px）で、<code>&lt;text&gt;</code> 要素は 0 個、<code>&lt;path&gt;</code> も 0 個のアウトライン。<code>document.images</code> にも <code>verticalWriting</code> にも出てこないので、<b>スクショだけ見て「縦組みを実装している」と判断しないこと。</b>下は同じ見え方を SVG で再現したもので、実サイトの構造に合わせてある。</p>
+
+  <div class="svgcopy" style="margin-top:22px">
+    <svg width="150" height="330" viewBox="0 0 150 330" role="img" aria-label="なつかしくて、あたらしい、日本の暮らしをつくる">
+      <g fill="#ffffff" font-family="Noto Serif JP, serif" font-weight="300" font-size="26" writing-mode="tb" text-anchor="start">
+        <text x="118" y="24" style="writing-mode:vertical-rl">なつかしくて</text>
+        <text x="80"  y="24" style="writing-mode:vertical-rl">あたらしい</text>
+        <text x="36"  y="24" style="writing-mode:vertical-rl">日本の暮らしをつくる</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section class="section-alt" id="components">
+<div class="section-inner">
+  <div class="section-label">04 / Components</div>
+  <div class="eyebrow">Components</div>
+  <h2 class="section-title">角丸は 4 値、影はひとつ</h2>
+  <p class="section-lead">角丸は <b>3px（カード）/ 9px（タグ）/ 12px（ボタン）/ 14px（バナー）</b> の 4 値から選ぶ。<b>影は実測 1 種類 1 要素しかない。</b>カード・ボタン・ナビはすべてフラットで、階層は紺地と白地の切り替えで作る。</p>
+
+  <div class="btn-grid">
+    <a href="#" class="btn btn-primary">お問い合わせ</a>
+    <a href="#" class="btn btn-secondary">NIPPONIAブランドは、株式会社NOTEによって提供されています。</a>
+    <button class="btn btn-pagetop">PAGE TOP</button>
+  </div>
+
+  <div class="btn-grid"><span class="tag">城下町</span><span class="tag">商人町</span><span class="tag">宿場町</span><span class="tag">港町</span></div>
+
+  <div class="akari">
+    <div class="akari-thumb"></div>
+    <div>
+      <div class="akari-eyebrow">AKARI SUPPORTER</div>
+      <div class="akari-copy">灯が、未来を照らす。</div>
+      <div class="akari-cta">詳しく見る →</div>
+    </div>
+  </div>
+  <p class="note"><b>サイト唯一の影。</b><code>rgba(0,0,0,.42) 0 14px 36px</code> ＋ <code>1px solid rgba(255,255,255,.16)</code> ＋ <code>radius 14px</code> のガラス調。ここ以外に影を足さない。</p>
+
+  <h3 style="font-family:var(--font-mincho);font-size:2rem;font-weight:500;line-height:1.45;color:var(--ink);margin:42px 0 16px">Cards</h3>
+  <div class="card-grid">
+    <a href="#" class="card"><div class="card-title">SETOUCHI MINKA featuring HIRAYA</div><div class="card-date">2026.06.24</div></a>
+    <a href="#" class="card"><div class="card-title">月刊レジャー産業資料</div><div class="card-date">2026.03.30</div></a>
+    <a href="#" class="card"><div class="card-title">新・公民連携最前線</div><div class="card-date">2026.06.30</div></a>
+    <a href="#" class="card"><div class="card-title">マイナビニュース</div><div class="card-date">2026.02.14</div></a>
+  </div>
+
+  <h3 style="font-family:var(--font-mincho);font-size:2rem;font-weight:500;line-height:1.45;color:var(--ink);margin:42px 0 16px">Inputs</h3>
+  <p class="note" style="margin-top:0;margin-bottom:18px">実測した 2 ページに入力欄が無い。<b>Tag の <code>radius: 9px</code> と Primary の <code>radius: 12px</code> に合わせ、フォーカスリングは CTA の <code>#8a001a</code> を使う。</b></p>
+  <div class="form-grid">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" placeholder="日本 太郎"><div class="field-msg">全角でご記入ください</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス（フォーカス）</label><input id="f2" type="text" value="info@example.jp"><div class="field-msg">確認のご連絡をお送りします</div></div>
+    <div class="field is-error"><label for="f3">ご用件（エラー）</label><input id="f3" type="text" value=""><div class="field-msg">ご用件を選択してください</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="section-label">05 / Elevation &amp; Layout</div>
+  <div class="eyebrow">Elevation</div>
+  <h2 class="section-title">影ではなく、面で区切る</h2>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">none ／ 既定。ほぼ全要素</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">rgba(0,0,0,.42) 0 14px 36px ／ 1 要素のみ</div></div>
+  </div>
+
+  <div class="layout-demo" style="margin-top:46px">
+    <div class="layout-bar" style="width:100%">max-width 1440px（実測 11 要素）</div>
+    <div class="layout-bar" style="width:88.9%">content 1280px（1440 − padding 80px × 2）</div>
+    <div class="layout-bar" style="width:74%">1066px（補助・1 要素）</div>
+  </div>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:2px"></div><div class="radius-label">2px ／ 19 要素</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:3px"></div><div class="radius-label">3px ／ 40 要素（最多）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px ／ 4 要素</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9px"></div><div class="radius-label">9px ／ タグ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">12px ／ ボタン</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:14px"></div><div class="radius-label">14px ／ バナー</div></div>
+  </div>
+
+  <p class="note"><b>ブレークポイントは実質 2 段階。</b>CSS 全文の <code>@media</code> は <code>max-width: 800px</code> が <b>299 宣言</b>と圧倒的で、次が <code>960px</code> の 39 宣言。<b>ルートサイズは 6 幅（1440 / 1200 / 834 / 768 / 767 / 375px）すべてで 10px、body 14px のまま動かない。</b>流体スケールは使っていない。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">NIPPONIA Sites</div>
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">NIPPONIA メンバーシップサイト</div><a href="#">一般社団法人ノオト</a><a href="#">株式会社NOTE</a></div>
+      <div class="footer-col"><div class="footer-col-title">NIPPONIA 活動サイト</div><a href="#">全国のプロジェクト</a><a href="#">ブログ</a></div>
+      <div class="footer-col"><div class="footer-col-title">関連団体</div><a href="#">参加・応援する</a><a href="#">ニュースリリース</a></div>
+    </div>
+    <div class="footer-copy">実測日 2026-10-13 ／ team.nipponia.or.jp ・ /about/ の computed style に基づく</div>
+  </div>
+</footer>
+
+</body>
+</html>

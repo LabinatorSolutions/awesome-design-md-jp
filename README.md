@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (565 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (568 sites)</a>
 </p>
 
 <table>
@@ -871,6 +871,11 @@
 </tr>
 <tr>
 <td align="center"><strong>界</strong><br><img src="design-md/kai-ryokan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NIPPONIA</strong><br><img src="design-md/nipponia/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MICIN</strong><br><img src="design-md/micin/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>日本民藝館</strong><br><img src="design-md/mingeikan/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1497,11 +1502,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [ヒューリック (HULIC)](https://www.hulic.co.jp/) | Real Estate / Corporate | [DESIGN.md](design-md/hulic/DESIGN.md) | [preview.html](design-md/hulic/preview.html) |
 | [阪急阪神不動産 (Hankyu Hanshin Properties)](https://www.hhp.co.jp/) | Real Estate / Corporate | [DESIGN.md](design-md/hhp/DESIGN.md) | [preview.html](design-md/hhp/preview.html) |
 | [界 (星野リゾート KAI)](https://hoshinoresorts.com/ja/brands/kai/) | Hospitality / Ryokan | [DESIGN.md](design-md/kai-ryokan/DESIGN.md) | [preview.html](design-md/kai-ryokan/preview.html) |
+| [NIPPONIA](https://team.nipponia.or.jp/) | Regional Revitalization / Historic Architecture | [DESIGN.md](design-md/nipponia/DESIGN.md) | [preview.html](design-md/nipponia/preview.html) |
+| [MICIN (マイシン)](https://micin.jp/) | Healthcare / Digital Health | [DESIGN.md](design-md/micin/DESIGN.md) | [preview.html](design-md/micin/preview.html) |
+| [The Japan Folk Crafts Museum (日本民藝館)](https://mingeikan.or.jp/) | Museum / Folk Crafts | [DESIGN.md](design-md/mingeikan/DESIGN.md) | [preview.html](design-md/mingeikan/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (565 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (568 sites)</a>
 </p>
 
 <table>
@@ -2338,6 +2346,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>界</strong><br><img src="design-md/kai-ryokan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>NIPPONIA</strong><br><img src="design-md/nipponia/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>MICIN</strong><br><img src="design-md/micin/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>日本民藝館</strong><br><img src="design-md/mingeikan/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

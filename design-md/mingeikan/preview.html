@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 日本民藝館（The Japan Folk Crafts Museum）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Noto+Sans+JP:wght@400;500&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties の自社トークンは 0 個（60 個すべて WordPress / Gutenberg の preset）。
+       以下は computed style と CSS 全文の実測値。2026-10-13 */
+    --ink-face:  #222222;   /* ナビの現在地・フッター全面 */
+    --bar:       #444444;   /* ★3 カラムの見出し帯（可視 6 要素）。唯一の構造的な面色 */
+    --sunday:    #f1503a;   /* ★カレンダーの日曜・休館日だけ（可視 6 要素）。唯一の彩度 */
+    --black:     #000000;   /* ★見出し・本文。純黒を使う（トップ 42 要素） */
+    --body:      #333333;   /* 補足テキスト（トップ 30 要素） */
+    --white:     #ffffff;
+    --muted:     #999999;   /* カレンダーの休館日・枠線 */
+    --surface:   #eeeeee;   /* カレンダーのヘッダ行・展示カード（可視 9 要素） */
+    --surface2:  #dddddd;   /* 休館日セル（可視 16 要素の文字色／4 要素の面） */
+    --surface3:  #f6f6f6;   /* 施設案内の面 */
+    --divider:   #cccccc;   /* サブメニューの面 */
+    --bg:        #fdfbfa;   /* ★ページ背景。純白ではなく、わずかに温かい生成り */
+
+    /* === Fonts ===
+       役割で 3 書体に分ける。
+       実サイトの本文スタックは先頭に Roboto があるが、フォントファイルを 1 件も
+       要求していない（73 件すべて Shippori Mincho / Noto Sans JP / Cinzel）。
+       Roboto を持たない環境では素通りするので、下では外してある。
+       游ゴシックの Windows 対策は「Medium を Regular より前に置く」スタック順で解いている。 */
+    --font-mincho:   "Shippori Mincho", serif;
+    --font-gothic:   "Noto Sans JP", "游ゴシック Medium", "Yu Gothic Medium",
+                     游ゴシック体, YuGothic, "Hiragino Sans",
+                     "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",
+                     メイリオ, Meiryo, "Meiryo UI", sans-serif;
+    --font-calendar: Cinzel, serif;
+    --font-mono:     SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===
+       html { line-height: 1 }（無単位）が全要素に降りる。
+       宣言し忘れると行が潰れる。実測 比率 1.00 がトップ 28 要素 / 下層 35 要素。 */
+    --lh-body:  2.00;   /* 本文 13px / 26px */
+    --lh-ui:    1.50;   /* UI（トップ 44 要素で最多） */
+    --lh-card:  1.30;   /* カード（トップ 19 / 下層 20 要素） */
+    --lh-head:  1.20;   /* 見出し */
+    --lh-title: 1.40;   /* ページタイトル */
+
+    /* === Letter spacing ===
+       可視要素の全件が normal。トップ 123/123、下層 87/87。例外は 1 件も無い。
+       CSS 全文の宣言も 4 件だけで、うち 2 件は 0px に戻すもの。 */
+    --ls: normal;
+
+    --r: 0px;        /* 既定。例外は TOPへ の 4px とカレンダー両端だけ */
+    --r-float: 4px;
+
+    --shadow1: rgba(0,0,0,.2) 0 1px 3px;      /* カード（1 要素） */
+    --shadow2: rgba(0,0,0,.2) 0 8px 8px -8px; /* 固定ヘッダ下の落ち影（1 要素） */
+
+    --container: 1200px;
+    --gutter:    40px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 100%; }   /* = 16px。6 幅すべてで固定。流体スケールは使わない */
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-gothic);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    /* font-feature-settings の宣言は実サイトで 0 件。palt も halt も使わない。
+       YakuHan 系の約物サブセットも読み込んでいない。約物は全角幅のまま出る。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { background: var(--bg); border-bottom: 1px solid var(--surface2); }
+  .header-inner { display: flex; align-items: flex-end; gap: 36px; max-width: var(--container); margin: 0 auto; padding: 18px var(--gutter); }
+  .logo { text-decoration: none; color: var(--black); }
+  .logo-ja { font-family: var(--font-mincho); font-size: 26px; font-weight: 700; line-height: var(--lh-head); letter-spacing: .08em; }
+  .logo-en { font-family: var(--font-calendar); font-size: 10px; line-height: var(--lh-ui); color: var(--body); margin-top: 3px; }
+  .header-nav { display: flex; gap: 26px; margin-left: auto; }
+  .header-nav a { font-family: var(--font-mincho); font-size: 14px; font-weight: 700; line-height: var(--lh-ui); color: var(--black); text-decoration: none; }
+
+  /* SECTIONS */
+  .section { padding: 60px var(--gutter); max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface3); }
+  .section-alt .section-inner { padding: 60px var(--gutter); max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-ui); color: var(--muted); margin-bottom: 8px; }
+  .eyebrow { font-family: var(--font-calendar); font-size: 13px; font-weight: 600; line-height: var(--lh-ui); color: var(--body); }
+  .section-title { font-family: var(--font-mincho); font-size: 24px; font-weight: 400; line-height: var(--lh-title); color: var(--black); margin: 8px 0 16px; }
+  .section-lead { font-size: 13px; line-height: var(--lh-body); color: var(--body); max-width: 860px; margin-bottom: 30px; }
+  .note { font-size: 13px; line-height: var(--lh-body); color: var(--body); margin-top: 20px; max-width: 860px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surface); padding: 1px 5px; }
+
+  /* COLUMN HEAD（3 カラムの帯） */
+  .colhead { background: var(--bar); color: var(--white); font-family: var(--font-mincho); font-size: 14px; font-weight: 400; line-height: var(--lh-ui); padding: 8px 14px; border-radius: var(--r); }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--surface2); background: var(--white); border-radius: var(--r); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-family: var(--font-mincho); font-size: 14px; font-weight: 700; line-height: var(--lh-ui); color: var(--black); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-ui); color: var(--muted); margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: var(--lh-card); color: var(--body); margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--surface2); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; line-height: 1.75; color: var(--muted); }
+  .type-meta b { font-weight: 700; color: var(--black); }
+  .type-meta > b:first-child { display: block; font-family: var(--font-gothic); font-size: 13px; font-weight: 500; line-height: var(--lh-ui); color: var(--black); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; align-items: baseline; }
+  .scale-bar span { background: var(--surface); padding: 8px 14px; line-height: var(--lh-ui); border-radius: var(--r); }
+
+  /* CALENDAR */
+  .cal { border-collapse: collapse; margin-top: 18px; }
+  .cal caption { font-family: var(--font-calendar); font-size: 18px; font-weight: 700; line-height: var(--lh-head); color: var(--black); padding-bottom: 10px; }
+  .cal th { background: var(--surface); border: 1px solid var(--muted); font-family: var(--font-calendar); font-size: 12px; font-weight: 600; line-height: 18px; color: var(--body); padding: 3px 0; width: 54px; }
+  .cal th.sun { color: var(--sunday); }
+  .cal td { background: var(--white); border: 1px solid var(--muted); font-family: var(--font-calendar); font-size: 13px; font-weight: 700; line-height: 19.5px; color: var(--black); padding: 8px 0; text-align: center; }
+  .cal td.closed { background: var(--surface2); color: var(--muted); }
+  .cal td.sun { color: var(--sunday); }
+  .cal tr td:first-child { border-radius: 4px 0 0 4px; }
+  .cal tr td:last-child  { border-radius: 0 4px 4px 0; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .btn { cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+  /* 実サイトでは本文の上に浮くので、地色が透けて見える前提の rgba。
+     ここでは地色が分かるよう、コンテンツ相当の暗い面に載せて見せている。 */
+  .float-stage { display: inline-flex; background: linear-gradient(160deg,#6f6256,#3b342c); padding: 14px 18px; border-radius: var(--r); }
+  .btn-float { background: rgba(0,0,0,.5); color: var(--white); font-family: var(--font-gothic); font-size: 13px; font-weight: 400; line-height: var(--lh-ui); padding: 10px 12px 12px 30px; border-radius: var(--r-float); border: 0; }
+  .btn-subnav { background: var(--divider); color: var(--ink-face); font-family: var(--font-mincho); font-size: 13px; font-weight: 400; line-height: 18.2px; padding: 12px 20px; border-radius: var(--r); border: 0; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .card { background: var(--surface); border-radius: var(--r); padding: 0 0 18px; text-decoration: none; display: block; color: var(--black); }
+  .card.is-raised { box-shadow: var(--shadow1); }
+  .card-img { height: 150px; background: linear-gradient(160deg,#cfc4b4,#9d9083); }
+  .card-body { padding: 14px 16px 0; }
+  .card-title { font-family: var(--font-mincho); font-size: 13px; font-weight: 700; line-height: var(--lh-ui); }
+  .card-sub { font-family: var(--font-mincho); font-size: 12px; font-weight: 700; line-height: var(--lh-card); color: var(--body); margin-top: 6px; }
+  .card-date { font-size: 12px; font-weight: 500; line-height: var(--lh-card); color: var(--body); margin-top: 10px; }
+  .card-more { font-size: 10px; line-height: var(--lh-card); color: var(--body); margin-top: 10px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .field label { display: block; font-family: var(--font-mincho); font-size: 14px; font-weight: 700; line-height: var(--lh-ui); color: var(--black); margin-bottom: 8px; }
+  .field input { width: 100%; background: var(--white); color: var(--black); border: 1px solid var(--muted); border-radius: var(--r); padding: 11px 13px; height: 46px; font-size: 13px; line-height: var(--lh-ui); font-family: var(--font-gothic); }
+  .field.is-focus input { outline: 2px solid var(--ink-face); }
+  .field.is-error input { outline: 2px solid var(--sunday); border-color: var(--sunday); }
+  .field-msg { font-size: 12px; line-height: var(--lh-ui); color: var(--body); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--sunday); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
+  .elev { background: var(--white); border: 1px solid var(--surface2); padding: 26px; text-align: center; border-radius: var(--r); }
+  .elev.e1 { box-shadow: var(--shadow1); border-color: transparent; }
+  .elev.e2 { box-shadow: var(--shadow2); border-color: transparent; }
+  .elev-name { font-family: var(--font-mincho); font-size: 16px; font-weight: 700; line-height: var(--lh-ui); color: var(--black); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-ui); color: var(--muted); margin-top: 8px; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--surface); height: 36px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; line-height: var(--lh-ui); color: var(--body); }
+
+  /* FOOTER */
+  .footer { background: var(--ink-face); color: var(--white); padding: 40px var(--gutter); }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-family: var(--font-mincho); font-size: 16px; font-weight: 700; line-height: var(--lh-card); }
+  .footer-cols { display: flex; gap: 48px; margin-top: 20px; flex-wrap: wrap; }
+  .footer-col a { display: block; font-size: 9px; line-height: 2.2; color: var(--white); text-decoration: none; opacity: .85; }
+  .footer-copy { font-size: 9px; line-height: var(--lh-head); margin-top: 28px; opacity: .7; }
+
+  @media (max-width: 735px) {
+    :root { --gutter: 20px; }
+    .section, .section-alt .section-inner, .footer { padding-left: 20px; padding-right: 20px; }
+    .section { padding-top: 40px; padding-bottom: 40px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-ja">日本民藝館</div>
+      <div class="logo-en">The Japan Folk Crafts Museum</div>
+    </a>
+    <nav class="header-nav">
+      <a href="#">展示</a><a href="#">日本民藝館について</a><a href="#">建物について</a><a href="#">所蔵品</a><a href="#">会員制度</a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="eyebrow">Colors</div>
+  <h2 class="section-title">黒とグレーの階調だけ</h2>
+  <p class="section-lead">ブランドカラーと呼べる面色は無い。黒（<code>#222222</code> / <code>#444444</code>）とグレーの階調だけで組み、<b>赤 <code>#f1503a</code> は暦の意味づけ（日曜・休館日）にしか使わない</b>。ページ背景は純白ではなく、わずかに温かい <b><code>#fdfbfa</code></b>。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#444444"></div><div class="swatch-body"><div class="swatch-name">Section Bar</div><div class="swatch-hex">#444444</div><div class="swatch-use">★3 カラムの見出し帯（可視 6 要素）。構造を揃える唯一の面色</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#222222"></div><div class="swatch-body"><div class="swatch-name">Ink（面）</div><div class="swatch-hex">#222222</div><div class="swatch-use">ナビの現在地・フッター全面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f1503a"></div><div class="swatch-body"><div class="swatch-name">Sunday Red</div><div class="swatch-hex">#f1503a</div><div class="swatch-use">★カレンダーの日曜・休館日だけ（可視 6 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div><div class="swatch-use">★見出し・本文（トップ 42 / 下層 36 要素）。純黒を使う</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Body</div><div class="swatch-hex">#333333</div><div class="swatch-use">補足テキスト（トップ 30 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#999999"></div><div class="swatch-body"><div class="swatch-name">Muted / 罫線</div><div class="swatch-hex">#999999</div><div class="swatch-use">カレンダーの枠線・休館日の文字</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eeeeee"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#eeeeee</div><div class="swatch-use">カレンダーのヘッダ行・展示カード（可視 9 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#fdfbfa;border-bottom:1px solid #dddddd"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#fdfbfa</div><div class="swatch-use">★ページ背景。純白ではない生成り（根拠 body）</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">Typography</div>
+  <h2 class="section-title">詰めない、空けない</h2>
+  <p class="section-lead"><b><code>letter-spacing</code> は可視要素の全件で <code>normal</code>。</b>トップ 123/123 要素、下層 87/87 要素で、例外は 1 件も無い。CSS 全文の宣言も <b>4 件</b>しかなく、うち 2 件は <code>0px</code> に戻すもの。<b><code>font-feature-settings</code> の宣言も 0 件</b>で、<code>palt</code> も <code>halt</code> も YakuHan 系の約物サブセットも使っていない。<b>約物（<code>、。「」（）</code>）は全角幅のまま出る。</b></p>
+
+  <div class="scale-bar">
+    <span style="font-size:9px">9</span><span style="font-size:10px">10</span><span style="font-size:11px">11</span>
+    <span style="font-size:12px">12</span><span style="font-size:13px">13</span><span style="font-size:14px">14</span>
+    <span style="font-size:16px">16</span><span style="font-size:18px;font-family:var(--font-mincho);font-weight:700">18</span>
+    <span style="font-size:24px;font-family:var(--font-mincho)">24</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Page Title ★</b>Shippori Mincho / 24px / 400<br>lh 1.40 / ls normal</div><div style="font-family:var(--font-mincho);font-size:24px;line-height:1.4;color:var(--black)">柳宗悦と日本民藝館</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav</b>Shippori Mincho / 14px / <b>700</b><br>lh 1.50</div><div style="font-family:var(--font-mincho);font-size:14px;font-weight:700;line-height:1.5;color:var(--black)">日本民藝館について ／ 建物について ／ 所蔵品</div></div>
+  <div class="type-row"><div class="type-meta"><b>Column Head</b>Shippori Mincho / 14px / 400<br>白抜き・#444444 の帯</div><div><span class="colhead">開催中</span> <span class="colhead">お知らせ</span> <span class="colhead">開館日カレンダー</span></div></div>
+  <div class="type-row"><div class="type-meta"><b>Exhibition Title</b>Shippori Mincho / 13px / <b>700</b><br>lh 1.50</div><div style="font-family:var(--font-mincho);font-size:13px;font-weight:700;line-height:1.5;color:var(--black)">創設90年記念 琉球王国の染織</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>Noto Sans JP / 13px / 400<br>lh <b>2.00</b> / ls normal（可視 45 要素）</div><div style="font-size:13px;line-height:2;color:var(--black)">柳宗悦は、無名の工人たちがつくる日用の器物のなかに健康な美を見出し、それを「民藝」と名づけました。日本民藝館は、その蒐集品を公開するために 1936 年に開設されています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>Noto Sans JP / 16px / 400<br>lh 1.50</div><div style="font-size:16px;line-height:1.5;color:var(--black)">2026年度 日本民藝館展 ― 新作工藝公募展 ―</div></div>
+  <div class="type-row"><div class="type-meta"><b>Date</b>Noto Sans JP / 12px / 400・500<br>lh 1.30</div><div style="font-size:12px;font-weight:500;line-height:1.3;color:var(--body)">2026年8月22日（土）― 11月3日（火・祝）</div></div>
+  <div class="type-row"><div class="type-meta"><b>Caption</b>Noto Sans JP / 10px / 400<br>lh 1.30（可視 18 要素）</div><div style="font-size:10px;line-height:1.3;color:var(--body)">詳しくはこちら</div></div>
+  <div class="type-row"><div class="type-meta"><b>Calendar ★</b>Cinzel / 12px・13px / 600・700<br>lh 18px・19.5px</div><div style="font-family:var(--font-calendar);font-size:13px;font-weight:700;line-height:1.5;color:var(--black)"><span style="color:var(--sunday)">Sun</span> Mon Tue Wed Thu Fri Sat　<span style="font-size:13px">1 2 3 4 5</span></div></div>
+
+  <p class="note"><b>「見出しほど太い」が成り立つのは明朝と欧文だけ。</b>可視の <code>700</code> はトップ 59 要素のうち <b>Cinzel 31 ＋ Shippori Mincho 25</b>。<b>ゴシックスタック（Noto Sans JP）の葉要素に <code>700</code> は 1 件も無く</b>、<code>document.fonts</code> 上も <code>Noto Sans JP 700</code> は <code>unloaded</code>。<b>本文を太字にしたいときは、ウェイトを上げずに Shippori Mincho へ切り替えるのがこのサイトの流儀。</b></p>
+
+  <p class="note"><b><code>html { font-size: 100%; line-height: 1 }</code>。</b>ルートは 6 幅（1440 / 1200 / 834 / 768 / 767 / 375px）すべてで <b>16px 固定</b>で、流体スケールもブレークポイントごとのルート切替も使っていない。一方で無単位の <code>1</code> が全要素に降りるため、<b>行間を宣言し忘れた要素は行が潰れる</b>（実測 比率 <code>1.00</code> がトップ 28 要素 / 下層 <b>35 要素</b>）。</p>
+
+  <p class="note"><b>実サイトはこうだが、正しくはこう</b> —— 本文スタックの先頭は <code>Roboto</code> だが、<b>フォントファイルを 1 件も要求していない</b>（73 件すべて Shippori Mincho / Noto Sans JP / Cinzel）。Roboto を持たない環境（macOS 既定）では素通りし、英数字も Noto Sans JP で出る。<b>読み込むか、落とすなら削ること。</b><br>なお <code>Barlow Semi Condensed</code> も <code>@font-face</code> で宣言されているが <code>unloaded</code>・可視 0 要素。</p>
+</div>
+</section>
+
+<section class="section" id="calendar">
+  <div class="section-label">03 / Calendar</div>
+  <div class="eyebrow">Calendar</div>
+  <h2 class="section-title">暦だけ、別の書体で</h2>
+  <p class="section-lead">曜日と日付だけ <b><code>Cinzel, serif</code></b>（ローマン体の欧文）で組む。トップで 38 要素。<b>カレンダーだけ別書体というのがこのサイトの指紋。</b>和文と混ぜない。</p>
+
+  <table class="cal">
+    <caption>« 2026 / 10 »</caption>
+    <tr><th class="sun">Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+    <tr><td class="closed"></td><td class="closed"></td><td class="closed"></td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><td class="sun">5</td><td class="closed">6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td></tr>
+    <tr><td class="sun">12</td><td class="closed">13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td></tr>
+    <tr><td class="sun">19</td><td class="closed">20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td></tr>
+  </table>
+
+  <p class="note"><b>角丸は行の両端だけ。</b><code>4px 0 0 4px</code> / <code>0 4px 4px 0</code> を各 1 要素に当てている。セルの枠は <code>1px solid #999999</code>、ヘッダ行は <code>#eeeeee</code>、休館日は <code>#dddddd</code> の面に <code>#999999</code> の文字。</p>
+</section>
+
+<section class="section-alt" id="components">
+<div class="section-inner">
+  <div class="section-label">04 / Components</div>
+  <div class="eyebrow">Components</div>
+  <h2 class="section-title">罫線と面で区切る</h2>
+  <p class="section-lead">角丸は <b>0 が既定</b>。例外は <code>TOPへ</code> の <code>4px</code> とカレンダー両端だけ。<b>影は 2 種類・各 1 要素しかない。</b>階層は罫線（<code>#999999</code>）と面（<code>#eeeeee</code> / <code>#dddddd</code> / <code>#f6f6f6</code>）で作る。</p>
+
+  <div class="btn-grid">
+    <span class="float-stage"><button class="btn btn-float">TOPへ</button></span>
+    <a href="#" class="btn btn-subnav">柳宗悦と日本民藝館</a>
+    <a href="#" class="btn btn-subnav">沿革</a>
+    <span class="colhead">開催中</span>
+  </div>
+
+  <h3 style="font-family:var(--font-mincho);font-size:16px;font-weight:700;line-height:1.5;color:var(--black);margin:36px 0 14px">Cards</h3>
+  <div class="card-grid">
+    <a href="#" class="card is-raised"><div class="card-img"></div><div class="card-body"><div class="card-title">創設90年記念 琉球王国の染織</div><div class="card-sub">尚家関連品と護得久家伝来品</div><div class="card-date">2026年8月22日（土）― 11月3日（火・祝）</div><div class="card-more">詳しくはこちら</div></div></a>
+    <a href="#" class="card"><div class="card-img" style="background:linear-gradient(160deg,#b9c3bd,#7f8b85)"></div><div class="card-body"><div class="card-title">2026年度 日本民藝館展</div><div class="card-sub">新作工藝公募展</div><div class="card-date">2026年11月22日（日）― 12月17日（水）</div><div class="card-more">詳しくはこちら</div></div></a>
+    <a href="#" class="card"><div class="card-img" style="background:linear-gradient(160deg,#cdbfa8,#8e7f6c)"></div><div class="card-body"><div class="card-title">西館（旧柳宗悦邸）公開日</div><div class="card-sub">本館と併せてご覧いただけます</div><div class="card-date">2026年10月12日</div><div class="card-more">詳しくはこちら</div></div></a>
+  </div>
+
+  <h3 style="font-family:var(--font-mincho);font-size:16px;font-weight:700;line-height:1.5;color:var(--black);margin:36px 0 14px">Inputs</h3>
+  <p class="note" style="margin-top:0;margin-bottom:16px">実測した 2 ページに入力欄が無い。<b>角丸 0 ＋ <code>1px solid #999999</code> のカレンダーの罫線に合わせる。</b>ラベルは Shippori Mincho、入力値は Noto Sans JP。</p>
+  <div class="form-grid">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" placeholder="柳 宗悦"><div class="field-msg">全角でご記入ください</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス（フォーカス）</label><input id="f2" type="text" value="info@example.jp"><div class="field-msg">ご予約の確認をお送りします</div></div>
+    <div class="field is-error"><label for="f3">ご来館日（エラー）</label><input id="f3" type="text" value=""><div class="field-msg">休館日は選択できません</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">05 / Elevation &amp; Layout</div>
+  <div class="eyebrow">Layout</div>
+  <h2 class="section-title">1200px の 3 カラム</h2>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">none ／ 既定。ほぼ全要素</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">rgba(0,0,0,.2) 0 1px 3px ／ カード 1 要素</div></div>
+    <div class="elev e2"><div class="elev-name">Level 2</div><div class="elev-val">rgba(0,0,0,.2) 0 8px 8px -8px ／ 固定ヘッダ下 1 要素</div></div>
+  </div>
+
+  <div class="layout-demo" style="margin-top:44px">
+    <div class="layout-bar" style="width:100%">max-width 1200px（実測 6 要素）</div>
+    <div class="layout-bar" style="width:93%">padding-left/right 40px（最多・3 要素）／ 内側 20px</div>
+    <div class="layout-bar" style="width:72%">3 カラム（開催中 ／ お知らせ ／ 開館日カレンダー）</div>
+  </div>
+
+  <p class="note"><b>ブレークポイントは実質 2 段階。</b>CSS 全文の <code>@media</code> は <code>max-width: 735px</code> が <b>102 宣言</b>と圧倒的で、ここで 3 カラムを 1 カラムへ落とす。次が <code>1200px</code> の 6 宣言（<code>max-width</code> の折り返し）。<b><code>html</code> は全幅で 16px のまま動かない。</b></p>
+
+  <p class="note"><b>タッチターゲットが 44px に届いていない。</b>カレンダーのセルは <code>padding: 8px 0</code> ＋ 行高 19.5px ＝ <b>約 36px</b>、サブナビは <code>padding: 12px 20px</code> ＋ 行高 18.2px ＝ <b>約 42px</b>。新規実装では縦 padding を足して 44px を確保すること。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">公益財団法人 日本民藝館</div>
+    <div class="footer-cols">
+      <div class="footer-col"><a href="#">開館時間・入館料</a><a href="#">開館日カレンダー</a><a href="#">交通案内</a></div>
+      <div class="footer-col"><a href="#">日本民藝館について</a><a href="#">建物について</a><a href="#">所蔵品</a></div>
+      <div class="footer-col"><a href="#">会員制度</a><a href="#">寄付のお願い</a><a href="#">サイトポリシー</a><a href="#">サイトマップ</a></div>
+    </div>
+    <div class="footer-copy">実測日 2026-10-13 ／ mingeikan.or.jp ・ /about/soetsu/ の computed style に基づく</div>
+  </div>
+</footer>
+
+</body>
+</html>
