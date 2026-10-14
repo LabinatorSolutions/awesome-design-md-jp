@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (568 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (571 sites)</a>
 </p>
 
 <table>
@@ -876,6 +876,11 @@
 </tr>
 <tr>
 <td align="center"><strong>日本民藝館</strong><br><img src="design-md/mingeikan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大塚製薬</strong><br><img src="design-md/otsuka/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>エスビー食品</strong><br><img src="design-md/sbfoods/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>沖縄県立博物館・美術館</strong><br><img src="design-md/okimu/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1505,11 +1510,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [NIPPONIA](https://team.nipponia.or.jp/) | Regional Revitalization / Historic Architecture | [DESIGN.md](design-md/nipponia/DESIGN.md) | [preview.html](design-md/nipponia/preview.html) |
 | [MICIN (マイシン)](https://micin.jp/) | Healthcare / Digital Health | [DESIGN.md](design-md/micin/DESIGN.md) | [preview.html](design-md/micin/preview.html) |
 | [The Japan Folk Crafts Museum (日本民藝館)](https://mingeikan.or.jp/) | Museum / Folk Crafts | [DESIGN.md](design-md/mingeikan/DESIGN.md) | [preview.html](design-md/mingeikan/preview.html) |
+| [大塚製薬 (Otsuka Pharmaceutical)](https://www.otsuka.co.jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/otsuka/DESIGN.md) | [preview.html](design-md/otsuka/preview.html) |
+| [エスビー食品 (S&B Foods)](https://www.sbfoods.co.jp/) | Food & Beverage / Corporate | [DESIGN.md](design-md/sbfoods/DESIGN.md) | [preview.html](design-md/sbfoods/preview.html) |
+| [沖縄県立博物館・美術館 (Okinawa Prefectural Museum and Art Museum)](https://okimu.jp/) | Museum / Public | [DESIGN.md](design-md/okimu/DESIGN.md) | [preview.html](design-md/okimu/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (568 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (571 sites)</a>
 </p>
 
 <table>
@@ -2351,6 +2359,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>日本民藝館</strong><br><img src="design-md/mingeikan/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>大塚製薬</strong><br><img src="design-md/otsuka/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>エスビー食品</strong><br><img src="design-md/sbfoods/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>沖縄県立博物館・美術館</strong><br><img src="design-md/okimu/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

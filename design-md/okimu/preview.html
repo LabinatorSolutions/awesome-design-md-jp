@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 沖縄県立博物館・美術館（おきみゅー）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個。背景色 4 スキームは
+       クラス前置きのルールを数十本手書きして実現している。2026-10-14 */
+    --museum:    #053b7b;   /* ★博物館ブルー。可視 11 要素。色が機能ラベル */
+    --art:       #b23730;   /* ★美術館レッド。可視 9 要素 */
+    --lang:      #7c2622;   /* 言語切替のドロップダウン（可視 4 要素） */
+    --gold:      #d9a300;   /* 「イベント一覧」ボタンの面 */
+    --beige:     #e6cdb8;   /* 講座・講演会のタグ（可視 10 要素） */
+    --sand:      #dfceb2;   /* 「開催中」ラベル（可視 4 要素） */
+    --sand-dark: #dad0ad;   /* LANGUAGE ボタンの面 */
+    --gray-sand: #a5a597;   /* 「今後開催」ラベル */
+    --bg:        #ffffff;   /* pageBackground.resolved / 根拠 body */
+    --text:      #000000;   /* 本文（可視 76 要素） */
+    --text-2:    #555555;   /* ★最多の文字色。見出しラベル（可視 42 要素） */
+    --text-3:    #666666;   /* パンくず（可視 9 要素） */
+    --text-nav:  #221813;   /* グローバルナビ（可視 5 要素） */
+    --teal:      #008c8c;   /* 下層の Features 見出し（可視 7 要素） */
+    --border:    #cccccc;
+    --on-dark:   #ffffff;
+
+    /* 背景色スキーム（アクセシビリティ切替）
+       ★青だけスウォッチ(#06438c)と実際の配色(#0000bb)が一致していない。実装の実態。 */
+    --sw-white:  #ffffff;
+    --sw-black:  #000000;
+    --sw-yellow: #ffbf00;
+    --sw-blue:   #06438c;   /* ボタンの面色 */
+    --bg-blue:   #0000bb;   /* 実際に body に適用される色 */
+
+    /* === Fonts ===
+       ★和文 Web フォントは 1 本も無い。フォント要求は 3 件で、Open Sans の
+         2 サブセットと slick.woff（カルーセルのアイコン）だけ。和文は OS ローカル。
+       実サイトのスタックは Medium を含まないため Windows では細く出る。
+       下の --font-body は実サイトのまま。--font-fixed が推奨の直し方。 */
+    --font-body:  "Open Sans", 游ゴシック, YuGothic, メイリオ, Meiryo,
+                  "ＭＳ Ｐゴシック", sans-serif;
+    --font-fixed: "Open Sans", "游ゴシック Medium", "Yu Gothic Medium",
+                  游ゴシック, YuGothic, メイリオ, Meiryo, sans-serif;
+    --font-mono:  SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: 比率で書く（% 組版と組み合わせるため） === */
+    --lh:       1.6;    /* ★101 要素 / 下層 64 要素で最多 */
+    --lh-head:  1.4;    /* 見出し 20 要素 */
+    --lh-body:  1.8;    /* 下層の本文 14 要素 */
+    --lh-tight: 1.2;    /* 切替ボタン 10 要素 */
+
+    /* === Letter spacing: 全要素 normal（170/170・113/113）=== */
+    --ls: normal;
+
+    --r:    4px;    /* 切替ボタン */
+    --r-tag:3px;    /* カテゴリタグ */
+    --r-cta:10px;   /* イベント CTA */
+    --shadow-inset: 2px 2px 8px rgba(0, 0, 0, 0.2) inset;  /* ★サイト唯一の影・内側 */
+
+    --container: 1200px;
+    --wide:      1500px;
+    --column:    860px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;      /* = ラッパーの 100%。実サイトは 6 幅すべてでこの値 */
+    font-weight: 400;     /* 実サイトは 500 を当てているが Open Sans は 400/600 しか読んでいない */
+    line-height: var(--lh);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は実サイトで 0 件。palt も halt も使っていない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); }
+  .header-inner { max-width: var(--wide); margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-nav); }
+  .logo-mark { width: 40px; height: 28px; border: 2px solid var(--museum); border-bottom-color: var(--art); border-radius: 14px 14px 0 0; }
+  .logo-tag { font-size: 11.7px; line-height: 1.4; color: var(--text-2); }
+  .logo-name { font-size: 20px; line-height: 1.3; }
+  .logo-en { font-family: "Open Sans", sans-serif; font-size: 10.08px; line-height: 1.4; color: var(--text-2); }
+  .facility { display: flex; gap: 10px; }
+  .fac { padding: 10px 26px; font-size: 14px; line-height: var(--lh); color: var(--on-dark); text-decoration: none; }
+  .fac.museum { background: var(--museum); }
+  .fac.art { background: var(--art); }
+
+  /* A11Y SWITCHER — このサイトの主役 */
+  .a11y { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+  .a11y-group { display: flex; align-items: center; gap: 5px; }
+  .a11y-ttl { font-size: 11.7px; line-height: var(--lh-tight); color: var(--text-2); }
+  .sw { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; padding: 3px 4px; border-radius: var(--r); font-size: 11.7px; line-height: var(--lh-tight); text-decoration: none; cursor: pointer; font-family: var(--font-body); }
+  .sw-std { background: #999999; color: var(--on-dark); font-weight: 700; border: none; }
+  .sw-big { background: #dddddd; color: var(--text); font-weight: 700; border: none; }
+  .sw-white  { background: var(--sw-white);  color: #000000; border: 1px solid var(--border); }
+  .sw-black  { background: var(--sw-black);  color: #ffffff; border: 1px solid var(--sw-black); }
+  .sw-yellow { background: var(--sw-yellow); color: #000000; border: 1px solid var(--sw-yellow); }
+  .sw-blue   { background: var(--sw-blue);   color: #ffffff; border: 1px solid var(--sw-blue); }
+  .lang-btn { background: var(--sand-dark); color: var(--text); padding: 5px 33px 5px 20px; font-size: 10.08px; line-height: var(--lh); border: none; font-family: var(--font-body); }
+
+  /* SECTION */
+  .section { max-width: var(--container); margin: 0 auto; padding: 54px 24px; }
+  .section-alt { background: #faf8f5; }
+  .section-alt .section-inner { max-width: var(--container); margin: 0 auto; padding: 54px 24px; }
+  .section-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); line-height: 1.6; }
+  .eyebrow { display: inline-block; font-family: "Open Sans", sans-serif; font-size: 12px; font-weight: 600; line-height: 1; padding-bottom: 5px; border-bottom: 3px solid var(--museum); margin-top: 10px; color: var(--teal); }
+  .section-title { font-size: 29.8656px; line-height: var(--lh-head); margin: 14px 0 16px; }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); margin-bottom: 34px; max-width: var(--column); }
+  .note { font-size: 14.08px; line-height: 1.9; color: var(--text-2); margin-top: 22px; max-width: var(--column); }
+  code { font-family: var(--font-mono); font-size: 12px; background: #f0eeea; padding: 1px 5px; border-radius: 3px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .swatch { background: var(--bg); border: 1px solid var(--border); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px 14px 15px; }
+  .swatch-name { font-size: 14px; font-weight: 600; line-height: 1.5; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: 1.7; color: var(--text-2); margin-top: 7px; overflow-wrap: anywhere; }
+
+  /* SCHEME DEMO — 4スキームを静的に並べる */
+  .scheme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .scheme { padding: 20px 22px 24px; border: 1px solid var(--border); }
+  .scheme-ttl { font-size: 14px; font-weight: 600; line-height: var(--lh); }
+  .scheme-meta { font-family: var(--font-mono); font-size: 11px; line-height: 1.7; margin-top: 6px; opacity: .85; }
+  .scheme-body { font-size: 14.08px; line-height: var(--lh); margin-top: 12px; }
+  .scheme-chip { display: inline-block; margin-top: 12px; padding: 5px 10px; font-size: 13px; line-height: var(--lh); }
+  /* 白（既定）— 面を塗る */
+  .scheme.s-white { background: #ffffff; color: #000000; }
+  .scheme.s-white .scheme-chip { background: var(--beige); color: #000000; border-radius: var(--r-tag); }
+  /* ★ハイコントラストの3スキームは面塗りをやめて罫線に置き換える */
+  .scheme.s-black  { background: #000000; color: #ffffff; }
+  .scheme.s-yellow { background: #ffbf00; color: #000000; }
+  .scheme.s-blue   { background: #0000bb; color: #ffffff; }
+  .scheme.s-black .scheme-chip,
+  .scheme.s-yellow .scheme-chip,
+  .scheme.s-blue .scheme-chip { background: none; border: 1px dotted; color: inherit; border-radius: 0; }
+
+  /* PERCENT LADDER */
+  .pct-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .pct-table th, .pct-table td { text-align: left; padding: 7px 14px 7px 0; border-bottom: 1px solid var(--border); font-size: 14.08px; line-height: var(--lh); }
+  .pct-table th { font-weight: 600; width: 150px; }
+  .pct-table td.m { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--text); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; align-items: baseline; }
+  .scale-bar span { background: #f0eeea; padding: 8px 14px; line-height: 1.5; }
+
+  /* VERTICAL — ★複数並べるときは row-reverse（DOM 順と読む向きを合わせる） */
+  /* 実サイトは 39px 幅の左カラムに縦組みの見出しと「一覧を見る」を縦に積み、右に一覧を置く */
+  .vert-wrap { display: flex; gap: 30px; align-items: flex-start; border: 1px solid var(--border); padding: 26px 30px; }
+  .vert-col { width: 39px; flex-shrink: 0; }
+  .vert-h2 { writing-mode: vertical-rl; font-size: 27.7328px; line-height: var(--lh-head); height: 132px; }
+  .vert-link { writing-mode: vertical-rl; font-size: 16px; line-height: var(--lh); height: 80px; color: var(--text-2); text-decoration: none; margin-top: 20px; }
+  .vert-list { flex: 1; }
+  .vert-item { display: flex; gap: 12px; align-items: baseline; padding: 9px 0; border-bottom: 1px dotted var(--border); }
+  .vert-date { font-family: "Open Sans", sans-serif; font-size: 14.9328px; line-height: var(--lh); color: var(--text-2); }
+  .vert-txt { font-size: 14.08px; line-height: var(--lh); }
+
+  /* BADGES / BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .mark { display: inline-flex; align-items: center; justify-content: center; padding: 5px; font-size: 13px; line-height: var(--lh); color: var(--on-dark); }
+  .mark.m-museum { background: var(--museum); }
+  .mark.m-art { background: var(--art); }
+  .mark.m-other { background: var(--text-2); }
+  .tag { display: inline-block; background: var(--beige); color: var(--text); border-radius: var(--r-tag); padding: 5px 10px; font-size: 13px; line-height: var(--lh); }
+  .status { display: inline-block; padding: 7px 10px; font-size: 15px; line-height: var(--lh); }
+  .status.now { background: var(--sand); color: var(--text); }
+  .status.soon { background: var(--gray-sand); color: var(--on-dark); }
+  .btn-event { background: var(--gold); color: var(--on-dark); border: none; border-radius: var(--r-cta); padding: 20px 30px 20px 20px; font-size: 19.2px; line-height: var(--lh); box-shadow: var(--shadow-inset); font-family: var(--font-body); cursor: pointer; }
+  .menu-card { display: block; background: var(--bg); color: var(--text); border: 1px solid var(--border); padding: 15px 14px; font-size: 14px; line-height: var(--lh); text-decoration: none; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin-top: 20px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 14px; font-weight: 600; line-height: var(--lh); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: var(--r);
+    padding: 12px 14px; font-size: 16px; line-height: var(--lh);
+    font-family: var(--font-body);
+  }
+  .field.is-focus input { outline: 2px solid var(--museum); border-color: var(--museum); }
+  .field.is-error input { outline: 2px solid var(--art); border-color: var(--art); }
+  .field-msg { font-size: 12px; line-height: 1.7; color: var(--text-2); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--art); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .elev { background: var(--bg); border: 1px solid var(--border); padding: 26px 20px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow-inset); border-color: transparent; background: var(--gold); color: var(--on-dark); }
+  .elev-name { font-size: 16px; font-weight: 600; line-height: var(--lh); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; margin-top: 8px; line-height: 1.6; }
+  .elev .elev-val { color: var(--text-2); }
+  .elev.e1 .elev-val { color: var(--on-dark); }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: #f0eeea; height: 38px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 32px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 70px; background: #f0eeea; border: 1px solid var(--border); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); margin-top: 8px; line-height: 1.6; }
+
+  /* FOOTER */
+  .footer { background: #f0eeea; margin-top: 30px; padding: 40px 24px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 16px; font-weight: 600; line-height: var(--lh); }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--text-3); text-decoration: none; }
+  .footer-copy { font-family: "Open Sans", sans-serif; font-size: 11px; line-height: 1.6; margin-top: 28px; color: var(--text-2); }
+
+  @media (max-width: 768px) {
+    .section, .section-alt .section-inner { padding: 40px 16px; }
+    .section-title { font-size: 22px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .a11y { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      <span>
+        <span class="logo-tag">あなたの沖縄に出会う</span><br>
+        <span class="logo-name">沖縄県立博物館・美術館</span><br>
+        <span class="logo-en">Okinawa Prefectural Museum and Art Museum</span>
+      </span>
+    </a>
+    <div class="facility">
+      <a href="#" class="fac museum">博物館</a>
+      <a href="#" class="fac art">美術館</a>
+    </div>
+    <div class="a11y">
+      <div class="a11y-group">
+        <span class="a11y-ttl">文字サイズ</span>
+        <button class="sw sw-std">標準</button><button class="sw sw-big">拡大</button>
+      </div>
+      <div class="a11y-group">
+        <span class="a11y-ttl">背景色</span>
+        <button class="sw sw-white">白</button><button class="sw sw-black">黒</button><button class="sw sw-yellow">黄</button><button class="sw sw-blue">青</button>
+      </div>
+      <button class="lang-btn">LANGUAGE</button>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="a11y">
+  <div class="section-label">01 / Accessibility</div>
+  <div class="eyebrow">Accessibility</div>
+  <h2 class="section-title">切替が設計の中心にある</h2>
+  <p class="section-lead">このサイトは<b>文字サイズ切替と背景色 4 スキーム切替</b>をヘッダーに常設し、<b>それが成立するように組版そのものを設計している</b>。文字サイズはラッパー <code>&lt;div style="font-size:100%"&gt;</code> の 1 箇所を JS が書き換え（<code>拡大</code> で <code>17px</code>）、背景色は <code>&lt;body&gt;</code> のクラスを差し替える。</p>
+
+  <h3 style="font-size:20px;line-height:1.5;margin:0 0 10px">背景色 4 スキーム</h3>
+  <div class="scheme-grid">
+    <div class="scheme s-white">
+      <div class="scheme-ttl">白（既定）</div>
+      <div class="scheme-meta">body.colors_rset<br>#ffffff / #000000</div>
+      <div class="scheme-body">面を塗ってよい唯一のスキーム。</div>
+      <span class="scheme-chip">美術講座</span>
+    </div>
+    <div class="scheme s-black">
+      <div class="scheme-ttl">黒</div>
+      <div class="scheme-meta">body.colors_black<br>#000000 / #ffffff</div>
+      <div class="scheme-body">面塗りをやめ、罫線に置き換える。</div>
+      <span class="scheme-chip">美術講座</span>
+    </div>
+    <div class="scheme s-yellow">
+      <div class="scheme-ttl">黄</div>
+      <div class="scheme-meta">body.colors_yellow<br>#ffbf00 / #000000</div>
+      <div class="scheme-body">面塗りをやめ、罫線に置き換える。</div>
+      <span class="scheme-chip">美術講座</span>
+    </div>
+    <div class="scheme s-blue">
+      <div class="scheme-ttl">青</div>
+      <div class="scheme-meta">body.colors_blue<br>★実際は #0000bb<br>（スウォッチは #06438c）</div>
+      <div class="scheme-body">面塗りをやめ、罫線に置き換える。</div>
+      <span class="scheme-chip">美術講座</span>
+    </div>
+  </div>
+
+  <p class="note"><b>ハイコントラストの3スキームでは <code>background: none; border: 1px solid/dotted; color: inherit;</code> に置き換える。</b>面色が消えるので、<b>影で階層を作る設計にはできない</b>（実サイトの影はサイト全体で内側影が 1 要素だけ）。<br>
+  <b>青だけスウォッチと配色が一致していない。</b>ボタンの面は <code>#06438c</code>、適用される背景は <code>#0000bb</code>。実装の実態なので両方記録するが、新規実装では揃える。</p>
+</section>
+
+<section class="section-alt" id="percent">
+<div class="section-inner">
+  <div class="section-label">02 / Sizing</div>
+  <div class="eyebrow">Percent Scale</div>
+  <h2 class="section-title">サイズを px ではなく % で組む</h2>
+  <p class="section-lead">CSS 全文で <code>font-size: %</code> が <b>226 箇所</b>、<code>px</code> は 87 箇所。<b>1px 刻みを % に換算した梯子</b>が並ぶ。子をすべて % / em で書いてあるから、<b>ラッパー 1 箇所を書き換えるだけでページ全体が連動して拡大する</b>。実測サイズに <code>14.08px</code> <code>21.3328px</code> <code>29.8656px</code> といった端数が並ぶのはこの入れ子の掛け算の結果。</p>
+
+  <table class="pct-table">
+    <tr><th>66.66%</th><td class="m">10px 相当</td><th>106.66%</th><td class="m">16px 相当</td></tr>
+    <tr><th>73.33%</th><td class="m">11px 相当</td><th>113.33%</th><td class="m">17px 相当</td></tr>
+    <tr><th>80%</th><td class="m">12px 相当</td><th>120%</th><td class="m">18px 相当</td></tr>
+    <tr><th>86.66%</th><td class="m">13px 相当</td><th>126.66%</th><td class="m">19px 相当</td></tr>
+    <tr><th>93.33%</th><td class="m">14px 相当</td><th>133.33%</th><td class="m">20px 相当</td></tr>
+    <tr><th>100%</th><td class="m">15px 相当（基準）</td><th>140%</th><td class="m">21px 相当</td></tr>
+  </table>
+
+  <p class="note"><b><code>font-size</code> を px で書かない。</b>px で書くと文字サイズ切替が効かなくなり、<b>このサイトの設計そのものが壊れる</b>。同じ理由で <code>line-height</code> も比率（無単位）で書く。</p>
+</div>
+</section>
+
+<section class="section" id="colors">
+  <div class="section-label">03 / Colors</div>
+  <div class="eyebrow">Color Palette</div>
+  <h2 class="section-title">青と赤は「館の別」</h2>
+  <p class="section-lead">博物館と美術館が同居する施設なので、<b>色が機能ラベルになっている</b>。装飾として使わない。地の砂色は琉球の土の色。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#053b7b"></div><div class="swatch-body"><div class="swatch-name">博物館ブルー</div><div class="swatch-hex">#053b7b</div><div class="swatch-use">★可視 11 要素。タブ・「博」の記号・館見出し</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#b23730"></div><div class="swatch-body"><div class="swatch-name">美術館レッド</div><div class="swatch-hex">#b23730</div><div class="swatch-use">★可視 9 要素。タブ・「美」の記号</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#7c2622"></div><div class="swatch-body"><div class="swatch-name">Language Maroon</div><div class="swatch-hex">#7c2622</div><div class="swatch-use">言語切替のドロップダウン（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d9a300"></div><div class="swatch-body"><div class="swatch-name">Event Gold</div><div class="swatch-hex">#d9a300</div><div class="swatch-use">「イベント一覧」ボタンの面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e6cdb8"></div><div class="swatch-body"><div class="swatch-name">Beige</div><div class="swatch-hex">#e6cdb8</div><div class="swatch-use">講座・講演会のタグ（可視 10 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#dfceb2"></div><div class="swatch-body"><div class="swatch-name">Sand</div><div class="swatch-hex">#dfceb2</div><div class="swatch-use">「開催中」ラベル（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#a5a597"></div><div class="swatch-body"><div class="swatch-name">Gray Sand</div><div class="swatch-hex">#a5a597</div><div class="swatch-use">「今後開催」ラベル</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#555555"></div><div class="swatch-body"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#555555</div><div class="swatch-use">★最多の文字色。可視 42 要素</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">04 / Typography</div>
+  <div class="eyebrow">Typography</div>
+  <h2 class="section-title">和文 Web フォントは 1 本も無い</h2>
+  <p class="section-lead">フォント要求は <b>3 件</b>で、内訳は Open Sans の 2 サブセットと <code>slick.woff</code>（カルーセルのアイコン）だけ。<b>和文は OS ローカルの游ゴシック。</b><code>font-family</code> はサイト全体でただ 1 本のスタック（実測 170/170 要素・113/113 要素）。<b><code>letter-spacing</code> は全要素 <code>normal</code></b>、<code>palt</code> も 0 件。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:29.8656px">29.87</span><span style="font-size:21.3328px">21.33</span><span style="font-size:19.2px">19.2</span><span style="font-size:16px">16</span><span style="font-size:15px">15</span><span style="font-size:14.9328px">14.93</span><span style="font-size:14.08px">14.08</span><span style="font-size:13px">13</span><span style="font-size:11.7px">11.7</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Page Heading ★</b>游ゴシック / 29.8656px<br>lh 1.40 / 133.33% × 140%</div><div style="font-size:29.8656px;line-height:1.4">沖縄県立博物館・美術館の特徴</div></div>
+  <div class="type-row"><div class="type-meta"><b>Vertical Heading</b>游ゴシック / 27.7328px<br>lh 1.40 / writing-mode</div><div style="font-size:27.7328px;line-height:1.4">お知らせ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>游ゴシック / 21.3328px<br>lh 1.50 / 133.33%</div><div style="font-size:21.3328px;line-height:1.5">今まで知らなかった、沖縄に出会ってみませんか？</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>游ゴシック / 16px<br>lh <b style="display:inline">1.60</b>（下層本文は 1.80）</div><div style="font-size:16px;line-height:1.8">博物館と美術館が併設された全国でも珍しい施設。沖縄の自然、歴史、文化、芸術を同時に楽しめます。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Status Label</b>游ゴシック / 15px<br>lh 1.60</div><div style="font-size:15px;line-height:1.6">開催中　今後開催</div></div>
+  <div class="type-row"><div class="type-meta"><b>Card Heading</b>游ゴシック / 14.08px<br>lh 1.60 / 93.33% 系</div><div style="font-size:14.08px;line-height:1.6">美術館コレクションギャラリー企画展　クムイの淵に</div></div>
+  <div class="type-row"><div class="type-meta"><b>Date</b>Open Sans / 14.9328px<br>lh 1.60</div><div style="font-family:'Open Sans',sans-serif;font-size:14.9328px;line-height:1.6">2026.10.11</div></div>
+  <div class="type-row"><div class="type-meta"><b>A11y Switch</b>游ゴシック / 11.7px<br>lh 1.20 / 400・700</div><div style="font-size:11.7px;line-height:1.2">文字サイズ　背景色</div></div>
+
+  <p class="note"><b><code>font-weight: 500</code> は Open Sans には存在しない。</b>読み込んでいるのは <code>:400,600</code> の 2 本だけなので、CSS フォントマッチングにより<b>欧文は 400 で描画される</b>。和文側は OS の游ゴシックに渡り、<b>macOS では Medium、Windows では Regular</b> が当たって環境差が出る。<br>
+  <b>実サイトのスタックは <code>游ゴシック Medium</code> を含んでいない。</b>新規実装では <code>"游ゴシック Medium", "Yu Gothic Medium"</code> を <code>游ゴシック</code> の前に足す。</p>
+</div>
+</section>
+
+<section class="section" id="vertical">
+  <div class="section-label">05 / Vertical Writing</div>
+  <div class="eyebrow">Vertical</div>
+  <h2 class="section-title">お知らせだけ縦組み</h2>
+  <p class="section-lead">縦組みは <b>3 要素だけ、すべて本物のテキスト</b>（画像でもウィジェットでもない）。トップページの「お知らせ」で、<b>39px 幅の左カラム</b>に見出しと <code>一覧を見る</code> を縦に積んで立てている。下層ページには無い。</p>
+
+  <div class="vert-wrap">
+    <div class="vert-col">
+      <h2 class="vert-h2">お知らせ</h2>
+      <a href="#" class="vert-link">一覧を見る</a>
+    </div>
+    <div class="vert-list">
+      <div class="vert-item"><span class="vert-date">2026.10.11</span><span class="vert-txt">令和8年度 博物館・美術館 年間スケジュールを公開しました</span></div>
+      <div class="vert-item"><span class="vert-date">2026.10.09</span><span class="vert-txt">ミュージアムショップ 臨時休業のお知らせ</span></div>
+      <div class="vert-item"><span class="vert-date">2026.10.02</span><span class="vert-txt">「けんぱくキット」貸出申込の受付を開始します</span></div>
+    </div>
+  </div>
+
+  <p class="note">実サイトは <b>39px 幅の左カラム</b>に見出しと <code>一覧を見る</code> を<b>縦に積み</b>、その右に一覧本体を置く（実測: 見出し left=120 / top=939、リンク left=126 / top=1091）。<br>
+  <b>縦組みを「横に並べる」ときだけ <code>flex-direction: row-reverse</code> が要る。</b>素の <code>display: flex</code> だと DOM 順に左→右へ置かれ、<b>日本語の縦組みとして読む向き（右→左）と逆になる</b>。ここは縦に積んでいるので素の <code>flex</code> でよい。</p>
+</section>
+
+<section class="section-alt" id="components">
+<div class="section-inner">
+  <div class="section-label">06 / Components</div>
+  <div class="eyebrow">Components</div>
+  <h2 class="section-title">面色とラベル</h2>
+  <div class="btn-grid">
+    <span class="mark m-museum">博</span><span class="mark m-art">美</span><span class="mark m-other">他</span>
+    <span class="tag">美術講座</span><span class="tag">講演会</span>
+    <span class="status now">開催中</span><span class="status soon">今後開催</span>
+    <button class="btn-event">イベント一覧</button>
+  </div>
+  <div class="menu-grid">
+    <a href="#" class="menu-card">開館時間・休館日・観覧料金</a>
+    <a href="#" class="menu-card">交通案内・駐車場</a>
+    <a href="#" class="menu-card">館内サービス</a>
+    <a href="#" class="menu-card">施設貸出</a>
+  </div>
+  <p class="note">角丸は <code>4px</code>（切替）/ <code>3px</code>（タグ）/ <code>10px</code>（イベント CTA）/ <code>0px</code>（タブ・記号・メニューカード）。<b>タッチターゲットは切替ボタンが約 18px 角と小さい</b>。新規実装では 44px 角を確保する。</p>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">07 / Forms</div>
+  <div class="eyebrow">Forms</div>
+  <h2 class="section-title">フォーム</h2>
+  <p class="section-lead">メニューカードの <code>1px solid #cccccc</code> と切替ボタンの角丸 4px から構成した参考実装。<b>フォーカスリングは博物館ブルー</b>、エラーは美術館レッド。</p>
+  <div class="form-grid">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" value="比嘉 太郎"><div class="field-msg">全角でご入力ください</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス（フォーカス）</label><input id="f2" type="text" value="taro@example.jp"><div class="field-msg">確認のご連絡に使用します</div></div>
+    <div class="field is-error"><label for="f3">見学希望日（エラー）</label><input id="f3" type="text" value=""><div class="field-msg">必須項目です</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">08 / Elevation &amp; Layout</div>
+  <div class="eyebrow">Depth</div>
+  <h2 class="section-title">影は内側影が1つだけ</h2>
+  <div class="elev-grid">
+    <div class="elev e1"><div class="elev-name">Event CTA ★</div><div class="elev-val">2px 2px 8px rgba(0,0,0,.2) inset<br>サイト全体で 1 要素</div></div>
+    <div class="elev"><div class="elev-name">それ以外</div><div class="elev-val">影なし。段差は 1px solid #cccccc<br>下層ページは影 0 件</div></div>
+  </div>
+  <div class="layout-demo" style="margin-top:34px">
+    <div class="layout-bar" style="width:100%">Wide — 1500px</div>
+    <div class="layout-bar" style="width:1200px;max-width:100%">Container — 1200px ★実測最多</div>
+    <div class="layout-bar" style="width:860px;max-width:100%">Column — 860px</div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px ★切替</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:3px"></div><div class="radius-label">3px タグ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px CTA</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0px タブ・記号</div></div>
+  </div>
+  <p class="note"><b><code>html</code> も <code>body</code> も 6 幅すべてで固定</b>（1440 / 1200 / 834 / 768 / 767 / 375px で <code>10px</code> / <code>16px</code> / <code>25.6px</code>）。<b>画面幅では文字サイズが一切変わらない。</b>サイズを動かすのは画面幅ではなく、利用者が押す「文字サイズ」ボタン。ブレークポイントは <code>min-width: 1280px</code>（18 ルール）/ <code>1500px</code>（12 ルール）の<b>モバイルファースト</b>。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">ご利用案内</div><a href="#">開館時間・休館日・観覧料金</a><a href="#">交通案内・駐車場</a><a href="#">館内サービス</a></div>
+      <div class="footer-col"><div class="footer-col-title">教育</div><a href="#">出前授業・講師派遣</a><a href="#">民具体験学習</a><a href="#">ワークシートダウンロード</a></div>
+      <div class="footer-col"><div class="footer-col-title">当館について</div><a href="#">沖縄県立博物館・美術館の特徴</a><a href="#">館長あいさつ</a><a href="#">組織体制</a></div>
+    </div>
+    <div class="footer-copy">© Okinawa Prefectural Museum and Art Museum — preview for DESIGN.md（実測 2026-10-14）</div>
+  </div>
+</footer>
+
+</body>
+</html>

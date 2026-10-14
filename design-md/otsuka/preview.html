@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 大塚製薬（Otsuka Pharmaceutical）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個（トップ・下層とも）。
+       以下は computed style と CSS 全文の実測値。2026-10-14 */
+    --blue:       #426bba;   /* ★ブランド青。リンク 41 要素 / アウトライン枠 */
+    --red:        #b01c2e;   /* New バッジの面 7 要素。CTA には使わない */
+    --pale-blue:  #bac4e3;   /* カテゴリタブの面（可視 5 要素） */
+    --bg:         #f5f4f2;   /* ★ページ背景。可視 64 要素 / 根拠 body */
+    --surface:    #ffffff;   /* 角丸カードの面 */
+    --text:       #000000;   /* ★本文。可視 77 要素。純黒 */
+    --muted:      #5c5c5c;   /* フッターの規約リンク（可視 11 要素） */
+    --on-dark:    #ffffff;
+
+    /* === Fonts ===
+       実サイトの和文は TBUDゴシック R / B（モリサワ TypeBank の UD 書体）を
+       TypeSquare で配信している。ドメインライセンスのためローカルでは出せないので、
+       同じモリサワの UD 書体である BIZ UDPGothic（Google Fonts）で代替する。
+       欧文の Sharoa Pro Regular は Lato で代替。
+       ★実サイトの @font-face は R も B も Sharoa も すべて font-weight: bold 宣言で、
+         太さは font-weight ではなくファミリー名で切り替える。 */
+    --font-body: "BIZ UDPGothic", 游ゴシック体, YuGothic, 游ゴシック, "Yu Gothic",
+                 "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo,
+                 Osaka, Arial, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;  /* 代替: TBUDゴシック R */
+    --font-en:   "Lato", Arial, メイリオ, Meiryo, "ヒラギノ角ゴ Pro", sans-serif; /* 代替: Sharoa Pro Regular */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===
+       body は無単位の 2。12px→24px / 14px→28px / 16px→32px と再計算されることを実測。
+       実測の行間比は 2.00 が 106 要素で最多。 */
+    --lh:       2;
+    --lh-mid:   1.6;    /* 11 要素 */
+    --lh-cta:   1.42;   /* 9 要素 */
+    --lh-sp:    1.75;   /* ≤749px の body */
+
+    /* === Letter spacing: 全要素 normal（トップ 143/143・下層 74/74）=== */
+    --ls: normal;
+
+    --r:      20px;   /* ★サイト全体の基準。実測 46 要素で最多 */
+    --r-pill: 100px;
+    --r-sm:   10px;
+    --shadow:      0 3px 4px rgba(0, 0, 0, 0.1);   /* ★33 要素。最多 */
+    --shadow-card: 0 3px 3px rgba(0, 0, 0, 0.1);   /* 下層のリンクカード 12 要素 */
+    --shadow-head: 0 6px 6px rgba(0, 0, 0, 0.1);   /* ヘッダー 2 要素 */
+
+    --container: 1220px;
+    --column:    900px;
+    --narrow:    460px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は実サイトで 0 件。palt も halt も使っていない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER — 白いカードが地色の上に浮く構造 */
+  .header { max-width: var(--container); margin: 20px auto 0; background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow-head); padding: 14px 28px; }
+  .header-top { display: flex; justify-content: flex-end; gap: 22px; }
+  .header-top a { font-size: 12px; line-height: var(--lh); color: var(--text); text-decoration: none; }
+  .header-main { display: flex; align-items: center; gap: 32px; margin-top: 6px; }
+  .logo { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text); }
+  .logo-mark { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%); }
+  .logo-en { font-family: var(--font-en); font-size: 20px; line-height: 1.2; }
+  .logo-ja { font-size: 13px; line-height: 1.2; }
+  .header-nav { display: flex; gap: 24px; }
+  .header-nav a { font-size: 14px; line-height: var(--lh); color: var(--text); text-decoration: none; }
+  .header-lang { margin-left: auto; background: var(--bg); border-radius: 15px; padding: 2px 14px 0; font-family: var(--font-en); font-size: 12px; line-height: var(--lh); }
+
+  /* HERO — heroCovered: true。全面画像の下の地色は #f5f4f2 */
+  .hero { max-width: var(--container); margin: 20px auto; height: 300px; border-radius: var(--r); background: linear-gradient(170deg, #3f7fd0 0%, #8fc0ea 55%, #e9eef2 100%); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 28px; position: relative; overflow: hidden; }
+  .hero-note { background: var(--surface); color: var(--text); border-radius: var(--r-pill); padding: 10px 28px; font-size: 14px; line-height: var(--lh-cta); box-shadow: var(--shadow); }
+  .hero-dots { position: absolute; top: 20px; right: 24px; display: flex; gap: 8px; }
+  .dot { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--blue); background: var(--surface); color: var(--text); font-size: 10px; line-height: 20px; text-align: center; }
+  .dot.is-active { background: var(--blue); color: var(--on-dark); }
+
+  /* SECTION */
+  .section { max-width: var(--container); margin: 0 auto; padding: 56px 20px; }
+  .section-alt { background: var(--surface); }
+  .section-alt .section-inner { max-width: var(--container); margin: 0 auto; padding: 56px 20px; }
+  .section-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .eyebrow { display: inline-block; font-family: var(--font-en); font-size: 12px; font-weight: 700; line-height: 1; padding-bottom: 5px; border-bottom: 3px solid var(--blue); margin-top: 10px; }
+  .section-title { font-size: 32px; font-weight: 400; line-height: var(--lh-mid); margin: 14px 0 16px; }
+  .section-lead { font-size: 16px; line-height: var(--lh); margin-bottom: 36px; max-width: var(--column); }
+  .note { font-size: 14px; line-height: 1.9; color: var(--muted); margin-top: 22px; max-width: var(--column); }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--bg); padding: 1px 5px; border-radius: 3px; }
+  .section-alt code { background: #eceae7; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .swatch { background: var(--surface); border-radius: var(--r-sm); overflow: hidden; box-shadow: var(--shadow); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 13px 15px 16px; }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: 1.5; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: 1.7; color: var(--muted); margin-top: 7px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid #e3e1de; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--text); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; align-items: baseline; }
+  .scale-bar span { background: var(--bg); border-radius: var(--r-sm); padding: 8px 14px; line-height: 1.5; }
+  .section-alt .scale-bar span { background: #eceae7; }
+
+  /* WEIGHT DEMO */
+  .weight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 8px; }
+  .weight-card { background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); padding: 24px 26px; }
+  .section-alt .weight-card { background: var(--bg); box-shadow: none; }
+  .weight-tag { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .weight-sample { font-size: 20px; line-height: 1.6; margin: 8px 0 4px; }
+  .weight-bad { color: var(--red); font-size: 12px; line-height: 1.8; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin-bottom: 28px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-outline { background: transparent; color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r); padding: 9px 32px 10px; font-size: 14px; line-height: var(--lh-cta); }
+  .btn-pill { background: var(--surface); color: var(--text); border: none; border-radius: var(--r-pill); padding: 10px 40px; font-size: 20px; line-height: var(--lh-mid); box-shadow: var(--shadow); }
+  .btn-lang { background: var(--bg); color: var(--text); border: none; border-radius: 15px; padding: 2px 16px 0; font-family: var(--font-en); font-size: 12px; line-height: var(--lh); }
+  .section-alt .btn-lang { background: #eceae7; }
+  .badge { display: inline-block; background: var(--red); color: var(--on-dark); border-radius: var(--r-sm); padding: 1px 10px 0; font-size: 14px; line-height: var(--lh-cta); }
+  .badge-ribbon { display: inline-block; background: var(--red); color: var(--on-dark); border-radius: 0 100px 100px 0; padding: 0 23px 0 17px; font-size: 12px; line-height: 2; }
+  .tabs { display: flex; margin-top: 10px; }
+  .tab { background: var(--pale-blue); color: var(--text); border: none; padding: 8px 26px; font-size: 14px; line-height: var(--lh-cta); font-family: var(--font-body); cursor: pointer; }
+  .tab:first-child { border-radius: 20px 0 0 20px; }
+  .tab:last-child { border-radius: 0 20px 20px 0; }
+  .tab.is-plain { background: var(--surface); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+  .card { background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); padding: 24px 26px 28px; text-decoration: none; color: var(--text); display: block; }
+  .card-cat { display: inline-block; background: var(--pale-blue); border-radius: var(--r-sm); padding: 1px 12px 0; font-size: 12px; line-height: 2; }
+  .card-title { font-size: 16px; line-height: var(--lh-mid); margin-top: 14px; }
+  .card-link { color: var(--blue); font-size: 14px; line-height: var(--lh-cta); margin-top: 16px; display: block; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 14px; font-weight: 700; line-height: var(--lh-mid); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: var(--surface); color: var(--text);
+    border: 1px solid #d9d7d3; border-radius: var(--r-sm);
+    padding: 12px 14px; font-size: 16px; line-height: var(--lh-mid);
+    font-family: var(--font-body);
+  }
+  .field.is-focus input { outline: 2px solid var(--blue); border-color: var(--blue); }
+  .field.is-error input { outline: 2px solid var(--red); border-color: var(--red); }
+  .field-msg { font-size: 12px; line-height: 1.7; color: var(--muted); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--red); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 26px; }
+  .elev { background: var(--surface); border-radius: var(--r); padding: 28px 20px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow); }
+  .elev.e2 { box-shadow: var(--shadow-card); }
+  .elev.e3 { box-shadow: var(--shadow-head); }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-mid); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--surface); border-radius: var(--r-sm); height: 38px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--muted); box-shadow: var(--shadow-card); }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 34px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 70px; background: var(--surface); box-shadow: var(--shadow); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
+  /* RESPONSIVE DEMO */
+  .bp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .bp-card { background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); padding: 24px 26px; }
+  .bp-card.alt { background: var(--bg); box-shadow: none; border: 1px solid #e3e1de; }
+  .bp-head { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .bp-pc { font-size: 16px; line-height: 2; margin-top: 8px; }
+  .bp-sp { font-size: 12px; font-weight: 400; line-height: 1.75; margin-top: 8px; }
+
+  /* FOOTER */
+  .footer { background: var(--surface); margin-top: 40px; padding: 44px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 16px; font-weight: 700; line-height: var(--lh-mid); }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--muted); text-decoration: none; }
+  .footer-copy { font-family: var(--font-en); font-size: 11px; line-height: 1.6; margin-top: 30px; color: var(--muted); }
+
+  @media (max-width: 749px) {
+    /* 実サイトは 749.98px 以下で body 12px / line-height 1.75 / weight 400 */
+    body { font-size: 12px; line-height: var(--lh-sp); }
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .section-title { font-size: 24px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <a href="#">お薬をご使用の方</a><a href="#">医療関係者の方</a><a href="#">採用情報</a><a href="#">健康と病気</a><a href="#">製品 FAQ</a><a href="#">お問い合わせ</a>
+  </div>
+  <div class="header-main">
+    <a href="#" class="logo"><span class="logo-mark"></span><span><span class="logo-en">Otsuka</span><br><span class="logo-ja">大塚製薬</span></span></a>
+    <nav class="header-nav">
+      <a href="#">2つの事業</a><a href="#">研究開発</a><a href="#">サステナビリティ</a><a href="#">企業情報</a><a href="#">Philosophy</a>
+    </nav>
+    <span class="header-lang">English</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-dots"><span class="dot">1</span><span class="dot is-active">2</span><span class="dot">3</span></div>
+  <div class="hero-note">令和8年熊本地震による被害への支援について</div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="eyebrow">Color Palette</div>
+  <h2 class="section-title">オフホワイトの地に、白いカード</h2>
+  <p class="section-lead">ページの地色は <b><code>#f5f4f2</code></b>（可視 64 要素）。その上に角丸 20px の白いカードを敷く二層構造。<b>青は「読む・進む」、赤は「新しい」</b>と役割が完全に分かれていて、<b>赤を CTA の面色には使わない</b>。</p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#426bba"></div><div class="swatch-body"><div class="swatch-name">Otsuka Blue</div><div class="swatch-hex">#426bba</div><div class="swatch-use">★リンク 41 要素 / 下層 19 要素。アウトラインボタンの枠と文字</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#b01c2e"></div><div class="swatch-body"><div class="swatch-name">Otsuka Red</div><div class="swatch-hex">#b01c2e</div><div class="swatch-use">New バッジの面 7 要素。カルーセルの現在位置</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#bac4e3"></div><div class="swatch-body"><div class="swatch-name">Pale Blue</div><div class="swatch-hex">#bac4e3</div><div class="swatch-use">カテゴリタブの面（可視 5 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f5f4f2;border-bottom:1px solid #e3e1de"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#f5f4f2</div><div class="swatch-use">★ページ背景。可視 64 要素 / 根拠 body</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border-bottom:1px solid #e3e1de"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">角丸 20px のカードの面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#000000</div><div class="swatch-use">★本文・見出し。可視 77 要素。純黒を使う</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#5c5c5c"></div><div class="swatch-body"><div class="swatch-name">Text Muted</div><div class="swatch-hex">#5c5c5c</div><div class="swatch-use">フッターの規約リンク（可視 11 要素）</div></div></div>
+  </div>
+
+  <p class="note"><b>トップは <code>heroCovered: true</code>。</b>1440×777 のヒーロー画像が全面を覆うので、<b>ヒーローの青空をページ背景色だと思わないこと</b>。地色は <code>#f5f4f2</code>。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="eyebrow">Typography</div>
+  <h2 class="section-title">TBUDゴシック、行間 2.0、字間ゼロ</h2>
+  <p class="section-lead">和文は <b>TBUDゴシック R</b>（モリサワ TypeBank の UD 書体）を TypeSquare で配信。実測 160 要素。<b><code>letter-spacing</code> は全要素 <code>normal</code></b>（トップ 143/143・下層 74/74）で、<code>palt</code> も 0 件。詰めも空けもせず、<b>行間 2.0 で余裕を作る</b>。</p>
+
+  <div class="scale-bar">
+    <span style="font-size:32px">32</span><span style="font-size:24px">24</span><span style="font-size:20px">20</span><span style="font-size:16px">16</span><span style="font-size:14px">14</span><span style="font-size:13px">13</span><span style="font-size:12px">12</span><span style="font-size:10px">10</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Section Heading</b>TBUDゴシック R / 32px / 500<br>lh 1.60 / ls normal</div><div style="font-size:32px;line-height:1.6">世界の人々の健康に貢献する</div></div>
+  <div class="type-row"><div class="type-meta"><b>Lead</b>TBUDゴシック R / 24px / 500<br>lh 1.75</div><div style="font-size:24px;line-height:1.75">一人ひとりの可能性に、向き合ってゆく。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Business Name</b>TBUDゴシック R / 20px / 500<br>lh 1.90</div><div style="font-size:20px;line-height:1.9">ニュートラシューティカルズ関連事業</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>TBUDゴシック R / 16px / 500<br>lh <b style="display:inline">2.00</b> / ls normal</div><div style="font-size:16px;line-height:2">大塚製薬は1964年に設立されました。世界の人々の健康に貢献する革新的な製品を創造するという企業理念のもと、医療関連事業とニュートラシューティカルズ関連事業の2つを柱に事業を展開しています。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / Card Title</b>TBUDゴシック R / 14px / 500<br>lh 2.00（CTA は 1.42）</div><div style="font-size:14px;line-height:2">サステナビリティ　研究開発　企業情報</div></div>
+  <div class="type-row"><div class="type-meta"><b>Utility Nav</b>TBUDゴシック R / 12px / 500<br>lh 2.00</div><div style="font-size:12px;line-height:2">個人情報・特定個人情報保護宣言　サイトのご利用について</div></div>
+  <div class="type-row"><div class="type-meta"><b>English ★</b>Sharoa Pro Regular / 12px / 500<br>代替: Lato</div><div style="font-family:var(--font-en);font-size:12px;line-height:2">Otsuka-people creating new products for better health worldwide</div></div>
+
+  <h3 style="font-size:20px;line-height:1.6;margin:40px 0 6px">太さはファミリー名で切り替える</h3>
+  <p class="section-lead" style="margin-bottom:18px">TypeSquare はウェイトごとに別ファミリーを配信する。実サイトの <code>@font-face</code> は <b>R も B も Sharoa も すべて <code>font-weight: bold</code> 宣言</b>で、<b><code>font-weight</code> の値は描画される太さを決めない</b>。</p>
+  <div class="weight-grid">
+    <div class="weight-card">
+      <div class="weight-tag">font-family: "TBUDゴシック R" / font-weight: 500</div>
+      <div class="weight-sample" style="font-weight:400">大塚製薬について</div>
+      <div class="weight-tag">★実測 160 要素。サイトのほぼ全部がこれ</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-tag">font-family: "TBUDゴシック B" / font-weight: 700</div>
+      <div class="weight-sample" style="font-weight:700">バーチャル工場見学</div>
+      <div class="weight-tag">★実測 1 要素。太字はファミリーごと差し替える</div>
+    </div>
+    <div class="weight-card">
+      <div class="weight-tag">NG: "TBUDゴシック R" に font-weight: 700 を当てる</div>
+      <div class="weight-sample" style="font-weight:400">バーチャル工場見学</div>
+      <div class="weight-bad">✕ 太くならない（@font-face が bold 宣言のため）</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons &amp; Badges</div>
+  <div class="eyebrow">Components</div>
+  <h2 class="section-title">角丸 20px が基準</h2>
+  <p class="section-lead"><code>border-radius: 20px</code> が実測 46 要素で最多。ボタンもカードもタブもここに揃う。例外はピル型（<code>100px</code>）とリボン型バッジ（<code>0 100px 100px 0</code>）。</p>
+
+  <div class="btn-grid">
+    <a href="#" class="btn btn-outline">キャンペーン一覧</a>
+    <button class="btn btn-pill">医療関連事業</button>
+    <button class="btn btn-lang">English</button>
+    <span class="badge">New</span>
+    <span class="badge-ribbon">New</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab">ニュースリリース</button>
+    <button class="tab is-plain">お知らせ</button>
+    <button class="tab is-plain">社会</button>
+  </div>
+
+  <p class="note"><b>アウトラインボタンの枠・文字はブランド青 <code>#426bba</code>。</b>赤 <code>#b01c2e</code> は <code>New</code> バッジ専用で、<b>CTA の面色には使わない</b>。</p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards</div>
+  <div class="eyebrow">Cards</div>
+  <h2 class="section-title">白いカードと浅い影</h2>
+  <p class="section-lead">影は <code>0 3px 4px rgba(0,0,0,0.1)</code> の 1 種類（実測 33 要素）で足りる。<b>黒 10%・ぼかし 3〜6px と浅く</b>、浮かせるのではなく「紙を一枚置いた」程度の段差にする。</p>
+
+  <div class="card-grid">
+    <a href="#" class="card"><span class="card-cat">ニュースリリース</span><div class="card-title">「エクエル パウチ120粒」の偽造品にご注意ください</div><span class="card-link">詳しく見る</span></a>
+    <a href="#" class="card"><span class="card-cat">お知らせ</span><div class="card-title">認知症を孤独な病気にしない。一人ひとりの尊厳とつながりを大切にする社会づくりに、私たちは取り組んでいきます。</div><span class="card-link">詳しく見る</span></a>
+    <a href="#" class="card"><span class="card-cat">社会</span><div class="card-title">健康に関する情報　更年期ラボ</div><span class="card-link">詳しく見る</span></a>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <div class="eyebrow">Forms</div>
+  <h2 class="section-title">フォーム</h2>
+  <p class="section-lead">実サイトに独立したフォーム部品は少ないため、カードの角丸 <code>10px</code> と枠色から構成した参考実装。<b>フォーカスリングはブランド青</b>、エラーは <code>#b01c2e</code>。</p>
+
+  <div class="form-grid">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" value="大塚 太郎"><div class="field-msg">全角でご入力ください</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス（フォーカス）</label><input id="f2" type="text" value="taro@example.jp"><div class="field-msg">確認のご連絡に使用します</div></div>
+    <div class="field is-error"><label for="f3">お問い合わせ種別（エラー）</label><input id="f3" type="text" value=""><div class="field-msg">必須項目です</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation</div>
+  <div class="eyebrow">Depth</div>
+  <h2 class="section-title">影はすべて黒 10%</h2>
+  <div class="elev-grid">
+    <div class="elev e1"><div class="elev-name">Card ★</div><div class="elev-val">0 3px 4px rgba(0,0,0,0.1)<br>実測 33 要素</div></div>
+    <div class="elev e2"><div class="elev-name">Card（下層）</div><div class="elev-val">0 3px 3px rgba(0,0,0,0.1)<br>実測 12 要素</div></div>
+    <div class="elev e3"><div class="elev-name">Header</div><div class="elev-val">0 6px 6px rgba(0,0,0,0.1)<br>実測 2 要素</div></div>
+  </div>
+  <p class="note"><b>色味を付けていない。</b>3 種とも <code>rgba(0,0,0,0.1)</code> で、違うのは offset とぼかしだけ。</p>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <div class="eyebrow">Layout</div>
+  <h2 class="section-title">コンテナ 1220px</h2>
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">Full bleed — 1920px（ヒーロー）</div>
+    <div class="layout-bar" style="width:1220px;max-width:100%">Container — 1220px ★実測最多</div>
+    <div class="layout-bar" style="width:900px;max-width:100%">Column — 900px</div>
+    <div class="layout-bar" style="width:460px;max-width:100%">Narrow — 460px</div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:20px"></div><div class="radius-label">20px ★46 要素</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:18px"></div><div class="radius-label">18px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:15px"></div><div class="radius-label">15px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:100px"></div><div class="radius-label">100px pill</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:20px 0 0 20px"></div><div class="radius-label">20px 0 0 20px</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="responsive">
+<div class="section-inner">
+  <div class="section-label">08 / Responsive</div>
+  <div class="eyebrow">Responsive</div>
+  <h2 class="section-title">750px を境に body が切り替わる</h2>
+  <p class="section-lead"><code>html</code> は 6 幅すべてで <b><code>10px</code> 固定</b>（1440 / 1200 / 834 / 768 / 767 / 375px で実測）。流体ではない。動くのは <code>body</code> だけで、<b>行間比まで 2.0 → 1.75 に変わる</b>。</p>
+  <div class="bp-grid">
+    <div class="bp-card">
+      <div class="bp-head">750px 以上 — body 16px / line-height 32px（= 2.0）/ weight 500</div>
+      <div class="bp-pc">世界の人々の健康に貢献する革新的な製品を創造する。</div>
+    </div>
+    <div class="bp-card alt">
+      <div class="bp-head">749px 以下 — body 12px / line-height 21px（= 1.75）/ weight 400</div>
+      <div class="bp-sp">世界の人々の健康に貢献する革新的な製品を創造する。</div>
+    </div>
+  </div>
+  <p class="note">メディアクエリには <code>print</code> が併記されている（<code>print, screen and (min-width: 750px)</code>）。<b>印刷時は PC レイアウトで出る設計。</b></p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">2つの事業</div><a href="#">医療関連事業</a><a href="#">ニュートラシューティカルズ関連事業</a></div>
+      <div class="footer-col"><div class="footer-col-title">企業情報</div><a href="#">会社概要</a><a href="#">役員一覧</a><a href="#">これまでの歩み</a></div>
+      <div class="footer-col"><div class="footer-col-title">サステナビリティ</div><a href="#">環境</a><a href="#">社会</a><a href="#">ガバナンス</a></div>
+    </div>
+    <div class="footer-copy">© Otsuka Pharmaceutical Co., Ltd. — preview for DESIGN.md（実測 2026-10-14）</div>
+  </div>
+</footer>
+
+</body>
+</html>

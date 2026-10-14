@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: エスビー食品（S&amp;B Foods）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&family=Zen+Kaku+Gothic+New:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 0 個。
+       以下は computed style と CSS 全文の実測値。2026-10-14 */
+    --red:         #d6182c;   /* ★S&Bレッド。CTA の面と枠・ロゴ・フッター・線画ヒーロー */
+    --red-badge:   #d62828;   /* 「新商品」バッジ 18 要素。#d6182c とは別の赤 */
+    --green:       #1b9974;   /* ★商品一覧のカテゴリ面 162 要素。トップには出ない */
+    --green-dark:  #00836b;   /* カルーセルの Prev / Next（可視 7 要素） */
+    --bg:          #ffffff;   /* pageBackground.resolved / 根拠 html */
+    --cream:       #f6f6ee;   /* セクションの面（可視 4 要素） */
+    --sand:        #f8f5e6;   /* パンくずの帯 */
+    --gray:        #e8e7e2;   /* ★スペック表のラベル列 180 要素 */
+    --light:       #f2f2f2;   /* 「一覧へ」まわり */
+    --text:        #000000;   /* ★本文。可視 83 要素 / 下層 498 要素。純黒 */
+    --muted:       #666666;
+    --muted-light: #9b9b9b;
+    --border:      #d4d3d3;   /* カテゴリタブの枠 */
+    --on-dark:     #ffffff;
+
+    /* === Fonts ===
+       本文は OS ローカルのみ（Web フォントではない）。実測 692/693 要素。
+       ★"游ゴシック Medium" / "Yu Gothic Medium" を 游ゴシック体 / YuGothic より前に置く
+         ＝ Windows で細く出るのを @font-face なしで防ぐ流儀。
+       見出しだけ Google Fonts。Zen Kaku Gothic New は 700 の 1 本しか読み込んでいない。 */
+    --font-body: Arial, Helvetica,
+                 "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro",
+                 "游ゴシック Medium", "Yu Gothic Medium",
+                 游ゴシック体, YuGothic,
+                 Meiryo, メイリオ, sans-serif;
+    --font-head: "Zen Kaku Gothic New", var(--font-body);   /* 700 のみ */
+    --font-en:   "Lato", Arial, sans-serif;                 /* 400 のみ */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: 無単位。本文 1.8 / 見出し 1.5 / CTA 1.44 === */
+    --lh:       1.8;    /* ★下層で 554 要素 */
+    --lh-top:   1.75;   /* トップで 73 要素 */
+    --lh-head:  1.5;
+    --lh-cta:   1.444;
+
+    /* === Letter spacing ===
+       本文は normal（トップ 95 要素 / 下層 693 要素＝全要素）。
+       ★字間は「各要素が自分で em を持つ」型。body に書いて継承させない。 */
+    --ls:        normal;
+    --ls-head:   0.1em;    /* 和文見出し 36px→3.6px / 28px→2.8px */
+    --ls-head-en:0.17em;   /* 欧文サブ見出し 18px→3.06px */
+    --ls-label:  0.03em;   /* update ラベル 16px→0.48px */
+
+    --r-pill: 42px;   /* ★CTA は全部これ */
+    --r-card: 10px;
+    --r-sm:   4px;
+    --shadow-card: 0 1px 3px rgba(145, 145, 145, 0.6);   /* ★62 要素。グレー 60% */
+    --shadow-cta:  0 0 20px rgba(0, 0, 0, 0.04);         /* ぼかし 20px・黒 4% */
+    --shadow-arrow:0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-sect: 0 2px 10px rgba(128, 128, 123, 0.1);  /* グレーに緑み */
+
+    --container: 1200px;
+    --wide:      1440px;
+    --column:    1080px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: var(--lh);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は実サイトで 0 件。palt も halt も使っていない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--red); }
+  .header-inner { max-width: var(--wide); margin: 0 auto; padding: 16px 24px 0; }
+  .header-top { display: flex; align-items: center; gap: 24px; justify-content: flex-end; }
+  .header-top a { font-size: 14px; line-height: var(--lh); color: var(--text); text-decoration: none; }
+  .header-search { background: var(--light); border: none; border-radius: var(--r-sm); padding: 9px 14px; width: 210px; font-family: var(--font-body); font-size: 14px; line-height: var(--lh); color: var(--text); }
+  .header-main { display: flex; align-items: flex-end; gap: 40px; padding: 10px 0 14px; }
+  .logo { text-decoration: none; color: var(--red); }
+  .logo-tag { font-size: 13px; line-height: 1.4; }
+  .logo-mark { font-family: var(--font-en); font-size: 38px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .header-nav { display: flex; gap: 32px; padding-bottom: 6px; }
+  .header-nav a { font-size: 16px; font-weight: 700; line-height: var(--lh-head); color: var(--text); text-decoration: none; }
+
+  /* HERO — 赤の線画 */
+  .hero { border-top: 1px solid var(--red); padding: 70px 24px 56px; text-align: center; background:
+     radial-gradient(circle at 18% 70%, rgba(214,24,44,.10) 0 1px, transparent 1px),
+     radial-gradient(circle at 46% 42%, rgba(214,24,44,.10) 0 1px, transparent 1px),
+     radial-gradient(circle at 78% 62%, rgba(214,24,44,.10) 0 1px, transparent 1px); }
+  .hero-art { max-width: 780px; margin: 0 auto 44px; height: 180px; border: 2px solid var(--red); border-radius: 90px 90px 10px 10px; display: flex; align-items: center; justify-content: center; color: var(--red); font-family: var(--font-en); font-size: 15px; letter-spacing: 0.18em; }
+  .hero-ctas { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+
+  /* SECTION */
+  .section { max-width: var(--container); margin: 0 auto; padding: 60px 24px; }
+  .section-alt { background: var(--cream); }
+  .section-alt .section-inner { max-width: var(--container); margin: 0 auto; padding: 60px 24px; }
+  .section-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
+  /* ★実サイトのセクション見出しは「和文 36px ＋ 欧文サブ 18px」の対で必ず出る */
+  .sec-head { margin: 10px 0 18px; }
+  .sec-ja { font-family: var(--font-head); font-size: 36px; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls-head); }
+  .sec-en { font-family: var(--font-en); font-size: 18px; font-weight: 400; line-height: var(--lh-cta); letter-spacing: var(--ls-head-en); color: var(--red); margin-top: 2px; }
+  .section-lead { font-size: 16px; line-height: var(--lh); margin-bottom: 34px; max-width: var(--column); }
+  .note { font-size: 14px; line-height: 1.9; color: var(--muted); margin-top: 22px; max-width: var(--column); }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--light); padding: 1px 5px; border-radius: 3px; }
+  .section-alt code { background: #eceade; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .swatch { background: var(--bg); border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-card); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 13px 15px 16px; }
+  .swatch-name { font-size: 14px; font-weight: 700; line-height: 1.5; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted-light); margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: 1.7; color: var(--muted); margin-top: 7px; overflow-wrap: anywhere; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--text); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; align-items: baseline; }
+  .scale-bar span { background: var(--light); border-radius: var(--r-sm); padding: 8px 14px; line-height: 1.5; }
+  .section-alt .scale-bar span { background: #eceade; }
+
+  /* LS DEMO */
+  .ls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; margin-top: 6px; }
+  .ls-card { background: var(--bg); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 22px 24px; }
+  .ls-tag { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-fill { background: var(--red); color: var(--on-dark); border: 2px solid var(--red); border-radius: var(--r-pill); padding: 14px 28px; font-size: 18px; line-height: var(--lh-cta); box-shadow: var(--shadow-cta); }
+  .btn-outline { background: var(--bg); color: var(--red); border: 2px solid var(--red); border-radius: var(--r-pill); padding: 14px 28px; font-size: 18px; line-height: var(--lh-cta); box-shadow: var(--shadow-cta); }
+  .btn-sm { background: var(--bg); color: var(--red); border: 2px solid var(--red); border-radius: var(--r-pill); padding: 12px 15px; font-size: 16px; line-height: var(--lh-cta); }
+  .btn-filter { background: var(--bg); color: var(--text); border: 2px solid var(--gray); border-radius: var(--r-sm); padding: 11px 32px 7px 20px; font-size: 16px; line-height: var(--lh-cta); }
+  .arrow { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.8); color: var(--green-dark); border: none; box-shadow: var(--shadow-arrow); font-size: 16px; line-height: 1; cursor: pointer; }
+  .badge-new { display: inline-block; background: var(--red-badge); color: var(--on-dark); border-radius: 10px 0; padding: 0 15px; font-size: 16px; line-height: 1.9; }
+  .badge-cat { display: inline-block; background: var(--green); color: var(--on-dark); border-radius: 10px 0; padding: 0 15px; font-size: 16px; line-height: 1.9; }
+  .tab-chip { display: inline-block; background: transparent; color: var(--text); border: 1px solid var(--border); border-radius: var(--r-card); padding: 1px 16px; font-size: 16px; line-height: var(--lh); }
+
+  /* PRODUCT CARDS + SPEC TABLE */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
+  .pcard { background: var(--bg); border-radius: var(--r-card); box-shadow: var(--shadow-card); overflow: hidden; }
+  .pcard-img { height: 128px; background: linear-gradient(150deg,#f3efe2,#e4ded0); }
+  .pcard-body { padding: 16px 18px 20px; }
+  .pcard-title { font-size: 18px; line-height: var(--lh-head); margin: 10px 0 12px; }
+  .spec { width: 100%; border-collapse: collapse; }
+  .spec th { background: var(--gray); color: var(--text); font-size: 14px; font-weight: 700; line-height: var(--lh-head); text-align: left; padding: 11px 13px 10px; width: 108px; }
+  .spec tr:first-child th { border-radius: 10px 0 0 0; }
+  .spec tr:last-child th { border-radius: 0 0 0 10px; }
+  .spec td { font-size: 14px; line-height: var(--lh-head); padding: 11px 13px 10px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 14px; font-weight: 700; line-height: var(--lh-head); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: var(--bg); color: var(--text);
+    border: 2px solid var(--gray); border-radius: var(--r-sm);
+    padding: 11px 16px; font-size: 16px; line-height: var(--lh-head);
+    font-family: var(--font-body);
+  }
+  .field.is-focus input { outline: 2px solid var(--red); border-color: var(--red); }
+  .field.is-error input { outline: 2px solid var(--red-badge); border-color: var(--red-badge); }
+  .field-msg { font-size: 12px; line-height: 1.7; color: var(--muted); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--red-badge); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elev { background: var(--bg); border-radius: var(--r-card); padding: 26px 18px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow-card); }
+  .elev.e2 { box-shadow: var(--shadow-cta); }
+  .elev.e3 { box-shadow: var(--shadow-arrow); }
+  .elev.e4 { box-shadow: var(--shadow-sect); }
+  .elev-name { font-size: 16px; font-weight: 700; line-height: var(--lh-head); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--light); border-radius: var(--r-card); height: 38px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .section-alt .layout-bar { background: var(--bg); }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 34px; justify-content: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 110px; height: 70px; background: var(--bg); box-shadow: var(--shadow-card); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
+  /* RESPONSIVE DEMO */
+  .bp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .bp-card { background: var(--bg); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 22px 24px; }
+  .bp-head { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .bp-pc { font-size: 16px; line-height: 1.8; margin-top: 8px; }
+  .bp-sp { font-size: 14px; line-height: 1.8; margin-top: 8px; }
+
+  /* FOOTER */
+  .footer { background: var(--red); color: var(--on-dark); margin-top: 20px; padding: 44px 24px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 16px; font-weight: 700; line-height: var(--lh-head); }
+  .footer-col a { display: block; font-size: 14px; line-height: 2; color: var(--on-dark); text-decoration: none; opacity: .88; }
+  .footer-copy { font-family: var(--font-en); font-size: 11px; line-height: 1.6; margin-top: 30px; opacity: .8; }
+
+  @media (max-width: 868px) {
+    /* 実サイトは 868px 以下で body 14px / line-height 22.4px（比率 1.8 のまま） */
+    body { font-size: 14px; }
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .sec-ja { font-size: 26px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <a href="#">S&amp;B Foods Global Site</a><a href="#">オンラインショップ</a>
+      <input class="header-search" type="text" value="サイト内検索">
+    </div>
+    <div class="header-main">
+      <a href="#" class="logo"><div class="logo-tag">そこに、スパイス＆ハーブ</div><div class="logo-mark">S&amp;B</div></a>
+      <nav class="header-nav">
+        <a href="#">商品情報</a><a href="#">レシピ</a><a href="#">スパイス&amp;ハーブ総合研究所</a><a href="#">暮らす・楽しむ</a><a href="#">企業・IR・採用</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-art">SPICE &amp; HERB — 赤の線画一色でヒーローを組む</div>
+  <div class="hero-ctas">
+    <a href="#" class="btn btn-outline">理念・ビジョン</a>
+    <a href="#" class="btn btn-fill">そこに、スパイス＆ハーブに込めた想い</a>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <div class="sec-head"><div class="sec-ja">赤が2つ、緑が2つ</div><div class="sec-en">colors</div></div>
+  <p class="section-lead">ブランド色は <b><code>#d6182c</code></b>。バッジ専用の <code>#d62828</code> と、<b>商品一覧側にだけ出る緑 <code>#1b9974</code></b>（162 要素）がある。<b>緑をトップページに持ち込まない。</b></p>
+
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#d6182c"></div><div class="swatch-body"><div class="swatch-name">S&amp;B Red</div><div class="swatch-hex">#d6182c</div><div class="swatch-use">★CTA の面と枠・ロゴ・フッター全面・線画ヒーロー</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d62828"></div><div class="swatch-body"><div class="swatch-name">Accent Red</div><div class="swatch-hex">#d62828</div><div class="swatch-use">「新商品」バッジ 18 要素。日付バッジ</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1b9974"></div><div class="swatch-body"><div class="swatch-name">Spice Green</div><div class="swatch-hex">#1b9974</div><div class="swatch-use">★商品一覧のカテゴリ面 162 要素。トップには出ない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#00836b"></div><div class="swatch-body"><div class="swatch-name">Carousel Green</div><div class="swatch-hex">#00836b</div><div class="swatch-use">カルーセルの矢印（可視 7 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f6f6ee;border-bottom:1px solid var(--border)"></div><div class="swatch-body"><div class="swatch-name">Surface Cream</div><div class="swatch-hex">#f6f6ee</div><div class="swatch-use">セクションの面（可視 4 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e8e7e2"></div><div class="swatch-body"><div class="swatch-name">Surface Gray</div><div class="swatch-hex">#e8e7e2</div><div class="swatch-use">★スペック表のラベル列 180 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f8f5e6;border-bottom:1px solid var(--border)"></div><div class="swatch-body"><div class="swatch-name">Surface Sand</div><div class="swatch-hex">#f8f5e6</div><div class="swatch-use">パンくずの帯</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#000000</div><div class="swatch-use">★本文。可視 83 要素 / 下層 498 要素。純黒</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <div class="sec-head"><div class="sec-ja">見出しだけ Web フォント</div><div class="sec-en">typography</div></div>
+  <p class="section-lead">Google Fonts の指定は <code>family=Lato&amp;family=Zen+Kaku+Gothic+New:wght@700</code>。<b>和文 Web フォントは「見出しの 8 要素」だけ</b>で、本文 686 要素は OS ローカル。<b>下層ページには <code>@font-face</code> が 1 件も無い。</b></p>
+
+  <div class="scale-bar">
+    <span style="font-size:36px">36</span><span style="font-size:28px">28</span><span style="font-size:24px">24</span><span style="font-size:18px">18</span><span style="font-size:16px">16</span><span style="font-size:14px">14</span><span style="font-size:13px">13</span><span style="font-size:10px">10</span>
+  </div>
+
+  <div class="type-row"><div class="type-meta"><b>Section Heading ★</b>Zen Kaku Gothic New / 36px / 700<br>lh 1.50 / <b style="display:inline">ls 0.1em</b></div><div style="font-family:var(--font-head);font-size:36px;font-weight:700;line-height:1.5;letter-spacing:.1em">今週のおすすめレシピ</div></div>
+  <div class="type-row"><div class="type-meta"><b>Section Sub ★</b>Lato / 18px / 400<br>lh 1.44 / <b style="display:inline">ls 0.17em</b></div><div style="font-family:var(--font-en);font-size:18px;line-height:1.444;letter-spacing:.17em;color:var(--red)">recipe</div></div>
+  <div class="type-row"><div class="type-meta"><b>Heading（小）</b>Zen Kaku Gothic New / 28px / 700<br>lh 1.44 / ls 0.1em</div><div style="font-family:var(--font-head);font-size:28px;font-weight:700;line-height:1.44;letter-spacing:.1em">私たちの取組み</div></div>
+  <div class="type-row"><div class="type-meta"><b>CTA</b>OS ローカル / 18px / 400<br>lh 1.44 / ls normal</div><div style="font-size:18px;line-height:1.444">そこに、スパイス＆ハーブに込めた想い</div></div>
+  <div class="type-row"><div class="type-meta"><b>Nav / Category</b>OS ローカル / 16px / 700<br>lh 1.50</div><div style="font-size:16px;font-weight:700;line-height:1.5">スパイス＆ハーブ・香辛料</div></div>
+  <div class="type-row"><div class="type-meta"><b>Body ★</b>OS ローカル / 16px / 400<br>lh <b style="display:inline">1.80</b> / ls normal</div><div style="font-size:16px;line-height:1.8">“もったいない”をおいしさに変える挑戦。忙しい日常でも、スパイスとハーブがあれば、いつもの一皿がぐっと豊かになります。</div></div>
+  <div class="type-row"><div class="type-meta"><b>Spec Label</b>OS ローカル / 14px / 700<br>lh 1.50</div><div style="font-size:14px;font-weight:700;line-height:1.5">品番　内容量　希望小売価格</div></div>
+  <div class="type-row"><div class="type-meta"><b>Date</b>Lato / 16px / 400<br>lh 1.80 / ls normal</div><div style="font-family:var(--font-en);font-size:16px;line-height:1.8">2026.10.07</div></div>
+
+  <h3 style="font-size:20px;line-height:1.6;margin:40px 0 6px">字間は「各要素が自分で em を持つ」型</h3>
+  <p class="section-lead" style="margin-bottom:18px">サイズに比例して px が変わる（36px→3.6px、28px→2.8px がどちらも <code>0.1em</code>）。<b><code>body</code> に 1 回書いて継承させる設計ではない。</b>和文と欧文で値も違う。</p>
+  <div class="ls-grid">
+    <div class="ls-card"><div class="ls-tag">和文見出し 36px / letter-spacing: 0.1em → 実測 3.6px</div><div style="font-family:var(--font-head);font-size:24px;font-weight:700;line-height:1.5;letter-spacing:.1em;margin-top:6px">商品情報</div></div>
+    <div class="ls-card"><div class="ls-tag">欧文サブ 18px / letter-spacing: 0.17em → 実測 3.06px</div><div style="font-family:var(--font-en);font-size:18px;line-height:1.5;letter-spacing:.17em;color:var(--red);margin-top:6px">products</div></div>
+    <div class="ls-card"><div class="ls-tag">本文 16px / letter-spacing: normal → 693/693 要素</div><div style="font-size:16px;line-height:1.8;margin-top:6px">スパイス＆ハーブでもっと楽しく。</div></div>
+  </div>
+
+  <p class="note"><b>Zen Kaku Gothic New は 700 の 1 本しか読み込んでいない。</b>実サイトは「楽しく、もっと健康に」に <code>font-weight: 400</code> を当てているが、<b>ファミリーに 700 しか存在しないので 700 で描画される</b>。<br>
+  <b>実サイトの問題点</b>: 下層のコピーライト行は <code>font-family: Lato</code> 単独で、<b>フォールバックが 1 つも無い</b>。<code>@font-face</code> が無い下層ではブラウザ既定書体で出る。新規実装では <code>Lato, sans-serif</code> と書く。</p>
+</div>
+</section>
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons &amp; Badges</div>
+  <div class="sec-head"><div class="sec-ja">ピル型は 42px、2種だけ</div><div class="sec-en">buttons</div></div>
+  <p class="section-lead">CTA は <code>border-radius: 42px</code> の<b>赤ベタと白地赤枠のペアだけ</b>。枠は両方とも <code>2px solid #d6182c</code>。<b>第3の形は存在しない。</b></p>
+
+  <div class="btn-grid">
+    <a href="#" class="btn btn-fill">そこに、スパイス＆ハーブに込めた想い</a>
+    <a href="#" class="btn btn-outline">理念・ビジョン</a>
+    <a href="#" class="btn btn-sm">一覧へ</a>
+    <button class="btn btn-filter">新商品</button>
+    <button class="arrow">‹</button>
+    <span class="badge-new">新商品</span>
+    <span class="badge-cat">リフレッシュ</span>
+    <span class="tab-chip">イベント</span>
+  </div>
+
+  <p class="note"><b>バッジの角丸は <code>10px 0</code>。</b>左上と右下だけを丸め、カードの角に合わせて <code>0 0 0 10px</code> / <code>0 0 10px</code> の変種を使い分ける。</p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards &amp; Table</div>
+  <div class="sec-head"><div class="sec-ja">商品カードとスペック表</div><div class="sec-en">products</div></div>
+  <p class="section-lead">カードは角丸 10px ＋ <code>0 1px 3px rgba(145,145,145,0.6)</code>（実測 62 要素）。<b>影の色は黒ではなくグレー 60%。</b>スペック表のラベル列は <code>#e8e7e2</code> / 14px / weight 700（実測 180 要素）。</p>
+
+  <div class="card-grid">
+    <div class="pcard"><div class="pcard-img"></div><div class="pcard-body"><span class="badge-cat">リフレッシュ</span><div class="pcard-title">スティックスパイス　ガーリック（あらびき）</div>
+      <table class="spec"><tr><th>品番</th><td>19307</td></tr><tr><th>内容量</th><td>9.3g</td></tr><tr><th>希望小売価格</th><td>198円</td></tr></table></div></div>
+    <div class="pcard"><div class="pcard-img"></div><div class="pcard-body"><span class="badge-new">新商品</span><div class="pcard-title">スティックスパイス　クミン（パウダー）</div>
+      <table class="spec"><tr><th>品番</th><td>19308</td></tr><tr><th>内容量</th><td>5.1g</td></tr><tr><th>希望小売価格</th><td>198円</td></tr></table></div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <div class="sec-head"><div class="sec-ja">フォーム</div><div class="sec-en">forms</div></div>
+  <p class="section-lead">絞り込みボタンの <code>2px solid #e8e7e2</code> / 角丸 4px を入力欄にも展開した参考実装。<b>フォーカスリングはブランド赤。</b></p>
+  <div class="form-grid">
+    <div class="field"><label for="f1">お名前</label><input id="f1" type="text" value="山田 花子"><div class="field-msg">全角でご入力ください</div></div>
+    <div class="field is-focus"><label for="f2">メールアドレス（フォーカス）</label><input id="f2" type="text" value="hanako@example.jp"><div class="field-msg">確認のご連絡に使用します</div></div>
+    <div class="field is-error"><label for="f3">お問い合わせ種別（エラー）</label><input id="f3" type="text" value=""><div class="field-msg">必須項目です</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation</div>
+  <div class="sec-head"><div class="sec-ja">影はグレー系を2種</div><div class="sec-en">elevation</div></div>
+  <div class="elev-grid">
+    <div class="elev e1"><div class="elev-name">Card ★</div><div class="elev-val">0 1px 3px rgba(145,145,145,.6)<br>実測 62 要素</div></div>
+    <div class="elev e2"><div class="elev-name">CTA</div><div class="elev-val">0 0 20px rgba(0,0,0,.04)<br>ぼかし 20px・黒 4%</div></div>
+    <div class="elev e3"><div class="elev-name">Arrow</div><div class="elev-val">0 2px 10px rgba(0,0,0,.1)<br>実測 7 要素</div></div>
+    <div class="elev e4"><div class="elev-name">Section</div><div class="elev-val">0 2px 10px rgba(128,128,123,.1)<br>グレーに緑み</div></div>
+  </div>
+  <p class="note"><b>影の色を黒に丸めない。</b><code>rgba(145,145,145,0.6)</code> と <code>rgba(128,128,123,0.1)</code> を使い分けている。</p>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <div class="sec-head"><div class="sec-ja">コンテナ 1200px</div><div class="sec-en">layout</div></div>
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">Wide — 1440px</div>
+    <div class="layout-bar" style="width:1200px;max-width:100%">Container — 1200px ★実測最多</div>
+    <div class="layout-bar" style="width:1080px;max-width:100%">Column — 1080px</div>
+    <div class="layout-bar" style="width:680px;max-width:100%">Narrow — 680px</div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:42px"></div><div class="radius-label">42px ★CTA</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px ★120 要素</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px 0"></div><div class="radius-label">10px 0（バッジ）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px（絞り込み）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50%"></div><div class="radius-label">50%（矢印）</div></div>
+  </div>
+  <p class="note">gap の実測は <code>30px</code> が最多。他に <code>0 30px</code> / <code>20px</code> / <code>12px</code> / <code>2%</code> / <code>5.7%</code>。2カラムの比率は <b>55.5% : 42.5%</b>。</p>
+</section>
+
+<section class="section-alt" id="responsive">
+<div class="section-inner">
+  <div class="section-label">08 / Responsive</div>
+  <div class="sec-head"><div class="sec-ja">868px を境に body が切り替わる</div><div class="sec-en">responsive</div></div>
+  <p class="section-lead"><code>html</code> は 6 幅すべてで <b><code>10px</code> 固定</b>。動くのは <code>body</code> だけで、<b>869px と 868px の 1px 差</b>で 16px → 14px に落ちる（実測で確定）。<b>行間比は 1.8 のまま変わらない。</b></p>
+  <div class="bp-grid">
+    <div class="bp-card">
+      <div class="bp-head">869px 以上 — body 16px / line-height 28.8px（= 1.8）</div>
+      <div class="bp-pc">スパイス＆ハーブでもっと楽しく、もっと健康に。</div>
+    </div>
+    <div class="bp-card">
+      <div class="bp-head">868px 以下 — body 14px / line-height 22.4px（= 1.8）</div>
+      <div class="bp-sp">スパイス＆ハーブでもっと楽しく、もっと健康に。</div>
+    </div>
+  </div>
+  <p class="note">メディアクエリの実測本数は <code>max-width: 868px</code> が <b>344 ルール</b>で突出。他に <code>1109px</code>（23）/ <code>760px</code>（10）/ <code>478px</code>（35）/ <code>(any-hover: hover)</code>（9）。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">商品情報</div><a href="#">スパイス＆ハーブ・香辛料</a><a href="#">カレー（ルウ・レトルト）</a><a href="#">新商品・リフレッシュ品</a></div>
+      <div class="footer-col"><div class="footer-col-title">レシピ</div><a href="#">レシピ検索</a><a href="#">動画で見るレシピ</a><a href="#">特集</a></div>
+      <div class="footer-col"><div class="footer-col-title">企業情報</div><a href="#">安全・安心</a><a href="#">サステナビリティ</a><a href="#">IR情報</a></div>
+    </div>
+    <div class="footer-copy">© S&amp;B FOODS INC. — preview for DESIGN.md（実測 2026-10-14）</div>
+  </div>
+</footer>
+
+</body>
+</html>
