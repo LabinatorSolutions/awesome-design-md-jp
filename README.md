@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (571 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (574 sites)</a>
 </p>
 
 <table>
@@ -881,6 +881,11 @@
 </tr>
 <tr>
 <td align="center"><strong>沖縄県立博物館・美術館</strong><br><img src="design-md/okimu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>玉乃光酒造</strong><br><img src="design-md/tamanohikari/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東北新社</strong><br><img src="design-md/tfc/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>東京建物</strong><br><img src="design-md/tatemono/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1513,11 +1518,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [大塚製薬 (Otsuka Pharmaceutical)](https://www.otsuka.co.jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/otsuka/DESIGN.md) | [preview.html](design-md/otsuka/preview.html) |
 | [エスビー食品 (S&B Foods)](https://www.sbfoods.co.jp/) | Food & Beverage / Corporate | [DESIGN.md](design-md/sbfoods/DESIGN.md) | [preview.html](design-md/sbfoods/preview.html) |
 | [沖縄県立博物館・美術館 (Okinawa Prefectural Museum and Art Museum)](https://okimu.jp/) | Museum / Public | [DESIGN.md](design-md/okimu/DESIGN.md) | [preview.html](design-md/okimu/preview.html) |
+| [玉乃光酒造 (Tamanohikari)](https://tamanohikari.co.jp/) | Sake Brewery / Kyoto | [DESIGN.md](design-md/tamanohikari/DESIGN.md) | [preview.html](design-md/tamanohikari/preview.html) |
+| [東北新社 (Tohokushinsha / TFC)](https://www.tfc.co.jp/) | Film & TV Production | [DESIGN.md](design-md/tfc/DESIGN.md) | [preview.html](design-md/tfc/preview.html) |
+| [東京建物 (Tokyo Tatemono)](https://tatemono.com/) | Real Estate Developer | [DESIGN.md](design-md/tatemono/DESIGN.md) | [preview.html](design-md/tatemono/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (571 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (574 sites)</a>
 </p>
 
 <table>
@@ -2364,6 +2372,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>沖縄県立博物館・美術館</strong><br><img src="design-md/okimu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>玉乃光酒造</strong><br><img src="design-md/tamanohikari/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東北新社</strong><br><img src="design-md/tfc/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>東京建物</strong><br><img src="design-md/tatemono/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

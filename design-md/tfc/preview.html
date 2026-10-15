@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 東北新社（TFC）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;900&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は 45 個すべて自社トークン（own: 45 / プラットフォーム由来 0）。
+       色は :root ではなく実値で書かれているため、以下は computed style の実測値。2026-10-15 */
+    --cyan:        #00b3cd;   /* ★アクセント。検索ボタンの面（可視 4 要素）/ 矢印 SVG の fill */
+    --teal-deep:   #002327;   /* ★グローバルナビの面（可視 7 要素） */
+    --cyan-pale:   #e2f6f9;   /* th・バッジ・プルダウンの地（可視 30 要素） */
+    --cyan-border: #b6d0d4;   /* ボタン・テーブルの枠。無効ボタンの面にも使う */
+    --red:         #ee3d23;   /* PDF バッジの面（可視 12 要素）。CTA には使わない */
+    --bg:          #ffffff;
+    --text:        #313131;   /* ★本文。可視 169 要素。body に宣言。純黒を使わない */
+    --muted:       #686868;   /* 可視 26 要素 */
+    --muted-2:     #747474;   /* 可視 17 要素 */
+    --muted-3:     #4d4d4d;   /* 可視 16 要素 */
+    --on-dark:     #ffffff;
+    --grad-hero:   linear-gradient(150deg, #ffffff 10%, #cbf0f5 40%, #b1e6ee 67%, #7ad1de);
+    --grad-cta:    linear-gradient(130deg, #cbf0f5, #7ad1de);
+
+    /* === Fonts ===
+       実サイトは Noto Sans JP（400/500/600/900）と Noto Sans（400/500）を
+       自社サーバ（assets/fonts/*.woff2）から配信している。Google Fonts は使っていない。
+       ここでは同じ書体を Google Fonts から読む（字形は同一）。
+       ★@font-face に 700 は無い。--fw-b: 700 を使うと上方向の 900（Black）が選ばれる。
+         600 に割り当てられているファイルは NotoSansJP-Bold.woff2。 */
+    --font-jp:    "Noto Sans JP", sans-serif;
+    --font-latin: "Noto Sans", sans-serif;
+
+    /* === Type scale（実サイトの --txt-* をそのまま。root 16px）=== */
+    --txt-xxxxxl: 3.25rem;   /* 52px */
+    --txt-xxxxl:  3rem;      /* 48px */
+    --txt-xxxl:   2.5rem;    /* 40px */
+    --txt-xxl:    2.25rem;   /* 36px */
+    --txt-xl:     2rem;      /* 32px */
+    --txt-l:      1.5rem;    /* 24px */
+    --txt-m:      1.25rem;   /* 20px */
+    --txt-s:      1.125rem;  /* 18px */
+    --txt-xs:     1rem;      /* 16px */
+    --txt-xxs:    .9375rem;  /* 15px */
+    --txt-xxxs:   .875rem;   /* 14px */
+    --txt-xxxxs:  .75rem;    /* 12px */
+    --txt-xxxxxs: .625rem;   /* 10px */
+
+    /* === ウェイト（実サイトのトークンどおり。--fw-b は使わない）=== */
+    --fw-r: 400;   /* 可視 46 要素 */
+    --fw-m: 500;   /* ★既定。可視 183 要素 */
+    --fw-b: 700;   /* ★実測 0 要素。書体が無く 900 で出るので使わない */
+    --fw-black: 900; /* グローバルナビの 24px（可視 8 要素） */
+
+    /* === 行間（無単位の比率。body は 24/16 = 1.5）=== */
+    --lh-xl: 2;
+    --lh-l:  1.8;
+    --lh-m:  1.6;
+    --lh-s:  1.5;
+    --lh-xs: 1.0;
+
+    /* === 字間（em。body は normal。palt とセットで使う）=== */
+    --ls-m: .08em;   /* ★既定。20px→1.6px / 18px→1.44px / 16px→1.28px / 12px→0.96px */
+    --ls-s: .01em;   /* 小さいラベル。15px→0.15px / 18px→0.18px */
+
+    --px-content: 6.25rem;   /* 100px。モバイルは 5.33% */
+    --radius-btn: 4px;       /* 可視 47 要素 */
+    --radius-badge: 2px;     /* 可視 33 要素 */
+    --shadow: rgba(0,42,49,.1) 0 -5px 14px 3px;  /* ★影はこの1種類だけ */
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: 16px; }   /* 6 幅すべて固定。流体ではない */
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: var(--txt-xs);
+    font-weight: var(--fw-r);
+    line-height: var(--lh-s);           /* 1.5 */
+    font-feature-settings: "palt";      /* ★ここ1行で全体に効く（実測 714 要素） */
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+  .section { padding: 64px 0; }
+
+  /* ---- Header / Global Nav ---- */
+  .header { border-bottom: 1px solid var(--cyan-border); box-shadow: var(--shadow); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; max-width: 1240px; margin: 0 auto; }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo-mark { width: 54px; height: 54px; border-radius: 50%; background: var(--cyan); opacity: .9; }
+  .logo-text { font-family: var(--font-latin); font-size: 34px; font-weight: var(--fw-m); letter-spacing: .06em; color: var(--text); }
+  .logo-jp { font-size: var(--txt-m); font-weight: var(--fw-m); letter-spacing: var(--ls-m); color: var(--text); }
+  .header-links { display: flex; gap: 22px; font-size: var(--txt-xxxs); font-weight: var(--fw-m); letter-spacing: var(--ls-m); }
+  .header-links a { color: var(--text); text-decoration: none; }
+  .search { display: flex; }
+  .search input {
+    font-family: var(--font-jp); font-size: var(--txt-s); font-weight: var(--fw-m);
+    letter-spacing: var(--ls-m); color: var(--text);
+    border: 1px solid var(--cyan-border); border-radius: 0; padding: 10px 14px; width: 260px;
+  }
+  .btn-search {
+    background: var(--cyan); color: var(--on-dark); border: 0; border-radius: var(--radius-badge);
+    padding: 0 8px; font-family: var(--font-jp); font-size: var(--txt-s);
+    font-weight: var(--fw-m); letter-spacing: var(--ls-m); cursor: pointer;
+  }
+  .gnav { display: flex; }
+  .gnav a {
+    flex: 1; text-align: center; text-decoration: none;
+    background: var(--teal-deep); color: var(--on-dark);
+    border: 4px solid var(--teal-deep); border-radius: 0;
+    padding: 14px 0;
+    font-size: var(--txt-l);            /* 24px */
+    font-weight: var(--fw-black);       /* ★900 */
+    letter-spacing: normal;             /* ★ここだけ字間を入れない */
+  }
+  .gnav a.is-current { background: var(--bg); color: var(--teal-deep); }
+
+  /* ---- Hero ---- */
+  .hero { background: var(--grad-hero); padding: 72px 0 80px; }
+  .hero-inner { display: flex; gap: 48px; align-items: flex-start; }
+  .hero-lead { flex: 1; }
+  .hero-lead .sub {
+    font-size: var(--txt-xl); font-weight: var(--fw-m);
+    letter-spacing: var(--ls-m); line-height: var(--lh-s); margin: 0 0 6px;
+  }
+  .hero-lead h1 {
+    font-size: var(--txt-xxl); font-weight: var(--fw-m);
+    letter-spacing: var(--ls-m); line-height: var(--lh-s); margin: 0 0 24px;
+  }
+  .hero-lead p {
+    font-size: var(--txt-s); font-weight: var(--fw-r);
+    letter-spacing: var(--ls-m); line-height: var(--lh-l); margin: 0; max-width: 640px;
+  }
+  .ir-card { background: var(--bg); padding: 32px; width: 400px; flex: none; }
+  .ir-card h2 {
+    font-size: var(--txt-l); font-weight: var(--fw-m);
+    letter-spacing: var(--ls-m); margin: 0 0 20px; text-align: center;
+  }
+  .ir-card .row { display: flex; gap: 10px; align-items: flex-start; font-size: var(--txt-xxs); letter-spacing: var(--ls-s); line-height: var(--lh-m); }
+  .ir-card .divider { height: 1px; background: var(--cyan); margin: 20px 0; }
+  .ir-card .dl { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: var(--txt-xs); letter-spacing: var(--ls-m); }
+  .dl-icon { width: 28px; height: 28px; border-radius: var(--radius-badge); background: var(--cyan); }
+
+  /* ---- Buttons ---- */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .c-button {
+    display: inline-block; background: var(--bg); color: var(--text);
+    border: 1px solid var(--cyan-border); border-radius: var(--radius-btn);
+    padding: 16px 24px; text-decoration: none;
+    font-family: var(--font-jp); font-size: var(--txt-m);
+    font-weight: var(--fw-m); letter-spacing: var(--ls-m); line-height: var(--lh-m);
+  }
+  .c-button.is-disabled { background: var(--cyan-border); color: var(--muted); }
+  .c-button.is-focus { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  .badge-pdf {
+    display: inline-block; background: var(--red); color: var(--on-dark);
+    border-radius: 0; padding: 0 10px;
+    font-size: var(--txt-xxxxxs); font-weight: var(--fw-r); letter-spacing: var(--ls-s);
+  }
+  .badge-tag {
+    display: inline-block; background: var(--cyan-pale); color: var(--text);
+    border-radius: var(--radius-badge); padding: 2px 12px;
+    font-size: var(--txt-xxxxs); font-weight: var(--fw-m); letter-spacing: normal;
+  }
+
+  /* ---- News ---- */
+  .news-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .news-card { border: 1px solid var(--cyan-border); border-radius: var(--radius-btn); padding: 28px; }
+  .news-card h3 {
+    font-size: var(--txt-l); font-weight: var(--fw-m);
+    letter-spacing: var(--ls-m); margin: 0 0 18px;
+    border-bottom: 1px solid var(--cyan-border); padding-bottom: 16px;
+  }
+  .news-item { padding: 14px 0; border-bottom: 1px solid var(--cyan-pale); }
+  .news-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 6px; }
+  .news-date { font-family: var(--font-latin); font-size: var(--txt-xxxxs); font-weight: var(--fw-m); color: var(--muted-2); letter-spacing: var(--ls-m); }
+  .news-item p { margin: 0; font-size: var(--txt-xxxs); font-weight: var(--fw-m); letter-spacing: var(--ls-m); line-height: var(--lh-m); }
+
+  /* ---- Table ---- */
+  .spec { width: 100%; border-collapse: collapse; }
+  .spec th, .spec td {
+    text-align: left; border: 1px solid var(--cyan-border); padding: 12px;
+    font-size: var(--txt-s); font-weight: var(--fw-m); letter-spacing: var(--ls-m); line-height: var(--lh-m);
+  }
+  .spec th { background: var(--cyan-pale); width: 260px; }
+
+  /* ---- CTA ---- */
+  .cta { background: var(--grad-cta); padding: 56px 0; }
+  .cta h2 { font-family: var(--font-latin); font-size: var(--txt-xxxl); font-weight: var(--fw-m); letter-spacing: var(--ls-m); margin: 0 0 10px; }
+  .cta p { font-size: var(--txt-s); font-weight: var(--fw-m); letter-spacing: var(--ls-m); margin: 0 0 24px; }
+
+  .kicker { font-family: var(--font-latin); font-size: var(--txt-xxxxs); font-weight: var(--fw-m); letter-spacing: .18em; color: var(--muted-2); text-transform: uppercase; margin: 0 0 18px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 14px; }
+  .sw { width: 180px; }
+  .sw i { display: block; height: 64px; border: 1px solid var(--cyan-border); }
+  .sw b { display: block; font-family: var(--font-latin); font-size: var(--txt-xxxxs); font-weight: var(--fw-m); letter-spacing: .04em; margin-top: 8px; }
+  .sw span { display: block; font-size: 11px; color: var(--muted); line-height: 1.6; letter-spacing: var(--ls-s); }
+
+  footer { background: var(--teal-deep); color: var(--on-dark); padding: 40px 0; }
+  footer .foot-copy { font-size: var(--txt-xxxxs); font-weight: var(--fw-r); letter-spacing: var(--ls-m); }
+
+  @media (max-width: 834px) {
+    :root { --px-content: 5.33%; }
+    .hero-inner, .news-cols { display: block; }
+    .ir-card { width: auto; margin-top: 28px; }
+    .gnav { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-mark"></div>
+      <div>
+        <div class="logo-text">TFC</div>
+        <div class="logo-jp">東北新社</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; align-items:flex-end;">
+      <nav class="header-links">
+        <a href="#">お問い合わせ</a><a href="#">サイトマップ</a><a href="#">採用情報</a><a href="#">English</a>
+      </nav>
+      <form class="search" onsubmit="return false">
+        <input type="text" placeholder="キーワード検索" aria-label="キーワード検索">
+        <button class="btn-search" type="submit">検索</button>
+      </form>
+    </div>
+  </div>
+  <nav class="gnav">
+    <a class="is-current" href="#">ホーム</a>
+    <a href="#">企業情報</a>
+    <a href="#">事業紹介</a>
+    <a href="#">中期経営計画</a>
+    <a href="#">決算短信</a>
+    <a href="#">IR資料室</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-lead">
+      <p class="sub">映像に関するあらゆる事業を行っている</p>
+      <h1>総合クリエイティブプロダクション</h1>
+      <p>CM制作、プロモーション制作、グラフィック・WEB制作、音響・字幕制作、番組・映画制作、ライセンスビジネス、CS放送関連事業、オンライン配信事業など従来のメディアにとらわれず、あらゆる生活シーンにビジネスフィールドを拡大しています。</p>
+    </div>
+    <div class="ir-card">
+      <h2>最新IR資料</h2>
+      <div class="row">
+        <span>2027年3月期 第1四半期決算短信〔日本基準〕（連結）（304KB）</span>
+        <span class="badge-pdf">PDF</span>
+      </div>
+      <div class="divider"></div>
+      <div class="dl"><span>一括ダウンロード</span><span class="dl-icon"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">News</p>
+    <div class="news-cols">
+      <div class="news-card">
+        <h3>IRニュース</h3>
+        <div class="news-item">
+          <div class="news-meta"><span class="news-date">2026.08.31</span><span class="badge-tag">適時開示</span></div>
+          <p>自己株式立会外買付取引による自己株式の取得結果及び自己株式取得終了に関するお知らせ</p>
+        </div>
+        <div class="news-item">
+          <div class="news-meta"><span class="news-date">2026.08.14</span><span class="badge-tag">決算</span><span class="badge-pdf">PDF</span></div>
+          <p>2027年3月期 第1四半期決算短信〔日本基準〕（連結）</p>
+        </div>
+      </div>
+      <div class="news-card">
+        <h3>プレスリリース・お知らせ</h3>
+        <div class="news-item">
+          <div class="news-meta"><span class="news-date">2026.10.06</span><span class="badge-tag">プレスリリース</span></div>
+          <p>庵野秀明 企画・プロデュース／放送50周年記念「宇宙戦艦ヤマト 全記録展」巡回開催のお知らせ</p>
+        </div>
+        <div class="news-item">
+          <div class="news-meta"><span class="news-date">2026.09.24</span><span class="badge-tag">お知らせ</span></div>
+          <p>9月30日（水）「サンダーバードの日」に一夜限りの特別上映を実施します</p>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:28px;">
+      <a class="c-button" href="#">IRニュース一覧</a>
+      <a class="c-button is-focus" href="#">プレスリリース一覧（:focus）</a>
+      <span class="c-button is-disabled">現在のページ</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--cyan-pale);">
+  <div class="wrap">
+    <p class="kicker">Specification</p>
+    <table class="spec">
+      <tr><th>ルート</th><td><code>html: 16px</code> / <code>body: 16px</code> — 6 幅（1440 / 1200 / 834 / 768 / 767 / 375px）すべて固定</td></tr>
+      <tr><th>和文 / 欧文</th><td>Noto Sans JP（400 / 500 / 900）／ Noto Sans（500）。実サイトは自社サーバ配信（フォント要求 5 件すべて自ドメイン）</td></tr>
+      <tr><th>既定ウェイト</th><td><b>500</b>（可視 183 要素）。400 は補足（46 要素）、900 はグローバルナビだけ（8 要素）</td></tr>
+      <tr><th>700 を使わない</th><td><code>--fw-b: 700</code> は宣言されているが <b>実測 0 要素</b>。<code>@font-face</code> は 400 / 500 / 600 / 900 の 4 本で、700 を要求すると上方向の <b>900（Black）</b>が選ばれる</td></tr>
+      <tr><th>行間</th><td>1.5（既定・176 要素）／ 1.6（49 要素）／ 1.75 / 2.0。無単位の比率</td></tr>
+      <tr><th>字間</th><td><code>--ls-m: 0.08em</code>（既定）／ <code>--ls-s: 0.01em</code>（小さいラベル）／ <code>normal</code>（グローバルナビのみ）</td></tr>
+      <tr><th>OpenType</th><td><code>body { font-feature-settings: "palt" }</code> の 1 行だけ。実測 714 要素。<b>palt で詰めた上から 0.08em を足し直す</b></td></tr>
+      <tr><th>角丸</th><td>4px（ボタン・47 要素）／ 2px（バッジ・検索・33 要素）の 2 段だけ</td></tr>
+      <tr><th>影</th><td><code>rgba(0,42,49,.1) 0 -5px 14px 3px</code> の <b>1 種類だけ</b>（固定ヘッダの下）</td></tr>
+      <tr><th>CSS 変数</th><td>45 個すべて自社トークン（プラットフォーム由来 0）</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">Color Palette</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#00b3cd"></i><b>#00b3cd</b><span>Cyan — 検索ボタンの面と矢印アイコン（可視 4 要素）。主ボタンの面には使わない</span></div>
+      <div class="sw"><i style="background:#002327"></i><b>#002327</b><span>Deep Teal — グローバルナビの面（可視 7 要素）</span></div>
+      <div class="sw"><i style="background:#e2f6f9"></i><b>#e2f6f9</b><span>Pale Cyan — th・バッジ・プルダウン（可視 30 要素）</span></div>
+      <div class="sw"><i style="background:#b6d0d4"></i><b>#b6d0d4</b><span>枠線。無効ボタンの面</span></div>
+      <div class="sw"><i style="background:#ee3d23"></i><b>#ee3d23</b><span>PDF バッジ専用（可視 12 要素）。CTA には使わない</span></div>
+      <div class="sw"><i style="background:#313131"></i><b>#313131</b><span>本文（可視 169 要素）。純黒を使わない</span></div>
+      <div class="sw"><i style="background:#686868"></i><b>#686868</b><span>補足（可視 26 要素）</span></div>
+      <div class="sw"><i style="background:linear-gradient(150deg,#ffffff 10%,#cbf0f5 40%,#b1e6ee 67%,#7ad1de)"></i><b>hero gradient</b><span>linear-gradient(150deg, #ffffff 10%, #cbf0f5 40%, #b1e6ee 67%, #7ad1de)</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>CONTACT</h2>
+    <p>サービスやご支援に関するご相談はこちらから</p>
+    <div class="btn-row"><a class="c-button" href="#">お問い合わせ</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-copy">© Tohokushinsha Film Corporation — preview for DESIGN.md（実測 2026-10-15）</span>
+  </div>
+</footer>
+
+</body>
+</html>

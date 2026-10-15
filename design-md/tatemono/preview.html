@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 東京建物（Tokyo Tatemono）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&family=Montserrat:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ★実サイトの :root は CSS 全文で 0 件。色もサイズも実値で書かれている。
+     このプレビューは読みやすさのために変数へまとめているが、
+     再現するときに CSS 変数で組む必要は無い。2026-10-15 実測 */
+  :root {
+    --green:       #009348;              /* ★ほぼ唯一のブランド色。可視 15 要素 */
+    --green-10:    rgba(0,147,72,.1);    /* バッジの面 */
+    --green-45:    rgba(0,147,72,.45);   /* 画像に重ねる半透明 */
+    --red:         #b3000b;              /* 注記・必須のみ（可視 2〜3 要素）。CTA には使わない */
+    --bg:          #ffffff;
+    --text:        #333333;              /* ★本文。可視 103 要素。body に宣言 */
+    --on-dark:     #ffffff;              /* 可視 123 要素 */
+    --surface-1:   #fafafa;
+    --surface-2:   #f8f8f8;
+    --surface-3:   #f2f2f2;
+    --surface-4:   #efefef;              /* タグの面 */
+    --pale:        #cddbd4;              /* 可視 10 要素 */
+    --veil:        rgba(0,0,0,.3);
+
+    --font-jp:    "Noto Sans JP", sans-serif;
+    --font-en:    "Josefin Sans", sans-serif;   /* ★見出しの英語。このサイトの見た目を決める */
+    --font-num:   "Montserrat", sans-serif;
+
+    --radius:       10px;   /* ★既定（可視 33 要素） */
+    --radius-badge: 24px;   /* バッジだけ丸い */
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ===== ルートは 5 段階の補間式（Bootstrap のブレークポイントに沿う）=====
+     実サイトの宣言をそのまま写す。測定値は 6 幅すべてこの式で再現できる。
+       1440px → 10px     1200px → 9px       1024px → 8.231px
+        992px → 8px（最小）  991px → 11.493px   768px → 10px
+        767px → 11.492px   576px → 10px       575px → 12.348px
+        375px → 10.005px   320px → 9.36px
+     ★帯の中では幅が狭いほど小さく、帯の境目（992/991・576/575）で跳ね上がる。
+       1024px の本文（13.17px）は 375px の本文（14.01px）より小さい。 */
+  html { font-size: 62.5%; }                                               /* ≥1400px → 10px */
+  @media (max-width: 1399.9px) { html { font-size: calc(56.25% + 1   * (100vw - 1200px) / 200); } }
+  @media (max-width: 1199.9px) { html { font-size: calc(50%    + 1.5 * (100vw -  992px) / 208); } }
+  @media (max-width:  991.9px) { html { font-size: calc(62.5%  + 1.5 * (100vw -  768px) / 224); } }
+  @media (max-width:  767.9px) { html { font-size: calc(62.5%  + 1.5 * (100vw -  576px) / 192); } }
+  @media (max-width:  575.9px) { html { font-size: calc(58.5%  + 3   * (100vw -  320px) / 256); } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-weight: 500;                 /* ★既定は Medium。400 ではない */
+    font-size: 1.6rem;                /* 991.9px 以下は 1.4rem */
+    line-height: 1.8;
+    letter-spacing: normal;           /* ★字間は足さない。palt だけで詰める */
+    -webkit-font-smoothing: antialiased;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    -webkit-font-feature-settings: "palt";
+    font-feature-settings: "palt";    /* ★ここ1行で全体に効く（実測 849 要素） */
+  }
+  @media (max-width: 991.9px) { body { font-size: 1.4rem; } }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .section { padding: 72px 0; }
+
+  /* ---- Header ---- */
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; border-bottom: 1px solid var(--surface-3); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--green); }
+  .brand-name { font-size: 2rem; font-weight: 700; letter-spacing: normal; }
+  .gnav { display: flex; gap: 26px; }
+  .gnav a { color: var(--text); text-decoration: none; font-size: 1.4rem; font-weight: 500; }
+  .btn-contact {
+    background: var(--green); color: var(--on-dark); border-radius: var(--radius);
+    padding: 14px 20px; text-decoration: none; font-size: 1.4rem; font-weight: 700;
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    position: relative; min-height: 460px; display: flex; align-items: flex-end;
+    background:
+      linear-gradient(0deg, rgba(0,0,0,.45), rgba(0,0,0,0) 60%),
+      linear-gradient(160deg, #a8d8ef 0%, #cfe8f5 45%, #e9f2f6 100%);
+    padding: 0 0 48px;
+  }
+  .hero-sub {
+    font-size: 1.6rem; font-weight: 500; color: var(--on-dark);
+    letter-spacing: .05em; margin: 0 0 14px;
+  }
+  .hero-main {
+    display: block; font-size: 4.2rem; font-weight: 500;   /* ★ヒーローは 500。700 ではない */
+    letter-spacing: normal; line-height: 1.5; color: var(--on-dark); margin: 0;
+  }
+
+  /* ---- 見出し（英語を大きく、和文を小さく）---- */
+  .heading { margin: 0 0 32px; }
+  .heading em {
+    display: block; font-family: var(--font-en); font-style: normal;
+    font-size: 6.5rem; font-weight: 400; letter-spacing: .05em; line-height: 1.1;
+    color: var(--text); margin: 0 0 4px;
+  }
+  .heading span { display: block; font-size: 1.6rem; font-weight: 700; letter-spacing: normal; }
+  .heading.on-green em, .heading.on-green span { color: var(--on-dark); }
+
+  /* ---- 事業カード（和文 50px / 0.21em・英語 30px）---- */
+  .biz { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .biz-card {
+    position: relative; min-height: 230px; border-radius: var(--radius); overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px;
+    background: linear-gradient(0deg, var(--veil), var(--veil)), linear-gradient(135deg, #4b6b58 0%, #22382c 100%);
+  }
+  .biz-card:nth-child(2) { background: linear-gradient(0deg, var(--veil), var(--veil)), linear-gradient(135deg, #46607a 0%, #203141 100%); }
+  .biz-card:nth-child(3) { background: linear-gradient(0deg, var(--veil), var(--veil)), linear-gradient(135deg, #6b6450 0%, #37321f 100%); }
+  .biz-card strong {
+    font-size: 5rem; font-weight: 700;
+    letter-spacing: .21em;            /* ★10.5px / 50px = 0.21em */
+    line-height: 1; color: var(--on-dark);
+    text-indent: .21em;               /* 字間ぶんの右アキを相殺して中央に見せる */
+  }
+  .biz-card em {
+    font-family: var(--font-en); font-style: normal;
+    font-size: 3rem; font-weight: 400; letter-spacing: .05em; line-height: 1; color: var(--on-dark);
+  }
+
+  /* ---- News ---- */
+  .tabs { display: flex; gap: 10px; margin-bottom: 24px; }
+  .tab {
+    background: var(--bg); color: var(--text); border: 1px solid var(--surface-4);
+    border-radius: var(--radius); padding: 14px 16px; text-decoration: none;
+    font-size: 1.6rem; font-weight: 700; letter-spacing: normal;
+  }
+  .tab.is-active { background: var(--green); color: var(--on-dark); border-color: var(--green); }
+  .news-item { display: flex; gap: 18px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid var(--surface-3); }
+  .news-date { font-family: var(--font-num); font-size: 1.4rem; font-weight: 500; color: var(--text); min-width: 108px; }
+  .c-badge {
+    background: var(--green-10); color: var(--green); border-radius: var(--radius-badge);
+    padding: 3.6px 12px 3.9px; font-size: 1.2rem; font-weight: 500; letter-spacing: normal; white-space: nowrap;
+  }
+  .news-item p { margin: 0; font-size: 1.6rem; font-weight: 500; line-height: 1.8; }
+  .tag { background: var(--surface-4); color: var(--text); border-radius: var(--radius); padding: 4px 12px; font-size: 1.2rem; font-weight: 500; }
+
+  /* ---- Buttons ---- */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .c-btnBasic {
+    display: inline-block; background: var(--green); color: var(--on-dark);
+    border: 1px solid var(--green); border-radius: var(--radius);
+    padding: 14px 16px; text-decoration: none;
+    font-size: 1.6rem; font-weight: 700; letter-spacing: normal;
+  }
+  .c-btnBasic.--lg { font-size: 1.8rem; padding: 16px 30px 16px 20px; }
+  .c-btnBasic.is-focus { outline: 2px solid var(--green); outline-offset: 3px; }
+
+  /* ---- 緑の帯 ---- */
+  .band { background: var(--green); color: var(--on-dark); }
+  .band p { font-size: 1.6rem; font-weight: 500; line-height: 1.8; margin: 0 0 24px; max-width: 760px; }
+  .band .c-btnBasic { background: var(--bg); color: var(--green); border-color: var(--bg); }
+
+  /* ---- Table ---- */
+  .spec { width: 100%; border-collapse: collapse; }
+  .spec th, .spec td {
+    text-align: left; border-bottom: 1px solid var(--surface-3); padding: 12px;
+    font-size: 1.4rem; font-weight: 500; line-height: 1.8; letter-spacing: normal;
+  }
+  .spec th { background: var(--surface-1); width: 260px; font-weight: 700; }
+  .req { color: var(--red); font-size: 1.2rem; font-weight: 500; }
+
+  .kicker { font-family: var(--font-en); font-size: 1.3rem; font-weight: 400; letter-spacing: .18em; color: var(--text); text-transform: uppercase; margin: 0 0 16px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 14px; }
+  .sw { width: 184px; }
+  .sw i { display: block; height: 64px; border: 1px solid var(--surface-3); border-radius: var(--radius); }
+  .sw b { display: block; font-family: var(--font-num); font-size: 1.2rem; font-weight: 500; margin-top: 8px; }
+  .sw span { display: block; font-size: 1.1rem; color: var(--text); line-height: 1.6; }
+
+  footer { background: var(--surface-1); padding: 40px 0; }
+  footer .foot-copy { font-size: 1.2rem; font-weight: 500; color: var(--text); }
+
+  @media (max-width: 834px) {
+    .biz { grid-template-columns: 1fr; }
+    .gnav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand"><span class="brand-mark"></span><span class="brand-name">東京建物</span></div>
+  <nav class="gnav">
+    <a href="#">企業情報</a><a href="#">事業紹介</a><a href="#">サステナビリティ</a>
+    <a href="#">IR情報</a><a href="#">ニュース</a><a href="#">採用情報</a>
+  </nav>
+  <a class="btn-contact" href="#">お問い合わせ</a>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="hero-sub">130年の信頼を未来へ</p>
+    <strong class="hero-main">人やまち、地球に寄り添う<br>サステナブルなまちづくりに向けて</strong>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2 class="heading"><em>Highlights</em><span>東京建物グループの取り組み</span></h2>
+    <div class="btn-row">
+      <a class="c-btnBasic --lg" href="#">トップメッセージ</a>
+      <a class="c-btnBasic --lg is-focus" href="#">グループ理念（:focus）</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--surface-1);">
+  <div class="wrap">
+    <h2 class="heading"><em>What&rsquo;s new</em><span>ニュース</span></h2>
+    <div class="tabs">
+      <a class="tab is-active" href="#">すべて</a>
+      <a class="tab" href="#">ニュース</a>
+      <a class="tab" href="#">IRニュース</a>
+    </div>
+    <div class="news-item">
+      <span class="news-date">2026.10.14</span>
+      <span class="c-badge">都市開発・ビル</span>
+      <p>八重洲一丁目東地区第一種市街地再開発事業の工事着手についてお知らせいたします</p>
+    </div>
+    <div class="news-item">
+      <span class="news-date">2026.10.02</span>
+      <span class="c-badge">住宅</span>
+      <p>分譲マンション「Brillia」シリーズの新たなブランドサイトを公開しました</p>
+    </div>
+    <div class="news-item">
+      <span class="news-date">2026.09.18</span>
+      <span class="c-badge">サステナビリティ</span>
+      <p>外部評価でサステナビリティの取り組みが最高位の評価を受けました <span class="tag">ESG</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2 class="heading"><em>Our Business</em><span>事業紹介</span></h2>
+    <div class="biz">
+      <div class="biz-card"><strong>働く</strong><em>Working</em></div>
+      <div class="biz-card"><strong>暮らす</strong><em>Living</em></div>
+      <div class="biz-card"><strong>活かす</strong><em>Practical</em></div>
+    </div>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="wrap">
+    <h2 class="heading on-green"><em>Sustainability</em><span>サステナビリティ</span></h2>
+    <p>人やまち、地球に寄り添うまちづくりを進めています。本文の字間は <code>normal</code> のままで、詰めは <code>font-feature-settings: "palt"</code> の 1 行だけで作っています。</p>
+    <div class="btn-row"><a class="c-btnBasic" href="#">取り組みを見る</a></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">Specification</p>
+    <table class="spec">
+      <tr><th>ルート</th><td>5 段階の補間式。1440px→10px ／ <b>992px→8px（最小）</b> ／ 991px→11.49px ／ 768px→10px ／ 767px→11.49px ／ 576px→10px ／ 575px→12.35px ／ 375px→10.00px</td></tr>
+      <tr><th>本文</th><td><code>1.6rem</code>（デスクトップ）／ <code>1.4rem</code>（991.9px 以下）。<b>1024px の本文 13.17px は 375px の 14.01px より小さい</b></td></tr>
+      <tr><th>和文</th><td>Noto Sans JP 400 / 500 / 700。<b>既定は 500（Medium）</b>。可視 500×123・400×71・700×56</td></tr>
+      <tr><th>欧文</th><td>Josefin Sans 400（見出し）／ Montserrat 500（数字）。<b>Roboto は宣言のみで 2 ページとも <code>unloaded</code>・可視 0 要素</b></td></tr>
+      <tr><th>900 を使わない</th><td>Google Fonts の URL が <code>Noto+Sans+JP:wght@400;500;700</code> なので、900 を書いても 700 で出る</td></tr>
+      <tr><th>行間</th><td>1.8（body・無単位）。実測比 1.20×58 / 1.30×49 / 1.00×54 / 1.10×22</td></tr>
+      <tr><th>字間</th><td><b><code>normal</code> が可視 177/193 要素</b>。当てるのは事業見出し 0.21em と欧文見出し 0.05em だけ</td></tr>
+      <tr><th>OpenType</th><td><code>body { font-feature-settings: "palt" }</code> の 1 行。実測 849 要素（トップ）／ 636 要素（下層）</td></tr>
+      <tr><th>角丸</th><td>10px が既定（可視 33 要素）。バッジのみ 24px、丸アイコン 50%</td></tr>
+      <tr><th>影</th><td><b><code>box-shadow</code> は 0 種</b>。段差は面色（#fafafa / #f8f8f8 / #f2f2f2）で作る</td></tr>
+      <tr><th>CSS 変数</th><td><b>実サイトの <code>:root</code> は 0 件</b>。色もサイズも実値で書かれている</td></tr>
+      <tr><th>注記色</th><td><span class="req">※必須</span> — <code>#b3000b</code>。注意書きのみ。CTA には使わない</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="section" style="background:var(--surface-2);">
+  <div class="wrap">
+    <p class="kicker">Color Palette</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#009348"></i><b>#009348</b><span>Tatemono Green — 面・文字・装飾のすべて（可視 15 要素）</span></div>
+      <div class="sw"><i style="background:rgba(0,147,72,.1)"></i><b>rgba(0,147,72,.1)</b><span>バッジの面。文字は #009348 のまま</span></div>
+      <div class="sw"><i style="background:#b3000b"></i><b>#b3000b</b><span>注記・必須のみ（可視 2〜3 要素）</span></div>
+      <div class="sw"><i style="background:#333333"></i><b>#333333</b><span>本文（可視 103 要素）。純黒を使わない</span></div>
+      <div class="sw"><i style="background:#efefef"></i><b>#efefef</b><span>タグの面</span></div>
+      <div class="sw"><i style="background:#cddbd4"></i><b>#cddbd4</b><span>薄い緑がかったグレー（可視 10 要素）</span></div>
+      <div class="sw"><i style="background:#fafafa"></i><b>#fafafa</b><span>セクションの地（下層）</span></div>
+      <div class="sw"><i style="background:#f2f2f2"></i><b>#f2f2f2</b><span>区切りの面</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-copy">© Tokyo Tatemono Co., Ltd. — preview for DESIGN.md（実測 2026-10-15）</span>
+  </div>
+</footer>
+
+</body>
+</html>

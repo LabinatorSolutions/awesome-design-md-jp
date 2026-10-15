@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 玉乃光酒造（Tamanohikari）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は実サイトに 47 個あるが すべて WordPress / Gutenberg 由来（own: 0）。
+       自社の設計トークンは存在しない。以下は computed style の実測値。2026-10-15 */
+    --navy:       #001328;   /* ★基調。body の地色 / ナビ面 / Solid ボタン。可視 10 要素 */
+    --navy-deep:  #040c16;   /* セクションの段差。可視 29 要素 */
+    --bg-article: #ebebed;   /* ★下層（記事）の地色。トップとは違う */
+    --surface:    #f5f5f5;   /* 記事カードの面（可視 2 要素） */
+    --on-dark:    #ffffff;   /* 本文・見出しの既定。可視 156 要素 */
+    --on-dark-2:  #dddddd;   /* 補足テキスト。可視 22 要素 */
+    --on-dark-3:  rgba(255,255,255,.85);  /* 可視 14 要素 */
+    --hairline:   rgba(255,255,255,.4);   /* Ghost ボタンの枠 */
+    --veil:       rgba(0,0,0,.2);         /* 写真の上のボタン面。可視 3 要素 */
+
+    /* === Fonts ===
+       実サイトの和文は A1明朝 StdN R（MFW-PA1MinchoStdN-Regular）と
+       游ゴシック Pr6N Medium / Demi（MFW-YuGoPr6N-*）を Morisawa Fonts Web で、
+       欧文は Helvetica Neue LT Pro Md / Lt を FontPlus で配信している。
+       どちらもドメインライセンスのためローカルでは出せないので、
+       明朝 = Shippori Mincho、ゴシック = Zen Kaku Gothic New、欧文 = Inter で代替する。
+       ★実サイトの @font-face は すべて font-weight: 1 1000 宣言（Morisawa Fonts Web）。
+         太さは font-weight ではなく ファミリー名（-Medium / -Demi）で切り替える。 */
+    --font-mincho: "Shippori Mincho", "Hiragino Mincho ProN", serif;      /* ★既定は明朝 */
+    --font-gothic: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
+    --font-latin:  "Inter", system-ui, sans-serif;
+
+    /* === Type scale（実測・1440px）===
+       ルートは html: 14px / body: 14px で 6 幅すべて固定。流体ではない。 */
+    --fs-base:    14px;   /* html = body */
+    --fs-hero:    50px;   /* h2.copy（縦組み）。1200px→45.6 / 834px→40 / 375px→31.875 */
+    --fs-vhead:   38.88px;/* h2.v（縦組み・2.7vw）。1200px→32.4 / 834px→30 / 375px→24.375 */
+    --fs-card:    30px;   /* 記事カード見出し（weight 600） */
+    --fs-body:    18px;
+    --fs-small:   15px;
+    --fs-label:   12px;
+
+    /* === 行間（無単位の比率。body は 25.2/14 = 1.8）=== */
+    --lh-body:    1.8;
+    --lh-vert:    1.7;    /* 縦組み見出し。375px では 1.5 に落ちる */
+    --lh-navi:    1.0;    /* 縦組みナビ（列を詰める） */
+
+    /* === 字間（各要素が em で持つ。body 継承ではない）=== */
+    --ls-vert:    .2em;   /* ★縦組みは例外なく 0.2em（全幅共通） */
+    --ls-head:    .12em;  /* 30px→3.6px / 18px→2.16px */
+    --ls-mid:     .1em;   /* 16px→1.6px */
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: var(--fs-base); }   /* 流体にしない */
+  body {
+    margin: 0;
+    background: var(--navy);
+    color: var(--on-dark);
+    font-family: var(--font-mincho);     /* ★既定が明朝 */
+    font-size: var(--fs-base);
+    font-weight: 400;
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 横組みは palt、縦組みは vpal（実サイトは halt / vkrn,vpal を取り違えている） */
+  .h-text { font-feature-settings: "palt"; }
+  .v-text { writing-mode: vertical-rl; font-feature-settings: "vpal"; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+  .section { padding: 72px 0; }
+  .section + .section { border-top: 1px solid rgba(255,255,255,.12); }
+  .kicker {
+    font-family: var(--font-latin); font-size: 11px; font-weight: 500;
+    letter-spacing: .18em; color: var(--on-dark-2); text-transform: uppercase; margin: 0 0 20px;
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    position: relative; height: 560px; overflow: hidden;
+    background:
+      linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,.15)),
+      radial-gradient(120% 90% at 30% 40%, #5d4a35 0%, #2b2219 55%, #120f0c 100%);
+  }
+  .hero-copy {
+    position: absolute; top: 40px; right: 48px;
+    writing-mode: vertical-rl; font-feature-settings: "vpal";
+    font-family: var(--font-mincho);
+    font-size: var(--fs-hero); font-weight: 400;
+    letter-spacing: var(--ls-vert);       /* 0.2em */
+    line-height: var(--lh-vert);          /* 1.7 */
+    color: var(--on-dark); margin: 0;
+  }
+  .hero-mark {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 210px; height: 210px; border-radius: 100%;
+    border: 1px solid rgba(255,255,255,.75);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  }
+  .hero-mark b {
+    writing-mode: vertical-rl; font-feature-settings: "vpal";
+    font-family: var(--font-mincho); font-size: 34px; font-weight: 500;
+    letter-spacing: .1em; line-height: 1.3;
+  }
+  .hero-mark small {
+    font-family: var(--font-latin); font-size: 11px; font-weight: 300;
+    letter-spacing: .22em; color: var(--on-dark-3); text-align: center; line-height: 1.6;
+  }
+  .hero-foot { position: absolute; left: 48px; bottom: 36px; max-width: 540px; }
+  .hero-foot .meta {
+    font-family: var(--font-gothic); font-size: var(--fs-label); font-weight: 500;
+    letter-spacing: .1em; color: var(--on-dark-3); margin: 0 0 10px;
+  }
+  .hero-foot h3 {
+    font-family: var(--font-mincho); font-size: var(--fs-card); font-weight: 600;
+    letter-spacing: var(--ls-head); line-height: 1.5; margin: 0 0 18px;
+    font-feature-settings: "palt";
+  }
+  /* 実サイトの縦組みサイドラベルは右端・左端に立つ */
+  .hero-side {
+    position: absolute; bottom: 28px; writing-mode: vertical-rl; font-feature-settings: "vpal";
+    font-family: var(--font-mincho); font-size: 13px; letter-spacing: .2em;
+    line-height: 1; color: var(--on-dark-3);
+  }
+  .hero-side.is-right { right: 14px; }
+  .hero-side.is-left  { left: 14px; }
+
+  /* ---- 縦組みナビ（横に並べる＝右から左へ）---- */
+  .vnav {
+    display: flex; flex-direction: row-reverse;   /* ★DOM 順を右→左に並べる */
+    justify-content: flex-start; gap: 24px;
+  }
+  .vnav a {
+    writing-mode: vertical-rl; font-feature-settings: "vpal";
+    font-family: var(--font-mincho); font-size: 17.28px; font-weight: 400;
+    letter-spacing: var(--ls-vert);   /* 3.456px = 0.2em */
+    line-height: var(--lh-navi);      /* 17.28px = 1.0 */
+    color: var(--on-dark); text-decoration: none; padding: 2px 0;
+  }
+  .vnav a:hover { color: var(--on-dark-2); }
+  .vnav-note { color: var(--on-dark-2); font-family: var(--font-gothic); font-size: 12px; letter-spacing: .08em; }
+
+  /* ---- 縦組み見出し ---- */
+  .vhead {
+    writing-mode: vertical-rl; font-feature-settings: "vpal";
+    font-family: var(--font-mincho);
+    font-size: var(--fs-vhead); font-weight: 400;
+    letter-spacing: var(--ls-vert); line-height: var(--lh-vert);
+    margin: 0; color: var(--on-dark);
+  }
+
+  /* ---- Buttons（角丸 0・影なし）---- */
+  .btn-solid {
+    display: inline-block; background: var(--navy); color: var(--on-dark);
+    border: 0; border-radius: 0; padding: 40px 20px;
+    font-family: var(--font-mincho); font-size: 14px; font-weight: 400;
+    letter-spacing: var(--ls-vert); text-decoration: none; text-align: center; min-width: 260px;
+  }
+  .btn-ghost {
+    display: inline-block; background: var(--veil); color: var(--on-dark);
+    border: 1px solid var(--hairline); border-radius: 0; padding: 20px;
+    font-family: var(--font-mincho); font-size: 15.12px; font-weight: 400;
+    text-decoration: none; min-width: 300px;
+  }
+  .btn-read {
+    display: inline-block; background: transparent; color: var(--on-dark);
+    border: 1px solid var(--hairline); border-radius: 0; padding: 10px 12px;
+    font-family: var(--font-gothic); font-size: 12px; font-weight: 600;
+    letter-spacing: .1em; text-decoration: none;
+  }
+  .btn-read.is-focus { outline: 2px solid #ffffff; outline-offset: 2px; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+
+  /* ---- Cards（写真の上に文字を直接置く）---- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    position: relative; min-height: 260px; border-radius: 0; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+    background:
+      linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,0)),
+      linear-gradient(135deg, #46525e 0%, #22303c 100%);
+  }
+  .card:nth-child(2) { background: linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,0)), linear-gradient(135deg, #5a4a3a 0%, #2c231b 100%); }
+  .card:nth-child(3) { background: linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,0)), linear-gradient(135deg, #3d4f44 0%, #1d2922 100%); }
+  .card .date {
+    font-family: var(--font-latin); font-size: 11px; font-weight: 300;
+    letter-spacing: .14em; color: var(--on-dark-3); margin-bottom: 8px;
+  }
+  .card h4 {
+    font-family: var(--font-mincho); font-size: 20px; font-weight: 600;
+    letter-spacing: var(--ls-head); line-height: 1.6; margin: 0 0 16px;
+    font-feature-settings: "palt"; color: var(--on-dark);
+  }
+
+  /* ---- 段差セクション ---- */
+  .band { background: var(--navy-deep); }
+
+  /* ---- 下層（記事）の地色 ---- */
+  .article {
+    background: var(--bg-article); color: var(--navy);
+    font-family: var(--font-mincho); padding: 56px 0;
+  }
+  .article h3 {
+    font-size: 32px; font-weight: 600; letter-spacing: var(--ls-head);
+    line-height: 1.6; margin: 0 0 20px; font-feature-settings: "palt";
+  }
+  .article p {
+    font-size: var(--fs-body); line-height: 2.2; letter-spacing: var(--ls-head);
+    margin: 0 0 18px; font-feature-settings: "palt"; max-width: 760px;
+  }
+  .article .surface {
+    background: var(--surface); padding: 24px; border-radius: 10px;   /* 記事のみ 10px */
+    font-size: var(--fs-small); line-height: 1.8;
+  }
+  .article .btn-dark {
+    display: inline-block; background: var(--navy); color: var(--on-dark);
+    border-radius: 0; padding: 20px 28px; text-decoration: none; font-size: 14px;
+  }
+
+  /* ---- 仕様表 ---- */
+  .spec { width: 100%; border-collapse: collapse; font-family: var(--font-gothic); font-size: 13px; }
+  .spec th, .spec td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.14); letter-spacing: .04em; }
+  .spec th { color: var(--on-dark-2); font-weight: 500; width: 230px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 14px; }
+  .sw { width: 168px; }
+  .sw i { display: block; height: 64px; border: 1px solid rgba(255,255,255,.22); }
+  .sw b { display: block; font-family: var(--font-latin); font-size: 12px; font-weight: 500; letter-spacing: .06em; margin-top: 8px; }
+  .sw span { display: block; font-family: var(--font-gothic); font-size: 11px; color: var(--on-dark-2); line-height: 1.6; }
+
+  footer { background: var(--navy-deep); padding: 40px 0; }
+  .foot-copy { font-family: var(--font-gothic); font-size: 11px; color: var(--on-dark-2); letter-spacing: .06em; }
+
+  @media (max-width: 834px) {
+    .hero-copy { font-size: 40px; }
+    .vhead { font-size: 30px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 375px) {
+    .hero-copy { font-size: 31.875px; line-height: 1.5; }  /* ★ヒーローだけ行間が 1.5 に落ちる */
+    .vhead { font-size: 24.375px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <p class="hero-copy">いい酒で、いい時間を、造る。</p>
+  <div class="hero-mark"><b>玉乃光</b><small>Kyoto, Japan<br>since 1673</small></div>
+  <div class="hero-foot">
+    <p class="meta">玉乃光を知る　2024.8.20 UPDATE</p>
+    <h3>秋になると酒蔵は最盛期へ。<br>酒造りに励む蔵人たちに密着。</h3>
+    <a class="btn-read" href="#">記事を読む</a>
+  </div>
+  <span class="hero-side is-right">京都市伏見区東堺町５４５−２</span>
+  <span class="hero-side is-left">玉乃光酒造オンラインショップ</span>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">Vertical Navigation</p>
+    <div class="vnav">
+      <a href="#">酒造りの礎</a>
+      <a href="#">伝統と技</a>
+      <a href="#">水のこだわり</a>
+      <a href="#">米のこだわり</a>
+      <a href="#">酒銘の由来</a>
+      <a href="#">受け継ぐ精神</a>
+    </div>
+    <p class="vnav-note">※ DOM 順は「酒造りの礎 → 受け継ぐ精神」。<code>flex-direction: row-reverse</code> で右から左に並べ、日本語の縦組みとして読む向きに揃えている。</p>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="wrap" style="display:flex; gap:48px; align-items:flex-start;">
+    <h2 class="vhead">玉乃光の自慢の酒</h2>
+    <div style="flex:1">
+      <p class="h-text" style="font-size:var(--fs-body); line-height:1.8; letter-spacing:var(--ls-head); max-width:620px; margin:0 0 24px;">
+        延宝元年（1673年）創業。「玉乃光」は和歌山で誕生し、京都・伏見へ移りました。純米酒の復活に取り組み、米と水だけで醸す酒を造り続けています。
+      </p>
+      <div class="btn-row">
+        <a class="btn-ghost" href="#">記事　『変わらぬこと、磨き続けること。』</a>
+        <a class="btn-read is-focus" href="#">記事を読む（:focus）</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">News</p>
+    <div class="cards">
+      <article class="card">
+        <span class="date">2026.10.07</span>
+        <h4>「ちいかわ 日本酒とお出汁のだし割りセット」店頭にて販売開始</h4>
+        <a class="btn-read" href="#">記事を読む</a>
+      </article>
+      <article class="card">
+        <span class="date">2026.09.25</span>
+        <h4>【受賞情報】『オーガニックスパークリング 京の星』が金賞を受賞</h4>
+        <a class="btn-read" href="#">記事を読む</a>
+      </article>
+      <article class="card">
+        <span class="date">2026.09.24</span>
+        <h4>「東蔵」の曳家工事が完了しました</h4>
+        <a class="btn-read" href="#">記事を読む</a>
+      </article>
+    </div>
+    <div class="btn-row" style="margin-top:32px;">
+      <a class="btn-solid" href="#">お知らせ記事一覧</a>
+      <a class="btn-solid" href="#">玉乃光の商品一覧</a>
+    </div>
+  </div>
+</section>
+
+<section class="article">
+  <div class="wrap">
+    <p class="kicker" style="color:#5a6672;">Article — 下層は地色が変わる（#ebebed）</p>
+    <h3>変わらぬこと、磨き続けること。玉乃光に宿る酒造りの精神。</h3>
+    <p>蔵人が着るＴシャツの背には、ダイアモンドリングをイメージしたロゴが入っています。蒸米を布に包んで小走りに運ぶ姿は、創業から変わらない光景です。</p>
+    <p>本文の文字色は黒ではなくブランドの濃紺（<code>#001328</code>）。行間は 2.2、字間は 0.12em。</p>
+    <div class="surface">記事ページだけ <code>border-radius: 10px</code> の面を使う（実測 2 要素）。トップの角丸は 0。</div>
+    <p style="margin-top:24px;"><a class="btn-dark" href="#">トップページに戻る</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">Color Palette</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#001328"></i><b>#001328</b><span>Navy — body の地色 / ナビ / Solid ボタン（可視 10 要素）</span></div>
+      <div class="sw"><i style="background:#040c16"></i><b>#040c16</b><span>Deep Navy — セクションの段差（可視 29 要素）</span></div>
+      <div class="sw"><i style="background:#ebebed"></i><b>#ebebed</b><span>下層（記事）の地色</span></div>
+      <div class="sw"><i style="background:#f5f5f5"></i><b>#f5f5f5</b><span>記事カードの面（可視 2 要素）</span></div>
+      <div class="sw"><i style="background:#ffffff"></i><b>#ffffff</b><span>文字の既定（可視 156 要素）</span></div>
+      <div class="sw"><i style="background:#dddddd"></i><b>#dddddd</b><span>補足テキスト（可視 22 要素）</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="wrap">
+    <p class="kicker">Typography / Spec</p>
+    <table class="spec">
+      <tr><th>ルート</th><td><code>html: 14px</code> / <code>body: 14px</code> — 6 幅（1440 / 1200 / 834 / 768 / 767 / 375px）すべて固定</td></tr>
+      <tr><th>和文（既定）</th><td>A1明朝 StdN Regular（Morisawa Fonts Web）→ ここでは Shippori Mincho で代替</td></tr>
+      <tr><th>和文（差し替え）</th><td>游ゴシック Pr6N Medium / Demi → ここでは Zen Kaku Gothic New で代替</td></tr>
+      <tr><th>欧文</th><td>Helvetica Neue LT Pro Md / Lt（FontPlus）→ ここでは Inter で代替</td></tr>
+      <tr><th>ウェイト</th><td>400 / 500 / 600 の3段。700 以上は 1 要素も無い。太さはファミリー名で切り替える</td></tr>
+      <tr><th>行間</th><td>body 1.8（無単位）／ 縦組み見出し 1.7（375px のヒーローのみ 1.5）／ 縦組みナビ 1.0</td></tr>
+      <tr><th>字間</th><td>縦組み <b>0.2em</b>（全幅共通）／ 横見出し 0.1〜0.12em。各要素が em で持つ</td></tr>
+      <tr><th>OpenType</th><td>横組み <code>"palt"</code>（実サイト 47 要素）／ 縦組み <code>"vpal"</code>。実サイトは縦組みに <code>"halt"</code> 39 要素、横組みに <code>"vkrn","vpal"</code> 4 要素を当てており、どちらも効いていない</td></tr>
+      <tr><th>角丸 / 影</th><td><code>border-radius: 0</code> が既定。<code>box-shadow</code> は <b>0 種</b></td></tr>
+      <tr><th>CSS 変数</th><td>実サイトは 47 個すべて WordPress / Gutenberg 由来（自社トークン 0）</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-copy">© Tamanohikari Sake Brewing Co., Ltd. — preview for DESIGN.md（実測 2026-10-15）</span>
+  </div>
+</footer>
+
+</body>
+</html>
