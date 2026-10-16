@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ビザスク（VisasQ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は 76 個あるが own は 16 個のみで、
+       残り 60 個は WordPress / Gutenberg 由来（admin 11 / Gutenberg 49）。
+       以下は computed style の実測値。2026-10-16 */
+    --blue:        #0052ff;  /* ★唯一の彩度色。文字 24 要素 / 面 6 要素 */
+    --blue-deep:   #003199;  /* 導入企業名・下層CTA。可視 16 要素 */
+    --navy-form:   #08277f;  /* フォーム見出し帯。可視 1 要素 */
+    --ink:         #000000;  /* ★本文は純黒。可視 197 要素 */
+    --ink-sub:     #7f7f7f;  /* 補助・フォームラベル。可視 122 要素 */
+    --on-blue:     #ffffff;  /* 可視 35 要素 */
+    --danger:      #dc2626;  /* 必須マーク * のみ。可視 2 要素 */
+    --bg-top:      #f0f0f0;  /* ★トップの地色 */
+    --bg-sub:      #edf4fe;  /* ★下層の地色。トップと違う */
+    --surface:     #f6f6f6;  /* カード面。可視 7 要素 */
+    --surface-bl:  #eaf2fb;  /* 比較ブロック */
+    --border:      #d9d9d9;
+    --border-2:    #e1e1e1;
+
+    /* === Fonts ===
+       Inter 400/700/800 ＋ Noto Sans JP 400/700（Roboto 700 は数値 11 要素のみ）。
+       すべて Google Fonts 配信で loaded。フォント要求 45 件すべて fonts.gstatic.com。
+       ★実サイトのスタックは YuGothic が "Yu Gothic Medium" より前にあり、
+         Windows で Regular に当たって細くなる。ここでは正しい順に直してある。 */
+    --font: Inter, "Noto Sans JP", "游ゴシック Medium", "Yu Gothic Medium",
+            YuGothic, "Yu Gothic", "Helvetica Neue", Arial,
+            "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+
+    /* === Type scale（実測・1440px）===
+       html は 6 幅すべて 16px 固定。body だけ 1200〜834px の間で 14px→15px と「増える」。 */
+    --fs-root:   16px;   /* html。固定 */
+    --fs-body:   14px;   /* body。834px 以下は 15px（モバイルで大きくなる） */
+    --fs-h1:     41.87px;/* 1024px 以上。834px 以下は 29px の階段 */
+    --fs-num:    42px;   /* 数値カウンタ。weight 900 */
+    --fs-h3:     22px;
+    --fs-mid:    34px;
+    --fs-label:  12px;   /* 可視 150 要素で最多 */
+
+    /* === 行間（無単位の比率）=== */
+    --lh-body:   1.7;    /* body = 23.8/14 */
+    --lh-h1:     1.4;
+    --lh-h3:     1.575;
+
+    /* === 字間 ===
+       ★既定は normal。当てるのは見出しと数値だけ。 */
+    --ls-h1:     .05em;  /* 41.87px → 2.0935px */
+    --ls-num:    -.04em; /* 42px → -1.68px。数字だけ詰める */
+    --ls-mid:    .05em;
+
+    --radius:    3px;    /* ★このサイトの角丸は 3px がほぼ唯一。可視 28 要素 */
+    --shadow:    rgba(0,0,0,.2) 0 10px 19px;  /* 影は実質これ 1 つ（可視 1 要素） */
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: var(--fs-root); }   /* 流体にしない */
+  body {
+    margin: 0;
+    background: var(--bg-top);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: var(--fs-body);
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: normal;             /* ★既定は normal */
+    /* ★実サイトは font-feature-settings:"pkna" だが Noto Sans JP が pkna を
+       持たないため 1px も効いていない（normal と完全同幅を実測）。
+       詰めるなら palt。ここでは実サイトの見え方＝詰まっていない状態に合わせ、
+       あえて指定しない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 48px 24px 72px; }
+  .sec { margin-bottom: 56px; }
+  .sec > h2.secttl {
+    font-size: 11px; font-weight: 700; letter-spacing: .14em;
+    color: var(--ink-sub); text-transform: uppercase;
+    margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    background: linear-gradient(100deg, #0a1b44 0%, #15306e 60%, #1b3f8c 100%);
+    color: var(--on-blue);
+    padding: 56px 40px; border-radius: var(--radius);
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: 32px; align-items: start;
+  }
+  .hero h1 {
+    margin: 0 0 20px;
+    font-size: var(--fs-h1); font-weight: 700;
+    line-height: var(--lh-h1); letter-spacing: var(--ls-h1);
+  }
+  .hero p { margin: 0 0 28px; font-size: 16px; line-height: 2; letter-spacing: .05em; }
+  .stats { display: flex; gap: 32px; }
+  .stat .n {
+    font-size: var(--fs-num); font-weight: 900; line-height: 1;
+    letter-spacing: var(--ls-num);                 /* ★数字だけ詰める */
+    font-family: Inter, var(--font);
+  }
+  .stat .c { font-size: var(--fs-label); font-weight: 700; letter-spacing: .05em; opacity: .85; }
+
+  /* ---- Form（ファーストビュー常設）---- */
+  .form { background: #fff; border-radius: 4px; overflow: hidden; color: var(--ink); }
+  .form .fh {
+    background: var(--navy-form); color: #fff;
+    font-size: var(--fs-label); font-weight: 700; text-align: center; padding: 10px;
+  }
+  .form .fb { padding: 20px; }
+  .form .ttl { font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+  .form .sub { font-size: var(--fs-label); color: var(--ink-sub); margin: 0 0 18px; }
+  .form label { display: block; font-size: var(--fs-label); color: var(--ink-sub); margin-bottom: 6px; }
+  .form label .req { color: var(--danger); margin-right: 3px; }
+  .form select {
+    width: 100%; padding: 11px 12px; margin-bottom: 16px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: var(--font); font-size: 14px; color: var(--ink); background: #fff;
+  }
+  .btn-primary {
+    display: block; width: 100%; padding: 14px;
+    background: var(--blue); color: #fff; border: none; border-radius: var(--radius);
+    font-family: var(--font); font-size: 16px; font-weight: 700; letter-spacing: normal;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: #0046d6; }
+  .btn-primary.is-focus { outline: 3px solid rgba(0,82,255,.35); outline-offset: 2px; }
+
+  /* ---- Buttons ---- */
+  .btnrow { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: var(--font); font-size: 16px; font-weight: 700;
+    border-radius: var(--radius); padding: 13px 26px; cursor: pointer; border: none;
+  }
+  .btn.solid   { background: var(--blue); color: #fff; }
+  .btn.deep    { background: var(--blue-deep); color: #fff; }
+  .btn.ghost   { background: #fff; color: var(--blue); border: 1px solid var(--blue); }
+  .note { font-size: var(--fs-label); color: var(--ink-sub); margin-top: 10px; }
+
+  /* ---- Cards ---- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: #fff; border: 1px solid var(--border-2); border-radius: var(--radius); padding: 22px; }
+  .card h3 { margin: 0 0 10px; font-size: var(--fs-h3); font-weight: 700; line-height: var(--lh-h3); }
+  .card p  { margin: 0; font-size: 14px; line-height: var(--lh-body); color: var(--ink); }
+
+  /* ---- 下層の地色 ---- */
+  .subpage { background: var(--bg-sub); border-radius: var(--radius); padding: 32px; }
+  .subpage h3 { margin: 0 0 6px; font-size: 28px; font-weight: 700; letter-spacing: .05em; }
+  .subpage .inner { background: #fff; border-radius: var(--radius); padding: 20px; margin-top: 16px; }
+
+  /* ---- pkna 実証 ---- */
+  .pkna { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+  .pkna .row { display: flex; align-items: baseline; gap: 14px; padding: 9px 0; border-bottom: 1px dashed var(--border); }
+  .pkna .row:last-child { border-bottom: none; }
+  .pkna .lb { flex: 0 0 150px; font-size: var(--fs-label); font-weight: 700; color: var(--ink-sub); }
+  .pkna .sp { font-size: 24px; white-space: nowrap; font-family: "Noto Sans JP", sans-serif; }
+  .pkna .sp.n { font-feature-settings: normal; }
+  .pkna .sp.k { font-feature-settings: "pkna"; }   /* ← 効かない（normal と同幅） */
+  .pkna .sp.p { font-feature-settings: "palt"; }   /* ← 効く */
+  .pkna .w { font-size: var(--fs-label); color: var(--ink-sub); }
+
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .sw { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: #fff; }
+  .sw .chip { height: 56px; }
+  .sw .meta { padding: 7px 8px; font-size: 10px; line-height: 1.5; }
+  .sw .meta b { display: block; font-weight: 700; }
+  .sw .meta span { color: var(--ink-sub); }
+
+  table.scale { width: 100%; border-collapse: collapse; background: #fff; border-radius: var(--radius); overflow: hidden; }
+  table.scale th, table.scale td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border-2); font-size: 13px; }
+  table.scale th { font-size: var(--fs-label); font-weight: 700; color: var(--ink-sub); background: var(--surface); }
+  table.scale tr:last-child td { border-bottom: none; }
+
+  @media (max-width: 834px) {
+    body { font-size: 15px; line-height: 1.7; }   /* ★モバイルで大きくなる */
+    :root { --fs-h1: 29px; }
+    .hero { grid-template-columns: 1fr; padding: 32px 20px; }
+    .cards { grid-template-columns: 1fr; }
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="sec">
+    <div class="hero">
+      <div>
+        <h1>アクセスしづらい<br>一次情報の収集を<br>たった1時間で</h1>
+        <p>業界の「生の情報」を実名登録のエキスパートから簡単に収集。<br>新規事業／研究開発／経営企画／マーケティングの市場調査や仮説検証に。</p>
+        <div class="stats">
+          <div class="stat"><div class="n">800,000</div><div class="c">国内外エキスパート登録数</div></div>
+          <div class="stat"><div class="n">500</div><div class="c">対応業界・職域カテゴリ</div></div>
+        </div>
+      </div>
+      <div class="form">
+        <div class="fh">たった30秒の入力で、いますぐ資料ダウンロード</div>
+        <div class="fb">
+          <p class="ttl">法人の方向け資料</p>
+          <p class="sub">まずはご状況を入力ください。</p>
+          <label><span class="req">*</span>主な担当業務をお選びください</label>
+          <select><option>選択してください</option><option>新規事業開発</option><option>研究企画・研究開発</option></select>
+          <label><span class="req">*</span>役職</label>
+          <select><option>選択してください</option><option>経営者・役員</option><option>部長</option></select>
+          <button class="btn-primary is-focus">次へ</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">font-feature-settings — 宣言はあるが効いていない</h2>
+    <div class="pkna">
+      <div class="row"><div class="lb">normal（既定）</div><div class="sp n">「ビザスク」、それは。</div><div class="w">1049px / 100px 換算</div></div>
+      <div class="row"><div class="lb">"pkna"（実サイト）</div><div class="sp k">「ビザスク」、それは。</div><div class="w"><b>1049px — 変化なし</b></div></div>
+      <div class="row"><div class="lb">"palt"（正しい手）</div><div class="sp p">「ビザスク」、それは。</div><div class="w"><b>856.81px — 詰まる</b></div></div>
+      <p class="note">実サイトは <code>body { font-feature-settings: "pkna" }</code> を 1937 要素へ継承しているが、Google Fonts 配信の Noto Sans JP が <code>pkna</code> テーブルを持たないため、ブラウザが黙って無視する。詰めたいなら <code>"palt"</code> を書く。</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Color Palette</h2>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#0052ff"></div><div class="meta"><b>#0052ff</b><span>VisasQ Blue・文字24/面6</span></div></div>
+      <div class="sw"><div class="chip" style="background:#003199"></div><div class="meta"><b>#003199</b><span>Blue Deep・16要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#08277f"></div><div class="meta"><b>#08277f</b><span>フォーム帯・1要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#000000"></div><div class="meta"><b>#000000</b><span>本文・197要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#7f7f7f"></div><div class="meta"><b>#7f7f7f</b><span>補助・122要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#dc2626"></div><div class="meta"><b>#dc2626</b><span>必須マーク・2要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#f0f0f0"></div><div class="meta"><b>#f0f0f0</b><span>トップ地色</span></div></div>
+      <div class="sw"><div class="chip" style="background:#edf4fe"></div><div class="meta"><b>#edf4fe</b><span>下層地色</span></div></div>
+      <div class="sw"><div class="chip" style="background:#f6f6f6"></div><div class="meta"><b>#f6f6f6</b><span>カード面・7要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#eaf2fb"></div><div class="meta"><b>#eaf2fb</b><span>比較ブロック</span></div></div>
+      <div class="sw"><div class="chip" style="background:#d9d9d9"></div><div class="meta"><b>#d9d9d9</b><span>Border</span></div></div>
+      <div class="sw"><div class="chip" style="background:#e1e1e1"></div><div class="meta"><b>#e1e1e1</b><span>Border 2</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons — 角丸は 3px がほぼ唯一</h2>
+    <div class="btnrow">
+      <button class="btn solid">サービス資料をダウンロード</button>
+      <button class="btn deep">ご利用に関するご相談（無料）</button>
+      <button class="btn ghost">活用事例はこちら</button>
+    </div>
+    <p class="note">ウェイトは 400 と 700 の二択。500 は Cookie バナー由来、900 は数値カウンタ専用。600 は設計に存在しない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Type Scale（1440px 実測）</h2>
+    <table class="scale">
+      <tr><th>役割</th><th>サイズ</th><th>ウェイト</th><th>行間</th><th>字間</th></tr>
+      <tr><td>ヒーロー h1</td><td>41.87px →（834px以下）29px</td><td>700</td><td>1.4</td><td>2.0935px（.05em）</td></tr>
+      <tr><td>数値カウンタ</td><td>42px</td><td>900</td><td>1.0</td><td>-1.68px（-.04em）</td></tr>
+      <tr><td>中見出し</td><td>34px</td><td>700</td><td>—</td><td>1.7px（.05em）</td></tr>
+      <tr><td>セクション見出し h3</td><td>22px</td><td>700</td><td>1.575</td><td>normal</td></tr>
+      <tr><td>本文</td><td>14px →（834px以下）15px</td><td>400</td><td>1.7</td><td>normal</td></tr>
+      <tr><td>ラベル・注記</td><td>12px（可視150要素で最多）</td><td>400</td><td>1.45</td><td>normal</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Cards</h2>
+    <div class="cards">
+      <div class="card"><h3>リサーチ支援領域</h3><p>対象市場の規模、最新動向の調査。想定ユーザーの課題やニーズの調査に。</p></div>
+      <div class="card"><h3>コンサルティング領域</h3><p>専門的・ニッチな領域や最新トレンドまで、実名の知見で埋める。</p></div>
+      <div class="card"><h3>人材採用領域</h3><p>現職者の声から、採用市場と組織の実像を把握する。</p></div>
+    </div>
+    <p class="note">影は使わない。面色（#ffffff / #f6f6f6 / #f0f0f0）の差だけで階層を作る。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">下層ページの地色（トップと変える）</h2>
+    <div class="subpage">
+      <h3>サービス</h3>
+      <p style="margin:0;font-size:15px;line-height:1.7;">ビザスクは190カ国80万人超の「実名の知見」をつなぐプラットフォームです。</p>
+      <div class="inner">
+        <p style="margin:0 0 12px;font-size:14px;line-height:1.7;">各サービスの特長や料金が5分でわかる資料をご用意しています。</p>
+        <button class="btn solid" style="font-size:20px;line-height:30px;letter-spacing:1px;">サービス資料ダウンロード</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

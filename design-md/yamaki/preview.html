@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ヤマキ（YAMAKI）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は 2 個だけで、うち 1 個は Swiper の既定値。
+       自社の設計トークンは存在しない。以下は computed style の実測値。2026-10-16 */
+    --red:       #e60012;           /* ★唯一の彩度色。面 6 要素 / 文字 11 要素 */
+    --ink:       #000000;           /* ★本文も見出しも純黒。可視 182 要素 */
+    --on-red:    #ffffff;           /* 可視 9 要素 */
+    --bg:        #ffffff;
+    --surface:   #f8f8f8;           /* ニュース欄・ブランド一覧。可視 15 要素 */
+    --border:    rgba(0,0,0,.16);   /* ★カードの枠。黒の16%。下層で可視 9 要素 */
+    --border-2:  #cccccc;           /* 区切り線。可視 6 要素 */
+    --veil:      rgba(250,246,239,.8); /* ★ヒーローの生成りの半透明帯。純白ではない */
+
+    /* === Fonts ===
+       Noto Sans JP 400/500/700 がすべて loaded（可視 201 要素）。欧文専用書体は無し。
+       フォント要求 44 件すべて fonts.gstatic.com。@font-face 373 件は
+       Noto Sans JP の unicode-range サブセット分割（正常）。
+       ★実サイトのスタックは游ゴシックの Medium が入っておらず、Noto が落ちた
+         Windows で細く出る。ここでは Medium を Regular より前に直してある。 */
+    --font: "Noto Sans JP", "游ゴシック Medium", "Yu Gothic Medium",
+            游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, sans-serif;
+
+    /* === Type scale（実測・1440px）===
+       html: 10px / body: 16px は 6 幅すべて完全固定。
+       流体なのは見出しだけ（3.4667vw・375px でちょうど 13px に着地）。 */
+    --fs-root:  10px;
+    --fs-body:  16px;
+    --fs-hero:  48px;   /* ヒーローのコピー。実テキスト（画像ではない） */
+    --fs-h2:    24px;
+    --fs-card:  18px;
+    --fs-nav:   14px;
+    --fs-util:  12px;   /* 可視 75 要素で最多 */
+    --fs-prod:  10px;   /* 商品名。ここだけ字間を詰める */
+    --fs-cat:   9px;
+
+    /* === 行間 ===
+       ★body は line-height: normal（宣言なし）。各ブロックが自分で宣言する。
+         最頻は 1.58（51 要素）、次いで 1.3（37）、1.25（15）。共通の基準値は無い。 */
+    --lh-body:  1.58;
+    --lh-h2:    1.25;
+    --lh-card:  1.44;
+    --lh-head:  1.7;    /* 流体見出し */
+
+    /* === 字間 ===
+       ★既定は normal（可視 146/205 要素）。CSS の宣言は全部で 44 箇所しかない。
+         見出しは空け（.05em / .1em）、10px の商品名だけ詰める（-0.06rem）。 */
+    --ls-head:  .05em;
+    --ls-wide:  .1em;
+    --ls-prod:  -.06rem;  /* = -0.6px。html 10px 基準のサイズ非依存の絶対値 */
+
+    --radius:   8px;      /* ★商品カード・枠線ボタン（主役）。可視 32 要素 */
+    --shadow:   rgba(0,0,0,.16) 0 1px 2px;  /* ★極端に浅い影。可視 41 要素 */
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: var(--fs-root); }   /* 10px 固定。流体にしない */
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: var(--fs-body);
+    font-weight: 700;                   /* ★700 が既定（可視 106/205 要素） */
+    line-height: normal;                /* ★実サイトの body は normal */
+    letter-spacing: normal;             /* ★既定は normal */
+    word-break: break-all;              /* ★実サイトの body にこれが当たっている（6幅すべて）*/
+    -webkit-font-smoothing: antialiased;
+    /* ★font-feature-settings は書かない。実サイトの CSS 全文で宣言 0 件
+       （palt も halt も使っていない）。 */
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 44px 24px 80px; }
+  .sec { margin-bottom: 56px; }
+  .secttl {
+    font-size: 11px; font-weight: 700; letter-spacing: .16em;
+    color: var(--red); margin: 0 0 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border-2);
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    position: relative; min-height: 320px;
+    background: linear-gradient(120deg, #3a2c22 0%, #6b5240 50%, #8a6a4f 100%);
+    display: flex; justify-content: flex-end; align-items: center; padding: 36px;
+  }
+  .hero .veil {
+    background: var(--veil); padding: 32px 34px; max-width: 480px;
+  }
+  .hero h1 {
+    margin: 0 0 16px;
+    font-size: var(--fs-hero); font-weight: 700; line-height: 1.3;
+    letter-spacing: var(--ls-head);     /* 48px → 2.4px */
+  }
+  .hero p {
+    margin: 0; font-size: 16px; font-weight: 400;
+    line-height: var(--lh-body); letter-spacing: var(--ls-head);
+  }
+
+  /* ---- 流体見出し ---- */
+  .fluid {
+    font-size: 3.4667vw;                /* ★1440px→49.92px / 375px→13px ちょうど */
+    font-weight: 700; line-height: var(--lh-head); letter-spacing: normal;
+    margin: 0 0 6px;
+  }
+  .fluidnote { font-size: 13px; font-weight: 400; line-height: 1.8; color: #555; }
+
+  h2.h2 {
+    margin: 0 0 12px;
+    font-size: var(--fs-h2); font-weight: 700;
+    line-height: var(--lh-h2); letter-spacing: var(--ls-wide);  /* 24px → 2.4px */
+  }
+  p.body { font-size: 16px; font-weight: 400; line-height: var(--lh-body); letter-spacing: var(--ls-head); max-width: 46em; }
+
+  /* ---- Buttons ---- */
+  .btnrow { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn { font-family: var(--font); cursor: pointer; font-size: 16px; font-weight: 400; letter-spacing: normal; }
+  .btn.solid {
+    background: var(--red); color: var(--ink);   /* ★実サイトは赤面に黒文字 */
+    border: none; border-radius: 10px; padding: 13px 30px;
+  }
+  .btn.solid.aa { color: var(--on-red); }        /* 推奨: 白文字 */
+  .btn.ghost {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 30px;
+  }
+  .btn.is-focus { outline: 3px solid rgba(230,0,18,.35); outline-offset: 2px; }
+  .note { font-size: 13px; font-weight: 400; line-height: 1.8; color: #555; margin-top: 12px; }
+
+  /* ---- Cards ---- */
+  .cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  .card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .card .ph { height: 96px; background: linear-gradient(135deg, #d8cfc2 0%, #bfae99 100%); }
+  .card .bd { padding: 12px 14px 16px; }
+  .card .name {
+    font-size: var(--fs-prod); font-weight: 700; line-height: 1.3;
+    letter-spacing: var(--ls-prod);     /* ★-0.6px。小さい文字だけ詰める */
+    margin: 0 0 6px;
+  }
+  .card .desc { font-size: 12px; font-weight: 400; line-height: var(--lh-body); letter-spacing: normal; margin: 0; color: #333; }
+
+  /* ---- 面 ---- */
+  .surface { background: var(--surface); padding: 26px; }
+  .surface h3 { margin: 0 0 10px; font-size: var(--fs-card); font-weight: 700; line-height: var(--lh-card); letter-spacing: var(--ls-head); }
+  .surface p { margin: 0; font-size: 14px; font-weight: 400; line-height: var(--lh-body); letter-spacing: normal; }
+
+  /* ---- break-all 実証 ---- */
+  .wb { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wb .box { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; width: 100%; }
+  .wb .box h4 { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--red); }
+  .wb .box p { margin: 0; font-size: 14px; font-weight: 400; line-height: 1.8; }
+  .wb .box.ba p { word-break: break-all; }
+  .wb .box.nm p { word-break: normal; overflow-wrap: anywhere; }
+
+  .swatches { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
+  .sw { border: 1px solid var(--border-2); border-radius: var(--radius); overflow: hidden; background: #fff; }
+  .sw .chip { height: 56px; }
+  .sw .meta { padding: 7px 8px; font-size: 10px; font-weight: 400; line-height: 1.5; }
+  .sw .meta b { display: block; font-weight: 700; }
+  .sw .meta span { color: #555; }
+
+  table.scale { width: 100%; border-collapse: collapse; }
+  table.scale th, table.scale td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border-2); font-size: 13px; font-weight: 400; }
+  table.scale th { font-size: 12px; font-weight: 700; background: var(--surface); }
+  table.scale tr:last-child td { border-bottom: none; }
+
+  @media (max-width: 767px) {
+    .cards { grid-template-columns: repeat(2,1fr); }
+    .wb { grid-template-columns: 1fr; }
+    .swatches { grid-template-columns: repeat(3,1fr); }
+    .hero { padding: 20px; } .hero .veil { padding: 22px; }
+    :root { --fs-hero: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="sec">
+    <div class="hero">
+      <div class="veil">
+        <h1>鰹節への愛情と、誇りを胸に百年。</h1>
+        <p>ヤマキは創業以来百年にわたり、「鰹節屋・だし屋」の道を一筋に歩んできました。日本が世界に誇れるかつお節・だしに心底惚れ込み、その伝統を守り、研鑽を重ねてきました。</p>
+      </div>
+    </div>
+    <p class="note">ヒーローのコピーは <b>48px / weight 700 / letter-spacing .05em の実テキスト</b>（画像ではない）。生成りの半透明帯 <code>rgba(250,246,239,.8)</code> に載せる。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">ルートは固定、見出しだけ流体（3.4667vw）</h2>
+    <p class="fluid">ブランド一覧</p>
+    <p class="fluidnote">
+      <b>html: 10px / body: 16px は 6 幅すべて完全固定。</b>流体なのは見出しだけで、式は全域で <code>font-size: 3.4667vw</code> の 1 本。<br>
+      1440px→49.92px ／ 1200px→41.6px ／ 1024px→35.4987px ／ 834px→28.912px ／ 768px→26.624px ／ <b>375px→13px ちょうど</b>（モバイル設計幅 375px）。<br>
+      ルートが固定なので <code>rem</code> では追従しない。見出しに <code>vw</code> を直接書く。
+    </p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Headings & Body — 700 が既定</h2>
+    <h2 class="h2">ヤマキの取り組み</h2>
+    <p class="body">かつお節・だしのおいしさと健康に貢献する研究を行っています。創業から変わらぬ想いを未来へと繋げています。</p>
+    <p class="note"><b>weight 700 が最多（可視 106 / 205 要素）。</b>ナビも商品名もカテゴリ名も太字で、400 は本文 80 要素のみ。600 は Cookie バナーの 1 要素だけで設計には存在しない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Color Palette — 差し色は赤 1 色</h2>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#e60012"></div><div class="meta"><b>#e60012</b><span>ヤマキ赤・面6/文字11</span></div></div>
+      <div class="sw"><div class="chip" style="background:#000000"></div><div class="meta"><b>#000000</b><span>本文・182要素（純黒）</span></div></div>
+      <div class="sw"><div class="chip" style="background:#ffffff;border:1px solid #ccc"></div><div class="meta"><b>#ffffff</b><span>背景・赤面の上</span></div></div>
+      <div class="sw"><div class="chip" style="background:#f8f8f8"></div><div class="meta"><b>#f8f8f8</b><span>Surface・15要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:rgba(0,0,0,.16)"></div><div class="meta"><b>rgba(0,0,0,.16)</b><span>カードの枠・9要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:#cccccc"></div><div class="meta"><b>#cccccc</b><span>区切り線・6要素</span></div></div>
+      <div class="sw"><div class="chip" style="background:rgba(250,246,239,.8)"></div><div class="meta"><b>rgba(250,246,239,.8)</b><span>ヒーローの帯</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons — 角丸 8px が主役</h2>
+    <div class="btnrow">
+      <button class="btn solid is-focus">もっと見る</button>
+      <button class="btn solid aa">もっと見る（白文字・推奨）</button>
+      <button class="btn ghost">一覧はこちら</button>
+    </div>
+    <p class="note"><b>実サイトは赤の面に黒い文字を載せている</b>（コントラスト比 約 3.1:1 で WCAG AA を満たさない）。見え方を再現するなら黒のまま、新規実装なら白文字を推奨する。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Product Cards — 浅い影（0 1px 2px）</h2>
+    <div class="cards">
+      <div class="card"><div class="ph"></div><div class="bd"><p class="name">ヤマキ 『めんつゆ』</p><p class="desc">かつお節屋のだしが決め手。</p></div></div>
+      <div class="card"><div class="ph"></div><div class="bd"><p class="name">ヤマキ割烹白だし®</p><p class="desc">料理の味が決まる白だし。</p></div></div>
+      <div class="card"><div class="ph"></div><div class="bd"><p class="name">旨さ、別格。だし屋の鍋</p><p class="desc">鍋つゆシリーズ。</p></div></div>
+      <div class="card"><div class="ph"></div><div class="bd"><p class="name">鰹節屋のだしパック</p><p class="desc">手軽に本格的なだしを。</p></div></div>
+    </div>
+    <p class="note">商品名は <b>10px / weight 700 / letter-spacing -0.6px</b>。<code>-0.06rem</code> の rem 宣言なので <code>html: 10px</code> 基準の絶対値で、フォントサイズを変えても追従しない。<b>em に読み替えない。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">word-break: break-all（実サイトの body に当たっている）</h2>
+    <div class="wb">
+      <div class="box ba">
+        <h4>実サイト（break-all）</h4>
+        <p>日本が世界に誇れるかつお節・だしに心底惚れ込み、その伝統を守り、研鑽を重ねてきました。今も変わらぬ私たちの心意気です。</p>
+      </div>
+      <div class="box nm">
+        <h4>一般的な日本語組版（normal）</h4>
+        <p>日本が世界に誇れるかつお節・だしに心底惚れ込み、その伝統を守り、研鑽を重ねてきました。今も変わらぬ私たちの心意気です。</p>
+      </div>
+    </div>
+    <p class="note">左は禁則処理が無効で、行末で熟語の途中でも折り返す。句読点が行頭に来ることもある。<b>見え方を再現するには必要だが、日本語組版として推奨はできない。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Surface & Type Scale</h2>
+    <div class="surface" style="margin-bottom:18px;">
+      <h3>ヤマキの想いと会社概要</h3>
+      <p>創業から変わらぬ想いを未来へと繋げています。</p>
+    </div>
+    <table class="scale">
+      <tr><th>役割</th><th>サイズ</th><th>ウェイト</th><th>行間</th><th>字間</th></tr>
+      <tr><td>ヒーローのコピー</td><td>48px</td><td>700</td><td>—</td><td>2.4px（.05em）</td></tr>
+      <tr><td>セクション見出し h3</td><td>49.92px（3.4667vw）</td><td>700</td><td>1.7</td><td>normal</td></tr>
+      <tr><td>中見出し h2</td><td>24px</td><td>700</td><td>1.25</td><td>2.4px（.1em）</td></tr>
+      <tr><td>カード見出し</td><td>18px</td><td>700</td><td>1.44</td><td>0.9px（.05em）</td></tr>
+      <tr><td>ナビ</td><td>14px</td><td>700</td><td>1.4</td><td>0.56px（.04em）</td></tr>
+      <tr><td>本文</td><td>16px</td><td>400</td><td>1.58</td><td>0.8px（.05em）</td></tr>
+      <tr><td>商品名</td><td>10px</td><td>700</td><td>1.3</td><td>-0.6px（-.06rem）</td></tr>
+      <tr><td>ユーティリティ</td><td>12px（可視75要素で最多）</td><td>500</td><td>—</td><td>1.2px（.1em）</td></tr>
+    </table>
+    <p class="note"><b>body の line-height は normal</b>（宣言なし）。本文ブロックには必ず <code>line-height</code> を書く。書かないとブラウザ既定の約 1.2 で詰まる。</p>
+  </section>
+
+</div>
+</body>
+</html>

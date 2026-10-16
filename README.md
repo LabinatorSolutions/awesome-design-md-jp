@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (574 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (577 sites)</a>
 </p>
 
 <table>
@@ -886,6 +886,11 @@
 </tr>
 <tr>
 <td align="center"><strong>東京建物</strong><br><img src="design-md/tatemono/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ビザスク</strong><br><img src="design-md/visasq/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ツムラ</strong><br><img src="design-md/tsumura/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>ヤマキ</strong><br><img src="design-md/yamaki/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1521,11 +1526,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [玉乃光酒造 (Tamanohikari)](https://tamanohikari.co.jp/) | Sake Brewery / Kyoto | [DESIGN.md](design-md/tamanohikari/DESIGN.md) | [preview.html](design-md/tamanohikari/preview.html) |
 | [東北新社 (Tohokushinsha / TFC)](https://www.tfc.co.jp/) | Film & TV Production | [DESIGN.md](design-md/tfc/DESIGN.md) | [preview.html](design-md/tfc/preview.html) |
 | [東京建物 (Tokyo Tatemono)](https://tatemono.com/) | Real Estate Developer | [DESIGN.md](design-md/tatemono/DESIGN.md) | [preview.html](design-md/tatemono/preview.html) |
+| [ビザスク (VisasQ)](https://visasq.co.jp/) | Knowledge Platform / SaaS | [DESIGN.md](design-md/visasq/DESIGN.md) | [preview.html](design-md/visasq/preview.html) |
+| [ツムラ (TSUMURA)](https://www.tsumura.co.jp/) | Pharmaceutical / Kampo | [DESIGN.md](design-md/tsumura/DESIGN.md) | [preview.html](design-md/tsumura/preview.html) |
+| [ヤマキ (YAMAKI)](https://www.yamaki.co.jp/) | Food / Katsuobushi & Dashi | [DESIGN.md](design-md/yamaki/DESIGN.md) | [preview.html](design-md/yamaki/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (574 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (577 sites)</a>
 </p>
 
 <table>
@@ -2377,6 +2385,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>東京建物</strong><br><img src="design-md/tatemono/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ビザスク</strong><br><img src="design-md/visasq/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>ツムラ</strong><br><img src="design-md/tsumura/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>ヤマキ</strong><br><img src="design-md/yamaki/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
