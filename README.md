@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (577 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (580 sites)</a>
 </p>
 
 <table>
@@ -891,6 +891,11 @@
 </tr>
 <tr>
 <td align="center"><strong>ヤマキ</strong><br><img src="design-md/yamaki/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>アステラス製薬</strong><br><img src="design-md/astellas/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>旭化成</strong><br><img src="design-md/asahi-kasei/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DAIKEN</strong><br><img src="design-md/daiken/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1529,11 +1534,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [ビザスク (VisasQ)](https://visasq.co.jp/) | Knowledge Platform / SaaS | [DESIGN.md](design-md/visasq/DESIGN.md) | [preview.html](design-md/visasq/preview.html) |
 | [ツムラ (TSUMURA)](https://www.tsumura.co.jp/) | Pharmaceutical / Kampo | [DESIGN.md](design-md/tsumura/DESIGN.md) | [preview.html](design-md/tsumura/preview.html) |
 | [ヤマキ (YAMAKI)](https://www.yamaki.co.jp/) | Food / Katsuobushi & Dashi | [DESIGN.md](design-md/yamaki/DESIGN.md) | [preview.html](design-md/yamaki/preview.html) |
+| [アステラス製薬 (Astellas Pharma)](https://www.astellas.com/jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/astellas/DESIGN.md) | [preview.html](design-md/astellas/preview.html) |
+| [旭化成 (Asahi Kasei)](https://www.asahi-kasei.com/jp) | Chemical / Corporate | [DESIGN.md](design-md/asahi-kasei/DESIGN.md) | [preview.html](design-md/asahi-kasei/preview.html) |
+| [DAIKEN (大建工業)](https://www.daiken.jp/) | Building Materials / Corporate | [DESIGN.md](design-md/daiken/DESIGN.md) | [preview.html](design-md/daiken/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (577 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (580 sites)</a>
 </p>
 
 <table>
@@ -2390,6 +2398,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>ヤマキ</strong><br><img src="design-md/yamaki/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>アステラス製薬</strong><br><img src="design-md/astellas/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>旭化成</strong><br><img src="design-md/asahi-kasei/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>DAIKEN</strong><br><img src="design-md/daiken/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

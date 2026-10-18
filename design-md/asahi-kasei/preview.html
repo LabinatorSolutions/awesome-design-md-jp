@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 旭化成（Asahi Kasei）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Fonts ===
+       実サイトは Noto Sans JP を自社ドメインから配信（fonts/noto-sans-jp/*.woff2 の 5 本）。
+       unicode-range を指定していないフル版（U+0-10FFFF）で、loaded は 400/500/700 の 3 本。
+       300（Light）と 600（SemiBold）は @font-face があるが unloaded。
+       ここでは手元で出せるよう Google Fonts に置き換えてある。実測 2026-10-18
+       ★--font-jp の游ゴシックは実サイトでは "Yu Gothic"（Regular）しか書かれておらず、
+         Windows で細く出る。ここでは Medium を足して正しい順に直してある。 */
+    --font-jp: "Noto Sans JP", system-ui, -apple-system, "Hiragino Kaku Gothic ProN",
+               "游ゴシック Medium", "Yu Gothic Medium", "Yu Gothic", "Meiryo", sans-serif;
+    --font-en: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-sc: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+    /* === Colors ===
+       CSS Custom Properties は own 28 個。AEM Edge Delivery Services の雛形の上に
+       組まれていて、--link-color / --text-color など雛形の既定値が可視 0 のまま残っている。 */
+    --blue:        #005bac;  /* ★唯一の彩度色。面7/4要素 */
+    --navy:        #04233c;  /* バッジ文字・帯グラデ左端。文字14要素 */
+    --blue-pale:   #e5eff7;  /* ★バッジ・選択タブの面。15要素 */
+    --blue-pale-2: #f2f7fb;  /* 下層のセクション面。2要素 */
+    --ink:         #222222;  /* ★本文。可視59/62要素で最多。純黒にしない */
+    --ink-sub:     #646464;  /* 非選択タブ・補足。9/1要素 */
+    --on-dark:     #ffffff;  /* 21/12要素 */
+    --bg:          #ffffff;  /* resolved（根拠 body） */
+    --surface:     #f8f8f8;  /* --light-color。4要素 */
+    --border:      #d3d3d3;  /* --separator-line-color。線ボタンの枠 */
+    --border-2:    #7a7a7a;  /* 破線の区切り */
+    --divider:     #a7a7a7;
+
+    /* === 雛形の残骸（可視 0・実装しない）===
+       --link-color: #3b63fb; --link-hover-color: #1d3ecf;  AEM EDS の既定の青
+       --text-color: #131313;  宣言はこれだが実装は #222222
+       --dark-color: #505050;
+       --fw-thin:100 … --fw-black:900  9 段あるが実装は 400/500/700 の 3 段 */
+
+    /* === Type scale（整数 px。流体でもルート切替でもない）=== */
+    --fs-root:  16px;   /* html。全幅固定 */
+    --fs-body:  16px;   /* body。★768px 以下で 14px に 1 段だけ落ちる */
+    --fs-h1:    40px;
+    --fs-h2:    32px;
+    --fs-h3:    24px;
+    --fs-h4:    18px;
+    --fs-lead:  15px;
+    --fs-cap:   14px;
+    --fs-meta:  12px;
+    --fs-badge: 11px;
+
+    /* === 行間 ===
+       ★実サイトの body は --body-line-tight-m: 16px という「絶対値」。
+         宣言し直さない要素は文字サイズに関係なく 16px の行送りになる。
+         見出しは必ず自分で line-height を持っている。 */
+    --body-line-tight-m: 16px;
+    --lh-body:  1.6;    /* 本文・見出し。可視72/55要素で最多 */
+    --lh-lead:  2.0;    /* リード文。20/7要素 */
+    --lh-meta:  1.33;
+
+    /* === 字間 ===
+       既定は normal。当てるのは 11〜12px の英数字ラベルだけ。 */
+    --ls-badge: 0.15px;  /* 11px の年号バッジ */
+    --ls-meta:  0.32px;  /* 12px の日付・分類 */
+
+    --radius:   4px;    /* ★角丸はこれ一種類。可視58/36要素 */
+    --radius-sm: 2px;   /* 検索ボタンのみ */
+    --container: 1200px;
+
+    /* === Spacing（整数 px。4 の倍数で 7 段）=== */
+    --gap-xs: 8px;
+    --gap-s:  12px;
+    --gap-m:  20px;
+    --gap-l:  32px;     /* --gap-vertical-l */
+    --gap-xl: 40px;     /* --separator-margin-desktop */
+    --gap-2xl: 48px;
+    --gap-3xl: 72px;    /* --scale-spacing-vertical-3xl */
+  }
+
+  * { box-sizing: border-box; }
+  html { font-size: var(--fs-root); }   /* 全幅固定 */
+
+  /* ★書体も palt も lang 属性に紐づける。body や * には書かない */
+  [lang|="ja"] {
+    --body-font-family: var(--font-jp);
+    font-family: var(--font-jp);
+    font-feature-settings: 'palt' on;
+  }
+  [lang|="en"], html[lang=""] {
+    --body-font-family: var(--font-en);
+    font-family: var(--font-en);
+  }
+  [lang|="zh"] {
+    --body-font-family: var(--font-sc);
+    font-family: var(--font-sc);
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body-font-family);
+    font-size: var(--fs-body);
+    font-weight: 400;
+    line-height: var(--body-line-tight-m);   /* ★16px の絶対値。子は必ず宣言し直す */
+    letter-spacing: normal;
+  }
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 var(--gap-m) var(--gap-3xl); }
+
+  /* ===== ヘッダー ===== */
+  .hdr { border-bottom: 1px solid var(--border); background: var(--bg); }
+  .hdr .inner {
+    max-width: var(--container); margin: 0 auto;
+    padding: var(--gap-m); display: flex; align-items: center; gap: var(--gap-l); flex-wrap: wrap;
+  }
+  .logo { font-size: var(--fs-h3); line-height: var(--lh-body); font-weight: 700; color: var(--blue); }
+  .logo em { font-style: normal; color: var(--navy); }
+  .nav { display: flex; gap: var(--gap-m); flex: 1; flex-wrap: wrap; }
+  .nav a { color: var(--ink); font-size: var(--fs-cap); line-height: var(--lh-body); text-decoration: none; }
+
+  /* ===== ヒーロー（実サイトは video。テキストは映像に焼き込み） ===== */
+  .hero {
+    height: 360px; display: grid; place-items: center;
+    background: linear-gradient(120deg, #0b3a66, #0f5ea8 55%, #1b7cc4);
+    color: var(--on-dark);
+  }
+  .hero .ph { font-size: var(--fs-h2); line-height: var(--lh-body); opacity: .6; letter-spacing: 0.32px; }
+
+  /* ===== セクション ===== */
+  .sec { padding: var(--gap-3xl) 0 0; }
+  .secttl { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-body); margin: 0 0 var(--gap-l); color: var(--ink); }
+  .h3 { font-size: var(--fs-h3); font-weight: 700; line-height: var(--lh-body); margin: 0 0 var(--gap-s); color: var(--ink); }
+  p { line-height: var(--lh-body); }
+  .note { font-size: var(--fs-cap); line-height: var(--lh-body); color: var(--ink-sub); margin: var(--gap-s) 0 0; }
+  .note code { background: var(--surface); border-radius: var(--radius); padding: 1px 5px; font-size: .92em; }
+  .lead { font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--ink); margin: 0 0 var(--gap-m); }
+
+  /* ===== Buttons ===== */
+  .btnrow { display: flex; gap: var(--gap-s); flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: inherit; font-size: var(--fs-body); font-weight: 700;
+    line-height: var(--lh-body);           /* ★必ず宣言（body の 16px が降りてくる） */
+    border-radius: var(--radius); padding: 8px 20px; cursor: pointer; box-shadow: none;
+  }
+  .btn.solid { background: var(--blue); border: none; color: var(--on-dark); }
+  .btn.ghost { background: var(--bg); border: 1px solid var(--border); color: var(--ink); }
+  .btn.search {
+    background: var(--blue); border: none; color: var(--on-dark);
+    border-radius: var(--radius-sm); padding: 0 24px; font-size: 13px; height: 38px;
+  }
+  .btn.is-focus { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  /* ===== Badges ===== */
+  .badges { display: flex; gap: var(--gap-xs); flex-wrap: wrap; align-items: center; }
+  .badge {
+    background: var(--blue-pale); color: var(--navy);
+    border-radius: var(--radius); padding: 0 8px 2px;
+    font-size: var(--fs-badge); font-weight: 400;
+    letter-spacing: var(--ls-badge); line-height: 1.45;
+  }
+
+  /* ===== Tabs ===== */
+  .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+  .tab {
+    padding: var(--gap-m) var(--gap-xl); font-size: var(--fs-body); font-weight: 400;
+    line-height: var(--lh-body); border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--surface); color: var(--ink-sub); border: none; cursor: pointer;
+    font-family: inherit;
+  }
+  .tab[aria-selected="true"] { background: var(--blue-pale); color: var(--blue); }
+
+  /* ===== News list ===== */
+  .news { border-top: 1px solid var(--border); }
+  .news li { list-style: none; border-bottom: 1px solid var(--border); }
+  .news ul { margin: 0; padding: 0; }
+  .news a {
+    display: grid; grid-template-columns: 1fr 24px; gap: var(--gap-m);
+    padding: var(--gap-m) 0; text-decoration: none; color: var(--ink); align-items: center;
+  }
+  .news .date { font-size: var(--fs-meta); letter-spacing: var(--ls-meta); line-height: var(--lh-meta); color: var(--ink-sub); display: block; margin-bottom: 6px; }
+  .news .ttl { font-size: var(--fs-body); line-height: var(--lh-body); }
+  .news .ar { font-size: var(--fs-h3); line-height: 1; text-align: right; color: var(--ink); }
+
+  /* ===== 事業領域の帯（唯一のグラデーション） ===== */
+  .band {
+    background: linear-gradient(90deg, #04233c 0%, #005bac 100%);
+    color: var(--on-dark); padding: var(--gap-3xl) 0; margin-top: var(--gap-3xl);
+  }
+  .band .inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--gap-m); }
+  .band h2 { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-body); margin: 0 0 var(--gap-s); }
+  .band .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-xl); margin-top: var(--gap-xl); }
+  .band .cols h3 { font-size: var(--fs-h3); font-weight: 700; line-height: var(--lh-body); margin: 0 0 var(--gap-s); }
+  .band .cols p  { font-size: var(--fs-cap); line-height: var(--lh-body); margin: 0; }
+
+  /* ===== Cards ===== */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-m); }
+  .card { background: var(--bg); }
+  .card .ph { aspect-ratio: 16/10; background: var(--surface); border-radius: var(--radius); display: grid; place-items: center; color: var(--ink-sub); font-size: var(--fs-cap); line-height: var(--lh-body); }
+  .card .row { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-s); padding-top: var(--gap-s); }
+  .card .row b { font-size: var(--fs-h4); font-weight: 700; line-height: var(--lh-body); }
+  .card .row span { font-size: var(--fs-h3); line-height: 1; }
+
+  /* ===== Swatches / tables ===== */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--gap-s); }
+  .sw { display: flex; gap: var(--gap-s); align-items: center; }
+  .sw .c { width: 46px; height: 46px; border-radius: var(--radius); flex: none; border: 1px solid #e6e6e6; }
+  .sw b { display: block; font-size: var(--fs-cap); font-weight: 700; line-height: var(--lh-body); color: var(--ink); }
+  .sw span { display: block; font-size: var(--fs-meta); line-height: var(--lh-meta); color: var(--ink-sub); }
+  .sw.dead b, .sw.dead span { opacity: .55; }
+
+  table { border-collapse: collapse; width: 100%; font-size: var(--fs-cap); }
+  th, td { border: 1px solid var(--border); padding: var(--gap-xs) var(--gap-s); text-align: left; line-height: var(--lh-body); }
+  th { background: var(--surface); font-weight: 700; color: var(--ink); }
+  td { color: var(--ink-sub); }
+  td b, th b { color: var(--ink); }
+
+  /* ===== palt 比較 ===== */
+  .pal { display: grid; grid-template-columns: 210px 1fr 170px; gap: var(--gap-s); align-items: baseline; margin-bottom: var(--gap-xs); }
+  .pal .lb { font-size: var(--fs-meta); line-height: var(--lh-meta); color: var(--ink-sub); }
+  .pal .sp { font-size: var(--fs-h3); line-height: var(--lh-body); color: var(--ink); }
+  .pal .w  { font-size: var(--fs-meta); line-height: var(--lh-meta); color: var(--ink-sub); }
+  .sp.n { font-feature-settings: normal; }
+  .sp.p { font-feature-settings: 'palt' on; }
+  .sp.h { font-feature-settings: 'halt' on; }
+
+  /* ===== 行間の罠 ===== */
+  .trap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-m); }
+  .trap .box { border: 1px solid var(--border); border-radius: var(--radius); padding: var(--gap-m); }
+  .trap .bad h3 { font-size: var(--fs-h2); font-weight: 700; margin: 24px 0 0; color: var(--ink); }  /* line-height 未宣言 → body の 16px が降りる */
+  .trap .good h3 { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-body); margin: 0; color: var(--ink); }
+
+  @media (width < 1000px) { .band .cols { grid-template-columns: 1fr; } .cards { grid-template-columns: 1fr 1fr; } }
+  @media (width < 768px) {
+    body { font-size: 14px; line-height: 14px; }   /* ★768px 以下で 1 段だけ落ちる */
+    .cards { grid-template-columns: 1fr; }
+    .trap  { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr"><div class="inner">
+  <div class="logo">Asahi<em>KASEI</em></div>
+  <nav class="nav">
+    <a href="#">企業情報</a><a href="#">事業・製品</a><a href="#">イノベーション</a>
+    <a href="#">IR情報</a><a href="#">サステナビリティ</a><a href="#">ニュース</a>
+  </nav>
+</div></header>
+
+<div class="hero"><span class="ph">Hero Video 1440×720</span></div>
+
+<div class="wrap">
+
+  <section class="sec">
+    <h2 class="secttl">最新のニュース</h2>
+    <div class="tabs">
+      <button class="tab" aria-selected="true">すべて</button>
+      <button class="tab" aria-selected="false">経営・決算</button>
+      <button class="tab" aria-selected="false">事業・製品</button>
+      <button class="tab" aria-selected="false">研究・開発</button>
+      <button class="tab" aria-selected="false">お知らせ</button>
+    </div>
+    <div class="news">
+      <ul>
+        <li><a href="#"><div>
+          <span class="date">2026年10月16日</span>
+          <div class="badges" style="margin-bottom:6px">
+            <span class="badge">2026年</span><span class="badge">経営・決算</span>
+          </div>
+          <span class="ttl">自己株式の消却に関するお知らせ</span>
+        </div><span class="ar" aria-hidden="true">→</span></a></li>
+        <li><a href="#"><div>
+          <span class="date">2026年10月13日</span>
+          <div class="badges" style="margin-bottom:6px">
+            <span class="badge">2026年</span><span class="badge">事業・製品</span>
+          </div>
+          <span class="ttl">新素材の生産設備を国内に増設</span>
+        </div><span class="ar" aria-hidden="true">→</span></a></li>
+        <li><a href="#"><div>
+          <span class="date">2026年10月09日</span>
+          <div class="badges" style="margin-bottom:6px">
+            <span class="badge">2026年</span><span class="badge">研究・開発</span>
+          </div>
+          <span class="ttl">医療機器の臨床試験において主要評価項目を達成</span>
+        </div><span class="ar" aria-hidden="true">→</span></a></li>
+      </ul>
+    </div>
+    <div class="btnrow" style="justify-content:center;margin-top:var(--gap-xl)">
+      <button class="btn ghost">ニュース</button>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">font-feature-settings — palt は [lang|="ja"] に書く</h2>
+    <div class="pal"><div class="lb">normal</div><div class="sp n">「東京・大阪」（株式会社）、デザインの話。</div><div class="w">800px / 40px 換算</div></div>
+    <div class="pal"><div class="lb"><b>'palt' on（実サイト）</b></div><div class="sp p">「東京・大阪」（株式会社）、デザインの話。</div><div class="w"><b>685.17px — 14.4% 詰まる</b></div></div>
+    <div class="pal"><div class="lb">'halt' on（使っていない）</div><div class="sp h">「東京・大阪」（株式会社）、デザインの話。</div><div class="w">700px</div></div>
+    <p class="note">実サイトは <code>font-feature-settings: 'palt' on</code> を <b><code>[lang|="ja"]</code> の中</b>に置いている。<code>body</code> でも <code>*</code> でもなく<b>言語セレクタに紐づけている</b>ので、日本語ページでだけ約物が詰まり、英語・中国語ページでは詰まらない。可視 1307 要素（トップ）に継承。<b>宣言位置を動かさないこと。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">書体は --body-font-family 1 本を lang で差し替える</h2>
+    <table>
+      <tr><th>セレクタ</th><th>--body-font-family</th><th>palt</th></tr>
+      <tr><td><code>[lang|="ja"]</code></td><td><code>var(--font-jp)</code> = "Noto Sans JP", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif</td><td><b>'palt' on</b></td></tr>
+      <tr><td><code>[lang|="en"]</code>, <code>html[lang=""]</code></td><td><code>var(--font-en)</code> = "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif</td><td>—</td></tr>
+      <tr><td><code>[lang|="zh"]</code></td><td><code>var(--font-sc)</code> = "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif</td><td>—</td></tr>
+    </table>
+    <p class="note"><b>要素ごとに書体スタックを書かない。</b>なお実サイトの <code>--font-jp</code> には <code>"Yu Gothic"</code>（Regular）しか書かれておらず、Noto Sans JP が落ちた Windows では細く出る。<b>正しくは <code>"游ゴシック Medium", "Yu Gothic Medium"</code> を Regular より前に足す</b>（このプレビューは直した版）。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">line-height が px の絶対値で降りてくる — 必ず宣言し直す</h2>
+    <div class="trap">
+      <div class="box bad">
+        <p class="note" style="margin:0 0 var(--gap-s)"><b>line-height 未宣言（32px の見出しに body の 16px が降りる）</b></p>
+        <h3>旭化成グループは、「ヘルスケア」「住宅」「マテリアル」の領域で事業を展開しています</h3>
+      </div>
+      <div class="box good">
+        <p class="note" style="margin:0 0 var(--gap-s)">line-height: 1.6 を宣言（正しい）</p>
+        <h3>旭化成グループは、「ヘルスケア」「住宅」「マテリアル」の領域で事業を展開しています</h3>
+      </div>
+    </div>
+    <p class="note">実サイトの <code>body</code> は <code>line-height: var(--body-line-tight-m)</code> で、その値が <b><code>16px</code> という絶対値</b>。宣言し直さない要素は文字サイズに関係なく 16px の行送りになる。左の列がその状態。<b>見出しも本文ブロックも必ず <code>1.6</code>（リードは <code>2.0</code>）を無単位で宣言する。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Color Palette — 彩度色は青 1 つだけ</h2>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#005bac"></div><div><b>#005bac</b><span>Asahi Kasei Blue・面7/4要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#04233c"></div><div><b>#04233c</b><span>Deep Navy・文字14要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#e5eff7"></div><div><b>#e5eff7</b><span>Pale Blue・面15要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#f2f7fb"></div><div><b>#f2f7fb</b><span>下層のセクション面</span></div></div>
+      <div class="sw"><div class="c" style="background:#222222"></div><div><b>#222222</b><span>本文・可視59/62要素で最多</span></div></div>
+      <div class="sw"><div class="c" style="background:#646464"></div><div><b>#646464</b><span>非選択タブ・補足</span></div></div>
+      <div class="sw"><div class="c" style="background:#f8f8f8"></div><div><b>#f8f8f8</b><span>Surface（--light-color）</span></div></div>
+      <div class="sw"><div class="c" style="background:#d3d3d3"></div><div><b>#d3d3d3</b><span>Border・線ボタンの枠</span></div></div>
+      <div class="sw"><div class="c" style="background:#7a7a7a"></div><div><b>#7a7a7a</b><span>破線の区切り</span></div></div>
+      <div class="sw"><div class="c" style="background:#a7a7a7"></div><div><b>#a7a7a7</b><span>Divider（濃）</span></div></div>
+    </div>
+    <p class="note" style="margin-top:var(--gap-m)"><b>AEM Edge Delivery Services の雛形の残骸（可視 0・実装しない）:</b></p>
+    <div class="swatches">
+      <div class="sw dead"><div class="c" style="background:#3b63fb"></div><div><b>#3b63fb</b><span>--link-color（EDS 既定の青）</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#1d3ecf"></div><div><b>#1d3ecf</b><span>--link-hover-color</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#131313"></div><div><b>#131313</b><span>--text-color（実装は #222222）</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#505050"></div><div><b>#505050</b><span>--dark-color</span></div></div>
+    </div>
+    <p class="note">リンクは <code>#222222</code> のまま下線で表現する。<b><code>--link-color: #3b63fb</code> を実装に持ち込まない。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons / Badges — 角丸は 4px 一種類、影は無し</h2>
+    <div class="btnrow">
+      <button class="btn solid">Creating for Tomorrow</button>
+      <button class="btn ghost">ニュース</button>
+      <button class="btn search">検索</button>
+      <button class="btn ghost is-focus">フォーカス時</button>
+    </div>
+    <div class="badges" style="margin-top:var(--gap-m)">
+      <span class="badge">2026年</span>
+      <span class="badge">経営・決算</span>
+      <span class="badge">事業・製品</span>
+      <span class="badge">研究・開発</span>
+      <span class="badge">お知らせ</span>
+    </div>
+    <p class="note"><b>線ボタンの枠は青ではなくグレー <code>#d3d3d3</code>。</b>塗りが青地に白、線が白地にグレー枠＋黒文字で、どちらも <code>padding: 8px 20px</code> / 16px / 700。バッジは<b>淡い青の面に濃紺の文字</b>（青地に白ではない）で 11px・<code>letter-spacing: 0.15px</code>・<code>padding: 0 8px 2px</code>（下だけ 2px 多い）。</p>
+    <p class="note">ウェイトは <b>400 と 700 の二択</b>（可視 73/28 要素）。500 は 5 要素だけで下層には 1 要素も無い。<code>--fw-thin: 100</code> 〜 <code>--fw-black: 900</code> の 9 段は宣言されているだけで、<b>300 と 600 は <code>@font-face</code> があっても <code>unloaded</code></b>。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Cards — 枠も影も持たず、矢印で送る</h2>
+    <div class="cards">
+      <div class="card"><div class="ph">16:10</div><div class="row"><b>ひと目で分かる旭化成</b><span aria-hidden="true">→</span></div></div>
+      <div class="card"><div class="ph">16:10</div><div class="row"><b>Tomorrow's Stories</b><span aria-hidden="true">→</span></div></div>
+      <div class="card"><div class="ph">16:10</div><div class="row"><b>旭化成レポート</b><span aria-hidden="true">→</span></div></div>
+    </div>
+    <p class="note">階層は<b>面色（<code>#ffffff</code> / <code>#f8f8f8</code> / <code>#e5eff7</code>）と 1px の区切り線</b>だけで作る。可視の <code>box-shadow</code> は 2 ページとも<b>モーダルの 1 要素のみ</b>（<code>0 5px 15px rgba(0,0,0,.5)</code>）で、カード・ボタン・バッジに影は付かない。<code>filter: drop-shadow()</code> も 0 要素。</p>
+  </section>
+</div>
+
+<div class="band"><div class="inner">
+  <h2>事業領域</h2>
+  <p class="lead" style="color:#ffffff;margin:0">旭化成グループは、「ヘルスケア」「住宅」「マテリアル」の領域で事業を展開しています。</p>
+  <div class="cols">
+    <div><h3>ヘルスケア領域</h3><p>"Improve and Save Patients' Lives" のミッションのもと、アンメットニーズを満たす革新的な医薬や医療機器の提供で、世界の人びとの命に貢献します。</p></div>
+    <div><h3>住宅領域</h3><p>高品質で耐久性に優れた住宅・建材や、住まいに関するさまざまなサービスの提供を通じ、安心で豊かな暮らしを実現します。</p></div>
+    <div><h3>マテリアル領域</h3><p>素材・化学の技術や知見を活かし、地球と人びとのより良い暮らしに貢献するサステナブルなソリューションを提供します。</p></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <section class="sec">
+    <h2 class="secttl">Type Scale（整数 px・流体ではない）</h2>
+    <table>
+      <tr><th>役割</th><th>サイズ</th><th>ウェイト</th><th>行間</th><th>字間</th><th>実測</th></tr>
+      <tr><td>ページ見出し h1（下層）</td><td><b>40px</b></td><td>700</td><td>1.6</td><td>normal</td><td>1 要素</td></tr>
+      <tr><td>セクション見出し</td><td><b>32px</b></td><td>700</td><td>1.6</td><td>normal</td><td>6 / 4 要素</td></tr>
+      <tr><td>中見出し</td><td>24px</td><td>700</td><td>1.6</td><td>normal</td><td>4 / 3 要素</td></tr>
+      <tr><td>小見出し・ナビ</td><td>18px</td><td>700</td><td>1.6</td><td>normal</td><td>8 / 2 要素</td></tr>
+      <tr><td><b>本文・ボタン</b></td><td><b>16px</b>（768px 以下 <b>14px</b>）</td><td>400</td><td><b>1.6</b></td><td>normal</td><td><b>可視 50 / 49 要素で最多</b></td></tr>
+      <tr><td>リード文</td><td>15px</td><td>400</td><td><b>2.0</b></td><td>normal</td><td>6 要素</td></tr>
+      <tr><td>キャプション</td><td>14px</td><td>400</td><td>1.6</td><td>normal</td><td>12 / 5 要素</td></tr>
+      <tr><td>日付・分類</td><td>12px</td><td>400</td><td>1.33</td><td><b>0.32px</b></td><td>6 / 8 要素</td></tr>
+      <tr><td>年号バッジ</td><td><b>11px</b></td><td>400</td><td>1.0</td><td><b>0.15px</b></td><td>14 要素</td></tr>
+    </table>
+    <p class="note"><b><code>html</code> は全幅 16px 固定。<code>body</code> だけが 768px を境に 16px → 14px に 1 段だけ落ちる</b>（769px = 16px、768px = 14px を実測で確認）。流体ではなく階段。<b>字間を当てるのは 11〜12px の英数字ラベルだけで、和文の本文には一切当たっていない。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Spacing / Layout</h2>
+    <table>
+      <tr><th>項目</th><th>値</th><th>実測</th></tr>
+      <tr><td>コンテナ</td><td><b>1200px</b></td><td><b>42 要素（トップ）／ 29 要素（下層）で圧倒的に最多</b></td></tr>
+      <tr><td>3 カラム</td><td><code>calc(33.3333% - 13.3333px)</code></td><td>3 要素（flex ＋ calc。CSS Grid ではない）</td></tr>
+      <tr><td>2 カラム</td><td><code>calc(50% - 10px)</code></td><td>2 要素</td></tr>
+      <tr><td>ナローカラム</td><td>590px / 564px / 387px</td><td>本文幅</td></tr>
+      <tr><td>ギャップ</td><td><b>8 / 12 / 20 / 32 / 40 / 48 / 72px</b></td><td>20px(8/6) 12px(8/4) 40px(6/4) 48px(3) 72px(2/5) 8px(5)</td></tr>
+      <tr><td>角丸</td><td><b>4px</b></td><td><b>58 要素／36 要素で最多</b>。ほかは検索の 2px、タブの <code>4px 4px 0 0</code></td></tr>
+      <tr><td>ブレークポイント</td><td><code>@media (width >= 768px)</code> / <code>(width >= 1280px)</code></td><td>7 箇所 / 4 箇所。レンジ構文</td></tr>
+      <tr><td>アクセシビリティ</td><td><code>prefers-reduced-motion</code> / <code>prefers-contrast</code></td><td>6 箇所 / 2 箇所</td></tr>
+    </table>
+    <p class="note">16px と 24px はほぼ出ない。<b>4 の倍数で 7 段</b>。タッチターゲットはボタンが約 42px、ページネーションが <code>--pagination-height-mobile: 32px</code> と<b>モバイルで 44px を下回る</b>ので別途保証する。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Web フォントの配信（実サイト）</h2>
+    <table>
+      <tr><th>書体</th><th>ウェイト</th><th>status</th><th>備考</th></tr>
+      <tr><td rowspan="3"><b>Noto Sans JP</b><br>（自社ドメイン配信）</td><td><b>400 / 500 / 700</b></td><td><b>loaded</b></td><td><code>fonts/noto-sans-jp/notosans-jp-{regular,medium,bold}.woff2</code></td></tr>
+      <tr><td>300（Light）</td><td>unloaded</td><td>@font-face はあるが当たる要素が無い</td></tr>
+      <tr><td>600（SemiBold）</td><td>unloaded</td><td>同上。<b>600 を当てても読まれない</b></td></tr>
+      <tr><td>Noto Sans（欧文）</td><td>400 / 400 italic</td><td>unloaded</td><td><code>[lang|="en"]</code> のときだけ使う</td></tr>
+      <tr><td>Noto Sans SC</td><td>300〜700</td><td>unloaded</td><td><code>[lang|="zh"]</code> 用</td></tr>
+    </table>
+    <p class="note">フォント要求はトップで <b>5 件</b>、すべて <code>www.asahi-kasei.com</code>。<b><code>unicode-range</code> を指定していないため、どのウェイトも和文フル版（<code>U+0-10FFFF</code>）が 1 ファイルで落ちてくる。</b>実サイトはそうだが、新規実装ではサブセット分割するほうがよい。明朝体は 2 ページとも可視 0。</p>
+  </section>
+
+</div>
+</body>
+</html>

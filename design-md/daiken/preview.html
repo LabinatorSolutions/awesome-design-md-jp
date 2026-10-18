@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: DAIKEN（大建工業）</title>
+<style>
+  /* ★Web フォントは 1 本も読み込まない。
+     実サイトのフォントファイル要求は 0 件で、@font-face は swiper-icons と
+     icomoon_close07（外部 CRM ウィジェット templates-cf.karte.io 配信）の
+     アイコン 2 件だけ。和文は OS ローカルの書体で組む。実測 2026-10-18
+     → このプレビューも意図的に Web フォントを読まない。 */
+
+  :root {
+    /* === Colors ===
+       ★CSS カスタムプロパティは実サイトに 0 個（own: 0）。
+         色もサイズも全部ハードコードで、デザイントークンの層が存在しない。
+         以下は computed style の実測値をこちらで変数に起こしたもの。 */
+    --blue:        #0068b7;  /* ★基準の青。文字7/2要素・面3/2要素 */
+    --navy:        #004d96;  /* 会員導線の塗り・線ピル */
+    --teal:        #3ea2a3;  /* ユーザー登録専用。面1要素 */
+    --green:       #0c8752;  /* トピックスバッジ。面3要素 */
+    --gray-badge:  #616161;  /* ニュースバッジ。面2要素 */
+    --card-mat:    #f0f5d2;  /* 素材事業（黄緑） */
+    --card-bld:    #d8e9f8;  /* 建材事業（淡い青） */
+    --card-eng:    #fdebca;  /* エンジニアリング事業（淡いオレンジ） */
+    --ink:         #333333;  /* ★本文。可視152/104要素で圧倒的に最多 */
+    --ink-strong:  #1a1a1a;  /* 大見出し。10/5要素 */
+    --ink-sub:     #696969;  /* 補足 */
+    --on-dark:     #ffffff;  /* 17/13要素 */
+    --bg:          #ffffff;  /* resolved（根拠 body） */
+    --surface:     #f2f2f2;  /* セクションの地 */
+    --surface-2:   #f5f5f5;
+    --border:      #cccccc;  /* ★既定の線。最もよく出る */
+    --border-dark: #808080;  /* 一覧ボタンの線 */
+    --border-pale: #ababab;  /* 小ピルの線 */
+    --focus:       #044795;  /* 下層のフォーカス光彩 */
+
+    /* === Type scale（rem。1rem = 10px）===
+       html { font-size: 62.5% } = 10px で 6 幅（1440/1200/834/768/767/375px）とも完全固定。
+       流体（vw / clamp）もルートの階段切替も使っていない。 */
+    --fs-h1:    4.0rem;   /* 40px。下層のページ見出し */
+    --fs-h2:    3.0rem;   /* 30px */
+    --fs-sns:   2.5rem;   /* 25px。weight 900（合成太字） */
+    --fs-h3:    2.2rem;   /* 22px。事業カード（游ゴシック） */
+    --fs-h4:    2.0rem;   /* 20px */
+    --fs-body:  1.6rem;   /* ★16px。38/44要素 */
+    --fs-link:  1.5rem;   /* 15px */
+    --fs-list:  1.4rem;   /* ★14px。可視57要素で最多（トップ） */
+    --fs-meta:  1.3rem;   /* 13px。43/43要素 */
+    --fs-note:  1.2rem;   /* 12px */
+    --fs-badge: 1.0rem;   /* 10px。極小バッジ */
+
+    /* === 行間（無単位の比率。1.5 と 2.0 の 2 つ）=== */
+    --lh-base:  1.5;   /* ★html に書く。本文・見出し。可視114/65要素で最多 */
+    --lh-list:  2.0;   /* 一覧・日付。53/47要素 */
+    --lh-head:  1.2;   /* 大見出し。15要素 */
+
+    /* === 角丸（用途で 5 段）=== */
+    --r-pill:   20px;  /* ★ピル・カード。可視60要素で最多 */
+    --r-pill-s: 15px;  /* 小ピル・タグ。14要素 */
+    --r-search: 10px;  /* 検索。5要素 */
+    --r-badge:  5px;   /* バッジ。11要素 */
+    --r-rect:   0;     /* 一覧ボタン */
+
+    --container: 1200px;
+
+    /* === Spacing（px 直書き。2 の倍数）=== */
+    --gap-xs: 8px;
+    --gap-s:  10px;
+    --gap-m:  16px;
+    --gap-l:  20px;   /* ★基準 */
+    --gap-xl: 24px;
+    --gap-2xl: 30px;
+    --gap-3xl: 70px;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ★この 4 つは html に置く。body ではない */
+  html {
+    font-size: 62.5%;                  /* = 10px */
+    line-height: var(--lh-base);       /* 1.5。ここから全体へ継承 */
+    word-break: break-all;             /* ★禁則処理を無効にして熟語の途中でも折り返す */
+    font-feature-settings: "palt";     /* 可視713/430要素へ継承 */
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: var(--fs-body);         /* 1.6rem = 16px、行送り 24px */
+    /* ★本文スタックの先頭が Meiryo。macOS では -apple-system に落ちるが
+         Windows ではメイリオが当たる。游ゴシックでもヒラギノでもない */
+    font-family: Meiryo, -apple-system, BlinkMacSystemFont,
+                 "Hiragino Kaku Gothic ProN", sans-serif;
+    font-weight: 400;
+    letter-spacing: normal;            /* ★可視185/190・下層は127/127要素すべて normal */
+  }
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 var(--gap-l) var(--gap-3xl); }
+
+  /* ===== ヘッダー ===== */
+  .hdr { border-bottom: 1px solid var(--border); background: var(--bg); }
+  .hdr .inner {
+    max-width: var(--container); margin: 0 auto; padding: var(--gap-m) var(--gap-l);
+    display: flex; align-items: center; gap: var(--gap-2xl); flex-wrap: wrap;
+  }
+  .logo { font-size: var(--fs-h4); font-weight: 600; color: var(--blue); letter-spacing: .04em; }
+  .nav { display: flex; gap: var(--gap-2xl); flex: 1; flex-wrap: wrap; }
+  .nav a { color: var(--ink); font-size: var(--fs-link); font-weight: 600; text-decoration: none; }
+
+  /* ===== ヒーロー（実サイトは .avif。文字は画像に焼き込み） ===== */
+  .hero {
+    height: 420px; position: relative;
+    background: linear-gradient(135deg, #d8c6a8, #c0a883 48%, #9d8460);
+    display: grid; place-items: center;
+  }
+  .hero .ph { color: #ffffff; font-size: var(--fs-h2); line-height: var(--lh-head); opacity: .6; }
+  .hero .cta {
+    position: absolute; right: var(--gap-2xl); bottom: var(--gap-2xl);
+    background: var(--bg); border: 1px solid var(--border-pale); color: var(--ink);
+    border-radius: var(--r-pill-s); padding: 5px 28px 5px 15px;
+    font-size: var(--fs-list); font-weight: 400; font-family: inherit;
+  }
+
+  /* ===== セクション ===== */
+  .sec { padding: var(--gap-3xl) 0 0; }
+  .secttl { font-size: var(--fs-h2); font-weight: 600; line-height: var(--lh-head); margin: 0 0 var(--gap-l); color: var(--ink-strong); }
+  .note { font-size: var(--fs-meta); line-height: var(--lh-list); color: var(--ink-sub); margin: var(--gap-m) 0 0; }
+  .note code { background: var(--surface); border-radius: var(--r-badge); padding: 1px 5px; font-size: .92em; }
+
+  /* ===== Buttons（ピル） ===== */
+  .btnrow { display: flex; gap: var(--gap-s); flex-wrap: wrap; align-items: center; }
+  .pill {
+    font-family: inherit; font-size: var(--fs-body); font-weight: 600;
+    line-height: var(--lh-base);
+    border-radius: var(--r-pill);
+    padding: 7px 29.87px 7px 20px;    /* ★右だけ広い（矢印のぶん） */
+    cursor: pointer; position: relative;
+  }
+  .pill::after {
+    content: "›"; position: absolute; right: 13px; top: 50%; transform: translateY(-52%);
+    font-size: 1.1em; line-height: 1;
+  }
+  .pill.navy  { background: var(--navy);  border: 1px solid var(--navy);  color: var(--on-dark); }
+  .pill.teal  { background: var(--teal);  border: 1px solid var(--teal);  color: var(--on-dark); }
+  .pill.ghost { background: var(--bg);    border: 1px solid var(--navy);  color: var(--navy); }
+  .pill-sm {
+    font-family: inherit; background: var(--bg); border: 1px solid var(--border-pale);
+    color: var(--ink); border-radius: var(--r-pill-s);
+    padding: 5px 28px 5px 15px; font-size: var(--fs-list); font-weight: 400;
+    line-height: var(--lh-base); cursor: pointer;
+  }
+  .btn-rect {
+    font-family: inherit; background: transparent; border: 1px solid var(--border-dark);
+    color: var(--ink); border-radius: var(--r-rect);
+    padding: 10px 28px 10px 10px; font-size: var(--fs-list); font-weight: 600;
+    line-height: var(--lh-base); cursor: pointer;
+  }
+  .btn-search {
+    font-family: inherit; background: var(--blue); border: 1px solid var(--blue);
+    color: var(--on-dark); border-radius: var(--r-search);
+    padding: 0 32px; height: 40px; font-size: var(--fs-body); font-weight: 400; cursor: pointer;
+  }
+  .is-focus { box-shadow: 0 0 4px var(--focus); outline: 1px solid var(--focus); }
+
+  /* ===== Badges ===== */
+  .badges { display: flex; gap: var(--gap-xs); flex-wrap: wrap; align-items: center; }
+  .badge {
+    border-radius: var(--r-badge); padding: 5px 0; width: 86px; text-align: center;
+    font-size: var(--fs-badge); font-weight: 400; line-height: var(--lh-base);
+  }
+  .badge.topics  { background: var(--green);      color: var(--on-dark); }
+  .badge.news    { background: var(--gray-badge); color: var(--on-dark); }
+  .badge.product { background: transparent; border: 1px solid var(--blue); color: var(--blue); }
+
+  /* ===== 事業カード ===== */
+  .biz { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-l); }
+  .biz .card { border-radius: var(--r-pill); padding: 32px var(--gap-m); color: var(--ink); }
+  .biz .mat { background: var(--card-mat); }
+  .biz .bld { background: var(--card-bld); }
+  .biz .eng { background: var(--card-eng); }
+  .biz h3 {
+    /* ★事業カードの h3 だけ別系統。実サイトは YuGothic が Medium より前にあり
+         Windows で細く出る。ここでは Medium を先に置いて直してある */
+    font-family: 游ゴシック体, "游ゴシック Medium", "Yu Gothic Medium",
+                 YuGothic, 游ゴシック, "Yu Gothic", sans-serif;
+    font-size: var(--fs-h3); font-weight: 400; line-height: var(--lh-base);
+    margin: 0 0 var(--gap-s);
+  }
+  .biz p { font-size: var(--fs-body); line-height: var(--lh-base); margin: 0; }
+
+  /* ===== 一覧 ===== */
+  .list { border-top: 1px solid var(--border); }
+  .list ul { margin: 0; padding: 0; }
+  .list li { list-style: none; border-bottom: 1px solid var(--border); }
+  .list a {
+    display: grid; grid-template-columns: 96px 86px 1fr; gap: var(--gap-m);
+    padding: var(--gap-m) 0; text-decoration: none; color: var(--ink); align-items: center;
+    font-size: var(--fs-list); line-height: var(--lh-list);
+  }
+  .list .d { font-size: var(--fs-meta); color: var(--ink-sub); }
+
+  /* ===== Swatches / tables ===== */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--gap-s); }
+  .sw { display: flex; gap: var(--gap-s); align-items: center; }
+  .sw .c { width: 46px; height: 46px; border-radius: var(--r-badge); flex: none; border: 1px solid #e3e3e3; }
+  .sw b { display: block; font-size: var(--fs-list); font-weight: 600; line-height: var(--lh-base); color: var(--ink); }
+  .sw span { display: block; font-size: var(--fs-note); line-height: var(--lh-base); color: var(--ink-sub); }
+  .sw.dead b, .sw.dead span { opacity: .55; }
+
+  table { border-collapse: collapse; width: 100%; font-size: var(--fs-list); }
+  th, td { border: 1px solid var(--border); padding: var(--gap-xs) var(--gap-s); text-align: left; line-height: var(--lh-base); }
+  th { background: var(--surface); font-weight: 600; color: var(--ink); }
+  td { color: var(--ink-sub); }
+  td b, th b { color: var(--ink); }
+
+  /* ===== 比較行 ===== */
+  .cmp { display: grid; grid-template-columns: 230px 1fr 170px; gap: var(--gap-s); align-items: baseline; margin-bottom: var(--gap-xs); }
+  .cmp .lb { font-size: var(--fs-note); line-height: var(--lh-base); color: var(--ink-sub); }
+  .cmp .sp { font-size: var(--fs-h3); line-height: var(--lh-base); color: var(--ink); }
+  .cmp .w  { font-size: var(--fs-note); line-height: var(--lh-base); color: var(--ink-sub); }
+  .sp.n { font-feature-settings: normal; }
+  .sp.p { font-feature-settings: "palt"; }
+  .sp.h { font-feature-settings: "halt"; }
+
+  /* ===== word-break 比較 ===== */
+  .wb { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-l); }
+  .wb .box { border: 1px solid var(--border); border-radius: var(--r-pill); padding: var(--gap-l); }
+  .wb p { font-size: var(--fs-body); line-height: var(--lh-base); margin: 0; width: 230px; }
+  .wb .a p { word-break: break-all; }
+  .wb .b p { word-break: normal; color: var(--ink-sub); }
+
+  /* ===== 合成太字の比較 ===== */
+  .fw { display: flex; gap: var(--gap-2xl); flex-wrap: wrap; align-items: baseline; }
+  .fw div { font-size: var(--fs-h4); line-height: var(--lh-base); color: var(--ink); }
+  .fw .w400 { font-weight: 400; }
+  .fw .w600 { font-weight: 600; }
+  .fw .w900 { font-weight: 900; }
+
+  @media screen and (max-width: 1024px) {
+    .biz { grid-template-columns: 1fr; }
+  }
+  @media screen and (max-width: 599px) {
+    .wb { grid-template-columns: 1fr; }
+    .list a { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (any-hover: hover) {
+    .pill:hover { opacity: .85; }
+    .list a:hover { background: var(--surface-2); }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr"><div class="inner">
+  <div class="logo">DAIKEN</div>
+  <nav class="nav">
+    <a href="#">会社情報</a><a href="#">製品情報</a><a href="#">ショールーム</a>
+    <a href="#">サポート</a><a href="#">SNS</a><a href="#">ログイン</a>
+  </nav>
+</div></header>
+
+<div class="hero">
+  <span class="ph">Hero AVIF 1440×600（筆記体の文字は画像に焼き込み）</span>
+  <button class="cta">詳しくはこちら</button>
+</div>
+
+<div class="wrap">
+
+  <section class="sec">
+    <h2 class="secttl">Web フォント 0 本 — OS ローカル ＋ palt で組む</h2>
+    <div class="cmp"><div class="lb">normal</div><div class="sp n">「東京・大阪」（株式会社）、デザインの話。</div><div class="w">797.61px / 40px 換算</div></div>
+    <div class="cmp"><div class="lb"><b>"palt"（実サイト・html に宣言）</b></div><div class="sp p">「東京・大阪」（株式会社）、デザインの話。</div><div class="w"><b>683.28px — 14.3% 詰まる</b></div></div>
+    <div class="cmp"><div class="lb">"halt"（使っていない）</div><div class="sp h">「東京・大阪」（株式会社）、デザインの話。</div><div class="w">697.61px</div></div>
+    <p class="note">フォントファイルの要求は <b>0 件</b>。<code>@font-face</code> は CSS 全文で 3 件あるが <code>swiper-icons</code> と <code>icomoon_close07</code>（外部 CRM ツール <code>templates-cf.karte.io</code> 配信）という<b>アイコン専用</b>だけ。<b>それでも OS ローカルのヒラギノ角ゴ／メイリオが <code>palt</code> テーブルを持っているので約物は詰まる</b>（可視 713 要素／下層 430 要素に継承）。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">html の 1 行に 4 つ押し込む</h2>
+<pre style="margin:0;background:var(--surface);border-radius:var(--r-badge);padding:var(--gap-m);font-size:var(--fs-meta);line-height:var(--lh-base);overflow-x:auto;color:var(--ink)">html {
+  font-size: 62.5%;                 /* = 10px。6 幅すべて固定 */
+  line-height: 1.5;                 /* 無単位。ここから全体へ継承 */
+  word-break: break-all;            /* 禁則処理を無効にする */
+  font-feature-settings: "palt";    /* 可視 713 要素へ継承 */
+}
+body {
+  font-size: 1.6rem;                /* = 16px、行送り 24px */
+  font-family: Meiryo, -apple-system, BlinkMacSystemFont,
+               "Hiragino Kaku Gothic ProN", sans-serif;
+  color: #333;
+  font-weight: 400;
+}</pre>
+    <p class="note"><code>body</code> ではなく <b><code>html</code> セレクタ</b>に 4 つとも置いている。<b>この宣言を外すと全体が崩れる。</b>CSS カスタムプロパティは <b>0 個</b>（own: 0）で、色もサイズも全部ハードコードされている。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">word-break: break-all — 禁則処理を無効にする</h2>
+    <div class="wb">
+      <div class="box a">
+        <p class="note" style="margin:0 0 var(--gap-s)"><b>break-all（実サイト・html に当てる）</b></p>
+        <p>「ずっと ここちいいね」を実現する企業として、素材事業・建材事業・エンジニアリング事業の3つを展開しています。</p>
+      </div>
+      <div class="box b">
+        <p class="note" style="margin:0 0 var(--gap-s)">normal（既定）</p>
+        <p>「ずっと ここちいいね」を実現する企業として、素材事業・建材事業・エンジニアリング事業の3つを展開しています。</p>
+      </div>
+    </div>
+    <p class="note">行末で<b>熟語の途中でも折り返す</b>。<code>auto-phrase</code>（改行位置を文節に寄せる）の<b>反対側</b>の選択で、狭いカード・ピル内でテキストが溢れないことを優先している。<b>読みやすさを優先する案件では <code>normal</code> に変えてよいが、そのときはカード幅の検証をやり直す。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">font-weight: 900 は合成太字 — 使わない</h2>
+    <div class="fw">
+      <div class="w400">400（既定・可視140/95要素）ソーシャルメディア 公式アカウント</div>
+      <div class="w600">600（見出し・31/20要素）ソーシャルメディア 公式アカウント</div>
+      <div class="w900">900（実サイト14/8要素）ソーシャルメディア 公式アカウント</div>
+    </div>
+    <p class="note">Web フォントを読まないため、<b>メイリオにもヒラギノ角ゴ ProN にも Black は無く、900 はブラウザが Bold を機械的に太らせているだけ</b>。実サイトは <code>ショールーム　トップページへ</code>（18px）、<code>ソーシャルメディア 公式アカウント</code>（25px）、<code>Facebook</code> / <code>Instagram</code> / <code>YouTube</code> の SNS ラベル（16px）に当てている。<b>新規実装では 400 と 600 の 2 段で組む</b>（700 も 6 要素だけで、うち Cookie バナー由来を含む）。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Color Palette — 青が 3 つあるが役割が分かれている</h2>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#0068b7"></div><div><b>#0068b7</b><span>DAIKEN Blue・基準／リンク・検索</span></div></div>
+      <div class="sw"><div class="c" style="background:#004d96"></div><div><b>#004d96</b><span>Navy・会員導線のピル</span></div></div>
+      <div class="sw"><div class="c" style="background:#3ea2a3"></div><div><b>#3ea2a3</b><span>Teal・ユーザー登録専用</span></div></div>
+      <div class="sw"><div class="c" style="background:#0c8752"></div><div><b>#0c8752</b><span>Green・トピックスバッジ</span></div></div>
+      <div class="sw"><div class="c" style="background:#616161"></div><div><b>#616161</b><span>Gray・ニュースバッジ</span></div></div>
+      <div class="sw"><div class="c" style="background:#f0f5d2"></div><div><b>#f0f5d2</b><span>素材事業カード</span></div></div>
+      <div class="sw"><div class="c" style="background:#d8e9f8"></div><div><b>#d8e9f8</b><span>建材事業カード</span></div></div>
+      <div class="sw"><div class="c" style="background:#fdebca"></div><div><b>#fdebca</b><span>エンジニアリング事業カード</span></div></div>
+      <div class="sw"><div class="c" style="background:#333333"></div><div><b>#333333</b><span>本文・可視152/104要素で最多</span></div></div>
+      <div class="sw"><div class="c" style="background:#1a1a1a"></div><div><b>#1a1a1a</b><span>大見出し・10/5要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#f2f2f2"></div><div><b>#f2f2f2</b><span>Surface</span></div></div>
+      <div class="sw"><div class="c" style="background:#cccccc"></div><div><b>#cccccc</b><span>Border（既定・最頻）</span></div></div>
+      <div class="sw"><div class="c" style="background:#808080"></div><div><b>#808080</b><span>Border（濃）・一覧ボタン</span></div></div>
+      <div class="sw"><div class="c" style="background:#ababab"></div><div><b>#ababab</b><span>Border（淡）・小ピル</span></div></div>
+    </div>
+    <p class="note" style="margin-top:var(--gap-m)"><b>外部ウィジェット由来（実装しない）:</b></p>
+    <div class="swatches">
+      <div class="sw dead"><div class="c" style="background:#1371c3"></div><div><b>#1371c3</b><span>Cookie バナーの クッキー設定（角丸18px）</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#3860be"></div><div><b>#3860be</b><span>Cookie バナーのフィルタ UI</span></div></div>
+    </div>
+    <p class="note"><b>サイト本体に 18px の角丸は無い。</b>また <code>font-family: "HG教科書体", "HG正楷書体-PRO", serif</code> が CSS にあるが<b>可視 0 要素</b>（Windows 専用の教科書体）なので実装しない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons — 角丸はピル 20px / 小ピル 15px / 検索 10px / バッジ 5px / 一覧 0</h2>
+    <div class="btnrow">
+      <button class="pill navy">新規会員登録</button>
+      <button class="pill teal">ユーザー登録</button>
+      <button class="pill ghost">ログイン</button>
+      <button class="btn-search">検索</button>
+    </div>
+    <div class="btnrow" style="margin-top:var(--gap-m)">
+      <button class="pill-sm">DAIKEN GROUP REPORT 2026</button>
+      <button class="pill-sm">リフォーム</button>
+      <button class="pill-sm">お家ミラクルウォール</button>
+      <button class="pill-sm is-focus">フォーカス時</button>
+    </div>
+    <div class="btnrow" style="margin-top:var(--gap-m)">
+      <button class="btn-rect">DAIKEN魂！を読む</button>
+      <button class="btn-rect">重要なお知らせ一覧を見る</button>
+    </div>
+    <div class="badges" style="margin-top:var(--gap-m)">
+      <span class="badge topics">トピックス</span>
+      <span class="badge news">ニュース</span>
+      <span class="badge product">製品情報</span>
+    </div>
+    <p class="note">ピルは <code>padding: 7px 29.87px 7px 20px</code> と<b>右だけ広い</b>（矢印を置く場所）。塗りピルと線ピルで枠線は同じ 1px、色だけ入れ替える。<b>バッジは 10px の極小で、左右 padding は 0・幅は親で固定する</b>。一覧ボタンだけ角丸なし。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">事業カード — 面色だけで区別する</h2>
+    <div class="biz">
+      <div class="card mat"><h3>素材事業</h3><p>独自の素材開発力</p></div>
+      <div class="card bld"><h3>建材事業</h3><p>高付加価値の建材開発力と内製型のモノづくり基盤</p></div>
+      <div class="card eng"><h3>エンジニアリング事業</h3><p>建材の機能を活かす施工</p></div>
+    </div>
+    <p class="note">カードはピルと同じ <b><code>border-radius: 20px</code></b>、<code>padding: 32px 16px</code>、影なし。文字色はどれも <code>#333333</code> のままで、<b>面だけで事業を区別する</b>。</p>
+    <p class="note"><b>この h3 だけ書体が違う。</b>游ゴシックのスタック（可視 3 要素）を使っているが、実サイトは <code>游ゴシック体, YuGothic, "游ゴシック Medium", …</code> と <b><code>YuGothic</code>（Regular）が Medium より前</b>にあるため Windows では細く出る。<b>Medium を先に置いて直すこと</b>（このプレビューは直した版）。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">一覧 — 13〜14px を行間 2.0 で積む</h2>
+    <div class="list">
+      <ul>
+        <li><a href="#"><span class="d">2026年9月30日</span><span class="badge topics">トピックス</span><span>「デザイン基準をもとにした製品ラインアップの見直しについて」のご案内</span></a></li>
+        <li><a href="#"><span class="d">2026年9月25日</span><span class="badge news">ニュース</span><span>新生産設備の稼働と出荷開始のお知らせ</span></a></li>
+        <li><a href="#"><span class="d">2026年9月12日</span><span class="badge product">製品情報</span><span>2026 New Products Topic を公開しました</span></a></li>
+      </ul>
+    </div>
+    <p class="note">一覧・日付・リンク行だけ <b><code>line-height: 2.0</code></b> に開ける。小さい文字を縦に積むところで行間を広く取る設計。<b>字間は <code>normal</code> 一択</b>で、下層ページは可視 127 要素すべてが <code>normal</code>。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Type Scale（rem・1rem = 10px・6 幅すべて固定）</h2>
+    <table>
+      <tr><th>役割</th><th>サイズ</th><th>ウェイト</th><th>行間</th><th>実測</th></tr>
+      <tr><td>ページ見出し（下層 h1）</td><td><b>4.0rem = 40px</b></td><td>400</td><td>1.2</td><td>1 要素</td></tr>
+      <tr><td>セクション見出し</td><td><b>3.0rem = 30px</b></td><td>400〜600</td><td>1.2</td><td>6 / 3 要素</td></tr>
+      <tr><td>SNS セクション見出し</td><td>2.5rem = 25px</td><td><b>900（合成）</b></td><td>1.2</td><td>1 要素</td></tr>
+      <tr><td>事業カード h3（游ゴシック）</td><td><b>2.2rem = 22px</b></td><td>400</td><td>1.5</td><td>3 要素</td></tr>
+      <tr><td>中見出し</td><td>2.0rem = 20px</td><td>600</td><td>1.5</td><td>7 / 1 要素</td></tr>
+      <tr><td><b>本文</b></td><td><b>1.6rem = 16px</b></td><td>400</td><td><b>1.5</b></td><td>38 / 44 要素</td></tr>
+      <tr><td>リンク・ラベル</td><td>1.5rem = 15px</td><td>400〜600</td><td>1.5</td><td>14 / 10 要素</td></tr>
+      <tr><td><b>一覧・ナビ</b></td><td><b>1.4rem = 14px</b></td><td>400</td><td><b>2.0</b></td><td><b>可視 57 要素で最多（トップ）</b></td></tr>
+      <tr><td>補足・日付</td><td><b>1.3rem = 13px</b></td><td>400</td><td>2.0</td><td>43 / 43 要素</td></tr>
+      <tr><td>注記</td><td>1.2rem / 1.0rem</td><td>400</td><td>1.5</td><td>8 + 11 要素</td></tr>
+    </table>
+    <p class="note"><b>6 幅（1440 / 1200 / 834 / 768 / 767 / 375px）とも <code>html: 10px</code> / <code>body: 16px</code> / 行送り 24px で完全に動かない。</b>流体（<code>vw</code> / <code>clamp()</code>）もルートの階段切替も使っていない。モバイルで小さくするところは、各要素が <code>@media screen and (max-width: 599px)</code> の中で <code>rem</code> を個別に書き換える。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Depth — 影は実質「無い」</h2>
+    <table>
+      <tr><th>用途</th><th>値</th><th>実測</th></tr>
+      <tr><td><b>ホバー用の初期値</b></td><td><code>0 0 10px rgba(0, 0, 0, 0)</code></td><td><b>可視 18 要素。α が 0 なので描画されない</b></td></tr>
+      <tr><td>ホバー時</td><td><code>0 0 10px rgba(0, 0, 0, .5)</code></td><td>1 要素</td></tr>
+      <tr><td>モーダル</td><td><code>0 5px 15px rgba(0, 0, 0, .5)</code></td><td>1 要素</td></tr>
+      <tr><td>フォーカス（下層）</td><td><b><code>0 0 4px #044795</code></b></td><td>4 要素。青い光彩</td></tr>
+      <tr><td>枠線代わり</td><td><code>0 0 2px 2px rgba(0, 0, 0, .1)</code></td><td>1 要素</td></tr>
+    </table>
+    <p class="note"><b><code>rgba(0, 0, 0, 0)</code> の 18 要素を「影がある」と読み違えない。</b>α が 0 なので見えず、ホバーで <code>0.5</code> に切り替わるための初期値。平常時の階層は<b>面色（白 / <code>#f2f2f2</code> / パステル 3 色）と 1px の線</b>だけで作る。<code>filter: drop-shadow()</code> は SVG の <code>&lt;g&gt;</code> 2 要素だけで、テキストには掛かっていない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Layout / Breakpoints</h2>
+    <table>
+      <tr><th>項目</th><th>値</th><th>実測</th></tr>
+      <tr><td>コンテナ</td><td><b>1200px</b></td><td>8 要素（トップ）／ 12 要素（下層）で最多</td></tr>
+      <tr><td>ヒーロー</td><td>1420px / 1440px</td><td>画面幅いっぱいに近い</td></tr>
+      <tr><td>ギャップ</td><td><b>8 / 10 / 16 / 20 / 24 / 30 / 70px</b></td><td>20px が基準（5 / 4 要素）</td></tr>
+      <tr><td>ブレークポイント</td><td><code>max-width: 599px</code> / <code>min-width: 600px</code> / <code>min-width: 1025px</code></td><td>83 / 41 / 39 箇所。<b>768px は使わない</b></td></tr>
+      <tr><td>ホバー演出</td><td><code>@media (any-hover: hover)</code></td><td><b>59 箇所</b>。ポインタのある端末に限定</td></tr>
+    </table>
+    <p class="note">境界は <b>600 / 1025 の 2 本</b>（= 599 以下 / 600〜1024 / 1025 以上の 3 段）。ピルは <code>padding: 7px …</code> ＋ 16px 文字で高さ約 38px なので、<b>モバイルでは <code>min-height: 44px</code> を別途保証する</b>（10px のバッジは装飾でタップ対象ではない）。</p>
+  </section>
+
+</div>
+</body>
+</html>

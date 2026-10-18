@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: アステラス製薬（Astellas Pharma）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0&family=Noto+Sans+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は 186 個すべて own（プラットフォーム由来 0）。
+       ただし --color-primary-*（青）/ --color-secondary-*（緑）/ --color-tertiary-*（黄）/
+       --color-additional-*（マゼンタ）の原色ランプ 48 個は 2 ページとも可視 0 要素で、
+       実際に描画されるのは下のクリムゾン 1 系統とニュートラルだけ。実測 2026-10-18 */
+    --crimson:      #d91e49;  /* ★唯一の彩度色。面26要素/文字26要素（下層） */
+    --crimson-hov:  #b4273b;  /* --primary-button-hover */
+    --crimson-prs:  #982334;  /* --primary-button-pressed */
+    --crimson-pale: #fdf2f4;  /* チップ選択面 */
+    --ink:          #515170;  /* ★本文。紫寄りグレー。可視14/19要素 */
+    --ink-sub:      #4d4d4f;  /* 補足。可視10/9要素 */
+    --navy:         #0e2753;  /* ユーティリティバー・ナビラベル。面3要素 */
+    --navy-outline: #0e4189;  /* お問い合わせの線ボタンだけ。1要素 */
+    --on-dark:      #ffffff;  /* 可視48/45要素で最多 */
+    --bg-body:      #ffffff;  /* ★body の地色（resolved） */
+    --bg-html:      #fef8f9;  /* ★html の地色。--primary-element-pale */
+    --surface:      #f4f4f4;  /* カード・タグ面 */
+
+    /* === Fonts ===
+       実サイトは font-family: "Noto Sans JP" とだけ書いていて受け皿が無い。
+       ここでは正しくフォールバックを足してある。
+       Petrona / Plus Sans Jakarta / IBM Plex Sans / Noto Serif / Roboto は
+       document.fonts に並ぶが全部 unloaded・可視 0（実装しない）。 */
+    --font: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "游ゴシック Medium",
+            "Yu Gothic Medium", "Yu Gothic", Meiryo, sans-serif;
+
+    /* === Type scale（--step-*。clamp() の流体・比率 1.21 = 1.1²）===
+       ★--step-* は 2 系統宣言されていて、効いているのは後に来たこちら。
+         先に並ぶ Utopia 既定（比率 1.25・--step-5 = 3.8147rem = 61.04px）は 1 要素も出ない。
+       html は 1pc（= 16px）で全幅固定。動くのは各要素のサイズだけ。 */
+    --step--2: clamp(0.5879rem, 0.5505rem + 0.1662vw, 0.683rem);   /* 1440px: 10.928px */
+    --step--1: clamp(0.7172rem, 0.6743rem + 0.1908vw, 0.8264rem);  /* 1440px: 13.2224px ★最多29要素 */
+    --step-0:  clamp(0.875rem,  0.8259rem + 0.2183vw, 1rem);       /* 1440px: 16px */
+    --step-1:  clamp(1.0675rem, 1.0115rem + 0.2489vw, 1.21rem);    /* 1440px: 19.36px */
+    --step-2:  clamp(1.3024rem, 1.2388rem + 0.2825vw, 1.4641rem);  /* 1440px: 23.4256px */
+    --step-3:  clamp(1.5889rem, 1.5171rem + 0.3191vw, 1.7716rem);  /* 1440px: 28.3456px */
+    --step-4:  clamp(1.9384rem, 1.8578rem + 0.3584vw, 2.1436rem);  /* 1440px: 34.2976px */
+    --step-5:  clamp(2.3649rem, 2.2749rem + 0.3998vw, 2.5937rem);  /* 1440px: 41.4992px */
+
+    /* === Space scale（--space-*。角丸・ギャップ・影のぼかしも全部ここから）=== */
+    --space-3xs: clamp(0.25rem, calc(0.2rem  + 0.2vw), 0.38rem);  /* 1440px: 6.08px  ★既定の角丸 */
+    --space-2xs: clamp(0.56rem, calc(0.52rem + 0.2vw), 0.69rem);  /* 1440px: 11.04px */
+    --space-xs:  clamp(0.81rem, calc(0.72rem + 0.4vw), 1.06rem);  /* 1440px: 16.96px */
+    --space-s:   clamp(1.06rem, calc(0.95rem + 0.5vw), 1.38rem);  /* 1440px: 22.08px */
+    --space-m:   clamp(1.63rem, calc(1.47rem + 0.7vw), 2.06rem);  /* 1440px: 32.96px */
+    --space-l:   clamp(2.13rem, calc(1.9rem  + 1vw),   2.75rem);  /* 1440px: 44px ★丸ボタン径 */
+    --space-xl:  clamp(3.19rem, calc(2.84rem + 1.5vw), 4.13rem);  /* 1440px: 66.08px */
+    --space-2xl: clamp(4.25rem, calc(3.79rem + 2vw),   5.5rem);   /* 1440px: 88px */
+
+    /* === 行間（無単位の比率。1.2 と 1.6 の 2 つだけ）=== */
+    --lh-tight: 1.2;   /* 見出し・UI。可視58/60要素で最多 */
+    --lh-body:  1.6;   /* 本文ブロック。12/26要素 */
+
+    /* === 影 ===
+       ★色は黒ではなく本文色 #515170 の 20%。ぼかし 44px は --space-l と同値。 */
+    --shadow:     0 11px 44px rgba(81, 81, 112, .2);
+    --shadow-hov: 0 9px 34px rgba(81,81,112,.2), 0 9px 13px rgba(81,81,112,.35), 0 4px 4px rgba(81,81,112,.2);
+
+    --container: 85.25rem;  /* = 1364px。--grid-max-width */
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    font-size: 1pc;            /* ★実サイトの書き方。1 パイカ = 16px。全幅固定 */
+    background: var(--bg-html);
+  }
+  body {
+    margin: 0;
+    background: var(--bg-body);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: var(--step-0);
+    line-height: var(--lh-tight);
+    letter-spacing: normal;       /* ★既定。可視104/107要素 */
+    word-break: auto-phrase;      /* ★body に当てる。改行位置を文節に寄せる */
+    /* font-feature-settings は書かない。2ページ192要素で 0 件 */
+  }
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 var(--space-s) var(--space-2xl); }
+
+  /* ===== ユーティリティバー ===== */
+  .util {
+    background: var(--navy); color: var(--on-dark);
+    font-size: var(--step--2); line-height: var(--lh-tight);
+  }
+  .util .inner {
+    max-width: var(--container); margin: 0 auto;
+    padding: var(--space-2xs) var(--space-s);
+    display: flex; gap: var(--space-s); flex-wrap: wrap;
+  }
+
+  /* ===== ヘッダー ===== */
+  .hdr {
+    border-bottom: 1px solid var(--surface);
+    background: var(--bg-body);
+  }
+  .hdr .inner {
+    max-width: var(--container); margin: 0 auto;
+    padding: var(--space-xs) var(--space-s);
+    display: flex; align-items: center; gap: var(--space-m); flex-wrap: wrap;
+  }
+  .logo { font-size: var(--step-2); color: var(--crimson); font-weight: 600; line-height: 1; }
+  .nav { display: flex; gap: var(--space-s); flex: 1; flex-wrap: wrap; }
+  .nav a { color: var(--navy); font-size: var(--step--1); text-decoration: none; }
+  .nav a.is-selected {
+    background: var(--crimson); color: var(--on-dark);
+    border-radius: var(--space-3xs);
+    padding: var(--space-3xs) var(--space-2xs);
+  }
+
+  /* ===== セクション ===== */
+  .sec { padding: var(--space-xl) 0 0; }
+  .secttl {
+    font-size: var(--step-3); font-weight: 400; line-height: var(--lh-tight);
+    color: var(--ink); margin: 0 0 var(--space-s);
+  }
+  .note {
+    font-size: var(--step--1); line-height: var(--lh-body); color: var(--ink-sub);
+    margin: var(--space-xs) 0 0;
+  }
+  .note code {
+    background: var(--surface); border-radius: var(--space-3xs);
+    padding: 1px 5px; font-size: .92em;
+  }
+
+  /* ===== ヒーロー ===== */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; padding: var(--space-xl) 0; }
+  .hero h1 { font-size: var(--step-5); font-weight: 400; line-height: var(--lh-tight); margin: 0 0 var(--space-s); color: var(--ink); }
+  .hero p  { font-size: var(--step-1); font-weight: 400; line-height: var(--lh-body); margin: 0 0 var(--space-s); color: var(--ink); }
+  .hero .shot {
+    aspect-ratio: 1 / 1; border-radius: var(--space-3xs);
+    background: linear-gradient(135deg, #c92247, #7d1430 70%, #4c0c1d);
+    display: grid; place-items: center;
+  }
+  .hero .shot span { color: #ffffff; font-size: var(--step-2); opacity: .55; }
+  .btnrow { display: flex; gap: var(--space-2xs); flex-wrap: wrap; }
+
+  /* ===== Buttons ===== */
+  .btn {
+    font-family: inherit; font-size: var(--step-0); font-weight: 600;
+    line-height: var(--lh-tight);
+    border-radius: var(--space-3xs);
+    padding: var(--space-2xs) var(--space-s);
+    cursor: pointer; box-shadow: none;
+  }
+  .btn.solid  { background: var(--crimson); border: 2px solid var(--crimson); color: var(--on-dark); }
+  .btn.solid:hover  { background: var(--crimson-hov); border-color: var(--crimson-hov); }
+  .btn.solid:active { background: var(--crimson-prs); border-color: var(--crimson-prs); }
+  .btn.ghost  { background: transparent; border: 2px solid var(--crimson); color: var(--crimson); }
+  .btn.navy   {
+    background: transparent; border: 2px solid var(--navy-outline); color: var(--navy-outline);
+    font-size: var(--step--1); font-weight: 400;
+    padding: var(--space-3xs) var(--space-xs);
+  }
+  .btn.is-focus { outline: 2px solid #0072e4; outline-offset: 2px; }
+
+  /* ===== 丸い矢印（このサイトの要） ===== */
+  .more {
+    display: inline-flex; align-items: center; gap: var(--space-2xs);
+    color: var(--ink); font-size: var(--step-0); font-weight: 600;
+    text-decoration: none; padding: var(--space-3xs) 0;
+  }
+  .arrow {
+    width: var(--space-l); height: var(--space-l);
+    border-radius: 50%; background: var(--crimson); color: var(--on-dark);
+    display: grid; place-items: center; flex: none;
+    font-family: "Material Symbols Rounded"; font-size: var(--space-m);
+    font-weight: 400; line-height: 1;
+  }
+  .more.crimson { color: var(--crimson); }
+
+  /* ===== カードオフセット（帯にまたがる） ===== */
+  .band { background: var(--crimson); padding: var(--space-xl) 0; margin-top: var(--space-l); }
+  .band .inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--space-s); position: relative; }
+  .offset {
+    background: var(--bg-body); border-radius: var(--space-3xs);
+    box-shadow: var(--shadow); padding: var(--space-s);
+    max-width: 440px; margin-bottom: calc(var(--space-l) * -1);
+  }
+  .offset h3 { font-size: var(--step-2); font-weight: 400; line-height: var(--lh-tight); margin: 0 0 var(--space-2xs); color: var(--ink); }
+  .offset p  { font-size: var(--step--1); line-height: var(--lh-body); margin: 0 0 var(--space-2xs); color: var(--ink-sub); }
+  .band-spacer { height: var(--space-l); }
+
+  /* ===== Cards ===== */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-s); }
+  .card {
+    background: var(--bg-body); border-radius: var(--space-3xs);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .card:hover { box-shadow: var(--shadow-hov); }
+  .card .ph { aspect-ratio: 16 / 10; background: var(--surface); display: grid; place-items: center; color: var(--ink-sub); font-size: var(--step--1); }
+  .card .bd { padding: var(--space-s); }
+  .card h3 { font-size: var(--step-1); font-weight: 400; line-height: var(--lh-tight); margin: 0 0 var(--space-s); color: var(--ink); }
+
+  /* ===== Chips ===== */
+  .chips { display: flex; gap: var(--space-2xs); flex-wrap: wrap; }
+  .chip {
+    border-radius: var(--space-m); border: 1px solid var(--crimson);
+    color: var(--crimson); background: transparent;
+    font-size: var(--step--1); padding: var(--space-3xs) var(--space-xs);
+  }
+  .chip.is-selected { background: var(--crimson-pale); }
+
+  /* ===== Swatches ===== */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--space-2xs); }
+  .sw { display: flex; gap: var(--space-2xs); align-items: center; }
+  .sw .c { width: 46px; height: 46px; border-radius: var(--space-3xs); flex: none; border: 1px solid #e4e4ea; }
+  .sw b { display: block; font-size: var(--step--1); font-weight: 600; color: var(--ink); }
+  .sw span { display: block; font-size: var(--step--2); color: var(--ink-sub); line-height: var(--lh-body); }
+  .sw.dead b, .sw.dead span { opacity: .55; }
+
+  /* ===== Tables ===== */
+  table { border-collapse: collapse; width: 100%; font-size: var(--step--1); }
+  th, td { border: 1px solid #e4e4ea; padding: var(--space-3xs) var(--space-2xs); text-align: left; line-height: var(--lh-body); }
+  th { background: var(--surface); font-weight: 600; color: var(--ink); }
+  td { color: var(--ink-sub); }
+  td b, th b { color: var(--ink); }
+
+  /* ===== 字間の比較 ===== */
+  .lsrow { display: grid; grid-template-columns: 170px 1fr; gap: var(--space-2xs); align-items: baseline; margin-bottom: var(--space-2xs); }
+  .lsrow .lb { font-size: var(--step--2); color: var(--ink-sub); }
+  .lsrow .sp { font-size: var(--step-2); color: var(--ink); line-height: var(--lh-tight); }
+  .sp.n { font-feature-settings: normal; }
+  .sp.p { font-feature-settings: "palt"; }
+
+  @media (max-width: 1024px) {
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 767.98px) {
+    .hero  { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="util"><div class="inner">
+  <span>採用情報</span><span>医療従事者の皆さま</span><span>ペイシェント・セントリシティ</span><span>サプライヤーの皆さま</span>
+</div></div>
+
+<header class="hdr"><div class="inner">
+  <div class="logo">astellas</div>
+  <nav class="nav">
+    <a href="#" class="is-selected">企業情報</a>
+    <a href="#">サイエンス</a>
+    <a href="#">パートナリング</a>
+    <a href="#">IR情報</a>
+    <a href="#">サステナビリティ</a>
+    <a href="#">メディア</a>
+  </nav>
+  <button class="btn navy">お問い合わせ</button>
+</div></header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div>
+      <h1>アステラス</h1>
+      <p>科学の進歩を患者さんの「価値」に変えることを目指すグローバルライフサイエンス企業です。</p>
+      <div class="btnrow">
+        <button class="btn solid">採用情報</button>
+        <button class="btn ghost">ニュース</button>
+      </div>
+    </div>
+    <div class="shot"><span>Hero Visual 1:1</span></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Type Scale — すべて clamp() の流体（比率 1.21）</h2>
+    <table>
+      <tr><th>トークン</th><th>1440px</th><th>834px</th><th>375px</th><th>用途</th></tr>
+      <tr><td><b>--step-5</b></td><td><b>41.4992px</b></td><td>39.7327px</td><td>37.8977px</td><td>h1</td></tr>
+      <tr><td><b>--step-4</b></td><td><b>34.2976px</b></td><td>32.7139px</td><td>31.0688px</td><td>h2</td></tr>
+      <tr><td><b>--step-3</b></td><td><b>28.3456px</b></td><td>26.9349px</td><td>25.4702px</td><td>h3</td></tr>
+      <tr><td><b>--step-2</b></td><td><b>23.4256px</b></td><td>—</td><td>—</td><td>リード文（8要素）</td></tr>
+      <tr><td><b>--step-1</b></td><td><b>19.36px</b></td><td>18.2598px</td><td>17.1174px</td><td>段落</td></tr>
+      <tr><td><b>--step-0</b></td><td><b>16px</b></td><td>—</td><td>—</td><td>本文・ボタン（20/36要素）</td></tr>
+      <tr><td><b>--step--1</b></td><td><b>13.2224px</b></td><td>12.3801px</td><td>11.5043px</td><td><b>リンク・ナビ（最多29要素）</b></td></tr>
+      <tr><td><b>--step--2</b></td><td><b>10.928px</b></td><td>10.1941px</td><td>9.43125px</td><td>注記（8要素）</td></tr>
+    </table>
+    <p class="note"><code>html</code> は <code>font-size: 1pc</code>（= 16px）で 6 幅すべて固定。動くのは各要素のサイズだけで、ブレークポイントの崖は 1 つも無い。<b>px を直書きすると 834px で 1px 近く、375px で 3.6px ずれる。</b></p>
+    <p class="note"><b>--step-* は 2 系統宣言されていて、効いているのは比率 1.21 のほう。</b>先に並ぶ Utopia 既定（比率 1.25・<code>--step-5: clamp(2.6438rem, 2.216rem + 1.8752vw, 3.8147rem)</code> = 最大 61.04px）は 1 要素も描画されない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">font-feature-settings — このサイトは和文を詰めない</h2>
+    <div class="lsrow"><div class="lb">normal（実サイト・全要素）</div><div class="sp n">「科学」の進歩を、価値へ。</div></div>
+    <div class="lsrow"><div class="lb">"palt"（使っていない）</div><div class="sp p">「科学」の進歩を、価値へ。</div></div>
+    <p class="note">2 ページ・可視 192 要素を走査して <code>font-feature-settings</code> が <code>normal</code> 以外の要素は <b>0 件</b>。<code>letter-spacing</code> も <code>normal</code> が可視 82/85・104/107 要素。<b>実測で見える <code>0.13008px</code> の 3 要素は OneTrust バナー由来（13.008px × .01em）で、サイトの設計ではない。</b>上段が実サイトの見え方。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Color Palette — 彩度色はクリムゾン 1 つだけ</h2>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#d91e49"></div><div><b>#d91e49</b><span>Crimson・面26/文字26要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#b4273b"></div><div><b>#b4273b</b><span>hover</span></div></div>
+      <div class="sw"><div class="c" style="background:#982334"></div><div><b>#982334</b><span>active</span></div></div>
+      <div class="sw"><div class="c" style="background:#515170"></div><div><b>#515170</b><span>本文・影の色・topnav 地</span></div></div>
+      <div class="sw"><div class="c" style="background:#4d4d4f"></div><div><b>#4d4d4f</b><span>補足・10/9要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#0e2753"></div><div><b>#0e2753</b><span>Navy・面3要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#0e4189"></div><div><b>#0e4189</b><span>線ボタン・1要素</span></div></div>
+      <div class="sw"><div class="c" style="background:#fef8f9"></div><div><b>#fef8f9</b><span>html の地色</span></div></div>
+      <div class="sw"><div class="c" style="background:#f4f4f4"></div><div><b>#f4f4f4</b><span>Surface</span></div></div>
+    </div>
+    <p class="note" style="margin-top:var(--space-s)"><b>宣言されているが 2 ページとも可視 0（実装しない）:</b></p>
+    <div class="swatches">
+      <div class="sw dead"><div class="c" style="background:#4454ff"></div><div><b>#4454ff</b><span>--color-primary-500（青）</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#38d996"></div><div><b>#38d996</b><span>--color-secondary-500（緑）</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#ffd41e"></div><div><b>#ffd41e</b><span>--color-tertiary-500（黄）</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#d46bcf"></div><div><b>#d46bcf</b><span>--color-additional-600</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#ecad36"></div><div><b>#ecad36</b><span>--secondary-button-resting</span></div></div>
+      <div class="sw dead"><div class="c" style="background:#611923"></div><div><b>#611923</b><span>--secondary-title-page-title</span></div></div>
+    </div>
+    <p class="note">原色ランプ 48 個は雛形のまま放置されていて、<code>--primary-element-mid</code> 等の意味的トークンはすべて <code>#D91E49</code> を直接指している。<b>ランプの青・緑・黄・マゼンタを実装に持ち込まない。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons — 線は 2px、角丸は --space-3xs、影は無し</h2>
+    <div class="btnrow">
+      <button class="btn solid">採用情報</button>
+      <button class="btn ghost">ニュース</button>
+      <button class="btn navy">お問い合わせ</button>
+      <button class="btn ghost is-focus">フォーカス時</button>
+    </div>
+    <p class="note">ウェイトは <b>400 と 600 の 2 段だけ</b>。700 は 2 ページとも OneTrust の <code>Apply</code> 1 要素のみで、サイト本体には存在しない。<b>見出し（h1/h2/h3）はすべて 400</b> で、太るのはボタンとリンクだけ。</p>
+    <div style="margin-top:var(--space-s);display:flex;gap:var(--space-m);flex-wrap:wrap;align-items:center">
+      <a href="#" class="more">もっと詳しく<span class="arrow" aria-hidden="true">arrow_right_alt</span></a>
+      <a href="#" class="more crimson">全てを見る<span class="arrow" aria-hidden="true">arrow_right_alt</span></a>
+    </div>
+    <p class="note">丸い矢印は <code>--space-l</code>（1440px で 44px）の正円。<b>アイコンサイズ <code>--space-m</code>・内側余白 <code>--space-3xs</code> も同じ余白スケールから取る。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Chips</h2>
+    <div class="chips">
+      <span class="chip is-selected">がん</span>
+      <span class="chip">泌尿器疾患</span>
+      <span class="chip">免疫</span>
+      <span class="chip">眼科</span>
+      <span class="chip">ウィメンズヘルス</span>
+    </div>
+  </section>
+</div>
+
+<div class="band"><div class="inner">
+  <div class="offset">
+    <h3>企業情報</h3>
+    <p>アステラスは、東京に本社を置き、世界 70 以上の国と地域で事業活動を展開している製薬企業です。</p>
+    <a href="#" class="more crimson">もっと詳しく<span class="arrow" aria-hidden="true">arrow_right_alt</span></a>
+  </div>
+</div></div>
+<div class="band-spacer"></div>
+
+<div class="wrap">
+  <p class="note" style="margin-top:0"><b>カードは帯の境界にまたがる。</b>クリムゾンの帯の上に白いカードを半分はみ出させる構成（<code>.cmp-card-offset</code>）が全ページで繰り返される。</p>
+
+  <section class="sec">
+    <h2 class="secttl">Cards — 影は本文色の 20%</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="ph">16:10</div>
+        <div class="bd">
+          <h3>数手先を見据え、世界で築いたキャリア</h3>
+          <a href="#" class="more">もっと詳しく<span class="arrow" aria-hidden="true">arrow_right_alt</span></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ph">16:10</div>
+        <div class="bd">
+          <h3>薬の「作り方」を変える研究者たちの挑戦</h3>
+          <a href="#" class="more">もっと詳しく<span class="arrow" aria-hidden="true">arrow_right_alt</span></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ph">16:10</div>
+        <div class="bd">
+          <h3>大切なものを見続けるための科学</h3>
+          <a href="#" class="more">もっと詳しく<span class="arrow" aria-hidden="true">arrow_right_alt</span></a>
+        </div>
+      </div>
+    </div>
+    <p class="note">影は <code>0 11px 44px rgba(81, 81, 112, .2)</code>。<b>黒ではなく本文色 <code>#515170</code> の 20%</b> で落とし、ぼかし半径 <code>44px</code> は <code>--space-l</code> と同値。<code>rgba(0,0,0,.2)</code> はモーダル専用。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Space Scale — 角丸・ギャップ・影のぼかしも同じ 1 本から</h2>
+    <table>
+      <tr><th>トークン</th><th>宣言</th><th>1440px</th><th>実測での用途</th></tr>
+      <tr><td><b>--space-3xs</b></td><td><code>clamp(0.25rem, calc(0.2rem + 0.2vw), 0.38rem)</code></td><td><b>6.08px</b></td><td><b>既定の角丸（可視40/44要素）</b></td></tr>
+      <tr><td><b>--space-2xs</b></td><td><code>clamp(0.56rem, calc(0.52rem + 0.2vw), 0.69rem)</code></td><td><b>11.04px</b></td><td>ボタン上下余白・ギャップ</td></tr>
+      <tr><td><b>--space-xs</b></td><td><code>clamp(0.81rem, calc(0.72rem + 0.4vw), 1.06rem)</code></td><td><b>16.96px</b></td><td>角丸（18要素）・ギャップ</td></tr>
+      <tr><td><b>--space-s</b></td><td><code>clamp(1.06rem, calc(0.95rem + 0.5vw), 1.38rem)</code></td><td><b>22.08px</b></td><td>ボタン左右余白・カード内側</td></tr>
+      <tr><td><b>--space-m</b></td><td><code>clamp(1.63rem, calc(1.47rem + 0.7vw), 2.06rem)</code></td><td><b>32.96px</b></td><td>チップの角丸・アイコン径</td></tr>
+      <tr><td><b>--space-l</b></td><td><code>clamp(2.13rem, calc(1.9rem + 1vw), 2.75rem)</code></td><td><b>44px</b></td><td><b>丸い矢印の直径・影のぼかし</b></td></tr>
+      <tr><td><b>--space-xl</b></td><td><code>clamp(3.19rem, calc(2.84rem + 1.5vw), 4.13rem)</code></td><td><b>66.08px</b></td><td>セクション間</td></tr>
+      <tr><td><b>--space-2xl</b></td><td><code>clamp(4.25rem, calc(3.79rem + 2vw), 5.5rem)</code></td><td><b>88px</b></td><td><code>calc(60% + 88px)</code> のカラム幅</td></tr>
+    </table>
+    <p class="note"><b>角丸専用のトークンは存在しない。</b>実測で出る角丸 6.08 / 11.04 / 16.96 / 22.08px は <code>--space-3xs</code> 〜 <code>--space-s</code> そのもの。コンテナは <code>--grid-max-width: 85.25rem</code>（= 1364px）で、1200px でも 1280px でもない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">word-break: auto-phrase — 改行位置を文節に寄せる</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-s)">
+      <div>
+        <p class="note" style="margin:0 0 var(--space-3xs)"><b>auto-phrase（実サイト・body に当てる）</b></p>
+        <p style="width:300px;font-size:var(--step-1);line-height:var(--lh-body);margin:0;word-break:auto-phrase;color:var(--ink)">科学の進歩を患者さんの「価値」に変えることを目指すグローバルライフサイエンス企業です。</p>
+      </div>
+      <div>
+        <p class="note" style="margin:0 0 var(--space-3xs)">normal（既定）</p>
+        <p style="width:300px;font-size:var(--step-1);line-height:var(--lh-body);margin:0;word-break:normal;color:var(--ink-sub)">科学の進歩を患者さんの「価値」に変えることを目指すグローバルライフサイエンス企業です。</p>
+      </div>
+    </div>
+    <p class="note">CSS 全文には <code>break-word</code> / <code>break-all</code> / <code>keep-all</code> も混在するが、<code>body</code> に効いているのは <code>auto-phrase !important</code>。<b>サイトの設計の一部なので外さない。</b></p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">行間は 1.2 と 1.6 の 2 つだけ</h2>
+    <table>
+      <tr><th>値</th><th>用途</th><th>実測</th></tr>
+      <tr><td><b>1.2</b></td><td>見出し・UI・リンク</td><td><b>可視 58 要素（トップ）／ 60 要素（下層）で最多</b></td></tr>
+      <tr><td><b>1.6</b></td><td>本文ブロック</td><td>12 要素／26 要素</td></tr>
+      <tr><td>1.5</td><td>OneTrust バナー</td><td>2 要素（外部）</td></tr>
+      <tr><td>1.0 / 0.95</td><td>アイコン（Material Symbols）</td><td>10 + 2 要素</td></tr>
+    </table>
+    <p class="note"><code>html { line-height: 1.15 }</code>（normalize.css 由来）が残っていて <code>body</code> の実効行送りは <b>18.4px</b>。<b>本文ブロックには必ず 1.6 を宣言する</b>（しないと 1.15 が降りて和文が詰まる）。無単位で書き、<code>em</code> や <code>px</code> に置き換えない。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">宣言だけで使われていない書体（実装しない）</h2>
+    <table>
+      <tr><th>書体</th><th>status</th><th>可視</th><th>備考</th></tr>
+      <tr><td><b>Noto Sans JP</b>（可変 100 900）</td><td><b>loaded 34 / unloaded 90</b></td><td><b>73 / 89 要素</b></td><td>Google の unicode-range 分割。これが唯一の本番書体</td></tr>
+      <tr><td>Material Symbols Rounded</td><td>loaded</td><td>12 / 18 要素</td><td>アイコン専用</td></tr>
+      <tr><td>Petrona</td><td>unloaded</td><td><b>0</b></td><td><code>--font-petrona</code>。<code>--font-title</code> は最終的に Noto Sans JP に上書きされる</td></tr>
+      <tr><td>Plus Sans Jakarta</td><td>unloaded</td><td><b>0</b></td><td><code>--font-jakarta</code></td></tr>
+      <tr><td>IBM Plex Sans / Noto Serif / Roboto / Roboto Slab / FontAwesome / slick / Material Icons</td><td>unloaded</td><td><b>0</b></td><td>AEM の残骸</td></tr>
+    </table>
+    <p class="note">実サイトは <code>font-family: "Noto Sans JP"</code> と<b>受け皿なしで書いている</b>。配信が落ちるとブラウザ既定のセリフ体に落ちるので、新規実装では <code>"Hiragino Kaku Gothic ProN", "游ゴシック Medium", "Yu Gothic Medium", Meiryo, sans-serif</code> を足す（このプレビューは直した版）。<b>見出し用のセリフ体は存在しない。</b></p>
+  </section>
+
+</div>
+</body>
+</html>
