@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: カネカ（KANEKA）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=PT+Serif:wght@400;700&family=Shippori+Mincho+B1:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === 設計幅 ===
+       実サイトの CSS Custom Properties は 3 個だけ。そのうち --designW が全寸法を決める。
+       --scrollbarW は JS がスクロールバーの実幅を測って書き込む（ここでは 0 固定）。実測 2026-10-19 */
+    --designW: 1280;
+    --scrollbarW: 0;
+
+    /* === Colors ===
+       ★ほとんど同じ青が 2 つ同居している。肉眼では区別できないが実装は別物。 */
+    --blue-a:   #005ca2;  /* ヒーローの斜め帯・グローバルナビの文字・丸アイコン。面14/文字8要素 */
+    --blue-b:   #005bac;  /* ヒーロー内のCTA・セクション見出し・フッターのボタン。文字21/面4要素 */
+    --blue-tint:#e8f4fc;  /* カード面。可視3要素 */
+    --ink:      #000000;  /* ★本文。可視64/31要素で最多。このサイトは純黒を使う */
+    --ink-muted:#707070;  /* グローバルナビの見出し・補助文 */
+    --ink-note: #7c7c7c;  /* 注意喚起バーの文言 */
+    --on-dark:  #ffffff;  /* 可視21要素 */
+    --inactive: #c3c3c3;  /* JP/EN 切替の非選択 */
+    --divider:  #cecece;  /* フッター上端の 1px */
+    --surface:  #f2f2f2;  /* 注意喚起バー */
+    --surface2: #f3f3f3;  /* RELATED LINKS */
+    --bg:       #ffffff;
+
+    /* ニュース種別のバッジ（border-radius: 100px のピル） */
+    --cat-info:    #4ea126;  /* お知らせ。可視8要素 */
+    --cat-release: #e87b21;  /* ニュースリリース。可視9要素 */
+    --cat-ir:      #811011;  /* IRニュース。可視7要素 */
+    /* --btnColor: #ae5136 は宣言されているが 2ページとも可視 0 要素。実装しない */
+
+    /* === Fonts ===
+       スタックは 2 語だけ。OS ローカル書体を並べない。
+       Libre Baskerville / Poppins / Noto Serif JP は @font-face が宣言されているが
+       フォント要求 0 件。実際に読まれるのは下の 3 ファミリー（計 4 ファイル）だけ。 */
+    --font:        "Noto Sans JP", sans-serif;
+    --font-en:     "PT Serif", serif;            /* 英字のセクション見出し。可視9/8要素 */
+    --font-mincho: "Shippori Mincho B1", serif;  /* ヒーローのコピー。可視2要素のみ */
+
+    --lh: 1.6;   /* body 既定。無単位。可視108/57要素 */
+  }
+
+  * { box-sizing: border-box; }
+
+  html { font-size: 62.5%; }   /* = 10px。7 幅すべてで固定 */
+
+  /* ★このサイトの核心。body をウィンドウ幅に比例させる。
+     設計幅 1280px のときちょうど 16px に着地し、1440px では 18px、768px では 9.6px。 */
+  body {
+    margin: 0;
+    font-size: calc(16 / (var(--designW) + var(--scrollbarW)) * 100vw);
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: var(--lh);            /* ★無単位。body が動いても比率が保たれる */
+    overflow-wrap: anywhere;
+    font-feature-settings: "palt";     /* ★ここで全体を詰める。実測847要素 */
+  }
+
+  /* ★767px で式が切れて固定に戻る。768px の 9.6px → 767px の 16px に 1.67 倍跳ぶ */
+  @media (max-width: 767px) {
+    body { font-size: 1.6rem; }        /* = 16px */
+  }
+
+  /* 以下、サイズと余白はすべて body に対する em。px も rem も使わない */
+  .wrap { max-width: 75em; margin: 0 auto; padding: 0 1.5em 5em; }
+
+  /* ===== ヘッダー ===== */
+  .hdr { background: var(--bg); }
+  .hdr .inner {
+    max-width: 82em; margin: 0 auto; padding: 1.2em 1.5em;
+    display: flex; align-items: center; gap: 2em; flex-wrap: wrap;
+  }
+  .logo { font-size: 1.8em; font-weight: 700; color: var(--blue-b); line-height: 1; letter-spacing: -0.03em; }
+  .nav { display: flex; gap: 1.6em; flex: 1; flex-wrap: wrap; }
+  .nav a { color: var(--blue-a); font-size: 0.96em; font-weight: 500; text-decoration: none; line-height: var(--lh); }
+  .nav a .en { display: block; color: var(--ink-muted); font-size: 0.75em; font-family: var(--font-en); }
+  .lang { display: flex; }
+  .lang span, .lang a {
+    font-size: 0.8125em; font-weight: 500; line-height: var(--lh);
+    padding: 0.27em 0.68em 0.54em; text-decoration: none;
+  }
+  .lang .on  { background: var(--inactive); color: var(--ink); border-radius: 0.375em 0 0 0.375em; }
+  .lang .off { background: var(--surface); color: var(--ink-muted); border-radius: 0 0.375em 0.375em 0; }
+
+  /* ===== 注意喚起バー ===== */
+  .notice {
+    max-width: 82em; margin: 0 auto; padding: 0 1.5em;
+  }
+  .notice span {
+    display: inline-block; background: var(--surface); color: var(--ink-note);
+    border-radius: 100px; padding: 0.4em 1.2em; font-size: 1em; line-height: var(--lh);
+  }
+
+  /* ===== ヒーロー ===== */
+  .hero { position: relative; overflow: hidden; background: #eef1f3; }
+  .hero .inner {
+    position: relative; max-width: 82em; margin: 0 auto;
+    display: grid; grid-template-columns: 1.3fr 1fr; min-height: 26em;
+  }
+  /* 斜めの青帯（.firstSlide_blue = --blue-a）。見出しはこの面の中に収める */
+  .hero .left {
+    background: var(--blue-a);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 7em) 100%, 0 100%);
+    padding: 3.4em 7.4em 4em 4em;
+    position: relative;
+  }
+  .hero h1 {
+    margin: 0 0 1em;
+    font-family: var(--font-mincho);
+    font-size: 3.6em;             /* 設計 57.6px / 1440px 実測 64.8px */
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.03em;      /* ★ヒーローだけ -0.03em */
+    color: var(--on-dark);
+  }
+  /* ★実サイトではこの右側のカタカナは firstslide_copy.png という画像。
+     preview では字間を再現したテキストで代用している。テキストで組まないこと。 */
+  .hero .right { align-self: center; padding: 3.4em 1.5em 4em 0; }
+  .hero .tagline { font-size: 1.6em; line-height: 1.9; letter-spacing: 0.34em; color: var(--blue-a); font-weight: 500; }
+  .hero .tagline b { color: var(--blue-a); font-weight: 700; }
+  .hero .cta {
+    display: inline-block; background: var(--blue-b); color: var(--on-dark);
+    border: 1px solid var(--blue-b); border-radius: 0.375em;
+    padding: 0.5em 2.25em 0.5em 0.9em; font-size: 1em; font-weight: 700;
+    text-decoration: none; line-height: var(--lh);
+  }
+  /* 縦組みの Scroll Down ラベル（実測は 3 要素だけ） */
+  .hero .scroll {
+    position: absolute; left: 1.1em; bottom: 1.4em;
+    writing-mode: vertical-rl;
+    font-family: var(--font-en); font-weight: 700; font-size: 0.9375em;
+    color: var(--on-dark); letter-spacing: 0.08em;
+    font-feature-settings: "vpal";   /* ★実サイトは "palt" のまま＝縦組みには効かない */
+  }
+
+  /* ===== セクション ===== */
+  .sec { padding: 3.6em 0 0; }
+  .secttl { margin: 0 0 1.2em; }
+  .secttl .en {
+    display: block; font-family: var(--font-en); font-weight: 700;
+    font-size: 2.375em; line-height: var(--lh); color: var(--blue-b);
+  }
+  .secttl .ja { display: block; font-size: 1em; font-weight: 700; color: var(--blue-b); line-height: var(--lh); }
+  .secttl.mid .en { font-size: 1.75em; }
+  .lead { margin: 0 0 1.4em; font-size: 1em; line-height: var(--lh); letter-spacing: -0.08em; color: var(--ink); }
+  .note { margin: 1em 0 0; font-size: 0.875em; line-height: var(--lh); color: var(--ink); }
+  .note code { background: var(--surface); padding: 0.06em 0.3em; border-radius: 0.2em; font-size: .94em; }
+  h3.sub { margin: 0 0 0.6em; font-size: 1.125em; font-weight: 700; line-height: var(--lh); letter-spacing: -0.08em; color: var(--ink); }
+  h3.sub.blue { font-size: 1em; font-weight: 600; letter-spacing: -0.07em; color: var(--blue-b); }
+
+  /* ===== ニュース ===== */
+  .news { list-style: none; margin: 0; padding: 0; }
+  .news li { display: flex; gap: 1em; align-items: baseline; flex-wrap: wrap; padding: 0.9em 0; border-bottom: 1px solid var(--divider); }
+  .news .date { color: var(--ink); font-size: 0.8em; line-height: var(--lh); flex: none; }
+  .news .badge {
+    flex: none; border-radius: 100px; padding: 0 0.432em;
+    font-size: 0.72em; font-weight: 400; color: var(--on-dark); line-height: var(--lh);
+  }
+  .news .badge.info    { background: var(--cat-info); }
+  .news .badge.release { background: var(--cat-release); }
+  .news .badge.ir      { background: var(--cat-ir); }
+  .news a { color: var(--ink); font-size: 1em; line-height: var(--lh); text-decoration: none; }
+  .news a:hover { color: var(--blue-b); }
+
+  /* ===== Buttons ===== */
+  .btnrow { display: flex; gap: 1em; flex-wrap: wrap; align-items: center; margin-top: 1.4em; }
+  .btn {
+    font-family: inherit; cursor: pointer; text-decoration: none; display: inline-block;
+    font-size: 1em; font-weight: 700; line-height: var(--lh);
+    border-radius: 0.375em; padding: 0.5em 2.25em 0.5em 0.9em;
+  }
+  .btn.pa { background: var(--blue-b); color: var(--on-dark); border: 1px solid var(--blue-b); }
+  .btn.pb { background: var(--blue-a); color: var(--on-dark); border: 1px solid var(--blue-a); }
+  .btn.invert { background: var(--bg); color: var(--blue-b); border: 1px solid var(--bg); }
+  .btn.is-focus { outline: 2px solid var(--blue-b); outline-offset: 2px; }
+  .btn.circle {
+    border-radius: 50%; width: 2.2em; height: 2.2em; padding: 0;
+    display: inline-grid; place-items: center; background: var(--blue-a); color: var(--on-dark);
+    font-size: 0.8em;
+  }
+
+  /* ===== 部分角丸のカード（このサイトの要）===== */
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 1.4em; }
+  .pair .c {
+    background: var(--blue-tint); padding: 1.4em 1.2em; color: var(--ink);
+  }
+  .pair .c:first-child { border-radius: 0.625em 0 0 0.625em; }
+  .pair .c:last-child  { border-radius: 0 0.625em 0.625em 0; }
+  .pair .c .en { font-family: var(--font-en); font-weight: 700; font-size: 1.75em; line-height: 1.3; color: var(--blue-b); display: block; }
+  .pair .c .ja { font-size: 0.875em; line-height: var(--lh); }
+
+  .foot-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 1.4em; }
+  .foot-btns a {
+    background: var(--blue-b); color: var(--on-dark); text-decoration: none;
+    padding: 1em 1.2em; line-height: var(--lh);
+  }
+  .foot-btns a:first-child { border-radius: 0 0 0 0.625em; }
+  .foot-btns a:last-child  { border-radius: 0 0 0.625em 0; }
+  .foot-btns .en { font-family: var(--font-en); font-weight: 700; font-size: 1.52em; display: block; line-height: 1.3; }
+  .foot-btns .ja { font-size: 0.88em; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2em; margin-top: 1.2em; }
+  .card { background: var(--bg); border-radius: 0.625em; border: 1px solid var(--divider); padding: 1.2em; }
+  .card h4 { margin: 0 0 0.5em; font-size: 1.25em; font-weight: 700; line-height: var(--lh); letter-spacing: 0.02em; color: var(--ink); }
+  .card p  { margin: 0; font-size: 1em; line-height: var(--lh); letter-spacing: -0.08em; color: var(--ink); }
+
+  /* ===== 表 ===== */
+  table.spec { width: 100%; border-collapse: collapse; font-size: 0.875em; line-height: var(--lh); }
+  table.spec th, table.spec td { text-align: left; padding: 0.75em 0.6em; border-bottom: 1px solid var(--divider); vertical-align: top; }
+  table.spec th { width: 13em; font-weight: 700; color: var(--ink-muted); }
+  table.spec code { background: var(--surface); padding: 0.06em 0.3em; border-radius: 0.2em; }
+  table.spec td.num { font-variant-numeric: tabular-nums; }
+
+  /* ===== スケール見本 ===== */
+  .scale { display: grid; gap: 0.9em; }
+  .scale .row { display: flex; align-items: baseline; gap: 1.2em; border-bottom: 1px solid var(--divider); padding-bottom: 0.7em; }
+  .scale .meta { width: 16em; flex: none; color: var(--ink-muted); font-size: 0.8em; line-height: 1.5; }
+
+  /* ===== Inputs ===== */
+  .field { display: grid; gap: 0.5em; max-width: 26em; margin-top: 1.2em; }
+  .field label { font-size: 0.875em; font-weight: 700; line-height: var(--lh); }
+  .field input {
+    font-family: inherit; font-size: 1em; color: var(--ink); line-height: var(--lh);
+    padding: 0.6em 0.8em; border: 1px solid var(--divider); border-radius: 0.375em; background: var(--bg);
+  }
+  .field input.is-focus { outline: 2px solid var(--blue-b); outline-offset: 1px; border-color: var(--blue-b); }
+
+  /* ===== フッター ===== */
+  .ftr { margin-top: 4em; border-top: 1px solid var(--divider); background: var(--surface2); }
+  .ftr .inner { max-width: 82em; margin: 0 auto; padding: 2em 1.5em; }
+  .ftr p { margin: 0; font-size: 0.875em; line-height: var(--lh); color: var(--ink); }
+
+  @media (max-width: 767px) {
+    .pair, .foot-btns, .cards { grid-template-columns: 1fr; }
+    .pair .c:first-child { border-radius: 0.625em 0.625em 0 0; }
+    .pair .c:last-child  { border-radius: 0 0 0.625em 0.625em; }
+    .foot-btns a:first-child { border-radius: 0.625em 0.625em 0 0; }
+    .foot-btns a:last-child  { border-radius: 0 0 0.625em 0.625em; }
+    .hero .inner { grid-template-columns: 1fr; min-height: 0; }
+    .hero .left { clip-path: none; padding: 2.4em 1.5em 3.2em 4em; }
+    .hero .right { padding: 2em 1.5em 2.6em; }
+    .scale .row { flex-wrap: wrap; }
+    .scale .meta { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="inner">
+    <div class="logo">KANEKA</div>
+    <nav class="nav">
+      <a href="#">事業・製品<span class="en">Business</span></a>
+      <a href="#">R2B<span class="en">Research to Business</span></a>
+      <a href="#">企業情報<span class="en">Company</span></a>
+      <a href="#">IR情報<span class="en">IR Information</span></a>
+      <a href="#">ESG活動<span class="en">ESG Activity</span></a>
+      <a href="#">採用情報<span class="en">Recruit</span></a>
+    </nav>
+    <div class="lang"><span class="on">JP</span><a class="off" href="#">EN</a></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="inner">
+    <div class="left">
+      <h1>カネカは<br>世界を健康にする</h1>
+      <a class="cta" href="#">企業情報</a>
+      <div class="scroll">Scroll Down</div>
+    </div>
+    <div class="right">
+      <p class="tagline"><b>カ</b>ガクで<br><b>ネ</b>ガイを<br><b>カ</b>ナエル会社</p>
+    </div>
+  </div>
+</section>
+
+<div class="notice" style="margin-top:1.2em;">
+  <span>当社及び当社役員を装ったフィッシング詐欺にご注意ください。</span>
+</div>
+
+<div class="wrap">
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">SCALING</span><span class="ja">設計幅 1280px の丸ごと拡縮</span></h2>
+    <p class="lead">デスクトップではページ全体がウィンドウ幅に比例して伸び縮みする。</p>
+    <table class="spec">
+      <tr><th><code>html</code></th><td><code>font-size: 62.5%</code> = <strong>10px</strong>。7 幅すべてで固定なので、<strong>ルートだけ測ると「完全固定のサイト」に見える</strong></td></tr>
+      <tr><th><code>body</code></th><td><code>calc(16 / (var(--designW) + var(--scrollbarW)) * 100vw)</code>、<code>--designW: 1280</code>。<strong>設計幅 1280px でちょうど 16px</strong></td></tr>
+      <tr><th class="num">1440px</th><td class="num">body <strong>18px</strong>（設計より 12.5% 大きい）</td></tr>
+      <tr><th class="num">1280px</th><td class="num">body <strong>16px</strong> ← 設計どおり</td></tr>
+      <tr><th class="num">1024px</th><td class="num">body 12.8px</td></tr>
+      <tr><th class="num">834px</th><td class="num">body 10.425px</td></tr>
+      <tr><th class="num">768px</th><td class="num">body <strong>9.6px</strong>（最小）</td></tr>
+      <tr><th class="num">767px</th><td class="num">body <strong>16px</strong> ← <strong>1.67 倍に跳ぶ。崖はここ 1 箇所だけ</strong></td></tr>
+      <tr><th class="num">375px</th><td class="num">body 16px（<code>1.6rem</code> 固定）</td></tr>
+      <tr><th>サイズと余白</th><td>すべて <code>body</code> に対する <code>em</code>。<strong><code>px</code> を直書きするとそこだけ拡縮から取り残される。<code>rem</code> も <code>html</code> が 10px 固定なので追従しない</strong></td></tr>
+      <tr><th>CSS 変数</th><td><strong>3 個だけ</strong>（<code>--designW</code> / <code>--scrollbarW</code> / <code>--btnColor</code>）。変数が少ない＝設計が雑、ではない</td></tr>
+    </table>
+    <p class="note">このページのサイズはすべて <code>em</code> で書いてあるので、<strong>ウィンドウ幅を変えると全体が一緒に伸び縮みする</strong>。767px を跨ぐと固定に戻る。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl mid"><span class="en">TYPOGRAPHY</span><span class="ja">タイポグラフィ階層</span></h2>
+    <div class="scale">
+      <div class="row"><div class="meta">3.6em / 設計 57.6px · 600 · lh 1.4 · −0.03em<br>Shippori Mincho B1（可視 2 要素）</div><div style="font-family:var(--font-mincho);font-size:2.4em;font-weight:600;line-height:1.4;letter-spacing:-0.03em;color:var(--blue-a);">世界を健康にする</div></div>
+      <div class="row"><div class="meta">2.375em / 設計 38px · 700<br>PT Serif</div><div style="font-family:var(--font-en);font-size:2.375em;font-weight:700;line-height:var(--lh);color:var(--blue-b);">ABOUT KANEKA</div></div>
+      <div class="row"><div class="meta">1.75em / 設計 28px · 700<br>PT Serif</div><div style="font-family:var(--font-en);font-size:1.75em;font-weight:700;line-height:var(--lh);color:var(--blue-b);">NEWS</div></div>
+      <div class="row"><div class="meta">1.5625em / 設計 25px · 700 · lh 1.44<br>+0.02em</div><div style="font-size:1.5625em;font-weight:700;line-height:1.44;letter-spacing:0.02em;">ごあいさつ</div></div>
+      <div class="row"><div class="meta">1.125em / 設計 18px · 700 · <strong>−0.08em</strong></div><div style="font-size:1.125em;font-weight:700;line-height:var(--lh);letter-spacing:-0.08em;">わたしのチカラ® Q10ヨーグルト</div></div>
+      <div class="row"><div class="meta">1em / 設計 16px · 600 · <strong>−0.07em</strong></div><div style="font-size:1em;font-weight:600;line-height:var(--lh);letter-spacing:-0.07em;color:var(--blue-b);">株主・投資家情報</div></div>
+      <div class="row"><div class="meta"><strong>1em / 設計 16px · 400 · lh 1.6</strong><br>本文。字間は normal（93 要素）</div><div style="font-size:1em;line-height:var(--lh);">カネカはカガクでネガイをカナエル会社として、地球環境と人々の健康に貢献する素材を生み出しています。</div></div>
+      <div class="row"><div class="meta">1em / 400 · <strong>−0.08em</strong><br>リード文（9 要素）</div><div style="font-size:1em;line-height:var(--lh);letter-spacing:-0.08em;">海洋マイクロプラスチック問題の解決をはじめ、地球規模の課題に取り組んでいます。</div></div>
+      <div class="row"><div class="meta">0.8em / 設計 12.8px · 400</div><div style="font-size:0.8em;line-height:var(--lh);">2026年10月7日</div></div>
+      <div class="row"><div class="meta">0.72em / 設計 11.52px · 400<br>バッジ</div><div><span style="display:inline-block;background:var(--cat-info);color:#fff;border-radius:100px;padding:0 0.432em;font-size:0.72em;line-height:var(--lh);">お知らせ</span></div></div>
+    </div>
+    <p class="note">ウェイトは <code>400 / 500 / 600 / 700</code> の 4 段。Noto Sans JP は可変（<code>100 900</code>）なので全部実在する。PT Serif は 400 / 700 の 2 本で、<strong>英字見出しは全部 700</strong>。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl mid"><span class="en">SPACING</span><span class="ja">字詰めは二段構え</span></h2>
+    <p class="lead"><code>palt</code> で全体を詰めた上から、見出しにだけ負の <code>em</code> を重ねる。</p>
+    <table class="spec">
+      <tr><th><code>palt</code></th><td><code>body</code>（＋ <code>.ly_header</code> / <code>.ly_footer</code> に冗長な再宣言）。実測 <strong>847 要素</strong>（トップ）/ 325 要素（下層）</td></tr>
+      <tr><th>既定の字間</th><td><code>normal</code>。可視 <strong>93 要素</strong>（トップ）/ 54 要素（下層）。<strong>本文は詰めも空けもしない</strong></td></tr>
+      <tr><th>見出し・リード</th><td><strong><code>-0.08em</code></strong>（リード 9 要素・h3 6 要素）/ <strong><code>-0.07em</code></strong>（青い小見出し 3 要素）/ <strong><code>-0.03em</code></strong>（ヒーロー 2 要素）</td></tr>
+      <tr><th>下層ページ</th><td><strong>逆に空ける</strong>。<code>+0.02em</code>〜<code>+0.0625em</code> が 7 要素。<strong>1 ページだけ見て「詰めるサイト」と決めない</strong></td></tr>
+      <tr><th>行間</th><td><code>line-height: 1.6</code> を <code>body</code> に<strong>無単位</strong>で。可視 108 / 57 要素。<code>em</code> や <code>px</code> で書くと <code>body</code> が動いたときに比率が崩れる</td></tr>
+      <tr><th>折り返し</th><td><code>overflow-wrap: anywhere</code> を <code>body</code> に 1 行。<code>break-all</code> と違い<strong>必要なときだけ</strong>単語の途中で折る</td></tr>
+      <tr><th>縦組み</th><td>ヒーロー左端の <code>Scroll Down</code>（27×122px）のみ・実測 3 要素。<strong>実サイトはここに横組み用の <code>palt</code> を当ててしまっていて効いていない</strong>。正しくは <code>vpal</code></td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl mid"><span class="en">COLOR</span><span class="ja">青が 2 つ同居している</span></h2>
+    <div class="btnrow">
+      <a class="btn pb" href="#">#005CA2（帯・ナビ）</a>
+      <a class="btn pa" href="#">#005BAC（CTA・見出し）</a>
+      <a class="btn pa is-focus" href="#">フォーカス時</a>
+      <span class="btn circle">▶</span>
+    </div>
+    <p class="note"><code>#005CA2</code> = <code>rgb(0,92,162)</code>、<code>#005BAC</code> = <code>rgb(0,91,172)</code>。<strong>肉眼ではまず区別できず、ヒーローでは青い帯（A）の上に青いボタン（B）が載っている</strong>。新規実装では <code>#005BAC</code> に寄せてよいが、既存ページと並べるときは 2 色あることを前提にする。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl mid"><span class="en">NEWS</span><span class="ja">ニュース</span></h2>
+    <ul class="news">
+      <li><span class="date">2026年10月7日</span><span class="badge info">お知らせ</span><a href="#">展示会のお知らせ</a></li>
+      <li><span class="date">2026年10月1日</span><span class="badge release">ニュースリリース</span><a href="#">カネカ生分解性バイオポリマー Green Planet™ の生産能力を増強</a></li>
+      <li><span class="date">2026年9月26日</span><span class="badge ir">IRニュース</span><a href="#">2027年3月期 第2四半期決算説明会のご案内</a></li>
+    </ul>
+    <div class="btnrow"><a class="btn pb" href="#">ニュース一覧</a></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl mid"><span class="en">COMPONENTS</span><span class="ja">部分角丸で組む</span></h2>
+    <div class="pair">
+      <div class="c"><span class="en">IR INFORMATION</span><span class="ja">株式・株主情報、IRカレンダーなど、投資に関する情報を掲載しています。</span></div>
+      <div class="c"><span class="en">ESG ACTIVITY</span><span class="ja">カネカグループのESG活動について紹介します。</span></div>
+    </div>
+    <div class="foot-btns">
+      <a href="#"><span class="en">EXHIBITION</span><span class="ja">展示会情報</span></a>
+      <a href="#"><span class="en">ONLINE SHOP</span><span class="ja">オンラインショップ</span></a>
+    </div>
+    <div class="cards">
+      <div class="card"><h4>Material Solutions</h4><p>素材の力で、産業の課題を解く。</p></div>
+      <div class="card"><h4>Health Care Solutions</h4><p>医療機器と医薬で、治療の選択肢を広げる。</p></div>
+      <div class="card"><h4>Nutrition Solutions</h4><p>食と栄養から、健康寿命に向き合う。</p></div>
+    </div>
+    <p class="note">角丸は <strong>カードを左右・上下で割って外側だけ丸める</strong>のが特徴。<code>10px 0 0 10px</code> / <code>0 0 10px 10px</code> / <code>6px 0 0 6px</code> の 4 種に加え、円 <code>50%</code>（19 要素）・ピル <code>100px</code>（7 要素）・ボタン <code>6px</code>。<strong><code>box-shadow</code> は両ページとも実測 0 種</strong>で、階層は面の色だけで作る。</p>
+    <div class="field">
+      <label for="q">製品を探す</label>
+      <input id="q" class="is-focus" type="text" value="生分解性ポリマー">
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl mid"><span class="en">CAUTION</span><span class="ja">再現するときの注意</span></h2>
+    <table class="spec">
+      <tr><th>ヒーロー右</th><td>「カガクでネガイをカナエル会社」は <code>firstslide_copy.png</code>（281×185）の<strong>画像</strong>。<code>letter-spacing</code> で再現しない</td></tr>
+      <tr><th>未使用の書体</th><td>Libre Baskerville / Poppins / Noto Serif JP は <code>@font-face</code> が宣言されているが<strong>フォント要求 0 件</strong>。実際に読まれるのは 3 ファミリー・計 4 ファイルだけ</td></tr>
+      <tr><th>Shippori Mincho B1</th><td>ヒーローの 1 行（可視 2 要素）のみ。<strong>見出し全般に広げない</strong></td></tr>
+      <tr><th><code>--btnColor</code></th><td><code>#ae5136</code> が宣言されているが <strong>2 ページとも可視 0 要素</strong></td></tr>
+      <tr><th>タブレット帯</th><td>834px〜768px で本文が <strong>10.4px〜9.6px</strong> まで縮む。この帯が主要ターゲットなら <code>--designW</code> を見直すか中間の BP を足す</td></tr>
+      <tr><th><code>--scrollbarW</code></th><td>JS がスクロールバーの実幅を測って分母に足す。<strong>スクロールバーの有無でレイアウトが跳ねるのを防ぐため</strong></td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer class="ftr">
+  <div class="inner">
+    <p>COPYRIGHT © KANEKA CORPORATION ALL RIGHTS RESERVED. — これは DESIGN.md の内容を確認するためのプレビューです。</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: IHI（株式会社IHI）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は 2 個だけ（--pc-height / --sp-height）。
+       設計トークンは存在しないので、ここでは実測値から名前を起こしている。実測 2026-10-19
+       ※ Cookiebot（CMP）由来の #141414 / #1032CF / #2A4EEF / #F4F4F4 / #D6D6D6 は
+         uniqueBackgrounds の 1〜2 位に出るがサイトの色ではない。採用していない。 */
+    --blue:        #1e52a6;  /* ★IHI ブルー。文字27要素/面30要素。リンクもCTAも全部これ */
+    --blue-pale:   #b3c5e3;  /* 見出し下罫線の薄いほう */
+    --blue-tint:   #d7e4f7;  /* 淡い面。可視5要素 */
+    --ink:         #333333;  /* ★本文。可視129/123要素で最多。純黒は使わない */
+    --ink-muted:   #707070;  /* 日付・カテゴリ。可視12要素 */
+    --on-dark:     #ffffff;  /* 可視40要素 */
+    --divider:     #dddddd;  /* ★罫線。border ではなく inset shadow で引く */
+    --surface:     #f5f5f5;  /* カード面。可視7要素 */
+    --surface-bl:  #f2f4f8;  /* 地域切替パネル */
+    --badge-gray:  #9f9f9f;  /* English バッジ */
+    --badge-mid:   #767676;  /* その他バッジ */
+    --badge-cyan:  #399fc4;
+    --bg:          #ffffff;  /* pageBackground.resolved / 根拠 body */
+
+    /* === Fonts ===
+       Noto Sans JP の 1 書体。Noto Serif JP はトップの 2 要素だけ。
+       Lato は Google Fonts の URL に入っているがフォント要求 0 件＝使われていない。
+       游ゴシックは Medium を Regular より前に置く「スタック順」方式（4つ目の流儀）。
+       先頭が Web フォントなので通常そこまで到達しない。 */
+    --font: "Noto Sans JP",
+            "Yu Gothic Medium", "游ゴシック Medium",
+            YuGothic, 游ゴシック体,
+            "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+            メイリオ, Meiryo, sans-serif;
+    --font-mincho: "Noto Serif JP", "ヒラギノ明朝 ProN", "Yu Mincho", serif;
+
+    /* === 行間（無単位の比率）=== */
+    --lh-body:   1.8;   /* body 既定。可視54要素 */
+    --lh-card:   1.3;   /* カードタイトル・ナビ。可視46要素 */
+    --lh-label:  1.1;   /* 小さいラベル。可視61要素で最多 */
+
+    /* === 影 ＝ 罫線 === */
+    --rule:   rgb(221, 221, 221) 0 -1px 0 0 inset;      /* ★可視43要素 */
+    --lift:   rgba(0, 0, 0, 0.16) 0 0 8px 0;            /* カード。可視6要素 */
+
+    --container: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ★このサイトの核心。html を 10px にして body には font-size を書かない。
+     サイズは全部 % で書く（170% = 17px）。CSS 全文で font-size:<n>% が 155 箇所。 */
+  html { font-size: 0.625em; }
+
+  body {
+    margin: 0;
+    /* font-size は宣言しない → html の 10px がそのまま body の 10px になる */
+    letter-spacing: 0.04em;   /* ★10px × 0.04 = 0.4px という絶対値が全子孫へ降りる */
+    line-height: var(--lh-body);  /* ★無単位。各要素が自分のサイズで再計算する */
+    color: var(--ink);
+    background-color: var(--bg);
+    font-family: var(--font);
+    /* font-feature-settings は書かない。実測 0 件 */
+  }
+
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ===== ヘッダー ===== */
+  .hdr { border-bottom: 1px solid var(--divider); background: var(--bg); }
+  .hdr .inner {
+    max-width: var(--container); margin: 0 auto; padding: 18px 24px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .logo { font-size: 320%; font-weight: 700; color: var(--blue); line-height: 1; letter-spacing: 0.02em; }
+  .nav { display: flex; gap: 22px; flex: 1; flex-wrap: wrap; }
+  .nav a { color: var(--ink); font-size: 170%; font-weight: 500; line-height: var(--lh-card); text-decoration: none; }
+  .nav a:hover { color: var(--blue); }
+  .hdr .util { display: flex; gap: 10px; align-items: center; }
+  .hdr .util a { color: var(--ink); font-size: 130%; text-decoration: none; line-height: 1; }
+
+  /* ===== ヒーロー（動画の代わりにグラデーションの面）===== */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(140deg, #16305e 0%, #24508f 45%, #5d7ba8 100%);
+    padding: 96px 24px 110px; text-align: center;
+  }
+  .hero h1 {
+    margin: 0 0 18px;
+    font-size: 610%;            /* 61px */
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--on-dark);
+    /* letter-spacing は body からの 0.4px がそのまま降りる。61px に対して 0.0066em */
+  }
+  /* ★実サイトではこの欧文サブコピーは SVG 画像（index_main-visual-text_2026_img.svg）。
+     preview では字間を再現したテキストで代用している。 */
+  .hero .sub {
+    margin: 0; font-size: 280%; font-weight: 300; line-height: 1.0;
+    color: var(--on-dark); letter-spacing: 0.18em;
+  }
+  .hero .scroll { margin-top: 44px; color: var(--on-dark); font-size: 120%; line-height: 1.1; opacity: .85; }
+
+  /* ===== 重要なお知らせ帯 ===== */
+  .alert { background: var(--surface); padding: 14px 24px; }
+  .alert .inner { max-width: var(--container); margin: 0 auto; display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+  .alert .tag { color: #c01; font-size: 160%; font-weight: 700; line-height: 1.5; }
+  .alert .date { color: var(--ink-muted); font-size: 150%; line-height: 1.5; }
+  .alert .txt { color: var(--ink); font-size: 150%; line-height: 1.5; }
+
+  /* ===== セクション ===== */
+  .sec { padding: 72px 0 0; }
+  /* ★見出し下の罫線は 2 色のハードストップ・グラデーション。
+     左 50px だけ濃い青、そこから先は淡い青。border-bottom を 2 本並べない。 */
+  .secttl {
+    margin: 0 0 28px; padding-bottom: 14px;
+    font-size: 360%;           /* 36px */
+    font-weight: 500; line-height: var(--lh-body); color: var(--blue);
+    background: linear-gradient(90deg, #1e52a6 50px, #b3c5e3 50px) 0 100% / 100% 3px no-repeat;
+  }
+  .secttl.lg { font-size: 460%; font-weight: 700; }   /* 46px */
+  .lead { margin: 0 0 24px; font-size: 380%; font-weight: 500; line-height: 1.2; color: var(--ink); }
+  .note { font-size: 140%; line-height: var(--lh-body); color: var(--ink); margin: 16px 0 0; }
+  .note code { background: var(--surface); padding: 1px 5px; border-radius: 2px; font-size: .94em; }
+
+  /* ===== リンクリスト（inset shadow で区切る）===== */
+  .linklist { list-style: none; margin: 0; padding: 0; }
+  .linklist li { box-shadow: var(--rule); }      /* ★border-bottom ではない */
+  .linklist a {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 4px; color: var(--ink); text-decoration: none;
+    font-size: 170%; line-height: var(--lh-body);
+  }
+  .linklist a:hover { color: var(--blue); }
+  .linklist .dot {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--blue);
+    flex: none; display: grid; place-items: center; color: var(--on-dark);
+    font-size: .62em; line-height: 1;
+  }
+
+  /* ===== Buttons ===== */
+  .btnrow { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn { font-family: inherit; cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn.primary {
+    background: var(--blue); color: var(--on-dark);
+    font-size: 140%; font-weight: 500;
+    border: 0; border-radius: 4px; padding: 16px 18px;
+    line-height: var(--lh-card);
+  }
+  .btn.secondary {
+    background: var(--bg); color: var(--blue);
+    font-size: 170%; font-weight: 500;
+    letter-spacing: 0.68px;        /* ★ここだけ 0.04em を再宣言している（17px × 0.04）*/
+    border: 1px solid var(--blue); border-radius: 4px; padding: 17px 30px;
+    line-height: var(--lh-card);
+  }
+  .btn.is-focus { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .badge {
+    display: inline-block; background: var(--blue); color: var(--on-dark);
+    font-size: 140%; border-radius: 3px; padding: 5px 7px 4px; line-height: 1.1;
+  }
+  .badge.gray { background: var(--badge-gray); }
+  .badge.mid  { background: var(--badge-mid); }
+  .badge.cyan { background: var(--badge-cyan); }
+
+  /* ===== Cards ===== */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    background: var(--bg); border: 1px solid var(--divider); border-radius: 4px;
+    padding: 20px 42px 20px 18px; box-shadow: var(--lift);
+  }
+  .card .cat { color: var(--ink-muted); font-size: 130%; line-height: 1.1; }
+  .card h3 { margin: 8px 0 10px; font-size: 200%; font-weight: 500; line-height: var(--lh-card); color: var(--ink); }
+  .card p  { margin: 0; font-size: 140%; line-height: var(--lh-body); color: var(--ink); }
+
+  .panel { background: var(--surface); border-radius: 4px; padding: 26px 24px; }
+  .panel.blue { background: var(--blue-tint); }
+  .panel.bl   { background: var(--surface-bl); border-radius: 6px; }
+  .panel h3 { margin: 0 0 10px; font-size: 280%; font-weight: 700; line-height: 1.1; color: var(--ink); }
+  .panel p  { margin: 0; font-size: 170%; line-height: var(--lh-body); color: var(--ink); }
+
+  /* ===== 仕様の表 ===== */
+  table.spec { width: 100%; border-collapse: collapse; font-size: 150%; line-height: var(--lh-body); }
+  table.spec th, table.spec td { text-align: left; padding: 12px 10px; box-shadow: var(--rule); vertical-align: top; }
+  table.spec th { width: 190px; font-weight: 500; color: var(--ink-muted); }
+  table.spec code { background: var(--surface); padding: 1px 5px; border-radius: 2px; }
+
+  /* ===== Inputs ===== */
+  .field { display: grid; gap: 8px; max-width: 420px; }
+  .field label { font-size: 150%; font-weight: 500; line-height: var(--lh-body); color: var(--ink); }
+  .field input {
+    font-family: inherit; font-size: 170%; color: var(--ink);
+    padding: 12px 14px; border: 1px solid var(--divider); border-radius: 4px; background: var(--bg);
+    line-height: var(--lh-card);
+  }
+  .field input.is-focus { outline: 2px solid var(--blue); outline-offset: 1px; border-color: var(--blue); }
+
+  /* ===== スケール見本 ===== */
+  .scale { display: grid; gap: 14px; }
+  .scale .row { display: flex; align-items: baseline; gap: 18px; box-shadow: var(--rule); padding-bottom: 12px; }
+  .scale .meta { width: 230px; flex: none; color: var(--ink-muted); font-size: 130%; line-height: 1.5; }
+  .scale .mincho { font-family: var(--font-mincho); font-weight: 300; }
+
+  /* ===== フッター ===== */
+  .ftr { margin-top: 80px; border-top: 1px solid var(--divider); background: var(--surface); }
+  .ftr .inner { max-width: var(--container); margin: 0 auto; padding: 32px 24px; }
+  .ftr p { margin: 0; font-size: 110%; line-height: var(--lh-body); color: var(--ink); }
+
+  @media (max-width: 767px) {
+    /* ★ブレークポイントは 768 / 767 の 1 箇所。本文サイズは変えない */
+    .hero h1 { font-size: 380%; }
+    .secttl, .secttl.lg { font-size: 240%; }
+    .cards { grid-template-columns: 1fr; }
+    .scale .meta { width: 100%; }
+    .scale .row { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="inner">
+    <div class="logo">IHI</div>
+    <nav class="nav">
+      <a href="#">企業情報</a>
+      <a href="#">製品情報</a>
+      <a href="#">技術情報</a>
+      <a href="#">株主・投資家情報</a>
+      <a href="#">サステナビリティ</a>
+      <a href="#">ニュース</a>
+    </nav>
+    <div class="util">
+      <a href="#">採用情報</a>
+      <a href="#">Global</a>
+      <span class="badge gray">English</span>
+    </div>
+  </div>
+</header>
+
+<div class="alert">
+  <div class="inner">
+    <span class="tag">重要なお知らせ</span>
+    <span class="date">2026年10月19日</span>
+    <span class="txt">当社名や当社役員名をかたる投資勧誘行為にご注意ください</span>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>世界中の人々の安心・安全、<br>豊かな暮らしを根幹から支える</h1>
+  <p class="sub">For Industry &amp; National Security</p>
+  <p class="scroll">scroll</p>
+</section>
+
+<div class="wrap">
+
+  <section class="sec">
+    <h2 class="secttl lg">ルートの置き方</h2>
+    <p class="lead">html を 10px にして、サイズは % で書く。</p>
+    <table class="spec">
+      <tr><th><code>html</code></th><td><code>font-size: 0.625em</code> = <strong>10px</strong>。1440 / 1200 / 1024 / 834 / 768 / 767 / 375px の 7 幅すべてで固定</td></tr>
+      <tr><th><code>body</code></th><td><strong><code>font-size</code> の宣言が無い</strong>ので 10px のまま。CSS 全文で <code>font-size: &lt;数値&gt;%</code> が <strong>155 箇所</strong></td></tr>
+      <tr><th>本文</th><td><code>170%</code> → <strong>17px</strong>（可視 106 要素で最多）/ <code>line-height: 1.8</code></td></tr>
+      <tr><th>見出し</th><td><code>460%</code> → 46px、<code>610%</code> → 61px、<code>280%</code> → 28px</td></tr>
+      <tr><th>字間</th><td><code>body</code> に <code>letter-spacing: 0.04em</code> を 1 回。<strong>10px に対して計算されるので <code>0.4px</code> という絶対値</strong>が全子孫へ降りる（可視 216 要素中 <strong>214 要素</strong>）。17px の本文では実効 <strong>0.024em</strong></td></tr>
+      <tr><th>字詰め</th><td><strong>使わない。</strong><code>font-feature-settings</code> の実測は 0 件。CSS に <code>.feature-palt</code> / <code>.feature-halt</code> が定義されているが 1 要素も使っていない</td></tr>
+      <tr><th>CSS 変数</th><td><strong>2 個だけ</strong>（<code>--pc-height: 400px</code> / <code>--sp-height: 240px</code>）。設計トークンは存在しない</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">タイポグラフィ階層</h2>
+    <div class="scale">
+      <div class="row"><div class="meta">610% / 61px · 700 · lh 1.3</div><div style="font-size:610%;font-weight:700;line-height:1.3;">安心・安全</div></div>
+      <div class="row"><div class="meta">540% / 54px · <strong>300</strong> · lh 1.0<br>※ 300 を使う唯一の場所</div><div class="mincho" style="font-size:540%;line-height:1.0;">持続可能であるために</div></div>
+      <div class="row"><div class="meta">460% / 46px · 700 · lh 1.8</div><div style="font-size:460%;font-weight:700;line-height:1.8;color:var(--blue);">IHIグループの歴史</div></div>
+      <div class="row"><div class="meta">280% / 28px · 700 · lh 1.1</div><div style="font-size:280%;font-weight:700;line-height:1.1;">大切なお知らせ</div></div>
+      <div class="row"><div class="meta">200% / 20px · 500 · lh 1.3</div><div style="font-size:200%;font-weight:500;line-height:1.3;">企業情報TOP</div></div>
+      <div class="row"><div class="meta"><strong>170% / 17px · 400 · lh 1.8</strong><br>本文（可視 106 要素）</div><div style="font-size:170%;line-height:1.8;">私たちIHIグループは、叡智を結集し、協力し合うことで、自然と技術が調和する社会をつくります。</div></div>
+      <div class="row"><div class="meta">140% / 14px · 400 · lh 1.8</div><div style="font-size:140%;line-height:1.8;">急速に変化する社会環境の中で、持続的な価値創出に挑みます。</div></div>
+      <div class="row"><div class="meta">120% / 12px · 400 · lh 1.1<br>可視 58 要素</div><div style="font-size:120%;line-height:1.1;">産業システム・汎用機械</div></div>
+    </div>
+    <p class="note">ウェイトは <code>300 / 400 / 500 / 700</code> の 4 段。<code>@font-face</code> もこの 4 本しかないので、<strong><code>600</code> を指定すると合成太字になる</strong>（実測で 600 が出るのは Cookiebot だけ）。ナビと見出しの既定は <strong>500</strong>（可視 80 要素）で、400（98 要素）に次いで多い。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons &amp; Badges</h2>
+    <div class="btnrow">
+      <a class="btn primary" href="#">お問い合わせ・資料ダウンロード</a>
+      <a class="btn secondary" href="#">沿革・あゆみを見る</a>
+      <a class="btn secondary is-focus" href="#">フォーカス時</a>
+      <span class="badge">NEW</span>
+      <span class="badge gray">English</span>
+      <span class="badge mid">その他</span>
+      <span class="badge cyan">PDF</span>
+    </div>
+    <p class="note">角丸は <strong>4px</strong> が標準（可視 9 要素）、バッジは <code>3px</code>、アイコンの円だけ <code>50%</code>（11 要素）。<code>border-radius: 3.75px</code> は Cookiebot のボタンなので採用していない。二次ボタンだけが <code>letter-spacing: 0.68px</code>（= 17px × 0.04em）を<strong>自分で宣言し直している</strong>。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">リンクリスト — 区切りは inset の影</h2>
+    <ul class="linklist">
+      <li><a href="#"><span class="dot">▶</span>トップメッセージ</a></li>
+      <li><a href="#"><span class="dot">▶</span>IHIグループビジョン</a></li>
+      <li><a href="#"><span class="dot">▶</span>会社概要</a></li>
+      <li><a href="#"><span class="dot">▶</span>事業紹介</a></li>
+      <li><a href="#"><span class="dot">▶</span>沿革・あゆみ</a></li>
+    </ul>
+    <p class="note"><code>border-bottom</code> ではなく <code>box-shadow: #dddddd 0 -1px 0 0 inset</code> で引いている（可視 <strong>43 要素</strong>・両ページとも同数）。このサイトの <code>box-shadow</code> は実質この 1 種類と、カードの <code>rgba(0,0,0,.16) 0 0 8px</code> の 2 つだけ。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Cards</h2>
+    <div class="cards">
+      <article class="card">
+        <div class="cat">技術情報</div>
+        <h3>IHI技報66巻1号</h3>
+        <p>特集「エンジニアリングの新展開」を公開しました。</p>
+      </article>
+      <article class="card">
+        <div class="cat">PROJECT</div>
+        <h3>既存の延長線上にない技術開発</h3>
+        <p>資源・エネルギー・環境の領域で、長期の課題に取り組んでいます。</p>
+      </article>
+      <article class="card">
+        <div class="cat">IR</div>
+        <h3>第209回定時株主総会を開催しました</h3>
+        <p>決議の結果と、当日の質疑の概要を掲載しています。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">面と入力</h2>
+    <div class="cards" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="panel bl">
+        <h3>Change Location</h3>
+        <p>現在は日本のサイトをご覧になっています。地域統括拠点のウェブサイトへ移動できます。</p>
+      </div>
+      <div class="panel blue">
+        <h3>Surface Blue Tint</h3>
+        <p><code>#d7e4f7</code>。タグ・選択状態の淡い面（可視 5 要素）。</p>
+      </div>
+    </div>
+    <div style="margin-top:24px;">
+      <div class="field">
+        <label for="q">サイト内検索</label>
+        <input id="q" class="is-focus" type="text" value="航空エンジン">
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">再現するときの注意</h2>
+    <table class="spec">
+      <tr><th>字間</th><td><strong>「0.04em のサイト」として再現しない。</strong><code>body</code> が 10px なので実際に効いているのは <code>0.4px</code>。子要素に <code>0.04em</code> を配ると文字サイズに比例して広がり、別物になる</td></tr>
+      <tr><th>行間</th><td><code>line-height: 1.8</code> は<strong>無単位</strong>なので各要素が再計算する。字間とは継承のしかたが逆</td></tr>
+      <tr><th>Lato</th><td>Google Fonts の URL に入っているが<strong>フォント要求は 0 件</strong>。読み込まない</td></tr>
+      <tr><th>Noto Serif JP</th><td>トップの <strong>2 要素だけ</strong>。下層ページでは要求 0 件。本文に広げない</td></tr>
+      <tr><th>ヒーローの欧文</th><td>実サイトでは <code>index_main-visual-text_2026_img.svg</code>（680×46）の<strong>画像</strong>。Web フォントで組まない</td></tr>
+      <tr><th>CMP</th><td>Cookiebot が画面下部を覆う。<code>#F4F4F4</code>（97 要素）<code>#D6D6D6</code>（30 要素）<code>#1032CF</code> <code>#141414</code> <code>font-weight: 600</code> <code>radius 3.75px</code> は<strong>全部 CMP</strong></td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer class="ftr">
+  <div class="inner">
+    <p>© IHI Corporation All Rights Reserved. — これは DESIGN.md の内容を確認するためのプレビューです。</p>
+  </div>
+</footer>
+
+</body>
+</html>

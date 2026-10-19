@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: KDDI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は own 34 / platform 1（Swiper）。
+       命名はアンダースコア区切りの --color_<系統>_<役割>。実測 2026-10-19 */
+    --color_main_key:        #0E0D6A;  /* ブランドの紺。面2要素/文字1要素と驚くほど出てこない */
+    --color_main_accent:     #1EACE5;  /* シアン。罫線・アイコン */
+    --color_main_base01:     #EBF6FF;  /* ヒーロー上の View More の文字色。可視7要素 */
+    --color_main_base02:     #D5EDFF;
+    --color_mono_white:      #FFFFFF;  /* 可視25/3要素 */
+    --color_mono_bg_light:   #F1F2F6;  /* ヘッダーのボタン面。可視5要素 */
+    --color_mono_bg_dark:    #DDE0E7;  /* ★カードの枠線 */
+    --color_mono_bg_dark--rgb: 221 224 231;
+    --color_mono_bg_black:   #222222;
+    --color_other_alert:     #C50018;  /* 障害・災害情報。可視1要素 */
+    --color_text_main:       #222222;  /* ★本文。可視136/74要素で最多 */
+    --color_text_main--rgb:  34 34 34; /* 透明度を後から足すための別名 */
+    --color_text_sub:        #7A7A7A;  /* 日付・ラベル。可視9/5要素 */
+    --color_text_sub--rgb:   122 122 122;
+    --color_text_darkgray:   #626262;  /* 補助文・フッター。可視36/26要素 */
+    --color_link_main:       #0066AA;  /* リンク。可視14/19要素 */
+    --color_link_hover:      #1D9BFF;
+
+    /* ★黒い PNG / SVG アイコンを filter で塗り替えるためのトークン。
+       色が hex と filter の 2 つの形で並行して存在する。 */
+    --color_text_main--filtered:
+      brightness(0) saturate(100%) invert(10%) sepia(0%) saturate(11%) hue-rotate(185deg) brightness(97%) contrast(89%);
+    --color_link_hover--filtered:
+      brightness(0) saturate(100%) invert(42%) sepia(98%) saturate(1942%) hue-rotate(188deg) brightness(102%) contrast(101%);
+
+    /* === Layout（12 カラム）===
+       68px × 12 + 40px × 11 = 816 + 440 = 1256px = --content-width */
+    --content-width:            1256px;
+    --content-side--pc:         58px;
+    --content-side--sp:         clamp(16px, 8.21vw, 32px);
+    --content-grid-width--pc:   68px;
+    --content-grid-gap--pc:     40px;
+    --content-grid-gap--sp:     16px;
+    --padding-inline:           min(15px, calc(15 / 1372 * 100vw));
+
+    /* === Motion === */
+    --transition_duration: 0.5s;
+    --transition_easing:   ease-out;
+    --transition_delay:    0s;
+    --transition_default-set:   var(--transition_duration) var(--transition_easing) var(--transition_delay);
+    --transition_animation-set: 0.3s var(--transition_easing) var(--transition_delay);
+
+    /* === Header === */
+    --header-height--pc: 121px;
+    --header-height--sp: 78px;
+
+    /* === Carousel（JS が running / paused を書き換える前提）=== */
+    --top-hero-indication-time: 5000ms;
+    --top-hero-animation-state: paused;
+
+    /* === Fonts ===
+       欧文優先の和欧二層。DM Sans が和文グリフを持たないので自動で振り分けられる。
+       ※実サイトのトップページは Helvetica が 2 回入っているが誤り（2 回目は到達しない）。
+         ここでは正しく 1 回にしてある。 */
+    --font: "DM Sans", "Noto Sans JP", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ★下層テンプレートの流儀に揃える（トップは html に宣言が無く UA 既定の 16px）*/
+  html { font-size: 62.5%; -webkit-text-size-adjust: 100%; }   /* = 10px */
+
+  body {
+    margin: 0 auto;
+    max-width: 1920px;
+    font-family: var(--font);
+    font-size: 1.5rem;                      /* = 15px */
+    font-weight: 400;
+    line-height: 1.7;
+    font-feature-settings: 'palt' on;       /* ★body に 1 行。実測 1047 要素 */
+    word-wrap: break-word;
+    word-break: break-word;                 /* 語の途中で折るのは収まらないときだけ */
+    background-color: var(--color_mono_white);
+    color: var(--color_text_main);
+  }
+  @media (max-width: 767.98px) { body { font-size: 1.4rem; } }   /* = 14px */
+
+  .wrap {
+    max-width: var(--content-width); margin: 0 auto;
+    padding: 0 var(--content-side--pc) 8rem;
+  }
+  @media (max-width: 767.98px) { .wrap { padding-left: var(--content-side--sp); padding-right: var(--content-side--sp); } }
+
+  /* ===== ヘッダー ===== */
+  .hdr { background: var(--color_mono_white); border-bottom: 1px solid var(--color_mono_bg_dark); }
+  .hdr .inner {
+    max-width: var(--content-width); margin: 0 auto;
+    padding: 2rem var(--content-side--pc);
+    display: flex; align-items: center; gap: 2.8rem; flex-wrap: wrap;
+  }
+  .logo {
+    font-size: 2.8rem; font-weight: 600; line-height: 1;
+    color: var(--color_main_key); letter-spacing: -0.02em;
+  }
+  .logo small { display: block; font-size: 0.4em; font-weight: 400; letter-spacing: 0.02em; color: var(--color_text_darkgray); }
+  .nav { display: flex; gap: 2.2rem; flex: 1; flex-wrap: wrap; }
+  .nav a {
+    color: var(--color_text_main); font-size: 1.5rem; font-weight: 500;
+    letter-spacing: 0.045em; line-height: 1.4; text-decoration: none;
+    transition: color var(--transition_default-set);
+  }
+  .nav a:hover { color: var(--color_link_hover); }
+  .hdr .util { display: flex; gap: 0.8rem; }
+
+  /* ===== Buttons ===== */
+  .btn {
+    font-family: inherit; cursor: pointer; text-decoration: none;
+    display: inline-block; border-radius: 8px;
+    transition: background-color var(--transition_default-set), color var(--transition_default-set);
+  }
+  .btn.primary {
+    background: var(--color_main_key); color: var(--color_mono_white);
+    font-size: 1.2rem; font-weight: 400; letter-spacing: 0.06em;
+    padding: 7px 14px 6px; border: 0; line-height: 1;
+  }
+  .btn.secondary {
+    background: var(--color_mono_bg_light); color: var(--color_text_main);
+    font-size: 1.2rem; font-weight: 400; letter-spacing: 0.01em;
+    padding: 7px 14px 6px; border: 0; line-height: 1;
+  }
+  .btn.dark {
+    background: var(--color_mono_bg_black); color: var(--color_mono_white);
+    border: 1px solid var(--color_mono_bg_black);
+    font-size: 1.5rem; font-weight: 400; letter-spacing: 0.04em;
+    padding: 6px 15px; line-height: 1.4;
+  }
+  .btn.outlined {
+    background: transparent; color: var(--color_text_main);
+    border: 1px solid var(--color_text_darkgray);
+    font-size: 1.5rem; font-weight: 400; letter-spacing: 0.04em;
+    padding: 6px 15px; line-height: 1.4;
+  }
+  .btn.is-focus { outline: 2px solid var(--color_link_hover); outline-offset: 2px; }
+  .pill {
+    display: inline-block; background: rgb(var(--color_text_main--rgb) / 0.6);
+    color: var(--color_mono_white); border-radius: 14px;
+    padding: 4px 12px; font-size: 1.2rem; line-height: 1.4;
+  }
+  .chip {
+    display: inline-block; background: var(--color_other_alert);
+    color: var(--color_mono_white); border-radius: 4px;
+    padding: 3px 9px; font-size: 1.2rem; line-height: 1.4;
+  }
+  .btnrow { display: flex; gap: 1.6rem; flex-wrap: wrap; align-items: center; }
+
+  /* ===== ヒーロー（Swiper カルーセル。大見出しは実テキスト）===== */
+  .hero {
+    position: relative;
+    background: linear-gradient(118deg, #0b1f5e 0%, #163a96 42%, #1eace5 100%);
+    padding: 9rem var(--content-side--pc) 7rem;
+  }
+  .hero .inner { max-width: var(--content-width); margin: 0 auto; }
+  .hero h1 {
+    margin: 0 0 2.1rem;
+    font-size: 4rem;              /* 40px */
+    font-weight: 400; line-height: 1.5;
+    color: var(--color_mono_white);
+    font-feature-settings: 'palt' 1;
+  }
+  .hero .subtitle {
+    margin: 0 0 3.4rem; font-size: 2.4rem; font-weight: 500; line-height: 1;
+    color: var(--color_mono_white); font-feature-settings: 'palt' 1;
+  }
+  .hero .more {
+    color: var(--color_main_base01); font-size: 1.5rem; font-weight: 600;
+    letter-spacing: -0.02em; text-decoration: none; line-height: 1.8;
+    display: inline-flex; align-items: center; gap: 1rem;
+  }
+  .hero .more .arrow {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--color_main_base01); display: inline-grid; place-items: center;
+    font-size: 1.1rem; line-height: 1;
+  }
+  .hero .idx { margin-top: 3rem; color: var(--color_mono_white); font-size: 1.2rem; letter-spacing: 0.08em; opacity: .8; }
+
+  /* ===== 障害・災害情報の帯 ===== */
+  .alert { background: var(--color_mono_bg_light); }
+  .alert .inner {
+    max-width: var(--content-width); margin: 0 auto;
+    padding: 1.4rem var(--content-side--pc);
+    display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap;
+  }
+  .alert .txt { font-size: 1.4rem; line-height: 1.7; letter-spacing: 0.08em; color: var(--color_text_main); }
+
+  /* ===== セクション ===== */
+  .sec { padding: 7rem 0 0; }
+  .secttl {
+    margin: 0 0 2.8rem;
+    font-size: 3.6rem; font-weight: 400; line-height: 1.4;
+    letter-spacing: 0.08em; color: var(--color_text_main);
+  }
+  .pagettl {
+    margin: 0 0 2.4rem;
+    font-size: 4.8rem; font-weight: 500; line-height: 1.5;
+    letter-spacing: 0.08em; color: var(--color_text_main);
+  }
+  .subttl {
+    margin: 0 0 1.6rem;
+    font-size: 3.2rem; font-weight: 500; line-height: 1.5;
+    letter-spacing: 0.08em; color: var(--color_text_main);
+  }
+  .lead { margin: 0 0 2rem; font-size: 1.6rem; line-height: 1.7; letter-spacing: 0.08em; }
+  .note { margin: 1.6rem 0 0; font-size: 1.4rem; line-height: 1.7; letter-spacing: 0.08em; color: var(--color_text_darkgray); }
+  .note code { background: var(--color_mono_bg_light); padding: 1px 5px; border-radius: 4px; font-size: .94em; }
+
+  /* ===== Cards ===== */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--content-grid-gap--pc); }
+  .card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--color_mono_bg_dark);
+    border-radius: 8px;
+    padding: 20px 16px 15px 19px;
+    /* box-shadow は無い。実測 0 種 */
+    transition: border-color var(--transition_default-set);
+  }
+  .card:hover { border-color: var(--color_link_hover); }
+  .card .date { color: var(--color_text_sub); font-size: 1.2rem; letter-spacing: 0.04em; line-height: 1.4; }
+  .card h3 { margin: 0.8rem 0 1rem; font-size: 1.8rem; font-weight: 400; line-height: 1.7; letter-spacing: 0.08em; color: var(--color_text_main); }
+  .card p  { margin: 0; font-size: 1.4rem; line-height: 1.6; letter-spacing: 0.08em; color: var(--color_text_darkgray); }
+
+  /* ===== 面とグラデーション ===== */
+  .band {
+    background: linear-gradient(1.72deg, #DAE2EA 15.13%, #ECF0F3 54.34%, #F9F9F9 70.26%, #E5EAF0 88.37%);
+    padding: 5rem 0; margin-top: 4rem; border-radius: 8px;
+  }
+  .band .inner { padding: 0 3rem; }
+  .card.grad { background: linear-gradient(225deg, #E7E9F2 22.4%, #FFFFFF 97.14%); }
+
+  /* ===== グリッド可視化 ===== */
+  .gridviz {
+    display: grid; grid-template-columns: repeat(12, var(--content-grid-width--pc));
+    gap: var(--content-grid-gap--pc); max-width: var(--content-width);
+  }
+  .gridviz span {
+    background: var(--color_main_base01); border-radius: 4px;
+    height: 56px; display: grid; place-items: center;
+    font-size: 1.1rem; color: var(--color_text_darkgray); line-height: 1;
+  }
+
+  /* ===== 表 ===== */
+  table.spec { width: 100%; border-collapse: collapse; font-size: 1.4rem; line-height: 1.7; letter-spacing: 0.08em; }
+  table.spec th, table.spec td { text-align: left; padding: 1.2rem 1rem; border-bottom: 1px solid var(--color_mono_bg_dark); vertical-align: top; }
+  table.spec th { width: 20rem; font-weight: 500; color: var(--color_text_darkgray); letter-spacing: 0.04em; }
+  table.spec code { background: var(--color_mono_bg_light); padding: 1px 5px; border-radius: 4px; }
+
+  /* ===== スケール見本 ===== */
+  .scale { display: grid; gap: 1.4rem; }
+  .scale .row { display: flex; align-items: baseline; gap: 1.8rem; border-bottom: 1px solid var(--color_mono_bg_dark); padding-bottom: 1.2rem; }
+  .scale .meta { width: 24rem; flex: none; color: var(--color_text_sub); font-size: 1.2rem; line-height: 1.5; letter-spacing: 0.04em; }
+
+  /* ===== filter トークンのデモ ===== */
+  .filterdemo { display: flex; gap: 2.4rem; flex-wrap: wrap; align-items: center; }
+  .filterdemo .ico {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #000; display: grid; place-items: center;
+  }
+  .filterdemo .ico.main { filter: var(--color_text_main--filtered); }
+  .filterdemo .ico.hov  { filter: var(--color_link_hover--filtered); }
+  .filterdemo .cap { font-size: 1.2rem; color: var(--color_text_darkgray); letter-spacing: 0.04em; line-height: 1.5; }
+
+  /* ===== Inputs ===== */
+  .field { display: grid; gap: 0.8rem; max-width: 42rem; }
+  .field label { font-size: 1.4rem; font-weight: 500; line-height: 1.7; letter-spacing: 0.08em; }
+  .field input {
+    font-family: inherit; font-size: 1.5rem; color: var(--color_text_main); line-height: 1.7;
+    padding: 1.2rem 1.4rem; border: 1px solid var(--color_mono_bg_dark);
+    border-radius: 8px; background: var(--color_mono_white);
+  }
+  .field input.is-focus { outline: 2px solid var(--color_link_hover); outline-offset: 1px; border-color: var(--color_link_hover); }
+
+  /* ===== フッター ===== */
+  .ftr { margin-top: 8rem; background: var(--color_mono_bg_light); }
+  .ftr .inner { max-width: var(--content-width); margin: 0 auto; padding: 3.2rem var(--content-side--pc); }
+  .ftr a { color: var(--color_text_darkgray); font-size: 1.4rem; letter-spacing: 0.04em; text-decoration: none; margin-right: 2rem; line-height: 1.7; }
+  .ftr p { margin: 1.6rem 0 0; font-size: 1.2rem; font-weight: 300; line-height: 1.7; letter-spacing: 0.08em; color: var(--color_text_darkgray); }
+
+  @media (max-width: 767.98px) {
+    .pagettl { font-size: 3.6rem; letter-spacing: 0.08em; }
+    .subttl  { font-size: 2.4rem; letter-spacing: normal; }
+    .secttl  { font-size: 2.4rem; }
+    .cards   { grid-template-columns: 1fr; gap: var(--content-grid-gap--sp); }
+    .gridviz { grid-template-columns: repeat(4, 1fr); gap: var(--content-grid-gap--sp); }
+    .scale .row { flex-wrap: wrap; }
+    .scale .meta { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="inner">
+    <div class="logo">KDDI<small>Spark Your Journey</small></div>
+    <nav class="nav">
+      <a href="#">理念・ビジョン</a>
+      <a href="#">サービス</a>
+      <a href="#">ニュース</a>
+      <a href="#">サステナビリティ</a>
+      <a href="#">企業情報</a>
+      <a href="#">株主・投資家情報</a>
+      <a href="#">採用情報</a>
+    </nav>
+    <div class="util">
+      <a class="btn primary" href="#">お問い合わせ</a>
+      <a class="btn secondary" href="#">ENGLISH</a>
+      <a class="btn secondary" href="#">サイト内検索</a>
+    </div>
+  </div>
+</header>
+
+<div class="alert">
+  <div class="inner">
+    <span class="chip">障害・災害の影響</span>
+    <span class="txt">令和8年台風第25号災害義援金（千葉県）の受付を開始しました</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="inner">
+    <h1>KDDIが取り組む<br>地域の魅力化</h1>
+    <p class="subtitle">誰もがずっと、この街で</p>
+    <a class="more" href="#">View More <span class="arrow">→</span></a>
+    <p class="idx">02 / 05</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section class="sec">
+    <h1 class="pagettl">設計トークン</h1>
+    <p class="lead">色・レイアウト・動き・ヘッダー高さ・カルーセルの再生状態まで CSS Custom Properties で持つ。</p>
+    <table class="spec">
+      <tr><th>変数の数</th><td>own <strong>34</strong> / platform 1（Swiper の <code>--swiper-theme-color</code>）。命名は <code>--color_&lt;系統&gt;_&lt;役割&gt;</code> のアンダースコア区切り</td></tr>
+      <tr><th>グリッド</th><td><code>--content-grid-width--pc: 68px</code> × 12 ＋ <code>--content-grid-gap--pc: 40px</code> × 11 = <strong>1256px</strong> = <code>--content-width</code>。<strong>コンテナ幅が 12 カラムの計算結果</strong></td></tr>
+      <tr><th>左右余白</th><td>PC <code>58px</code> / SP <code>clamp(16px, 8.21vw, 32px)</code></td></tr>
+      <tr><th>ルート</th><td>下層は <code>html { font-size: 62.5% }</code>（10px）＋ <code>body { 1.5rem }</code>（15px）。<strong>トップは <code>html</code> に宣言が無く UA 既定の 16px</strong>（2 世代のテンプレート同居）</td></tr>
+      <tr><th>動き</th><td><code>--transition_duration: 0.5s</code> / <code>--transition_easing: ease-out</code>。アニメーションは <code>0.3s</code></td></tr>
+      <tr><th>透明度</th><td><code>--color_text_main--rgb: 34 34 34</code> のような <code>--rgb</code> の別名を作り、<code>rgb(var(--color_text_main--rgb) / 0.6)</code> で使う</td></tr>
+    </table>
+    <div class="gridviz" style="margin-top:2.8rem;">
+      <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+      <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+    </div>
+    <p class="note">12 カラム × 68px ＋ gap 40px × 11 = 1256px。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">タイポグラフィ階層</h2>
+    <div class="scale">
+      <div class="row"><div class="meta">4.8rem / 48px · 500 · lh 1.5<br>ls 3.84px（<strong>0.08em</strong>）</div><div style="font-size:4.8rem;font-weight:500;line-height:1.5;letter-spacing:0.08em;">企業情報</div></div>
+      <div class="row"><div class="meta">4rem / 40px · 400 · lh 1.5<br>ヒーロー（実テキスト）</div><div style="font-size:4rem;font-weight:400;line-height:1.5;">地域の魅力化</div></div>
+      <div class="row"><div class="meta">3.6rem / 36px · 400 · lh 1.4<br>ls 2.88px（0.08em）</div><div style="font-size:3.6rem;font-weight:400;line-height:1.4;letter-spacing:0.08em;">ニュースリリース</div></div>
+      <div class="row"><div class="meta">3.2rem / 32px · 500 · lh 1.5<br>ls 2.56px（0.08em）</div><div style="font-size:3.2rem;font-weight:500;line-height:1.5;letter-spacing:0.08em;">会社概要</div></div>
+      <div class="row"><div class="meta">2.4rem / 24px · 500 · lh 1.4<br>ls 1.92px（0.08em）</div><div style="font-size:2.4rem;font-weight:500;line-height:1.4;letter-spacing:0.08em;">個人のお客さま向け</div></div>
+      <div class="row"><div class="meta">1.8rem / 18px · 400 · lh 1.7<br>ls 1.44px（0.08em）</div><div style="font-size:1.8rem;font-weight:400;line-height:1.7;letter-spacing:0.08em;">海のゆりかごを守る石積みの技術</div></div>
+      <div class="row"><div class="meta">1.6rem / 16px · 400 · lh 1.7<br>ls 1.28px（0.08em）</div><div style="font-size:1.6rem;line-height:1.7;letter-spacing:0.08em;">「つなぐチカラ」を進化させ、誰もが思いを実現できる社会をつくる。</div></div>
+      <div class="row"><div class="meta"><strong>1.5rem / 15px · 400 · lh 1.7</strong><br>本文（body 既定）· ls normal</div><div style="font-size:1.5rem;line-height:1.7;">KDDIグループは、全従業員の物心両面の幸福を追求すると同時に、豊かなコミュニケーション社会の発展に貢献します。</div></div>
+      <div class="row"><div class="meta">1.4rem / 14px · 400 · lh 1.7<br>ls 1.12px（0.08em）</div><div style="font-size:1.4rem;line-height:1.7;letter-spacing:0.08em;">会社の沿革をご覧いただけます。</div></div>
+      <div class="row"><div class="meta">1.2rem / 12px · 400 · lh 1.75<br>ls 0.6px（0.05em）</div><div style="font-size:1.2rem;line-height:1.75;letter-spacing:0.05em;color:var(--color_text_darkgray);">2026年3月31日現在</div></div>
+      <div class="row"><div class="meta">1.2rem / 12px · <strong>300</strong> · lh 1.7</div><div style="font-size:1.2rem;font-weight:300;line-height:1.7;letter-spacing:0.08em;color:var(--color_text_darkgray);">COPYRIGHT © KDDI CORPORATION</div></div>
+    </div>
+    <p class="note">ウェイトは <code>300 / 400 / 500 / 600</code> の 4 段（700 は下層に 1 要素だけ）。Noto Sans JP も DM Sans も可変フォントなので中間値も実在する。<strong>「見出しほど太い」設計ではない</strong>——42px の見出しが 400、24px のサブ見出しが 500 になる場面がある。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">字間は em を各要素に当てる</h2>
+    <table class="spec">
+      <tr><th>既定</th><td><strong><code>0.08em</code></strong>。48px → 3.84px、36px → 2.88px、18px → 1.44px、16px → 1.28px、14px → 1.12px、12px → 0.96px</td></tr>
+      <tr><th>小さい UI</th><td><code>0.01em</code>（最小のボタン）/ <code>0.04em</code>（日付・フッター）/ <code>0.045em</code>（グローバルナビ）/ <code>0.05em</code>（キャプション）</td></tr>
+      <tr><th>負の値</th><td><code>-0.02em</code>（欧文の大きな見出し）/ <code>-0.12em</code>（装飾の数字）</td></tr>
+      <tr><th>読み方</th><td>分布に <code>3.84 / 2.88 / 2.56 / 1.92 / 1.44 / 1.28 / 1.2 / 1.12 / 0.96px</code> が並ぶのは、<strong>サイズが違えば px も違う＝各要素が <code>em</code> を持っている</strong>証拠。「px で継承されている」と読まない</td></tr>
+      <tr><th>字詰め</th><td>下層は <code>body</code> に <code>font-feature-settings: 'palt' on</code> を 1 行（実測 1047 要素）。<strong>トップはコンポーネント単位で 51 箇所</strong>（実測 202 要素）と正反対。新規実装では <code>body</code> に 1 行で足りる</td></tr>
+      <tr><th>折り返し</th><td>下層のみ <code>word-break: break-word</code>。<code>break-all</code> と違い 1 行に収まらない語だけを折る（トップは <code>normal</code>）</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Buttons</h2>
+    <div class="btnrow">
+      <a class="btn primary" href="#">お問い合わせ</a>
+      <a class="btn secondary" href="#">ENGLISH</a>
+      <a class="btn dark" href="#">ニュースリリース</a>
+      <a class="btn outlined" href="#">トピックス</a>
+      <a class="btn outlined is-focus" href="#">フォーカス時</a>
+      <span class="pill">みらい</span>
+      <span class="chip">障害・災害の影響</span>
+    </div>
+    <p class="note">角丸は <strong>8px</strong> が標準（トップ 89 要素 / 下層 33 要素）。カードは 6px（下層 49 要素）、カルーセル上のピルは 14px、小さいチップは 4px。Outlined の枠は専用トークンではなく <code>--color_text_darkgray</code> を使う。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Cards — 影を使わない</h2>
+    <div class="cards">
+      <article class="card">
+        <div class="date">2026.10.16</div>
+        <h3>「auひかり」の料金改定および「でんきセット割」について</h3>
+        <p>2027年1月からの改定内容をお知らせします。</p>
+      </article>
+      <article class="card">
+        <div class="date">2026.10.15</div>
+        <h3>KDDIみらい共創プログラム 第5期の募集を開始</h3>
+        <p>スタートアップとの共創テーマを公開しました。</p>
+      </article>
+      <article class="card grad">
+        <div class="date">2026.10.14</div>
+        <h3>役員等の人事について</h3>
+        <p>2027年4月1日付の人事を決定しました。</p>
+      </article>
+    </div>
+    <div class="band">
+      <div class="inner">
+        <h3 class="subttl">グラデーションで地を作る</h3>
+        <p class="lead"><code>linear-gradient(1.72deg, #DAE2EA 15.13%, #ECF0F3 54.34%, #F9F9F9 70.26%, #E5EAF0 88.37%)</code></p>
+        <p class="note">角度 <code>1.72deg</code>・停止位置 <code>15.13% / 54.34% / 70.26% / 88.37%</code> は<strong>丸めずそのまま写す</strong>。<code>box-shadow</code> の実測は<strong>両ページとも 0 種</strong>で、階層は「面の色」「1px の枠線（<code>#DDE0E7</code>）」「グラデーション」の 3 つだけで作る。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">色を filter で配る</h2>
+    <div class="filterdemo">
+      <div><div class="ico"></div><div class="cap">元の黒アイコン</div></div>
+      <div><div class="ico main"></div><div class="cap">--color_text_main--filtered<br>→ #222222</div></div>
+      <div><div class="ico hov"></div><div class="cap">--color_link_hover--filtered<br>→ #1D9BFF</div></div>
+    </div>
+    <p class="note"><code>fill</code> を持たない画像アイコンにブランド色を当てるための <code>filter</code> 文字列をトークンとして持っている。<strong>色が hex と filter の 2 つの形で並行して存在する</strong>のがこのサイト固有の作り。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">Inputs</h2>
+    <div class="field">
+      <label for="q">サイト内検索</label>
+      <input id="q" class="is-focus" type="text" value="中期経営戦略">
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl">再現するときの注意</h2>
+    <table class="spec">
+      <tr><th>2 世代のテンプレート</th><td>トップは <code>html</code> 16px、下層は 10px。<code>palt</code> の配り方も宣言位置も違う。<strong>1 ページだけ測るとルートを取り違える。</strong>新規実装は下層の流儀に揃える</td></tr>
+      <tr><th><code>Helvetica</code> の重複</th><td>トップの <code>font-family</code> は <code>… "Helvetica Neue", Helvetica, Helvetica, Arial …</code>（可視 252 要素）。<strong>2 回目は到達しない。正しくは 1 回</strong></td></tr>
+      <tr><th><code>&lt;a&gt;</code> の色</th><td>実サイトは <code>&lt;a&gt;</code> に <code>color</code> の宣言が無く、ロゴの画像リンクと読み上げラベルが <strong>UA 既定の <code>#0000EE</code></strong> のまま（可視 19 要素）。画像リンクなので実害は無いが、<strong>テキストを直下に置くと青が出る</strong></td></tr>
+      <tr><th>ブランドの紺</th><td><code>#0E0D6A</code> の実測は両ページ合わせて <strong>3 要素</strong>。面に広げない。このサイトの印象は <code>#222222</code> の文字と角丸 8px の白い面が作っている</td></tr>
+      <tr><th>流体</th><td>全面的な流体ではなく、<code>min()</code> / <code>clamp()</code> を部品ごとに当てる。<code>min(18px, calc(18 / 1372 * 100vw))</code> の分母 <strong>1372</strong> が SP の基準幅</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer class="ftr">
+  <div class="inner">
+    <a href="#">総合サイトマップ</a>
+    <a href="#">ニュース関連リンク</a>
+    <a href="#">サイトポリシー</a>
+    <a href="#">個人情報保護について</a>
+    <p>COPYRIGHT © KDDI CORPORATION, ALL RIGHTS RESERVED. — これは DESIGN.md の内容を確認するためのプレビューです。</p>
+  </div>
+</footer>
+
+</body>
+</html>
