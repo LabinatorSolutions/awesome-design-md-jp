@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 三菱商事（Mitsubishi Corporation）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Inter:wght@200;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       自社トークンは 15〜18 個あるが、色は 1 つも入っていない（寸法・書体名・ロゴ用）。
+       以下は computed style と CSS 全文の実測値。2026-10-25 */
+    --black:    #000000;   /* ★面の主役。タブ選択・一覧ボタン。文字としても可視 20 要素 */
+    --white:    #ffffff;   /* 黒面・メガメニュー上の文字（可視 170 要素） */
+    --mc-red:   #a22041;   /* ブランド赤。実装は rgba(162,32,65,.8)。「ページ上部へ」1 要素のみ */
+    --navy:     #0f2350;   /* ニュース見出しリンク（可視 6 要素） */
+    --text-2:   #333333;   /* グローバルナビの項目（可視 11 要素） */
+    --muted:    #666666;   /* 言語切替の非選択 */
+    --muted-2:  #999999;   /* Social media ラベル */
+    --border:   #d5d5d5;   /* ★最多の罫線色 */
+    --surface:  #efefef;   /* メガメニューの開閉ボタン面（可視 32 要素） */
+    --surface-light: #f7f7f8;  /* ピックアップの面 */
+    --surface-lighter: #f2f1f1;
+    --bg:       #ffffff;   /* pageBackground.resolved / 根拠 body */
+
+    /* === Fonts ===
+       実サイトは Monotype の Neue Helvetica（欧文）＋ たづがね角ゴシック（和文）を
+       FONTPLUS で配信している（フォント要求 30 件・全部 fonts.fontplus.dev）。
+       どちらもドメインライセンスのためローカルでは表示できない。
+       欧文は Inter、和文は Zen Kaku Gothic New（ヒューマニスト系で字形が近い）で代替する。
+       ★実サイトのウェイトは 200 / 400 / 500 の 3 本だけ。700 を指定しても 500 が出る。
+       Zen Kaku Gothic New に 200 が無いので、ここでは 300 を 200 の代替として読み込む。 */
+    --font-body: Inter, "Zen Kaku Gothic New", "Neue Helvetica", "Tazugane Gothic",
+                 "Noto Sans JP", "Yu Gothic Medium", "游ゴシック Medium", YuGothic,
+                 "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",
+                 Osaka, メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Weight: 200 / 400 / 500 の 3 段だけ ===
+       実測（同一ページで幅を比較）: 100・200・300 → 全部 200 の面
+                                     500・600・700・900 → 全部 500 の面 */
+    --fw-thin:   300;   /* 実サイトの宣言は 300、描画は 200。代替書体の最小が 300 */
+    --fw-normal: 400;
+    --fw-medium: 500;
+
+    /* === Line height: 本文 1.8 / 中間 1.6・1.5 / 見出し 1.28 ===
+       body は無単位 1。両ページとも行間比 1 未満が 1 件も無いので絶対値ではない。 */
+    --lh-body:   1.8;    /* 16px → 28.8px（可視 33 要素） */
+    --lh-mid:    1.6;    /* 最多 62 要素 */
+    --lh-ui:     1.5;    /* 41 要素 */
+    --lh-tight:  1.28;   /* 50px → 64px */
+
+    /* === Letter spacing: 要素ごとに em で当てる（継承させない） === */
+    --ls-body:    0.03em;   /* 16px → 0.48px。★可視 73〜76 要素で最多 */
+    --ls-nav:     0.08em;   /* 16px → 1.28px */
+    --ls-heading: 0.1em;    /* 28/34/50px の見出し */
+    --ls-h1:      0.12em;   /* 下層ページの h1（42px → 5.04px） */
+
+    --r: 0px;   /* ★サイト全体で 0。例外は「ページ上部へ」の円とアイコンの 50% だけ */
+    --shadow-header: rgba(0, 0, 0, 0.16) 0 3px 6px 0;  /* 全体で 1 要素のみ */
+
+    /* === Layout === */
+    --base-unit: 10px;                                        /* 実サイトのトークン */
+    --width-contents: min(1200px, calc(100vw - 120px), 100%); /* 実サイトのトークン */
+    --pad-x: 120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; }   /* 実サイト: ≥768px は 16px 固定 / ≤767px は 4.2667vw */
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: var(--fw-normal);
+    line-height: 1;                 /* ★実サイトと同じく無単位 1。本文は必ず宣言し直す */
+    letter-spacing: normal;         /* body は normal。字間は継承させない */
+    /* font-feature-settings は実サイトで 0 件（palt / halt は CSS 全文にも無い）。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); background: var(--bg); box-shadow: var(--shadow-header); }
+  .header-inner { display: flex; align-items: center; max-width: var(--width-contents); margin: 0 auto; padding: 20px 0; gap: 40px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--black); }
+  .logo-mark { width: 26px; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--mc-red); font-size: 22px; line-height: 1; }
+  .logo-text { font-size: 22px; font-weight: var(--fw-medium); letter-spacing: var(--ls-nav); line-height: 1.2; }
+  .header-nav { display: flex; gap: 28px; margin-left: auto; }
+  .header-nav a { font-size: 16px; line-height: var(--lh-ui); color: var(--text-2); text-decoration: none; letter-spacing: var(--ls-nav); }
+  .header-lang { display: flex; gap: 8px; font-size: 14px; line-height: var(--lh-ui); color: var(--muted); }
+  .header-lang b { color: var(--black); font-weight: var(--fw-medium); }
+
+  /* SECTIONS */
+  .section { padding: 72px 0; max-width: var(--width-contents); margin: 0 auto; }
+  .section-alt { background: var(--surface-light); }
+  .section-alt .section-inner { padding: 72px 0; max-width: var(--width-contents); margin: 0 auto; }
+  .eyebrow { font-size: 16px; line-height: var(--lh-ui); letter-spacing: var(--ls-nav); color: var(--text-2); margin-bottom: calc(1.2 * var(--base-unit)); }
+  .section-title { font-size: 50px; font-weight: var(--fw-thin); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); margin-bottom: calc(2.4 * var(--base-unit)); }
+  .section-lead { font-size: 16px; line-height: var(--lh-body); letter-spacing: var(--ls-body); max-width: 860px; margin-bottom: calc(4 * var(--base-unit)); }
+  .note { font-size: 15px; line-height: var(--lh-body); letter-spacing: var(--ls-body); color: #555; margin-top: calc(2.4 * var(--base-unit)); max-width: 860px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surface); padding: 1px 5px; letter-spacing: normal; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--border); border-radius: var(--r); background: var(--bg); }
+  .swatch-chip { height: 80px; }
+  .swatch-body { padding: calc(1.2 * var(--base-unit)); }
+  .swatch-name { font-size: 15px; font-weight: var(--fw-medium); line-height: var(--lh-ui); letter-spacing: var(--ls-body); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .swatch-use { font-size: 13px; line-height: var(--lh-mid); letter-spacing: var(--ls-body); color: #555; margin-top: 7px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 13px; font-weight: var(--fw-medium); color: var(--black); letter-spacing: var(--ls-body); }
+  .s-display { font-size: 50px; font-weight: var(--fw-thin); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); }
+  .s-h1 { font-size: 42px; font-weight: var(--fw-thin); line-height: 1.52; letter-spacing: var(--ls-h1); }
+  .s-h2 { font-size: 34px; font-weight: var(--fw-normal); line-height: 1.41; letter-spacing: var(--ls-heading); }
+  .s-h3 { font-size: 28px; font-weight: var(--fw-normal); line-height: var(--lh-mid); letter-spacing: var(--ls-heading); }
+  .s-label { font-size: 24px; font-weight: var(--fw-normal); line-height: var(--lh-ui); letter-spacing: var(--ls-body); }
+  .s-body { font-size: 16px; font-weight: var(--fw-normal); line-height: var(--lh-body); letter-spacing: var(--ls-body); }
+  .s-caption { font-size: 15px; font-weight: var(--fw-normal); line-height: 1.67; letter-spacing: 0.045em; }
+
+  .ls-demo { display: grid; gap: 14px; margin-top: 26px; }
+  .ls-demo div { font-size: 24px; line-height: var(--lh-mid); border-left: 1px solid var(--border); padding-left: calc(2 * var(--base-unit)); }
+
+  /* HERO（実サイトは全画面の動画。文字は動画に焼き込まれており DOM に無い） */
+  .hero { position: relative; height: 320px; background: linear-gradient(170deg, #1d7fd0 0%, #63b3e8 55%, #cfe6f6 100%); display: flex; align-items: center; justify-content: center; }
+  .hero-note { position: absolute; left: 0; bottom: 0; background: var(--black); color: var(--white); font-size: 13px; line-height: var(--lh-ui); letter-spacing: var(--ls-body); padding: 10px 20px; }
+  .hero-copy { color: var(--white); font-family: Inter, sans-serif; font-size: 44px; font-weight: var(--fw-thin); line-height: 1.2; letter-spacing: 0.01em; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: calc(2 * var(--base-unit)); align-items: center; margin-bottom: calc(2.6 * var(--base-unit)); }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--r); }
+  .btn-primary { background: var(--black); color: var(--white); border: none; padding: calc(1 * var(--base-unit)) calc(2 * var(--base-unit)); font-size: 20px; font-weight: var(--fw-medium); line-height: var(--lh-ui); letter-spacing: var(--ls-heading); }
+  .btn-secondary { background: var(--white); color: var(--black); border: 1px solid var(--black); padding: calc(1 * var(--base-unit)) calc(2 * var(--base-unit)); font-size: 20px; font-weight: var(--fw-medium); line-height: var(--lh-ui); letter-spacing: var(--ls-heading); }
+  .btn-list { background: var(--black); color: var(--white); border: none; padding: 25px 40px 25px 25px; font-size: 20px; font-weight: var(--fw-normal); line-height: var(--lh-ui); letter-spacing: normal; }
+  .btn-round { background: rgba(162, 32, 65, 0.8); color: var(--white); border: none; border-radius: 1440px; width: 56px; height: 56px; font-size: 10px; line-height: var(--lh-ui); }
+  .on-dark { background: var(--black); padding: calc(3 * var(--base-unit)); display: flex; gap: calc(3 * var(--base-unit)); flex-wrap: wrap; }
+  .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--white); padding: calc(1.2 * var(--base-unit)) 0 calc(1.2 * var(--base-unit)) calc(2 * var(--base-unit)); font-size: 20px; font-weight: var(--fw-normal); line-height: var(--lh-ui); letter-spacing: var(--ls-body); min-width: 240px; justify-content: flex-start; }
+  .is-focus { outline: 2px solid var(--navy); outline-offset: 3px; }
+
+  /* NEWS */
+  .news-tabs { display: flex; margin-bottom: calc(3 * var(--base-unit)); }
+  .news-list { border-top: 1px solid var(--border); }
+  .news-item { display: grid; grid-template-columns: 160px 1fr; gap: calc(2.4 * var(--base-unit)); padding: calc(2.4 * var(--base-unit)) 0; border-bottom: 1px solid var(--border); text-decoration: none; }
+  .news-date { font-size: 15px; line-height: 1.67; letter-spacing: 0.045em; color: var(--text-2); }
+  .news-title { font-size: 15px; line-height: 1.67; letter-spacing: 0.045em; color: var(--navy); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: calc(2.4 * var(--base-unit)); }
+  .card { border: 1px solid var(--border); border-radius: var(--r); background: var(--bg); text-decoration: none; color: var(--black); display: block; }
+  .card-img { height: 150px; background: linear-gradient(140deg, #dfe6ea, #b3bfc7); }
+  .card-body { padding: calc(2 * var(--base-unit)); }
+  .card-cat { font-size: 16px; font-weight: var(--fw-medium); line-height: var(--lh-ui); letter-spacing: var(--ls-nav); color: var(--text-2); }
+  .card-title { font-size: 20px; font-weight: var(--fw-normal); line-height: var(--lh-mid); letter-spacing: 0.02em; margin-top: calc(1 * var(--base-unit)); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: calc(2.6 * var(--base-unit)); }
+  .field label { display: block; font-size: 16px; font-weight: var(--fw-medium); line-height: var(--lh-ui); letter-spacing: var(--ls-body); margin-bottom: calc(0.8 * var(--base-unit)); }
+  .field input, .field select {
+    width: 100%; background: transparent; color: var(--black);
+    border: none; border-bottom: 1px solid var(--border); border-radius: var(--r);
+    padding: 4px 28px 4px 36px; height: 44px; font-size: 14px; line-height: var(--lh-ui);
+    font-family: var(--font-body); letter-spacing: var(--ls-body);
+  }
+  .field input:focus, .field select:focus { outline: none; border-bottom: 1px solid var(--black); }
+  .field input.is-focus { border-bottom: 1px solid var(--black); outline: 2px solid var(--navy); outline-offset: 2px; }
+  .field-note { font-size: 13px; line-height: var(--lh-mid); letter-spacing: var(--ls-body); color: var(--muted); margin-top: 6px; }
+
+  /* TOKENS */
+  .token-table { width: 100%; border-collapse: collapse; margin-top: calc(2 * var(--base-unit)); }
+  .token-table th, .token-table td { text-align: left; font-size: 14px; line-height: var(--lh-ui); letter-spacing: var(--ls-body); padding: calc(1.3 * var(--base-unit)) calc(1.6 * var(--base-unit)); border-bottom: 1px solid var(--border); vertical-align: top; }
+  .token-table th { font-weight: var(--fw-medium); width: 320px; }
+  .token-table td.mono, .token-table th.mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: normal; }
+
+  /* LAYOUT */
+  .layout-demo { border: 1px solid var(--border); background: var(--surface-light); padding: calc(2 * var(--base-unit)); }
+  .layout-bar { background: var(--black); color: var(--white); font-size: 13px; line-height: var(--lh-ui); letter-spacing: var(--ls-body); padding: calc(1 * var(--base-unit)); text-align: center; }
+  .layout-bar + .layout-bar { margin-top: calc(1.2 * var(--base-unit)); }
+
+  /* FOOTER */
+  .footer { background: var(--black); color: var(--white); margin-top: calc(6 * var(--base-unit)); }
+  .footer-inner { max-width: var(--width-contents); margin: 0 auto; padding: calc(5 * var(--base-unit)) 0; }
+  .footer h4 { font-size: 20px; font-weight: var(--fw-medium); line-height: var(--lh-ui); letter-spacing: var(--ls-heading); margin-bottom: calc(1.6 * var(--base-unit)); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: calc(2.4 * var(--base-unit)); }
+  .footer-links a { color: var(--white); font-size: 15px; line-height: var(--lh-ui); letter-spacing: 0.05em; text-decoration: none; }
+  .footer-copy { font-size: 13px; line-height: var(--lh-ui); letter-spacing: var(--ls-body); color: #bbb; margin-top: calc(3 * var(--base-unit)); }
+
+  @media (max-width: 767px) {
+    /* 実サイトは html { font-size: 4.2667vw }（375px でちょうど 16px）。
+       768/767px の境目で 2.05 倍に跳ぶ。ここでは同じ式を再現する。 */
+    html { font-size: 4.2667vw; }
+    :root { --pad-x: 20px; --width-contents: min(1200px, calc(100vw - 40px), 100%); }
+    .section-title { font-size: 28px; }
+    .s-display { font-size: 28px; }
+    .s-h1 { font-size: 28px; }
+    .header-nav { display: none; }
+    .news-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <span class="logo-mark">▲</span>
+      <span class="logo-text">三菱商事</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#colors">会社情報</a>
+      <a href="#typography">ニュース</a>
+      <a href="#buttons">サステナビリティ</a>
+      <a href="#news">投資家情報</a>
+      <a href="#layout">採用情報</a>
+    </nav>
+    <div class="header-lang"><b>日本語</b><span>|</span><span>English</span></div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-copy">what comes to mind?</div>
+  <div class="hero-note">実サイトのこの文字は全画面動画（1440×720）に焼き込まれており、DOM には存在しない。テキストで組まないこと</div>
+</div>
+
+<section class="section" id="colors">
+  <div class="eyebrow">Color Palette</div>
+  <h2 class="section-title">黒い面と、ほとんど出てこない赤</h2>
+  <p class="section-lead">面の主役は <code>#000000</code>。ブランド赤 <code>#a22041</code> が面になるのは右下の「ページ上部へ」1 要素だけで、CTA には一切出てこない。区切りは影ではなく 1px の罫線でつける。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black（面）</div><div class="swatch-hex">#000000</div><div class="swatch-use">タブの選択状態・一覧ボタン。文字色としても可視 20 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:rgba(162,32,65,.8)"></div><div class="swatch-body"><div class="swatch-name">MC Red</div><div class="swatch-hex">#a22041 / α .8</div><div class="swatch-use">「ページ上部へ」のみ。可視 1 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#0f2350"></div><div class="swatch-body"><div class="swatch-name">Navy</div><div class="swatch-hex">#0f2350</div><div class="swatch-use">ニュース見出しリンク（可視 6 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#333333</div><div class="swatch-use">グローバルナビの項目（可視 11 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d5d5d5"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#d5d5d5</div><div class="swatch-use">最多の罫線色。カード・区切り線</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#efefef"></div><div class="swatch-body"><div class="swatch-name">Surface Gray</div><div class="swatch-hex">#efefef</div><div class="swatch-use">メガメニューの開閉ボタン面（可視 32 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f7f7f8"></div><div class="swatch-body"><div class="swatch-name">Surface Light</div><div class="swatch-hex">#f7f7f8</div><div class="swatch-use">「ピックアップ」の面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border-bottom:1px solid #d5d5d5"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">pageBackground.resolved / 根拠 body</div></div></div>
+  </div>
+  <p class="note">計測に出る <code>#d52484</code>（ピンク）・<code>#151b17</code>・<code>#3860be</code> は Video.js のプレイヤー UI。サンプル文字列が <code>0:05</code> <code>1x, selected</code> <code>Filter Icon</code> なので判別できる。ブランド色として採用しない。</p>
+</section>
+
+<section class="section-alt" id="typography">
+  <div class="section-inner">
+    <div class="eyebrow">Typography</div>
+    <h2 class="section-title">ウェイトは3段しかない</h2>
+    <p class="section-lead">欧文 Neue Helvetica ＋ 和文 たづがね角ゴシック。どちらも Monotype で、FONTPLUS から配信される。<strong>使える太さは 200 / 400 / 500 の 3 本だけ</strong>で、<code>font-weight: 700</code> と書いても Medium が出る。実サイトの 50px 見出しは <code>300</code> と宣言されているが、描画は 200。</p>
+
+    <div class="type-row"><div class="type-meta"><b>Display</b>50px / w300（実体 200）<br>lh 1.28 / ls 0.1em</div><div class="s-display">ニュース</div></div>
+    <div class="type-row"><div class="type-meta"><b>Heading 1</b>42px / w300（実体 200）<br>lh 1.52 / ls 0.12em</div><div class="s-h1">社長メッセージ</div></div>
+    <div class="type-row"><div class="type-meta"><b>Heading 2</b>34px / w400<br>lh 1.41 / ls 0.1em</div><div class="s-h2">三菱商事について</div></div>
+    <div class="type-row"><div class="type-meta"><b>Heading 3</b>28px / w400<br>lh 1.6 / ls 0.1em</div><div class="s-h3">サステナビリティ</div></div>
+    <div class="type-row"><div class="type-meta"><b>Section Label</b>24px / w400<br>lh 1.5 / ls 0.03em</div><div class="s-label">基本情報</div></div>
+    <div class="type-row"><div class="type-meta"><b>Body</b>16px / w400<br>lh 1.8 / ls 0.03em<br>★可視 94 要素で最多</div><div class="s-body">三菱商事は、世界中に広がる当社の拠点、事業会社とのネットワークを通じて、幅広い産業を事業領域としています。地球環境と社会、そして企業の持続的な成長をめざし、事業を通じた価値の創出に取り組んでいます。</div></div>
+    <div class="type-row"><div class="type-meta"><b>Caption</b>15.008px / w400<br>lh 1.67</div><div class="s-caption">2026年10月21日　米国Copper World銅鉱山の開発意思決定について</div></div>
+
+    <h3 class="s-h3" style="margin-top:48px">字間は役割ごとに違う</h3>
+    <p class="note" style="margin-top:12px">body は <code>letter-spacing: normal</code>。継承させず、要素ごとに <code>em</code> で当てている。判定根拠はサイズが違う要素で px 値が比例して変わること（16px→0.48px、24px→0.72px、34px→3.4px）。</p>
+    <div class="ls-demo">
+      <div style="letter-spacing:0.03em">本文 0.03em — 三菱商事について｜可視 73〜76 要素で最多</div>
+      <div style="letter-spacing:0.08em">ナビ 0.08em — 三菱商事について｜グローバルナビ</div>
+      <div style="letter-spacing:0.1em">見出し 0.1em — 三菱商事について｜28 / 34 / 50px</div>
+      <div style="letter-spacing:0.12em">h1 0.12em — 三菱商事について｜下層ページのみ</div>
+    </div>
+    <p class="note"><code>font-feature-settings: "palt"</code> は CSS 全文で 0 件、実測も 0 要素。字詰めは一切しない。正の字間と設計が衝突するので後から足さないこと。</p>
+  </div>
+</section>
+
+<section class="section" id="buttons">
+  <div class="eyebrow">Buttons</div>
+  <h2 class="section-title">角丸ゼロ。黒い面に白文字</h2>
+  <p class="section-lead">CTA は <code>border-radius: 0</code>・<code>padding: 10px 20px</code>・20px / weight 500 / <code>letter-spacing: 2px</code>（0.1em）。丸くなるのは「ページ上部へ」だけ。</p>
+  <div class="btn-grid">
+    <button class="btn btn-primary">ニュースリリース</button>
+    <button class="btn btn-secondary">新着情報</button>
+    <a class="btn btn-list" href="#">ニュース一覧</a>
+    <button class="btn btn-primary is-focus">フォーカス状態</button>
+    <button class="btn btn-round">ページ<br>上部へ</button>
+  </div>
+  <div class="on-dark">
+    <a class="btn btn-outline" href="#">ニュースリリース</a>
+    <a class="btn btn-outline" href="#">お知らせ</a>
+    <a class="btn btn-outline" href="#">IR最新情報</a>
+  </div>
+  <p class="note">黒面の上のリンクは <code>1px solid #ffffff</code> の枠に <code>padding-left: 20px</code>。左だけ空けて罫線と文字を離す。</p>
+</section>
+
+<section class="section-alt" id="news">
+  <div class="section-inner">
+    <div class="eyebrow">News</div>
+    <h2 class="section-title">タブとカード</h2>
+    <div class="news-tabs">
+      <button class="btn btn-primary">ニュースリリース</button>
+      <button class="btn btn-secondary">お知らせ</button>
+      <button class="btn btn-secondary">IR最新情報</button>
+    </div>
+    <div class="news-list">
+      <a class="news-item" href="#"><div class="news-date">2026年10月21日</div><div class="news-title">米国Copper World銅鉱山の開発意思決定について</div></a>
+      <a class="news-item" href="#"><div class="news-date">2026年10月9日</div><div class="news-title">2026年度第2四半期決算説明会の開催について</div></a>
+      <a class="news-item" href="#"><div class="news-date">2026年10月7日</div><div class="news-title">サステナビリティ・レポートを発行しました</div></a>
+    </div>
+
+    <h3 class="s-h3" style="margin-top:56px">カード</h3>
+    <div class="card-grid" style="margin-top:24px">
+      <a class="card" href="#"><div class="card-img"></div><div class="card-body"><div class="card-cat">会社情報</div><div class="card-title">ひと目で分かる三菱商事</div></div></a>
+      <a class="card" href="#"><div class="card-img"></div><div class="card-body"><div class="card-cat">事業について</div><div class="card-title">プロジェクト事例</div></div></a>
+      <a class="card" href="#"><div class="card-img"></div><div class="card-body"><div class="card-cat">投資家情報</div><div class="card-title">個人投資家の皆様へ</div></div></a>
+    </div>
+    <p class="note">カードは <code>1px solid #d5d5d5</code>・角丸 0・影なし。面の区別は影ではなく罫線でつける。</p>
+  </div>
+</section>
+
+<section class="section" id="forms">
+  <div class="eyebrow">Forms</div>
+  <h2 class="section-title">入力欄は枠を持たない</h2>
+  <div class="form-grid">
+    <div class="field">
+      <label for="q">サイト内検索</label>
+      <input id="q" type="text" class="is-focus" value="サステナビリティ">
+      <div class="field-note">実サイトは <code>border: 0px none</code>・<code>padding: 4px 28px 4px 36px</code>（左 36px はアイコン分）・14px</div>
+    </div>
+    <div class="field">
+      <label for="cat">カテゴリ</label>
+      <select id="cat"><option>すべて</option><option>ニュースリリース</option><option>お知らせ</option></select>
+      <div class="field-note">angle は UA 既定。<code>border-radius</code> は 0</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="tokens">
+  <div class="section-inner">
+    <div class="eyebrow">Design Tokens</div>
+    <h2 class="section-title">設計幅における1pxを変数で持つ</h2>
+    <p class="section-lead">自社トークンは 15〜18 個。色は 1 つも入っておらず、中身は寸法・書体名・ロゴのパスだけ。特徴的なのが下の 4 つで、<strong>分母がそのまま設計幅</strong>になっている。</p>
+    <table class="token-table">
+      <tr><th class="mono">--mc--quantity--of-design--horizontal--dt</th><td class="mono">0.0520833333vw</td><td>= 100vw / <b>1920</b>（デスクトップ）</td></tr>
+      <tr><th class="mono">--mc--quantity--of-design--horizontal--lt</th><td class="mono">0.0694444444vw</td><td>= 100vw / <b>1440</b>（ラップトップ）</td></tr>
+      <tr><th class="mono">--mc--quantity--of-design--horizontal--tb</th><td class="mono">0.1302083333vw</td><td>= 100vw / <b>768</b>（タブレット）</td></tr>
+      <tr><th class="mono">--mc--quantity--of-design--horizontal--sp</th><td class="mono">0.2666666667vw</td><td>= 100vw / <b>375</b>（モバイル）</td></tr>
+      <tr><th class="mono">--base-unit</th><td class="mono">10px</td><td>余白は <code>calc(1.6 * var(--base-unit))</code> のように書く</td></tr>
+      <tr><th class="mono">--width-contents</th><td class="mono">min(1200px, calc(100vw - 120px), 100%)</td><td>コンテンツ幅</td></tr>
+      <tr><th class="mono">--mc--size--of-font--for-root</th><td class="mono">1rem</td><td>≤767px で <code>4.2667vw</code> に切り替わる</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="layout">
+  <div class="eyebrow">Layout</div>
+  <h2 class="section-title">コンテナ1200px / 左右120px</h2>
+  <div class="layout-demo">
+    <div class="layout-bar">max-width 1200px（--width-contents）</div>
+    <div class="layout-bar" style="background:#333">padding-left / right 120px</div>
+    <div class="layout-bar" style="background:#666">gutter 12px（最多）／ セクション間 24px・32px</div>
+  </div>
+  <p class="note"><strong>768 / 767px の境目でルートが 2.05 倍に跳ぶ。</strong>実測 <code>html</code>: 768px → 16px / 767px → 32.7253px。モバイル側だけ 375px 設計のレイアウトを画面幅へ比例拡大する作りで、834px も 375px も 16px なので、規定の 4 幅だけ測ると完全に固定に見える。</p>
+</section>
+
+<section class="section-alt" id="elevation">
+  <div class="section-inner">
+    <div class="eyebrow">Elevation</div>
+    <h2 class="section-title">影は固定ヘッダーの1つだけ</h2>
+    <p class="section-lead">サイト本体の影は <code>rgba(0,0,0,0.16) 0 3px 6px 0</code> が可視 1 要素。もう 1 つ計測に出る <code>rgba(0,0,0,0.2) 0 0 18px</code> は Cookie バナー由来なので採用しない。</p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:24px">
+      <div style="background:#fff;border:1px solid var(--border);padding:24px 32px;font-size:15px;line-height:1.5;letter-spacing:.03em">Level 0 — none（カード・ボタン）</div>
+      <div style="background:#fff;box-shadow:rgba(0,0,0,0.16) 0 3px 6px 0;padding:24px 32px;font-size:15px;line-height:1.5;letter-spacing:.03em">Level 1 — 固定ヘッダー</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>三菱商事</h4>
+    <div class="footer-links">
+      <a href="#">会社情報</a><a href="#">ニュース</a><a href="#">サステナビリティ</a><a href="#">投資家情報</a><a href="#">採用情報</a><a href="#">ご利用規約</a>
+    </div>
+    <div class="footer-copy">このページは design system のプレビューです。書体は Neue Helvetica / たづがね角ゴシック（Monotype・FONTPLUS 配信）の代替として Inter / Zen Kaku Gothic New を使用しています。</div>
+  </div>
+</footer>
+
+</body>
+</html>

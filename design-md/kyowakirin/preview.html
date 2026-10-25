@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 協和キリン（Kyowa Kirin）</title>
+<style>
+  /* ★このプレビューは Web フォントを 1 本も読み込まない。
+     実サイトが @font-face 0 件・フォントファイル要求 0 件・document.fonts 空配列で、
+     OS ローカル書体だけで組んでいるため、代替を当てずに実サイトのスタックをそのまま使う。
+     ヒラギノUD角ゴ Std は macOS に同梱されない別売書体なので、多くの環境では
+     3 番目の ヒラギノ角ゴ Pro W3（mac）／5 番目の メイリオ（Windows）が描画される。 */
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 1 つも無い（自社 0・プラットフォーム 0）。
+       以下は computed style の実測値。2026-10-25 */
+    --orange:    #ea5504;   /* ★ブランド色。ラベル・カテゴリ名・ドット。文字 16 / 面 10 要素 */
+    --orange-2:  #eb5e11;   /* 大見出しに出る別のオレンジ（3 要素） */
+    --orange-3:  #ed6f36;   /* さらに別のオレンジ（1 要素） */
+    --blue:      #1ba8d6;   /* ★導線専用。リンク文・ピル型ボタンの文字（可視 9 要素） */
+    --text:      #23323b;   /* ★本文・見出し・ナビ。可視 46 要素で最多。純黒は使わない */
+    --white:     #ffffff;
+    --surface:   #f3f3f3;   /* カルーセルの地・「もっと見る」の面（可視 14 要素） */
+    --surface-light: #f9f9f9;
+    --footer:    #3e3a39;
+    --bg:        #ffffff;   /* pageBackground.resolved / 根拠 viewportTopBySample (12/12) */
+
+    /* === Fonts === 実サイトの宣言をそのまま。Web フォントは読み込まない */
+    --font-body: "ヒラギノUD角ゴ Std", "Hiragino UD Kaku Gothic Std",
+                 "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",
+                 メイリオ, meiryo, Arial, verdana, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Weight: 400 と 700 の 2 段だけ。500・600 は実測 0 要素 === */
+    --fw-normal: 400;
+    --fw-bold:   700;
+
+    /* === Line height: 本文 1.5 / 見出し 1.25 === */
+    --lh-body:  1.5;    /* 16px → 24px / 14px → 21px。★可視 76 要素で圧倒的最多 */
+    --lh-head:  1.25;   /* 48px / 32px の見出し */
+    --lh-micro: 1.15;   /* 左端タブの 2 行ラベル */
+
+    --ls: normal;   /* 実測 93/93 要素が normal */
+
+    /* === Radius: ピル型ボタンと円だけ。カードは角丸なし === */
+    --r-pill:  40px;
+    --r-more:  50px;
+    --r-card:  0px;
+
+    /* === Shadow: すべて offset 0 の「全方向の広がり」型 === */
+    --shadow-card:   rgba(0, 0, 0, 0.2) 0 0 8px 0;   /* ★主力。可視 14 要素 */
+    --shadow-header: rgba(0, 0, 0, 0.12) 0 2px 2px 0;
+    --shadow-rail:   rgba(0, 0, 0, 0.3) 0 0 6px 0;
+
+    /* === Layout === */
+    --container: 980px;   /* 8 箇所で最多 */
+    --wide:     1100px;
+    --column:    600px;
+    --pad-x:      10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 62.5%; }   /* = 10px。実サイトと同じ。以降すべて rem */
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1.6rem;          /* 16px */
+    font-weight: var(--fw-normal);
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls);
+    word-break: break-all;      /* ★実サイトの前提。日本語の禁則処理を切っている */
+    /* font-feature-settings は実サイトで 0 件（palt / halt は CSS 全文にも無い）。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* STAKEHOLDER RAIL（左端の常設タブ。製薬サイト特有） */
+  .rail { position: fixed; left: 0; top: 120px; width: 84px; background: var(--white); box-shadow: var(--shadow-rail); z-index: 20; }
+  .rail a, .rail button { display: block; width: 100%; border: none; background: var(--white); color: var(--text); font-family: var(--font-body); font-size: 1.1rem; line-height: var(--lh-micro); text-align: center; padding: 12px 6px; text-decoration: none; cursor: pointer; border-bottom: 1px solid var(--surface); }
+  .rail .icon { display: block; font-size: 2rem; line-height: 1; margin-bottom: 6px; }
+
+  /* HEADER */
+  .header { background: var(--white); box-shadow: var(--shadow-header); position: relative; z-index: 10; }
+  .header-inner { display: flex; align-items: center; max-width: var(--wide); margin: 0 auto; padding: 16px var(--pad-x); }
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--orange); font-size: 2.2rem; font-weight: var(--fw-bold); line-height: 1.2; }
+  .header-nav { display: flex; margin-left: auto; }
+  .header-nav a { font-size: 1.4rem; line-height: var(--lh-body); color: var(--text); text-decoration: none; padding: 0 15px; }
+
+  /* HERO */
+  .hero { position: relative; background: linear-gradient(135deg, #04344f 0%, #0a5f82 45%, #0c7b6a 100%); min-height: 380px; display: flex; align-items: center; }
+  .hero-inner { max-width: var(--wide); margin: 0 auto; padding: 0 var(--pad-x); width: 100%; }
+  .hero-card { background: var(--white); border-left: 4px solid var(--orange); padding: 36px 40px; max-width: 490px; }
+  .hero-card h2 { font-size: 3.4rem; font-weight: var(--fw-bold); line-height: var(--lh-head); color: var(--orange-2); margin-bottom: 20px; }
+  .hero-card p { font-size: 1.6rem; line-height: var(--lh-body); margin-bottom: 14px; }
+  .hero-card .play { color: var(--blue); font-size: 1.6rem; line-height: var(--lh-body); text-decoration: none; }
+
+  /* SECTIONS */
+  .section { padding: 64px var(--pad-x); max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface-light); }
+  .section-alt .section-inner { padding: 64px var(--pad-x); max-width: var(--container); margin: 0 auto; }
+  .eyebrow { font-size: 1.4rem; line-height: var(--lh-body); color: var(--orange); font-weight: var(--fw-bold); margin-bottom: 8px; }
+  .section-title { font-size: 3.2rem; font-weight: var(--fw-bold); line-height: var(--lh-head); margin-bottom: 24px; }
+  .section-lead { font-size: 1.6rem; line-height: var(--lh-body); max-width: var(--column); margin-bottom: 32px; }
+  .note { font-size: 1.3rem; line-height: 1.7; color: #4b5a63; margin-top: 22px; max-width: var(--column); word-break: normal; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--surface); padding: 1px 5px; word-break: normal; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .swatch { background: var(--bg); box-shadow: var(--shadow-card); }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 14px; }
+  .swatch-name { font-size: 1.4rem; font-weight: var(--fw-bold); line-height: var(--lh-body); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: #6a7880; margin-top: 4px; word-break: normal; }
+  .swatch-use { font-size: 1.2rem; line-height: 1.6; color: #4b5a63; margin-top: 7px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 230px 1fr; gap: 26px; padding: 20px 0; border-bottom: 1px solid var(--surface); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: #6a7880; line-height: 1.8; word-break: normal; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.3rem; font-weight: var(--fw-bold); color: var(--text); }
+  .s-title { font-size: 4.8rem; font-weight: var(--fw-bold); line-height: var(--lh-head); }
+  .s-hero  { font-size: 3.4rem; font-weight: var(--fw-bold); line-height: var(--lh-head); }
+  .s-h1    { font-size: 3.2rem; font-weight: var(--fw-bold); line-height: var(--lh-head); }
+  .s-h2    { font-size: 3.0rem; font-weight: var(--fw-bold); line-height: var(--lh-head); }
+  .s-link  { font-size: 2.0rem; font-weight: var(--fw-bold); line-height: var(--lh-body); }
+  .s-body  { font-size: 1.6rem; font-weight: var(--fw-normal); line-height: var(--lh-body); }
+  .s-nav   { font-size: 1.4rem; font-weight: var(--fw-normal); line-height: var(--lh-body); }
+  .s-list  { font-size: 1.3rem; font-weight: var(--fw-normal); line-height: var(--lh-body); }
+  .s-micro { font-size: 1.1rem; font-weight: var(--fw-normal); line-height: var(--lh-micro); }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 24px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; letter-spacing: var(--ls); word-break: normal; }
+  .btn-pill { background: var(--white); color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r-pill); padding: 12px 32px; font-size: 1.6rem; font-weight: var(--fw-normal); line-height: var(--lh-body); }
+  .btn-more { background: var(--surface); color: var(--blue); border: none; border-radius: var(--r-more); padding: 16px 44px; font-size: 2.0rem; font-weight: var(--fw-bold); line-height: var(--lh-body); }
+  .btn-nav  { background: var(--white); color: var(--text); border: none; border-radius: 0; padding: 10px 15px; font-size: 1.4rem; font-weight: var(--fw-normal); line-height: var(--lh-body); }
+  .is-focus { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 46px; }
+  .card { background: var(--white); box-shadow: var(--shadow-card); border-radius: var(--r-card); text-decoration: none; color: var(--text); display: block; }
+  .card-img { height: 150px; background: linear-gradient(140deg, #0a5f82, #0c7b6a); position: relative; }
+  .card-img .overlay { position: absolute; inset: 0; background-image: linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.45)); display: flex; align-items: flex-end; padding: 14px; }
+  .card-img .overlay span { color: var(--white); font-size: 1.6rem; font-weight: var(--fw-bold); line-height: var(--lh-body); }
+  .card-body { padding: 18px; }
+  .card-cat { font-size: 1.3rem; font-weight: var(--fw-bold); line-height: var(--lh-body); color: var(--orange); }
+  .card-title { font-size: 1.6rem; font-weight: var(--fw-normal); line-height: var(--lh-body); margin-top: 8px; }
+
+  /* NEWS */
+  .news-head { display: flex; align-items: baseline; gap: 16px; border-bottom: 3px solid var(--text); padding-bottom: 10px; margin-bottom: 20px; }
+  .news-head h3 { font-size: 2.0rem; font-weight: var(--fw-bold); line-height: var(--lh-body); color: var(--orange); }
+  .news-item { display: grid; grid-template-columns: 140px 1fr; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--surface); text-decoration: none; }
+  .news-date { font-size: 1.3rem; line-height: var(--lh-body); color: var(--text); }
+  .news-title { font-size: 1.3rem; line-height: var(--lh-body); color: var(--blue); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: var(--fw-bold); line-height: var(--lh-body); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: transparent; color: var(--text);
+    border: none; border-bottom: 1px solid var(--text); border-radius: 0;
+    padding: 4px; height: 40px; font-size: 1.6rem; line-height: var(--lh-body);
+    font-family: var(--font-body);
+  }
+  .field input:focus, .field select:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .field-note { font-size: 1.2rem; line-height: 1.7; color: #6a7880; margin-top: 6px; word-break: normal; }
+
+  /* LAYOUT */
+  .layout-demo { background: var(--surface); padding: 18px; }
+  .layout-bar { background: var(--text); color: var(--white); font-size: 1.3rem; line-height: var(--lh-body); padding: 10px; text-align: center; word-break: normal; }
+  .layout-bar + .layout-bar { margin-top: 10px; }
+
+  /* SHADOW DEMO */
+  .sh-grid { display: flex; flex-wrap: wrap; gap: 28px; }
+  .sh-item { background: var(--white); padding: 22px 28px; font-size: 1.4rem; line-height: var(--lh-body); word-break: normal; }
+
+  /* FOOTER */
+  .footer { background: var(--footer); color: var(--white); margin-top: 64px; }
+  .footer-inner { max-width: var(--wide); margin: 0 auto; padding: 40px var(--pad-x); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
+  .footer-links a { color: var(--white); font-size: 1.3rem; line-height: var(--lh-body); text-decoration: none; }
+  .footer-copy { font-size: 1.2rem; line-height: var(--lh-body); color: #c6c1bf; margin-top: 24px; word-break: normal; }
+
+  @media (max-width: 767px) {
+    /* 実サイトは html を動かさず body だけ 1.4rem に落とす 2 段の階段 */
+    body { font-size: 1.4rem; }
+    .section-title, .s-h1 { font-size: 2.8rem; }
+    .s-title { font-size: 2.8rem; }
+    .s-h2 { font-size: 1.6rem; }
+    .rail { display: none; }
+    .header-nav { display: none; }
+    .news-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <button><span class="icon">✕</span>閉じる</button>
+  <a href="#"><span class="icon">⚕</span>医療関係者<br>の皆さま</a>
+  <a href="#"><span class="icon">☺</span>一般・患者<br>の皆さま</a>
+  <a href="#"><span class="icon">📈</span>株主・投資家<br>の皆様</a>
+  <a href="#"><span class="icon">👤</span>採用情報</a>
+</aside>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">KYOWA KIRIN</a>
+    <nav class="header-nav">
+      <a href="#colors">会社情報</a>
+      <a href="#typography">研究開発</a>
+      <a href="#buttons">価値の共創</a>
+      <a href="#news">知る・学ぶ</a>
+      <a href="#layout">ニュースルーム</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-card">
+      <h2>Life-changingな価値を目指して</h2>
+      <p>私たちは協和キリンです。</p>
+      <a class="play" href="#">▶ 動画をみる</a>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="eyebrow">Color Palette</div>
+  <h2 class="section-title">オレンジはラベル、ブルーは導線</h2>
+  <p class="section-lead">ブランド色 <code>#ea5504</code> はセクションラベル・カテゴリ名・カルーセルのドットに使い、押せるものの文字は一貫してブルー <code>#1ba8d6</code>。役割で分かれている。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#ea5504"></div><div class="swatch-body"><div class="swatch-name">Kyowa Kirin Orange</div><div class="swatch-hex">#ea5504</div><div class="swatch-use">ブランド色。文字 16 要素 / 面 10 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#eb5e11"></div><div class="swatch-body"><div class="swatch-name">Orange 2</div><div class="swatch-hex">#eb5e11</div><div class="swatch-use">大見出しに出る別のオレンジ（3 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ed6f36"></div><div class="swatch-body"><div class="swatch-name">Orange 3</div><div class="swatch-hex">#ed6f36</div><div class="swatch-use">さらに別のオレンジ（1 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1ba8d6"></div><div class="swatch-body"><div class="swatch-name">Link Blue</div><div class="swatch-hex">#1ba8d6</div><div class="swatch-use">導線専用。リンク文・ピル型ボタン（可視 9 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#23323b"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#23323b</div><div class="swatch-use">本文・見出し・ナビ。可視 46 要素で最多</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f3f3f3"></div><div class="swatch-body"><div class="swatch-name">Surface Gray</div><div class="swatch-hex">#f3f3f3</div><div class="swatch-use">カルーセルの地・「もっと見る」の面（可視 14 要素）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#3e3a39"></div><div class="swatch-body"><div class="swatch-name">Footer</div><div class="swatch-hex">#3e3a39</div><div class="swatch-use">フッター全面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border-bottom:1px solid #f3f3f3"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">pageBackground.resolved / 根拠 viewportTopBySample (12/12)</div></div></div>
+  </div>
+  <p class="note"><strong>オレンジが 3 つ混在している。</strong>新規実装では <code>#ea5504</code> に寄せてよいが、既存ページと並べるときは 3 色あることを前提にする。写真の上に白文字を置く覆いは <code>linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.45))</code>（可視 8 要素）で、左が濃く右が透明。</p>
+</section>
+
+<section class="section-alt" id="typography">
+  <div class="section-inner">
+    <div class="eyebrow">Typography</div>
+    <h2 class="section-title">Webフォントを1本も読まない</h2>
+    <p class="section-lead">3 つの判定すべてでゼロ：<code>document.fonts</code> が空配列、CSS 全文の <code>@font-face</code> が 0 件、フォントファイルのリクエストが 0 件。<strong>ローカル書体だけで組むことが設計そのもの</strong>で、スタックの先頭には UD 書体が置かれている。</p>
+
+    <div class="type-row"><div class="type-meta"><b>Page Title</b>48px / w700<br>lh 1.25 / ls normal</div><div class="s-title">トップメッセージ</div></div>
+    <div class="type-row"><div class="type-meta"><b>Hero Heading</b>34px / w700<br>lh 1.25</div><div class="s-hero">Life-changingな価値を目指して</div></div>
+    <div class="type-row"><div class="type-meta"><b>Heading 1</b>32px / w700<br>lh 1.25</div><div class="s-h1">研究開発</div></div>
+    <div class="type-row"><div class="type-meta"><b>Heading 2</b>30px / w700<br>lh 1.25</div><div class="s-h2">注力する疾患領域</div></div>
+    <div class="type-row"><div class="type-meta"><b>Section Link</b>20px / w700<br>lh 1.5</div><div class="s-link">もっと見る</div></div>
+    <div class="type-row"><div class="type-meta"><b>Body</b>16px / w400<br>lh 1.5 / ls normal<br>★可視 76 要素で最多</div><div class="s-body">協和キリンは「ライフサイエンスとテクノロジーの進歩を追求し、新しい価値の創造により、世界の人々の健康と豊かさに貢献する」ことを経営理念に掲げ、独自の抗体技術を核とした医薬品の研究開発に取り組んでいます。</div></div>
+    <div class="type-row"><div class="type-meta"><b>Nav / Caption</b>14px / w400<br>lh 1.5<br>可視 21 要素</div><div class="s-nav">会社情報｜研究開発｜価値の共創｜知る・学ぶ</div></div>
+    <div class="type-row"><div class="type-meta"><b>List</b>13px / w400<br>lh 1.5</div><div class="s-list">2026年8月17日　「アレロック®錠５」一部ロットの自主回収について</div></div>
+    <div class="type-row"><div class="type-meta"><b>Micro</b>11px / w400<br>lh 1.15<br>左端タブ</div><div class="s-micro">医療関係者<br>の皆さま</div></div>
+
+    <p class="note"><strong>ウェイトは 400 と 700 の 2 段だけ。</strong>実測で 500・600 は 1 要素も無い。Web フォントが無いため、使える太さが OS 同梱書体の持ち分に限られる。中間の太さを足すと合成されてしまう。</p>
+    <p class="note"><strong>字間は <code>normal</code>。</strong>実測 93/93 要素（トップ）・48/48 要素（下層）で例外なし。<code>font-feature-settings: "palt"</code> も CSS 全文で 0 件。</p>
+  </div>
+</section>
+
+<section class="section" id="wordbreak">
+  <div class="eyebrow">Line Breaking</div>
+  <h2 class="section-title">禁則処理を切っている</h2>
+  <p class="section-lead"><code>body { word-break: break-all }</code> を 7 幅すべてで確認。<code>distributions</code> には出ないので、<code>body</code> の computed style を直接見ないと気づけない。</p>
+  <p class="note" style="margin-top:0;margin-bottom:20px">和文だけの文章では差が出ない（CJK は既定でどこでも折れる）。違いが出るのは<strong>欧文の単語</strong>と<strong>行頭禁則</strong>で、<code>break-all</code> は行末に収まらない欧文を<strong>単語の途中で切る</strong>。下は同じ文・同じ幅での比較。</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:8px">
+    <div>
+      <div style="font-size:1.3rem;font-weight:700;margin-bottom:8px;word-break:normal">word-break: break-all（実サイト）</div>
+      <div style="width:230px;background:#f3f3f3;padding:14px;font-size:1.4rem;line-height:1.5;word-break:break-all">新しい価値の創造 Life-changing な毎日へ</div>
+    </div>
+    <div>
+      <div style="font-size:1.3rem;font-weight:700;margin-bottom:8px;word-break:normal">word-break: normal（参考）</div>
+      <div style="width:230px;background:#f3f3f3;padding:14px;font-size:1.4rem;line-height:1.5;word-break:normal">新しい価値の創造 Life-changing な毎日へ</div>
+    </div>
+  </div>
+  <p class="note">情報量の多い見出し・一覧を幅の狭いカラムに収めるための選択。読みやすさを優先して外すと、カラム幅の設計ごと変わる。</p>
+</section>
+
+<section class="section-alt" id="buttons">
+  <div class="section-inner">
+    <div class="eyebrow">Buttons</div>
+    <h2 class="section-title">ピル型。文字はブルー</h2>
+    <p class="section-lead">一覧へのリンクは <code>border-radius: 40px</code>、「もっと見る」は <code>50px</code> で面が <code>#f3f3f3</code>。<strong>ボタンの文字はオレンジではなくブルー。</strong></p>
+    <div class="btn-grid">
+      <a class="btn btn-pill" href="#">お知らせ一覧</a>
+      <a class="btn btn-pill" href="#">ニュースリリース一覧</a>
+      <a class="btn btn-more" href="#">もっと見る</a>
+      <a class="btn btn-pill is-focus" href="#">フォーカス状態</a>
+    </div>
+    <div style="display:flex;gap:0;background:#fff;box-shadow:var(--shadow-header);width:fit-content;margin-top:8px">
+      <button class="btn btn-nav">会社情報</button>
+      <button class="btn btn-nav">研究開発</button>
+      <button class="btn btn-nav">価値の共創</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="news">
+  <div class="eyebrow">News</div>
+  <h2 class="section-title">3pxの罫で区切る</h2>
+  <div class="news-head"><h3>お知らせ</h3></div>
+  <a class="news-item" href="#"><div class="news-date">2026年8月17日</div><div class="news-title">「アレロック®錠５」一部ロットの自主回収（クラスⅡ）について</div></a>
+  <a class="news-item" href="#"><div class="news-date">2026年8月4日</div><div class="news-title">令和8年熊本地震による被害への支援について</div></a>
+  <a class="news-item" href="#"><div class="news-date">2026年7月28日</div><div class="news-title">2026年12月期 第2四半期決算を発表しました</div></a>
+  <div style="margin-top:24px"><a class="btn btn-pill" href="#">お知らせ一覧</a></div>
+
+  <h3 class="s-h1" style="margin-top:56px;font-size:2.4rem">カード</h3>
+  <div class="card-grid" style="margin-top:24px">
+    <a class="card" href="#"><div class="card-img"><div class="overlay"><span>品質保証</span></div></div><div class="card-body"><div class="card-cat">研究開発</div><div class="card-title">最高品質の医薬品を届けるための体制や取り組みを紹介</div></div></a>
+    <a class="card" href="#"><div class="card-img"><div class="overlay"><span>地球環境の保全</span></div></div><div class="card-body"><div class="card-cat">価値の共創</div><div class="card-title">気候変動および水資源への取り組み</div></div></a>
+    <a class="card" href="#"><div class="card-img"><div class="overlay"><span>創薬テクノロジー</span></div></div><div class="card-body"><div class="card-cat">研究開発</div><div class="card-title">独自の抗体技術を核とした創薬プロセス</div></div></a>
+  </div>
+  <p class="note">カードは<strong>角丸なし</strong>。影 <code>rgba(0,0,0,0.2) 0 0 8px 0</code>（可視 14 要素）で面を浮かせる。</p>
+</section>
+
+<section class="section-alt" id="elevation">
+  <div class="section-inner">
+    <div class="eyebrow">Elevation</div>
+    <h2 class="section-title">影はすべてoffset 0</h2>
+    <p class="section-lead"><code>0 4px 12px</code> のような下方向の影は使っていない（固定ヘッダーの <code>0 2px 2px</code> だけが例外）。色と offset をそのまま書き写すこと。</p>
+    <div class="sh-grid">
+      <div class="sh-item" style="box-shadow:rgba(0,0,0,0.12) 0 2px 2px 0">Level 1 — 固定ヘッダー</div>
+      <div class="sh-item" style="box-shadow:rgba(0,0,0,0.2) 0 0 8px 0">Level 2 — カード（可視 14 要素）★主力</div>
+      <div class="sh-item" style="box-shadow:rgba(0,0,0,0.3) 0 0 6px 0">Level 3 — 左端のステークホルダータブ</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="forms">
+  <div class="eyebrow">Forms</div>
+  <h2 class="section-title">入力欄は枠を持たない</h2>
+  <div class="form-grid">
+    <div class="field">
+      <label for="q">サイト内検索</label>
+      <input id="q" type="text" value="開発パイプライン">
+      <div class="field-note">実サイトは <code>border: 0px none</code> / <code>padding: 4px</code> / 16px。ここでは入力欄だと分かるように下線だけ足している</div>
+    </div>
+    <div class="field">
+      <label for="cat">カテゴリ</label>
+      <select id="cat"><option>すべて</option><option>お知らせ</option><option>ニュースリリース</option></select>
+      <div class="field-note"><code>border-radius</code> は 0</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="layout">
+  <div class="section-inner">
+    <div class="eyebrow">Layout</div>
+    <h2 class="section-title">コンテナ980px / 左右10px</h2>
+    <div class="layout-demo">
+      <div class="layout-bar">max-width 980px（8 箇所で最多）</div>
+      <div class="layout-bar" style="background:#4b5a63">セクションにより 1000px / 1100px</div>
+      <div class="layout-bar" style="background:#6a7880">本文カラム 600px ／ gap 46px・65px ／ padding 10px</div>
+    </div>
+    <p class="note"><strong><code>html</code> は全幅 10px 固定（<code>62.5%</code>）。</strong>動くのは <code>body</code> と見出しだけで、768px を境にした 2 段の階段切替。1920 / 1440 / 1200 / 1024 / 834px はすべて同じ値、768 / 767 / 375 / 374px もすべて同じ値。<code>clamp()</code> も <code>vw</code> も使っていない。</p>
+    <p class="note">CSS Custom Properties は<strong>自社・プラットフォームとも 0 個</strong>。値はすべて CSS に直書きされている。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#">サイトマップ</a><a href="#">サイト利用規約</a><a href="#">推奨環境</a><a href="#">個人情報の取り扱いについて</a><a href="#">ソーシャルメディアポリシー</a>
+    </div>
+    <div class="footer-copy">このページは design system のプレビューです。実サイトと同じく Web フォントを 1 本も読み込まず、OS ローカル書体のスタックをそのまま使っています。</div>
+  </div>
+</footer>
+
+</body>
+</html>
