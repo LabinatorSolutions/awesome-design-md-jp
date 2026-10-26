@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: ニデック（NIDEC）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === 設計幅 ===
+       ★全要素のサイズが calc(カンプのpx / var(--design-width) * 100vw) で書かれている。
+         デスクトップ 1468 / モバイル 376（767px 以下）。1440 と決め打ちしないこと。 */
+    --design-width: 1468;
+    --root-fz: 16;
+    --contents-width: 1172;
+    --contents-side-padding: 54;
+    --line-height: 1.5;
+
+    /* ★1px 相当の単位。角丸・余白・サイズをすべてこの倍数で書く */
+    --spacing: calc(1 / 16 * 1rem);
+
+    /* === Colors ===
+       グリーンのランプは実サイトで 21 段。主要なものを載せる。 */
+    --color-base-1:  #001f0f;  /* 深緑。本文・見出しの文字色。黒を使わない */
+    --color-green-1: #04937e;  /* グラデーション左端 */
+    --color-green-2: #099d41;  /* グラデーション右端 */
+    --color-green-3: #f8faf9;  /* ページ背景（html に当てる。body は透明） */
+    --color-green-4: #002f17;
+    --color-green-5: #eff9f4;
+    --color-green-6: #aec1b7;
+    --color-green-7: #009b4a;
+    --color-green-10:#52cc8c;
+    --color-green-13:#eaf7f0;
+    --color-green-18:#ccebdb;
+    --color-green-21:#5e8370;
+    --color-red-1:   #b30c00;
+    --color-red-2:   #fbf3f2;
+    --color-red-3:   #f0cecc;
+    --color-white-1: #fff;
+    --color-black-3: #242424;
+    /* ★グレーにも緑が入っている。純粋な無彩色ではない */
+    --color-gray-2:  #c7cdca;
+    --color-gray-4:  #d7dbd9;
+    --color-gray-5:  #eef0ef;
+    --color-gray-9:  #8f9c95;
+    --color-gray-13: #646d68;
+    /* カテゴリーバッジは別系統 */
+    --cat-product:   #5981a4;
+    --cat-corporate: #869c56;
+
+    --color-gradient-green:       90deg, #04937e 0%, #099d41 100%;
+    --color-gradient-green-hover: 90deg, #056a5b 0%, #08863c 100%;
+    --color-gradient-navy:        90deg, #282761 0%, #232180 100%;
+
+    /* === Fonts ===
+       ★可変フォント。wght@100..900 で読むから 250・350 という中間値が描画できる。 */
+    --ff-root:   "Noto Sans JP", sans-serif;
+    --ff-outfit: "Outfit", sans-serif;
+
+    /* === Weight tokens（7 段。250 と 350 がある） === */
+    --font-weight-200: 200;  --font-weight-250: 250;  --font-weight-300: 300;
+    --font-weight-350: 350;  --font-weight-400: 400;  --font-weight-500: 500;
+    --font-weight-700: 700;
+
+    /* === Size tokens（カンプの px 値をそのまま名前にする。実サイトは 9〜76 の 30 段以上） === */
+    --text-12: calc(var(--spacing) * 12);  --text-14: calc(var(--spacing) * 14);
+    --text-16: calc(var(--spacing) * 16);  --text-17: calc(var(--spacing) * 17);
+    --text-20: calc(var(--spacing) * 20);  --text-24: calc(var(--spacing) * 24);
+    --text-32: calc(var(--spacing) * 32);  --text-48: calc(var(--spacing) * 48);
+
+    /* === Leading / Tracking tokens === */
+    --leading-100: 100%;  --leading-110: 110%;  --leading-120: 120%;
+    --leading-130: 130%;  --leading-140: 140%;  --leading-170: 170%;  --leading-200: 200%;
+    --tracking-0: 0;  --tracking-1: .01em;  --tracking-2: .02em;
+    --tracking-3: .03em;  --tracking-4: .04em;
+
+    /* === Radius（--spacing の倍数） === */
+    --radius-4:  calc(var(--spacing) * 4);   --radius-8:  calc(var(--spacing) * 8);
+    --radius-12: calc(var(--spacing) * 12);  --radius-20: calc(var(--spacing) * 20);
+    --radius-34: calc(var(--spacing) * 34);  /* ボタンのピル形 */
+
+    /* === セマンティックなタイポ・トークン ===
+       命名: --text-{pc|sp}-{jp}-{要素}-{ウェイト名}-{変種}
+       サイズ・行間・字間・ウェイトの 4 つが同じ接頭辞でぶら下がる。 */
+    --text-pc-jp-text-p-demilight-narrow:                 calc(var(--spacing) * 17);
+    --text-pc-jp-text-p-demilight-narrow--line-height:    130%;
+    --text-pc-jp-text-p-demilight-narrow--letter-spacing: 0;
+    --text-pc-jp-text-p-demilight-narrow--font-weight:    350;
+
+    --text-pc-jp-text-p-demilight-s:                      calc(var(--spacing) * 14);
+    --text-pc-jp-text-p-demilight-s--line-height:         170%;   /* narrow でない＝広い */
+    --text-pc-jp-text-p-demilight-s--letter-spacing:      0;
+    --text-pc-jp-text-p-demilight-s--font-weight:         350;
+
+    --ease-out: cubic-bezier(0, 0, .2, 1);
+    --global-navigation-height: calc(var(--spacing) * 80);
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ★ページ背景は html に当たっており body は透明 */
+  html {
+    background: var(--color-green-3);
+    font-size: calc(var(--root-fz) * 1px);   /* 768px 以上 ＝ 16px */
+  }
+  body {
+    margin: 0;
+    background: transparent;
+    color: var(--color-base-1);              /* ★黒ではなく深緑 */
+    font-family: var(--ff-root);
+    font-size: calc(var(--root-fz) * 1px);
+    line-height: var(--line-height);
+    font-weight: var(--font-weight-350);     /* ★本文は 400 ではなく 350。可視58要素 */
+    font-feature-settings: normal;           /* ★palt は 1 要素も使っていない */
+  }
+
+  /* ★767px でルート自体が vw になる。768px の 16px → 767px の 32.64px に 2.04 倍跳ぶ */
+  @media (max-width: 767px) {
+    :root { --design-width: 376; }
+    html, body { font-size: calc(var(--root-fz) / var(--design-width) * 100vw); }
+  }
+
+  .wrap {
+    max-width: calc(var(--spacing) * var(--contents-width));
+    margin: 0 auto;
+    padding: 0 calc(var(--spacing) * var(--contents-side-padding));
+  }
+
+  /* ---------- Header ---------- */
+  .gnav {
+    height: var(--global-navigation-height);
+    display: flex; align-items: center; gap: calc(var(--spacing) * 28);
+    background: var(--color-green-3);
+  }
+  .gnav__logo {
+    font-family: var(--ff-outfit); font-weight: var(--font-weight-700);
+    font-size: var(--text-24); color: var(--color-green-7); letter-spacing: var(--tracking-0);
+  }
+  .gnav a {
+    color: var(--color-base-1); text-decoration: none;
+    font-size: var(--text-14); font-weight: var(--font-weight-400);
+    letter-spacing: var(--tracking-2);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; border-radius: var(--radius-20); overflow: hidden;
+    background: linear-gradient(170deg, #9fd4e8 0%, #6fb9d8 38%, #2f7fa8 100%);
+    min-height: calc(var(--spacing) * 380);
+    display: grid; align-content: center;
+    padding: calc(var(--spacing) * 48);
+    margin-bottom: calc(var(--spacing) * 40);
+  }
+  .hero__ttl {
+    font-family: var(--ff-outfit);
+    font-size: calc(48 / var(--design-width) * 100vw);
+    font-weight: var(--font-weight-500);
+    color: var(--color-white-1); margin: 0 0 calc(var(--spacing) * 14);
+    line-height: var(--leading-110); letter-spacing: var(--tracking-0);
+  }
+  .hero__lead {
+    margin: 0 0 calc(var(--spacing) * 26); max-width: 26em;
+    color: var(--color-white-1);
+    font-size: var(--text-17); font-weight: var(--font-weight-350);
+    line-height: var(--leading-170);
+  }
+
+  /* ---------- Buttons ---------- */
+  .c-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: calc(var(--spacing) * 56);
+    padding: 0 calc(var(--spacing) * 28);
+    border: none; border-radius: var(--radius-34);      /* ピル形 */
+    background: linear-gradient(var(--color-gradient-green));
+    color: var(--color-white-1); text-decoration: none;
+    font-size: var(--text-17); font-weight: var(--font-weight-500);
+    transition: background .15s var(--ease-out);
+  }
+  .c-btn:hover { background: linear-gradient(var(--color-gradient-green-hover)); }
+  .c-btn--arrow { padding: 0 calc(var(--spacing) * 60) 0 calc(var(--spacing) * 28); position: relative; }
+  .c-btn--arrow::after { content: "→"; position: absolute; right: calc(var(--spacing) * 28); }
+  .c-btn--outline {
+    background: var(--color-white-1); color: var(--color-base-1);
+    border: 1px solid var(--color-gray-4);
+  }
+  .c-btn--outline:hover { background: var(--color-green-13); }
+  .c-btn--navy { background: linear-gradient(var(--color-gradient-navy)); }
+  .c-btn.is-focus { outline: 2px solid var(--color-green-7); outline-offset: 3px; }
+
+  /* ---------- Sections ---------- */
+  .sec { padding: calc(var(--spacing) * 44) 0 0; }
+  .secttl {
+    display: flex; align-items: baseline; gap: calc(var(--spacing) * 14);
+    margin: 0 0 calc(var(--spacing) * 20);
+  }
+  .secttl .en {
+    font-family: var(--ff-outfit); font-weight: var(--font-weight-500);
+    font-size: var(--text-32); letter-spacing: var(--tracking-0);
+    /* ★グラデーションを文字そのものに流す。下層で可視 5 要素 */
+    background: linear-gradient(var(--color-gradient-green));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .secttl .ja {
+    font-size: var(--text-14); color: var(--color-gray-13);
+    font-weight: var(--font-weight-400); letter-spacing: var(--tracking-2);
+  }
+
+  .p-text {
+    font-size:      var(--text-pc-jp-text-p-demilight-narrow);
+    line-height:    var(--text-pc-jp-text-p-demilight-narrow--line-height);
+    letter-spacing: var(--text-pc-jp-text-p-demilight-narrow--letter-spacing);
+    font-weight:    var(--text-pc-jp-text-p-demilight-narrow--font-weight);
+    margin: 0 0 calc(var(--spacing) * 18);
+  }
+  .p-text--s {
+    font-size:      var(--text-pc-jp-text-p-demilight-s);
+    line-height:    var(--text-pc-jp-text-p-demilight-s--line-height);
+    font-weight:    var(--text-pc-jp-text-p-demilight-s--font-weight);
+    color: var(--color-gray-13);
+  }
+  .p-text code, .spec code {
+    font-family: var(--ff-outfit); font-size: var(--text-14); color: var(--color-green-7);
+  }
+
+  /* ---------- Weight demo ---------- */
+  .wrow {
+    display: grid; grid-template-columns: calc(var(--spacing) * 150) 1fr;
+    gap: calc(var(--spacing) * 16); align-items: baseline;
+    padding: calc(var(--spacing) * 12) 0; border-bottom: 1px solid var(--color-gray-5);
+  }
+  .wrow__k { font-family: var(--ff-outfit); font-size: var(--text-14); color: var(--color-gray-13); }
+  .wrow__v { font-size: var(--text-24); line-height: var(--leading-130); color: var(--color-base-1); }
+
+  /* ---------- Cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--spacing) * 20); }
+  .c-card {
+    background: var(--color-white-1); border-radius: var(--radius-12);
+    padding: calc(var(--spacing) * 22);
+    display: flex; flex-direction: column; gap: calc(var(--spacing) * 10);
+    min-height: calc(var(--spacing) * 180);
+  }
+  .badge {
+    align-self: flex-start; color: var(--color-white-1);
+    font-size: var(--text-12); font-weight: var(--font-weight-500);
+    padding: calc(var(--spacing) * 4) calc(var(--spacing) * 12);
+    border-radius: var(--radius-4); letter-spacing: var(--tracking-2);
+  }
+  .badge--product   { background: var(--cat-product); }
+  .badge--corporate { background: var(--cat-corporate); }
+  .c-card__ttl {
+    font-size: var(--text-20); font-weight: var(--font-weight-500);
+    line-height: var(--leading-140); color: var(--color-base-1); margin-top: auto;
+  }
+
+  /* ---------- Color ---------- */
+  .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: calc(var(--spacing) * 10); }
+  .sw { border-radius: var(--radius-8); overflow: hidden; background: var(--color-white-1); }
+  .sw__chip { height: calc(var(--spacing) * 64); }
+  .sw__meta { padding: calc(var(--spacing) * 8) calc(var(--spacing) * 10); }
+  .sw__name { font-size: var(--text-12); color: var(--color-base-1); }
+  .sw__hex { font-family: var(--ff-outfit); font-size: var(--text-12); color: var(--color-gray-13); }
+
+  /* ---------- Spec ---------- */
+  .spec { width: 100%; border-collapse: collapse; background: var(--color-white-1); border-radius: var(--radius-8); overflow: hidden; }
+  .spec th, .spec td {
+    border: 1px solid var(--color-gray-5); padding: calc(var(--spacing) * 10) calc(var(--spacing) * 12);
+    text-align: left; font-size: var(--text-14); line-height: var(--leading-170);
+  }
+  .spec th { background: var(--color-green-20, #f1f4f2); white-space: nowrap; font-weight: var(--font-weight-500); }
+
+  .caution {
+    background: var(--color-white-1); border-left: calc(var(--spacing) * 4) solid var(--color-green-7);
+    border-radius: var(--radius-8);
+    padding: calc(var(--spacing) * 18) calc(var(--spacing) * 22);
+    margin: calc(var(--spacing) * 10) 0 calc(var(--spacing) * 56);
+  }
+  .caution ul { margin: 0; padding-left: 1.2em; }
+  .caution li { font-size: var(--text-14); line-height: var(--leading-200); }
+  .caution b { color: var(--color-green-7); font-weight: var(--font-weight-700); }
+
+  @media (max-width: 767px) {
+    .hero__ttl { font-size: var(--text-32); }
+    .cards { grid-template-columns: 1fr; }
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+    .wrow { grid-template-columns: 1fr; gap: calc(var(--spacing) * 4); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="gnav">
+    <span class="gnav__logo">Nidec</span>
+    <a href="#">製品情報</a>
+    <a href="#">アプリケーション</a>
+    <a href="#">ソリューション・事例</a>
+    <a href="#">サポート</a>
+    <a href="#">Nidecの強み</a>
+  </header>
+
+  <section class="hero">
+    <h1 class="hero__ttl">Nidec Journal</h1>
+    <p class="hero__lead">抜本的な改革に取り組むニデックの現在地と、これからの未来への軌跡をお伝えしていきます。</p>
+    <div><a class="c-btn c-btn--arrow" href="#">View More</a></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">WEIGHT</span><span class="ja">可変フォントの中間値で設計する</span></h2>
+    <p class="p-text">Noto Sans JP を <code>wght@100..900</code> の可変フォントとして読み込んでいるので、<code>--font-weight-250</code> と <code>--font-weight-350</code> という中間値がトークンとして存在し、実際に描画される（実測: 欧文幅が 9 ウェイトすべて別の値 — 425.28 / 430.5 / 435.7 / 450.67 / 461.73 / 468.89 / 476.05 / 483.2 / 490.38px）。<b>本文は 400 ではなく 350。</b>400 に丸めるとサイトの軽さが消える。</p>
+    <div class="wrow"><span class="wrow__k">200</span><span class="wrow__v" style="font-weight:200">モータで、未来を動かす</span></div>
+    <div class="wrow"><span class="wrow__k">250</span><span class="wrow__v" style="font-weight:250">モータで、未来を動かす</span></div>
+    <div class="wrow"><span class="wrow__k">350 ／ 本文・可視58要素</span><span class="wrow__v" style="font-weight:350">モータで、未来を動かす</span></div>
+    <div class="wrow"><span class="wrow__k">400 ／ 可視67要素</span><span class="wrow__v" style="font-weight:400">モータで、未来を動かす</span></div>
+    <div class="wrow"><span class="wrow__k">500 ／ 可視45要素</span><span class="wrow__v" style="font-weight:500">モータで、未来を動かす</span></div>
+    <div class="wrow"><span class="wrow__k">700 ／ 可視10要素</span><span class="wrow__v" style="font-weight:700">モータで、未来を動かす</span></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">TOKENS</span><span class="ja">サイズ・行間・字間・ウェイトを 1 組で当てる</span></h2>
+    <p class="p-text">命名は <code>--text-{pc|sp}-{jp}-{要素}-{ウェイト名}-{変種}</code>。画面（pc/sp）と言語（jp）と、書体のウェイト名（demilight ＝ 350）と、行間の変種（narrow ＝ 130% / 無印 ＝ 170%）を名前に畳み込む。</p>
+    <p class="p-text">この段落が <code>--text-pc-jp-text-p-demilight-narrow</code>（17px / 130% / 0 / 350）。4 つのトークンを必ずまとめて当てる。</p>
+    <p class="p-text p-text--s">この段落が <code>--text-pc-jp-text-p-demilight-s</code>（14px / <b>170%</b> / 0 / 350）。narrow が付かない方は行間が広い。同じウェイトでも行間だけが違う 2 つが用意されている。</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">COLOR</span><span class="ja">黒を使わず、グレーにも緑を混ぜる</span></h2>
+    <div class="swatches">
+      <div class="sw"><div class="sw__chip" style="background:#001f0f"></div><div class="sw__meta"><div class="sw__name">文字（深緑）</div><div class="sw__hex">#001f0f</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:linear-gradient(90deg,#04937e 0%,#099d41 100%)"></div><div class="sw__meta"><div class="sw__name">CTA グラデーション</div><div class="sw__hex">#04937e → #099d41</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#009b4a"></div><div class="sw__meta"><div class="sw__name">アクセント</div><div class="sw__hex">#009b4a</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#f8faf9;border-bottom:1px solid #d7dbd9"></div><div class="sw__meta"><div class="sw__name">ページ背景（html）</div><div class="sw__hex">#f8faf9</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#b30c00"></div><div class="sw__meta"><div class="sw__name">Danger</div><div class="sw__hex">#b30c00</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#8f9c95"></div><div class="sw__meta"><div class="sw__name">グレー（緑入り）</div><div class="sw__hex">#8f9c95</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#c7cdca"></div><div class="sw__meta"><div class="sw__name">グレー（緑入り）</div><div class="sw__hex">#c7cdca</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#5981a4"></div><div class="sw__meta"><div class="sw__name">バッジ 製品</div><div class="sw__hex">#5981a4</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#869c56"></div><div class="sw__meta"><div class="sw__name">バッジ コーポレート</div><div class="sw__hex">#869c56</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:linear-gradient(90deg,#282761 0%,#232180 100%)"></div><div class="sw__meta"><div class="sw__name">ネイビー系</div><div class="sw__hex">#282761 → #232180</div></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">COMPONENTS</span><span class="ja">ピル形のボタンとカード</span></h2>
+    <div style="display:flex;gap:calc(var(--spacing)*16);flex-wrap:wrap;align-items:center;margin-bottom:calc(var(--spacing)*22)">
+      <a class="c-btn c-btn--arrow" href="#">ソリューション・事例一覧</a>
+      <a class="c-btn c-btn--outline" href="#">詳しくはこちら</a>
+      <a class="c-btn c-btn--navy" href="#">IR情報</a>
+      <a class="c-btn c-btn--outline is-focus" href="#">フォーカス状態</a>
+    </div>
+    <div class="cards">
+      <div class="c-card">
+        <span class="badge badge--product">製品</span>
+        <span class="c-card__ttl">小型・精密モータの新シリーズを発表</span>
+      </div>
+      <div class="c-card">
+        <span class="badge badge--corporate">コーポレート</span>
+        <span class="c-card__ttl">再生に向けて — REDEFINED ニデック</span>
+      </div>
+      <div class="c-card">
+        <span class="badge badge--product">製品</span>
+        <span class="c-card__ttl">コードレスクリーナー用ブラシレスDCモータ</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">SCALING</span><span class="ja">設計幅に対する vw で全寸法を書く</span></h2>
+    <table class="spec">
+      <tr><th>サイズの書き方</th><td><code>calc(カンプのpx / var(--design-width) * 100vw)</code></td></tr>
+      <tr><th><code>--design-width</code></th><td><b>1468</b>（768px 以上）／ <b>376</b>（767px 以下）。<b>1440 と決め打ちしない</b></td></tr>
+      <tr><th><code>html</code> の実測</th><td>1440 / 1200 / 1024 / 834 / 768px → すべて 16px ／ <b>767px → 32.6383px</b> ／ 375px → 15.9574px</td></tr>
+      <tr><th>注意</th><td><b>768px と 767px の間でルートが 2.04 倍に跳ぶ。</b>1440 / 1200 / 834 / 375px の 4 幅だけ測ると完全固定に見える</td></tr>
+      <tr><th>要素（トップの h2）</th><td>1440 / 1200px → 48px（固定）／ 1024px → 33.4823px ／ 834px → 27.2698px ／ 768px → 25.1117px ／ 767 / 375px → 30px（固定）</td></tr>
+      <tr><th>三段構え</th><td>デスクトップは px 固定、タブレット帯（768〜1024px）は<b>要素側</b>が vw で縮み、モバイルは<b>ルート</b>が vw になる</td></tr>
+      <tr><th>余白・角丸</th><td>すべて <code>--spacing: calc(1 / 16 * 1rem)</code> の倍数。<code>--radius-4〜34</code>、ボタンは 34px のピル形</td></tr>
+      <tr><th>ハーフレディング</th><td><code>--leading-trim-v2: calc((1em - 1lh) / 2)</code> — <code>1lh</code> 単位を使う</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">CAUTION</span><span class="ja">再現するときの注意</span></h2>
+    <div class="caution">
+      <ul>
+        <li><b>font-weight: 350 を 400 に丸めない。</b>250・350 は可変フォント前提で設計された値</li>
+        <li><b>font-weight: 600 を使わない。</b><code>--font-weight-*</code> のトークンに存在しない（実測 7 要素は設計外）</li>
+        <li><b>--design-width を 1440 と決め打ちしない。</b>デスクトップ 1468 / モバイル 376</li>
+        <li><b>768px / 767px を跨ぐテストを省かない。</b>ルートが 16px → 32.6px に跳ぶ</li>
+        <li><b>rem だけでレスポンシブを作らない。</b>デスクトップ帯はルートが固定で、要素側の vw が応答する</li>
+        <li><b>palt を「不要」と読まない。</b>可視 190 要素すべて <code>normal</code> だが、書体は対応しており足せば約 14% 詰まる（実測 540px → 463.09px）</li>
+        <li><b>文字色・区切り線に純粋な無彩色のグレーを使わない。</b>実サイトのグレーには緑が入っている（<code>#8f9c95</code> <code>#c7cdca</code> <code>#5e8370</code>）</li>
+        <li><code>document.fonts</code> に <code>unloaded</code> が大量（<code>@font-face</code> 351 件）に出るのは、Google Fonts が和文を <code>unicode-range</code> で分割するため。異常ではない</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

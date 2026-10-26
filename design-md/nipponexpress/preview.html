@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: NXグループ／日本通運（NIPPON EXPRESS）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       ランプは 5 段ずつ宣言されている。実装で描画されるのは下の 3 色が中心。 */
+    --color--navy:    #1a005d;  /* ブランド色。CTA の面・ロゴ・見出し。可視28要素で最多 */
+    --color--navy-90: #250d65;  /* フッターのグループ企業リンク。可視2要素 */
+    --color--navy-80: #443178;
+    --color--navy-60: #716297;
+    --color--navy-40: #a096b9;
+    --color--navy-20: #cfcadd;
+    --color--green:   #8ec300;  /* アクセントのライム。検索ボタン。可視3要素 */
+    --color--green-80:#9dc73a;
+    --color--green-60:#bbdb66;
+    --color--green-40:#cce197;
+    --color--green-20:#e5efca;
+
+    --color--text:    #282828;  /* 本文 */
+    --color--line:    #e0e0e0;  /* 区切り線 */
+    --color--white-60:#f8f8f8;  /* ページ背景（body） */
+    --color--white:   #fff;
+    --color--attention:#d00;
+
+    /* ★宣言はあるが実装に接続されていないもの（Don't 参照）
+       --color--primary-20〜90 は --color--navy-20〜90 とまったく同じ値の別名。
+       --color-text-neutral-loud / -medium / -soft と --color-text-primary-loud / -medium は
+       5 つとも #282828 で同値。意味の階層が宣言だけで潰れている。
+       --color--gray-saturation: 15% / --color--gray-hue: 201 / --color--primary-hue: 202 は
+       HSL 生成用のパラメータだが、実際の色は hex 直書きでこれらを参照していない。 */
+
+    /* === Fonts ===
+       ★実サイトは font-family の先頭に tazuganegothicstdn-regular（タズガネゴシック StdN）を
+         置いているが、@font-face が 1 件も無く、フォント要求も 4 件（Metropolis 3 + Lora 1）だけ。
+         和文 Web フォントは 1 バイトも読まれていない＝死んだ別名。
+         実際に和文を組んでいるのは「游ゴシック Medium」。
+       ★その結果、スタックが正しい游ゴシック対策になっている。
+         Medium を Regular（游ゴシック体 / 游ゴシック）より前に置くので Windows でも Medium が当たる。
+       欧文の metropolis は自社配信で手元に無いため、字幅の近い Poppins で代替する。 */
+    --font-ja: tazuganegothicstdn-regular,
+               "游ゴシック Medium", "Yu Gothic Medium",
+               游ゴシック体, yugothic, 游ゴシック, "Yu Gothic",
+               sans-serif;
+    --font-en: "Poppins", sans-serif;   /* 実サイトは metropolis */
+    --font-serif: "Lora", "georgia", serif;
+
+    /* === Size tokens（rem・html は 16px 固定） === */
+    --font-size-xxxs: 0.625rem;  --font-size-xxs: 0.75rem;   --font-size-xs: 0.8125rem;
+    --font-size-s:    0.875rem;  --font-size-m:   1rem;      --font-size-l:  1.125rem;
+    --font-size-xl:   1.25rem;   --font-size-xxl: 1.375rem;  --font-size-xxxl: 1.5rem;
+
+    /* === Spacing ===
+       基準が --sp: 1.125rem（18px）という珍しい値。8px 系の --m-* と 2 系統が並走する。 */
+    --sp0-5: 0.5625rem;  --sp0-75: 0.84375rem;  --sp: 1.125rem;  --sp1-5: 1.6875rem;
+    --m-xxxs: 0.5rem;    --m-xxs: 1rem;         --m-xs: 1.5rem;
+
+    --max-width: 84.375rem;      /* 1350px */
+    --content-left: 5.625rem;    /* 90px — 左サイドバーの逃げ */
+    --border-radius: 0.1875rem;  /* 3px。ほぼ直角 */
+  }
+
+  * { box-sizing: border-box; }
+
+  html { font-size: 100%; }   /* ＝ 16px。7 幅すべてで固定 */
+
+  body {
+    margin: 0;
+    background: var(--color--white-60);
+    color: var(--color--text);
+    font-family: var(--font-ja);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    line-height: 1;            /* ★無単位の 1。実測で 1 未満の行間比が 1 件も無いことで確定。
+                                  本文ブロックは必ず 1.5 を宣言し直すこと */
+  }
+
+  /* ★字間は親に 1 回だけ。16px に掛かって -0.239976px という絶対値になり、
+     可視 99 要素へ px のまま降りる。子で em を再宣言しないこと。 */
+  .wrap {
+    letter-spacing: -0.015em;
+    line-height: 1.5;                /* 実測 208/255 要素 */
+    overflow-wrap: anywhere;         /* 長い型番・URL が枠を破らないように */
+    color: var(--color--text);
+  }
+
+  .layout { display: grid; grid-template-columns: 272px 1fr; min-height: 560px; }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    background: var(--color--white);
+    border-right: 1px solid var(--color--line);
+    padding: 28px 24px;
+  }
+  .side__logo {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 28px;
+  }
+  .side__mark {
+    background: var(--color--navy); color: var(--color--white);
+    font-family: var(--font-en); font-weight: 700; font-size: 1.25rem;
+    padding: 6px 10px; border-radius: var(--border-radius); letter-spacing: 0;
+  }
+  .side__name { font-family: var(--font-en); font-weight: 600; font-size: 0.9375rem; line-height: 1.1; color: var(--color--navy); }
+  .side__nav { list-style: none; margin: 0; padding: 0; }
+  .side__nav li { border-bottom: 1px solid var(--color--line); }
+  .side__nav a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 2px; color: var(--color--text); text-decoration: none;
+    font-size: var(--font-size-m); line-height: 1.5;
+  }
+  .side__nav a::after { content: "›"; color: var(--color--navy-60); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    background: linear-gradient(118deg, #2b3a4a 0%, #4a5a68 52%, #6c7a84 100%);
+    display: grid; align-content: center; padding: 48px 56px;
+  }
+  .hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 86px; height: 56px;
+    background: repeating-linear-gradient(
+      96deg,
+      var(--color--navy) 0 26px, transparent 26px 44px,
+      var(--color--green) 44px 70px, transparent 70px 92px,
+      var(--color--white) 92px 110px, transparent 110px 136px);
+    opacity: .9;
+  }
+  .hero__h1 {
+    position: relative; z-index: 1; margin: 0 0 14px;
+    color: var(--color--white);
+    font-family: var(--font-en); font-weight: 700;
+    /* ★設計意図を式に残す書き方。「1440px のとき 64px」 */
+    font-size: clamp(2rem, calc(100vw * 64 / 1440), 4rem);
+    line-height: 1.08; letter-spacing: -0.0125em;
+  }
+  .hero__lead {
+    position: relative; z-index: 1; margin: 0; max-width: 30em;
+    color: var(--color--white); font-size: var(--font-size-l); line-height: 1.5;
+  }
+
+  /* ---------- Sections ---------- */
+  .main { padding: 0 56px 8px; max-width: var(--max-width); }
+  .sec { padding: 48px 0 0; }
+  .secttl { display: flex; align-items: baseline; gap: 14px; margin: 0 0 20px; }
+  .secttl .en {
+    font-family: var(--font-en); font-weight: 600;
+    font-size: var(--font-size-xxxl); color: var(--color--navy); letter-spacing: 0;
+  }
+  .secttl .ja { font-size: var(--font-size-s); color: var(--color--text); }
+  .note { font-size: var(--font-size-s); line-height: 1.7; margin: 0 0 18px; }
+  .note code, .spec code { font-family: var(--font-en); font-size: 0.8125rem; color: var(--color--navy); }
+
+  /* ---------- Buttons ---------- */
+  .btns { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 56px;
+    border-radius: var(--border-radius); text-decoration: none;
+    font-size: var(--font-size-m); line-height: 1.5;
+  }
+  /* padding が左右非対称なのは右端に矢印を置くため */
+  .btn--primary {
+    background: var(--color--navy); color: var(--color--white);
+    border: 1px solid var(--color--navy); padding: 0 48px 0 24px; position: relative;
+  }
+  .btn--primary::after { content: "→"; position: absolute; right: 20px; }
+  .btn--outline {
+    background: var(--color--white); color: var(--color--navy);
+    border: 1px solid var(--color--navy); padding: 0 24px;
+  }
+  .btn--search { background: var(--color--green); color: #000; border: none; padding: 0 28px; }
+  .btn.is-focus { outline: 2px solid var(--color--navy); outline-offset: 2px; }
+
+  /* ---------- Cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--m-xs); }
+  .card {
+    background: var(--color--white); border: 1px solid var(--color--line);
+    padding: var(--sp) var(--sp);
+    display: flex; flex-direction: column; min-height: 190px;
+    /* ★影は 1 種類も使わない。面の区別はボーダーと塗り分けで行う */
+  }
+  .card__label { font-family: var(--font-en); font-size: var(--font-size-xs); color: var(--color--navy-60); letter-spacing: 0; }
+  .cardArrowTtl {
+    margin-top: auto;                    /* タイトルをカード下端へ寄せる */
+    font-size: var(--font-size-xl);      /* ★和文は欧文の xxxl より 1 段小さく */
+    line-height: 1.5;                    /* ★行間も広げる */
+    letter-spacing: -0.4px;
+    color: var(--color--text);
+  }
+  .cardArrowTtl--en {
+    font-family: var(--font-en);
+    font-size: var(--font-size-xxxl);    /* 欧文は 24px */
+    line-height: 1.08;
+  }
+
+  /* ---------- Color ---------- */
+  .ramp { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14px; }
+  .ramp div { height: 56px; border-radius: var(--border-radius); display: grid; align-items: end; padding: 6px; }
+  .ramp span { font-family: var(--font-en); font-size: 0.6875rem; letter-spacing: 0; }
+
+  /* ---------- Spec ---------- */
+  .spec { width: 100%; border-collapse: collapse; background: var(--color--white); }
+  .spec th, .spec td { border: 1px solid var(--color--line); padding: 10px 12px; text-align: left; font-size: var(--font-size-s); line-height: 1.5; }
+  .spec th { background: var(--color--white-60); font-weight: 700; white-space: nowrap; }
+
+  .caution { background: var(--color--white); border-left: 4px solid var(--color--navy); padding: 18px 20px; margin: 10px 0 56px; }
+  .caution ul { margin: 0; padding-left: 1.2em; }
+  .caution li { font-size: var(--font-size-s); line-height: 1.8; }
+  .caution b { color: var(--color--navy); }
+
+  @media (max-width: 767px) {
+    .layout { grid-template-columns: 1fr; }
+    .side { border-right: none; border-bottom: 1px solid var(--color--line); }
+    .hero { padding: 32px 20px; }
+    .hero__h1 { font-size: 3rem; }   /* ★768px を下回ると流体をやめて固定に戻る */
+    .main { padding: 0 20px 8px; }
+    .cards { grid-template-columns: 1fr; }
+    .ramp { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="layout">
+    <aside class="side">
+      <div class="side__logo">
+        <span class="side__mark">NX</span>
+        <span class="side__name">NIPPON<br>EXPRESS</span>
+      </div>
+      <ul class="side__nav">
+        <li><a href="#">NX Brand</a></li>
+        <li><a href="#">サービス</a></li>
+        <li><a href="#">ナレッジ</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">サステナビリティ</a></li>
+        <li><a href="#">Global Network</a></li>
+      </ul>
+    </aside>
+
+    <section class="hero">
+      <h1 class="hero__h1">Our Values,<br>Our Journey</h1>
+      <p class="hero__lead">グローバル物流市場のインサイトと、NXグループが積み重ねてきた歩み。1872年、前身の「陸運元会社」から始まりました。</p>
+    </section>
+  </div>
+
+  <div class="main">
+
+    <section class="sec">
+      <h2 class="secttl"><span class="en">TYPEFACE</span><span class="ja">指定された和文フォントが読まれていない</span></h2>
+      <p class="note">実サイトは <code>font-family</code> の先頭に <code>tazuganegothicstdn-regular</code>（タズガネゴシック StdN）を置き、可視 247 要素を占める。しかし <code>@font-face</code> は 7 件すべて欧文（metropolis ×3 / Lora ×3 / swiper-icons ×1）で、<b>タズガネの宣言が無い</b>。フォント要求も 4 件だけ。つまりこの名前は必ず外れる<b>死んだ別名</b>で、実際に和文を組んでいるのは<b>スタック 2 番目の游ゴシック Medium</b>。結果としてスタックは「Medium を Regular より前に置く」正しい游ゴシック対策になっている。</p>
+      <table class="spec">
+        <tr><th>実サイトのスタック</th><td><code>tazuganegothicstdn-regular, "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック体, yugothic, 游ゴシック, "Yu Gothic", sans-serif</code></td></tr>
+        <tr><th>正しくは</th><td><code>@font-face</code> を足すか、先頭の死んだ別名を外して <code>"游ゴシック Medium"</code> を先頭にする</td></tr>
+        <tr><th>太字</th><td><code>tazuganegothicstdn-bold</code> も実体が無いので、実際は<b>合成太字</b>で出ている（実測: 欧文幅が 100〜500 で 437.61px、600〜900 で 464.53px の 2 段のみ）</td></tr>
+      </table>
+    </section>
+
+    <section class="sec">
+      <h2 class="secttl"><span class="en">COLOR</span><span class="ja">ネイビーパープルとライム</span></h2>
+      <div class="ramp">
+        <div style="background:#cfcadd"><span style="color:#1a005d">navy-20</span></div>
+        <div style="background:#a096b9"><span style="color:#1a005d">navy-40</span></div>
+        <div style="background:#716297"><span style="color:#fff">navy-60</span></div>
+        <div style="background:#443178"><span style="color:#fff">navy-80</span></div>
+        <div style="background:#1a005d"><span style="color:#fff">navy #1a005d</span></div>
+      </div>
+      <div class="ramp">
+        <div style="background:#e5efca"><span style="color:#282828">green-20</span></div>
+        <div style="background:#cce197"><span style="color:#282828">green-40</span></div>
+        <div style="background:#bbdb66"><span style="color:#282828">green-60</span></div>
+        <div style="background:#9dc73a"><span style="color:#282828">green-80</span></div>
+        <div style="background:#8ec300"><span style="color:#282828">green #8ec300</span></div>
+      </div>
+      <p class="note">本文 <code>#282828</code>／線 <code>#e0e0e0</code>／ページ背景 <code>#f8f8f8</code>／面 <code>#ffffff</code>。</p>
+    </section>
+
+    <section class="sec">
+      <h2 class="secttl"><span class="en">COMPONENTS</span><span class="ja">影を使わず、3px の角丸で組む</span></h2>
+      <div class="btns">
+        <a class="btn btn--primary" href="#">お問い合わせください</a>
+        <a class="btn btn--outline" href="#">選択内容を確認する</a>
+        <a class="btn btn--search" href="#">検索</a>
+        <a class="btn btn--outline is-focus" href="#">フォーカス状態</a>
+      </div>
+      <p class="note">Primary の <code>padding</code> が <code>0 48px 0 24px</code> と左右非対称なのは、右端に矢印を置くため。<code>border-radius</code> は <code>0.1875rem</code>（3px）でほぼ直角。<b>影は 1 種類も使っていない。</b></p>
+    </section>
+
+    <section class="sec">
+      <h2 class="secttl"><span class="en">CARDS</span><span class="ja">和文と欧文でサイズも行間も切り替える</span></h2>
+      <div class="cards">
+        <div class="card">
+          <span class="card__label">SERVICE</span>
+          <span class="cardArrowTtl--en cardArrowTtl">Air Freight Forwarding</span>
+        </div>
+        <div class="card">
+          <span class="card__label">サービス</span>
+          <span class="cardArrowTtl">航空輸送とプロジェクトロジスティクス</span>
+        </div>
+        <div class="card">
+          <span class="card__label">サービス</span>
+          <span class="cardArrowTtl">サプライチェーンの可視化ソリューション</span>
+        </div>
+      </div>
+      <p class="note">同じ <code>.cardArrowTtl</code> でも、欧文は <code>--font-size-xxxl</code>（24px）／<code>line-height: 1.08</code>、和文は <code>:is(html[lang^="ja"] *)</code> で <code>--font-size-xl</code>（20px）／<code>line-height: 1.5</code> に落とす。</p>
+    </section>
+
+    <section class="sec">
+      <h2 class="secttl"><span class="en">SCALING</span><span class="ja">設計幅を式に残す clamp</span></h2>
+      <table class="spec">
+        <tr><th>書き方</th><td><code>clamp(var(--font-size-m), calc(100vw * 20 / 1440), var(--font-size-xl))</code> ＝「1440px のとき 20px」</td></tr>
+        <tr><th><code>html</code></th><td><code>font-size: 100%</code> ＝ 16px。7 幅すべてで固定</td></tr>
+        <tr><th>下層 <code>h1</code> の実測</th><td>1440px → 64px ／ 1200px → 53.3333px ／ 1024px → 45.5111px ／ 834px → 37.0667px ／ 768px → 34.1333px ／ <b>767px → 48px</b> ／ 375px → 48px</td></tr>
+        <tr><th>注意</th><td><b>768px を下回った瞬間に流体をやめて 48px 固定に戻る。</b>34.1px → 48px と一度大きくなるので、ここを跨ぐテストを必ず行う</td></tr>
+        <tr><th>ブレークポイント</th><td><code>48rem</code>（768px）／ <code>75rem</code>（1200px）</td></tr>
+        <tr><th>余白</th><td><code>--sp: 1.125rem</code>（18px）系と <code>--m-*</code>（8px）系の 2 系統が並走</td></tr>
+      </table>
+    </section>
+
+    <section class="sec">
+      <h2 class="secttl"><span class="en">CAUTION</span><span class="ja">再現するときの注意</span></h2>
+      <div class="caution">
+        <ul>
+          <li><b>@font-face の無いファミリー名をスタックの先頭に置かない。</b>意図した書体が 1 度も描画されない</li>
+          <li><b>body { line-height: 1 } のまま本文を置かない。</b>無単位の 1 が全子孫に降りる。各ブロックで 1.5 を宣言し直す</li>
+          <li><b>letter-spacing を子要素で em 再宣言しない。</b>親の <code>-0.015em</code> は <code>-0.239976px</code> という絶対値で降りる（可視 99 要素）</li>
+          <li><b>--color--primary-* と --color--navy-* を別の色として扱わない</b>（同値の別名）</li>
+          <li><b>--color-text-neutral-loud / -medium / -soft を「濃さの違い」として使わない</b>（5 つとも <code>#282828</code>。Drupal Olivero の雛形の既定値が残っている）</li>
+          <li><b>影を足さない。</b>実サイトは 0 種。面の区別はボーダーと塗り分けで行う</li>
+          <li><code>font-feature-settings</code> は可視 255 要素すべて <code>normal</code>。<b>palt は 1 要素も使っていない</b>が、書体側は対応しており足せば約 14% 詰まる（実測 540px → 463.73px）</li>
+          <li>欧文の metropolis は自社配信で手元に無いため、このプレビューは <b>Poppins</b> で代替している</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 三井物産（MITSUI &amp; CO.）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       無彩色だけで構成される。彩度のある色はブランドカラーとして使われていない。 */
+    --ink:        #101010;  /* 見出し・ロゴ・ナビ。可視42要素。純黒ではない */
+    --ink-body:   #333333;  /* 本文。可視99要素で最多 */
+    --ink-muted:  #555555;  /* 日付・補足。可視67要素 */
+    --on-dark:    #fafafa;  /* 写真の上の白文字。可視26要素。純白ではない */
+    --bg:         #f5f5f5;  /* ページ背景（body）。ヒーローが覆うので取り違えやすい */
+    --surface:    #ffffff;  /* カード面 */
+    --surface-nav:#eeeeee;  /* ナビのドロップダウン。可視20要素 */
+    --surface-alt:#f2f2f2;  /* 下層の定義リストの見出しセル。可視12要素 */
+    --divider:    #e3e3e3;  /* バッジの地・区切り線。可視8要素 */
+    /* #27455c と #468254 は uniqueBackgrounds に出るが 2ページとも可視0要素。実装しない。
+       #000a02 は CMP（OneTrust）のボタン色なのでサイトの設計色ではない。 */
+
+    /* === Fonts ===
+       実サイトは自社専用書体 MitsuiandCoSans（Regular/Bold の 2 ファミリー）。
+       ドメイン外では出ないので、字形の近い幾何学的サンセリフ Poppins で代替する。
+       ★実サイトの @font-face は font-weight を宣言していないため、
+         欧文は 100〜900 のどれを指定しても同じ 1 本が返る（実測 9 ウェイトとも 478.41px）。
+         ここでは Poppins の 400/600 を Regular/Bold ファミリーに見立てて同じ構造を作る。 */
+    --font-ja: "Poppins", "Noto Sans JP", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+    --font-en: "Poppins", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;  /* ★和文を抜く。可視57要素 */
+
+    --lh-base: 1.4;   /* --line-height-base。実測の行間比は 1.24 / 1.33 / 1.40 の3段 */
+
+    /* 写真の上の白文字用。CSS 変数はサイト全体で 3 個しかなく、うち 2 個がこれ */
+    --text-shadow-mobile:
+      10px 10px 25px rgba(0, 0, 0, 0.99),
+      -10px 10px 25px rgba(0, 0, 0, 0.99),
+      -10px -10px 25px rgba(0, 0, 0, 0.99),
+      10px -10px 25px rgba(0, 0, 0, 0.99);
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ★トップは 62.5% ＝ 10px。7 幅すべてで固定。rem は 10px 基準で読む。
+     （下層ページは別世代のテンプレートで 14px／834px以下 15px。§8 参照） */
+  html { font-size: 62.5%; line-height: var(--lh-base); }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink-body);
+    font-family: var(--font-ja);
+    font-size: 1.47rem;              /* 14.7px。可視126要素で最多 */
+    font-weight: 500;                /* ★400 ではなく 500 が既定。可視392/423要素 */
+    line-height: 140%;
+    font-feature-settings: "palt";   /* ★詰めはこれだけ。可視415/423要素（98%） */
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: normal;          /* ★字間は触らない。可視363/423要素が normal */
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 420px;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(120% 90% at 50% 40%, #8a7a6c 0%, #5c5048 55%, #332d29 100%);
+    overflow: hidden;
+  }
+  .hero__copy {
+    font-family: var(--font-en);     /* ★欧文専用スタック */
+    font-size: 6.2rem;
+    font-weight: 400;
+    color: var(--on-dark);
+    text-shadow: var(--text-shadow-mobile);  /* ★4方向の多重シャドウ */
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0;
+    text-align: center;
+  }
+  .hero__note {
+    position: absolute; left: 24px; bottom: 18px;
+    color: var(--on-dark); font-size: 1.2rem; opacity: .85;
+    text-shadow: var(--text-shadow-mobile);
+  }
+
+  /* ---------- Header ---------- */
+  .gnav {
+    background: var(--surface-nav);
+    border-bottom: 1px solid var(--divider);
+  }
+  .gnav__inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .gnav__logo { font-family: var(--font-en); font-size: 1.9rem; letter-spacing: .08em; color: var(--ink); font-weight: 600; }
+  .gnav a { color: var(--ink); text-decoration: none; font-size: 1.47rem; }
+  .gnav__lang { margin-left: auto; display: flex; gap: 2px; }
+  .gnav__lang span {
+    font-family: var(--font-en); font-size: 1.3rem; padding: 4px 9px; border-radius: 0.96px;
+  }
+  .gnav__lang .on { background: var(--ink); color: var(--on-dark); }
+  .gnav__lang .off { color: var(--ink); }
+
+  /* ---------- Sections ---------- */
+  .sec { padding: 56px 0 8px; }
+  .secttl { display: flex; align-items: baseline; gap: 16px; margin: 0 0 24px; }
+  .secttl .en {
+    font-family: var(--font-en); font-size: 2.12rem; font-weight: 400;
+    color: var(--ink); letter-spacing: .02em;
+  }
+  .secttl .ja { font-size: 1.372rem; color: var(--ink-muted); font-weight: 500; }
+
+  .note { font-size: 1.372rem; color: var(--ink-muted); margin: 0 0 20px; }
+
+  /* ---------- Weight demo ---------- */
+  .wgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--divider); }
+  .wcell { padding: 16px 18px; border-bottom: 1px solid var(--divider); background: var(--surface); }
+  .wcell:nth-child(odd) { border-right: 1px solid var(--divider); }
+  .wcell__label { font-size: 1.2rem; color: var(--ink-muted); margin-bottom: 8px; }
+  .wcell__en { font-family: var(--font-en); font-size: 2.4rem; color: var(--ink); line-height: 1.24; }
+  .wcell__ja { font-size: 2.1rem; color: var(--ink); line-height: 1.24; }
+  .w-reg { font-weight: 400; }
+  .w-500 { font-weight: 500; }
+  .w-700 { font-weight: 700; }
+  /* ★太字はファミリーごと差し替える。実サイトは MitsuiandCoSans-Bold に変える */
+  .fam-bold { font-family: "Poppins", "Noto Sans JP", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif; font-weight: 600; }
+
+  /* ---------- palt demo ---------- */
+  .palt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .palt-box { background: var(--surface); padding: 18px; border: 1px solid var(--divider); }
+  .palt-box h3 { margin: 0 0 10px; font-size: 1.2rem; color: var(--ink-muted); font-weight: 500; }
+  .palt-box p { margin: 0; font-size: 2.0rem; color: var(--ink); line-height: 1.33; }
+  .ffs-off { font-feature-settings: normal; }
+  .ffs-on  { font-feature-settings: "palt"; }
+
+  /* ---------- Color ---------- */
+  .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .sw { background: var(--surface); border: 1px solid var(--divider); }
+  .sw__chip { height: 72px; }
+  .sw__meta { padding: 10px 12px; }
+  .sw__name { font-size: 1.3rem; color: var(--ink); }
+  .sw__hex { font-family: var(--font-en); font-size: 1.2rem; color: var(--ink-muted); }
+
+  /* ---------- News ---------- */
+  .news { border-top: 1px solid var(--divider); }
+  .news__item {
+    display: grid; grid-template-columns: 110px 92px 1fr;
+    gap: 16px; align-items: center;
+    padding: 16px 2px; border-bottom: 1px solid var(--divider);
+  }
+  .news__date { font-family: var(--font-en); font-size: 1.372rem; color: var(--ink-muted); }
+  .badge {
+    display: inline-block; background: var(--divider); color: var(--ink);
+    font-size: 1.2rem; padding: 4.8px 9.6px; border-radius: 1.92px;  /* 端数は vw 由来。丸めない */
+    text-align: center; white-space: nowrap;
+  }
+  .news__title { color: var(--ink-body); font-size: 1.47rem; line-height: 1.33; }
+
+  /* ---------- Components ---------- */
+  .comp-row { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  /* ★面色を持つボタンが存在しない。円形アイコン＋テキストで示す */
+  .linkbtn { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+  .linkbtn__txt { font-size: 1.47rem; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+  .linkbtn__icon {
+    width: 48px; height: 48px; border-radius: 50%;    /* border-radius: 50% が可視35要素 */
+    border: 1px solid var(--divider); background: transparent;
+    display: grid; place-items: center; font-family: var(--font-en); font-size: 1.6rem; color: var(--ink);
+  }
+  .linkbtn.is-focus .linkbtn__icon { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .card {
+    background: var(--surface); border-radius: 4.8px; padding: 18px 20px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0 3px 7px 0;      /* 影は2種のみ */
+    max-width: 300px;
+  }
+  .card--raised { box-shadow: rgba(0, 0, 0, 0.12) 0 3px 8px 0; }
+  .card h4 { margin: 0 0 6px; font-size: 1.6rem; color: var(--ink); font-weight: 500; line-height: 1.24; }
+  .card p { margin: 0; font-size: 1.372rem; color: var(--ink-muted); line-height: 1.4; }
+
+  /* ---------- Caution ---------- */
+  .caution { background: var(--surface-alt); padding: 20px 22px; margin: 8px 0 56px; }
+  .caution ul { margin: 0; padding-left: 1.2em; }
+  .caution li { font-size: 1.372rem; color: var(--ink-body); line-height: 1.7; }
+  .caution b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- Spec table ---------- */
+  .spec { width: 100%; border-collapse: collapse; background: var(--surface); }
+  .spec th, .spec td { border: 1px solid var(--divider); padding: 10px 12px; text-align: left; font-size: 1.372rem; }
+  .spec th { background: var(--surface-alt); color: var(--ink); font-weight: 500; white-space: nowrap; }
+  .spec td { color: var(--ink-body); }
+  .spec code { font-family: var(--font-en); font-size: 1.3rem; color: var(--ink); }
+
+  @media (max-width: 767px) {
+    .hero__copy { font-size: 3.4rem; }
+    .wgrid, .palt-row { grid-template-columns: 1fr; }
+    .wcell:nth-child(odd) { border-right: none; }
+    .swatches { grid-template-columns: repeat(2, 1fr); }
+    .news__item { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="gnav">
+  <div class="wrap gnav__inner">
+    <span class="gnav__logo">MITSUI &amp; CO.</span>
+    <a href="#">会社情報</a>
+    <a href="#">リリース</a>
+    <a href="#">サステナビリティ</a>
+    <a href="#">投資家情報</a>
+    <span class="gnav__lang"><span class="on">JP</span><span class="off">EN</span></span>
+  </div>
+</header>
+
+<section class="hero">
+  <p class="hero__copy">360° business innovation.</p>
+  <span class="hero__note">写真の上の白文字は #fafafa ＋ 4 方向の多重 text-shadow</span>
+</section>
+
+<div class="wrap">
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">WEIGHT</span><span class="ja">欧文は太さ1本、和文は4段</span></h2>
+    <p class="note">自社書体の <code>@font-face</code> は <code>font-weight</code> を宣言していないので、欧文は 100〜900 のどれを要求しても同じ 1 本が返る（実測 9 ウェイトとも 478.41px）。一方、和文は受け皿の Noto Sans JP に落ちるので 400 / 500 / 600 / 700 が効く（実測 435.7 / 450.67 / 461.73 / 468.89 / 476.05px）。<b>同じ 1 行の中で、欧文と和文でウェイトの自由度が違う。</b></p>
+    <div class="wgrid">
+      <div class="wcell">
+        <div class="wcell__label">font-weight: 400 ／ 欧文</div>
+        <div class="wcell__en w-reg">Global Business</div>
+      </div>
+      <div class="wcell">
+        <div class="wcell__label">font-weight: 400 ／ 和文</div>
+        <div class="wcell__ja w-reg">世界中のビジネス</div>
+      </div>
+      <div class="wcell">
+        <div class="wcell__label">font-weight: 500（本文の既定）／ 欧文 — 400 と同じ字面</div>
+        <div class="wcell__en w-500">Global Business</div>
+      </div>
+      <div class="wcell">
+        <div class="wcell__label">font-weight: 500 ／ 和文 — ここは太くなる</div>
+        <div class="wcell__ja w-500">世界中のビジネス</div>
+      </div>
+      <div class="wcell">
+        <div class="wcell__label">font-weight: 700 だけ ／ 欧文 — <b>変わらない</b></div>
+        <div class="wcell__en w-700">Global Business</div>
+      </div>
+      <div class="wcell">
+        <div class="wcell__label">font-family を Bold に差し替え ／ 欧文 — <b>これが正しい</b></div>
+        <div class="wcell__en fam-bold">Global Business</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">SPACING</span><span class="ja">詰めは palt だけ、字間は触らない</span></h2>
+    <p class="note">可視 423 要素中 415 要素に <code>font-feature-settings: "palt"</code>。<code>letter-spacing</code> は 363 要素が <code>normal</code> のまま。実測で palt は約 14% 詰まる（540px → 463.09px）。</p>
+    <div class="palt-row">
+      <div class="palt-box">
+        <h3>font-feature-settings: normal</h3>
+        <p class="ffs-off">「経営」と、事業（投資）。</p>
+      </div>
+      <div class="palt-box">
+        <h3>font-feature-settings: "palt"（実装）</h3>
+        <p class="ffs-on">「経営」と、事業（投資）。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">COLOR</span><span class="ja">無彩色だけで組む</span></h2>
+    <div class="swatches">
+      <div class="sw"><div class="sw__chip" style="background:#101010"></div><div class="sw__meta"><div class="sw__name">見出し・ロゴ</div><div class="sw__hex">#101010 ／ 42要素</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#333333"></div><div class="sw__meta"><div class="sw__name">本文</div><div class="sw__hex">#333333 ／ 99要素</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#555555"></div><div class="sw__meta"><div class="sw__name">日付・補足</div><div class="sw__hex">#555555 ／ 67要素</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#fafafa;border-bottom:1px solid #e3e3e3"></div><div class="sw__meta"><div class="sw__name">写真上の白文字</div><div class="sw__hex">#fafafa ／ 26要素</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#f5f5f5;border-bottom:1px solid #e3e3e3"></div><div class="sw__meta"><div class="sw__name">ページ背景</div><div class="sw__hex">#f5f5f5</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#eeeeee;border-bottom:1px solid #e3e3e3"></div><div class="sw__meta"><div class="sw__name">ドロップダウン</div><div class="sw__hex">#eeeeee ／ 20要素</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#f2f2f2;border-bottom:1px solid #e3e3e3"></div><div class="sw__meta"><div class="sw__name">定義リストの見出し</div><div class="sw__hex">#f2f2f2 ／ 12要素</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#e3e3e3"></div><div class="sw__meta"><div class="sw__name">バッジ地・区切り線</div><div class="sw__hex">#e3e3e3 ／ 8要素</div></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">NEWS</span><span class="ja">ニュース一覧</span></h2>
+    <div class="news">
+      <div class="news__item">
+        <span class="news__date">2026.10.15</span>
+        <span class="badge">適時開示</span>
+        <span class="news__title">自己株式の取得状況（途中経過）について</span>
+      </div>
+      <div class="news__item">
+        <span class="news__date">2026.10.01</span>
+        <span class="badge">リリース</span>
+        <span class="news__title">養鶏事業から目指すアフリカの豊かな未来。現地法人との合弁契約を締結</span>
+      </div>
+      <div class="news__item">
+        <span class="news__date">2026.09.30</span>
+        <span class="badge">お知らせ</span>
+        <span class="news__title">データドリブン経営の推進に向けた組織改編のお知らせ</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">COMPONENTS</span><span class="ja">面色を持たない導線</span></h2>
+    <p class="note">サイト本体に面色付きのボタンが存在しない。導線は下線つきテキスト＋<code>border-radius: 50%</code> の円形アイコン（可視 35 要素）で示す。<code>interactive</code> に出る面色付きボタンはすべて CMP（OneTrust）。</p>
+    <div class="comp-row">
+      <a class="linkbtn" href="#"><span class="linkbtn__txt">三井物産の事業を見る</span><span class="linkbtn__icon">&rarr;</span></a>
+      <a class="linkbtn is-focus" href="#"><span class="linkbtn__txt">フォーカス状態</span><span class="linkbtn__icon">&rarr;</span></a>
+      <div class="card">
+        <h4>統合報告書 2026</h4>
+        <p>影は rgba(0,0,0,0.04) 0 3px 7px の 1 種。角丸は 4.8px</p>
+      </div>
+      <div class="card card--raised">
+        <h4>浮いた面</h4>
+        <p>rgba(0,0,0,0.12) 0 3px 8px。可視 4 要素</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">SCALING</span><span class="ja">rem(10px) と vw の加算</span></h2>
+    <table class="spec">
+      <tr><th>トップの <code>html</code></th><td><code>font-size: 62.5%</code> ＝ 10px。7 幅すべてで固定</td></tr>
+      <tr><th>トップの <code>body</code></th><td>13px（<code>1.3rem</code>）。7 幅とも固定</td></tr>
+      <tr><th>下層の <code>html</code></th><td><b>14px</b>（1024px 以上）／ <b>15px</b>（834px 以下）— 別世代のテンプレート</td></tr>
+      <tr><th>要素のサイズ</th><td><code>calc(0.8rem + 2.13333vw)</code>（モバイル）／ <code>max(1.2rem, 0.9rem + 0.6vw)</code>（768px 以上）</td></tr>
+      <tr><th>端数の出どころ</th><td><code>14.7px</code> <code>13.72px</code> <code>0.96px</code> <code>1.92px</code> <code>4.8px</code> — すべて vw 由来。丸めない</td></tr>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="secttl"><span class="en">CAUTION</span><span class="ja">再現するときの注意</span></h2>
+    <div class="caution">
+      <ul>
+        <li><b>MitsuiandCoSans-Regular に font-weight: 700 を当てない。</b>欧文は 1px も太くならず、和文だけが太る「ちぐはぐな太字」になる。太字はファミリーごと <code>-Bold</code> に差し替える</li>
+        <li><b>欧文だけの要素では font-family から "Noto Sans JP" を抜く</b>（実サイトで可視 57 要素がそうしている）</li>
+        <li><b>letter-spacing を em で配らない。</b>詰めは <code>palt</code> の仕事。実サイトは 363/423 要素が <code>normal</code></li>
+        <li><b>#27455c / #468254 を設計色として使わない。</b>2 ページとも可視 0 要素。<code>#000a02</code> は CMP のボタン色</li>
+        <li><b>ヒーローの地色をページの地色と取り違えない。</b><code>heroCovered: true</code> で、ページの地色は <code>body</code> の <code>#f5f5f5</code></li>
+        <li>自社書体はドメイン外では配信されない。このプレビューは字形の近い <b>Poppins</b> で代替している</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
