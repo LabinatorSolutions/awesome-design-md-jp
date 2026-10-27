@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 小野薬品工業（ONO PHARMACEUTICAL）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトが読むのは Lato-Regular.ttf の 1 本だけ。和文の Web フォントは 0 本。 -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトに CSS Custom Properties は 1 つも無い（total 0）。
+       下は実測値をこの preview のために変数化したもの。実測 2026-10-27 */
+    --navy:      #003f73;  /* 文字 35/27 要素。ヒーロー・見出し・外部リンク・検索ボタン面 */
+    --blue:      #007ac7;  /* CTA とタブの面。可視 5 要素 */
+    --navy-foot: #00345f;  /* フッターのカテゴリ帯。面 5 要素 */
+    --navy-nav:  #1e3a65;  /* グローバルナビのドロワー */
+    --ink:       #222222;  /* ★本文。可視 152/166 要素で最多。純黒は使わない */
+    --ink-sub:   #555555;  /* 言語切替・注釈 */
+    --ink-muted: #707070;  /* 日付 */
+    --ink-crumb: #767676;  /* パンくずの現在地 */
+    --on-dark:   #ffffff;
+    --surface:   #f2f2f6;  /* 特集バナーの面 */
+    --surface2:  #e8eaee;  /* 下層のリンクリスト・h1 の帯 */
+    --bg:        #ffffff;
+
+    /* ニュース種別バッジ（radius 0 / padding 4px 0 / 11px / weight 500） */
+    --cat-rd:    #2452a2;  /* 研究開発 */
+    --cat-lic:   #bb5a00;  /* ライセンス */
+    --cat-fin:   #a9303e;  /* 経営・財務 */
+    --cat-corp:  #00345f;  /* 企業 */
+
+    /* === Fonts ===
+       ★和文は OS ローカルだけ。@font-face は 19 面あるが読まれるのは Lato-Regular の 1 本。 */
+    --font: "Yu Gothic", "Yu Gothic Medium", "游ゴシック Medium", YuGothic, 游ゴシック体,
+            "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo,
+            "ＭＳ Ｐゴシック", sans-serif;
+    --font-en: "Lato", sans-serif;   /* 実サイトの @font-face 名は Lato-Regular（単一面） */
+
+    /* 影は 1 種類しかなく、黒ではなく青 */
+    --shadow-movie: rgba(36, 120, 255, 0.3) 5px 5px 25px 0px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { font-size: 62.5%; }   /* = 10px。8 幅すべてで固定。流体もクランプも無い */
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 1rem;        /* = 10px。実サイトの body もこの値 */
+    font-weight: 500;       /* ★可視 234/237 要素。macOS では 400 と同じ面で出る */
+    line-height: 1.15;      /* ★無単位。本文ブロックが宣言し直すまでこれが降りる */
+    letter-spacing: normal; /* ★可視要素の 100% が normal。CSS の 14 種類は英語ページ用 */
+    color: var(--ink);
+    background: var(--bg);
+    word-break: break-word;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }  /* 実サイトの本文コンテナ */
+
+  /* ---------- Header ---------- */
+  .hdr { border-bottom: 1px solid #e5e5e5; }
+  .hdr__inner { max-width: 1260px; margin: 0 auto; padding: 18px 20px; display: flex; align-items: center; gap: 24px; }
+  .hdr__logo { font-size: 2.2rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .hdr__nav { margin-left: auto; display: flex; gap: 20px; align-items: center; }
+  .hdr__nav a { font-size: 1.4rem; line-height: 1.15; color: var(--ink); text-decoration: none; }
+  .hdr__nav a.ext { color: var(--navy); }
+  .hdr__lang { font-size: 1.3rem; color: var(--ink-sub); line-height: 1.3; }
+  .hdr__search {
+    background: var(--navy); color: var(--on-dark);
+    font-family: var(--font); font-size: 1.6rem; font-weight: 700;
+    border: 0; border-radius: 0; padding: 15px; cursor: pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .kv { display: grid; grid-template-columns: 520px 1fr; gap: 48px; align-items: center;
+        padding: 56px 0; }
+  /* ★実サイトは font-family: "Noto Sans", sans-serif だが @font-face 名は NotoSans（空白なし）。
+     名前が一致せず読まれないので、ここでも generic の sans-serif で出している。 */
+  .kv__ttl {
+    margin: 0; font-family: "Noto Sans", sans-serif;
+    font-size: 8rem; font-weight: 700; line-height: 1.1; color: var(--navy);
+    word-break: normal;   /* body の break-word が降りると THROUG|H で割れる */
+  }
+  .kv__read { margin: 16px 0 0; font-size: 2.6rem; font-weight: 700; line-height: 2.0; color: var(--navy); }
+  .kv__img {
+    height: 300px; border-radius: 0;
+    background: linear-gradient(120deg, #cfe3f2 0%, #e8f1f7 45%, #f3ece2 100%);
+    display: flex; align-items: flex-end; justify-content: flex-end; padding: 16px;
+    font-size: 1.3rem; line-height: 1.3; color: var(--ink-sub);
+  }
+
+  /* ---------- Section ---------- */
+  .sec { padding: 56px 0; }
+  .sec--tint { background: var(--surface); }
+  .sec__label { display: block; font-family: var(--font-en); font-size: 3rem; font-weight: 400;
+                line-height: 1.3; color: var(--navy); }
+  .sec__ttl { margin: 4px 0 32px; font-size: 3.2rem; font-weight: 700; line-height: 1.5; color: var(--ink); }
+  .sec--tint .sec__ttl { color: var(--navy); }
+
+  /* ---------- Cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  .card { border-radius: 10px; overflow: hidden; background: #fff; box-shadow: none; }
+  .card__img { height: 198px; background: linear-gradient(135deg, #dfe8ef, #f0f3f6); }
+  .card__body { padding: 20px 0 0; }
+  .card__ttl { margin: 0 0 8px; font-size: 2rem; font-weight: 900; line-height: 1.25; color: var(--navy); }
+  .card__txt { margin: 0; font-size: 1.5rem; font-weight: 500; line-height: 2.0; color: var(--ink); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--blue); color: var(--on-dark);
+    font-size: 1.6rem; font-weight: 500; line-height: 24px;
+    padding: 16px 16px 16px 24px;   /* ★左右非対称。右端に矢印が入る */
+    border-radius: 9999px; border: 0; text-decoration: none; cursor: pointer;
+  }
+  .btn::after { content: "›"; font-size: 1.8rem; line-height: 1; }
+
+  /* ---------- Tabs + News ---------- */
+  .tabs { display: flex; gap: 4px; }
+  .tab {
+    font-family: var(--font); font-size: 2rem; font-weight: 700; line-height: 30px;
+    padding: 16px 20px; border: 0; cursor: pointer;
+    border-radius: 10px 10px 0 0;    /* ★上だけ丸める */
+    background: #fff; color: var(--navy);
+  }
+  .tab[aria-selected="true"] { background: var(--blue); color: var(--on-dark); }
+  .news { border-top: 1px solid #e3e3e3; }
+  .news__row { display: flex; gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid #e3e3e3; }
+  .news__date { font-size: 1.3rem; line-height: 1.3; color: var(--ink-muted); flex: 0 0 90px; }
+  .badge {
+    flex: 0 0 110px; text-align: center;
+    font-size: 1.1rem; font-weight: 500; line-height: 1.3; color: var(--on-dark);
+    padding: 4px 0; border-radius: 0;
+  }
+  .badge--rd   { background: var(--cat-rd); }
+  .badge--lic  { background: var(--cat-lic); }
+  .badge--fin  { background: var(--cat-fin); }
+  .badge--corp { background: var(--cat-corp); }
+  .news__txt { font-size: 1.5rem; font-weight: 500; line-height: 2.0; color: var(--ink); }
+
+  /* ---------- 下層のリンクリスト ---------- */
+  .links { display: grid; gap: 8px; max-width: 1025px; }
+  .links a {
+    display: block; background: var(--surface2); color: var(--ink);
+    font-size: 1.6rem; font-weight: 500; line-height: 1.6;
+    padding: 17px 35px 15px 16px;     /* ★上下も非対称 */
+    border-radius: 0; text-decoration: none;
+  }
+
+  /* ---------- 影の見本（1 種しかない。しかも青） ---------- */
+  .movie { width: 180px; height: 180px; border-radius: 50%; }   /* 実サイトの movie は radius 50% */
+  .movie--off { box-shadow: none; background: #dfe8ef; }
+  .movie--on  { box-shadow: var(--shadow-movie); background: #dfe8ef; }
+
+  /* ---------- Spec blocks ---------- */
+  .spec { padding: 40px 0; border-top: 1px solid #e3e3e3; }
+  .spec h3 { margin: 0 0 16px; font-size: 1.8rem; font-weight: 700; line-height: 1.5; color: var(--navy); }
+  .spec p  { margin: 0 0 12px; font-size: 1.5rem; font-weight: 500; line-height: 2.0; }
+  .note { font-size: 1.3rem; line-height: 1.8; color: var(--ink-sub); }
+  table { border-collapse: collapse; width: 100%; font-size: 1.4rem; line-height: 1.6; }
+  th, td { border: 1px solid #e3e3e3; padding: 10px 12px; text-align: left; }
+  th { background: var(--surface2); font-weight: 700; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 16px; }
+  .sw { width: 148px; }
+  .sw__chip { height: 56px; border-radius: 0; border: 1px solid #e3e3e3; }
+  .sw__name { font-size: 1.3rem; line-height: 1.6; margin-top: 6px; }
+  .sw__hex  { font-size: 1.2rem; line-height: 1.6; color: var(--ink-muted); }
+  .lh-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .lh-demo > div { border: 1px solid #e3e3e3; padding: 16px; }
+  .lh-demo p { margin: 8px 0 0; font-size: 1.5rem; font-weight: 500; }
+  .lh-115 p { line-height: 1.15; }
+  .lh-130 p { line-height: 1.30; }
+  .lh-200 p { line-height: 2.00; }
+  .lh-demo strong { font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+
+  /* ---------- Footer ---------- */
+  .ftr { background: var(--navy-foot); color: var(--on-dark); margin-top: 56px; }
+  .ftr__inner { max-width: 1260px; margin: 0 auto; padding: 40px 20px; }
+  .ftr__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .ftr h4 { margin: 0 0 8px; font-size: 1.9rem; font-weight: 700; line-height: 1.15; }
+  .ftr ul { margin: 0; padding: 0; list-style: none; }
+  .ftr li { font-size: 1.4rem; font-weight: 500; line-height: 1.15; padding: 6px 0; }
+  .ftr__copy { font-size: 1rem; line-height: 1.15; margin-top: 24px; }
+
+  /* ★崖は 767/768px の 1 箇所。html/body の font-size は動かない */
+  @media (max-width: 767px) {
+    .kv { grid-template-columns: 1fr; gap: 24px; }
+    .kv__ttl { font-size: 4.4rem; }
+    .kv__read { font-size: 1.8rem; }
+    .sec__ttl { font-size: 2.4rem; }
+    .card__txt, .news__txt { font-size: 1.2rem; }
+    .cards { grid-template-columns: 1fr; gap: 24px; }
+    .lh-demo { grid-template-columns: 1fr; }
+    .ftr__cols { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr__inner">
+    <div class="hdr__logo">小野薬品工業株式会社</div>
+    <nav class="hdr__nav">
+      <a href="#">患者さんとご家族の皆さま</a>
+      <a href="#" class="ext">医療関係者の皆さま</a>
+      <a href="#">ニュース</a>
+      <a href="#">お問い合わせ</a>
+      <span class="hdr__lang">English｜Global</span>
+      <button class="hdr__search">検索</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="kv">
+    <div>
+      <h1 class="kv__ttl">BREAK<br>THROUGH</h1>
+      <p class="kv__read">ONOは挑戦で、未来を変える</p>
+    </div>
+    <div class="kv__img">ヒーロー画像（1440×541px / top_kv.webp）</div>
+  </section>
+</div>
+
+<section class="sec sec--tint">
+  <div class="wrap">
+    <span class="sec__label">About</span>
+    <h2 class="sec__ttl">小野薬品について</h2>
+    <div class="cards">
+      <article class="card">
+        <div class="card__img"></div>
+        <div class="card__body">
+          <h3 class="card__ttl">小野薬品の特徴・強みを知る</h3>
+          <p class="card__txt">新薬は、多くの挑戦と失敗の先に生まれます。私たちは未充足の医療ニーズに応えるため、世界の叡智と共創しながら創薬に挑み続けています。</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__img"></div>
+        <div class="card__body">
+          <h3 class="card__ttl">革新的な医薬品の創製</h3>
+          <p class="card__txt">がん免疫をはじめとする領域で、独自の視点から新しい治療の選択肢を届けることをめざしています。</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__img"></div>
+        <div class="card__body">
+          <h3 class="card__ttl">私たちの社会的責任</h3>
+          <p class="card__txt">次の100年に向けて策定したサステナビリティの方針に沿って、事業を通じた社会への貢献を進めます。</p>
+        </div>
+      </article>
+    </div>
+    <p style="margin-top:32px"><a class="btn" href="#">詳しく見る</a></p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="sec__label">News</span>
+    <h2 class="sec__ttl">ニュース</h2>
+    <div class="tabs">
+      <button class="tab" aria-selected="true">プレスリリース</button>
+      <button class="tab" aria-selected="false">お知らせ</button>
+    </div>
+    <div class="news">
+      <div class="news__row">
+        <span class="news__date">2026.10.08</span>
+        <span class="badge badge--lic">ライセンス</span>
+        <span class="news__txt">米国Biohaven社と、日本、韓国、台湾、ASEAN地域における独占的ライセンス契約を締結</span>
+      </div>
+      <div class="news__row">
+        <span class="news__date">2026.10.01</span>
+        <span class="badge badge--rd">研究開発</span>
+        <span class="news__txt">新規がん免疫療法候補品の第Ⅰ相臨床試験を国内で開始</span>
+      </div>
+      <div class="news__row">
+        <span class="news__date">2026.09.16</span>
+        <span class="badge badge--fin">経営・財務</span>
+        <span class="news__txt">2027年3月期 第2四半期決算の発表日程について</span>
+      </div>
+      <div class="news__row">
+        <span class="news__date">2026.09.02</span>
+        <span class="badge badge--corp">企業</span>
+        <span class="news__txt">統合報告書2026 を公開しました</span>
+      </div>
+    </div>
+    <p style="margin-top:32px"><a class="btn" href="#">プレスリリース一覧へ</a></p>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap">
+    <h2 class="sec__ttl">下層ページのリンクリスト</h2>
+    <div class="links">
+      <a href="#">小野薬品ミッションステートメント</a>
+      <a href="#">ONOグループ　コード・オブ･コンダクト</a>
+      <a href="#">人権方針</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+
+    <div class="spec">
+      <h3>1. 行間の既定は 1.15。本文ブロックが宣言し直してはじめて読める行になる</h3>
+      <div class="lh-demo">
+        <div class="lh-115">
+          <strong>1.15（body の既定・可視 82/91 要素）</strong>
+          <p>新薬は、多くの挑戦と失敗の先に生まれます。私たちは世界中の患者さんのために新薬創製に挑戦し続けます。</p>
+        </div>
+        <div class="lh-130">
+          <strong>1.30（ナビ・ラベル・可視 129/147 要素で最多）</strong>
+          <p>新薬は、多くの挑戦と失敗の先に生まれます。私たちは世界中の患者さんのために新薬創製に挑戦し続けます。</p>
+        </div>
+        <div class="lh-200">
+          <strong>2.00（本文ブロック・可視 8/16 要素）</strong>
+          <p>新薬は、多くの挑戦と失敗の先に生まれます。私たちは世界中の患者さんのために新薬創製に挑戦し続けます。</p>
+        </div>
+      </div>
+      <p class="note">比率 1.00 未満が 1 件も出ないので、<code>body</code> の <code>line-height</code> は絶対値 px ではなく<strong>無単位 1.15</strong> と確定できる。</p>
+    </div>
+
+    <div class="spec">
+      <h3>2. font-weight は 2 段しかない（macOS 実測）</h3>
+      <table>
+        <tr><th>指定</th><th>実測字幅</th><th>出る面</th></tr>
+        <tr><td>100 / 200 / 300 / 400 / <strong>500</strong></td><td>577.38px</td><td>すべて同じ（Regular）</td></tr>
+        <tr><td>600 / <strong>700</strong> / 800 / 900</td><td>589.17px</td><td>すべて同じ（Bold）</td></tr>
+      </table>
+      <p style="font-weight:400">font-weight: 400 — 新薬で未来をつくる</p>
+      <p style="font-weight:500">font-weight: 500 — 新薬で未来をつくる（body の既定。上と同じ顔）</p>
+      <p style="font-weight:700">font-weight: 700 — 新薬で未来をつくる</p>
+      <p style="font-weight:900">font-weight: 900 — 新薬で未来をつくる（700 と同じ顔）</p>
+      <p class="note">実サイトは <code>h3</code> の一部に 900 を当てているが、700 と区別はつかない。</p>
+    </div>
+
+    <div class="spec">
+      <h3>3. 字間も palt も使わない</h3>
+      <p style="letter-spacing:normal">letter-spacing: normal — 病気と苦痛に対する人間の闘いのために（実サイトの可視要素は 100% これ）</p>
+      <p style="letter-spacing:0.08em">letter-spacing: 0.08em — 病気と苦痛に対する人間の闘いのために（<strong>実サイトには 1 要素も無い</strong>）</p>
+      <p style="font-feature-settings:normal">font-feature-settings なし — 「約物・テスト（括弧）」。</p>
+      <p style="font-feature-settings:'palt'">font-feature-settings: "palt" — 「約物・テスト（括弧）」。（<strong>書体は対応しているが実サイトは使わない</strong>）</p>
+      <p class="note">CSS 全文には <code>letter-spacing</code> が 0.02em〜0.18em の 14 種類書かれているが、どれも <code>body.english</code> / <code>html[lang="en"]</code> スコープで、日本語ページには 1 つも届かない。</p>
+    </div>
+
+    <div class="spec">
+      <h3>4. 影は 1 種類だけ。しかも黒ではなく青</h3>
+      <div style="display:flex;gap:40px;align-items:center;flex-wrap:wrap">
+        <div>
+          <div class="movie movie--off"></div>
+          <p class="note">box-shadow: none（カード・ボタンを含むほぼ全要素）</p>
+        </div>
+        <div>
+          <div class="movie movie--on"></div>
+          <p class="note">rgba(36,120,255,.3) 5px 5px 25px（動画サムネ・可視 2 要素のみ）</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <h3>5. カラーパレット</h3>
+      <div class="swatches">
+        <div class="sw"><div class="sw__chip" style="background:#003f73"></div><div class="sw__name">ONO Navy（文字・見出し）</div><div class="sw__hex">#003F73</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#007ac7"></div><div class="sw__name">ONO Blue（CTA 面）</div><div class="sw__hex">#007AC7</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#00345f"></div><div class="sw__name">Footer Navy</div><div class="sw__hex">#00345F</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#1e3a65"></div><div class="sw__name">Nav Navy</div><div class="sw__hex">#1E3A65</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#222222"></div><div class="sw__name">Text Primary</div><div class="sw__hex">#222222</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#707070"></div><div class="sw__name">Text Muted</div><div class="sw__hex">#707070</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#e8eaee"></div><div class="sw__name">Surface 2</div><div class="sw__hex">#E8EAEE</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#f2f2f6"></div><div class="sw__name">Surface</div><div class="sw__hex">#F2F2F6</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#2452a2"></div><div class="sw__name">研究開発</div><div class="sw__hex">#2452A2</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#bb5a00"></div><div class="sw__name">ライセンス</div><div class="sw__hex">#BB5A00</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#a9303e"></div><div class="sw__name">経営・財務</div><div class="sw__hex">#A9303E</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#0042d8"></div><div class="sw__name">採用バナー（1 箇所）</div><div class="sw__hex">#0042D8</div></div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <h3>6. Web フォントは欧文 1 本だけ</h3>
+      <p><span style="font-family:var(--font-en);font-size:3rem;line-height:1.3;color:var(--navy)">About &nbsp; R&amp;D &nbsp; Investors</span></p>
+      <p class="note">
+        読まれるフォントファイルは <code>Lato-Regular.ttf</code> の 1 本（可視 4 要素）。
+        <code>NotoSerif-regular</code> / <code>-semi</code> / <code>-light</code> / <code>-semibold</code> / <code>-regular-vw</code> の 5 面は
+        <strong>宣言だけで 2 ページとも可視 0・要求 0 件</strong>。
+        ヒーローの <code>BREAK THROUGH</code> は <code>font-family: "Noto Sans", sans-serif</code> だが
+        <code>@font-face</code> 名が <code>NotoSans</code>（空白なし）で一致せず、generic にフォールバックしている。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="ftr__inner">
+    <div class="ftr__cols">
+      <div>
+        <h4>小野薬品について</h4>
+        <ul><li>CEO・COOメッセージ</li><li>ミッションステートメント</li><li>沿革</li></ul>
+      </div>
+      <div>
+        <h4>研究開発</h4>
+        <ul><li>創薬方針</li><li>オープンイノベーション</li><li>開発パイプライン</li></ul>
+      </div>
+      <div>
+        <h4>IR情報</h4>
+        <ul><li>経営戦略</li><li>財務ハイライト</li><li>IRライブラリ</li></ul>
+      </div>
+      <div>
+        <h4>採用情報</h4>
+        <ul><li>新卒採用</li><li>キャリア採用</li><li>働く環境</li></ul>
+      </div>
+    </div>
+    <p class="ftr__copy">COPYRIGHT © 2026 ONO PHARMACEUTICAL CO., LTD. ALL RIGHTS RESERVED.</p>
+  </div>
+</footer>
+
+</body>
+</html>

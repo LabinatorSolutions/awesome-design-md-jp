@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja" class="is-darkmode">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 日本郵船（NYK LINE）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトが読むのは Noto Sans JP の 400 と 700 だけ -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     ★このサイトの核心。:root に 17 個の配色トークンを置き、
+       html.is-darkmode が「その 17 個を全部」上書きする。
+       残り 7 個は両モード共通で、上書きしない。実測 2026-10-27
+     ============================================================ */
+  :root {
+    /* --- モードで切り替わる 17 個（ライト） --- */
+    --theme-color-main:  #333333;   /* 主要な文字・罫 */
+    --theme-color-sub:   #f3f5f7;   /* 面（カード・バッジ） */
+    --theme-color-sub3:  #ffffff;   /* 反転した面の上の文字 */
+    --theme-color-sub4:  #717171;   /* 弱い文字・日付 */
+    --theme-color-sub5:  #d70c18;   /* ★モードで役割が入れ替わる（赤 ↔ 白） */
+    --theme-color-red:   #d70c18;   /* 赤い文字 */
+    --bg-color-base:     #ffffff;   /* ページ背景 */
+    --bg-color-sub:      #888888;   /* 補助面 */
+    --text-color-base:   #333333;   /* 本文 */
+    --text-color-red:    #d70c18;   /* 強調の文字 */
+    --link-color-link:   #333333;
+    --link-color-visited:#333333;
+    --link-color-hover:  #d70c18;   /* ★ライトだけ赤くなる */
+    --link-color-active: #333333;
+    --border-color:      #dddddd;
+    --icon-color:        #d70c18;
+    --icon-color2:       #ffffff;   /* ★下の icon-color と入れ替わる */
+
+    /* --- モード共通の 7 個（is-darkmode で上書きしない） --- */
+    --theme-color-accent:     #d70c18;  /* ★社旗の赤。面として使う色は変えない */
+    --theme-color-bright:     #ffffff;
+    --text-color-bright:      #ffffff;  /* 赤面の上の文字 */
+    --theme-color-sub2:       #888888;
+    --icon-color3:            #888888;
+    --text-color-placeholder: #999999;
+    --text-color-disable:     #717171;
+  }
+
+  html.is-darkmode {
+    --theme-color-main:  #e0e0e0;
+    --theme-color-sub:   #383838;
+    --theme-color-sub3:  #121212;
+    --theme-color-sub4:  #a1a1a1;
+    --theme-color-sub5:  #ffffff;
+    --theme-color-red:   #f58080;   /* ★暗い地では明度を上げる */
+    --bg-color-base:     #121212;
+    --bg-color-sub:      #4b4b4b;
+    --text-color-base:   #e0e0e0;
+    --text-color-red:    #f58080;
+    --link-color-link:   #e0e0e0;
+    --link-color-visited:#e0e0e0;
+    --link-color-hover:  #e0e0e0;
+    --link-color-active: #e0e0e0;
+    --border-color:      #a1a1a1;
+    --icon-color:        #ffffff;
+    --icon-color2:       #d70c18;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { font-size: 62.5%; }   /* = 10px。8 幅すべてで固定 */
+
+  body {
+    margin: 0 auto;
+    max-width: 1920px;
+    /* 実サイトは min-width: 1260px（デスクトップ固定幅）。この preview では
+       スクロールを出さないため min-width を外し、幅の扱いだけ下の節で説明する */
+    font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Hiragino Sans",
+                 Meiryo, Osaka, Arial, "MS PGothic", sans-serif;
+    font-size: 1.6rem;        /* = 16px。≤767.98px では 1.4rem（14px） */
+    font-weight: 400;
+    line-height: 1.6;         /* ★本文の既定 */
+    letter-spacing: normal;   /* ★CSS 全文に letter-spacing の宣言が 0 件 */
+    color: var(--text-color-base);
+    background-color: var(--bg-color-base);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    transition: background-color .25s cubic-bezier(.4, 0, .2, 1);   /* ★切替をアニメーションさせる */
+  }
+
+  .wrap { max-width: 1260px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- Header ---------- */
+  .hdr { border-bottom: 1px solid var(--border-color); background: var(--bg-color-base); }
+  .hdr__inner { max-width: 1260px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
+  .hdr__logo { font-size: 2rem; font-weight: 700; line-height: 1.4; color: var(--text-color-base); }
+  .hdr__util { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+  .hdr__util a { font-size: 1.4rem; line-height: 1.4; color: var(--link-color-link); text-decoration: none; }
+  .hdr__mode { display: flex; align-items: center; gap: 8px; font-size: 1.4rem; line-height: 1.4; color: var(--text-color-base); }
+  .switch { width: 44px; height: 22px; border-radius: 11px; background: var(--theme-color-accent); position: relative; }
+  .switch::after { content: ""; position: absolute; top: 3px; right: 3px; width: 16px; height: 16px;
+                   border-radius: 50%; background: var(--text-color-bright); }
+  .hdr__search {
+    background: var(--theme-color-accent);     /* ★モード共通の赤 */
+    color: var(--text-color-bright);
+    font-size: 1.4rem; line-height: 1.4; font-weight: 400;
+    padding: 5px 15px 5px 36px; border-radius: 0; text-decoration: none; position: relative;
+  }
+  .hdr__search::before { content: "⌕"; position: absolute; left: 14px; top: 3px; font-size: 1.8rem; }
+  .hdr__gnav { max-width: 1260px; margin: 0 auto; padding: 0 20px 12px; display: flex; gap: 24px; }
+  .hdr__gnav a { font-size: 1.6rem; line-height: 1.6; color: var(--link-color-link); text-decoration: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; height: 480px; display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(180deg, #2b3a44 0%, #4a5c63 55%, #6d7a7c 100%); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, .3); }
+  .hero__copy { position: relative; z-index: 1; margin: 0; font-size: 6.4rem; font-weight: 700;
+                line-height: 1.2; color: #ffffff; text-align: center; }
+  .hero__note { position: absolute; left: 20px; bottom: 16px; z-index: 1; font-size: 1.2rem;
+                line-height: 1.6; color: #e8e8e8; }
+
+  /* ---------- Section ---------- */
+  .sec { padding: 56px 0; }
+  .sec__ttl { margin: 0 0 24px; font-size: 3.2rem; font-weight: 700; line-height: 1.4; color: var(--text-color-base); }
+  .sec__h2 { margin: 0 0 16px; font-size: 2.6rem; font-weight: 700; line-height: 1.4; color: var(--text-color-base); }
+
+  /* ---------- Story cards ---------- */
+  .stories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .story { background: var(--bg-color-base); }
+  .story__img { height: 180px; background: var(--theme-color-sub); }
+  .story__meta { display: flex; gap: 8px; margin: 12px 0 8px; flex-wrap: wrap; }
+  .badge-cat {
+    background: var(--theme-color-sub); border: 1px solid var(--theme-color-sub);
+    color: var(--text-color-base);
+    font-size: 1.2rem; font-weight: 700; line-height: 1.4;
+    padding: 0 10px 2px; border-radius: 0;
+  }
+  .badge-sub {
+    background: var(--bg-color-base); border: 1px solid var(--theme-color-sub4);
+    color: var(--text-color-base);
+    font-size: 1.2rem; font-weight: 700; line-height: 1.4;
+    padding: 0 10px 2px; border-radius: 0;
+  }
+  .story__ttl { margin: 0 0 8px; font-size: 1.8rem; font-weight: 700; line-height: 1.4; color: var(--text-color-base); }
+  .story__date { font-size: 1.2rem; font-weight: 700; line-height: 1.4; color: var(--theme-color-sub4); }
+  .tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .tag {
+    position: relative;
+    background: var(--bg-color-base);
+    border: 1px solid var(--text-color-base);
+    color: var(--text-color-base);
+    font-size: 1.2rem; font-weight: 700; line-height: 16.8px;
+    padding: 1.8px 9px 2px 20px;    /* ★左 20px は # を重ねるための余白 */
+    border-radius: 13px;            /* ★このサイト唯一の角丸 */
+  }
+  .tag::before { content: "#"; position: absolute; left: 9px; color: var(--theme-color-accent); }
+
+  /* ---------- 沿革（年号） ---------- */
+  .hist { border-top: 1px solid var(--border-color); }
+  .hist__row { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 20px 0;
+               border-bottom: 1px solid var(--border-color); align-items: baseline; }
+  /* ★実サイトはここで font-family: Arial, Helvetica, "sans-serif" と generic をクォートしている。
+     クォートすると generic キーワードとして働かないので、ここでは正しい書き方にした。 */
+  .hist__year { font-family: Arial, Helvetica, sans-serif; font-size: 4.4rem; font-weight: 700;
+                line-height: 1; color: var(--text-color-base); }
+  .hist__era { display: block; font-family: inherit; font-size: 1.4rem; font-weight: 400;
+               line-height: 1.6; color: var(--theme-color-sub4); }
+  .hist__txt { margin: 0; font-size: 1.6rem; line-height: 1.6; color: var(--text-color-base); }
+
+  /* ---------- Spec blocks ---------- */
+  .spec { padding: 40px 0; border-top: 1px solid var(--border-color); }
+  .spec h3 { margin: 0 0 16px; font-size: 2.2rem; font-weight: 700; line-height: 1.4; color: var(--text-color-base); }
+  .spec p  { margin: 0 0 12px; font-size: 1.6rem; line-height: 1.6; color: var(--text-color-base); }
+  .note { font-size: 1.4rem; line-height: 1.6; color: var(--theme-color-sub4); }
+  table { border-collapse: collapse; width: 100%; font-size: 1.4rem; line-height: 1.6; }
+  th, td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; color: var(--text-color-base); }
+  th { background: var(--theme-color-sub); font-weight: 700; }
+  .chip { display: inline-block; width: 64px; height: 24px; border: 1px solid var(--border-color); vertical-align: middle; }
+
+  /* ライト／ダークの対比パネル。lint が地色をたどれるよう、面と文字を明示する */
+  .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .mode-card { padding: 24px; border: 1px solid var(--border-color); }
+  .mode-card--light { background: #ffffff; color: #333333; }
+  .mode-card--light h4, .mode-card--light p { color: #333333; }
+  .mode-card--dark  h4, .mode-card--dark  p { color: #e0e0e0; }
+  .mode-card--light .mode-card__muted { color: #717171; }
+  .mode-card--light .mode-card__red   { color: #d70c18; }
+  .mode-card--light .mode-card__surface { background: #f3f5f7; color: #333333; padding: 12px; margin-top: 12px; }
+  .mode-card--dark  { background: #121212; color: #e0e0e0; }
+  .mode-card--dark .mode-card__muted  { color: #a1a1a1; }
+  .mode-card--dark .mode-card__red    { color: #f58080; }
+  .mode-card--dark .mode-card__surface { background: #383838; color: #e0e0e0; padding: 12px; margin-top: 12px; }
+  .mode-card h4 { margin: 0 0 12px; font-size: 1.8rem; font-weight: 700; line-height: 1.4; }
+  .mode-card p { margin: 0 0 8px; font-size: 1.5rem; line-height: 1.6; }
+  .mode-card__accent { background: #d70c18; color: #ffffff; display: inline-block;
+                       padding: 5px 15px; font-size: 1.4rem; line-height: 1.4; margin-top: 12px; }
+
+  /* ---------- Footer ---------- */
+  .ftr { background: var(--theme-color-sub); margin-top: 56px; }
+  .ftr__inner { max-width: 1260px; margin: 0 auto; padding: 40px 20px; }
+  .ftr__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .ftr h4 { margin: 0 0 8px; font-size: 1.6rem; font-weight: 700; line-height: 1.6; color: var(--text-color-base); }
+  .ftr ul { margin: 0; padding: 0; list-style: none; }
+  .ftr li { font-size: 1.2rem; line-height: 1.6; padding: 4px 0; color: var(--text-color-base); }
+  .ftr__copy { font-size: 1.2rem; line-height: 1.6; margin-top: 24px; color: var(--theme-color-sub4); }
+
+  /* ★ブレークポイントは 480 / 768 / 1260px。body の font-size が切り替わるのは 767.98px */
+  @media only screen and (max-width: 767.98px) {
+    body { font-size: 1.4rem; line-height: 1.6; }
+    .hero { height: 300px; }
+    .hero__copy { font-size: 3.2rem; }
+    .sec__ttl { font-size: 2.4rem; }
+    .stories { grid-template-columns: 1fr; }
+    .hist__row { grid-template-columns: 1fr; gap: 8px; }
+    .modes { grid-template-columns: 1fr; }
+    .ftr__cols { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr__inner">
+    <div class="hdr__logo">日本郵船　NYK GROUP</div>
+    <div class="hdr__util">
+      <span class="hdr__mode">ダークモード<span class="switch"></span></span>
+      <a href="#">English</a>
+      <a href="#">お問い合わせ</a>
+      <a href="#" class="hdr__search">検索</a>
+    </div>
+  </div>
+  <nav class="hdr__gnav">
+    <a href="#">企業情報</a>
+    <a href="#">ニュースルーム</a>
+    <a href="#">サステナビリティ</a>
+    <a href="#">株主・投資家情報</a>
+    <a href="#">採用情報</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <p class="hero__copy">これまでを極め、<br>これからを拓く。</p>
+  <span class="hero__note">※ 実サイトのこのコピーは index_tx01.webp（949×312px）。背景は 1920×716px の &lt;video&gt;。ここは文字で組んだ見本。</span>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="sec__ttl">日本郵船のリアルストーリーを紹介する</h2>
+    <div class="stories">
+      <article class="story">
+        <div class="story__img"></div>
+        <div class="story__meta">
+          <span class="badge-cat">日本郵船「ツウ」の方へ</span>
+          <span class="badge-sub">挑戦する企業</span>
+        </div>
+        <h3 class="story__ttl">（前編）日本郵船はなぜ大型M&amp;Aに踏み切ったのか</h3>
+        <span class="story__date">2026年10月26日</span>
+        <div class="tags"><span class="tag">日本郵船グループ</span><span class="tag">次世代燃料</span></div>
+      </article>
+      <article class="story">
+        <div class="story__img"></div>
+        <div class="story__meta">
+          <span class="badge-cat">これが私たち日本郵船の「仕事」です</span>
+          <span class="badge-sub">日本郵船グループの取り組み</span>
+        </div>
+        <h3 class="story__ttl">（中編）ロケット洋上回収船に挑む技術者たち</h3>
+        <span class="story__date">2026年10月23日</span>
+        <div class="tags"><span class="tag">組織開発</span></div>
+      </article>
+      <article class="story">
+        <div class="story__img"></div>
+        <div class="story__meta">
+          <span class="badge-cat">日本郵船「ツウ」の方へ</span>
+          <span class="badge-sub">船の世界</span>
+        </div>
+        <h3 class="story__ttl">（後編）ロケット洋上回収船に挑む技術者たち</h3>
+        <span class="story__date">2026年10月22日</span>
+        <div class="tags"><span class="tag">日本郵船これくしょん</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="sec__h2">創業から航路拡大へ</h2>
+    <div class="hist">
+      <div class="hist__row">
+        <div><span class="hist__year">1885</span><span class="hist__era">（明治18年）</span></div>
+        <p class="hist__txt">郵便汽船三菱会社と共同運輸会社の合併により誕生しました。</p>
+      </div>
+      <div class="hist__row">
+        <div><span class="hist__year">1896</span><span class="hist__era">（明治29年）</span></div>
+        <p class="hist__txt">欧州航路・北米航路・豪州航路を相次いで開設し、遠洋定期航路の基礎を築きました。</p>
+      </div>
+      <div class="hist__row">
+        <div><span class="hist__year">1964</span><span class="hist__era">（昭和39年）</span></div>
+        <p class="hist__txt">海運集約により三菱海運と合併。総合物流企業グループへの歩みを進めます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+
+    <div class="spec">
+      <h3>1. モードで変える色と、変えない色</h3>
+      <div class="modes">
+        <div class="mode-card mode-card--light">
+          <h4>Light（:root）</h4>
+          <p>本文 #333333 — これまでを極め、これからを拓く。</p>
+          <p class="mode-card__muted">弱い文字 #717171 — 2026年10月26日</p>
+          <p class="mode-card__red">赤い文字 #d70c18 — 重要なお知らせ</p>
+          <div class="mode-card__surface">面 --theme-color-sub #f3f5f7</div>
+          <span class="mode-card__accent">面の赤 #d70c18（共通）</span>
+        </div>
+        <div class="mode-card mode-card--dark">
+          <h4>Dark（html.is-darkmode）</h4>
+          <p>本文 #e0e0e0 — これまでを極め、これからを拓く。</p>
+          <p class="mode-card__muted">弱い文字 #a1a1a1 — 2026年10月26日</p>
+          <p class="mode-card__red">赤い文字 #f58080 — 重要なお知らせ</p>
+          <div class="mode-card__surface">面 --theme-color-sub #383838</div>
+          <span class="mode-card__accent">面の赤 #d70c18（共通）</span>
+        </div>
+      </div>
+      <p class="note" style="margin-top:16px">
+        <strong>面の赤は変えない。文字の赤だけ明度を上げる。</strong>
+        <code>#d70c18</code> は白文字を乗せる面としてはどちらのモードでも成立するが、
+        <code>#121212</code> の上に文字色として置くとコントラストが足りないため <code>#f58080</code> に持ち上げる。
+      </p>
+    </div>
+
+    <div class="spec">
+      <h3>2. 24 個のトークン（17 個が切り替わり、7 個は共通）</h3>
+      <table>
+        <thead><tr><th>トークン</th><th>Light</th><th>Dark</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>--theme-color-main</td><td><span class="chip" style="background:#333"></span> #333333</td><td><span class="chip" style="background:#e0e0e0"></span> #e0e0e0</td><td>主要な文字・罫</td></tr>
+          <tr><td>--theme-color-sub</td><td><span class="chip" style="background:#f3f5f7"></span> #f3f5f7</td><td><span class="chip" style="background:#383838"></span> #383838</td><td>面</td></tr>
+          <tr><td>--theme-color-sub3</td><td><span class="chip" style="background:#fff"></span> #ffffff</td><td><span class="chip" style="background:#121212"></span> #121212</td><td>反転面の上の文字</td></tr>
+          <tr><td>--theme-color-sub4</td><td><span class="chip" style="background:#717171"></span> #717171</td><td><span class="chip" style="background:#a1a1a1"></span> #a1a1a1</td><td>弱い文字・日付</td></tr>
+          <tr><td>--theme-color-sub5</td><td><span class="chip" style="background:#d70c18"></span> #d70c18</td><td><span class="chip" style="background:#fff"></span> #ffffff</td><td>役割が入れ替わる</td></tr>
+          <tr><td>--theme-color-red</td><td><span class="chip" style="background:#d70c18"></span> #d70c18</td><td><span class="chip" style="background:#f58080"></span> #f58080</td><td>赤い文字</td></tr>
+          <tr><td>--bg-color-base</td><td><span class="chip" style="background:#fff"></span> #ffffff</td><td><span class="chip" style="background:#121212"></span> #121212</td><td>ページ背景</td></tr>
+          <tr><td>--bg-color-sub</td><td><span class="chip" style="background:#888"></span> #888888</td><td><span class="chip" style="background:#4b4b4b"></span> #4b4b4b</td><td>補助面</td></tr>
+          <tr><td>--text-color-base</td><td><span class="chip" style="background:#333"></span> #333333</td><td><span class="chip" style="background:#e0e0e0"></span> #e0e0e0</td><td>本文</td></tr>
+          <tr><td>--link-color-hover</td><td><span class="chip" style="background:#d70c18"></span> #d70c18</td><td><span class="chip" style="background:#e0e0e0"></span> #e0e0e0</td><td>ライトだけ赤くなる</td></tr>
+          <tr><td>--border-color</td><td><span class="chip" style="background:#ddd"></span> #dddddd</td><td><span class="chip" style="background:#a1a1a1"></span> #a1a1a1</td><td>罫線</td></tr>
+          <tr><td>--icon-color / --icon-color2</td><td>#d70c18 / #ffffff</td><td>#ffffff / #d70c18</td><td>入れ替わる</td></tr>
+          <tr><td><strong>--theme-color-accent</strong></td><td colspan="2"><span class="chip" style="background:#d70c18"></span> #d70c18（<strong>共通</strong>）</td><td>面の赤</td></tr>
+          <tr><td><strong>--text-color-bright</strong></td><td colspan="2"><span class="chip" style="background:#fff"></span> #ffffff（<strong>共通</strong>）</td><td>赤面の上の文字</td></tr>
+          <tr><td><strong>--text-color-disable</strong></td><td colspan="2"><span class="chip" style="background:#717171"></span> #717171（<strong>共通</strong>）</td><td>無効テキスト</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="spec">
+      <h3>3. ウェイトは 400 と 700 の 2 段だけ</h3>
+      <table>
+        <thead><tr><th>指定</th><th>実測字幅</th><th>出る面</th></tr></thead>
+        <tbody>
+          <tr><th>100 / 200 / 300 / 400 / 500</th><td>576.53px</td><td>Regular（400）</td></tr>
+          <tr><th>600 / 700 / 800 / 900</th><td>588.38px</td><td>Bold（700）</td></tr>
+        </tbody>
+      </table>
+      <p style="font-weight:400">font-weight: 400 — これまでを極め、これからを拓く。</p>
+      <p style="font-weight:500">font-weight: 500 — これまでを極め、これからを拓く。（<strong>400 と同じ顔</strong>）</p>
+      <p style="font-weight:700">font-weight: 700 — これまでを極め、これからを拓く。</p>
+      <p class="note"><code>@font-face</code> は <code>unicode-range</code> で 248 件に分割され、フォント要求は 32 件。<code>unloaded</code> が大量に出るのは正常。</p>
+    </div>
+
+    <div class="spec">
+      <h3>4. 字間ゼロ・palt なし</h3>
+      <p style="letter-spacing:normal">letter-spacing: normal — 「海を通じて、人と地球をつなぐ」（CSS 全文に宣言が 0 件）</p>
+      <p style="letter-spacing:0.06em">letter-spacing: 0.06em — 「海を通じて、人と地球をつなぐ」（<strong>実サイトには 1 要素も無い</strong>）</p>
+      <p style="font-feature-settings:'palt'">font-feature-settings: "palt" — 「海を通じて、人と地球をつなぐ」（<strong>書体は対応しているが使っていない</strong>）</p>
+    </div>
+
+    <div class="spec">
+      <h3>5. 角丸は 13px のピルだけ。影はほぼ使わない</h3>
+      <div class="tags">
+        <span class="tag">日本郵船グループ</span>
+        <span class="tag">次世代燃料</span>
+        <span class="tag">組織開発</span>
+      </div>
+      <p class="note" style="margin-top:12px">
+        <code>border-radius: 13px</code> は可視 83 要素（トップ）。それ以外は <code>0</code>（丸アイコンの <code>50%</code> が 1 要素）。
+        影は <code>rgba(0,0,0,.1) 0 6px 12px</code> が <strong>1 要素だけ</strong>で、下層ページは 0 種。
+        <strong>ダークモードでは黒い影が見えない</strong>ので、段差は <code>--theme-color-sub</code> の面で作る。
+      </p>
+    </div>
+
+    <div class="spec">
+      <h3>6. レスポンシブ</h3>
+      <table>
+        <thead><tr><th>Name</th><th>Width</th><th>body font-size</th><th>line-height</th></tr></thead>
+        <tbody>
+          <tr><th>Mobile</th><td>≤ 767.98px</td><td>14px</td><td>22.4px (1.6)</td></tr>
+          <tr><th>Tablet</th><td>768–1259.98px</td><td>16px</td><td>25.6px (1.6)</td></tr>
+          <tr><th>Desktop</th><td>≥ 1260px</td><td>16px</td><td>25.6px (1.6)</td></tr>
+        </tbody>
+      </table>
+      <p class="note">
+        <code>html</code> は 8 幅すべて 10px で固定（流体もクランプも無い）。
+        実サイトは <code>body { min-width: 1260px; max-width: 1920px; margin: 0 auto }</code> で
+        <strong>デスクトップが 1260px の固定幅</strong>。768〜1259px では横スクロールが出る。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="ftr__inner">
+    <div class="ftr__cols">
+      <div>
+        <h4>企業情報</h4>
+        <ul><li>社長挨拶</li><li>会社概要</li><li>沿革</li><li>事業案内</li></ul>
+      </div>
+      <div>
+        <h4>ニュースルーム</h4>
+        <ul><li>プレスリリース</li><li>お知らせ</li></ul>
+      </div>
+      <div>
+        <h4>サステナビリティ</h4>
+        <ul><li>トップコミットメント</li><li>環境</li><li>社会</li></ul>
+      </div>
+      <div>
+        <h4>関連リンク</h4>
+        <ul><li>Ocean Network Express</li><li>日本郵船歴史博物館</li><li>サイトマップ</li></ul>
+      </div>
+    </div>
+    <p class="ftr__copy">© NIPPON YUSEN KABUSHIKI KAISHA</p>
+  </div>
+</footer>
+
+</body>
+</html>

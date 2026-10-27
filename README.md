@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (589 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (592 sites)</a>
 </p>
 
 <table>
@@ -911,6 +911,11 @@
 </tr>
 <tr>
 <td align="center"><strong>ニデック</strong><br><img src="design-md/nidec/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>小野薬品工業</strong><br><img src="design-md/ono-pharma/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>野村證券</strong><br><img src="design-md/nomura/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>日本郵船</strong><br><img src="design-md/nyk/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1561,11 +1566,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [三井物産 (MITSUI & CO.)](https://www.mitsui.com/jp/ja/) | Trading / Corporate | [DESIGN.md](design-md/mitsui-bussan/DESIGN.md) | [preview.html](design-md/mitsui-bussan/preview.html) |
 | [NXグループ／日本通運 (NIPPON EXPRESS)](https://www.nipponexpress.com/ja/) | Logistics / Corporate | [DESIGN.md](design-md/nipponexpress/DESIGN.md) | [preview.html](design-md/nipponexpress/preview.html) |
 | [ニデック (NIDEC)](https://www.nidec.com/jp/) | Manufacturing / Corporate | [DESIGN.md](design-md/nidec/DESIGN.md) | [preview.html](design-md/nidec/preview.html) |
+| [小野薬品工業 (ONO Pharmaceutical)](https://www.ono-pharma.com/ja) | Pharmaceutical / Corporate | [DESIGN.md](design-md/ono-pharma/DESIGN.md) | [preview.html](design-md/ono-pharma/preview.html) |
+| [野村證券 (Nomura Securities)](https://www.nomura.co.jp/) | Securities / Corporate | [DESIGN.md](design-md/nomura/DESIGN.md) | [preview.html](design-md/nomura/preview.html) |
+| [日本郵船 (NYK Line)](https://www.nyk.com/) | Shipping / Corporate | [DESIGN.md](design-md/nyk/DESIGN.md) | [preview.html](design-md/nyk/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (589 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (592 sites)</a>
 </p>
 
 <table>
@@ -2442,6 +2450,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>ニデック</strong><br><img src="design-md/nidec/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>小野薬品工業</strong><br><img src="design-md/ono-pharma/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>野村證券</strong><br><img src="design-md/nomura/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>日本郵船</strong><br><img src="design-md/nyk/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

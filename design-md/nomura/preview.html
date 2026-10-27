@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 野村證券（NOMURA）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 実サイトと同じ 3 ファミリー。可変軸も実サイトに合わせて Sans=400..600 / Serif=400..500 に絞る -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400..600&family=Noto+Serif+JP:wght@400;500&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は Swiper の 2 個だけ（自社トークン 0）。
+       下は実測値をこの preview のために変数化したもの。実測 2026-10-27 */
+    --red:        #ca2420;  /* ★ブランド赤。文字 3/134 要素・面 2 要素 */
+    --red-login:  #e00000;  /* ログインボタン 1 個だけの別の赤 */
+    --navy-deep:  #002c78;  /* ノムラFX ログインの面 */
+    --navy-dark:  #001338;  /* 手順ステップの番号面 */
+    --ink:        #222222;  /* ★本文。可視 58/334 要素 */
+    --ink-ui:     #42425a;  /* ★ナビ・ボタン・見出しの既定色。可視 165/78 要素 */
+    --ink-muted:  #666666;  /* 注記・免責 */
+    --link:       #013399;  /* テキストリンク・スキップリンク */
+    --on-dark:    #ffffff;
+    --divider:    #e3e3e3;  /* 罫線とタグ面。面 39 要素でトップ最多 */
+    --th:         #777c90;  /* 表ヘッダ面 */
+    --label:      #595959;  /* 人物ラベル面 */
+    --surface:    #f8f8f8;  /* セクション帯 */
+    --surface2:   #f4f4f4;  /* 表のデータセル。面 144 要素で下層最多 */
+    --surface3:   #f4f6f8;  /* 表の見出しセル */
+    --tint-blue:  #e4eaf4;  /* 紹介ブロック */
+    --tint-warm:  #fff2e6;  /* 減額セル */
+    --footer:     #1c1c1c;
+    --bg:         #ffffff;
+
+    /* === Fonts === */
+    --font: "Noto Sans JP", Arial, メイリオ, Meiryo, "ヒラギノ角ゴ Pro W3",
+            "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", Helvetica, Verdana, sans-serif;
+    /* 実サイトは 2 番目に CompatilLetterLTCERegular を挟むが、@font-face もフォント要求も
+       無い死んだ名前なのでここでは省いた */
+    --font-mincho: "Noto Serif JP", serif;   /* 見出し・リード。可変軸 400 500 */
+    --font-en:     "Marcellus", serif;        /* 飾りの英字。可視 6/7 要素 */
+
+    /* 影は 2 段。深いほうが薄い（α 0.08）ので揃えないこと */
+    --shadow-btn:  rgba(0, 0, 0, 0.1) 0 2px 8px 0;
+    --shadow-card: rgba(0, 0, 0, 0.08) 0 3px 20px 0;
+    --shadow-edge: inset 0 0 0 1px #e3e3e3;   /* border ではなく inset の影で枠を描く */
+  }
+
+  * { box-sizing: border-box; }
+
+  /* ★このサイトの核心。rem がピクセルの 100 倍になる。
+     CSS には font-size: 0.16rem（=16px）、1.6rem（=160px）と書かれる。8 幅すべてで固定。 */
+  html { font-size: 100px; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 0.16rem;      /* = 16px */
+    font-weight: 400;
+    line-height: 1;          /* ★無単位の 1。本文ブロックが宣言し直すまでこれが降りる */
+    letter-spacing: normal;  /* ★可視要素のほぼ 100% が normal */
+    color: var(--ink);
+    background: var(--bg);
+    word-break: break-all;
+  }
+
+  .wrap { max-width: 1220px; margin: 0 auto; padding: 0 0.2rem; }  /* = 20px */
+
+  /* ---------- Header ---------- */
+  .hdr { border-bottom: 1px solid var(--divider); }
+  .hdr__inner { max-width: 1260px; margin: 0 auto; padding: 0.15rem 0.2rem; display: flex; align-items: center; gap: 0.2rem; }
+  .hdr__logo { font-size: 0.24rem; font-weight: 600; line-height: 1.6; color: var(--ink-ui); }
+  .hdr__logo small { display: block; font-size: 0.12rem; font-weight: 400; line-height: 1.8; }
+  .hdr__nav { margin-left: auto; display: flex; gap: 0.2rem; align-items: center; }
+  .hdr__nav a { font-size: 0.16rem; line-height: 1.6; color: var(--ink-ui); text-decoration: none; }
+  .hdr__login {
+    background: var(--red); color: var(--on-dark);
+    font-size: 0.16rem; font-weight: 400; line-height: 1.6;
+    padding: 0.1rem; border-radius: 0; text-decoration: none;
+  }
+  .hdr__search {
+    background: var(--ink-ui); color: var(--on-dark); border: 1px solid transparent;
+    font-family: var(--font); font-size: 0.14rem; line-height: 1.6;
+    padding: 0.1rem 0.14rem; border-radius: 0; cursor: pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .kv { position: relative; height: 4.4rem; display: flex; align-items: center; justify-content: center;
+        background: linear-gradient(170deg, #0b1730 0%, #15294d 45%, #1b1f33 100%); }
+  /* ★実サイトのヒーローコピーは img_main.webp に焼き込まれた画像。ここは「もし文字で組むなら」の見本。 */
+  .kv__copy {
+    margin: 0; font-family: var(--font-mincho); font-weight: 400;
+    font-size: 0.44rem; line-height: 1.8; color: var(--on-dark); text-align: center;
+  }
+  .kv__note { position: absolute; left: 0.2rem; top: 0.16rem; font-size: 0.12rem; line-height: 1.8; color: #9aa6bd; }
+
+  .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.2rem; margin: 0.3rem auto; position: relative; z-index: 1; }
+  .btn-sec {
+    display: block; text-align: center; background: #fff; color: var(--ink-ui);
+    border: 1px solid var(--ink-ui); border-radius: 0; box-shadow: var(--shadow-btn);
+    font-size: 0.16rem; font-weight: 400; line-height: 1.8;
+    padding: 0.1rem; text-decoration: none;
+  }
+
+  /* ---------- Section ---------- */
+  .sec { padding: 0.6rem 0; }
+  .sec--tint { background: var(--surface); }
+  /* 小さいほうの英字ラベル（New Products / News）。20px / weight 500 / #222222 / 字間なし */
+  .sec__en { display: block; font-family: var(--font-en); font-size: 0.2rem; font-weight: 500;
+             line-height: 1.64; color: var(--ink); }
+  /* 大きいほうは必ず濃い面の上に白で置かれる（WEALTH MANAGEMENT 160px / weight 500） */
+  .band { background: var(--navy-dark); padding: 0.4rem 0.2rem; overflow: hidden; }
+  .band__en { margin: 0; font-family: var(--font-en); font-size: 1.6rem; font-weight: 500;
+              line-height: 1; color: var(--on-dark); white-space: nowrap; }
+  .band__note { margin: 0.12rem 0 0; font-size: 0.13rem; line-height: 1.8; color: #9aa6bd; }
+  .sec__ttl { margin: 0.08rem 0 0.3rem; font-family: var(--font-mincho); font-weight: 500;
+              font-size: 0.4rem; line-height: 1.32; color: var(--ink-ui); }
+  .lead { margin: 0 0 0.3rem; font-family: var(--font-mincho); font-weight: 400;
+          font-size: 0.2rem; line-height: 1.8; color: var(--ink-ui); }
+
+  /* ---------- Cards ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.2rem; }
+  .card { background: #fff; border-radius: 0; box-shadow: var(--shadow-card); overflow: hidden; }
+  .card__img { height: 1.6rem; background: linear-gradient(135deg, #dde3ee, #f1f3f7); }
+  .card__body { padding: 0.2rem; }
+  .card__ttl { margin: 0 0 0.1rem; font-size: 0.26rem; font-weight: 600; line-height: 1.49; color: var(--ink); }
+  .card__txt { margin: 0; font-size: 0.16rem; font-weight: 400; line-height: 1.8; color: var(--ink); }
+  .card--edge { box-shadow: var(--shadow-edge); }
+
+  .tags { display: flex; gap: 0.1rem; margin-bottom: 0.1rem; }
+  .tag { background: var(--divider); color: var(--ink-ui); font-size: 0.14rem; font-weight: 600;
+         line-height: 1.8; padding: 0.1rem 0.15rem; border-radius: 0; }
+
+  /* ---------- Table（下層の主役） ---------- */
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid var(--divider); padding: 0.1rem; font-size: 0.16rem; line-height: 1.8; text-align: left; }
+  thead th { background: var(--th); color: var(--on-dark); font-weight: 600; padding: 0.15rem 0.2rem; }
+  tbody th { background: var(--surface3); color: var(--ink); font-weight: 600; }
+  tbody td { background: var(--surface2); color: var(--ink); }
+  td.em { color: var(--red); font-weight: 600; }
+  td.warm { background: var(--tint-warm); }
+
+  /* ---------- Spec blocks ---------- */
+  .spec { padding: 0.4rem 0; border-top: 1px solid var(--divider); }
+  .spec h3 { margin: 0 0 0.16rem; font-family: var(--font-mincho); font-weight: 500;
+             font-size: 0.25rem; line-height: 1.8; color: var(--ink-ui); }
+  .spec p  { margin: 0 0 0.12rem; font-size: 0.18rem; font-weight: 400; line-height: 1.8; }
+  .note { font-size: 0.14rem; line-height: 1.8; color: var(--ink-muted); }
+  .swatches { display: flex; flex-wrap: wrap; gap: 0.16rem; }
+  .sw { width: 1.5rem; }
+  .sw__chip { height: 0.56rem; border-radius: 0; border: 1px solid var(--divider); }
+  .sw__name { font-size: 0.13rem; line-height: 1.8; margin-top: 0.06rem; }
+  .sw__hex  { font-size: 0.12rem; line-height: 1.8; color: var(--ink-muted); }
+  .lh-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.24rem; }
+  .lh-demo > div { border: 1px solid var(--divider); padding: 0.16rem; }
+  .lh-demo p { margin: 0.08rem 0 0; font-size: 0.16rem; }
+  .lh-100 p { line-height: 1; }
+  .lh-160 p { line-height: 1.6; }
+  .lh-180 p { line-height: 1.8; }
+  .lh-demo strong { font-size: 0.13rem; font-weight: 600; color: var(--red); line-height: 1.8; }
+  .shadow-row { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .shadow-box { width: 2.2rem; height: 1.1rem; background: #fff; display: flex; align-items: center;
+                justify-content: center; font-size: 0.13rem; line-height: 1.8; color: var(--ink-muted);
+                text-align: center; padding: 0.1rem; }
+
+  /* ---------- Footer ---------- */
+  .ftr { background: var(--footer); color: var(--on-dark); margin-top: 0.6rem; }
+  .ftr__inner { max-width: 1260px; margin: 0 auto; padding: 0.4rem 0.2rem; }
+  .ftr__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.24rem; }
+  .ftr h4 { margin: 0 0 0.08rem; font-family: var(--font-mincho); font-weight: 500; font-size: 0.18rem; line-height: 1.8; }
+  .ftr ul { margin: 0; padding: 0; list-style: none; }
+  .ftr li { font-size: 0.14rem; line-height: 1.8; padding: 0.04rem 0; }
+  .ftr__copy { font-size: 0.12rem; line-height: 1.8; margin-top: 0.24rem; color: #bdbdbd; }
+
+  /* ★崖は 767/768px の 1 箇所。飾りの英字だけが 160px → 44px に落ちる */
+  @media (max-width: 767px) {
+    .band__en { font-size: 0.44rem; }
+    .kv__copy { font-size: 0.26rem; }
+    .quick { grid-template-columns: 1fr 1fr; }
+    .cards { grid-template-columns: 1fr; }
+    .lh-demo { grid-template-columns: 1fr; }
+    .ftr__cols { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr__inner">
+    <div class="hdr__logo">NOMURA<small>WEALTH MANAGEMENT</small></div>
+    <nav class="hdr__nav">
+      <a href="#">ソリューション・サービス</a>
+      <a href="#">投資情報</a>
+      <a href="#">お客様サポート</a>
+      <a href="#">会社情報</a>
+      <button class="hdr__search">検索</button>
+      <a href="#" class="hdr__login">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<section class="kv">
+  <p class="kv__copy">変化を読み、<br>あなたの未来を共に創る。</p>
+  <span class="kv__note">※ 実サイトのこのコピーは img_main.webp（1440×744px）に焼き込まれた画像。ここは文字で組んだ見本。</span>
+</section>
+
+<div class="wrap">
+  <div class="quick">
+    <a class="btn-sec" href="#">よくあるご質問</a>
+    <a class="btn-sec" href="#">お手続き</a>
+    <a class="btn-sec" href="#">口座開設</a>
+    <a class="btn-sec" href="#">取扱商品</a>
+  </div>
+</div>
+
+<section class="band">
+  <p class="band__en">WEALTH MANAGEMENT</p>
+  <p class="band__note">飾りの英字は 1.6rem（= 160px）/ Marcellus / weight 500 / 白。下層では 1.92rem（= 192px）。実サイトでも 1440px 幅で 1400px あり、必ず濃い面の上に置かれる。</p>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <span class="sec__en">Solutions</span>
+    <h2 class="sec__ttl">ソリューション・サービス</h2>
+    <p class="lead">お客様の想像以上の未来を実現するパートナーとして、金融資産だけでなく、お客様の資産すべてをふまえたご提案を行います。</p>
+    <div class="cards">
+      <article class="card">
+        <div class="card__img"></div>
+        <div class="card__body">
+          <div class="tags"><span class="tag">IPO</span><span class="tag">債券</span></div>
+          <h3 class="card__ttl">あんしんスイープ</h3>
+          <p class="card__txt">野村證券の証券口座と野村信託銀行の普通預金口座を自動で資金移動するサービスです。</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card__img"></div>
+        <div class="card__body">
+          <div class="tags"><span class="tag">アプリ</span></div>
+          <h3 class="card__ttl">野村の資産運用アプリ「NOMURA」</h3>
+          <p class="card__txt">資産運用を便利に。パスキー認証採用でセキュリティも高めています。</p>
+        </div>
+      </article>
+      <article class="card card--edge">
+        <div class="card__body">
+          <h3 class="card__ttl">お知らせ</h3>
+          <p class="card__txt">お客様本位の業務運営を実現するための方針、プロダクトガバナンスに関する方針を更新しました。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--tint">
+  <div class="wrap">
+    <h2 class="sec__ttl">相続税額の試算</h2>
+    <table>
+      <thead>
+        <tr><th>ご資産の状況</th><th>配偶者と子ども1人</th><th>配偶者と子ども2人</th><th>相続税の負担率</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>遺産総額 1億円</th><td>385万円</td><td>315万円</td><td class="em">3.2%</td></tr>
+        <tr><th>遺産総額 2億円</th><td>1,670万円</td><td>1,350万円</td><td class="em">6.8%</td></tr>
+        <tr><th>遺産総額 3億円</th><td>3,460万円</td><td>2,860万円</td><td class="em">9.5%</td></tr>
+        <tr><th>生前贈与による軽減</th><td class="warm">▲ 108万円</td><td class="warm">▲ 96万円</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:0.16rem">当社で取扱う商品等へのご投資には、各商品等に所定の手数料等をご負担いただく場合があります。</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+
+    <div class="spec">
+      <h3>1. html { font-size: 100px } — rem がピクセルの 100 倍になる</h3>
+      <table>
+        <thead><tr><th>CSS の書き方</th><th>実際の px</th><th>どこ</th></tr></thead>
+        <tbody>
+          <tr><th>0.12rem</th><td>12px</td><td>人物ラベル</td></tr>
+          <tr><th>0.16rem</th><td>16px</td><td>body・表・カード本文（可視 180/510 要素で最多）</td></tr>
+          <tr><th>0.18rem</th><td>18px</td><td>記事本文</td></tr>
+          <tr><th>1.6rem</th><td>160px</td><td>飾りの英字（トップ）</td></tr>
+          <tr><th>1.92rem</th><td>192px</td><td>飾りの英字（下層）</td></tr>
+        </tbody>
+      </table>
+      <p class="note">8 幅（1440 / 1280 / 1200 / 1024 / 834 / 768 / 767 / 375px）すべてで <code>html</code> は 100px、<code>body</code> は 16px のまま動かない。流体もクランプも無い。</p>
+    </div>
+
+    <div class="spec">
+      <h3>2. body { line-height: 1 } — 本文ブロックが宣言し直すまで行が潰れる</h3>
+      <div class="lh-demo">
+        <div class="lh-100">
+          <strong>1（body の既定・可視 43/14 要素）</strong>
+          <p>金融資産だけでなく、お客様の資産すべてをふまえたご提案を行います。専門知識が求められる不動産の承継も含めて支援します。</p>
+        </div>
+        <div class="lh-160">
+          <strong>1.6（ヘッダーのメニュー・27/35 要素）</strong>
+          <p>金融資産だけでなく、お客様の資産すべてをふまえたご提案を行います。専門知識が求められる不動産の承継も含めて支援します。</p>
+        </div>
+        <div class="lh-180">
+          <strong>1.8（本文・表・見出し・168/514 要素で最多）</strong>
+          <p>金融資産だけでなく、お客様の資産すべてをふまえたご提案を行います。専門知識が求められる不動産の承継も含めて支援します。</p>
+        </div>
+      </div>
+      <p class="note">比率 1.00 未満が 1 件も出ないので、無単位の 1 と確定できる（絶対値 px なら大きな見出しが 1 未満になる）。</p>
+    </div>
+
+    <div class="spec">
+      <h3>3. font-weight 700 は 600 で出る（可変軸が 400 600）</h3>
+      <table>
+        <thead><tr><th>指定</th><th>実測字幅</th><th>出る面</th></tr></thead>
+        <tbody>
+          <tr><th>100–400</th><td>576.53px</td><td>Regular</td></tr>
+          <tr><th>500</th><td>581.69px</td><td>軸の中間</td></tr>
+          <tr><th>600 / 700 / 800 / 900</th><td>585.03px</td><td>すべて軸の上限（600）</td></tr>
+        </tbody>
+      </table>
+      <p style="font-weight:400">font-weight: 400 — ウェルス・マネジメントを新たなステージへ</p>
+      <p style="font-weight:500">font-weight: 500 — ウェルス・マネジメントを新たなステージへ</p>
+      <p style="font-weight:600">font-weight: 600 — ウェルス・マネジメントを新たなステージへ</p>
+      <p style="font-weight:700">font-weight: 700 — ウェルス・マネジメントを新たなステージへ（<strong>600 と同じ顔</strong>）</p>
+      <p class="note">明朝（Noto Serif JP）の軸は <code>400 500</code>。見出しはすべて 500 で、600 以上は存在しない。</p>
+    </div>
+
+    <div class="spec">
+      <h3>4. 書体は三層。見出しは明朝、本文はゴシック、飾りだけ欧文セリフ</h3>
+      <p style="font-family:var(--font-mincho);font-weight:500;font-size:0.32rem;line-height:1.8;color:var(--ink-ui)">Noto Serif JP 500 — 資産承継ソリューション</p>
+      <p style="font-family:var(--font);font-weight:400;font-size:0.18rem;line-height:1.8">Noto Sans JP 400 — 専門知識が求められる不動産の承継も含め、お客様の資産全体をふまえてご提案します。</p>
+      <p style="font-family:var(--font-en);font-size:0.2rem;font-weight:500;line-height:1.64;color:var(--ink)">Marcellus 20px / weight 500 / #222222 — New Products / News</p>
+      <p style="background:var(--navy-dark);color:var(--on-dark);padding:0.16rem;font-family:var(--font-en);font-size:0.5rem;line-height:1;letter-spacing:3px">Marcellus 50px / 白 / 字間 3px — Solutions</p>
+      <p class="note">実サイトのスタック 2 番目にある <code>CompatilLetterLTCERegular</code> は、<code>@font-face</code> もフォント要求も無い死んだ名前。省いてよい。</p>
+    </div>
+
+    <div class="spec">
+      <h3>5. 字間ゼロ・palt なし・角丸ゼロ</h3>
+      <p style="letter-spacing:normal">letter-spacing: normal — 資産承継のご相談を承ります（実サイトの可視要素はほぼ 100% これ）</p>
+      <p style="font-feature-settings:'palt'">font-feature-settings: "palt" — 「約物・テスト（括弧）」。（<strong>実サイトには宣言が 0 件</strong>）</p>
+      <p class="note"><code>border-radius</code> の実測は 2 ページとも <strong>0 種</strong>。ボタン・タグ・カード・表、すべて直角。</p>
+    </div>
+
+    <div class="spec">
+      <h3>6. 影は 2 段。深いほうが薄い</h3>
+      <div class="shadow-row">
+        <div class="shadow-box" style="box-shadow:none;border:1px solid var(--divider)">none<br>表・タグ・テキストリンク</div>
+        <div class="shadow-box" style="box-shadow:var(--shadow-btn)">rgba(0,0,0,.1) 0 2px 8px<br>ボタン（14/24 要素）</div>
+        <div class="shadow-box" style="box-shadow:var(--shadow-card)">rgba(0,0,0,.08) 0 3px 20px<br>カード（21/7 要素）</div>
+        <div class="shadow-box" style="box-shadow:var(--shadow-edge)">inset 0 0 0 1px #E3E3E3<br>枠線だけのカード（5/1 要素）</div>
+      </div>
+      <p class="note">ぼかしの大きいカードのほうが α が小さい（0.08）。α を揃えないこと。</p>
+    </div>
+
+    <div class="spec">
+      <h3>7. カラーパレット</h3>
+      <div class="swatches">
+        <div class="sw"><div class="sw__chip" style="background:#ca2420"></div><div class="sw__name">NOMURA Red</div><div class="sw__hex">#CA2420</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#e00000"></div><div class="sw__name">Login Red（1 箇所）</div><div class="sw__hex">#E00000</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#42425a"></div><div class="sw__name">Text UI Navy</div><div class="sw__hex">#42425A</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#222222"></div><div class="sw__name">Text Primary</div><div class="sw__hex">#222222</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#002c78"></div><div class="sw__name">Deep Navy</div><div class="sw__hex">#002C78</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#001338"></div><div class="sw__name">Darkest Navy</div><div class="sw__hex">#001338</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#777c90"></div><div class="sw__name">Table Head</div><div class="sw__hex">#777C90</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#e3e3e3"></div><div class="sw__name">Divider / Tag</div><div class="sw__hex">#E3E3E3</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#f4f4f4"></div><div class="sw__name">Table Cell</div><div class="sw__hex">#F4F4F4</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#f4f6f8"></div><div class="sw__name">Table Head Cell</div><div class="sw__hex">#F4F6F8</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#e4eaf4"></div><div class="sw__name">Tint Blue</div><div class="sw__hex">#E4EAF4</div></div>
+        <div class="sw"><div class="sw__chip" style="background:#1c1c1c"></div><div class="sw__name">Footer</div><div class="sw__hex">#1C1C1C</div></div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <h3>8. 縦組みは「サイト本体には無い」</h3>
+      <p class="note">
+        <code>writing-mode: vertical-rl</code> が 2 要素出るが、どちらも外部チャットウィジェット
+        （<code>お困りですか？</code> / <code>お困りですか？チャットでご案内します</code>、20px / 18px、<code>letter-spacing: 1px</code>）。
+        <strong>縦組みを実装しないこと。</strong>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="ftr__inner">
+    <div class="ftr__cols">
+      <div>
+        <h4>ソリューション・サービス</h4>
+        <ul><li>金融資産ソリューション</li><li>不動産ソリューション</li><li>資産承継ソリューション</li></ul>
+      </div>
+      <div>
+        <h4>投資情報</h4>
+        <ul><li>マーケットレポート</li><li>新商品情報</li><li>取扱商品一覧</li></ul>
+      </div>
+      <div>
+        <h4>お客様サポート</h4>
+        <ul><li>お手続き</li><li>よくあるご質問</li><li>お問い合わせ</li></ul>
+      </div>
+      <div>
+        <h4>会社情報</h4>
+        <ul><li>会社概要</li><li>採用情報</li><li>サステナビリティ</li></ul>
+      </div>
+    </div>
+    <p class="ftr__copy">野村證券株式会社　金融商品取引業者　関東財務局長（金商）第142号</p>
+  </div>
+</footer>
+
+</body>
+</html>
