@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (592 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (595 sites)</a>
 </p>
 
 <table>
@@ -916,6 +916,11 @@
 </tr>
 <tr>
 <td align="center"><strong>日本郵船</strong><br><img src="design-md/nyk/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>塩野義製薬</strong><br><img src="design-md/shionogi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>住友化学</strong><br><img src="design-md/sumitomo-chem/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>島津製作所</strong><br><img src="design-md/shimadzu/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1569,11 +1574,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [小野薬品工業 (ONO Pharmaceutical)](https://www.ono-pharma.com/ja) | Pharmaceutical / Corporate | [DESIGN.md](design-md/ono-pharma/DESIGN.md) | [preview.html](design-md/ono-pharma/preview.html) |
 | [野村證券 (Nomura Securities)](https://www.nomura.co.jp/) | Securities / Corporate | [DESIGN.md](design-md/nomura/DESIGN.md) | [preview.html](design-md/nomura/preview.html) |
 | [日本郵船 (NYK Line)](https://www.nyk.com/) | Shipping / Corporate | [DESIGN.md](design-md/nyk/DESIGN.md) | [preview.html](design-md/nyk/preview.html) |
+| [塩野義製薬 (SHIONOGI)](https://www.shionogi.com/jp/ja/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/shionogi/DESIGN.md) | [preview.html](design-md/shionogi/preview.html) |
+| [住友化学 (Sumitomo Chemical)](https://www.sumitomo-chem.co.jp/) | Chemical / Corporate | [DESIGN.md](design-md/sumitomo-chem/DESIGN.md) | [preview.html](design-md/sumitomo-chem/preview.html) |
+| [島津製作所 (SHIMADZU)](https://www.shimadzu.co.jp/) | Precision Instruments / Corporate | [DESIGN.md](design-md/shimadzu/DESIGN.md) | [preview.html](design-md/shimadzu/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (592 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (595 sites)</a>
 </p>
 
 <table>
@@ -2455,6 +2463,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>日本郵船</strong><br><img src="design-md/nyk/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>塩野義製薬</strong><br><img src="design-md/shionogi/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>住友化学</strong><br><img src="design-md/sumitomo-chem/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>島津製作所</strong><br><img src="design-md/shimadzu/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

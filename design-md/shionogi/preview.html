@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 塩野義製薬（SHIONOGI）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの :root には 93 個の Custom Properties があるが（自社 92 / Swiper 1）、
+       DOM 全走査で可視 0 要素のものが大半。ここには実測できた色だけを置く。2026-10-28 */
+    --red:          #D80C24;   /* ★--main-color / --red-100 / --txt-red。文字 4 / 面 7 要素 */
+    --red-grad-a:   #F24A51;   /* --gradient-red-start。単独では可視 0。グラデ内でのみ使用 */
+    --txt-body:     #2D313F;   /* ★--txt-body / --txt-dark / --dark-100。可視 711 要素で最多 */
+    --txt-grey:     #92959E;   /* --txt-grey。可視 86 要素 */
+    --txt-third:    #545863;   /* ユーティリティナビ。可視 7 要素 */
+    --link:         #3F58B0;   /* --txt-link / --blue-100。可視 1 要素のみ */
+    --border:       #EEEEEF;   /* --gray-5 / --border-light / --border-base。可視 11 要素 */
+    --border-strong:#D3D4D9;   /* --dark-15。ピルボタンの枠。可視 6 要素 */
+    --surface:      #FFFFFF;
+    --surface-tint: #F8E2E5;   /* カテゴリ見出し帯。可視 24 要素。変数化されていない直書き */
+    --surface-tint2:#EFC3C8;   /* 同系の濃い帯。可視 4 要素 */
+    --surface-grey: #EFEFEF;   /* 可視 32 要素 */
+    --bg:           #FFFFFF;   /* pageBackground.resolved / 根拠 viewportTopBySample (10/10) */
+    --bg-sub:       #F5F5F5;   /* 下層ページの地。ハードストップのグラデーションで作っている */
+
+    /* === Fonts ===
+       実サイトは "Noto Sans JP" を自社ホストから読もうとして 4 ファイルすべて HTTP 404。
+       document.fonts は 2 件とも status:"error" で、実際はメイリオ / sans-serif に落ちている。
+       ここでは「意図された設計」を再現するため Google Fonts から正しく読み込む。
+       なお実サイトのスタックは 3 つだけでヒラギノを明示していない（下の 2 行目は補った受け皿）。 */
+    --font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===
+       トークンが実装と一致している数少ない例。実測値と完全に合う。 */
+    --lh-text:    1.8;   /* --line-height-text。本文 16px → 28.8px。実測 43 要素 */
+    --lh-heading: 1.4;   /* --line-height-heading。実測 75 要素で最多 */
+    --lh-btn:     1.3;   /* --line-height-btn。実測 19 要素 */
+    --lh-tight:   1.2;   /* カテゴリ見出し帯 */
+
+    /* === Letter spacing ===
+       可視 148/148 要素（トップ）・72/72（下層）が normal。1 箇所も触っていない。 */
+    --ls: normal;
+
+    /* === Radius: 5 段 + ピル === */
+    --r-xs: 8px;    /* --border-radius-xs。可視 33 要素 */
+    --r-sm: 12px;   /* --border-radius-sm */
+    --r-md: 16px;   /* --border-radius-md */
+    --r-lg: 24px;   /* --border-radius-lg。可視 12 要素 */
+    --r-xl: 32px;   /* --border-radius-xl */
+    --r-pill: 9999px;  /* 実サイトは border-radius: 1440px と書いている */
+
+    /* === Elevation: 1 種のみ === */
+    --shadow: 0 2px 12px rgba(45, 49, 63, 0.1);  /* --box-shadow-sm。可視 26 要素 */
+
+    --gutter: 16px;     /* --grid-gutter */
+    --container: 1200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* 実サイトは html { font-size: 62.5% } = 10px 固定。7 幅すべてで不変（流体なし）。 */
+  html { font-size: 62.5%; }
+
+  body {
+    background: var(--bg);
+    color: var(--txt-body);
+    font-family: var(--font-body);
+    font-size: 1.6rem;              /* = 16px */
+    font-weight: 400;
+    line-height: var(--lh-text);
+    letter-spacing: var(--ls);
+    /* font-feature-settings は実サイトで CSS 全文 0 件・実測 0 要素。書かない。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); background: var(--surface); }
+  .header-util { display: flex; justify-content: flex-end; gap: 20px; max-width: var(--container); margin: 0 auto; padding: 10px 20px 0; }
+  .header-util a { font-size: 1.2rem; line-height: 1; color: var(--txt-third); text-decoration: none; }
+  .header-inner { display: flex; align-items: center; gap: 28px; max-width: var(--container); margin: 0 auto; padding: 14px 20px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--txt-body); }
+  .logo-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--red); }
+  .logo-text { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+  .header-nav { display: flex; gap: 26px; margin-left: auto; }
+  .header-nav a { font-size: 1.5rem; line-height: var(--lh-btn); color: var(--txt-body); text-decoration: none; }
+  .navbar { background: var(--red); }
+  .navbar-inner { display: flex; justify-content: center; gap: 0; max-width: var(--container); margin: 0 auto; }
+  .navbar a { color: #FFFFFF; font-size: 1.6rem; font-weight: 600; line-height: var(--lh-btn); text-decoration: none; padding: 14px 28px; border-left: 1px solid rgba(255,255,255,.35); }
+  .navbar a:last-child { border-right: 1px solid rgba(255,255,255,.35); }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--bg-sub); }
+  .section-alt .section-inner { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .eyebrow { font-size: 3.7rem; font-weight: 600; line-height: var(--lh-btn); color: var(--txt-body); }
+  .eyebrow-ja { font-size: 1.4rem; font-weight: 400; line-height: var(--lh-heading); color: var(--txt-grey); margin-top: 2px; }
+  .section-title { font-size: 2.6rem; font-weight: 600; line-height: var(--lh-heading); margin: 22px 0 14px; }
+  .section-lead { font-size: 1.6rem; line-height: var(--lh-text); margin-bottom: 34px; max-width: 860px; }
+  .note { font-size: 1.4rem; line-height: var(--lh-heading); color: var(--txt-grey); margin-top: 20px; max-width: 880px; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--surface-grey); padding: 1px 5px; border-radius: 3px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--gutter); }
+  .swatch { border: 1px solid var(--border); border-radius: var(--r-xs); background: var(--surface); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px 14px; }
+  .swatch-name { font-size: 1.4rem; font-weight: 600; line-height: var(--lh-btn); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-grey); margin-top: 3px; }
+  .swatch-use { font-size: 1.2rem; line-height: 1.6; color: var(--txt-grey); margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-grey); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.3rem; font-weight: 600; color: var(--txt-body); }
+  .s37 { font-size: 3.7rem; font-weight: 600; line-height: var(--lh-btn); }
+  .s26 { font-size: 2.6rem; font-weight: 600; line-height: var(--lh-heading); }
+  .s21 { font-size: 2.1rem; font-weight: 600; line-height: var(--lh-heading); }
+  .s16 { font-size: 1.6rem; font-weight: 400; line-height: var(--lh-text); }
+  .s14 { font-size: 1.4rem; font-weight: 400; line-height: var(--lh-heading); }
+  .s12 { font-size: 1.2rem; font-weight: 400; line-height: 1; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; letter-spacing: var(--ls); }
+  .btn-pill { font-size: 1.6rem; font-weight: 600; line-height: var(--lh-btn); color: var(--txt-body); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-pill); padding: 12px 30px; }
+  .btn-pill-sm { font-size: 1.4rem; font-weight: 600; line-height: var(--lh-btn); color: var(--txt-body); background: transparent; border: 1px solid var(--border); border-radius: var(--r-pill); padding: 9px 22px; }
+  .link-text { font-size: 1.6rem; font-weight: 400; line-height: var(--lh-text); color: var(--link); background: transparent; border: none; text-decoration: underline; }
+  .badge { display: inline-block; font-size: 1.2rem; font-weight: 400; line-height: 1.8; color: #FFFFFF; border-radius: var(--r-pill); padding: 1px 14px; }
+  /* 実サイトのバッジは 10px。小さすぎるのでここでは 12px に上げている（DESIGN.md 4 章の注記） */
+  .badge--press  { background: var(--red); }
+  .badge--notice { background: var(--link); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .card { background: var(--surface); border-radius: var(--r-xs); box-shadow: var(--shadow); overflow: hidden; text-decoration: none; color: var(--txt-body); display: block; }
+  .card-img { height: 150px; background: linear-gradient(140deg, #E7EAF2, #C9CEDC); border-radius: var(--r-xs) var(--r-xs) 0 0; }
+  .card-body { padding: 18px 20px 22px; }
+  .card-date { font-size: 1.2rem; line-height: 1; color: var(--txt-grey); }
+  .card-title { font-size: 2.1rem; font-weight: 600; line-height: var(--lh-heading); margin-top: 10px; }
+  .card-desc { font-size: 1.6rem; line-height: var(--lh-text); margin-top: 10px; }
+  .card-lg { border-radius: var(--r-lg); }
+  .card-lg .card-img { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+
+  /* CATEGORY HEADING */
+  .cat-heading { background: var(--surface-tint); color: var(--txt-body); font-size: 1.6rem; font-weight: 700; line-height: var(--lh-tight); padding: 14px 20px; border-radius: var(--r-xs); }
+  .cat-heading--strong { background: var(--surface-tint2); }
+
+  /* GRADIENT BAR */
+  .grad-bar { background: linear-gradient(var(--red-grad-a) 0%, var(--red) 100%); color: #FFFFFF; padding: 26px 24px; border-radius: var(--r-md); font-size: 2.1rem; font-weight: 600; line-height: var(--lh-heading); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 600; line-height: var(--lh-btn); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: var(--surface); color: var(--txt-body);
+    border: 1px solid var(--border-strong); border-radius: var(--r-xs);
+    padding: 12px 14px; font-size: 1.6rem; line-height: var(--lh-btn);
+    font-family: var(--font-body);
+  }
+  .field.is-focus input { outline: 2px solid var(--red); outline-offset: 1px; }
+  .field.is-error input { border-color: var(--red); }
+  .field-msg { font-size: 1.2rem; line-height: 1.6; color: var(--txt-grey); margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--red); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+  .elev { background: var(--surface); border-radius: var(--r-xs); padding: 28px; text-align: center; border: 1px solid var(--border); }
+  .elev.e1 { box-shadow: var(--shadow); border-color: transparent; }
+  .elev-name { font-size: 1.6rem; font-weight: 600; line-height: var(--lh-btn); }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-grey); margin-top: 8px; }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 26px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 108px; height: 68px; background: var(--surface-grey); border: 1px solid var(--border); }
+  .radius-label { font-family: var(--font-mono); font-size: 1.1rem; color: var(--txt-grey); margin-top: 7px; }
+
+  /* FOOTER */
+  .footer { background: var(--txt-body); color: #FFFFFF; padding: 44px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-size: 2.1rem; font-weight: 600; line-height: var(--lh-heading); }
+  .footer-cols { display: flex; gap: 48px; margin-top: 22px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 1.6rem; font-weight: 600; line-height: var(--lh-heading); }
+  .footer-col a { display: block; font-size: 1.4rem; line-height: 2; color: #FFFFFF; text-decoration: none; opacity: .85; }
+  .footer-copy { font-size: 1.2rem; line-height: 1.5; margin-top: 30px; opacity: .7; }
+
+  /* 実測で切り替わるのは 768/767px の 1 箇所だけ。ルートも body も動かない。 */
+  @media (max-width: 767px) {
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .s16, .section-lead, .card-desc { font-size: 1.6rem; }   /* p は 18px → 16px */
+    .s14, .card-title { font-size: 1.4rem; }                 /* h3 は 16px → 14px */
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav, .header-util { display: none; }
+    .navbar-inner { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-util">
+    <a href="#">患者・ご家族の皆さま</a>
+    <a href="#">医療関係者の皆さま</a>
+    <a href="#">株主・投資家の皆さま</a>
+    <a href="#">採用情報</a>
+  </div>
+  <div class="header-inner">
+    <a class="logo" href="#"><span class="logo-mark"></span><span class="logo-text">SHIONOGI</span></a>
+    <nav class="header-nav">
+      <a href="#">お問い合わせ</a>
+      <a href="#">検索</a>
+      <a href="#">Worldwide</a>
+    </nav>
+  </div>
+</header>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#">企業情報</a>
+    <a href="#">サステイナビリティ</a>
+    <a href="#">イノベーション</a>
+    <a href="#">ジャーナル</a>
+    <a href="#">ニュース</a>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="eyebrow">Colors</div>
+  <div class="eyebrow-ja">カラーパレット</div>
+  <h2 class="section-title">実際に描画される色は 10 色ほどに収束している</h2>
+  <p class="section-lead">
+    <code>:root</code> には 93 個の Custom Properties があるが、緑・黄・水色のランプ（計 15 色）と、
+    赤・青・グレーの薄い段はいずれも 2 ページとも可視 0 要素だった。
+    以下は DOM 全走査で実際に描画を確認できた色だけを並べている。
+  </p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#D80C24"></div><div class="swatch-body">
+      <div class="swatch-name">Primary Red</div><div class="swatch-hex">#D80C24</div>
+      <div class="swatch-use">--main-color / --red-100 / --txt-red。文字 4・面 7 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#2D313F"></div><div class="swatch-body">
+      <div class="swatch-name">Text Primary</div><div class="swatch-hex">#2D313F</div>
+      <div class="swatch-use">--txt-body / --txt-dark / --dark-100。可視 711 要素で最多</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#92959E"></div><div class="swatch-body">
+      <div class="swatch-name">Text Secondary</div><div class="swatch-hex">#92959E</div>
+      <div class="swatch-use">--txt-grey。可視 86 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#3F58B0"></div><div class="swatch-body">
+      <div class="swatch-name">Link</div><div class="swatch-hex">#3F58B0</div>
+      <div class="swatch-use">--txt-link / --blue-100。可視 1 要素のみ</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F8E2E5"></div><div class="swatch-body">
+      <div class="swatch-name">Surface Tint</div><div class="swatch-hex">#F8E2E5</div>
+      <div class="swatch-use">カテゴリ見出し帯。可視 24 要素。変数化されていない直書き</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EFC3C8"></div><div class="swatch-body">
+      <div class="swatch-name">Surface Tint 2</div><div class="swatch-hex">#EFC3C8</div>
+      <div class="swatch-use">同系の濃い帯。可視 4 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EFEFEF"></div><div class="swatch-body">
+      <div class="swatch-name">Surface Grey</div><div class="swatch-hex">#EFEFEF</div>
+      <div class="swatch-use">可視 32 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#D3D4D9"></div><div class="swatch-body">
+      <div class="swatch-name">Border Strong</div><div class="swatch-hex">#D3D4D9</div>
+      <div class="swatch-use">--dark-15。ピルボタンの枠。可視 6 要素</div></div></div>
+  </div>
+  <p class="note">
+    壊れたトークンが 2 つある。<code>--font-size-base: 16rem</code> はルート 10px では 160px になる書き誤りで、
+    どこからも参照されていない。<code>--btn-arw-padding: calc(* 2 + )</code> は空変数から合成された無効な式。
+    どちらも実装に写さないこと。
+  </p>
+</section>
+
+<section class="section-alt"><div class="section-inner">
+  <div class="eyebrow">Typography</div>
+  <div class="eyebrow-ja">タイポグラフィ</div>
+  <h2 class="section-title">字間は 1 箇所も触らない。行間だけがトークンどおり</h2>
+  <p class="section-lead">
+    <code>letter-spacing</code> は可視 148/148 要素（トップ）・72/72 要素（下層）が <code>normal</code>。
+    一方で行間は <code>--line-height-text: 1.8</code> / <code>--line-height-heading: 1.4</code> /
+    <code>--line-height-btn: 1.3</code> が実測値とそのまま一致する。
+  </p>
+
+  <div class="type-row">
+    <div class="type-meta"><b>セクション見出し（欧文）</b>37px / 600 / lh 1.3 / ls normal<br>実測 4 要素</div>
+    <div class="s37">Innovation</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>カテゴリ見出し</b>26px / 600 / lh 1.4 / ls normal<br>実測 5 要素</div>
+    <div class="s26">SHIONOGIを知る</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>カード見出し</b>21px / 600 / lh 1.4 / ls normal<br>実測 5 要素</div>
+    <div class="s21">感染症の脅威に、科学で立ち向かう</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>本文</b>16px / 400 / lh 1.8 / ls normal<br>実測 96 要素。最多</div>
+    <div class="s16">創薬型製薬企業として、感染症をはじめとする領域で、医療上の必要性が高い医薬品を継続的に届けることを使命としています。行間 1.8 は日本語の本文としてゆったりした側に入ります。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>補助テキスト</b>14px / 400 / lh 1.4 / ls normal<br>実測 14 要素</div>
+    <div class="s14">※ 本ページに掲載されている情報は発表日現在のものです。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>ユーティリティ・日付</b>12px / 400 / lh 1.0 / ls normal<br>実測 12 要素</div>
+    <div class="s12">2026年10月28日</div>
+  </div>
+
+  <p class="note">
+    ウェイトは 400 と 600 の 2 段（トップ: 400 ×90 / 600 ×55）。
+    ただし宣言された <code>@font-face</code> は 400 と 700 の 2 本だけで 600 は存在せず、
+    しかもその 2 本が <strong>HTTP 404 で読み込みに失敗している</strong>。
+    実環境では 600 が OS ローカル書体のどのウェイトに当たるかが閲覧環境で割れる。
+    再現するときは 400 / 700 の 2 段に寄せるか、可変フォントで 600 を実際に用意すること。
+  </p>
+</div></section>
+
+<section class="section">
+  <div class="eyebrow">Components</div>
+  <div class="eyebrow-ja">コンポーネント</div>
+  <h2 class="section-title">面で塗った CTA が存在しない</h2>
+  <p class="section-lead">
+    赤 <code>#D80C24</code> は見出しの文字色・バッジ・グラデーション帯に使われるが、
+    ボタンの地色には一度も使われていない。ボタンはすべてピル型（実サイトの記述は <code>border-radius: 1440px</code>）。
+  </p>
+  <div class="btn-grid">
+    <a class="btn btn-pill" href="#">企業情報を見る</a>
+    <a class="btn btn-pill-sm" href="#">会社概要</a>
+    <button class="btn link-text" type="button">ニュース一覧へ</button>
+    <span class="badge badge--press">プレスリリース</span>
+    <span class="badge badge--notice">お知らせ</span>
+  </div>
+
+  <div class="cat-heading">企業情報トップ</div>
+  <div style="height:10px"></div>
+  <div class="cat-heading cat-heading--strong">SHIONOGIのサステイナビリティ</div>
+  <div style="height:26px"></div>
+  <div class="grad-bar">統合報告書2026 を公開しました</div>
+
+  <div style="height:34px"></div>
+  <div class="card-grid">
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body">
+      <div class="card-date">2026年10月28日</div>
+      <div class="card-title">感染症への長期コミットメント</div>
+      <div class="card-desc">薬剤耐性（AMR）問題に対する取り組みを紹介しています。</div>
+    </div></a>
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body">
+      <div class="card-date">2026年10月21日</div>
+      <div class="card-title">創薬研究の現在地</div>
+      <div class="card-desc">研究開発ビジョンと、創薬から臨床開発までの流れ。</div>
+    </div></a>
+    <a class="card card-lg" href="#"><div class="card-img"></div><div class="card-body">
+      <div class="card-date">2026年10月14日</div>
+      <div class="card-title">ブランドステートメント</div>
+      <div class="card-desc">角丸 24px の大きいカード（--border-radius-lg・可視 12 要素）。</div>
+    </div></a>
+  </div>
+
+  <div style="height:40px"></div>
+  <div class="form-grid">
+    <div class="field">
+      <label for="f1">お名前</label>
+      <input id="f1" type="text" value="塩野 義一">
+      <div class="field-msg">全角でご入力ください</div>
+    </div>
+    <div class="field is-focus">
+      <label for="f2">メールアドレス（フォーカス状態）</label>
+      <input id="f2" type="text" value="example@example.com">
+      <div class="field-msg">フォーカスリングは Primary Red</div>
+    </div>
+    <div class="field is-error">
+      <label for="f3">電話番号（エラー状態）</label>
+      <input id="f3" type="text" value="03-0000">
+      <div class="field-msg">電話番号の桁数が不足しています</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt"><div class="section-inner">
+  <div class="eyebrow">Elevation</div>
+  <div class="eyebrow-ja">影と角丸</div>
+  <h2 class="section-title">影は 1 種類だけ。色は黒ではなく本文色の 10%</h2>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">影なし</div><div class="elev-val">none</div></div>
+    <div class="elev e1"><div class="elev-name">Card</div><div class="elev-val">0 2px 12px rgba(45,49,63,.1)</div></div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">xs 8px<br>可視 33</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">sm 12px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">md 16px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">lg 24px<br>可視 12</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:32px"></div><div class="radius-label">xl 32px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">pill<br>実サイトは 1440px</div></div>
+  </div>
+  <p class="note">
+    下層ページの背景は <code>linear-gradient(#FFFFFF 0px, #FFFFFF 140px, #F5F5F5 140px, #F5F5F5 100%)</code>。
+    2 要素を重ねる代わりに、1 枚のハードストップのグラデーションでヘッダー下 140px の段差を作っている。
+  </p>
+</div></section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">SHIONOGI</div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">企業情報</div>
+        <a href="#">会社概要</a><a href="#">トップメッセージ</a><a href="#">経営戦略</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">サステイナビリティ</div>
+        <a href="#">環境</a><a href="#">社会</a><a href="#">ガバナンス</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">イノベーション</div>
+        <a href="#">研究開発ビジョン</a><a href="#">創薬研究</a><a href="#">臨床開発</a>
+      </div>
+    </div>
+    <div class="footer-copy">Copyright (C) Shionogi &amp; Co., Ltd. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

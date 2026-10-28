@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 住友化学（Sumitomo Chemical）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap" rel="stylesheet">
+<!-- YakuHanJPs は約物だけのサブセットフォント（OSS）。実サイトは自社ホストから 400/700 の 2 本だけ読む。
+     ここでは同じものを jsDelivr から読み、約物が詰まる様子を再現する。 -->
+<link href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.1.1/dist/css/yakuhanjp_s.min.css" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       実サイトの CSS Custom Properties は 0 個（--ot-footer-space は OneTrust 由来）。
+       色はすべて直書き。以下は computed style の実測値。2026-10-28 */
+    --blue:        #0296E5;   /* ★リンク・CTA の面・言語切替アクティブ。文字 22 / 面 9 要素 */
+    --blue-light:  #28A6E9;   /* 検索ボタン。1 要素 */
+    --navy:        #27455C;   /* 濃紺の面。8 要素 */
+    --txt-body:    #555963;   /* ★html に直接宣言。本文色 */
+    --txt-on-img:  #FFFFFF;   /* ヒーロー上の文字。126 要素 */
+    --surface-pale:#ECF3F6;   /* セクションの淡い地。18 要素 */
+    --surface-pale2:#E4EEF1;  /* 文字サイズ・言語切替のアクティブ背景。6 要素 */
+    --surface-dark:#48535B;   /* 1 要素 */
+    --bg:          #FFFFFF;   /* html に宣言。pageBackground.resolved の根拠も html */
+    --border:      #D8DEE2;
+
+    /* 事業部門の識別色。文字用の濃い側とアイコン用の明るい側をペアで持つ */
+    --seg-agro-txt:  #739931;  --seg-agro-fill:  #B6E37D;
+    --seg-ict-txt:   #C69044;  --seg-ict-fill:   #EDC47D;
+    --seg-med-txt:   #C6637B;  --seg-med-fill:   #FCA7B9;
+    --seg-ess-fill:  #82D3FD;
+
+    /* === Fonts ===
+       和文 Web フォントは 0 本。かな・漢字は OS ローカル書体で組む。
+       スタック先頭の YakuHanJPs が約物（「」、。（）など）だけを差し替える。
+       欧文見出しだけ Roboto Condensed（Google Fonts・300/400）。トップ専用で下層では読まれない。 */
+    --font-body: YakuHanJPs, メイリオ, Meiryo, "Hiragino Kaku Gothic ProN",
+                 "ヒラギノ角ゴ ProN W3", "ＭＳ Ｐゴシック", "MS PGothic",
+                 Helvetica, Arial, sans-serif;
+    --font-en:   "Roboto Condensed", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: 無単位の比率。本文 2.0 はゆったりした側 === */
+    --lh-body:   2;      /* 本文 13px → 26px。実測 93 要素で最多 */
+    --lh-mid:    1.5;    /* 見出し・小見出し。実測 73 要素 */
+    --lh-tight:  1.25;   /* ヒーロー大見出し 40px → 50px */
+    --lh-en:     1.1;    /* 欧文ラベル */
+
+    /* === Letter spacing: 見出しだけ em で当てる。大きいほど狭い === */
+    --ls-hero:   0.10em;   /* 40px → 4px */
+    --ls-head:   0.14em;   /* 30px → 4.2px / 18px → 2.52px */
+    --ls-sub:    0.20em;   /* 16px → 3.2px。最も広い */
+    --ls-en:     0.05em;   /* 14px → 0.7px */
+    --ls-body:   normal;   /* 本文は触らない。可視 144/159 要素 */
+
+    --r-btn:  5px;    /* 実測 8 要素 */
+    --r-card: 7px;    /* 実測 4 要素 */
+    --shadow: 0 0 20px rgba(0, 0, 0, 0.3);   /* 実測 15 要素。全方位・不透明度 0.3 は強い */
+
+    --container: 1100px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* 実サイトは色・背景・書体・ルートサイズを html に 1 ブロックでまとめている */
+  html {
+    color: var(--txt-body);
+    background: var(--bg);
+    font-family: var(--font-body);
+    font-size: 62.5%;        /* = 10px。7 幅すべてで不変 */
+  }
+
+  body {
+    font-size: 1.6rem;       /* = 16px。767px 以下で 14px に落ちる（2 段の階段） */
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-body);
+    /* font-feature-settings は書かない。YakuHanJPs が約物を担当するので palt は不要。
+       足すと二重に詰まる。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); background: var(--bg); }
+  .header-top { display: flex; align-items: center; gap: 18px; max-width: var(--container); margin: 0 auto; padding: 12px 20px 0; }
+  .logo { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--txt-body); margin-right: auto; }
+  .logo-mark { width: 24px; height: 18px; background: var(--blue); border-radius: 3px; }
+  .logo-text { font-size: 2.2rem; font-weight: 700; line-height: 1; letter-spacing: 0.04em; }
+
+  /* 文字サイズ切替（このサイトの特徴的なコンポーネント） */
+  .text-fontsize { display: flex; align-items: center; }
+  .fontsize-ttl { font-size: 1.3rem; line-height: 1; }
+  .fontsize-list { display: flex; font-size: 1.3rem; margin-left: 7px; list-style: none; }
+  .fontsize-list .item-inner { padding: 3px 6px; border: none; background: transparent; color: var(--txt-body);
+                               font-family: var(--font-body); font-size: 1.3rem; cursor: pointer;
+                               transition: all .3s ease-out; border-radius: 2px; }
+  .fontsize-list .item-inner.is-active { background: var(--surface-pale2); color: var(--blue); }
+  .text-language { display: flex; list-style: none; gap: 2px; }
+  .text-language .item-inner { display: block; padding: 3px 9px; font-size: 1.3rem; color: var(--txt-body); text-decoration: none; border-radius: 2px; }
+  .text-language .item-inner.is-active { background: var(--blue); color: #FFFFFF; }
+
+  .header-nav { display: flex; gap: 26px; max-width: var(--container); margin: 0 auto; padding: 10px 20px 14px; }
+  .header-nav a { font-size: 1.6rem; line-height: var(--lh-body); color: var(--txt-body); text-decoration: none; }
+
+  /* HERO */
+  .hero { position: relative; background: linear-gradient(150deg, #16222E 0%, #27455C 55%, #3A6B86 100%); color: var(--txt-on-img); padding: 92px 20px 100px; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; }
+  .hero-title { font-size: 4rem; font-weight: 700; line-height: var(--lh-tight); letter-spacing: var(--ls-hero); }
+  .hero-en { font-size: 1.5rem; font-weight: 700; line-height: var(--lh-mid); letter-spacing: var(--ls-en); margin-top: 22px; }
+  .hero-sub { font-size: 1.6rem; font-weight: 700; line-height: var(--lh-mid); letter-spacing: var(--ls-sub); margin-top: 24px; }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface-pale); }
+  .section-alt .section-inner { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .eyebrow { font-family: var(--font-en); font-size: 4rem; font-weight: 300; line-height: var(--lh-en); letter-spacing: var(--ls-en); color: var(--txt-body); }
+  .section-title { font-size: 3rem; line-height: var(--lh-mid); letter-spacing: var(--ls-head); margin: 14px 0 16px; }
+  .section-lead { font-size: 1.3rem; line-height: var(--lh-body); letter-spacing: var(--ls-body); margin-bottom: 32px; max-width: 880px; }
+  .note { font-size: 1.3rem; line-height: var(--lh-body); color: #6D7280; margin-top: 20px; max-width: 900px; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--surface-pale); padding: 1px 5px; border-radius: 2px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(205px, 1fr)); gap: 14px; }
+  .swatch { border: 1px solid var(--border); border-radius: var(--r-card); background: var(--bg); overflow: hidden; }
+  .swatch-chip { height: 72px; }
+  .swatch-body { padding: 12px 14px; }
+  .swatch-name { font-size: 1.4rem; font-weight: 700; line-height: var(--lh-mid); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: #8A8F99; margin-top: 3px; }
+  .swatch-use { font-size: 1.2rem; line-height: 1.7; color: #6D7280; margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 265px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: #8A8F99; line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.3rem; font-weight: 700; color: var(--txt-body); }
+  .t40 { font-size: 4rem; font-weight: 700; line-height: var(--lh-tight); letter-spacing: var(--ls-hero); }
+  .t30 { font-size: 3rem; line-height: var(--lh-mid); letter-spacing: var(--ls-head); }
+  .t18 { font-size: 1.8rem; line-height: var(--lh-mid); letter-spacing: var(--ls-head); }
+  .t16 { font-size: 1.6rem; font-weight: 700; line-height: var(--lh-mid); letter-spacing: var(--ls-sub); }
+  .t13 { font-size: 1.3rem; line-height: var(--lh-body); letter-spacing: var(--ls-body); }
+  .t14en { font-family: var(--font-en); font-size: 1.4rem; font-weight: 300; line-height: var(--lh-en); letter-spacing: var(--ls-en); }
+
+  /* 約物の詰まりを見せる比較 */
+  .yaku-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .yaku-label { font-family: var(--font-mono); font-size: 1.1rem; color: #8A8F99; }
+  .yaku-s { font-size: 2.6rem; line-height: 1.6; }
+  .yaku-off { font-family: メイリオ, Meiryo, "Hiragino Kaku Gothic ProN", sans-serif; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; letter-spacing: var(--ls-body); }
+  .btn-primary { font-size: 1.3rem; font-weight: 400; line-height: var(--lh-body); color: #FFFFFF; background: var(--blue); border: none; border-radius: var(--r-btn); padding: 8px 26px; }
+  .btn-search { font-size: 1.3rem; color: #FFFFFF; background: var(--blue-light); border: none; border-radius: var(--r-btn); padding: 8px 26px; }
+  .btn-navy { font-size: 1.3rem; color: #FFFFFF; background: var(--navy); border: none; border-radius: var(--r-btn); padding: 8px 26px; }
+  .link-text { font-size: 1.3rem; line-height: var(--lh-body); color: var(--blue); background: transparent; border: none; text-decoration: underline; }
+
+  /* SEGMENT CARDS */
+  .seg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .seg { background: var(--bg); border-radius: var(--r-card); box-shadow: var(--shadow); padding: 24px 22px 26px; text-decoration: none; display: block; }
+  .seg-icon { width: 48px; height: 48px; border-radius: 50%; }
+  .seg-title { font-size: 1.8rem; line-height: var(--lh-mid); letter-spacing: var(--ls-head); margin-top: 16px; }
+  .seg-desc { font-size: 1.3rem; line-height: var(--lh-body); letter-spacing: var(--ls-body); color: var(--txt-body); margin-top: 8px; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 700; line-height: var(--lh-mid); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: var(--bg); color: var(--txt-body);
+    border: 1px solid var(--border); border-radius: var(--r-btn);
+    padding: 11px 13px; font-size: 1.6rem; line-height: var(--lh-mid);
+    font-family: var(--font-body);
+  }
+  .field.is-focus input { outline: 2px solid var(--blue); outline-offset: 1px; }
+  .field.is-error input { border-color: #C6637B; }
+  .field-msg { font-size: 1.2rem; line-height: 1.7; color: #8A8F99; margin-top: 7px; }
+  .field.is-error .field-msg { color: #C6637B; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 28px; }
+  .elev { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-card); padding: 28px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow); border-color: transparent; }
+  .elev-name { font-size: 1.6rem; font-weight: 700; line-height: var(--lh-mid); }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; color: #8A8F99; margin-top: 8px; }
+
+  /* SIZE UTILITIES */
+  .fz-table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+  .fz-table th, .fz-table td { text-align: left; font-size: 1.3rem; line-height: var(--lh-mid); padding: 9px 14px 9px 0; border-bottom: 1px solid var(--border); }
+  .fz-table th { font-weight: 700; width: 130px; }
+  .fzs  { font-size: 1.2rem; }
+  .fzm  { font-size: 1.4rem; }
+  .fzl  { font-size: 1.6rem; }
+  .fzll { font-size: 1.8rem; }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: #FFFFFF; padding: 44px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-head { font-family: var(--font-en); font-size: 2.4rem; font-weight: 300; line-height: var(--lh-en); letter-spacing: var(--ls-en); }
+  .footer-cols { display: flex; gap: 48px; margin-top: 22px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 1.6rem; font-weight: 700; line-height: var(--lh-mid); letter-spacing: var(--ls-head); }
+  .footer-col a { display: block; font-size: 1.3rem; line-height: 2.2; color: #FFFFFF; text-decoration: none; opacity: .85; }
+  .footer-copy { font-size: 1.2rem; line-height: var(--lh-mid); margin-top: 28px; opacity: .7; }
+
+  /* 実測で切り替わるのは 768/767px の 1 箇所。body が 16px → 14px の階段。 */
+  @media (max-width: 767px) {
+    body { font-size: 1.4rem; line-height: 2; }
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .hero { padding: 60px 16px 66px; }
+    /* 字間は em で宣言しているので、サイズが縮んでも 0.10em / 0.12em のまま追従する */
+    .hero-title, .t40 { font-size: 2.5rem; line-height: 1.25; }
+    .eyebrow { font-size: 2.8rem; }
+    .section-title, .t30 { font-size: 2.2rem; }
+    .type-row, .yaku-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+    /* サイズユーティリティは 1 段上がる */
+    .fzs  { font-size: 1.4rem; }
+    .fzm  { font-size: 1.6rem; }
+    .fzl  { font-size: 1.8rem; }
+    .fzll { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <a class="logo" href="#"><span class="logo-mark"></span><span class="logo-text">住友化学</span></a>
+    <div class="text-fontsize">
+      <p class="fontsize-ttl">文字サイズ :</p>
+      <ul class="fontsize-list">
+        <li><button class="item-inner" type="button" data-fz="S">小</button></li>
+        <li><button class="item-inner is-active" type="button" data-fz="M">中</button></li>
+        <li><button class="item-inner" type="button" data-fz="L">大</button></li>
+      </ul>
+    </div>
+    <ul class="text-language">
+      <li><a class="item-inner is-active" href="#">日本語</a></li>
+      <li><a class="item-inner" href="#">English</a></li>
+      <li><a class="item-inner" href="#">中文</a></li>
+    </ul>
+  </div>
+  <nav class="header-nav">
+    <a href="#">企業情報</a><a href="#">ニュース</a><a href="#">株主・投資家情報</a>
+    <a href="#">事業・製品</a><a href="#">研究開発</a><a href="#">サステナビリティ</a><a href="#">採用情報</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1 class="hero-title">地球がつぎに、<br>必要なものを。</h1>
+    <p class="hero-en">Creating What the Earth Needs Next.</p>
+    <p class="hero-sub">私たち住友化学は、<br>化学の領域から次の地球を支える<br>Innovative Solution Providerです。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="eyebrow">COLORS</div>
+  <h2 class="section-title">カラーパレット</h2>
+  <p class="section-lead">
+    CSS Custom Properties は 0 個。色はすべて直書きされている。
+    事業部門の 4 色は、文字用の濃い側とアイコン用の明るい側をペアで持つ。
+  </p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#0296E5"></div><div class="swatch-body">
+      <div class="swatch-name">Primary Blue</div><div class="swatch-hex">#0296E5</div>
+      <div class="swatch-use">リンク・CTA の面・言語切替。文字 22 / 面 9 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#27455C"></div><div class="swatch-body">
+      <div class="swatch-name">Navy</div><div class="swatch-hex">#27455C</div>
+      <div class="swatch-use">濃紺の面。8 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#555963"></div><div class="swatch-body">
+      <div class="swatch-name">Text Primary</div><div class="swatch-hex">#555963</div>
+      <div class="swatch-use">html に直接宣言された本文色</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ECF3F6"></div><div class="swatch-body">
+      <div class="swatch-name">Surface Pale</div><div class="swatch-hex">#ECF3F6</div>
+      <div class="swatch-use">セクションの淡い地。18 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#E4EEF1"></div><div class="swatch-body">
+      <div class="swatch-name">Surface Pale 2</div><div class="swatch-hex">#E4EEF1</div>
+      <div class="swatch-use">文字サイズ・言語切替のアクティブ背景。6 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#B6E37D"></div><div class="swatch-body">
+      <div class="swatch-name">Agro（塗り / 文字）</div><div class="swatch-hex">#B6E37D / #739931</div>
+      <div class="swatch-use">アグロ＆ライフソリューション</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EDC47D"></div><div class="swatch-body">
+      <div class="swatch-name">ICT（塗り / 文字）</div><div class="swatch-hex">#EDC47D / #C69044</div>
+      <div class="swatch-use">ICT＆モビリティソリューション</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#FCA7B9"></div><div class="swatch-body">
+      <div class="swatch-name">Medical（塗り / 文字）</div><div class="swatch-hex">#FCA7B9 / #C6637B</div>
+      <div class="swatch-use">アドバンストメディカルソリューション</div></div></div>
+  </div>
+  <p class="note">
+    計測に出てくる <code>13.008px</code> / <code>14.4px</code> / <code>0.13008px</code> は
+    すべて OneTrust の Cookie バナー由来。サイト本体の設計値ではないので採用しない。
+  </p>
+</section>
+
+<section class="section-alt"><div class="section-inner">
+  <div class="eyebrow">TYPOGRAPHY</div>
+  <h2 class="section-title">約物は Web フォント、かな漢字は OS ローカル</h2>
+  <p class="section-lead">
+    読み込んでいるフォントファイルはトップで 3 本だけ（YakuHanJPs の 400 / 700 と Roboto Condensed）。
+    かな・漢字は 1 バイトも落としていない。
+    <code>font-feature-settings</code> の宣言は CSS 全文で 0 件なのに、
+    約物は詰まっている ── スタック先頭の YakuHanJPs が半角幅に差し替えているため。
+  </p>
+
+  <div class="yaku-row">
+    <div class="yaku-label">YakuHanJPs あり<br>（実サイト・実測 480.81px）</div>
+    <div class="yaku-s">「日本語」、約物。（テスト）</div>
+  </div>
+  <div class="yaku-row">
+    <div class="yaku-label">なし＝OS ローカルのみ<br>（比較・実測 518〜520px）</div>
+    <div class="yaku-s yaku-off">「日本語」、約物。（テスト）</div>
+  </div>
+  <p class="note">
+    同一文字列での実測は、住友化学 480.81px に対し、約物フォントを持たない塩野義製薬 520px /
+    島津製作所 518px。<code>normal</code> の時点で約 7% 狭い。
+    <strong><code>palt</code> を足すと二重に詰まる</strong>ので、再現時に加えないこと。
+  </p>
+
+  <div style="height:26px"></div>
+
+  <div class="type-row">
+    <div class="type-meta"><b>ヒーロー大見出し</b>40px / 700 / lh 1.25 / ls 0.10em<br>実測 4px</div>
+    <div class="t40">地球がつぎに、必要なものを。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>セクション見出し（和文）</b>30px / lh 1.5 / ls 0.14em<br>実測 4.2px</div>
+    <div class="t30">企業情報</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>小見出し</b>18px / lh 1.5 / ls 0.14em<br>実測 2.52px</div>
+    <div class="t18">アグロ＆ライフソリューション</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>ヒーローのサブコピー</b>16px / 700 / lh 1.5 / ls 0.20em<br>実測 3.2px。最も広い</div>
+    <div class="t16">私たち住友化学は、化学の領域から次の地球を支えます。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>欧文ラベル</b>14px / Roboto Condensed 300 / lh 1.1 / ls 0.05em</div>
+    <div class="t14en">ABOUT THE COMPANY</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>本文</b>13px / 400 / lh 2.0 / ls normal<br>実測 80 要素。字間は触らない</div>
+    <div class="t13">住友化学は、「化学の力」を基盤に開発した多岐にわたる製品の提供を通じ、人々の豊かな暮らしづくりに広く貢献しています。本文の行間 2.0 は日本語としてかなりゆったりした側に入ります。</div>
+  </div>
+
+  <p class="note">
+    字間は<strong>大きい見出しほど狭く、小さいコピーほど広い</strong>。
+    40px のヒーロー見出しが 0.10em、その下の 16px のサブコピーが 0.20em で倍の開きになっている。
+    本文には一切当てない（可視 144/159 要素が <code>normal</code>）。
+    なお和文に <code>font-weight: 300</code> を当てないこと ── 300 は欧文の Roboto Condensed 専用で、
+    OS ローカルの和文書体は Regular / Bold の 2 本しか持たない。
+  </p>
+</div></section>
+
+<section class="section">
+  <div class="eyebrow">COMPONENTS</div>
+  <h2 class="section-title">コンポーネント</h2>
+  <div class="btn-grid">
+    <a class="btn btn-primary" href="#">製品検索を見る</a>
+    <a class="btn btn-navy" href="#">IR資料室</a>
+    <button class="btn btn-search" type="button">検索する</button>
+    <button class="btn link-text" type="button">一覧を見る</button>
+  </div>
+
+  <div class="seg-grid">
+    <a class="seg" href="#"><div class="seg-icon" style="background:var(--seg-agro-fill)"></div>
+      <div class="seg-title" style="color:var(--seg-agro-txt)">アグロ＆ライフ</div>
+      <div class="seg-desc">農業・食糧、ヘルスケアの領域で、暮らしの基盤を支えます。</div></a>
+    <a class="seg" href="#"><div class="seg-icon" style="background:var(--seg-ict-fill)"></div>
+      <div class="seg-title" style="color:var(--seg-ict-txt)">ICT＆モビリティ</div>
+      <div class="seg-desc">情報通信と移動の進化を、素材の側から押し上げます。</div></a>
+    <a class="seg" href="#"><div class="seg-icon" style="background:var(--seg-med-fill)"></div>
+      <div class="seg-title" style="color:var(--seg-med-txt)">アドバンストメディカル</div>
+      <div class="seg-desc">医薬品と診断の領域で、新しい治療の選択肢をつくります。</div></a>
+    <a class="seg" href="#"><div class="seg-icon" style="background:var(--seg-ess-fill)"></div>
+      <div class="seg-title" style="color:var(--navy)">エッセンシャル＆グリーン</div>
+      <div class="seg-desc">基盤化学品を、環境負荷の低い形へ置き換えていきます。</div></a>
+  </div>
+
+  <div style="height:40px"></div>
+  <h3 class="t18">コンテンツ用サイズユーティリティ</h3>
+  <table class="fz-table">
+    <tr><th>クラス</th><th>≥768px</th><th>≤767px</th><th>見本</th></tr>
+    <tr><td><code>.fzs</code></td><td>12px</td><td>14px</td><td class="fzs">化学の力で、次の地球を支える</td></tr>
+    <tr><td><code>.fzm</code></td><td>14px</td><td>16px</td><td class="fzm">化学の力で、次の地球を支える</td></tr>
+    <tr><td><code>.fzl</code></td><td>16px</td><td>18px</td><td class="fzl">化学の力で、次の地球を支える</td></tr>
+    <tr><td><code>.fzll</code></td><td>18px</td><td>20px</td><td class="fzll">化学の力で、次の地球を支える</td></tr>
+  </table>
+  <p class="note">
+    実サイトは <code>font-size: 14px; font-size: 1.4rem;</code> のように
+    <strong>px を書いてから rem で上書きする</strong>形を全面的に採っている（rem 239 宣言 / px 104 宣言）。
+    ヘッダーの文字サイズ切替（小・中・大）に追従させるための書き方で、
+    px 単独で指定すると拡大できなくなる。
+  </p>
+
+  <div style="height:36px"></div>
+  <div class="form-grid">
+    <div class="field">
+      <label for="g1">お名前</label>
+      <input id="g1" type="text" value="住友 太郎">
+      <div class="field-msg">全角でご入力ください</div>
+    </div>
+    <div class="field is-focus">
+      <label for="g2">メールアドレス（フォーカス状態）</label>
+      <input id="g2" type="text" value="example@example.com">
+      <div class="field-msg">フォーカスリングは Primary Blue</div>
+    </div>
+    <div class="field is-error">
+      <label for="g3">電話番号（エラー状態）</label>
+      <input id="g3" type="text" value="03-0000">
+      <div class="field-msg">電話番号の桁数が不足しています</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt"><div class="section-inner">
+  <div class="eyebrow">ELEVATION</div>
+  <h2 class="section-title">影は 1 種類。全方位・黒 30%</h2>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">影なし</div><div class="elev-val">none</div></div>
+    <div class="elev e1"><div class="elev-name">Card</div><div class="elev-val">0 0 20px rgba(0,0,0,.3)</div></div>
+  </div>
+  <p class="note">
+    offset を持たない全方位のぼかしで、不透明度 0.3 はかなり強い。薄く丸めずそのまま写すこと。
+    角丸は 5px（ボタン）/ 7px（カード）/ 50%（円形アイコン）の 3 種だけ。
+  </p>
+</div></section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-head">SUMITOMO CHEMICAL</div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">企業情報</div>
+        <a href="#">会社概要</a><a href="#">企業理念</a><a href="#">略年史</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">事業・製品</div>
+        <a href="#">製品一覧</a><a href="#">アグロ＆ライフ</a><a href="#">ICT＆モビリティ</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">株主・投資家情報</div>
+        <a href="#">経営方針</a><a href="#">財務・業績</a><a href="#">IR資料室</a>
+      </div>
+    </div>
+    <div class="footer-copy">Copyright © Sumitomo Chemical Co., Ltd. All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

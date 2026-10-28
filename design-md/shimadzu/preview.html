@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 島津製作所（SHIMADZU）</title>
+<!-- Web フォントは意図的に読み込まない。実サイトのフォント要求はアイコンの 1 件だけで、
+     和文・欧文とも OS ローカル書体（ヒラギノ角ゴ ProN / メイリオ）で組んでいる。
+     親切のつもりで Noto Sans JP を足すと別物になる。 -->
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 0 個。すべて直書き。
+       （CSS に現れる --underlayer / --bg / --SP2Column は BEM のモディファイア名であって
+         Custom Property ではない）2026-10-28 */
+    --red:         #DD0000;   /* ★ブランドの赤。見出しの短い罫・ホバー。面 2 要素 */
+    --txt-body:    #464646;   /* ★body に宣言。可視 94 要素 */
+    --txt-strong:  #111111;   /* 下層の見出し。8 要素 */
+    --txt-on-dark: #FFFFFF;   /* 122 要素 */
+    --link:        #004ECC;   /* フッターのリンク。4 要素 */
+    --badge-press: #3192BF;   /* プレスリリース。3 要素 */
+    --badge-note:  #74A642;   /* お知らせ。2 要素 */
+    --bg:          #FFFFFF;   /* viewportTopBySample (3/6)、下層は 3/3 */
+    --surface-1:   #F3F3F3;   /* .grayWideContainer */
+    --surface-2:   #F5F5F5;   /* 交互配色の偶数行 */
+    --surface-3:   #EEEEEE;   /* 拠点ラベル。6 要素 */
+    --bar-dark:    #595757;   /* 見出しの帯。8 要素 */
+    --black:       #000000;   /* ナビ・ボタンの面 */
+    --overlay:     rgba(0, 0, 0, .8);  /* 画像の上のラベル帯。6 要素 */
+    --divider:     #ADADAD;   /* 6 要素 */
+
+    /* === Fonts ===
+       @font-face は CSS 全文（10 ファイル・728KB）で 2 件のみ、どちらもアイコンフォント。
+       フォントファイルの要求は shimadzu_icon.woff2 の 1 件だけ。 */
+    --font-body: "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===
+       ★実サイトは body に line-height を宣言しておらず、normal が
+         トップ 139 要素 / 下層 200 要素に降りている（ヒラギノでおおむね 1.17）。
+         日本語の本文としては詰まりすぎなので、ここでは 1.6 を補っている。
+         個別に宣言されている値のうち最多も 1.60（45 要素）。 */
+    --lh-body:    1.6;
+    --lh-heading: 1.48;   /* セクション見出し 40px → 59.2px */
+    --lh-card:    1.43;   /* カードタイトル 20px */
+    --lh-cat:     1.3;    /* 製品カテゴリ 18px */
+    --lh-tight:   1;      /* ボタン */
+
+    /* === Letter spacing ===
+       可視 229/234 要素（トップ）・240/240（下層）が normal。
+       例外は大きい見出しをわずかに詰める 2 値だけ。字空けは 1 箇所も無い。 */
+    --ls:       normal;
+    --ls-sub:   -0.0175em;  /* 和文サブ見出し 20px → -0.35px */
+    --ls-title: -0.03em;    /* 下層タイトル 30px → -0.9px */
+
+    --r: 0px;    /* 矩形の角丸は 1 種類も実装されていない */
+    --shadow: 0 5px 20px rgba(0, 0, 0, 0.2);   /* 実測 31 要素。唯一の影 */
+
+    --container: 1200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* 実サイトは html { cursor: auto; font-size: 62.5% } = 10px。7 幅すべてで不変 */
+  html { font-size: 62.5%; }
+
+  body {
+    background: var(--bg);
+    color: var(--txt-body);
+    font-family: var(--font-body);
+    font-size: 1.6rem;              /* = 16px。375px で 14px に落ちる */
+    font-weight: 400;
+    line-height: var(--lh-body);    /* 実サイトは未宣言。意図的に補っている */
+    letter-spacing: var(--ls);
+    /* font-feature-settings は書かない。CSS に palt 系の記述が 4 箇所あるが適用は 0 件。 */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .topbar { height: 5px; background: var(--red); width: 170px; }
+  .header { background: var(--bg); }
+  .header-util { display: flex; justify-content: flex-end; gap: 22px; max-width: var(--container); margin: 0 auto; padding: 10px 20px 0; }
+  .header-util a { font-size: 1.2rem; line-height: var(--lh-tight); color: var(--txt-body); text-decoration: none; }
+  .header-inner { display: flex; align-items: center; gap: 24px; max-width: var(--container); margin: 0 auto; padding: 12px 20px 16px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--txt-strong); }
+  .logo-mark { width: 26px; height: 26px; border-radius: 50%; background: var(--red); }
+  .logo-text { font-size: 2.2rem; font-weight: 700; line-height: var(--lh-tight); }
+  .logo-tag { font-size: 1.1rem; line-height: var(--lh-tight); color: var(--txt-body); margin-top: 3px; }
+  .header-search { margin-left: auto; display: flex; }
+  .header-search input { width: 300px; border: 1px solid var(--divider); border-radius: var(--r); padding: 10px 12px; font-size: 1.4rem; font-family: var(--font-body); color: var(--txt-body); background: var(--bg); }
+  .header-search button { background: var(--black); color: var(--txt-on-dark); border: none; border-radius: var(--r); padding: 0 16px; font-size: 1.4rem; font-family: var(--font-body); cursor: pointer; }
+  .gnav { border-top: 1px solid #E2E2E2; border-bottom: 1px solid #E2E2E2; }
+  .gnav-inner { display: flex; justify-content: center; gap: 34px; max-width: var(--container); margin: 0 auto; padding: 14px 20px; }
+  .gnav a { font-size: 1.4rem; line-height: var(--lh-body); color: var(--txt-body); text-decoration: none; }
+  .gnav a:hover { color: var(--red); }
+
+  /* HERO（実サイトは 1200×370px のバナー画像。文字は画像に焼き込まれている） */
+  .hero { max-width: var(--container); margin: 0 auto; padding: 24px 20px 0; }
+  .hero-banner { height: 300px; background: linear-gradient(110deg, #EDF1F4 0%, #DCE4EA 48%, #C6D2DB 100%); display: flex; align-items: center; padding: 0 56px; border-radius: var(--r); }
+  .hero-banner-note { font-family: var(--font-mono); font-size: 1.2rem; color: #6B7680; line-height: 1.9; }
+  .hero-banner-note b { display: block; font-family: var(--font-body); font-size: 3.2rem; font-weight: 700; color: #22323F; line-height: 1.25; margin-bottom: 10px; }
+
+  /* SECTIONS */
+  .section { padding: 60px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface-1); }
+  .section-alt .section-inner { padding: 60px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-heading::before { content: ""; display: block; width: 40px; height: 3px; background: var(--red); margin-bottom: 16px; }
+  .heading-en { font-size: 4rem; line-height: var(--lh-heading); color: var(--txt-body); display: inline-block; vertical-align: baseline; }
+  .heading-ja { font-size: 2rem; line-height: var(--lh-card); letter-spacing: var(--ls-sub); color: var(--txt-body); display: inline-block; margin-left: 18px; }
+  .section-lead { font-size: 1.4rem; line-height: var(--lh-body); margin: 16px 0 32px; max-width: 880px; }
+  .note { font-size: 1.4rem; line-height: var(--lh-body); color: #6B7680; margin-top: 20px; max-width: 900px; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--surface-3); padding: 1px 5px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(205px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid #DEDEDE; border-radius: var(--r); background: var(--bg); }
+  .swatch-chip { height: 72px; }
+  .swatch-body { padding: 12px 14px; }
+  .swatch-name { font-size: 1.4rem; font-weight: 600; line-height: var(--lh-body); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: #8B8B8B; margin-top: 3px; }
+  .swatch-use { font-size: 1.2rem; line-height: 1.6; color: #6B7680; margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 255px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid #DEDEDE; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: #8B8B8B; line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.3rem; font-weight: 600; color: var(--txt-body); }
+  .t40 { font-size: 4rem; line-height: var(--lh-heading); }
+  .t36 { font-size: 3.6rem; font-weight: 800; line-height: 1.33; }
+  .t20 { font-size: 2rem; font-weight: 400; line-height: var(--lh-card); letter-spacing: var(--ls-sub); }
+  .t18 { font-size: 1.8rem; font-weight: 600; line-height: var(--lh-cat); }
+  .t16 { font-size: 1.6rem; font-weight: 400; line-height: var(--lh-body); }
+  .t14 { font-size: 1.4rem; font-weight: 400; line-height: var(--lh-body); }
+  .t12 { font-size: 1.2rem; font-weight: 400; line-height: var(--lh-tight); }
+
+  /* line-height: normal の比較 */
+  .lh-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 10px; }
+  .lh-box { border: 1px solid #DEDEDE; padding: 20px; background: var(--bg); }
+  .lh-box h4 { font-size: 1.3rem; font-weight: 700; line-height: var(--lh-body); margin-bottom: 10px; }
+  .lh-box p { font-size: 1.4rem; }
+  .lh-normal p { line-height: normal; }
+  .lh-fixed  p { line-height: 1.6; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--r); letter-spacing: var(--ls); }
+  .btn-list { font-size: 1.4rem; font-weight: 400; line-height: var(--lh-tight); color: var(--txt-on-dark); background: var(--black); border: none; padding: 13px 30px; }
+  .tab { font-size: 1.3rem; font-weight: 400; line-height: 1.4; color: var(--txt-body); background: var(--surface-3); border: none; padding: 10px 22px; }
+  .tab.is-active { background: var(--black); color: var(--txt-on-dark); }
+  .badge { display: inline-block; font-size: 1.2rem; font-weight: 400; line-height: normal; background: transparent; border: 1px solid currentColor; border-radius: var(--r); padding: 3px 10px; }
+  .badge--press  { color: var(--badge-press); }
+  .badge--notice { color: var(--badge-note); }
+
+  /* NEWS LIST */
+  .news { border-top: 1px solid #DEDEDE; }
+  .news-item { display: grid; grid-template-columns: 130px 120px 1fr; gap: 18px; align-items: center; padding: 16px 0; border-bottom: 1px solid #DEDEDE; }
+  .news-date { font-size: 1.4rem; line-height: var(--lh-body); color: var(--txt-body); }
+  .news-title { font-size: 1.6rem; line-height: var(--lh-body); color: var(--txt-body); text-decoration: none; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .card { background: var(--bg); border-radius: var(--r); box-shadow: var(--shadow); text-decoration: none; color: var(--txt-body); display: block; overflow: hidden; }
+  .card-img { height: 150px; background: linear-gradient(135deg, #D9E0E6, #AFBCC6); position: relative; }
+  .card-label { position: absolute; left: 0; bottom: 0; right: 0; background: var(--overlay); color: var(--txt-on-dark); font-size: 1.8rem; font-weight: 600; line-height: var(--lh-cat); padding: 10px 16px; }
+  .card-body { padding: 16px 18px 20px; }
+  .card-title { font-size: 2rem; font-weight: 400; line-height: var(--lh-card); }
+  .card-desc { font-size: 1.4rem; line-height: var(--lh-body); margin-top: 8px; }
+
+  /* DARK BAR */
+  .bar-dark { background: var(--bar-dark); color: var(--txt-on-dark); font-size: 1.8rem; font-weight: 600; line-height: var(--lh-cat); padding: 12px 20px; border-radius: var(--r); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 600; line-height: var(--lh-body); margin-bottom: 8px; }
+  .field input, .field select {
+    width: 100%; background: var(--bg); color: var(--txt-body);
+    border: 1px solid var(--divider); border-radius: var(--r);
+    padding: 11px 13px; font-size: 1.6rem; line-height: var(--lh-body);
+    font-family: var(--font-body);
+  }
+  .field.is-focus input { outline: 2px solid var(--red); outline-offset: 1px; }
+  .field.is-error input { border-color: var(--red); }
+  .field-msg { font-size: 1.2rem; line-height: 1.6; color: #8B8B8B; margin-top: 7px; }
+  .field.is-error .field-msg { color: var(--red); }
+
+  /* SPEC TABLE */
+  .spec { width: 100%; border-collapse: collapse; margin-top: 18px; }
+  .spec th, .spec td { text-align: left; font-size: 1.6rem; line-height: var(--lh-body); padding: 11px 16px 11px 0; border-bottom: 1px solid #DEDEDE; vertical-align: top; }
+  .spec th { font-weight: 800; width: 190px; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 28px; }
+  .elev { background: var(--bg); border: 1px solid #DEDEDE; border-radius: var(--r); padding: 28px; text-align: center; }
+  .elev.e1 { box-shadow: var(--shadow); border-color: transparent; }
+  .elev-name { font-size: 1.6rem; font-weight: 600; line-height: var(--lh-body); }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; color: #8B8B8B; margin-top: 8px; }
+
+  /* FOOTER */
+  .footer { background: var(--surface-2); color: var(--txt-body); padding: 40px 20px 0; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 52px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 1.4rem; font-weight: 700; line-height: var(--lh-body); }
+  .footer-col a { display: block; font-size: 1.4rem; line-height: 2; color: var(--txt-body); text-decoration: none; }
+  .footer-bottom { border-top: 1px solid #DEDEDE; margin-top: 30px; padding: 16px 0 26px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-bottom a { font-size: 1.3rem; line-height: var(--lh-tight); color: var(--link); text-decoration: none; }
+  .footer-copy { font-size: 1.2rem; line-height: var(--lh-body); color: #8B8B8B; margin-left: auto; }
+
+  /* 実測で描画が変わるのは 375px のみ。768〜1440px は完全に同一。 */
+  @media (max-width: 480px) {
+    body { font-size: 1.4rem; }
+    .section, .section-alt .section-inner { padding: 42px 16px; }
+    .heading-en, .t40 { font-size: 3rem; line-height: 1.3; letter-spacing: var(--ls-title); }
+    .heading-ja { display: block; margin-left: 0; margin-top: 6px; }
+    .section-lead, .t14, .news-date { font-size: 1.2rem; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .lh-demo { grid-template-columns: 1fr; }
+    .news-item { grid-template-columns: 1fr; gap: 6px; }
+    .header-util, .gnav { display: none; }
+    .hero-banner { height: 200px; padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-util">
+    <a href="#">Global Web</a>
+    <a href="#">お問い合わせ</a>
+  </div>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <span class="logo-mark"></span>
+      <span><span class="logo-text">SHIMADZU</span><span class="logo-tag">Excellence in Science</span></span>
+    </a>
+    <div class="header-search">
+      <input type="text" placeholder="サイト内検索" aria-label="サイト内検索">
+      <button type="button">検索</button>
+    </div>
+  </div>
+</header>
+<nav class="gnav">
+  <div class="gnav-inner">
+    <a href="#">ニュース</a><a href="#">製品情報</a><a href="#">サービス＆サポート</a>
+    <a href="#">島津製作所について</a><a href="#">株主・投資家向け情報</a>
+    <a href="#">研究開発</a><a href="#">サステナビリティ</a><a href="#">人財・採用</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-banner">
+    <div class="hero-banner-note">
+      <b>Explore SHIMADZU</b>
+      実サイトのヒーローは 1200×370px の JPG バナーで、文字は画像に焼き込まれている。<br>
+      DOM 上で最大の実テキストは 40px のセクション見出し。Web フォントで実装しないこと。
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-heading">
+    <span class="heading-en">Colors</span><span class="heading-ja">カラーパレット</span>
+  </div>
+  <p class="section-lead">
+    CSS Custom Properties は 0 個。Drupal 7 の上に構築されており、色もサイズもすべて直書き。
+    赤は見出しの短い罫とホバーに限られ、面で塗る CTA は黒。
+  </p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#DD0000"></div><div class="swatch-body">
+      <div class="swatch-name">Primary Red</div><div class="swatch-hex">#DD0000</div>
+      <div class="swatch-use">見出しの短い罫・ホバー。面 2 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#464646"></div><div class="swatch-body">
+      <div class="swatch-name">Text Primary</div><div class="swatch-hex">#464646</div>
+      <div class="swatch-use">body に宣言。可視 94 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#111111"></div><div class="swatch-body">
+      <div class="swatch-name">Text Strong</div><div class="swatch-hex">#111111</div>
+      <div class="swatch-use">下層の見出し。8 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#595757"></div><div class="swatch-body">
+      <div class="swatch-name">Dark Bar</div><div class="swatch-hex">#595757</div>
+      <div class="swatch-use">見出しの帯。8 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#F3F3F3"></div><div class="swatch-body">
+      <div class="swatch-name">Surface 1</div><div class="swatch-hex">#F3F3F3</div>
+      <div class="swatch-use">.grayWideContainer</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#EEEEEE"></div><div class="swatch-body">
+      <div class="swatch-name">Surface 3</div><div class="swatch-hex">#EEEEEE</div>
+      <div class="swatch-use">タブ・拠点ラベル。6 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#3192BF"></div><div class="swatch-body">
+      <div class="swatch-name">Badge: プレスリリース</div><div class="swatch-hex">#3192BF</div>
+      <div class="swatch-use">枠線のみ・地色なし。3 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#74A642"></div><div class="swatch-body">
+      <div class="swatch-name">Badge: お知らせ</div><div class="swatch-hex">#74A642</div>
+      <div class="swatch-use">枠線のみ・地色なし。2 要素</div></div></div>
+  </div>
+  <p class="note">
+    <code>#FF0000</code> も 1 要素あるが、これは Cookie バナーの OK ボタン。
+    本体の赤は <code>#DD0000</code>。
+  </p>
+</section>
+
+<section class="section-alt"><div class="section-inner">
+  <div class="section-heading">
+    <span class="heading-en">Typography</span><span class="heading-ja">タイポグラフィ</span>
+  </div>
+  <p class="section-lead">
+    Web フォントは 0 本。<code>@font-face</code> は CSS 全文（10 ファイル・728KB）で 2 件だけで、
+    どちらもアイコンフォント。フォントファイルの要求は <code>shimadzu_icon.woff2</code> の 1 件のみ。
+    和文も欧文も <code>"Hiragino Kaku Gothic ProN", メイリオ, sans-serif</code> で組んでいる。
+  </p>
+
+  <div class="type-row">
+    <div class="type-meta"><b>セクション見出し（欧文）</b>40px / lh 1.48 / ls normal<br>実測 6 要素</div>
+    <div class="t40">Featured Products</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>和文サブ</b>20px / lh 1.43 / ls -0.35px（-0.0175em）<br>わずかに詰める</div>
+    <div class="t20">注目製品＆トピックス</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>下層ページタイトル</b>36px / 800 / lh 1.33<br>375px では ls -0.9px が付く</div>
+    <div class="t36">会社概要</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>製品カテゴリ</b>18px / 600 / lh 1.3 / ls normal<br>実測 6 要素</div>
+    <div class="t18">真空機器／産業機械／海洋関連機器</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>ニュース本文</b>16px / 400 / ls normal<br>実測 30 要素</div>
+    <div class="t16">当社製品「Nexera IC」と「Nexis GC-2060」がグッドデザイン賞を受賞しました。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>本文・リスト</b>14px / 400 / ls normal<br>実測 126 要素。最多</div>
+    <div class="t14">島津製作所は 1875 年の創業以来、「科学技術で社会に貢献する」という経営理念のもと、分析計測機器・医用機器・産業機器・航空機器の事業を展開しています。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>ユーティリティ</b>12px / 400 / lh normal<br>実測 9 要素</div>
+    <div class="t12">2026年10月28日</div>
+  </div>
+
+  <h3 class="t18" style="margin-top:34px">body に line-height を宣言していない</h3>
+  <p class="section-lead" style="margin-bottom:12px">
+    実サイトは <code>body</code> に <code>line-height</code> が無く、<code>normal</code> が
+    トップ 139 要素 / 下層 200 要素に降りている。ヒラギノではおおむね 1.17 で、
+    日本語の本文としては詰まりすぎている。再現するときは必ず宣言すること。
+  </p>
+  <div class="lh-demo">
+    <div class="lh-box lh-normal">
+      <h4>実サイトのまま（line-height: normal）</h4>
+      <p>島津製作所は 1875 年の創業以来、「科学技術で社会に貢献する」という経営理念のもと、分析計測機器・医用機器・産業機器・航空機器の 4 つの事業を展開しています。行が詰まって読みづらい。</p>
+    </div>
+    <div class="lh-box lh-fixed">
+      <h4>補った状態（line-height: 1.6）</h4>
+      <p>島津製作所は 1875 年の創業以来、「科学技術で社会に貢献する」という経営理念のもと、分析計測機器・医用機器・産業機器・航空機器の 4 つの事業を展開しています。サイト内で個別に宣言されている最多値も 1.60。</p>
+    </div>
+  </div>
+
+  <p class="note">
+    ウェイトは 400 / 600 / 700（下層では 800 も）。ただし和文は OS ローカル書体で、
+    ヒラギノ角ゴ ProN は W3 / W6 の 2 本、メイリオも Regular / Bold の 2 本しか持たない。
+    600 までは実体に当たるが、<strong>700 と 800 は合成太字</strong>になる。400 / 600 の 2 段に寄せるのが安全。
+    なお CSS には <code>letter-spacing: 1</code> / <code>1.1</code>（単位なし）という宣言が残っているが、
+    これは無効な値でブラウザに無視されている。写さないこと。
+  </p>
+</div></section>
+
+<section class="section">
+  <div class="section-heading">
+    <span class="heading-en">Components</span><span class="heading-ja">コンポーネント</span>
+  </div>
+  <p class="section-lead">
+    角丸は実質ゼロ。<code>border-radius</code> の実測は円形アイコンの <code>50%</code> だけで、
+    矩形の角丸は 1 種類も実装されていない。バッジは地色を持たず、文字色と同色の 1px 枠線で色分けする。
+  </p>
+  <div class="btn-grid">
+    <a class="btn btn-list" href="#">ニュース一覧へ</a>
+    <button class="btn tab is-active" type="button">新着情報</button>
+    <button class="btn tab" type="button">製品/イベント関連</button>
+    <span class="badge badge--press">プレスリリース</span>
+    <span class="badge badge--notice">お知らせ</span>
+  </div>
+
+  <div class="news">
+    <div class="news-item">
+      <div class="news-date">2026年10月27日</div>
+      <div><span class="badge badge--notice">お知らせ</span></div>
+      <a class="news-title" href="#">当社製品「Nexera IC」と「Nexis GC-2060」がグッドデザイン賞を受賞</a>
+    </div>
+    <div class="news-item">
+      <div class="news-date">2026年10月26日</div>
+      <div><span class="badge badge--press">プレスリリース</span></div>
+      <a class="news-title" href="#">社外研究パートナー公募制度「SHIMADZUみらい共創チャレンジ」の公募開始</a>
+    </div>
+    <div class="news-item">
+      <div class="news-date">2026年10月21日</div>
+      <div><span class="badge badge--press">プレスリリース</span></div>
+      <a class="news-title" href="#">次世代質量分析システムを開発し、創薬研究の高速化に貢献</a>
+    </div>
+  </div>
+
+  <div style="height:34px"></div>
+  <div class="bar-dark">共創・協働の取り組み</div>
+  <div style="height:22px"></div>
+
+  <div class="card-grid">
+    <a class="card" href="#"><div class="card-img"><div class="card-label">分析計測機器</div></div>
+      <div class="card-body"><div class="card-title">Shimadzu みらい共創ラボ</div>
+      <div class="card-desc">オープンイノベーションによる価値創造の拠点。</div></div></a>
+    <a class="card" href="#"><div class="card-img"><div class="card-label">医用画像診断機器</div></div>
+      <div class="card-body"><div class="card-title">Shimadzu Tokyo Innovation Plaza</div>
+      <div class="card-desc">先端分野の技術を結集した共創の場。</div></div></a>
+    <a class="card" href="#"><div class="card-img"><div class="card-label">航空機器</div></div>
+      <div class="card-body"><div class="card-title">田中耕一記念質量分析研究所</div>
+      <div class="card-desc">質量分析の基礎研究と応用展開を担う。</div></div></a>
+  </div>
+
+  <div style="height:40px"></div>
+  <h3 class="t18">会社概要（下層ページの定義表）</h3>
+  <table class="spec">
+    <tr><th>商号</th><td>株式会社 島津製作所　Shimadzu Corporation</td></tr>
+    <tr><th>創業</th><td>1875年（明治8年）3月31日</td></tr>
+    <tr><th>本社所在地</th><td>京都市中京区西ノ京桑原町1番地</td></tr>
+    <tr><th>事業内容</th><td>分析計測機器、医用機器、産業機器、航空機器の製造・販売</td></tr>
+  </table>
+
+  <div style="height:36px"></div>
+  <div class="form-grid">
+    <div class="field">
+      <label for="h1">お名前</label>
+      <input id="h1" type="text" value="島津 一郎">
+      <div class="field-msg">全角でご入力ください</div>
+    </div>
+    <div class="field is-focus">
+      <label for="h2">メールアドレス（フォーカス状態）</label>
+      <input id="h2" type="text" value="example@example.com">
+      <div class="field-msg">フォーカスリングは Primary Red</div>
+    </div>
+    <div class="field is-error">
+      <label for="h3">電話番号（エラー状態）</label>
+      <input id="h3" type="text" value="075-0000">
+      <div class="field-msg">電話番号の桁数が不足しています</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt"><div class="section-inner">
+  <div class="section-heading">
+    <span class="heading-en">Elevation</span><span class="heading-ja">影と角丸</span>
+  </div>
+  <p class="section-lead">
+    角丸ゼロ ＋ 影ありという組み合わせ。直線的な矩形が浮いている状態が、このサイトの質感。
+  </p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">影なし</div><div class="elev-val">none</div></div>
+    <div class="elev e1"><div class="elev-name">Card</div><div class="elev-val">0 5px 20px rgba(0,0,0,.2)</div></div>
+  </div>
+  <p class="note">
+    影は 1 種類（実測 31 要素）。下方向に 5px の offset を持つ素直なドロップシャドウで、
+    不透明度 0.2 をそのまま写すこと。
+  </p>
+</div></section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">ニュース</div>
+        <a href="#">新着情報</a><a href="#">プレスリリース</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">製品情報</div>
+        <a href="#">分析計測機器</a><a href="#">医用画像診断機器</a><a href="#">航空機器</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">島津製作所について</div>
+        <a href="#">会社概要</a><a href="#">社長挨拶</a><a href="#">ブランドステートメント</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">サステナビリティ</div>
+        <a href="#">島津の環境貢献</a><a href="#">健康経営</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">ご利用上の注意</a>
+      <a href="#">サイトマップ</a>
+      <div class="footer-copy">Copyright © Shimadzu Corporation. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
