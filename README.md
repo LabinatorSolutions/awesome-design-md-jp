@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (595 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (598 sites)</a>
 </p>
 
 <table>
@@ -921,6 +921,11 @@
 </tr>
 <tr>
 <td align="center"><strong>島津製作所</strong><br><img src="design-md/shimadzu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>シスメックス</strong><br><img src="design-md/sysmex/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>武田薬品</strong><br><img src="design-md/takeda/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>東宝</strong><br><img src="design-md/toho/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1577,11 +1582,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [塩野義製薬 (SHIONOGI)](https://www.shionogi.com/jp/ja/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/shionogi/DESIGN.md) | [preview.html](design-md/shionogi/preview.html) |
 | [住友化学 (Sumitomo Chemical)](https://www.sumitomo-chem.co.jp/) | Chemical / Corporate | [DESIGN.md](design-md/sumitomo-chem/DESIGN.md) | [preview.html](design-md/sumitomo-chem/preview.html) |
 | [島津製作所 (SHIMADZU)](https://www.shimadzu.co.jp/) | Precision Instruments / Corporate | [DESIGN.md](design-md/shimadzu/DESIGN.md) | [preview.html](design-md/shimadzu/preview.html) |
+| [シスメックス (Sysmex)](https://www.sysmex.co.jp/) | Medical Devices / Corporate | [DESIGN.md](design-md/sysmex/DESIGN.md) | [preview.html](design-md/sysmex/preview.html) |
+| [武田薬品工業 (Takeda)](https://www.takeda.com/jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/takeda/DESIGN.md) | [preview.html](design-md/takeda/preview.html) |
+| [東宝 (TOHO)](https://www.toho.co.jp/) | Entertainment / Corporate | [DESIGN.md](design-md/toho/DESIGN.md) | [preview.html](design-md/toho/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (595 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (598 sites)</a>
 </p>
 
 <table>
@@ -2468,6 +2476,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>島津製作所</strong><br><img src="design-md/shimadzu/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>シスメックス</strong><br><img src="design-md/sysmex/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>武田薬品</strong><br><img src="design-md/takeda/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>東宝</strong><br><img src="design-md/toho/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

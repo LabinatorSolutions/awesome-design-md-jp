@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: シスメックス（Sysmex）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300..700&family=Archivo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 52 個すべて自社トークン（プラットフォーム由来 0）。
+       命名は --color__base__main のような二重アンダースコアの BEM 風。2026-10-29 実測 */
+    --blue:        #005bac;   /* ★--color__base__main。文字 99 / 罫線 109 / 面 8 要素 */
+    --black:       #000000;   /* ★--color__font__TX1。可視 262 要素で最多。本文は純黒 */
+    --white:       #ffffff;   /* --color__base__white */
+    --secondary:   #e3e7eb;   /* --color__base__secondary。ナビ項目の面。可視 43 要素 */
+    --pager:       #bfd1e0;   /* --color__sub__4。スライダーの非選択ドット。可視 4 要素 */
+    --border:      #d8d9d9;   /* --color__sub__1。罫線 9 要素 */
+    --bg:          #efefef;   /* ★--color__bg__base。pageBackground.resolved / 根拠 body */
+    /* 宣言はあるが 2 ページとも可視 0 の色（preview では使わない）
+       --color__base__accent / --color__font__red / --color__badge__high : #bc1a2a
+       --color__font__TX2 : #666666 ／ --color__border__1 : #9e9e9e ／ --color__border__3 : #787878
+       --color__sub__3 : #e5edf7 ／ --color__sub__6 : #ffdddd ／ --color__sub__5 : 値が空文字 */
+    --muted:       #555555;   /* preview の注記用。実サイトのトークンではない */
+
+    /* === Fonts ===
+       実サイトのスタックは 1 本だけ（トップ 216 要素 / 下層 142 要素）:
+         Sysmex, "Noto Sans JP", "Hiragino Sans", Meiryo, Arial, sans-serif
+       Sysmex は自社ドメイン配信の欧文専用書体（Light/Regular/Medium/Bold の 4 本・全て loaded）。
+       ドメイン外では読めないため、preview ではグロテスク系の Archivo で代替する。
+       和文は実サイトと同じ Noto Sans JP（Google Fonts の可変 wght@300..700）。 */
+    --font-body: "Archivo", "Noto Sans JP", "Hiragino Sans", Meiryo, Arial, sans-serif;  /* 代替: Sysmex */
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: 本文 1.70 / UI 1.60 / 見出し 1.40 の三層（無単位の比率） === */
+    --lh-body:  1.70;   /* 可視 99 / 98 要素で最多 */
+    --lh-ui:    1.60;   /* body の既定（16px → 25.6px） */
+    --lh-head:  1.40;   /* ヒーロー 46px → 64.4px、見出し 32px → 44.8px */
+    --lh-tight: 1.35;
+
+    /* === Letter spacing: 可視要素の 100% が normal（216/216・148/148） === */
+    --ls: normal;
+
+    /* === Radius: 10px がカード、20px がボタン、13px がタグ === */
+    --r-card: 10px;   /* 可視 26 要素で最多 */
+    --r-btn:  20px;
+    --r-tag:  13px;
+    --r-pill: 30px;
+    --r-notch: 0 60px 0 0;   /* ★一角だけ 60px。コーポレートブランドの面で使う */
+
+    /* === Layout（html { font-size: 10px } なので 1rem = 10px） === */
+    --container: 1132px;   /* --format__content-W : 113.2rem */
+    --gap-col:   24px;     /* --gap__col-gap : 2.4rem */
+    --gap-link:  10px;     /* --gap__link-gap : 1rem */
+    --col-3:     360px;    /* --col__3col : 36rem */
+    --header-h:  110px;    /* --header-height-base */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 10px; }   /* 実サイトと同じ。7 幅すべてで固定（vw も clamp() も無い） */
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 1.6rem;          /* 16px */
+    font-weight: 400;
+    line-height: var(--lh-ui);
+    letter-spacing: var(--ls);
+    word-break: break-word;     /* 実サイトが body に当てている唯一の折り返し指定 */
+    /* font-feature-settings は実サイトで宣言 0 件。palt も halt も書かない */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { background: var(--white); border-bottom: 1px solid var(--border); }
+  .header-inner { display: flex; align-items: center; max-width: var(--container); margin: 0 auto; padding: 16px 20px; gap: 28px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--blue); }
+  .logo-mark { width: 30px; height: 20px; background: var(--blue); border-radius: 0 10px 0 10px; }
+  .logo-text { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+  .logo-tag { font-size: 1.1rem; font-weight: 400; line-height: 1.3; color: var(--black); border-left: 1px solid var(--border); padding-left: 10px; }
+  .header-nav { display: flex; gap: 22px; margin-left: auto; }
+  .header-nav a { font-size: 1.4rem; font-weight: 500; line-height: var(--lh-body); color: var(--black); text-decoration: none; }
+  .header-nav a.is-current { color: var(--blue); }
+
+  /* HERO */
+  .hero { position: relative; background: linear-gradient(118deg, #4d6f52 0%, #7e9b63 42%, #b7c98a 100%); padding: 86px 20px 96px; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; }
+  .hero h1 { color: var(--white); font-size: 4.6rem; font-weight: 700; line-height: var(--lh-head); letter-spacing: var(--ls); }
+  .hero-btn { display: inline-flex; align-items: center; margin-top: 26px; background: transparent; color: var(--white); border: 1px solid var(--white); border-radius: var(--r-pill); padding: 9px 38px 6px; font-family: var(--font-body); font-size: 1.4rem; font-weight: 500; line-height: var(--lh-body); text-decoration: none; cursor: pointer; }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--white); }
+  .section-alt .section-inner { padding: 64px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 1.2rem; color: var(--blue); margin-bottom: 10px; }
+  .section-title { font-size: 3.2rem; font-weight: 700; line-height: var(--lh-head); margin-bottom: 16px; }
+  .section-lead { font-size: 1.6rem; line-height: var(--lh-body); margin-bottom: 36px; max-width: 860px; }
+  .note { font-size: 1.4rem; line-height: var(--lh-body); color: var(--muted); margin-top: 20px; max-width: 860px; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--secondary); padding: 1px 5px; border-radius: 3px; }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(208px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--border); border-radius: var(--r-card); background: var(--white); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px 14px 14px; }
+  .swatch-name { font-size: 1.4rem; font-weight: 500; line-height: var(--lh-ui); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: var(--blue); margin-top: 3px; }
+  .swatch-use { font-size: 1.2rem; line-height: var(--lh-body); color: var(--muted); margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.3rem; font-weight: 500; color: var(--black); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; align-items: baseline; }
+  .scale-bar span { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-card); padding: 8px 14px; line-height: var(--lh-ui); }
+  .ffs-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-top: 10px; }
+  .ffs-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-card); padding: 18px 20px; }
+  .ffs-box .label { font-family: var(--font-mono); font-size: 1.1rem; color: var(--blue); margin-bottom: 8px; }
+  .ffs-box .sample { font-size: 2.4rem; line-height: var(--lh-head); }
+  .ffs-box.is-palt .sample { font-feature-settings: "palt"; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; letter-spacing: var(--ls); }
+  .btn-primary { background: var(--white); color: var(--blue); border: 1px solid var(--blue); border-radius: var(--r-btn); padding: 10px 38px 8px; font-size: 1.4rem; font-weight: 500; line-height: var(--lh-body); }
+  .btn-onphoto { background: transparent; color: var(--black); border: 1px solid var(--black); border-radius: var(--r-pill); padding: 9px 38px 6px; font-size: 1.4rem; font-weight: 500; line-height: var(--lh-body); }
+  .btn-tag { background: var(--white); color: var(--black); border: 1px solid var(--blue); border-radius: var(--r-tag); padding: 4px 11px 2px; font-size: 1.6rem; font-weight: 400; line-height: var(--lh-ui); }
+  .btn-round { background: var(--blue); color: var(--white); border: 1px solid var(--white); border-radius: 50%; width: 44px; height: 44px; font-size: 1.6rem; }
+  .navitem { background: var(--secondary); color: var(--black); border: none; border-radius: 0; padding: 13px 50px 14px 30px; font-family: var(--font-body); font-size: 1.4rem; font-weight: 400; line-height: var(--lh-body); text-align: left; cursor: pointer; }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(248px, 1fr)); gap: var(--gap-col); }
+  .card { border: 1px solid var(--border); border-radius: var(--r-card); padding: 0 0 20px; text-decoration: none; color: var(--black); display: block; background: var(--white); overflow: hidden; }
+  .card-img { height: 128px; background: linear-gradient(140deg, #cdd8e4, #9fb4c8); }
+  .card-body { padding: 16px 18px 0; }
+  .card-cat { font-size: 1.2rem; font-weight: 500; line-height: var(--lh-body); color: var(--blue); }
+  .card-title { font-size: 1.4rem; font-weight: 500; line-height: var(--lh-body); margin-top: 6px; }
+  .card-date { font-size: 1.2rem; line-height: var(--lh-body); color: var(--muted); margin-top: 12px; }
+
+  /* NOTCH（一角だけ 60px） */
+  .notch-row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .notch { width: 232px; height: 128px; background: var(--secondary); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); text-align: center; padding: 10px; }
+  .notch.tr { border-radius: 0 60px 0 0; }
+  .notch.bl { border-radius: 0 0 0 60px; }
+  .notch.tl { border-radius: 60px 0 0; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 500; line-height: var(--lh-ui); margin-bottom: 8px; }
+  .field input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: 1px solid var(--blue); border-radius: 5px;
+    padding: 10px 12px; font-size: 1.6rem; line-height: var(--lh-ui);
+    font-family: var(--font-body); letter-spacing: var(--ls);
+  }
+  .field.is-focus input { outline: 2px solid var(--blue); outline-offset: 1px; }
+  .field-msg { font-size: 1.2rem; line-height: var(--lh-body); color: var(--muted); margin-top: 7px; }
+
+  /* PAGINATION */
+  .pager { display: flex; gap: var(--gap-link); align-items: center; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--pager); }
+  .dot.is-active { background: var(--blue); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+  .elev { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-card); padding: 28px; text-align: center; }
+  .elev-name { font-size: 1.6rem; font-weight: 500; line-height: var(--lh-ui); }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); margin-top: 8px; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--secondary); border-radius: var(--r-card); height: 38px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); }
+  .col-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-col); max-width: var(--container); margin: 20px auto 0; }
+  .col-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-card); height: 72px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); }
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 108px; height: 68px; background: var(--white); border: 1px solid var(--border); }
+  .radius-label { font-family: var(--font-mono); font-size: 1.1rem; color: var(--muted); margin-top: 7px; }
+
+  /* FOOTER */
+  .footer { background: var(--white); border-top: 1px solid var(--border); padding: 40px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 1.4rem; font-weight: 500; line-height: var(--lh-body); color: var(--blue); }
+  .footer-col a { display: block; font-size: 1.2rem; line-height: 2; color: var(--black); text-decoration: none; }
+  .footer-copy { font-size: 1.2rem; line-height: var(--lh-body); color: var(--muted); margin-top: 30px; }
+
+  @media (max-width: 767px) {
+    body { font-size: 1.4rem; }   /* 実サイトは 375px で body 14px */
+    .hero h1 { font-size: 2.8rem; }
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .section-title { font-size: 2.4rem; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .col-demo { grid-template-columns: 1fr; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <span class="logo-mark"></span>
+      <span class="logo-text">sysmex</span>
+      <span class="logo-tag">Together for a better<br>healthcare journey</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#" class="is-current">ヘルスケアジャーニー</a>
+      <a href="#">シスメックスについて</a>
+      <a href="#">研究開発</a>
+      <a href="#">サステナビリティ</a>
+      <a href="#">IR情報</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>より良い<br>ヘルスケアジャーニーを、<br>ともに。</h1>
+    <a class="btn hero-btn" href="#">ヘルスケアジャーニーとは？</a>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">有彩色は Sysmex ブルー 1 色だけ</h2>
+  <p class="section-lead">リンク・アイコン・罫線・CTA の枠まで、すべて <b>#005bac</b> ひとつでまかなう（文字 99 要素 / 罫線 109 要素 / 面 8 要素）。アクセントレッド <code>#bc1a2a</code> は 3 つのトークンが同じ値を指すが、<b>2 ページとも可視 0 要素</b>。ページの地色は白ではなく <code>#efefef</code> で、カードだけ白に抜く。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#005bac"></div><div class="swatch-body"><div class="swatch-name">Sysmex Blue</div><div class="swatch-hex">#005bac</div><div class="swatch-use">--color__base__main。文字 99 / 罫線 109 / 面 8 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#000000</div><div class="swatch-use">--color__font__TX1。可視 262 要素。本文は純黒</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e3e7eb"></div><div class="swatch-body"><div class="swatch-name">Secondary Surface</div><div class="swatch-hex">#e3e7eb</div><div class="swatch-use">ナビ・メガメニューの面。可視 43 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#bfd1e0"></div><div class="swatch-body"><div class="swatch-name">Pagination</div><div class="swatch-hex">#bfd1e0</div><div class="swatch-use">スライダーの非選択ドット。可視 4 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#d8d9d9"></div><div class="swatch-body"><div class="swatch-name">Border</div><div class="swatch-hex">#d8d9d9</div><div class="swatch-use">--color__sub__1。罫線 9 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#efefef"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#efefef</div><div class="swatch-use">ページ地色。根拠は body</div></div></div>
+  </div>
+  <p class="note"><b>トークンの枠と実装が一致していない箇所がある。</b> <code>--color__news__category--1</code> 〜 <code>--5</code> はニュース区分ごとに色を変える 5 枠だが、現状は <b>5 つとも同じ #005bac</b>。また <code>--color__sub__5</code> は<b>値が空文字</b>。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">自社の欧文書体＋Noto Sans JP の和欧二層</h2>
+  <p class="section-lead">スタックは<b>サイト全体で 1 本だけ</b>。先頭の <code>Sysmex</code> は自社ドメインから配信する<b>欧文専用</b>の書体（Light / Regular / Medium / Bold の 4 本・全て <code>loaded</code>）で、和文は 2 番目の Noto Sans JP が受ける。<b>隠し div の幅実測で 700 と 800 が同じ 557.28px</b> だったので、実在するのは 4 ウェイトだけ。</p>
+  <div class="scale-bar">
+    <span style="font-size:1.2rem">12px</span>
+    <span style="font-size:1.4rem">14px</span>
+    <span style="font-size:1.6rem">16px</span>
+    <span style="font-size:1.8rem">18px</span>
+    <span style="font-size:2rem">20px</span>
+    <span style="font-size:2.2rem">22px</span>
+    <span style="font-size:3.2rem">32px</span>
+    <span style="font-size:4.6rem">46px</span>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Hero</b>46px / 700 / lh 1.40<br>letter-spacing: normal</div>
+    <div style="font-size:4.6rem;font-weight:700;line-height:var(--lh-head)">より良いヘルスケアジャーニーを。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 1</b>32px / 700 / lh 1.40<br>letter-spacing: normal</div>
+    <div style="font-size:3.2rem;font-weight:700;line-height:var(--lh-head)">検査を通じて、医療の進歩に貢献する</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 2</b>22px / 500 / lh 1.40</div>
+    <div style="font-size:2.2rem;font-weight:500;line-height:var(--lh-head)">細胞測定技術・タンパク測定技術・遺伝子測定技術</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Lead</b>18px / 400 / lh 1.70<br>--font__font-size--L</div>
+    <div style="font-size:1.8rem;line-height:var(--lh-body)">ヘルスケアジャーニーとは、人が健康でいるための一連の道のりのこと。検査は、その節目ごとに確かな手がかりを差し出します。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body</b>16px / 400 / lh 1.70<br>--font__font-size--M</div>
+    <div style="font-size:1.6rem;line-height:var(--lh-body)">body の既定は 16px / line-height 25.6px（16 × 1.6）。本文ブロックは 1.70 に上げる。<b>字間は可視要素の 100% が normal</b> で、見出しにもバッジにも letter-spacing を足さない。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Caption</b>14px / 500 / lh 1.70<br>--font__font-size--S</div>
+    <div style="font-size:1.4rem;font-weight:500;line-height:var(--lh-body)">ナビゲーション・リンクのラベルは 14px / weight 500</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Small</b>12px / 400 / lh 1.70<br>--font__font-size--XS。可視 177 要素で最多</div>
+    <div style="font-size:1.2rem;line-height:var(--lh-body)">カードの補助情報・日付・区分ラベルはすべて 12px。このサイトで最も多いサイズ</div>
+  </div>
+
+  <h3 style="font-size:2rem;font-weight:500;line-height:var(--lh-tight);margin:40px 0 10px">詰められるのに、詰めない</h3>
+  <p class="section-lead" style="margin-bottom:18px"><code>font-feature-settings</code> の宣言は CSS 全文で <b>0 件</b>。ただし書体側は機能を持っていて、実測では 40px の約物が <code>normal</code> 360px → <code>"palt"</code> 300px と <b>16.7% 縮む</b>。<b>使えないのではなく、使わないと決めている。</b></p>
+  <div class="ffs-demo">
+    <div class="ffs-box"><div class="label">実サイト（宣言なし・normal）</div><div class="sample">「東京」、（映画）。・</div></div>
+    <div class="ffs-box is-palt"><div class="label">"palt" を足すとこうなる（使わない）</div><div class="sample">「東京」、（映画）。・</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons</div>
+  <h2 class="section-title">枠線ボタンが主役。下 padding は 2px 小さい</h2>
+  <p class="section-lead">主要 CTA は<b>白地に #005bac の 1px 枠</b>、角丸 20px。padding は <code>10px 38px 8px</code> で、<b>下が上より 2px 小さい</b>（和文の見た目の重心を合わせる調整）。タグは角丸 13px、丸ボタンは 50%。</p>
+  <div class="btn-grid">
+    <a class="btn btn-primary" href="#">ストーリーズ一覧</a>
+    <a class="btn btn-onphoto" href="#">ヘルスケアジャーニーとは？</a>
+    <a class="btn btn-tag" href="#">#イノベーション</a>
+    <a class="btn btn-tag" href="#">#検査のチカラ</a>
+    <button class="btn btn-round" type="button" aria-label="ページ上部へ">↑</button>
+  </div>
+  <div class="btn-grid">
+    <button class="navitem" type="button">企業理念・ブランド</button>
+    <button class="navitem" type="button">経営戦略</button>
+    <button class="navitem" type="button">会社概要</button>
+  </div>
+  <div class="btn-grid"><div class="pager"><span class="dot is-active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+  <p class="note">ナビ項目は <code>#e3e7eb</code> の面に<b>角丸なし</b>、padding <code>13px 50px 14px 30px</code>。ボタンとナビで角丸の扱いを変えている。</p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards</div>
+  <h2 class="section-title">カードは角丸 10px・影なし</h2>
+  <p class="section-lead">白地に <code>1px solid #d8d9d9</code> の枠と角丸 10px（可視 26 要素でこのサイト最多）。<b>影は 2 ページとも 0 件</b>なので、階層は罫線と 3 段の面色だけで作る。</p>
+  <div class="card-grid">
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body"><div class="card-cat">お知らせ</div><div class="card-title">皮膚カロテノイドレベルと認知機能の関連に関する共同研究を開始</div><div class="card-date">2026年10月28日</div></div></a>
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body"><div class="card-cat">ストーリーズ</div><div class="card-title">検査のチカラが、診断までの時間を縮める</div><div class="card-date">2026年10月21日</div></div></a>
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body"><div class="card-cat">研究開発</div><div class="card-title">令和8年度近畿地方発明表彰で「発明奨励賞」を受賞</div><div class="card-date">2026年10月14日</div></div></a>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">入力欄は #005bac の 1px 枠・角丸 5px</h2>
+  <p class="section-lead">ボタンやカードとは別に、入力欄だけ角丸 5px を使う。文字サイズは 16px。</p>
+  <div class="form-grid">
+    <div class="field"><label for="q1">サイト内検索</label><input id="q1" type="text" value="血球計数検査"><div class="field-msg">16px / line-height 1.60 / letter-spacing normal</div></div>
+    <div class="field is-focus"><label for="q2">フォーカス状態</label><input id="q2" type="text" value="ヘルスケアジャーニー"><div class="field-msg">outline は 2px solid #005bac（.is-focus クラスで再現）</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation</div>
+  <h2 class="section-title">影は 1 件も使わない</h2>
+  <p class="section-lead"><code>box-shadow</code> の分布は 2 ページとも空。代わりに角丸の使い分けが語彙になっていて、<b>一角だけ 60px という面</b>がコーポレートブランドのページに存在する。</p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">box-shadow: none（既定・唯一）</div></div>
+    <div class="elev"><div class="elev-name">区別のしかた</div><div class="elev-val">1px solid #d8d9d9 の罫線</div></div>
+    <div class="elev"><div class="elev-name">面の 3 段</div><div class="elev-val">#ffffff / #efefef / #e3e7eb</div></div>
+  </div>
+  <h3 style="font-size:2rem;font-weight:500;line-height:var(--lh-tight);margin:40px 0 16px">一角だけ 60px の切り欠き</h3>
+  <div class="notch-row">
+    <div class="notch tr">border-radius:<br>0 60px 0 0</div>
+    <div class="notch bl">border-radius:<br>0 0 0 60px</div>
+    <div class="notch tl">border-radius:<br>60px 0 0</div>
+  </div>
+  <p class="note"><b>四隅を均等にしないのがこのサイトの癖。</b> 通常の角丸は 10px / 13px / 20px / 30px / 50% の 5 種。</p>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <h2 class="section-title">コンテナ 1132px / 3 カラム基準 / gap 24px</h2>
+  <p class="section-lead"><code>html { font-size: 10px }</code> 固定なので <code>1rem = 10px</code>。カラム幅はトークンで固定されており（<code>--col__3col: 36rem</code> = 360px）、<b>1132 = 360×3 + 24×2 + 4</b> の関係になっている。</p>
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">--format__viewport-W : 192rem = 1920px（設計上限）</div>
+    <div class="layout-bar" style="width:1132px;max-width:100%">--format__content-W : 113.2rem = 1132px（コンテナ）</div>
+    <div class="layout-bar" style="width:554px;max-width:100%">--col__2col : 55.4rem = 554px</div>
+    <div class="layout-bar" style="width:360px;max-width:100%">--col__3col : 36rem = 360px</div>
+    <div class="layout-bar" style="width:265px;max-width:100%">--col__4col : 26.5rem = 265px</div>
+  </div>
+  <div class="col-demo">
+    <div class="col-box">360px</div><div class="col-box">360px</div><div class="col-box">360px</div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px / カード</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:13px"></div><div class="radius-label">13px / タグ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:20px"></div><div class="radius-label">20px / ボタン</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:30px"></div><div class="radius-label">30px / 写真上の CTA</div></div>
+    <div class="radius-item"><div class="radius-box" style="width:68px;border-radius:50%"></div><div class="radius-label">50% / 丸</div></div>
+  </div>
+  <p class="note"><b>7 幅（1440 / 1200 / 1024 / 834 / 768 / 767 / 375px）で実測した結果、<code>html</code> は全幅 10px で 1 度も動かない。</b> 流体（<code>vw</code>）も <code>clamp()</code> も使っていない。<code>body</code> が 16px → 14px に落ちるのは <b>767px より下</b>で、ヒーロー見出しは 46px → 28px（0.61 倍）になる。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">ヘルスケアジャーニー</div><a href="#">検査とは</a><a href="#">検査のチカラ</a></div>
+      <div class="footer-col"><div class="footer-col-title">シスメックスについて</div><a href="#">企業理念・ブランド</a><a href="#">経営戦略</a><a href="#">会社概要</a></div>
+      <div class="footer-col"><div class="footer-col-title">研究開発</div><a href="#">シスメックスの技術</a><a href="#">オープンイノベーション</a></div>
+      <div class="footer-col"><div class="footer-col-title">サステナビリティ</div><a href="#">マテリアリティ</a><a href="#">社外からの評価</a></div>
+    </div>
+    <div class="footer-copy">この preview.html は DESIGN.md の実測値を再現したものです（2026-10-29 実測）。欧文の Sysmex は自社ドメイン配信のため Archivo で代替しています。</div>
+  </div>
+</footer>
+
+</body>
+</html>

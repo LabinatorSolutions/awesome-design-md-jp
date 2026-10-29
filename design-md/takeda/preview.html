@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 武田薬品工業（Takeda）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 93 個が自社トークン（＋Swiper 2）。
+       すべてのタイポグラフィ値に …Mobile の対がある Desktop/Mobile 2 本立て。2026-10-29 実測 */
+    --primary:        #BD120A;   /* ★--colorPrimary。面 13 / 文字 7 / 罫線 20 要素 */
+    --primary-active: #891515;   /* --colorPrimaryActive。ホバー専用。静的には可視 0 */
+    --text:           #333333;   /* ★--colorDarkGrey / --textColor。可視 732 要素で圧倒的最多 */
+    --white:          #ffffff;
+    --muted:          #a1a4ac;   /* --colorMediumGrey。文字 4 / 罫線 3 要素 */
+    --surface:        #edf2f4;   /* --colorLightGrey。面 18 / 罫線 8 要素 */
+    --navy:           #27455c;   /* 面 8 要素。トークン化されていない直書き */
+    --bg:             #ffffff;   /* pageBackground.resolved / 根拠 body */
+    /* 可視 0 のトークン（preview では静的に使わない）
+       --colorHoverGrey : #DCE6E9
+       CMP（OneTrust）由来で本体ではない色: #FF0000 / #3860BE */
+
+    /* === Fonts ===
+       @font-face に gotham 6 ウェイト（200/300/400/500/700/800）＋ gotham Fallback が
+       宣言され、html にも font-family: var(--font-gotham) と書かれているが、
+       document.fonts で 7 本とも unloaded・2 ページとも可視 0 要素。
+       body 以下の Noto Sans JP が上書きしており、実際に描画されるのはこれ 1 本だけ。
+       読み込まれているウェイトも 400 と 700 の 2 本（欧文実測 300=400=500 → 540.06px）。 */
+    --font-body: "Noto Sans JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                 Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Type scale（html 16px 固定。トークンはすべて rem） === */
+    --h1-size: 2.625rem;    --h1-size-m: 1.875rem;    --h1-lh: 2.875rem;   --h1-weight: 300;
+    --h2-size: 2.25rem;     --h2-size-m: 1.5rem;      --h2-lh: 2.6875rem;  --h2-lh-m: 2rem;   --h2-weight: 300;
+    --h3-size: 1.5rem;      --h3-size-m: 1.25rem;     --h3-lh: 2rem;       --h3-lh-m: 1.75rem; --h3-weight: 500;
+    --h4-size: 1.25rem;     --h4-size-m: 1.125rem;    --h4-lh: 1.75rem;    --h4-weight: 500;
+    --h5-size: 1rem;                                   --h5-lh: 1.75rem;    --h5-weight: 700;
+    --body-size: 1rem;      --body-lh: 1.625rem;      --body-weight: 400;
+    --cta-size: 1rem;       --cta-lh: 1.625rem;       --cta-weight: 300;   /* ★CTA は Light */
+    --quote-lh: 2.75rem;    --quote-lh-m: 1.625rem;   --quote-weight: 400;
+
+    /* === Letter spacing: 可視 130/134・90/90 要素が normal === */
+    --ls: normal;
+
+    /* === Radius: 1.875rem = 30px が四隅それぞれのトークンで用意されている === */
+    --r: 1.875rem;        /* 30px */
+    --r-full: 9999px;     /* Tailwind rounded-full。可視 11 要素 */
+
+    /* === Shadow: Tailwind の既定値をそのまま使う === */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --focus-ring: inset 0 0 0 1px #BD120A;
+
+    --space-first:   3.125rem;   /* --spacings-marginTopFirstComponent : 50px */
+    --space-first-m: 2.5rem;     /* 40px */
+    --container: 1200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;              /* 実サイトと同じ。7 幅すべてで固定 */
+    font-feature-settings: normal; /* ★実サイトが html に明示している打ち消し */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    font-weight: var(--body-weight);
+    line-height: 1.5;            /* body は 24px = 16 × 1.5 */
+    letter-spacing: var(--ls);
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { background: var(--white); border-bottom: 1px solid var(--surface); }
+  .header-inner { display: flex; align-items: center; max-width: var(--container); margin: 0 auto; padding: 14px 20px; gap: 28px; }
+  .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; letter-spacing: var(--ls); }
+  .header-nav { display: flex; gap: 22px; margin-left: auto; }
+  .header-nav a { font-size: var(--body-size); font-weight: 325; line-height: var(--body-lh); color: var(--text); text-decoration: none; }
+
+  /* HERO */
+  .hero { background: linear-gradient(to right, #BD120A, #A1B1C4); padding: 72px 20px 80px; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; text-align: center; }
+  .hero h1 { color: var(--white); font-size: var(--h1-size); font-weight: var(--h1-weight); line-height: var(--h1-lh); letter-spacing: var(--ls); }
+  .hero p { color: var(--white); font-size: 2.3864rem; font-weight: 300; line-height: 2.6136rem; margin-top: 14px; }
+
+  /* SECTIONS */
+  .section { padding: var(--space-first) 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface); }
+  .section-alt .section-inner { padding: var(--space-first) 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 0.8rem; color: var(--primary); margin-bottom: 10px; }
+  .section-title { font-size: var(--h2-size); font-weight: var(--h2-weight); line-height: var(--h2-lh); margin-bottom: 16px; }
+  .section-lead { font-size: var(--body-size); line-height: var(--body-lh); margin-bottom: 36px; max-width: 860px; }
+  .note { font-size: 0.875rem; line-height: 1.625rem; color: #5b6168; margin-top: 20px; max-width: 860px; }
+  code { font-family: var(--font-mono); font-size: 0.8rem; background: var(--surface); padding: 1px 5px; border-radius: 4px; }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(208px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid #dde4e8; border-radius: 10px; background: var(--white); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px 14px 14px; }
+  .swatch-name { font-size: 0.875rem; font-weight: 500; line-height: 1.5; }
+  .swatch-hex { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--primary); margin-top: 3px; }
+  .swatch-use { font-size: 0.75rem; line-height: 1.6; color: #5b6168; margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid #dde4e8; align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 0.6875rem; color: #5b6168; line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 700; color: var(--text); }
+  .weight-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 10px; }
+  .weight-box { background: var(--white); border: 1px solid #dde4e8; border-radius: 10px; padding: 18px 20px; }
+  .weight-box .label { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--primary); margin-bottom: 8px; }
+  .weight-box .sample { font-size: 1.5rem; line-height: 2rem; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; letter-spacing: var(--ls); font-size: var(--cta-size); line-height: var(--cta-lh); font-weight: var(--cta-weight); }
+  .btn-primary { background: var(--primary); color: var(--white); border: 1px solid var(--primary); border-radius: var(--r); padding: 14px 40px; }
+  .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--primary); border-radius: var(--r); padding: 12px 32px; }
+  .btn-pill { background: var(--surface); color: var(--text); border: none; border-radius: var(--r-full); width: 44px; height: 44px; font-size: var(--body-size); }
+  .btn-pill-dark { background: var(--text); color: var(--white); border: none; border-radius: var(--r-full); width: 44px; height: 44px; font-size: var(--body-size); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+  .card { border-radius: var(--r); background: var(--white); box-shadow: var(--shadow-sm); overflow: hidden; text-decoration: none; color: var(--text); display: block; }
+  .card-img { height: 140px; background: linear-gradient(140deg, #d9c3c1, #a8b6c4); }
+  .card-body { padding: 20px 24px 26px; }
+  .card-eyebrow { font-size: 0.875rem; line-height: 1.625rem; color: var(--muted); }
+  .card-title { font-size: var(--h3-size); font-weight: var(--h3-weight); line-height: var(--h3-lh); margin-top: 4px; }
+  .card-text { font-size: var(--body-size); line-height: var(--body-lh); margin-top: 10px; }
+  .card-top { border-radius: var(--r) var(--r) 0 0; }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: var(--h5-size); font-weight: var(--h5-weight); line-height: var(--h5-lh); margin-bottom: 8px; }
+  .field input {
+    width: 100%; background: var(--white); color: var(--text);
+    border: 1px solid var(--muted); border-radius: 4px;
+    padding: 12px 14px; font-size: var(--body-size); line-height: var(--body-lh);
+    font-family: var(--font-body); letter-spacing: var(--ls);
+  }
+  .field.is-focus input { border-color: var(--primary); box-shadow: var(--focus-ring); }
+  .field-msg { font-size: 0.75rem; line-height: 1.6; color: #5b6168; margin-top: 7px; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
+  .elev { background: var(--white); border-radius: var(--r); padding: 28px; text-align: center; }
+  .elev.e0 { border: 1px solid #dde4e8; }
+  .elev.e1 { box-shadow: var(--shadow-sm); }
+  .elev.e2 { box-shadow: var(--shadow-lg); }
+  .elev.e3 { box-shadow: var(--shadow-md); }
+  .elev.ef { box-shadow: var(--focus-ring); }
+  .elev-name { font-size: var(--h5-size); font-weight: var(--h5-weight); line-height: var(--h5-lh); }
+  .elev-val { font-family: var(--font-mono); font-size: 0.6875rem; color: #5b6168; margin-top: 8px; }
+
+  /* LAYOUT */
+  .scale-table { width: 100%; border-collapse: collapse; }
+  .scale-table th, .scale-table td { text-align: left; font-size: 0.875rem; line-height: 1.625rem; padding: 10px 14px; border-bottom: 1px solid #dde4e8; }
+  .scale-table th { font-weight: 700; }
+  .scale-table td.num { font-family: var(--font-mono); font-size: 0.75rem; }
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 120px; height: 72px; background: var(--surface); }
+  .radius-label { font-family: var(--font-mono); font-size: 0.6875rem; color: #5b6168; margin-top: 7px; }
+
+  /* FOOTER */
+  .footer { background: var(--navy); color: var(--white); padding: 40px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; }
+  .footer-col-title { font-size: var(--h5-size); font-weight: var(--h5-weight); line-height: var(--h5-lh); }
+  .footer-col a { display: block; font-size: 0.875rem; font-weight: 325; line-height: 2; color: var(--white); text-decoration: none; }
+  .footer-copy { font-size: 0.75rem; line-height: 1.625rem; margin-top: 30px; }
+
+  @media (max-width: 767px) {
+    .hero h1 { font-size: var(--h1-size-m); }
+    .hero p { font-size: 1.7045rem; }
+    .section, .section-alt .section-inner { padding: var(--space-first-m) 16px; }
+    .section-title { font-size: var(--h2-size-m); line-height: var(--h2-lh-m); }
+    .card-title { font-size: var(--h3-size-m); line-height: var(--h3-lh-m); }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">Takeda</a>
+    <nav class="header-nav">
+      <a href="#">企業情報</a>
+      <a href="#">サイエンス</a>
+      <a href="#">ストーリー</a>
+      <a href="#">ニュース</a>
+      <a href="#">IR情報</a>
+      <a href="#">採用情報</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>健やかな未来のために、自らを果敢に進化させ、道を切り拓く。</h1>
+    <p>それが、世代を超えて受け継いできたタケダの約束。</p>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">タケダレッド 1 色と、#333333 の本文</h2>
+  <p class="section-lead">ブランド色は <b>#BD120A</b> ひとつ（面 13 / 文字 7 / 罫線 20 要素）。本文は純黒ではなく <b>#333333</b> で、<b>可視 732 要素</b>と圧倒的に多い。セクションの地は <code>#edf2f4</code>。<b>CMP（OneTrust）の <code>#FF0000</code> をブランド赤と混同しないこと。</b></p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#BD120A"></div><div class="swatch-body"><div class="swatch-name">Takeda Red</div><div class="swatch-hex">#BD120A</div><div class="swatch-use">--colorPrimary。面 13 / 文字 7 / 罫線 20 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#891515"></div><div class="swatch-body"><div class="swatch-name">Primary Active</div><div class="swatch-hex">#891515</div><div class="swatch-use">ホバー専用。静的計測では可視 0 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#333333"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#333333</div><div class="swatch-use">--colorDarkGrey。可視 732 要素で最多</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#edf2f4"></div><div class="swatch-body"><div class="swatch-name">Surface Light</div><div class="swatch-hex">#edf2f4</div><div class="swatch-use">--colorLightGrey。面 18 / 罫線 8 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#a1a4ac"></div><div class="swatch-body"><div class="swatch-name">Text Muted</div><div class="swatch-hex">#a1a4ac</div><div class="swatch-use">--colorMediumGrey。文字 4 / 罫線 3 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#27455c"></div><div class="swatch-body"><div class="swatch-name">Deep Navy</div><div class="swatch-hex">#27455c</div><div class="swatch-use">面 8 要素。トークン化されていない直書き</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:linear-gradient(to right,#BD120A,#A1B1C4)"></div><div class="swatch-body"><div class="swatch-name">Hero Gradient</div><div class="swatch-hex">to right, #BD120A → #A1B1C4</div><div class="swatch-use">ヒーローの地。角度を丸めない</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">見出しほど細い、逆のウェイト階層</h2>
+  <p class="section-lead"><code>--h1-fontWeight: 300</code> / <code>--h2-fontWeight: 300</code> / <code>--h3-fontWeight: 500</code> / <code>--h4-fontWeight: 500</code> / <b><code>--h5-fontWeight: 700</code></b>。<b>大きい見出しほど細い。</b>CTA も <code>--cta-fontWeight: 300</code> で、ボタンの文字を太くしない。</p>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 1</b>2.625rem (42px) / 300<br>lh 2.875rem (46px) = 1.10</div>
+    <div style="font-size:var(--h1-size);font-weight:var(--h1-weight);line-height:var(--h1-lh)">健やかな未来のために</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 2</b>2.25rem (36px) / 300<br>lh 2.6875rem (43px) = 1.19</div>
+    <div style="font-size:var(--h2-size);font-weight:var(--h2-weight);line-height:var(--h2-lh)">ファースト・イン・クラスの治療薬が切り拓く、新たな時代</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 3</b>1.5rem (24px) / <b>500</b><br>lh 2rem (32px) = 1.33</div>
+    <div style="font-size:var(--h3-size);font-weight:var(--h3-weight);line-height:var(--h3-lh)">FDAが真性多血症に対する新たな治療薬を承認</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 4</b>1.25rem (20px) / 500<br>lh 1.75rem (28px)</div>
+    <div style="font-size:var(--h4-size);font-weight:var(--h4-weight);line-height:var(--h4-lh)">研究開発パイプライン</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 5</b>1rem (16px) / <b>700</b><br>lh 1.75rem (28px)。最小の見出しが最も太い</div>
+    <div style="font-size:var(--h5-size);font-weight:var(--h5-weight);line-height:var(--h5-lh)">対象疾患領域</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body</b>1rem (16px) / 400<br>lh 1.625rem (26px)</div>
+    <div style="font-size:var(--body-size);line-height:var(--body-lh)">本文は 16px / 行間 26px。<b>字間は可視 130/134・90/90 要素が normal</b> で、見出しにも CTA にも letter-spacing を足さない。<code>html</code> には <code>font-feature-settings: normal</code> が明示されており、約物も詰めない。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>CTA</b>1rem (16px) / <b>300</b><br>lh 1.625rem (26px)</div>
+    <div style="font-size:var(--cta-size);font-weight:var(--cta-weight);line-height:var(--cta-lh)">全てのストーリーを見る</div>
+  </div>
+
+  <h3 style="font-size:var(--h4-size);font-weight:var(--h4-weight);line-height:var(--h4-lh);margin:40px 0 10px">実在するウェイトは 400 と 700 の 2 本だけ</h3>
+  <p class="section-lead" style="margin-bottom:18px">読み込んでいる Noto Sans JP は <b>400 と 700 の 2 本</b>。欧文の幅を実測すると <code>300 = 400 = 500 → 540.06px</code> / <code>700 = 800 → 570.92px</code> で、<b>300 や 500 を書いても 400 で出る</b>。ナビとフッターに 11 要素ある <code>font-weight: 325</code> も同じく 400 で描画される。</p>
+  <div class="weight-demo">
+    <div class="weight-box"><div class="label">font-weight: 300（指定）→ 400 で出る</div><div class="sample" style="font-weight:300">Takeda Pharmaceutical 武田薬品</div></div>
+    <div class="weight-box"><div class="label">font-weight: 325（指定）→ 400 で出る</div><div class="sample" style="font-weight:325">Takeda Pharmaceutical 武田薬品</div></div>
+    <div class="weight-box"><div class="label">font-weight: 400（実在）</div><div class="sample" style="font-weight:400">Takeda Pharmaceutical 武田薬品</div></div>
+    <div class="weight-box"><div class="label">font-weight: 700（実在）</div><div class="sample" style="font-weight:700">Takeda Pharmaceutical 武田薬品</div></div>
+  </div>
+  <p class="note"><b>Gotham は宣言だけで一度も描画されない。</b> <code>@font-face</code> に 6 ウェイトあり <code>html</code> にも <code>font-family: var(--font-gotham)</code> と書かれているが、<code>body</code> 以下の <code>"Noto Sans JP", …</code> に上書きされ、<code>document.fonts</code> では 7 本とも <code>unloaded</code>、<b>2 ページとも可視 0 要素</b>。<b>実サイトはこうだが、正しくは <code>body</code> 側のスタック先頭に入れる。</b></p>
+</div>
+</section>
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons</div>
+  <h2 class="section-title">角丸 30px。文字は Light</h2>
+  <p class="section-lead">角丸は <code>1.875rem</code>（30px）で、<b>四隅それぞれに個別トークン</b>（<code>--buttonPrimary-borderRadiusTopLeft</code> 〜）が用意されている。片側だけ落とした形を作れる設計。アイコンボタンは <code>9999px</code>。</p>
+  <div class="btn-grid">
+    <a class="btn btn-primary" href="#">登録する</a>
+    <a class="btn btn-secondary" href="#">全てのストーリーを見る ›</a>
+    <a class="btn btn-secondary" href="#">全てのニュースを見る ›</a>
+    <button class="btn btn-pill" type="button" aria-label="次へ">›</button>
+    <button class="btn btn-pill-dark" type="button" aria-label="カレンダー">▦</button>
+  </div>
+  <p class="note">Primary は <code>#BD120A</code> の塗り / 白文字 / padding <code>14px 40px</code> / <b>weight 300</b>。ホバーで <code>#891515</code> に沈む。Secondary は透明地に <code>#BD120A</code> の 1px 枠で、文字色は <code>#333333</code>。</p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards</div>
+  <h2 class="section-title">四隅を個別に持つ角丸</h2>
+  <p class="section-lead">画像・カードの角丸も <code>--globalMedia-borderRadiusTopLeft</code> 〜 <code>BottomRight</code> の 4 隅個別トークンで 30px。<b>上半分だけ丸いカード</b>（<code>30px 30px 0 0</code>）が可視 8 要素ある。</p>
+  <div class="card-grid">
+    <a class="card" href="#"><div class="card-img card-top"></div><div class="card-body"><div class="card-eyebrow">報道関係者の方へ</div><div class="card-title">FDAが真性多血症（PV）に対する新たな治療薬を承認</div><div class="card-text">真性多血症の成人患者さんにおける赤血球増加症に対するファーストインクラスの新たな治療薬です。</div></div></a>
+    <a class="card" href="#"><div class="card-img card-top"></div><div class="card-body"><div class="card-eyebrow">ストーリー</div><div class="card-title">ナルコレプシータイプ1治療薬の開発</div><div class="card-text">厚生労働省が、武田薬品のナルコレプシータイプ1（NT1）患者さん向け治療薬を承認しました。</div></div></a>
+    <a class="card" href="#"><div class="card-img card-top"></div><div class="card-body"><div class="card-eyebrow">企業情報</div><div class="card-title">タケダについて詳しく知る</div><div class="card-text">240年を超える歴史のなかで受け継いできた価値観と、これからの挑戦について。</div></div></a>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">フォーカスは赤の inset 1px リング</h2>
+  <p class="section-lead">フォーカス表現は <code>rgb(189, 18, 10) 0px 0px 0px 1px inset</code>。外側に広がるリングではなく、<b>枠の内側に赤を 1px 重ねる</b>。</p>
+  <div class="form-grid">
+    <div class="field"><label for="e1">メールアドレス</label><input id="e1" type="text" value="example@takeda.com"><div class="field-msg">16px / line-height 1.625rem / letter-spacing normal</div></div>
+    <div class="field is-focus"><label for="e2">フォーカス状態</label><input id="e2" type="text" value="メールマガジン登録"><div class="field-msg">box-shadow: inset 0 0 0 1px #BD120A（.is-focus クラスで再現）</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation</div>
+  <h2 class="section-title">影は Tailwind の既定値をそのまま使う</h2>
+  <p class="section-lead">独自の影トークンは持たない。<code>shadow-sm</code> / <code>shadow-lg</code> と、下層ページに 1 種（<code>0 4px 8px rgba(0,0,0,.2)</code>）。</p>
+  <div class="elev-grid">
+    <div class="elev e0"><div class="elev-name">Level 0</div><div class="elev-val">none（既定）</div></div>
+    <div class="elev e1"><div class="elev-name">Level 1</div><div class="elev-val">0 1px 2px rgba(0,0,0,.05)<br>可視 3 要素</div></div>
+    <div class="elev e2"><div class="elev-name">Level 2</div><div class="elev-val">0 10px 15px rgba(0,0,0,.1)<br>可視 2 要素</div></div>
+    <div class="elev e3"><div class="elev-name">Level 3</div><div class="elev-val">0 4px 8px rgba(0,0,0,.2)<br>下層ページ 2 要素</div></div>
+    <div class="elev ef"><div class="elev-name">Focus</div><div class="elev-val">inset 0 0 0 1px #BD120A</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <h2 class="section-title">Desktop / Mobile の 2 本立てトークン</h2>
+  <p class="section-lead"><code>html</code> も <code>body</code> も <b>7 幅（1440 / 1200 / 1024 / 834 / 768 / 767 / 375px）すべてで 16px / 24px から 1 度も動かない</b>。流体（<code>vw</code>）も <code>clamp()</code> も使わず、<b>すべてのタイポグラフィ値に <code>…Mobile</code> の対</b>を持たせて切り替える。</p>
+  <table class="scale-table">
+    <thead><tr><th>Role</th><th>Desktop</th><th>Mobile</th><th>変化</th></tr></thead>
+    <tbody>
+      <tr><td>H1</td><td class="num">2.625rem (42px)</td><td class="num">1.875rem (30px)</td><td class="num">0.71 倍</td></tr>
+      <tr><td>H2</td><td class="num">2.25rem (36px)</td><td class="num">1.5rem (24px)</td><td class="num">0.67 倍</td></tr>
+      <tr><td>H3</td><td class="num">1.5rem (24px)</td><td class="num">1.25rem (20px)</td><td class="num">0.83 倍</td></tr>
+      <tr><td>H4</td><td class="num">1.25rem (20px)</td><td class="num">1.125rem (18px)</td><td class="num">0.90 倍</td></tr>
+      <tr><td>H5 / Body / CTA</td><td class="num">1rem (16px)</td><td class="num">1rem (16px)</td><td class="num">変えない</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><b>16px 以下は一切変えない。</b> 縮むのは H1〜H4 だけで、しかも<b>大きい見出しほど大きく縮む</b>。最初のコンポーネントの上マージンも <code>3.125rem</code>（50px）→ <code>2.5rem</code>（40px）の対になっている。</p>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:1.875rem"></div><div class="radius-label">1.875rem = 30px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:1.875rem 1.875rem 0 0"></div><div class="radius-label">上だけ 30px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0 0 1.875rem 1.875rem"></div><div class="radius-label">下だけ 30px</div></div>
+    <div class="radius-item"><div class="radius-box" style="width:72px;border-radius:9999px"></div><div class="radius-label">9999px / full</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">企業情報</div><a href="#">会社概要</a><a href="#">トップマネジメント</a><a href="#">沿革</a></div>
+      <div class="footer-col"><div class="footer-col-title">サイエンス</div><a href="#">研究開発</a><a href="#">パイプライン</a></div>
+      <div class="footer-col"><div class="footer-col-title">IR情報</div><a href="#">財務ハイライト</a><a href="#">株主・投資家の皆さま</a></div>
+      <div class="footer-col"><div class="footer-col-title">その他</div><a href="#">採用情報</a><a href="#">お問い合わせ</a><a href="#">各拠点のウェブサイト</a></div>
+    </div>
+    <div class="footer-copy">この preview.html は DESIGN.md の実測値を再現したものです（2026-10-29 実測）。フッターのリンクは実サイトと同じ font-weight: 325（実際は 400 で描画される）で組んでいます。</div>
+  </div>
+</footer>
+
+</body>
+</html>

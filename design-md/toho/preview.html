@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 東宝（TOHO）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Junge&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === Colors ===
+       CSS Custom Properties は 23 個すべて自社トークン（プラットフォーム由来 0）。
+       命名は --Bg_white / --Toho_Blue の PascalCase＋アンダースコアに
+       --Owned-media-bg-gray のケバブが混ざる。2026-10-29 実測 */
+    --primary-blue:  #3036E6;   /* ★--Primary_blue。文字 16 / 罫線 16 要素 */
+    --primary-black: #03021F;   /* ★--Primary_black。文字 25 要素。純黒ではなく青みのある紺 */
+    --text-black:    #2E313B;   /* --Text_black。可視 22 要素 */
+    --text-sub:      #64687A;   /* --Text_sub_black。文字 10 / 面 6 要素。タグの地 */
+    --text-white:    #FFFFFF;   /* --Text_white / --Bg_white。可視 53 要素 */
+    --text-sub-wh:   #E0E0E3;   /* --Text_sub_white。文字 18 / 面 8 要素 */
+    --divider:       #D1D3DE;   /* ★--Devider_gray（綴りは実サイトのまま）。罫線 46 要素で最多 */
+    --bg-gray:       #F5F5F5;   /* --Bg_gray。お知らせの帯。可視 4 要素 */
+    --bg-sub-gray:   #EBEBEB;   /* --Bg_sub_gray。面 7 要素 */
+    --secondary-gy:  #A6A5AD;   /* --Secondary_gray。文字 3 要素 */
+    --card-dark:     #1a1a1a;   /* 作品カードの地。可視 34 要素。トークン化されていない直書き */
+    --focus:         #8ab4f8;   /* --focus-color */
+    --bg:            #FFFFFF;   /* pageBackground.resolved。html/body に塗り指定が無く UA 既定 */
+    /* 可視 0 のトークン（preview では使わない）
+       --Toho_Blue : #003692         ← 社名を冠しているが 2 ページとも可視 0。実装は --Primary_blue
+       --Secondary_green  : #70E1B6
+       --Secondary_yellow : #D6FFB6  ← グラデーションの停止色としてのみ登場
+       --Secondary_magenta: #CD82FF
+       --Secondary_purple : #8752FA
+       --Owned-media-bg-gray : #272930 */
+
+    /* === Gradient（実装の主役。停止位置を丸めない） === */
+    --grad: radial-gradient(70% 220% at 100% 0%,
+              rgb(214, 255, 182) 0%,
+              rgb(193, 145, 255) 20%,
+              rgb(53, 72, 229) 55%,
+              rgb(9, 1, 26) 100%);
+
+    /* === Fonts ===
+       実際に描画されるのは "Noto Sans JP", Noto-Sans-Fallback, sans-serif の 1 本だけ
+       （可視 163 要素）。Noto-Sans-Fallback の @font-face は status: error。
+       .font-junge { font-family: Junge, serif } が CSS にあるが、Junge は
+       フォント要求 0 件・unloaded・check() が false・適用要素 0 で機能していない。
+       preview では「本来こう出るはずだった」姿を見せるため Google Fonts から Junge を読む。 */
+    --font-body:  "Noto Sans JP", sans-serif;
+    --font-junge: "Junge", serif;   /* 実サイトでは読み込まれず serif にフォールバックする */
+    --font-mono:  SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height: 本文 1.70 / UI 1.50 の二層 === */
+    --lh-body:  1.70;   /* body の既定（16px → 27.2px） */
+    --lh-ui:    1.50;   /* 可視 78 要素で最多 */
+    --lh-tight: 1.25;   /* リスト・見出し */
+    --lh-loose: 1.94;   /* ゆったりした段落 */
+
+    /* === Letter spacing: 既定 normal（可視 79 要素）。ラベルだけ em を当てる === */
+    --ls:        normal;
+    --ls-label:  0.04em;   /* カード・リストのラベル（15px → 0.6px）。可視 11 要素 */
+    --ls-ui:     0.05em;   /* UI テキスト（14px → 0.7px） */
+    --ls-nav:    0.15em;   /* ★ナビの 2 要素専用。一般化しない */
+
+    /* === Radius === */
+    --r-card: 4px;      /* 可視 29 要素で最多 */
+    --r-btn:  18px;
+    --r-pill: 9999px;
+
+    /* === Transition（トークンで 3 段に固定） === */
+    --t-fast:    all .15s;
+    --t-default: all .3s;
+    --t-slow:    all .5s;
+
+    --container: 1600px;
+    --header-h:  127px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 10px; }   /* 実サイトと同じ。7 幅すべてで固定 */
+
+  body {
+    background: var(--bg);
+    color: var(--primary-black);
+    font-family: var(--font-body);
+    font-size: 1.6rem;                     /* 16px */
+    font-weight: 400;
+    line-height: var(--lh-body);           /* 27.2px */
+    letter-spacing: var(--ls);
+    /* ★このサイトの核心。横組みの全角約物を一律に半角幅へ揃える。実測 1017 要素 */
+    font-feature-settings: "halt";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header { background: var(--bg); border-bottom: 1px solid var(--divider); }
+  .header-inner { display: flex; align-items: center; max-width: var(--container); margin: 0 auto; padding: 16px 24px; gap: 28px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-black); }
+  .logo-mark { width: 34px; height: 34px; border: 1.5px solid var(--primary-black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 500; }
+  .logo-text { font-size: 2.4rem; font-weight: 500; line-height: 1; letter-spacing: var(--ls-label); }
+  .header-nav { display: flex; gap: 22px; margin-left: auto; }
+  .header-nav a { font-size: 1.5rem; font-weight: 400; line-height: var(--lh-ui); color: var(--primary-black); text-decoration: none; padding-bottom: 3px; transition: var(--t-default); }
+  .header-nav a.is-spaced { letter-spacing: var(--ls-nav); }
+  .header-nav a.is-current { color: var(--primary-blue); border-bottom: 2px solid var(--primary-blue); }
+
+  /* HERO */
+  .hero { background: linear-gradient(118deg, #0c2a2a 0%, #123b4e 38%, #0b1038 72%, #05061c 100%); padding: 56px 24px 64px; }
+  .hero-inner { max-width: var(--container); margin: 0 auto; }
+  .hero .en { font-family: var(--font-junge); font-size: 5.6rem; font-weight: 400; line-height: 1.15; color: var(--text-white); letter-spacing: var(--ls); }
+  .hero .ja { font-size: 1.6rem; font-weight: 400; line-height: var(--lh-ui); color: var(--text-white); margin-top: 10px; }
+  .hero .caveat { font-family: var(--font-mono); font-size: 1.1rem; line-height: 1.7; color: var(--text-sub-wh); margin-top: 26px; max-width: 760px; }
+  .hero .caveat code { background: rgba(255, 255, 255, .14); color: var(--text-white); }
+
+  /* SECTIONS */
+  .section { padding: 64px 24px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--bg-gray); }
+  .section-alt .section-inner { padding: 64px 24px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 10px; }
+  .section-title { font-size: 2.8rem; font-weight: 500; line-height: var(--lh-ui); margin-bottom: 16px; }
+  .section-lead { font-size: 1.6rem; line-height: var(--lh-body); margin-bottom: 36px; max-width: 880px; }
+  .note { font-size: 1.4rem; line-height: var(--lh-body); color: var(--text-sub); margin-top: 20px; max-width: 880px; }
+  code { font-family: var(--font-mono); font-size: 1.2rem; background: var(--bg-sub-gray); padding: 1px 5px; border-radius: var(--r-card); }
+  b { font-weight: 700; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--divider); border-radius: var(--r-card); background: var(--bg); overflow: hidden; }
+  .swatch-chip { height: 76px; }
+  .swatch-body { padding: 12px 14px 14px; }
+  .swatch-name { font-size: 1.4rem; font-weight: 500; line-height: var(--lh-ui); letter-spacing: var(--ls-ui); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary-blue); margin-top: 3px; }
+  .swatch-use { font-size: 1.2rem; line-height: 1.6; color: var(--text-sub); margin-top: 6px; }
+  .swatch.is-unused .swatch-chip { position: relative; }
+  .swatch.is-unused .swatch-chip::after { content: "可視 0"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-white); background: rgba(3, 2, 31, .55); }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--divider); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 1.1rem; color: var(--text-sub); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.3rem; font-weight: 500; color: var(--primary-black); }
+  .scale-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; align-items: baseline; }
+  .scale-bar span { background: var(--bg-sub-gray); border-radius: var(--r-card); padding: 8px 14px; line-height: var(--lh-ui); }
+  .halt-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-top: 10px; }
+  .halt-box { background: var(--bg); border: 1px solid var(--divider); border-radius: var(--r-card); padding: 18px 20px; }
+  .halt-box .label { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary-blue); margin-bottom: 8px; }
+  .halt-box .sample { font-size: 2.4rem; line-height: var(--lh-ui); }
+  .halt-box.is-off .sample { font-feature-settings: normal; }
+  .halt-box.is-palt .sample { font-feature-settings: "palt"; }
+  .ls-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .ls-table th, .ls-table td { text-align: left; font-size: 1.4rem; line-height: var(--lh-ui); padding: 10px 14px; border-bottom: 1px solid var(--divider); }
+  .ls-table th { font-weight: 700; }
+  .ls-table td.num { font-family: var(--font-mono); font-size: 1.2rem; }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 26px; }
+  .btn { font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; letter-spacing: var(--ls); transition: var(--t-default); }
+  .btn-primary { background: var(--grad); color: var(--text-white); border: none; border-radius: var(--r-pill); padding: 16px 16px 16px 24px; font-size: 1.6rem; font-weight: 400; line-height: var(--lh-ui); gap: 10px; }
+  .btn-secondary { background: var(--bg); color: var(--text-black); border: 1px solid var(--divider); border-radius: var(--r-btn); padding: 8px 18px; font-size: 1.2rem; font-weight: 700; line-height: var(--lh-tight); }
+  .tag { display: inline-flex; align-items: center; background: var(--text-sub); color: var(--text-white); border-radius: var(--r-card); padding: 4px 12px; font-size: 1.4rem; font-weight: 400; line-height: var(--lh-ui); letter-spacing: var(--ls-label); }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); gap: 32px 24px; }
+  .card { border-radius: var(--r-card); background: var(--card-dark); overflow: hidden; text-decoration: none; color: var(--text-white); display: block; }
+  .card-img { height: 168px; background: linear-gradient(150deg, #2b3550, #4a3360); }
+  .card-body { padding: 14px 16px 18px; }
+  .card-tag { display: inline-block; background: var(--text-sub); color: var(--text-white); border-radius: var(--r-card); padding: 0 12px; font-size: 1.4rem; line-height: 1.6; }
+  .card-title { font-size: 1.5rem; font-weight: 500; line-height: var(--lh-ui); letter-spacing: var(--ls-label); margin-top: 10px; }
+  .card-date { font-size: 1.3rem; line-height: var(--lh-ui); color: var(--text-sub-wh); margin-top: 8px; }
+  .card-light { background: var(--bg); color: var(--primary-black); border: 1px solid var(--divider); }
+  .card-light .card-date { color: var(--text-sub); }
+
+  /* NEWS LIST */
+  .news { max-width: 888px; }
+  .news-row { display: flex; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--divider); }
+  .news-date { font-family: var(--font-mono); font-size: 1.3rem; color: var(--text-sub); flex-shrink: 0; }
+  .news-title { font-size: 1.5rem; line-height: var(--lh-ui); letter-spacing: var(--ls-label); }
+
+  /* FORMS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+  .field label { display: block; font-size: 1.4rem; font-weight: 500; line-height: var(--lh-ui); letter-spacing: var(--ls-ui); margin-bottom: 8px; }
+  .field input {
+    width: 100%; background: var(--bg); color: var(--primary-black);
+    border: 1px solid var(--divider); border-radius: var(--r-card);
+    padding: 12px 14px; font-size: 1.6rem; line-height: var(--lh-ui);
+    font-family: var(--font-body); letter-spacing: var(--ls);
+  }
+  .field.is-focus input { box-shadow: 0 0 0 2px #0042BC; border-color: #0042BC; }
+  .field-msg { font-size: 1.2rem; line-height: 1.6; color: var(--text-sub); margin-top: 7px; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+  .elev { background: var(--bg); border: 1px solid var(--divider); border-radius: var(--r-card); padding: 28px; text-align: center; }
+  .elev.ef { box-shadow: 0 0 0 2px #0042BC; border-color: transparent; }
+  .elev-name { font-size: 1.6rem; font-weight: 500; line-height: var(--lh-ui); }
+  .elev-val { font-family: var(--font-mono); font-size: 1.1rem; color: var(--text-sub); margin-top: 8px; }
+
+  /* LAYOUT */
+  .layout-demo { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .layout-bar { background: var(--bg-sub-gray); border-radius: var(--r-card); height: 38px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 1.1rem; color: var(--text-sub); }
+  .radius-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 112px; height: 70px; background: var(--bg-sub-gray); border: 1px solid var(--divider); }
+  .radius-label { font-family: var(--font-mono); font-size: 1.1rem; color: var(--text-sub); margin-top: 7px; }
+  .trans-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 24px; }
+  .trans-item { background: var(--bg); border: 1px solid var(--divider); border-radius: var(--r-card); padding: 16px 20px; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-sub); }
+
+  /* FOOTER */
+  .footer { background: var(--primary-black); color: var(--text-white); padding: 44px 24px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-cols { display: flex; gap: 48px; flex-wrap: wrap; }
+  .footer-col-title { font-size: 1.5rem; font-weight: 500; line-height: var(--lh-ui); letter-spacing: var(--ls-label); }
+  .footer-col a { display: block; font-size: 1.3rem; line-height: 2; color: var(--text-sub-wh); text-decoration: none; }
+  .footer-copy { font-size: 1.2rem; line-height: var(--lh-body); color: var(--secondary-gy); margin-top: 30px; }
+
+  @media (max-width: 767px) {
+    .hero .en { font-size: 3.4rem; }
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .section-title { font-size: 2.2rem; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .header-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <span class="logo-mark">東宝</span>
+      <span class="logo-text">TOHO</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#" class="is-current">TOHOブランド</a>
+      <a href="#" class="is-spaced">映画</a>
+      <a href="#">IP・アニメ</a>
+      <a href="#" class="is-spaced">演劇</a>
+      <a href="#">不動産</a>
+      <a href="#">オンラインストア</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="en">Moments for Life</div>
+    <div class="ja">その時間が、人生の力になる。</div>
+    <p class="caveat">※ 実サイトではこの欧文見出しは書体ではなく <code>heading.webp</code>（350×30px）の画像。<code>&lt;h1&gt;</code> の中に画像と和文テキストが並ぶ構造になっている。CSS には <code>.font-junge { font-family: Junge, serif }</code> があるが、Junge はフォント要求 0 件・<code>unloaded</code>・適用要素 0 で機能していない（この preview では「本来こう出るはずだった」姿を見せるため Google Fonts から Junge を読んでいる）。</p>
+  </div>
+</div>
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">宣言された色の半分は使われていない</h2>
+  <p class="section-lead">23 個の自社トークンのうち、<b>社名を冠した <code>--Toho_Blue: #003692</code> は 2 ページとも可視 0 要素</b>。画面に出る青は <code>--Primary_blue: #3036E6</code> の方。Secondary の 4 色も単色の面としては一度も現れず、<b>登場するのはラジアルグラデーションの中だけ</b>（しかも停止色はトークンの値と一致しない）。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#3036E6"></div><div class="swatch-body"><div class="swatch-name">Primary Blue</div><div class="swatch-hex">#3036E6</div><div class="swatch-use">--Primary_blue。文字 16 / 罫線 16 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#03021F"></div><div class="swatch-body"><div class="swatch-name">Primary Black</div><div class="swatch-hex">#03021F</div><div class="swatch-use">--Primary_black。純黒ではなく青みのある紺。文字 25 要素</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#003692"></div><div class="swatch-body"><div class="swatch-name">Toho Blue</div><div class="swatch-hex">#003692</div><div class="swatch-use">--Toho_Blue。社名のトークンだが 2 ページとも可視 0</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#2E313B"></div><div class="swatch-body"><div class="swatch-name">Text Black</div><div class="swatch-hex">#2E313B</div><div class="swatch-use">--Text_black。可視 22 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#64687A"></div><div class="swatch-body"><div class="swatch-name">Text Sub Black</div><div class="swatch-hex">#64687A</div><div class="swatch-use">--Text_sub_black。文字 10 / 面 6 要素。タグの地</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#D1D3DE"></div><div class="swatch-body"><div class="swatch-name">Divider Gray</div><div class="swatch-hex">#D1D3DE</div><div class="swatch-use">--Devider_gray（綴りは実サイトのまま）。罫線 46 要素で最多</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#1a1a1a"></div><div class="swatch-body"><div class="swatch-name">Card Dark</div><div class="swatch-hex">#1a1a1a</div><div class="swatch-use">作品カードの地。可視 34 要素。直書き</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#70E1B6"></div><div class="swatch-body"><div class="swatch-name">Secondary Green</div><div class="swatch-hex">#70E1B6</div><div class="swatch-use">--Secondary_green。面・文字・罫線とも 0 要素</div></div></div>
+    <div class="swatch is-unused"><div class="swatch-chip" style="background:#8752FA"></div><div class="swatch-body"><div class="swatch-name">Secondary Purple</div><div class="swatch-hex">#8752FA</div><div class="swatch-use">--Secondary_purple。0 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:radial-gradient(70% 220% at 100% 0%, #D6FFB6 0%, #C191FF 20%, #3548E5 55%, #09011A 100%)"></div><div class="swatch-body"><div class="swatch-name">Hero Gradient</div><div class="swatch-hex">70% 220% at 100% 0%</div><div class="swatch-use">CTA と CMP の OK ボタン。このサイト唯一の「色」</div></div></div>
+  </div>
+  <p class="note">停止位置 <code>0% / 20% / 55% / 100%</code> と大きさ <code>70% 220% at 100% 0%</code> を丸めない。右上の 1 点から黄緑 → 藤色 → 青 → ほぼ黒へ抜ける。</p>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">サイト全体に halt をかける</h2>
+  <p class="section-lead"><code>font-feature-settings: "halt"</code> が <b>1017 要素</b>（下層ページでも 669 要素）。<b><code>palt</code> ではなく <code>halt</code></b> で、文字ごとに詰め幅を変えるのではなく<b>全角約物を一律に半角幅へ揃える</b>。横組み専用で、縦組みでの適用は 0 件。</p>
+  <div class="halt-demo">
+    <div class="halt-box is-off"><div class="label">normal（実測 40px で 360px）</div><div class="sample">「東京」、（映画）。・</div></div>
+    <div class="halt-box"><div class="label">★実サイト "halt"（実測 300px・16.7% 詰まる）</div><div class="sample">「東京」、（映画）。・</div></div>
+    <div class="halt-box is-palt"><div class="label">"palt"（別物。このサイトは使わない）</div><div class="sample">「東京」、（映画）。・</div></div>
+  </div>
+  <p class="note"><b>縦組みに <code>halt</code> を当てても黙って無視される。</b> 軸が違うため、縦組みでは <code>"vhal"</code> / <code>"vpal"</code> に差し替える必要がある。</p>
+
+  <div class="scale-bar" style="margin-top:40px">
+    <span style="font-size:1.2rem">12px</span>
+    <span style="font-size:1.3rem">13px</span>
+    <span style="font-size:1.4rem">14px</span>
+    <span style="font-size:1.5rem">15px</span>
+    <span style="font-size:1.6rem">16px</span>
+    <span style="font-size:2.2rem">22px</span>
+    <span style="font-size:2.8rem">28px</span>
+    <span style="font-size:3.2rem">32px</span>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 1（下層）</b>32px / 500 / lh 1.25</div>
+    <div style="font-size:3.2rem;font-weight:500;line-height:var(--lh-tight)">会社情報</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 2</b>28px / 500 / lh 1.50<br>h2-basis</div>
+    <div style="font-size:2.8rem;font-weight:500;line-height:var(--lh-ui)">TOHOブランド</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Heading 3</b>22px / 500 / lh 1.50</div>
+    <div style="font-size:2.2rem;font-weight:500;line-height:var(--lh-ui)">東宝グループが大切にしている価値観</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body</b>16px / 400 / lh 1.70<br>body の既定（27.2px）</div>
+    <div style="font-size:1.6rem;line-height:var(--lh-body)">本文は 16px / 行間 27.2px。ウェイトは 400（133 要素）と 500（26 要素）の 2 段で大半を占め、Google Fonts で 600 / 700 も読んでいるが実際にはほとんど使われていない。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>List / Card</b>15px / 400 / lh 1.50<br>letter-spacing 0.6px = 0.04em</div>
+    <div style="font-size:1.5rem;line-height:var(--lh-ui);letter-spacing:var(--ls-label)">カードとリストのラベルは 15px。ここにだけ 0.04em の字間を足す</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>UI</b>14px / 400 / lh 1.50<br>可視 62 要素で最多</div>
+    <div style="font-size:1.4rem;line-height:var(--lh-ui)">ナビゲーション・タグ・補助ラベル。このサイトで最も多いサイズ</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Caption</b>13px / 400 / lh 1.50</div>
+    <div style="font-size:1.3rem;line-height:var(--lh-ui)">日付・注記</div>
+  </div>
+
+  <h3 style="font-size:2.2rem;font-weight:500;line-height:var(--lh-ui);margin:40px 0 10px">字間は継承ではなく、要素ごとの em</h3>
+  <p class="section-lead" style="margin-bottom:10px">可視 79 要素は <code>normal</code>。残りは<b>要素ごとに <code>em</code> を当てている</b>（サイズが違うと px 値も比例して変わる）。<b>px に読み替えて配らないこと。</b></p>
+  <table class="ls-table">
+    <thead><tr><th>実測値</th><th>サイズ</th><th>em 換算</th><th>件数</th><th>用途</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0.6px</td><td class="num">15px</td><td class="num">0.04em</td><td class="num">11</td><td>カード・リストのラベル</td></tr>
+      <tr><td class="num">0.7px</td><td class="num">14px</td><td class="num">0.05em</td><td class="num">3</td><td>UI テキスト</td></tr>
+      <tr><td class="num">0.8px</td><td class="num">16px</td><td class="num">0.05em</td><td class="num">2</td><td>本文サイズの強調</td></tr>
+      <tr><td class="num">0.48px</td><td class="num">12px</td><td class="num">0.04em</td><td class="num">1</td><td>タグ</td></tr>
+      <tr><td class="num">2.25px</td><td class="num">15px</td><td class="num"><b>0.15em</b></td><td class="num">2</td><td><b>ナビの一部専用。一般化しない</b></td></tr>
+    </tbody>
+  </table>
+</div>
+</section>
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons</div>
+  <h2 class="section-title">主要 CTA はグラデーションの Pill</h2>
+  <p class="section-lead">単色の面を持たず、<b>ラジアルグラデーション 1 本に装飾を集約</b>している。小さなボタンは白地に <code>#D1D3DE</code> の 1px 枠・角丸 18px・12px / weight 700。タグは <code>#64687A</code> の塗りに角丸 4px。</p>
+  <div class="btn-grid">
+    <a class="btn btn-primary" href="#">TOHOブランド <span aria-hidden="true">›</span></a>
+    <a class="btn btn-secondary" href="#">プライバシー設定</a>
+    <a class="btn btn-secondary" href="#">全て拒否する</a>
+    <span class="tag">映画</span>
+    <span class="tag">イベント</span>
+  </div>
+  <p class="note">トランジションはトークンで 3 段に固定されている（<code>--transition-fast: all .15s</code> / <code>--transition-default: all .3s</code> / <code>--transition-slow: all .5s</code>）。</p>
+</section>
+
+<section class="section-alt" id="cards">
+<div class="section-inner">
+  <div class="section-label">04 / Cards</div>
+  <h2 class="section-title">作品カードは #1a1a1a、情報カードは白</h2>
+  <p class="section-lead">角丸は <b>4px</b>（可視 29 要素で最多）。影は 1 件も使わない。暗いタイルを敷き詰めて作品を見せ、情報系は白地に <code>1px solid #D1D3DE</code> で分ける。</p>
+  <div class="card-grid">
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body"><span class="card-tag">映画</span><div class="card-title">うるわしの宵の月</div><div class="card-date">2026.10.23 公開</div></div></a>
+    <a class="card" href="#"><div class="card-img"></div><div class="card-body"><span class="card-tag">演劇</span><div class="card-title">ミュージカル『SPY×FAMILY』爆弾犬篇＆豪華客船篇</div><div class="card-date">2026.11 開幕</div></div></a>
+    <a class="card card-light" href="#"><div class="card-img" style="background:linear-gradient(150deg,#dfe3ef,#b9c2d8)"></div><div class="card-body"><span class="card-tag">不動産</span><div class="card-title">日比谷シャンテ リニューアルのお知らせ</div><div class="card-date">2026.10.14</div></div></a>
+  </div>
+
+  <h3 style="font-size:2.2rem;font-weight:500;line-height:var(--lh-ui);margin:40px 0 14px">ニュース一覧（記事カラム 888px）</h3>
+  <div class="news">
+    <div class="news-row"><div class="news-date">2026.10.28</div><div class="news-title">「東宝公式オウンドメディア Our Moments for Life」を公開しました</div></div>
+    <div class="news-row"><div class="news-date">2026.10.21</div><div class="news-title">2027年2月期 第2四半期決算短信を発表しました</div></div>
+    <div class="news-row"><div class="news-date">2026.10.14</div><div class="news-title">TOHOシネマズ、IMAX上映館を拡大します</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">フォーカスは青の 2px リング</h2>
+  <p class="section-lead">このサイトで唯一の <code>box-shadow</code> がフォーカスリング（<code>rgb(0, 66, 188) 0 0 0 2px</code>）。<code>--focus-color: #8ab4f8</code> も宣言されている。</p>
+  <div class="form-grid">
+    <div class="field"><label for="s1">サイト内検索</label><input id="s1" type="text" value="作品タイトル"><div class="field-msg">16px / line-height 1.50 / letter-spacing normal</div></div>
+    <div class="field is-focus"><label for="s2">フォーカス状態</label><input id="s2" type="text" value="Moments for Life"><div class="field-msg">box-shadow: 0 0 0 2px #0042BC（.is-focus クラスで再現）</div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / Elevation</div>
+  <h2 class="section-title">影はフォーカスリングだけ</h2>
+  <p class="section-lead">カード・ボタン・タグはすべてフラット。区別は <code>1px solid #D1D3DE</code> の罫線（46 要素）と、<code>#ffffff</code> / <code>#F5F5F5</code> / <code>#EBEBEB</code> / <code>#1a1a1a</code> の面色で行う。</p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">box-shadow: none（既定）</div></div>
+    <div class="elev ef"><div class="elev-name">Focus</div><div class="elev-val">rgb(0, 66, 188) 0 0 0 2px<br>可視 1 要素</div></div>
+    <div class="elev"><div class="elev-name">区別のしかた</div><div class="elev-val">1px solid #D1D3DE（罫線 46 要素）</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="layout">
+  <div class="section-label">07 / Layout</div>
+  <h2 class="section-title">コンテナ 1600px / ヘッダー 127px</h2>
+  <p class="section-lead"><code>html { font-size: 10px }</code> 固定なので <code>1rem = 10px</code>。<b>7 幅（1440 / 1200 / 1024 / 834 / 768 / 767 / 375px）すべてで <code>html</code> も <code>body</code> も動かない。</b>流体（<code>vw</code>）も <code>clamp()</code> も使っていない。</p>
+  <div class="layout-demo">
+    <div class="layout-bar" style="width:100%">max-width: 1600px（コンテナ。可視 12 要素）</div>
+    <div class="layout-bar" style="width:888px;max-width:100%">記事カラム 888px</div>
+    <div class="layout-bar" style="width:100%;height:50px">--header-height : 127px</div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px / カード・タグ</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:18px"></div><div class="radius-label">18px / 小ボタン</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">9999px / Pill</div></div>
+    <div class="radius-item"><div class="radius-box" style="width:70px;border-radius:50%"></div><div class="radius-label">50% / 丸</div></div>
+  </div>
+  <div class="trans-row">
+    <div class="trans-item">--transition-fast : all .15s</div>
+    <div class="trans-item">--transition-default : all .3s</div>
+    <div class="trans-item">--transition-slow : all .5s</div>
+  </div>
+  <p class="note">カードグリッドの gap は <code>32px 24px</code>。チップの並びは <code>8px 12px</code>、リストは <code>5px</code> / <code>8px</code> / <code>12px</code> / <code>15px</code> と 4 の倍数ではない値も混ざる。</p>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">TOHOブランド</div><a href="#">東宝グループの価値観</a><a href="#">Our Moments for Life</a></div>
+      <div class="footer-col"><div class="footer-col-title">事業</div><a href="#">映画</a><a href="#">IP・アニメ</a><a href="#">演劇</a><a href="#">不動産</a></div>
+      <div class="footer-col"><div class="footer-col-title">会社情報</div><a href="#">会社概要</a><a href="#">沿革</a><a href="#">サステナビリティ</a></div>
+      <div class="footer-col"><div class="footer-col-title">その他</div><a href="#">投資家情報</a><a href="#">採用情報</a><a href="#">お問い合わせ</a></div>
+    </div>
+    <div class="footer-copy">この preview.html は DESIGN.md の実測値を再現したものです（2026-10-29 実測）。ヒーローの欧文は実サイトでは画像なので、ここでは Junge を読み込んで「本来の意図」を見せています。</div>
+  </div>
+</footer>
+
+</body>
+</html>
