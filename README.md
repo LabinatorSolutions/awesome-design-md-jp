@@ -34,7 +34,7 @@
 各 DESIGN.md のデザイントークンを可視化したショーケースページ（`preview.html`）を同梱しています。
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (598 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (601 sites)</a>
 </p>
 
 <table>
@@ -926,6 +926,11 @@
 </tr>
 <tr>
 <td align="center"><strong>東宝</strong><br><img src="design-md/toho/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東京ステーションホテル</strong><br><img src="design-md/tokyostationhotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東洋経済新報社</strong><br><img src="design-md/toyokeizai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>横浜美術館</strong><br><img src="design-md/yokohama-art/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 
@@ -1585,11 +1590,14 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 | [シスメックス (Sysmex)](https://www.sysmex.co.jp/) | Medical Devices / Corporate | [DESIGN.md](design-md/sysmex/DESIGN.md) | [preview.html](design-md/sysmex/preview.html) |
 | [武田薬品工業 (Takeda)](https://www.takeda.com/jp/) | Pharmaceutical / Corporate | [DESIGN.md](design-md/takeda/DESIGN.md) | [preview.html](design-md/takeda/preview.html) |
 | [東宝 (TOHO)](https://www.toho.co.jp/) | Entertainment / Corporate | [DESIGN.md](design-md/toho/DESIGN.md) | [preview.html](design-md/toho/preview.html) |
+| [東京ステーションホテル (THE TOKYO STATION HOTEL)](https://www.tokyostationhotel.jp/) | Hotel / Corporate | [DESIGN.md](design-md/tokyostationhotel/DESIGN.md) | [preview.html](design-md/tokyostationhotel/preview.html) |
+| [東洋経済新報社 (TOYO KEIZAI)](https://corp.toyokeizai.net/) | Publishing / Corporate | [DESIGN.md](design-md/toyokeizai/DESIGN.md) | [preview.html](design-md/toyokeizai/preview.html) |
+| [横浜美術館 (Yokohama Museum of Art)](https://yokohama.art.museum/) | Museum / Public | [DESIGN.md](design-md/yokohama-art/DESIGN.md) | [preview.html](design-md/yokohama-art/preview.html) |
 
 ### Previews
 
 <p align="center">
-  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (598 sites)</a>
+  <a href="https://kzhrknt.github.io/awesome-design-md-jp/gallery.html">Gallery (601 sites)</a>
 </p>
 
 <table>
@@ -2481,6 +2489,11 @@ Without these specifications, AI agents produce Japanese UI with broken typograp
 </tr>
 <tr>
 <td align="center"><strong>東宝</strong><br><img src="design-md/toho/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東京ステーションホテル</strong><br><img src="design-md/tokyostationhotel/preview-screenshot.png" width="120"></td>
+<td align="center"><strong>東洋経済新報社</strong><br><img src="design-md/toyokeizai/preview-screenshot.png" width="120"></td>
+</tr>
+<tr>
+<td align="center"><strong>横浜美術館</strong><br><img src="design-md/yokohama-art/preview-screenshot.png" width="120"></td>
 </tr>
 </table>
 

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 東京ステーションホテル（THE TOKYO STATION HOTEL）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     東京ステーションホテル — 実測 2026-10-30
+     CSS Custom Properties は実サイトに 0 個。以下は computed style と
+     CSS 全文から起こした実測値。
+     ============================================================ */
+
+  /* 実サイトは @font-face で "Yu Gothic" という名前そのものを上書きしている：
+
+       @font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Medium"); font-weight: 100; }
+       @font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Medium"); font-weight: 200; }
+       @font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Medium"); font-weight: 300; }
+       @font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Medium"); font-weight: 400; }
+       @font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Bold");   font-weight: bold; }
+
+     src が local() だけなのでダウンロードは発生しない。Windows では Medium が当たるが、
+     macOS には "Yu Gothic Medium" という名前が無いため document.fonts は error になる
+     （実サイトの 400 と bold も error）。このプレビューは macOS で撮るので、
+     同じ結果になるスタック順方式（Medium を Regular より前に置く）で書く。
+     DESIGN.md 3.1 を参照。 */
+
+  :root {
+    /* === Colors ===  実測（可視要素数つき） */
+    --navy:        #00335c;  /* ★主ボタン・面。可視 43 要素（下層 31） */
+    --navy-dark:   #002c59;  /* ヘッダー最上部の予約ボタン 3 つ専用。可視 3 要素 */
+    --greige:      #9f9691;  /* グローバルナビの帯。可視 25 要素（下層 22） */
+    --teal:        #356a87;  /* 電話番号の文字色。面には使わない */
+    --text:        #444444;  /* ★本文の既定。下層で可視 173 要素 */
+    --text-black:  #000000;  /* 客室名・プラン名。可視 25〜30 要素 */
+    --text-nav:    #111111;  /* グローバルナビ。可視 10 要素 */
+    --muted:       #888888;  /* Language・パンくず。可視 14〜15 要素 */
+    --muted2:      #777777;  /* 時計・施設名。可視 8〜11 要素 */
+    --border:      #dddddd;  /* 区切り線 */
+    --surface:     #f5f5f5;  /* 客室カードの面 */
+    --surface2:    #e7e7e7;  /* 定義リスト <dt> の面。可視 20 要素 */
+    --surface3:    #eeeeee;  /* フッターの帯 */
+    --bg:          #ffffff;  /* pageBackground.resolved / 根拠 body */
+
+    /* === Fonts ===
+       和文の Web フォントは実サイトで 1 本も読み込んでいない（フォント要求 3 件は
+       Cormorant Infant / FontAwesome / slick）。和文は OS ローカル書体。
+       欧文セリフの Cormorant Infant だけ Google Fonts から読む（実サイトと同じ）。 */
+    --font-gothic: "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック体, YuGothic,
+                   "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+                   メイリオ, Meiryo, sans-serif;
+    /* 実サイトの明朝スタックは末尾に メイリオ, Meiryo が入っていて誤り（ゴシックで出る）。
+       ここでは正しい形で書く（DESIGN.md 3.3 の「正しくはこう」） */
+    --font-mincho: 游明朝, "Yu Mincho", YuMincho, "Hiragino Mincho ProN",
+                   HGS明朝E, "MS P明朝", serif;
+    --font-serif:  "Cormorant Infant", serif;
+    --font-mono:   SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===  本文 1.75 / カード 1.25 / 注記 1.50 の三層。
+       実サイトの body は line-height: 1（無単位）で、1 未満の比率が 1 件も出ない。 */
+    --lh-body:  1.75;   /* 下層で可視 132 要素 */
+    --lh-card:  1.25;   /* 可視 27 要素 */
+    --lh-note:  1.50;   /* 可視 30 要素 */
+    --lh-tight: 1.10;   /* 和英併記の大見出し */
+
+    /* === Letter spacing ===  既定は normal（下層 230 要素）。
+       空けるのは固有名詞だけで、欧文と和文で値が違う。 */
+    --ls-en:   1.8px;   /* 欧文の客室名。可視 12 要素 */
+    --ls-ja:   0.7px;   /* 和文の客室名。可視 12 要素 */
+    --ls-link: 1.05px;  /* 「詳細を見る」。可視 12 要素 */
+    --ls-cat:  2.8px;   /* ROOM TYPES */
+    --ls-btn:  1.6px;   /* 明朝ボタン「空室検索」 */
+
+    --container: 1100px;
+    --r-pill:  30px;    /* ピル型 CTA */
+    --r-head:  0 0 4px 4px;  /* ヘッダー予約ボタン */
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-gothic);
+    font-size: 14px;
+    font-weight: 500;        /* 実サイトの body と同じ。ただし游ゴシックは 400 と同字面 */
+    /* 実サイトは body { line-height: 1 } だが、行が潰れるので本文の値を書く（DESIGN.md Don't） */
+    line-height: var(--lh-body);
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HEADER */
+  .header-top { display: flex; justify-content: flex-end; gap: 2px; padding: 0 20px; }
+  .btn-reserve {
+    background: var(--navy-dark); color: #fff; border: 0;
+    font-family: var(--font-gothic); font-size: 12.8px; font-weight: 700;
+    line-height: 1.5; padding: 10px 25px; border-radius: var(--r-head);
+    cursor: pointer; text-decoration: none;
+  }
+  .header-main { display: flex; align-items: center; justify-content: space-between; max-width: var(--container); margin: 0 auto; padding: 18px 20px; }
+  .clock { font-size: 14.4px; color: var(--muted2); line-height: 1.5; }
+  .brand { text-align: center; }
+  .brand-en { font-family: var(--font-serif); font-size: 26px; letter-spacing: 2px; color: var(--text-black); line-height: 1.2; }
+  .brand-sub { font-family: var(--font-serif); font-size: 12px; letter-spacing: 3px; color: var(--muted); line-height: 1.6; }
+  .lang { font-family: var(--font-mincho); font-size: 14.4px; color: var(--muted); line-height: 1.5; }
+  .gnav { background: var(--greige); }
+  .gnav-inner { display: flex; max-width: var(--container); margin: 0 auto; }
+  .gnav a { flex: 1; text-align: center; color: #fff; text-decoration: none; font-size: 15.2px; font-weight: 500; line-height: 1; padding: 20px 6px; border-left: 1px solid rgba(255,255,255,.3); }
+  .gnav a:last-child { border-right: 1px solid rgba(255,255,255,.3); }
+
+  /* SEARCH（明朝ボタン） */
+  .searchbar { background: var(--navy); }
+  .searchbar-inner { max-width: var(--container); margin: 0 auto; display: flex; align-items: stretch; }
+  .searchbar .field-inline { flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 20px; color: #fff; font-size: 12.8px; }
+  .searchbar .field-inline input,
+  .searchbar .field-inline select {
+    background: #fff; border: 0; border-radius: 0; height: 36px; padding: 0 10px;
+    font-family: var(--font-gothic); font-size: 14px; color: var(--text);
+  }
+  .btn-mincho {
+    background: var(--navy); color: #fff; border: 0; border-radius: 0;
+    font-family: var(--font-mincho); font-size: 14.4px; font-weight: 500;
+    letter-spacing: var(--ls-btn); line-height: 1; padding: 0 34px;
+    border-left: 1px solid rgba(255,255,255,.35); cursor: pointer;
+  }
+
+  /* SECTIONS */
+  .section { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: var(--surface); }
+  .section-alt .section-inner { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+  .section-head { font-family: var(--font-serif); font-size: 29px; font-weight: 600; line-height: 1.1; color: var(--text-black); }
+  .section-title { font-size: 22px; font-weight: 500; line-height: var(--lh-tight); color: var(--text-black); margin: 8px 0 18px; }
+  .section-lead { font-size: 14px; line-height: var(--lh-body); max-width: 760px; margin-bottom: 34px; }
+  .note { font-size: 12px; line-height: var(--lh-note); color: var(--muted2); margin-top: 18px; max-width: 760px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surface2); padding: 1px 5px; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--border); background: var(--bg); }
+  .swatch-chip { height: 74px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-size: 13px; font-weight: 700; line-height: 1.5; color: var(--text-black); }
+  .swatch-hex { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .swatch-use { font-size: 12px; line-height: 1.6; color: var(--muted2); margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 250px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); line-height: 1.75; }
+  .type-meta b { display: block; font-family: var(--font-gothic); font-size: 13px; font-weight: 700; color: var(--text-black); }
+  .weight-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 13px; }
+  .weight-table th, .weight-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; line-height: var(--lh-note); }
+  .weight-table th { background: var(--surface2); font-weight: 700; color: var(--text-black); }
+  .weight-table td.same { background: #fdf6e8; }
+  .weight-sample span { display: inline-block; margin-right: 18px; font-size: 20px; }
+
+  /* ROOMS */
+  .rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .room { background: var(--surface); }
+  .room-img { height: 180px; background: linear-gradient(150deg, #cfd6dd, #9aa7b2); }
+  .room-body { padding: 20px; }
+  .room-en { font-family: var(--font-serif); font-size: 18px; font-weight: 400; line-height: var(--lh-card); letter-spacing: var(--ls-en); color: var(--text-black); }
+  .room-ja { font-size: 18px; font-weight: 500; line-height: var(--lh-card); letter-spacing: var(--ls-ja); color: var(--text-black); margin-top: 2px; }
+  .room-desc { font-size: 14px; line-height: var(--lh-body); margin-top: 12px; }
+  .room-more { display: inline-block; margin-top: 16px; font-size: 15px; letter-spacing: var(--ls-link); line-height: 1.33; color: var(--navy); text-decoration: none; border-bottom: 1px solid var(--navy); }
+
+  /* BUTTONS */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; margin-bottom: 26px; }
+  .btn { cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-gothic); border: 0; }
+  .btn-pill { background: var(--navy); color: #fff; font-size: 12.8px; font-weight: 500; line-height: 1.5; padding: 7px 24px; border-radius: var(--r-pill); }
+  .btn-pill-wide { background: var(--navy); color: #fff; font-size: 12.8px; font-weight: 500; line-height: 1.5; padding: 10px 0; border-radius: var(--r-pill); width: 260px; }
+  .btn-head { background: var(--navy-dark); color: #fff; font-size: 12.8px; font-weight: 700; line-height: 1.5; padding: 10px 25px; border-radius: var(--r-head); }
+  .btn-m { background: var(--navy); color: #fff; font-family: var(--font-mincho); font-size: 14.4px; font-weight: 500; letter-spacing: var(--ls-btn); line-height: 1.5; padding: 10px 30px; border-radius: 0; }
+  .btn-inverse { background: var(--surface2); color: #373a3c; font-size: 14px; font-weight: 700; line-height: 1.5; padding: 10px 24px; border-radius: 0; }
+
+  /* DEFINITION LIST */
+  .dl { display: grid; grid-template-columns: 180px 1fr; border-top: 1px solid var(--border); max-width: 700px; }
+  .dl dt { background: var(--surface2); color: #373a3c; font-size: 14px; font-weight: 700; line-height: var(--lh-note); padding: 10px; border-bottom: 1px solid var(--bg); margin: 0; }
+  .dl dd { font-size: 14px; line-height: var(--lh-note); padding: 10px 16px; margin: 0; border-bottom: 1px solid var(--border); }
+
+  /* PALT */
+  .palt-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .palt-box { border: 1px solid var(--border); padding: 18px; background: var(--bg); }
+  .palt-box .label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+  .palt-box p { font-size: 20px; line-height: var(--lh-card); margin: 0; color: var(--text-black); }
+  .palt-on  { font-feature-settings: "palt"; }
+  .palt-off { font-feature-settings: normal; }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .elev { background: var(--bg); border: 1px solid var(--border); padding: 26px; text-align: center; }
+  .elev-name { font-size: 15px; font-weight: 700; line-height: 1.5; color: var(--text-black); }
+  .elev-val { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 28px; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 120px; height: 62px; background: var(--navy); }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
+  /* INPUT */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 760px; }
+  .field label { display: block; font-size: 13px; font-weight: 700; line-height: 1.5; margin-bottom: 7px; color: var(--text-black); }
+  .field input, .field select {
+    width: 100%; background: #fff; color: var(--text);
+    border: 1px solid var(--border); border-radius: 0;
+    padding: 0 10px; height: 44px; font-size: 14px; line-height: 1.5;
+    font-family: var(--font-gothic);
+  }
+  .field.is-focus input { outline: 2px solid var(--navy); }
+  .field-msg { font-size: 12px; line-height: 1.6; color: var(--muted); margin-top: 6px; }
+
+  /* FOOTER */
+  .footer { background: var(--surface3); color: var(--text); padding: 40px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-brand { font-family: var(--font-serif); font-size: 20px; letter-spacing: 2px; color: var(--text-black); line-height: 1.3; }
+  .footer-addr { font-size: 13px; line-height: var(--lh-body); margin-top: 12px; }
+  .footer-tel { color: var(--teal); font-size: 24px; font-family: var(--font-mincho); line-height: 1.3; margin-top: 4px; }
+  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
+  .footer-copy { font-size: 11px; color: var(--muted2); margin-top: 28px; line-height: 1.6; }
+
+  @media (max-width: 767px) {
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .brand-en { font-size: 18px; letter-spacing: 1px; }   /* 実サイトも 54px → 34px に縮める */
+    .gnav-inner { flex-wrap: wrap; }
+    .gnav a { flex: 1 1 33%; font-size: 13px; padding: 14px 4px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .searchbar-inner { flex-direction: column; }
+    .dl { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <a class="btn-reserve" href="#">宿泊予約</a>
+    <a class="btn-reserve" href="#">レストラン予約</a>
+    <a class="btn-reserve" href="#">オンラインショップ</a>
+  </div>
+  <div class="header-main">
+    <div class="clock">TOKYO　09:04</div>
+    <div class="brand">
+      <div class="brand-en">THE TOKYO STATION</div>
+      <div class="brand-sub">HOTEL</div>
+    </div>
+    <div class="lang">Language</div>
+  </div>
+  <nav class="gnav">
+    <div class="gnav-inner">
+      <a href="#">宿泊</a>
+      <a href="#">レストラン・ショップ</a>
+      <a href="#">ウエディング</a>
+      <a href="#">ミーティング・イベント</a>
+      <a href="#">フィットネス・スパ</a>
+      <a href="#">ホテルについて</a>
+    </div>
+  </nav>
+  <div class="searchbar">
+    <div class="searchbar-inner">
+      <div class="field-inline">
+        <label for="ci">チェックイン</label>
+        <input id="ci" type="date" value="2026-11-03">
+        <label for="ni">泊数</label>
+        <select id="ni"><option>1泊</option><option>2泊</option></select>
+      </div>
+      <button class="btn-mincho" type="button">空室検索</button>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="colors">
+  <div class="section-label">02 / COLOR PALETTE</div>
+  <div class="section-head">COLOR</div>
+  <h2 class="section-title">濃紺とグレージュ。角丸は 3 種</h2>
+  <p class="section-lead">面に使う色は濃紺 <code>#00335c</code>（可視 43 要素）とグローバルナビのグレージュ <code>#9f9691</code>（可視 25 要素）の 2 色。ヘッダー最上部の予約ボタンだけ 1 段暗い <code>#002c59</code> を使う。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#00335c"></div><div class="swatch-body"><div class="swatch-name">Navy（主）</div><div class="swatch-hex">#00335c</div><div class="swatch-use">可視 43 要素。ピル型 CTA、空室検索、電話ボタン</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#002c59"></div><div class="swatch-body"><div class="swatch-name">Navy Dark</div><div class="swatch-hex">#002c59</div><div class="swatch-use">可視 3 要素。ヘッダー最上部の予約ボタン専用</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#9f9691"></div><div class="swatch-body"><div class="swatch-name">Greige</div><div class="swatch-hex">#9f9691</div><div class="swatch-use">可視 25 要素。グローバルナビの帯</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#356a87"></div><div class="swatch-body"><div class="swatch-name">Teal（文字）</div><div class="swatch-hex">#356a87</div><div class="swatch-use">電話番号の文字色。面には使わない</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#444444"></div><div class="swatch-body"><div class="swatch-name">Text Primary</div><div class="swatch-hex">#444444</div><div class="swatch-use">下層で可視 173 要素。本文の既定</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#f5f5f5;border-bottom:1px solid #ddd"></div><div class="swatch-body"><div class="swatch-name">Surface</div><div class="swatch-hex">#f5f5f5</div><div class="swatch-use">客室カードの面</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#e7e7e7;border-bottom:1px solid #ddd"></div><div class="swatch-body"><div class="swatch-name">Surface 2</div><div class="swatch-hex">#e7e7e7</div><div class="swatch-use">可視 20 要素。定義リストの &lt;dt&gt;</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#888888"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#888888</div><div class="swatch-use">Language・パンくず。可視 14〜15 要素</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">03 / TYPOGRAPHY</div>
+  <div class="section-head">TYPE</div>
+  <h2 class="section-title">和文は OS ローカル。欧文セリフだけ Web フォント</h2>
+  <p class="section-lead">フォントファイルの要求は 3 件で、内訳は Cormorant Infant / FontAwesome / slick だけ。和文の Web フォントは 1 本も読み込まない。実測の内訳は 游ゴシックのスタック <b>860 要素</b>、游明朝 <b>77 要素</b>、Cormorant Infant <b>5 要素</b>。</p>
+
+  <div class="type-row">
+    <div class="type-meta"><b>Section（英）</b>Cormorant Infant / 29px / 600<br>line-height 1.1</div>
+    <div style="font-family:var(--font-serif);font-size:29px;font-weight:600;line-height:1.1;color:var(--text-black)">SPECIAL OFFERS</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Card Title（英）</b>Cormorant Infant / 18px / 400<br>letter-spacing 1.8px / lh 1.25</div>
+    <div style="font-family:var(--font-serif);font-size:18px;line-height:1.25;letter-spacing:1.8px;color:var(--text-black)">PALACE VIEW</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Card Title（和）</b>游ゴシック / 18px / 500<br>letter-spacing 0.7px / lh 1.25</div>
+    <div style="font-size:18px;font-weight:500;line-height:1.25;letter-spacing:.7px;color:var(--text-black)">パレスビュー</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Button（明朝）</b>游明朝 / 14.4px / 500<br>letter-spacing 1.6px</div>
+    <div style="font-family:var(--font-mincho);font-size:14.4px;font-weight:500;letter-spacing:1.6px;color:var(--text-black)">空室検索</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body</b>游ゴシック / 14px / 500<br>line-height 1.75 / ls normal<br>下層で可視 141 要素</div>
+    <div style="font-size:14px;line-height:1.75;max-width:620px">丸の内側でホテル中央付近に位置する客室。縦長窓の向こうに広がる駅前広場の景色と、開業当時の意匠を受け継いだ調度が、旅のはじまりを静かに迎えます。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Caption</b>游ゴシック / 12px / 500<br>line-height 1.50</div>
+    <div style="font-size:12px;line-height:1.5;color:var(--muted2)">※客室の天井高は、2F が約 3.7m、3F が約 3m です。</div>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--text-black);margin:36px 0 10px;line-height:1.5">実際に出るウェイトは 2 段しかない</h3>
+  <p class="section-lead" style="margin-bottom:16px">隠し div の幅を <code>font-weight</code> だけ変えて実測した値（40px / 「日本語の組版とAbc123」）。游ゴシックは 100〜500 が全部同じ字面で、600 以上は合成太字になる。</p>
+  <table class="weight-table">
+    <tr><th>スタック</th><th>100</th><th>200</th><th>300</th><th>400</th><th>500</th><th>600</th><th>700</th><th>900</th></tr>
+    <tr><th>游ゴシック系</th><td class="same">416.48</td><td class="same">416.48</td><td class="same">416.48</td><td class="same">416.48</td><td class="same">416.48</td><td>422.81</td><td>422.81</td><td>422.81</td></tr>
+    <tr><th>游明朝系</th><td class="same">408.00</td><td class="same">408.00</td><td class="same">408.00</td><td class="same">408.00</td><td class="same">408.00</td><td>412.53</td><td>422.84</td><td>422.84</td></tr>
+  </table>
+  <div class="weight-sample" style="margin-top:18px">
+    <span style="font-weight:400">游ゴシック 400</span>
+    <span style="font-weight:500">游ゴシック 500</span>
+    <span style="font-weight:700">游ゴシック 700（合成）</span>
+  </div>
+  <p class="note">※ 色の付いたセルが「同じ字面になる」範囲。<code>body</code> には <code>font-weight: 500</code> が当たっているが、400 と見た目は変わらない。</p>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--text-black);margin:36px 0 10px;line-height:1.5">palt はコンポーネント単位で当てる</h3>
+  <p class="section-lead" style="margin-bottom:16px"><code>body</code> にも <code>*</code> にも書かない。CSS 全文で 5 箇所（<code>.spc_txt</code> / <code>.category_title</code> / <code>.tx_ja</code> / <code>.c_page_ttl_01</code> / <code>.c_btn</code> 系）。実測 168 要素、すべて <code>horizontal-tb</code>。隠し div の幅は normal 580.00px → palt 463.45px。</p>
+  <div class="palt-demo">
+    <div class="palt-box"><div class="label">font-feature-settings: normal</div><p class="palt-off">「東京ステーションホテル」（創業 1915 年）、丸の内。</p></div>
+    <div class="palt-box"><div class="label">font-feature-settings: "palt"</div><p class="palt-on">「東京ステーションホテル」（創業 1915 年）、丸の内。</p></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="rooms">
+  <div class="section-label">04 / COMPONENT — CARD</div>
+  <div class="section-head">ROOM TYPES</div>
+  <h2 class="section-title">客室名は欧文と和文で字間を変える</h2>
+  <p class="section-lead">同じ 18px でも、欧文は <code>letter-spacing: 1.8px</code>、和文は <code>0.7px</code>。どちらかに揃えないこと。カードの面は <code>#f5f5f5</code>、角丸も影も付けない。</p>
+  <div class="rooms">
+    <article class="room">
+      <div class="room-img"></div>
+      <div class="room-body">
+        <div class="room-en">PALACE VIEW</div>
+        <div class="room-ja">パレスビュー</div>
+        <p class="room-desc">丸の内側でホテル中央付近に位置する客室。縦長窓の向こうに駅前広場が広がります。</p>
+        <a class="room-more" href="#">詳細を見る</a>
+      </div>
+    </article>
+    <article class="room">
+      <div class="room-img" style="background:linear-gradient(150deg,#d8d1cb,#a79c94)"></div>
+      <div class="room-body">
+        <div class="room-en">JUNIOR SUITE</div>
+        <div class="room-ja">ジュニアスイート</div>
+        <p class="room-desc">東京駅丸の内駅舎のほぼ中央にある客室。58㎡とゆとりのある造りです。</p>
+        <a class="room-more" href="#">詳細を見る</a>
+      </div>
+    </article>
+    <article class="room">
+      <div class="room-img" style="background:linear-gradient(150deg,#ccd5d8,#8f9ea4)"></div>
+      <div class="room-body">
+        <div class="room-en">MAISONETTE</div>
+        <div class="room-ja">メゾネット</div>
+        <p class="room-desc">日本では珍しい二階建ての客室。リビングルームと寝室を階で分けています。</p>
+        <a class="room-more" href="#">詳細を見る</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section-alt" id="buttons">
+<div class="section-inner">
+  <div class="section-label">04 / COMPONENT — BUTTON</div>
+  <div class="section-head">BUTTONS</div>
+  <h2 class="section-title">角丸が 3 通り。明朝のボタンがある</h2>
+  <p class="section-lead">ピル（<code>30px</code>）／ヘッダー予約（<code>0 0 4px 4px</code>）／角丸なしの明朝ボタンが同じサイトに同居する。</p>
+  <div class="btn-grid">
+    <a class="btn btn-pill" href="#">オンライン予約</a>
+    <a class="btn btn-pill-wide" href="#">お問い合わせフォーム</a>
+    <a class="btn btn-head" href="#">宿泊予約</a>
+    <button class="btn btn-m" type="button">空室検索</button>
+    <span class="btn btn-inverse">チェックイン</span>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--text-black);margin:34px 0 12px;line-height:1.5">定義リスト（下層）</h3>
+  <dl class="dl">
+    <dt>チェックイン</dt><dd>15:00</dd>
+    <dt>チェックアウト</dt><dd>12:00</dd>
+    <dt>キャンセル規定</dt><dd>前日 50% ／ 当日 80% ／ 不泊 100%</dd>
+  </dl>
+  <p class="note">※ <code>&lt;dt&gt;</code> は <code>#e7e7e7</code> の面に 14px / weight 700。実測 20 要素。日付ラベル（前日・当日・不泊）だけ <code>letter-spacing: -1px</code> で詰める。</p>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--text-black);margin:34px 0 12px;line-height:1.5">入力欄</h3>
+  <div class="form-grid">
+    <div class="field"><label for="n1">お名前</label><input id="n1" type="text" value="葛原 健太"><div class="field-msg">全角でご入力ください</div></div>
+    <div class="field is-focus"><label for="n2">メールアドレス（フォーカス）</label><input id="n2" type="text" value="guest@example.com"><div class="field-msg">確認メールをお送りします</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="elevation">
+  <div class="section-label">06 / DEPTH &amp; ELEVATION</div>
+  <div class="section-head">ELEVATION</div>
+  <h2 class="section-title">サイト本体に影は無い</h2>
+  <p class="section-lead">実測できる <code>box-shadow</code> は 2 種類だけで、どちらも Cookie 同意バー（CMP）のもの。カード・ボタン・モーダルに影を足さないこと。奥行きは面の色と余白で作る。</p>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">box-shadow: none<br>すべての要素</div></div>
+    <div class="elev" style="background:var(--surface)"><div class="elev-name">面で分ける</div><div class="elev-val">#f5f5f5（カード）</div></div>
+    <div class="elev" style="background:var(--surface2)"><div class="elev-name">面で分ける</div><div class="elev-val">#e7e7e7（&lt;dt&gt;）</div></div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:30px"></div><div class="radius-label">30px（ピル）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0 0 4px 4px"></div><div class="radius-label">0 0 4px 4px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px（日付セル）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:50%;width:62px"></div><div class="radius-label">50%（アイコン）</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0（それ以外）</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">THE TOKYO STATION HOTEL</div>
+    <div class="footer-addr">東京ステーションホテル　〒100-0005 東京都千代田区丸の内一丁目9番1号</div>
+    <div class="footer-tel">03-5220-1111</div>
+    <div class="footer-links">
+      <a class="btn btn-pill" href="#">お問い合わせフォーム</a>
+      <a class="btn btn-pill" href="#">ホテルへのアクセス</a>
+    </div>
+    <div class="footer-copy">実測 2026-10-30 / https://www.tokyostationhotel.jp/ ・/stay/rooms/ ｜ 本ファイルは DESIGN.md の値を確認するためのプレビューです</div>
+  </div>
+</footer>
+
+</body>
+</html>

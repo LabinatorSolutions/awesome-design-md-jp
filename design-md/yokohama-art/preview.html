@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: 横浜美術館（Yokohama Museum of Art）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     横浜美術館 — 実測 2026-10-30
+     CSS Custom Properties は 49 個あるがすべて WordPress / Gutenberg 由来。
+     自社トークンは 0 個で、値は CSS に直書きされている。
+     以下は computed style と CSS 全文から起こした実測値。
+     ============================================================ */
+  :root {
+    /* === Colors ===  ブランド色は 1 色だけ */
+    --cyan:       #0090df;  /* ★面として可視 7 要素 / 文字色として 16 要素 */
+    --black:      #000000;  /* ★本文・見出し。トップ 153 / 下層 75 要素 */
+    --white:      #ffffff;  /* 黒面・写真の上。トップ 61 / 下層 50 要素 */
+    --muted:      #7d7d7d;  /* カテゴリラベル。トップ 48 要素 */
+    --caption:    #888888;  /* 写真クレジット。下層 18 要素 */
+    --date:       #555555;  /* 一覧の日付。5 要素 */
+    --nav:        #222222;  /* グローバルナビ。5 要素 */
+    --inactive:   #cccccc;  /* カルーセルの番号。29 要素 */
+    --disabled:   #b5b5b5;  /* 切り替え前の言語ラベル */
+    --border:     #e2e2e2;
+    --bg:         #ffffff;  /* pageBackground.resolved / 根拠 html */
+
+    /* === Fonts ===  Noto Sans JP 1 書体だけ。明朝は 2 ページとも可視 0 要素。
+       実サイトは <link> ではなく CSS 内の @import で読んでいる。
+       loaded は 400 / 500 / 700 の 3 ウェイトだけ（600 を指定しても 700 と同字面）。 */
+    --font-body: "Noto Sans JP", sans-serif;
+    --font-mono: SFMono-Regular, Consolas, Menlo, Courier, monospace;
+
+    /* === Line height ===  本文も見出しも 1.65。CMS 長文だけ 2.10 */
+    --lh-body: 1.65;   /* ★トップ 183 / 下層 84 要素 */
+    --lh-cms:  2.10;   /* 下層の長文。33 要素 */
+    --lh-date: 1.60;   /* 展覧会の日付 */
+
+    --r:       0;      /* ★角丸を使わない。円形アイコンの 50% だけ例外 */
+    --container: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  /* html には font-size の宣言が無い（UA 既定の 16px）。12 幅すべてで固定。 */
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-body);
+    /* ★実サイトは font-size: calc(1.09756vw)（1640px〜501px）。
+       501px で本文が約 5.5px まで縮み、500px で 16px に跳ね戻る（約 2.9 倍の崖）。
+       そのまま写すと読めなくなるので、ここでは下限を切った clamp で書く。
+       DESIGN.md 8. の表を参照。 */
+    font-size: clamp(14px, 1.09756vw, 18px);
+    font-weight: 400;
+    line-height: var(--lh-body);
+    letter-spacing: 0.1em;            /* ★body に 1 回だけ。絶対値 px として全子孫に降りる */
+    font-feature-settings: "palt";    /* ★body に 1 回だけ。実測 894 要素に継承 */
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
+  }
+
+  /* ★箇条書きの行頭 1 文字だけ詰めを解除する（実サイト独自の工夫） */
+  .cms ol li::first-letter,
+  .cms ul li::first-letter { font-feature-settings: normal; }
+
+  /* 写真クレジットは字間を戻す */
+  .caption { letter-spacing: normal; color: var(--caption); font-size: .6667em; line-height: 1.63; }
+
+  /* HEADER */
+  .header { position: relative; }
+  .header-top { display: flex; align-items: center; justify-content: flex-end; gap: 22px; padding: 14px 20px 0; max-width: var(--container); margin: 0 auto; }
+  .header-top a { font-size: 1.1111em; font-weight: 500; color: var(--cyan); text-decoration: none; line-height: var(--lh-body); }
+  .badge-open { background: var(--cyan); color: var(--white); font-size: 1em; font-weight: 400; line-height: var(--lh-body); padding: .1111em .8889em; border-radius: var(--r); }
+  .header-nav { display: flex; justify-content: flex-end; gap: 44px; padding: 10px 20px 20px; max-width: var(--container); margin: 0 auto; }
+  .header-nav a { font-size: 2.1111em; font-weight: 700; color: var(--nav); text-decoration: none; line-height: var(--lh-body); }
+  .logo { position: absolute; left: 12px; top: 12px; width: 150px; height: 150px; background: var(--white); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+  .logo-mark { width: 44px; height: 40px; border: 2px solid var(--black); }
+  .logo-ja { font-size: .9em; font-weight: 700; line-height: 1.4; }
+  .logo-en { font-size: .6667em; line-height: 1.4; text-align: center; color: var(--muted); }
+
+  /* HERO */
+  .hero { position: relative; height: 480px; background: linear-gradient(135deg, #4a4540 0%, #8a7f6e 45%, #c9b98f 100%); display: flex; align-items: flex-end; }
+  .hero-note { background: rgba(0,0,0,.55); color: var(--white); font-size: .9em; line-height: var(--lh-body); padding: 10px 16px; margin: 0 0 24px 190px; max-width: 620px; }
+  .hero-note code { background: rgba(255,255,255,.18); color: var(--white); }
+  .hero-nums { position: absolute; right: 24px; bottom: 20px; display: flex; gap: 14px; }
+  .hero-nums span { color: var(--inactive); font-size: 1.5em; line-height: 1.93; }
+  .hero-nums span.is-current { color: var(--white); }
+
+  /* SECTIONS */
+  .section { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-alt { background: #fafafa; }
+  .section-alt .section-inner { padding: 72px 20px; max-width: var(--container); margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: .7778em; color: var(--muted); letter-spacing: normal; margin-bottom: 12px; line-height: 1.6; }
+  .section-title { font-size: 2.7778em; font-weight: 700; line-height: var(--lh-body); margin: 0 0 16px; }
+  .section-sub { font-size: 1.6667em; font-weight: 700; line-height: var(--lh-body); margin: 0 0 14px; }
+  .section-lead { font-size: 1em; line-height: var(--lh-body); max-width: 760px; margin: 0 0 32px; }
+  .note { font-size: .8889em; line-height: var(--lh-body); color: var(--date); margin-top: 18px; max-width: 760px; }
+  code { font-family: var(--font-mono); font-size: .8em; background: #f1f1f1; padding: 1px 5px; letter-spacing: normal; }
+
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--border); background: var(--bg); border-radius: var(--r); }
+  .swatch-chip { height: 74px; }
+  .swatch-body { padding: 12px; }
+  .swatch-name { font-size: .8889em; font-weight: 700; line-height: var(--lh-body); }
+  .swatch-hex { font-family: var(--font-mono); font-size: .7em; color: var(--muted); letter-spacing: normal; margin-top: 3px; }
+  .swatch-use { font-size: .7778em; line-height: var(--lh-body); color: var(--date); margin-top: 6px; }
+
+  /* TYPOGRAPHY */
+  .type-row { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+  .type-meta { font-family: var(--font-mono); font-size: .7em; color: var(--muted); letter-spacing: normal; line-height: 1.8; }
+  .type-meta b { display: block; font-family: var(--font-body); font-size: 1.15em; font-weight: 700; color: var(--black); letter-spacing: .1em; }
+  .tbl { width: 100%; border-collapse: collapse; margin-top: 22px; font-size: .8333em; max-width: 760px; }
+  .tbl th, .tbl td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; line-height: var(--lh-body); }
+  .tbl th { background: #f1f1f1; font-weight: 700; }
+  .tbl td.warn { background: #fdecec; }
+
+  /* PALT demo */
+  .palt-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .palt-box { border: 1px solid var(--border); padding: 18px; }
+  .palt-box .label { font-family: var(--font-mono); font-size: .7em; color: var(--muted); letter-spacing: normal; margin-bottom: 10px; }
+  .palt-box p { font-size: 1.3333em; line-height: var(--lh-body); margin: 0; }
+  .palt-on { font-feature-settings: "palt"; }
+  .palt-off { font-feature-settings: normal; }
+
+  /* first-letter demo */
+  .cms ul { margin: 0; padding-left: 1.4em; }
+  .cms li { font-size: 1em; line-height: var(--lh-cms); }
+
+  /* EXHIBITION CARDS */
+  .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 28px; }
+  .ex-img { height: 190px; }
+  .ex-date { font-size: 1.3333em; font-weight: 400; line-height: var(--lh-date); margin-top: 14px; }
+  .ex-title { font-size: 1.6667em; font-weight: 700; line-height: var(--lh-body); margin-top: 6px; }
+  .ex-meta { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .tag { font-size: .7778em; color: var(--muted); line-height: var(--lh-body); }
+  .badge-now { background: var(--black); color: var(--white); font-size: 1em; font-weight: 700; line-height: var(--lh-body); padding: .1111em .4444em; border-radius: var(--r); border: 1px solid var(--black); }
+
+  /* MENU LINKS */
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+  .menu-grid a { background: var(--white); color: var(--black); font-size: .7778em; font-weight: 700; line-height: var(--lh-body); padding: 1.4em .2222em 1.4em 1.2em; text-decoration: none; display: block; border-radius: var(--r); }
+
+  /* ELEVATION */
+  .elev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .elev { background: var(--bg); border: 1px solid var(--border); padding: 26px; text-align: center; border-radius: var(--r); }
+  .elev-name { font-size: .9444em; font-weight: 700; line-height: var(--lh-body); }
+  .elev-val { font-family: var(--font-mono); font-size: .7em; color: var(--muted); letter-spacing: normal; margin-top: 8px; line-height: 1.6; }
+  .radius-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 28px; align-items: flex-end; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 120px; height: 62px; background: var(--cyan); }
+  .radius-label { font-family: var(--font-mono); font-size: .7em; color: var(--muted); letter-spacing: normal; margin-top: 8px; line-height: 1.6; }
+  .pagetop { width: 60px; height: 60px; border-radius: 50%; background: var(--black); color: var(--white); font-size: .5556em; display: flex; align-items: center; justify-content: center; }
+
+  /* FOOTER */
+  .footer { border-top: 1px solid var(--border); padding: 40px 20px; }
+  .footer-inner { max-width: var(--container); margin: 0 auto; }
+  .footer-name { font-size: 1.1667em; font-weight: 700; line-height: var(--lh-body); }
+  .footer-addr { font-size: .9em; line-height: 1.90; margin-top: 10px; }
+  .footer-note { font-size: .7778em; line-height: var(--lh-body); color: var(--muted); margin-top: 20px; letter-spacing: .0333em; }
+
+  @media (max-width: 767px) {
+    .section, .section-alt .section-inner { padding: 44px 16px; }
+    .header-nav { gap: 20px; flex-wrap: wrap; }
+    .header-nav a { font-size: 1.4em; }
+    .logo { width: 104px; height: 104px; }
+    .hero { height: 300px; }
+    .hero-note { margin-left: 16px; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+  @media (max-width: 500px) {
+    body { font-size: 16px; }   /* ★実サイトはここで流体を抜けて 16px に戻る */
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark"></div>
+    <div class="logo-ja">横浜美術館</div>
+    <div class="logo-en">YOKOHAMA<br>MUSEUM OF ART</div>
+  </div>
+  <div class="header-top">
+    <a href="#">美術館について</a>
+    <a href="#">ご支援</a>
+    <span class="badge-open">本日開館 ｜ 10時−18時</span>
+  </div>
+  <nav class="header-nav">
+    <a href="#">見る</a>
+    <a href="#">参加する</a>
+    <a href="#">利用する</a>
+    <a href="#">訪れる</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <p class="hero-note">ヒーローの縦組みは <b>webp 画像に焼き込まれている</b>（1440×675）。CSS に <code>.vwTxt { writing-mode: vertical-rl }</code> の定義はあるが、適用されている要素は 2 ページとも 0 件。</p>
+  <div class="hero-nums"><span class="is-current">1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+</section>
+
+<section class="section" id="colors">
+  <div class="section-label">02 / COLOR PALETTE</div>
+  <h2 class="section-title">ブランド色はシアン 1 色</h2>
+  <p class="section-lead">面に使うか文字に使うかで役割が変わる。トップでは開館情報のバッジ、下層ではリンクの文字色として出る。角丸も影も使わないので、色と余白だけで区別をつける。</p>
+  <div class="color-grid">
+    <div class="swatch"><div class="swatch-chip" style="background:#0090df"></div><div class="swatch-body"><div class="swatch-name">Cyan Blue</div><div class="swatch-hex">#0090df</div><div class="swatch-use">面 7 要素 / 文字 16 要素。開館バッジ、下層のリンク</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#000000"></div><div class="swatch-body"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div><div class="swatch-use">トップ 153 / 下層 75 要素。本文に純黒を使う</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#7d7d7d"></div><div class="swatch-body"><div class="swatch-name">Muted</div><div class="swatch-hex">#7d7d7d</div><div class="swatch-use">トップ 48 要素。カテゴリラベル</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#888888"></div><div class="swatch-body"><div class="swatch-name">Caption</div><div class="swatch-hex">#888888</div><div class="swatch-use">下層 18 要素。写真クレジット（字間を normal に戻す）</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#555555"></div><div class="swatch-body"><div class="swatch-name">Date</div><div class="swatch-hex">#555555</div><div class="swatch-use">一覧の日付。5 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#222222"></div><div class="swatch-body"><div class="swatch-name">Nav</div><div class="swatch-hex">#222222</div><div class="swatch-use">グローバルナビの項目。5 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#cccccc"></div><div class="swatch-body"><div class="swatch-name">Inactive</div><div class="swatch-hex">#cccccc</div><div class="swatch-use">カルーセルの番号。29 要素</div></div></div>
+    <div class="swatch"><div class="swatch-chip" style="background:#ffffff;border-bottom:1px solid #e2e2e2"></div><div class="swatch-body"><div class="swatch-name">Background</div><div class="swatch-hex">#ffffff</div><div class="swatch-use">html に直接</div></div></div>
+  </div>
+</section>
+
+<section class="section-alt" id="typography">
+<div class="section-inner">
+  <div class="section-label">03 / TYPOGRAPHY</div>
+  <h2 class="section-title">詰めてから、空け直す</h2>
+  <p class="section-lead"><code>body</code> に <code>font-feature-settings: "palt"</code> を 1 行書いて全要素に継承させ（実測 <b>894 要素</b>）、その上から <code>letter-spacing: 0.1em</code> で空け直している。片方だけ再現すると別物になる。</p>
+
+  <div class="type-row">
+    <div class="type-meta"><b>Nav</b>33.3659px / 700 / lh 1.65<br>ls 1.58049px（= 2.1111em）</div>
+    <div style="font-size:2.1111em;font-weight:700;line-height:1.65">見る　参加する　利用する</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Page Title（下層）</b>43.9024px / 700 / lh 1.65<br>ls 1.58049px（実効 0.036em）</div>
+    <div style="font-size:2.7778em;font-weight:700;line-height:1.65">概要</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Section Head</b>26.3415px / 700 / lh 1.65</div>
+    <div style="font-size:1.6667em;font-weight:700;line-height:1.65">グランドギャラリー</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Exhibition Date</b>21.0732px / 400 / lh 1.60<br>可視 30 要素</div>
+    <div style="font-size:1.3333em;line-height:1.6">2026年7月24日（金）− 11月23日（月・祝）</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body</b>15.8049px / 400 / lh 1.65<br>★本文の基準</div>
+    <div style="font-size:1em;line-height:1.65;max-width:620px">横浜美術館は、1989年11月3日に開館しました。迫力のあるシンメトリーな外観と、吹き抜けの開放的なグランドギャラリーが特徴です。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Body（CMS 長文）</b>15.8049px / 400 / <b>lh 2.10</b><br>下層 33 要素</div>
+    <div style="font-size:1em;line-height:2.10;max-width:620px">展覧会や教育プログラムを始めとするさまざまな活動を通じて、人びとが美術とともにあるための場をひらいていきます。</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Menu Item</b>14.0488px / 400 / lh 1.65<br>★トップ 104 / 下層 72 要素と最多</div>
+    <div style="font-size:.8889em;line-height:1.65">概要・あゆみ・建築</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta"><b>Caption</b>10.5366px / 400 / lh 1.63<br>★letter-spacing: normal に戻す</div>
+    <div class="caption">撮影：新津保建秀（以下すべて）</div>
+  </div>
+
+  <h3 class="section-sub" style="margin-top:36px">palt は実効している</h3>
+  <p class="section-lead" style="margin-bottom:16px">隠し div の幅を実測すると <code>normal</code> 603.72px → <code>palt</code> <b>485.36px</b>（約 20% 詰まる）。</p>
+  <div class="palt-demo">
+    <div class="palt-box"><div class="label">font-feature-settings: normal</div><p class="palt-off">「横浜美術館」（1989年開館）、みなとみらい。</p></div>
+    <div class="palt-box"><div class="label">font-feature-settings: "palt"</div><p class="palt-on">「横浜美術館」（1989年開館）、みなとみらい。</p></div>
+  </div>
+
+  <h3 class="section-sub" style="margin-top:36px">箇条書きの行頭だけ詰めを解除する</h3>
+  <p class="section-lead" style="margin-bottom:16px"><code>palt</code> が行頭の括弧や中点を詰めると字下げが揃わなくなるため、<code>li::first-letter { font-feature-settings: normal }</code> で<b>行頭の 1 文字だけ</b>解除している。CSS 全文で 6 箇所、本文エリアごとに個別宣言。</p>
+  <div class="cms" style="max-width:620px">
+    <ul>
+      <li>「コレクション展」は通年で開催しています</li>
+      <li>（団体でのご利用は事前のご予約が必要です）</li>
+      <li>・観覧料は展覧会ごとに異なります</li>
+    </ul>
+  </div>
+
+  <h3 class="section-sub" style="margin-top:36px">字間は body の 0.1em が px で降りる</h3>
+  <table class="tbl">
+    <tr><th>対象</th><th>letter-spacing</th><th>実測（1440px）</th><th>em 換算</th></tr>
+    <tr><td>ほぼ全要素（本文・ナビ・見出し）</td><td>0.1em（body に 1 回）</td><td><b>1.58049px</b>（トップ 291 要素）</td><td>本文 0.1em</td></tr>
+    <tr><td>見出し（43.9px）</td><td>継承のまま</td><td>1.58049px</td><td class="warn"><b>0.036em</b> まで薄まる</td></tr>
+    <tr><td>写真クレジット</td><td>normal</td><td>—</td><td>—</td></tr>
+  </table>
+  <p class="note">※ 大きい文字ほど字間が相対的に消える。見出しを広く空けたいなら、その要素で <code>em</code> を宣言し直すこと。</p>
+
+  <h3 class="section-sub" style="margin-top:36px">実際に使うウェイトは 3 段</h3>
+  <table class="tbl">
+    <tr><th>weight</th><th>実測</th><th>用途</th></tr>
+    <tr><td><b>400</b></td><td>トップ 213 / 下層 127 要素</td><td>本文・日付・ラベル</td></tr>
+    <tr><td><b>700</b></td><td>トップ 99 / 下層 33 要素</td><td>ナビ・見出し・カテゴリリンク</td></tr>
+    <tr><td><b>500</b></td><td>5 要素だけ</td><td>ヘッダー最上部の 3 項目</td></tr>
+    <tr><td>600</td><td class="warn">使わない</td><td>700 と同じ字面（隠し div でどちらも 436.59px）</td></tr>
+  </table>
+</div>
+</section>
+
+<section class="section" id="exhibitions">
+  <div class="section-label">04 / COMPONENT — CARD</div>
+  <h2 class="section-title">角丸ゼロ、影ゼロ</h2>
+  <p class="section-lead"><code>box-shadow</code> は 2 ページとも実測 <b>0 種</b>。<code>border-radius</code> はページトップへ戻る円の <code>50%</code> が 1 要素あるだけ。奥行きは余白と写真で作る。</p>
+  <div class="ex-grid">
+    <article>
+      <div class="ex-img" style="background:linear-gradient(140deg,#6b7f91,#b8c6cf)"></div>
+      <div class="ex-meta"><span class="badge-now">開催中</span></div>
+      <div class="ex-date">2026年7月24日（金）− 11月23日（月・祝）</div>
+      <div class="ex-title">第60回ヴェネチア・ビエンナーレ日本館帰国展</div>
+      <div class="ex-meta"><span class="tag">大人</span><span class="tag">ギャラリー9</span></div>
+    </article>
+    <article>
+      <div class="ex-img" style="background:linear-gradient(140deg,#8d7a63,#cdbfa5)"></div>
+      <div class="ex-meta"><span class="badge-now">開催中</span></div>
+      <div class="ex-date">2026年8月1日（土）− 12月13日（日）</div>
+      <div class="ex-title">コレクション展　光と影のあいだ</div>
+      <div class="ex-meta"><span class="tag">無料</span><span class="tag">ワークショップ</span></div>
+    </article>
+    <article>
+      <div class="ex-img" style="background:linear-gradient(140deg,#7e8a74,#c4cdb6)"></div>
+      <div class="ex-date">2026年10月4日（日）</div>
+      <div class="ex-title">みんなのフリーゾーン（10-3月）</div>
+      <div class="ex-meta"><span class="tag">子ども（小学生以下）</span></div>
+    </article>
+  </div>
+  <p class="caption" style="margin-top:16px">撮影：新津保建秀（以下すべて）</p>
+
+  <h3 class="section-sub" style="margin-top:40px">メニューリンク（下層）</h3>
+  <div class="menu-grid">
+    <a href="#">概要・あゆみ・建築</a>
+    <a href="#">館長挨拶・ビジョン・じゆうエリア</a>
+    <a href="#">美術館のコレクション</a>
+    <a href="#">組織一覧</a>
+    <a href="#">計画・報告</a>
+    <a href="#">ご支援</a>
+  </div>
+  <p class="note">※ 白面に黒文字 weight 700、<code>padding</code> は <code>0.2222em</code>（1440px で 3.5122px）。<b>padding もフォントサイズも em で書く</b>ので、<code>body</code> の幅に連動する。</p>
+</section>
+
+<section class="section-alt" id="elevation">
+<div class="section-inner">
+  <div class="section-label">06 / DEPTH &amp; ELEVATION</div>
+  <h2 class="section-title">影は 1 つも使っていない</h2>
+  <div class="elev-grid">
+    <div class="elev"><div class="elev-name">Level 0</div><div class="elev-val">box-shadow: none<br>すべての要素</div></div>
+    <div class="elev"><div class="elev-name">境界は罫線で</div><div class="elev-val">1px solid #e2e2e2</div></div>
+    <div class="elev"><div class="elev-name">奥行きは余白で</div><div class="elev-val">写真と white space</div></div>
+  </div>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:0"></div><div class="radius-label">0（すべて）</div></div>
+    <div class="radius-item"><div class="pagetop">TOP</div><div class="radius-label">50%（1 要素だけ）</div></div>
+  </div>
+
+  <h3 class="section-sub" style="margin-top:40px">本文が vw 流体であることの帰結</h3>
+  <p class="section-lead" style="margin-bottom:16px"><code>html</code> は 12 幅すべてで 16px 固定なのに、<code>body</code> だけが <code>calc(1.09756vw)</code>（設計幅 1640px で 18px）。<b>ルートだけ測ると「完全固定のサイト」に見える。</b></p>
+  <table class="tbl">
+    <tr><th>幅</th><th>body の font-size</th><th>letter-spacing（0.1em の実値）</th></tr>
+    <tr><td>1641px 以上</td><td>18px（設計値）</td><td>1.8px</td></tr>
+    <tr><td>1440px</td><td>15.8049px</td><td>1.58049px</td></tr>
+    <tr><td>1024px</td><td>11.239px</td><td>1.1239px</td></tr>
+    <tr><td>834px</td><td class="warn">9.15366px</td><td>0.915366px</td></tr>
+    <tr><td>768px</td><td class="warn">8.42927px</td><td>0.842927px</td></tr>
+    <tr><td><b>501px</b></td><td class="warn"><b>約 5.5px</b>（最小）</td><td>約 0.55px</td></tr>
+    <tr><td><b>500px 以下</b></td><td><b>16px</b>（ここで跳ね戻る）</td><td>1.6px</td></tr>
+  </table>
+  <p class="note">※ 崖は <b>501 / 500 の 1 箇所だけ</b>で、16px → 5.5px の約 2.9 倍。規定の 4 幅（1440 / 1200 / 834 / 375px）だけ測ると、375px が 16px なので崖が見えない。<b>この式をそのまま写さないこと</b>（このプレビューは <code>clamp(14px, 1.09756vw, 18px)</code> で下限を切っている）。</p>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">横浜美術館</div>
+    <div class="footer-addr">〒220-0012 神奈川県横浜市西区みなとみらい3-4-1<br>045-221-0300</div>
+    <div class="footer-note">横浜美術館は、公益財団法人横浜市芸術文化振興財団が指定管理者として運営しています。</div>
+    <div class="footer-note">実測 2026-10-30 / https://yokohama.art.museum/ ・/about/overview/ ｜ 本ファイルは DESIGN.md の値を確認するためのプレビューです</div>
+  </div>
+</footer>
+
+</body>
+</html>
